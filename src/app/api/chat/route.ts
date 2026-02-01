@@ -1,7 +1,8 @@
 import { anthropic } from "@/lib/ai/anthropic";
-import { MessageParam } from "@anthropic-ai/sdk/resources/messages";
+import { MessageParam, ImageBlockParam, TextBlockParam } from "@anthropic-ai/sdk/resources/messages";
 
 export const runtime = "nodejs";
+export const maxDuration = 60;
 
 interface ChatRequest {
   messages: Array<{
@@ -11,7 +12,7 @@ interface ChatRequest {
     pills?: string[];
     showUpload?: boolean;
   }>;
-  inspoImage: string | null;
+  inspoImages: string[];
   currentPreview: string | null;
 }
 
@@ -41,35 +42,46 @@ CONVERSATION FLOW:
 6. During iteration → Make changes, say "Done. What else?"
 
 RESPONSE FORMAT:
-Always respond with valid JSON:
+Always respond with valid JSON (no markdown code blocks, just raw JSON):
 {
   "message": "Your conversational message to the user",
-  "pills": ["Option A", "Option B", "Option C", "Option D"], // optional, only when offering choices
-  "showUpload": true, // optional, only when asking for inspo screenshots
-  "html": "<!DOCTYPE html>..." // optional, only when generating/updating the preview
+  "pills": ["Option A", "Option B"],
+  "showUpload": true,
+  "html": "<!DOCTYPE html>..."
 }
 
-WHEN GENERATING HTML:
-- Generate a COMPLETE HTML document with inline CSS
+Only include pills when offering choices. Only include showUpload when asking for inspo. Only include html when generating or updating a website.
+
+WHEN GENERATING HTML - THIS IS CRITICAL:
+- Generate a COMPLETE, FULLY FLESHED OUT website - NOT just a homepage
+- Build ALL pages into a single HTML document using JavaScript-based client-side routing
+- Include navigation that works between pages (Home, About, Services/Menu/Products, Contact, etc.)
+- Every page must have FULL, REAL content - not placeholders or "coming soon"
+- Each section should have multiple paragraphs, real-feeling details, realistic pricing, hours, team bios, etc.
 - Use Google Fonts (Satoshi, Manrope, Cabinet Grotesk, Instrument Sans, Space Grotesk - NOT Inter/Roboto/Arial)
 - Large confident headlines (48-96px)
 - Perfect typography hierarchy (letter-spacing -0.02em on display, line-height 1.1-1.2 headlines, 1.6 body)
 - 8px spacing grid (8, 16, 24, 32, 48, 64, 80, 96, 120px)
 - Section padding 80-120px vertical
 - Container max-width 1200-1400px
-- Subtle entrance animations (fade + translateY 20px)
+- Subtle entrance animations (fade + translateY 20px, using IntersectionObserver)
 - Hover transitions 150ms ease-out
-- Real-feeling placeholder content (NOT lorem ipsum)
-- High-quality images from picsum.photos
+- Real-feeling placeholder content (NOT lorem ipsum) - write actual compelling copy
+- High-quality images from picsum.photos (use different seed numbers for variety)
 - WCAG AA contrast ratios
 - Responsive with media queries
-- NO purple-to-blue gradients, NO generic startup aesthetic
-- If inspo was provided, match that aesthetic closely
+- Smooth scroll behavior
+- NO purple-to-blue gradients, NO generic startup aesthetic, NO AI slop
+- If inspo was provided, match that aesthetic with high fidelity - same colors, typography feel, spacing rhythm, border radius patterns
+
+PAGE ROUTING PATTERN (use this in every generated site):
+Use a simple JS router where clicking nav links shows/hides page sections. Each "page" is a <section> with display:none by default, and the router shows the active one. Include a showPage() function and wire up all nav links. Make sure the initial page is "home".
 
 WHEN UPDATING HTML (iteration):
 - Take the current HTML and modify it based on user request
-- Return the full updated HTML
-- Keep all existing content unless user asks to change it
+- Return the COMPLETE updated HTML document
+- Keep all existing content and pages unless user asks to change them
+- Maintain the routing system
 
 VIBE OPTIONS to offer:
 - "Clean & minimal"
@@ -80,101 +92,87 @@ VIBE OPTIONS to offer:
 export async function POST(req: Request) {
   try {
     const body: ChatRequest = await req.json();
-    const { messages, inspoImage, currentPreview } = body;
+    const { messages, inspoImages, currentPreview } = body;
 
-    // Build messages for Claude
     const claudeMessages: MessageParam[] = [];
 
     for (const msg of messages) {
       if (msg.role === "user") {
-        // If this is the message with inspo image, include it
         const isLastUserMessage = messages.indexOf(msg) === messages.length - 1;
 
-        if (isLastUserMessage && inspoImage) {
-          // Extract base64 data and media type
-          const matches = inspoImage.match(/^data:(image\/[a-z]+);base64,(.+)$/);
-          if (matches) {
-            const mediaType = matches[1] as "image/jpeg" | "image/png" | "image/gif" | "image/webp";
-            const base64Data = matches[2];
+        if (isLastUserMessage && inspoImages && inspoImages.length > 0) {
+          const contentBlocks: (ImageBlockParam | TextBlockParam)[] = [];
 
-            claudeMessages.push({
-              role: "user",
-              content: [
-                {
-                  type: "image",
-                  source: {
-                    type: "base64",
-                    media_type: mediaType,
-                    data: base64Data,
-                  },
+          for (const img of inspoImages) {
+            const matches = img.match(/^data:(image\/[a-z]+);base64,(.+)$/);
+            if (matches) {
+              contentBlocks.push({
+                type: "image",
+                source: {
+                  type: "base64",
+                  media_type: matches[1] as "image/jpeg" | "image/png" | "image/gif" | "image/webp",
+                  data: matches[2],
                 },
-                {
-                  type: "text",
-                  text: msg.content,
-                },
-              ],
-            });
-          } else {
-            claudeMessages.push({
-              role: "user",
-              content: msg.content,
-            });
+              });
+            }
           }
-        } else {
-          claudeMessages.push({
-            role: "user",
-            content: msg.content,
+
+          contentBlocks.push({
+            type: "text",
+            text: msg.content || "Here are my inspiration images. Please design based on these.",
           });
+
+          claudeMessages.push({ role: "user", content: contentBlocks });
+        } else {
+          claudeMessages.push({ role: "user", content: msg.content });
         }
       } else {
-        // Assistant message - only include the text content
-        claudeMessages.push({
-          role: "assistant",
-          content: msg.content,
-        });
+        claudeMessages.push({ role: "assistant", content: msg.content });
       }
     }
 
-    // Add context about current preview if iterating
+    // Inject current preview context for iteration
     if (currentPreview && claudeMessages.length > 0) {
       const lastMessage = claudeMessages[claudeMessages.length - 1];
       if (lastMessage.role === "user" && typeof lastMessage.content === "string") {
-        lastMessage.content = `Current website HTML:\n\`\`\`html\n${currentPreview.substring(0, 2000)}...\n\`\`\`\n\nUser request: ${lastMessage.content}`;
+        lastMessage.content = `[The user currently has a website preview. Here is the current HTML (truncated):\n${currentPreview.substring(0, 6000)}\n]\n\nUser request: ${lastMessage.content}`;
       }
     }
 
-    // Call Claude
     const response = await anthropic.messages.create({
       model: "claude-sonnet-4-20250514",
-      max_tokens: 8192,
+      max_tokens: 16000,
       system: SYSTEM_PROMPT,
       messages: claudeMessages,
     });
 
-    // Extract the response text
     const responseText = response.content
       .filter((block) => block.type === "text")
       .map((block) => (block.type === "text" ? block.text : ""))
       .join("");
 
-    // Try to parse JSON from the response
     let parsedResponse: ChatResponse;
     try {
-      // Try to extract JSON from markdown code blocks if present
-      const jsonMatch = responseText.match(/```json\n([\s\S]+?)\n```/) ||
-                       responseText.match(/```\n([\s\S]+?)\n```/) ||
-                       [null, responseText];
-
-      const jsonText = jsonMatch[1] || responseText;
-      parsedResponse = JSON.parse(jsonText.trim());
-    } catch (parseError) {
-      // If parsing fails, try to extract just the message
-      console.error("Failed to parse JSON:", parseError);
-
-      // Fallback: treat the entire response as a message
-      parsedResponse = {
-        message: responseText || "Give me one more second...",
-      };
+      // Try direct parse first
+      parsedResponse = JSON.parse(responseText.trim());
+    } catch {
+      try {
+        // Try extracting from code blocks
+        const jsonMatch = responseText.match(/```(?:json)?\n?([\s\S]+?)\n?```/);
+        if (jsonMatch) {
+          parsedResponse = JSON.parse(jsonMatch[1].trim());
+        } else {
+          // Try finding JSON object in the text
+          const objMatch = responseText.match(/\{[\s\S]*\}/);
+          if (objMatch) {
+            parsedResponse = JSON.parse(objMatch[0]);
+          } else {
+            parsedResponse = { message: responseText || "Let me try that again..." };
+          }
+        }
+      } catch {
+        parsedResponse = { message: responseText || "Let me try that again..." };
+      }
     }
 
     return new Response(JSON.stringify(parsedResponse), {

@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Paperclip, ArrowUp, X } from "lucide-react";
+import { Paperclip, ArrowUp, X, ImagePlus } from "lucide-react";
 import { TypingIndicator } from "./TypingIndicator";
 
 interface Message {
@@ -18,8 +18,9 @@ interface ChatPanelProps {
   onSend: (text: string) => void;
   onPillClick: (pill: string) => void;
   onImageUpload: (base64: string) => void;
+  onImageRemove: (index: number) => void;
   isGenerating: boolean;
-  inspoImage: string | null;
+  inspoImages: string[];
 }
 
 export function ChatPanel({
@@ -27,8 +28,9 @@ export function ChatPanel({
   onSend,
   onPillClick,
   onImageUpload,
+  onImageRemove,
   isGenerating,
-  inspoImage,
+  inspoImages,
 }: ChatPanelProps) {
   const [input, setInput] = useState("");
   const messagesEndRef = useRef<HTMLDivElement>(null);
@@ -56,19 +58,50 @@ export function ChatPanel({
   };
 
   const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file || !file.type.startsWith("image/")) return;
+    const files = e.target.files;
+    if (!files) return;
 
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      const base64 = reader.result as string;
-      onImageUpload(base64);
-    };
-    reader.readAsDataURL(file);
+    Array.from(files).forEach((file) => {
+      if (!file.type.startsWith("image/")) return;
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        onImageUpload(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    });
+
+    // Reset input so the same files can be selected again
+    e.target.value = "";
+  };
+
+  const handleDrop = (e: React.DragEvent) => {
+    e.preventDefault();
+    const files = e.dataTransfer.files;
+    Array.from(files).forEach((file) => {
+      if (!file.type.startsWith("image/")) return;
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        onImageUpload(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    });
+  };
+
+  const handleDragOver = (e: React.DragEvent) => {
+    e.preventDefault();
   };
 
   return (
-    <div className="flex flex-col h-full bg-zinc-950 border-r border-zinc-700">
+    <div
+      className="flex flex-col h-full bg-zinc-950 border-r border-zinc-700"
+      onDrop={handleDrop}
+      onDragOver={handleDragOver}
+    >
+      {/* Header */}
+      <div className="px-4 py-3 border-b border-zinc-800">
+        <h1 className="text-lg font-semibold text-zinc-100">16s</h1>
+      </div>
+
       {/* Messages area */}
       <div className="flex-1 overflow-y-auto p-4 space-y-4">
         <AnimatePresence>
@@ -85,7 +118,7 @@ export function ChatPanel({
                   message.role === "user"
                     ? "bg-indigo-500 text-white ml-auto max-w-[80%]"
                     : "bg-zinc-900 border border-zinc-700 text-zinc-100"
-                } rounded-xl p-4 animate-fade-in`}
+                } rounded-xl p-4`}
               >
                 <p className="whitespace-pre-wrap">{message.content}</p>
 
@@ -96,7 +129,7 @@ export function ChatPanel({
                       <button
                         key={idx}
                         onClick={() => onPillClick(pill)}
-                        className="px-3 py-1.5 text-sm bg-zinc-800 hover:bg-zinc-700 text-zinc-200 rounded-lg border border-zinc-600 transition-colors"
+                        className="px-3 py-1.5 text-sm bg-zinc-800 hover:bg-zinc-700 text-zinc-200 rounded-full border border-zinc-600 transition-colors"
                       >
                         {pill}
                       </button>
@@ -109,10 +142,10 @@ export function ChatPanel({
                   <div className="mt-3">
                     <button
                       onClick={() => fileInputRef.current?.click()}
-                      className="w-full px-4 py-3 text-sm bg-zinc-800 hover:bg-zinc-700 text-zinc-200 rounded-lg border border-zinc-600 transition-colors flex items-center justify-center gap-2"
+                      className="w-full px-4 py-3 text-sm bg-zinc-800 hover:bg-zinc-700 text-zinc-200 rounded-lg border border-dashed border-zinc-600 transition-colors flex items-center justify-center gap-2"
                     >
-                      <Paperclip className="w-4 h-4" />
-                      Upload inspiration image
+                      <ImagePlus className="w-4 h-4" />
+                      Upload inspiration images
                     </button>
                   </div>
                 )}
@@ -121,7 +154,6 @@ export function ChatPanel({
           ))}
         </AnimatePresence>
 
-        {/* Typing indicator */}
         {isGenerating && (
           <motion.div
             initial={{ opacity: 0, y: 10 }}
@@ -139,29 +171,38 @@ export function ChatPanel({
 
       {/* Input bar */}
       <div className="p-4 border-t border-zinc-800 bg-zinc-950">
-        {/* Image preview */}
-        {inspoImage && (
-          <div className="mb-3 relative inline-block">
-            <img
-              src={inspoImage}
-              alt="Inspiration"
-              className="h-16 rounded-lg border border-zinc-700"
-            />
+        {/* Image previews */}
+        {inspoImages.length > 0 && (
+          <div className="mb-3 flex gap-2 flex-wrap">
+            {inspoImages.map((img, idx) => (
+              <div key={idx} className="relative group">
+                <img
+                  src={img}
+                  alt={`Inspo ${idx + 1}`}
+                  className="h-14 w-14 object-cover rounded-lg border border-zinc-700"
+                />
+                <button
+                  onClick={() => onImageRemove(idx)}
+                  className="absolute -top-1.5 -right-1.5 w-5 h-5 bg-zinc-700 hover:bg-red-500 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
+                >
+                  <X className="w-3 h-3" />
+                </button>
+              </div>
+            ))}
             <button
-              onClick={() => onImageUpload("")}
-              className="absolute -top-2 -right-2 w-5 h-5 bg-zinc-700 hover:bg-zinc-600 rounded-full flex items-center justify-center"
+              onClick={() => fileInputRef.current?.click()}
+              className="h-14 w-14 rounded-lg border border-dashed border-zinc-600 flex items-center justify-center hover:bg-zinc-800 transition-colors"
             >
-              <X className="w-3 h-3" />
+              <ImagePlus className="w-4 h-4 text-zinc-500" />
             </button>
           </div>
         )}
 
         <div className="flex items-center gap-2">
-          {/* Upload button */}
           <button
             onClick={() => fileInputRef.current?.click()}
             className="p-2 hover:bg-zinc-800 rounded-lg transition-colors"
-            title="Upload image"
+            title="Upload inspo images"
           >
             <Paperclip className="w-5 h-5 text-zinc-400" />
           </button>
@@ -169,11 +210,11 @@ export function ChatPanel({
             ref={fileInputRef}
             type="file"
             accept="image/*"
+            multiple
             onChange={handleFileUpload}
             className="hidden"
           />
 
-          {/* Text input */}
           <input
             type="text"
             value={input}
@@ -181,10 +222,9 @@ export function ChatPanel({
             onKeyDown={handleKeyDown}
             placeholder="Type a message..."
             disabled={isGenerating}
-            className="flex-1 bg-zinc-900 border border-zinc-700 rounded-lg px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 disabled:opacity-50"
+            className="flex-1 bg-zinc-900 border border-zinc-700 rounded-lg px-4 py-2.5 text-sm text-zinc-100 placeholder:text-zinc-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 disabled:opacity-50"
           />
 
-          {/* Send button */}
           <button
             onClick={handleSend}
             disabled={!input.trim() || isGenerating}

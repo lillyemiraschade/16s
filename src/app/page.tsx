@@ -5,7 +5,6 @@ import { ChatPanel } from "@/components/chat/ChatPanel";
 import { PreviewPanel } from "@/components/preview/PreviewPanel";
 
 type Viewport = "desktop" | "tablet" | "mobile";
-type ConversationPhase = "greeting" | "gathering" | "vibe" | "inspo" | "generating" | "iterating";
 
 interface Message {
   id: string;
@@ -18,12 +17,11 @@ interface Message {
 export default function HomePage() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [currentPreview, setCurrentPreview] = useState<string | null>(null);
+  const [previewHistory, setPreviewHistory] = useState<string[]>([]);
   const [viewport, setViewport] = useState<Viewport>("desktop");
   const [isGenerating, setIsGenerating] = useState(false);
-  const [inspoImage, setInspoImage] = useState<string | null>(null);
-  const [conversationPhase, setConversationPhase] = useState<ConversationPhase>("greeting");
+  const [inspoImages, setInspoImages] = useState<string[]>([]);
 
-  // Initial greeting
   useEffect(() => {
     setMessages([
       {
@@ -35,7 +33,6 @@ export default function HomePage() {
   }, []);
 
   const handleSendMessage = async (text: string) => {
-    // Add user message
     const userMessage: Message = {
       id: Date.now().toString(),
       role: "user",
@@ -45,26 +42,20 @@ export default function HomePage() {
     setIsGenerating(true);
 
     try {
-      // Call API
       const response = await fetch("/api/chat", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           messages: [...messages, userMessage],
-          inspoImage,
+          inspoImages,
           currentPreview,
         }),
       });
 
-      if (!response.ok) {
-        throw new Error("Failed to get response");
-      }
+      if (!response.ok) throw new Error("Failed to get response");
 
       const data = await response.json();
 
-      // Add AI response
       const aiMessage: Message = {
         id: (Date.now() + 1).toString(),
         role: "assistant",
@@ -74,18 +65,22 @@ export default function HomePage() {
       };
       setMessages((prev) => [...prev, aiMessage]);
 
-      // Update preview if HTML was generated
       if (data.html) {
+        if (currentPreview) {
+          setPreviewHistory((prev) => [...prev, currentPreview]);
+        }
         setCurrentPreview(data.html);
       }
     } catch (error) {
       console.error("Error sending message:", error);
-      const errorMessage: Message = {
-        id: (Date.now() + 1).toString(),
-        role: "assistant",
-        content: "Sorry, something went wrong. Can you try again?",
-      };
-      setMessages((prev) => [...prev, errorMessage]);
+      setMessages((prev) => [
+        ...prev,
+        {
+          id: (Date.now() + 1).toString(),
+          role: "assistant",
+          content: "Sorry, something went wrong. Can you try again?",
+        },
+      ]);
     } finally {
       setIsGenerating(false);
     }
@@ -96,34 +91,43 @@ export default function HomePage() {
   };
 
   const handleImageUpload = (base64: string) => {
-    setInspoImage(base64 || null);
+    setInspoImages((prev) => [...prev, base64]);
   };
 
-  const handleViewportChange = (newViewport: Viewport) => {
-    setViewport(newViewport);
+  const handleImageRemove = (index: number) => {
+    setInspoImages((prev) => prev.filter((_, i) => i !== index));
+  };
+
+  const handleBack = () => {
+    if (previewHistory.length > 0) {
+      const prev = [...previewHistory];
+      const last = prev.pop()!;
+      setPreviewHistory(prev);
+      setCurrentPreview(last);
+    }
   };
 
   return (
     <div className="flex h-screen overflow-hidden">
-      {/* Chat panel - 1/3 width */}
-      <div className="w-1/3">
+      <div className="w-1/3 min-w-[360px]">
         <ChatPanel
           messages={messages}
           onSend={handleSendMessage}
           onPillClick={handlePillClick}
           onImageUpload={handleImageUpload}
+          onImageRemove={handleImageRemove}
           isGenerating={isGenerating}
-          inspoImage={inspoImage}
+          inspoImages={inspoImages}
         />
       </div>
-
-      {/* Preview panel - 2/3 width */}
       <div className="flex-1">
         <PreviewPanel
           html={currentPreview}
           viewport={viewport}
-          onViewportChange={handleViewportChange}
+          onViewportChange={setViewport}
           isGenerating={isGenerating}
+          canGoBack={previewHistory.length > 0}
+          onBack={handleBack}
         />
       </div>
     </div>
