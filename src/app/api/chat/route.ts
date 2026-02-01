@@ -181,7 +181,8 @@ export async function POST(req: Request) {
     });
   } catch (error) {
     const errMsg = error instanceof Error ? error.message : String(error);
-    console.error("Chat API error:", errMsg);
+    const errStack = error instanceof Error ? error.stack : "";
+    console.error("Chat API error:", errMsg, errStack);
 
     const isCredits = errMsg.includes("credit balance");
     return new Response(
@@ -189,6 +190,7 @@ export async function POST(req: Request) {
         message: isCredits
           ? "Looks like the AI service needs its credits topped up. The team is on it!"
           : "Give me one more second...",
+        _debug: errMsg,
       }),
       {
         status: 200,
