@@ -48,11 +48,14 @@ export default function HomePage() {
 
     try {
 
+      // Strip images from message history to avoid huge payloads
+      const cleanMessages = [...messages, userMessage].map(({ images, ...rest }) => rest);
+
       const response = await fetch("/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          messages: [...messages, userMessage],
+          messages: cleanMessages,
           inspoImages: imagesToSend,
           currentPreview,
         }),
