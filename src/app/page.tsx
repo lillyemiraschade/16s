@@ -12,6 +12,7 @@ interface Message {
   content: string;
   pills?: string[];
   showUpload?: boolean;
+  images?: string[];
 }
 
 export default function HomePage() {
@@ -33,21 +34,26 @@ export default function HomePage() {
   }, []);
 
   const handleSendMessage = async (text: string) => {
+    const imagesToSend = [...inspoImages];
+    setInspoImages([]);
+
     const userMessage: Message = {
       id: Date.now().toString(),
       role: "user",
       content: text,
+      images: imagesToSend.length > 0 ? imagesToSend : undefined,
     };
     setMessages((prev) => [...prev, userMessage]);
     setIsGenerating(true);
 
     try {
+
       const response = await fetch("/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           messages: [...messages, userMessage],
-          inspoImages,
+          inspoImages: imagesToSend,
           currentPreview,
         }),
       });

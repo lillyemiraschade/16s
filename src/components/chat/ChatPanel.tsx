@@ -11,6 +11,7 @@ interface Message {
   content: string;
   pills?: string[];
   showUpload?: boolean;
+  images?: string[];
 }
 
 interface ChatPanelProps {
@@ -45,8 +46,8 @@ export function ChatPanel({
   }, [messages, isGenerating]);
 
   const handleSend = () => {
-    if (!input.trim() || isGenerating) return;
-    onSend(input);
+    if ((!input.trim() && inspoImages.length === 0) || isGenerating) return;
+    onSend(input.trim() || "Here are my inspiration images. Please design based on these.");
     setInput("");
   };
 
@@ -120,6 +121,18 @@ export function ChatPanel({
                     : "bg-zinc-900 border border-zinc-700 text-zinc-100"
                 } rounded-xl p-4`}
               >
+                {message.images && message.images.length > 0 && (
+                  <div className="flex flex-wrap gap-2 mb-2">
+                    {message.images.map((img, idx) => (
+                      <img
+                        key={idx}
+                        src={img}
+                        alt={`Inspo ${idx + 1}`}
+                        className="h-20 w-20 object-cover rounded-lg border border-zinc-600"
+                      />
+                    ))}
+                  </div>
+                )}
                 <p className="whitespace-pre-wrap">{message.content}</p>
 
                 {/* Pills */}
@@ -227,7 +240,7 @@ export function ChatPanel({
 
           <button
             onClick={handleSend}
-            disabled={!input.trim() || isGenerating}
+            disabled={(!input.trim() && inspoImages.length === 0) || isGenerating}
             className="p-2 bg-indigo-500 hover:bg-indigo-600 disabled:bg-zinc-700 disabled:cursor-not-allowed rounded-full transition-colors"
           >
             <ArrowUp className="w-5 h-5 text-white" />
