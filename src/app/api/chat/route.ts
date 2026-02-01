@@ -182,10 +182,13 @@ export async function POST(req: Request) {
       headers: { "Content-Type": "application/json" },
     });
   } catch (error) {
-    console.error("Chat API error:", error);
+    const errMsg = error instanceof Error ? error.message : String(error);
+    const errStack = error instanceof Error ? error.stack : "";
+    console.error("Chat API error:", errMsg, errStack);
     return new Response(
       JSON.stringify({
-        message: "Give me one more second...",
+        message: `Something went wrong — ${errMsg}`,
+        _debug: errStack,
       }),
       {
         status: 200,
