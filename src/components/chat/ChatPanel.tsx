@@ -34,6 +34,7 @@ export function ChatPanel({
   inspoImages,
 }: ChatPanelProps) {
   const [input, setInput] = useState("");
+  const [isDragging, setIsDragging] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -117,55 +118,80 @@ export function ChatPanel({
 
   const handleDrop = (e: React.DragEvent) => {
     e.preventDefault();
+    setIsDragging(false);
     processFiles(e.dataTransfer.files);
   };
 
   const handleDragOver = (e: React.DragEvent) => {
     e.preventDefault();
+    setIsDragging(true);
+  };
+
+  const handleDragLeave = (e: React.DragEvent) => {
+    e.preventDefault();
+    setIsDragging(false);
   };
 
   return (
     <div
-      className="flex flex-col h-full bg-zinc-950 border-r border-zinc-700"
+      className="flex flex-col h-full bg-[#0a0a0b] border-r border-zinc-800/80"
       onDrop={handleDrop}
       onDragOver={handleDragOver}
+      onDragLeave={handleDragLeave}
     >
       {/* Header */}
-      <div className="px-4 py-3 border-b border-zinc-800">
-        <h1 className="text-lg font-semibold text-zinc-100">16s</h1>
+      <div className="px-5 py-4 border-b border-zinc-800/80">
+        <div className="flex items-center gap-2.5">
+          <div className="w-7 h-7 rounded-lg bg-indigo-500 flex items-center justify-center">
+            <span className="text-white text-xs font-bold tracking-tight">16</span>
+          </div>
+          <span className="text-[15px] font-semibold text-zinc-100 tracking-[-0.01em]">16s</span>
+        </div>
       </div>
 
       {/* Messages area */}
-      <div className="flex-1 overflow-y-auto p-4 space-y-4">
+      <div className="flex-1 overflow-y-auto px-5 py-5 space-y-5">
+        {/* Drag overlay */}
+        {isDragging && (
+          <div className="absolute inset-0 z-10 bg-indigo-500/5 border-2 border-dashed border-indigo-500/30 rounded-xl flex items-center justify-center backdrop-blur-sm">
+            <div className="text-center">
+              <ImagePlus className="w-8 h-8 text-indigo-400 mx-auto mb-2" />
+              <p className="text-sm text-indigo-300 font-medium">Drop images here</p>
+            </div>
+          </div>
+        )}
+
         <AnimatePresence>
           {messages.map((message) => (
             <motion.div
               key={message.id}
-              initial={{ opacity: 0, y: 10 }}
+              initial={{ opacity: 0, y: 8 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0 }}
+              transition={{ duration: 0.2, ease: "easeOut" }}
               className={`flex ${message.role === "user" ? "justify-end" : "justify-start"}`}
             >
               <div
                 className={`${
                   message.role === "user"
-                    ? "bg-indigo-500 text-white ml-auto max-w-[80%]"
-                    : "bg-zinc-900 border border-zinc-700 text-zinc-100"
-                } rounded-xl p-4`}
+                    ? "bg-indigo-500/90 text-white ml-auto max-w-[85%]"
+                    : "bg-zinc-900/80 border border-zinc-800/80 text-zinc-200 max-w-[90%]"
+                } rounded-2xl px-4 py-3`}
               >
+                {/* Attached images */}
                 {message.images && message.images.length > 0 && (
-                  <div className="flex flex-wrap gap-2 mb-2">
+                  <div className="flex flex-wrap gap-1.5 mb-2.5">
                     {message.images.map((img, idx) => (
                       <img
                         key={idx}
                         src={img}
                         alt={`Inspo ${idx + 1}`}
-                        className="h-20 w-20 object-cover rounded-lg border border-zinc-600"
+                        className="h-16 w-16 object-cover rounded-lg"
                       />
                     ))}
                   </div>
                 )}
-                <p className="whitespace-pre-wrap">{message.content}</p>
+                <p className="text-[14px] leading-relaxed whitespace-pre-wrap">{message.content}</p>
 
                 {/* Pills */}
                 {message.pills && message.pills.length > 0 && (
@@ -174,7 +200,7 @@ export function ChatPanel({
                       <button
                         key={idx}
                         onClick={() => onPillClick(pill)}
-                        className="px-3 py-1.5 text-sm bg-zinc-800 hover:bg-zinc-700 text-zinc-200 rounded-full border border-zinc-600 transition-colors"
+                        className="px-3.5 py-1.5 text-[13px] font-medium bg-zinc-800/80 hover:bg-zinc-700/80 text-zinc-200 rounded-full border border-zinc-700/60 transition-all duration-150 hover:border-zinc-600"
                       >
                         {pill}
                       </button>
@@ -187,7 +213,7 @@ export function ChatPanel({
                   <div className="mt-3">
                     <button
                       onClick={() => fileInputRef.current?.click()}
-                      className="w-full px-4 py-3 text-sm bg-zinc-800 hover:bg-zinc-700 text-zinc-200 rounded-lg border border-dashed border-zinc-600 transition-colors flex items-center justify-center gap-2"
+                      className="w-full px-4 py-3 text-[13px] font-medium bg-zinc-800/60 hover:bg-zinc-800 text-zinc-300 rounded-xl border border-dashed border-zinc-700/60 transition-all duration-150 flex items-center justify-center gap-2 hover:border-zinc-600"
                     >
                       <ImagePlus className="w-4 h-4" />
                       Upload inspiration images
@@ -201,11 +227,12 @@ export function ChatPanel({
 
         {isGenerating && (
           <motion.div
-            initial={{ opacity: 0, y: 10 }}
+            initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.2 }}
             className="flex justify-start"
           >
-            <div className="bg-zinc-900 border border-zinc-700 rounded-xl px-4 py-2">
+            <div className="bg-zinc-900/80 border border-zinc-800/80 rounded-2xl px-4 py-3">
               <TypingIndicator />
             </div>
           </motion.div>
@@ -215,7 +242,7 @@ export function ChatPanel({
       </div>
 
       {/* Input bar */}
-      <div className="p-4 border-t border-zinc-800 bg-zinc-950">
+      <div className="px-5 pb-5 pt-3">
         {/* Image previews */}
         {inspoImages.length > 0 && (
           <div className="mb-3 flex gap-2 flex-wrap">
@@ -224,32 +251,32 @@ export function ChatPanel({
                 <img
                   src={img}
                   alt={`Inspo ${idx + 1}`}
-                  className="h-14 w-14 object-cover rounded-lg border border-zinc-700"
+                  className="h-14 w-14 object-cover rounded-lg ring-1 ring-zinc-700/50"
                 />
                 <button
                   onClick={() => onImageRemove(idx)}
-                  className="absolute -top-1.5 -right-1.5 w-5 h-5 bg-zinc-700 hover:bg-red-500 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
+                  className="absolute -top-1.5 -right-1.5 w-5 h-5 bg-zinc-800 hover:bg-red-500 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-150 ring-1 ring-zinc-700/50"
                 >
-                  <X className="w-3 h-3" />
+                  <X className="w-3 h-3 text-zinc-300" />
                 </button>
               </div>
             ))}
             <button
               onClick={() => fileInputRef.current?.click()}
-              className="h-14 w-14 rounded-lg border border-dashed border-zinc-600 flex items-center justify-center hover:bg-zinc-800 transition-colors"
+              className="h-14 w-14 rounded-lg border border-dashed border-zinc-700/50 flex items-center justify-center hover:bg-zinc-900/80 transition-colors"
             >
               <ImagePlus className="w-4 h-4 text-zinc-500" />
             </button>
           </div>
         )}
 
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 bg-zinc-900/60 border border-zinc-800/80 rounded-xl px-3 py-2 focus-within:border-indigo-500/40 transition-colors">
           <button
             onClick={() => fileInputRef.current?.click()}
-            className="p-2 hover:bg-zinc-800 rounded-lg transition-colors"
+            className="p-1.5 hover:bg-zinc-800/80 rounded-lg transition-colors flex-shrink-0"
             title="Upload inspo images"
           >
-            <Paperclip className="w-5 h-5 text-zinc-400" />
+            <Paperclip className="w-4 h-4 text-zinc-500" />
           </button>
           <input
             ref={fileInputRef}
@@ -265,17 +292,17 @@ export function ChatPanel({
             value={input}
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={handleKeyDown}
-            placeholder="Type a message..."
+            placeholder="Describe what you want to build..."
             disabled={isGenerating}
-            className="flex-1 bg-zinc-900 border border-zinc-700 rounded-lg px-4 py-2.5 text-sm text-zinc-100 placeholder:text-zinc-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 disabled:opacity-50"
+            className="flex-1 bg-transparent text-[14px] text-zinc-100 placeholder:text-zinc-600 focus:outline-none disabled:opacity-40"
           />
 
           <button
             onClick={handleSend}
             disabled={(!input.trim() && inspoImages.length === 0) || isGenerating}
-            className="p-2 bg-indigo-500 hover:bg-indigo-600 disabled:bg-zinc-700 disabled:cursor-not-allowed rounded-full transition-colors"
+            className="p-1.5 bg-indigo-500 hover:bg-indigo-400 disabled:bg-zinc-800 disabled:cursor-not-allowed rounded-lg transition-all duration-150 flex-shrink-0"
           >
-            <ArrowUp className="w-5 h-5 text-white" />
+            <ArrowUp className="w-4 h-4 text-white" />
           </button>
         </div>
       </div>
