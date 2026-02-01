@@ -6,8 +6,8 @@ import { Providers } from "@/components/layout/Providers";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "16s - AI Development Team",
-  description: "Build software with your AI-powered development team",
+  title: "16s | AI Cybersecurity Builder",
+  description: "Build secure applications with your AI-powered security team",
 };
 
 export default function RootLayout({

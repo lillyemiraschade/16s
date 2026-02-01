@@ -1,7 +1,5 @@
 import { NextResponse } from "next/server";
-import { getServerSession } from "next-auth";
 import { z } from "zod";
-import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/db";
 
 const createSchema = z.object({
@@ -12,15 +10,12 @@ const createSchema = z.object({
   techStack: z.string().optional(),
 });
 
-export async function GET() {
-  const session = await getServerSession(authOptions);
-  if (!session?.user) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-  }
+// Demo user ID for the no-auth version
+const DEMO_USER_ID = "demo-user";
 
-  const userId = (session.user as { id: string }).id;
+export async function GET() {
   const projects = await prisma.project.findMany({
-    where: { userId },
+    where: { userId: DEMO_USER_ID },
     orderBy: { updatedAt: "desc" },
   });
 
@@ -28,18 +23,12 @@ export async function GET() {
 }
 
 export async function POST(req: Request) {
-  const session = await getServerSession(authOptions);
-  if (!session?.user) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-  }
-
   try {
     const body = await req.json();
     const data = createSchema.parse(body);
-    const userId = (session.user as { id: string }).id;
 
     const project = await prisma.project.create({
-      data: { ...data, userId },
+      data: { ...data, userId: DEMO_USER_ID },
     });
 
     return NextResponse.json(project, { status: 201 });

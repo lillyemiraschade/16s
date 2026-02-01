@@ -1,21 +1,16 @@
 import { NextResponse } from "next/server";
-import { getServerSession } from "next-auth";
 import JSZip from "jszip";
-import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/db";
 
-export async function POST(req: Request) {
-  const session = await getServerSession(authOptions);
-  if (!session?.user) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-  }
+// Demo user ID for the no-auth version
+const DEMO_USER_ID = "demo-user";
 
+export async function POST(req: Request) {
   try {
     const { projectId } = await req.json();
-    const userId = (session.user as { id: string }).id;
 
     const project = await prisma.project.findFirst({
-      where: { id: projectId, userId },
+      where: { id: projectId, userId: DEMO_USER_ID },
       include: { codeFiles: true },
     });
 
