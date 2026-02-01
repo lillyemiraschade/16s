@@ -2,7 +2,7 @@ import { anthropic } from "@/lib/ai/anthropic";
 import { MessageParam, ImageBlockParam, TextBlockParam } from "@anthropic-ai/sdk/resources/messages";
 
 export const runtime = "nodejs";
-export const maxDuration = 60;
+export const maxDuration = 120;
 
 interface ChatRequest {
   messages: Array<{
@@ -139,56 +139,85 @@ export async function POST(req: Request) {
       }
     }
 
-    const response = await anthropic.messages.create({
+    // Use streaming to avoid Vercel function timeout
+    const stream = anthropic.messages.stream({
       model: "claude-sonnet-4-20250514",
       max_tokens: 16000,
       system: SYSTEM_PROMPT,
       messages: claudeMessages,
     });
 
-    const responseText = response.content
-      .filter((block) => block.type === "text")
-      .map((block) => (block.type === "text" ? block.text : ""))
-      .join("");
-
-    let parsedResponse: ChatResponse;
-    try {
-      // Try direct parse first
-      parsedResponse = JSON.parse(responseText.trim());
-    } catch {
-      try {
-        // Try extracting from code blocks
-        const jsonMatch = responseText.match(/```(?:json)?\n?([\s\S]+?)\n?```/);
-        if (jsonMatch) {
-          parsedResponse = JSON.parse(jsonMatch[1].trim());
-        } else {
-          // Try finding JSON object in the text
-          const objMatch = responseText.match(/\{[\s\S]*\}/);
-          if (objMatch) {
-            parsedResponse = JSON.parse(objMatch[0]);
-          } else {
-            parsedResponse = { message: responseText || "Let me try that again..." };
+    const encoder = new TextEncoder();
+    const readable = new ReadableStream({
+      async start(controller) {
+        try {
+          let fullText = "";
+          for await (const event of stream) {
+            if (event.type === "content_block_delta" && event.delta.type === "text_delta") {
+              fullText += event.delta.text;
+              // Send keepalive chunks so Vercel doesn't kill the connection
+              controller.enqueue(encoder.encode(" "));
+            }
           }
-        }
-      } catch {
-        parsedResponse = { message: responseText || "Let me try that again..." };
-      }
-    }
 
-    return new Response(JSON.stringify(parsedResponse), {
+          // Parse the complete response
+          let parsedResponse: ChatResponse;
+          try {
+            parsedResponse = JSON.parse(fullText.trim());
+          } catch {
+            try {
+              const jsonMatch = fullText.match(/```(?:json)?\n?([\s\S]+?)\n?```/);
+              if (jsonMatch) {
+                parsedResponse = JSON.parse(jsonMatch[1].trim());
+              } else {
+                const objMatch = fullText.match(/\{[\s\S]*\}/);
+                if (objMatch) {
+                  parsedResponse = JSON.parse(objMatch[0]);
+                } else {
+                  parsedResponse = { message: fullText || "Let me try that again..." };
+                }
+              }
+            } catch {
+              parsedResponse = { message: fullText || "Let me try that again..." };
+            }
+          }
+
+          // Send the final JSON
+          controller.enqueue(encoder.encode("\n" + JSON.stringify(parsedResponse)));
+          controller.close();
+        } catch (error) {
+          const errMsg = error instanceof Error ? error.message : String(error);
+          console.error("Stream error:", errMsg);
+          const isCredits = errMsg.includes("credit balance");
+          controller.enqueue(
+            encoder.encode(
+              "\n" +
+                JSON.stringify({
+                  message: isCredits
+                    ? "Looks like the AI service needs its credits topped up. The team is on it!"
+                    : "Give me one more second...",
+                })
+            )
+          );
+          controller.close();
+        }
+      },
+    });
+
+    return new Response(readable, {
       status: 200,
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "text/plain; charset=utf-8",
+        "Transfer-Encoding": "chunked",
+      },
     });
   } catch (error) {
     const errMsg = error instanceof Error ? error.message : String(error);
     console.error("Chat API error:", errMsg);
 
-    const isCredits = errMsg.includes("credit balance");
     return new Response(
       JSON.stringify({
-        message: isCredits
-          ? "Looks like the AI service needs its credits topped up. The team is on it!"
-          : "Give me one more second...",
+        message: "Give me one more second...",
       }),
       {
         status: 200,

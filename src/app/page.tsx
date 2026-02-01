@@ -63,7 +63,9 @@ export default function HomePage() {
 
       if (!response.ok) throw new Error("Failed to get response");
 
-      const data = await response.json();
+      // Read streamed response - JSON is on the last line after spaces
+      const text = await response.text();
+      const data = JSON.parse(text.trim());
 
       const aiMessage: Message = {
         id: (Date.now() + 1).toString(),
