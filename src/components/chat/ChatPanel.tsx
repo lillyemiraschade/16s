@@ -58,34 +58,48 @@ export function ChatPanel({
     }
   };
 
+  const compressImage = (file: File): Promise<string> => {
+    return new Promise((resolve) => {
+      const img = new Image();
+      const url = URL.createObjectURL(file);
+      img.onload = () => {
+        URL.revokeObjectURL(url);
+        const canvas = document.createElement("canvas");
+        const MAX = 1200;
+        let w = img.width;
+        let h = img.height;
+        if (w > MAX || h > MAX) {
+          if (w > h) { h = Math.round(h * MAX / w); w = MAX; }
+          else { w = Math.round(w * MAX / h); h = MAX; }
+        }
+        canvas.width = w;
+        canvas.height = h;
+        const ctx = canvas.getContext("2d")!;
+        ctx.drawImage(img, 0, 0, w, h);
+        resolve(canvas.toDataURL("image/jpeg", 0.7));
+      };
+      img.src = url;
+    });
+  };
+
+  const processFiles = (files: FileList | File[]) => {
+    Array.from(files).forEach(async (file) => {
+      if (!file.type.startsWith("image/")) return;
+      const compressed = await compressImage(file);
+      onImageUpload(compressed);
+    });
+  };
+
   const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
     if (!files) return;
-
-    Array.from(files).forEach((file) => {
-      if (!file.type.startsWith("image/")) return;
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        onImageUpload(reader.result as string);
-      };
-      reader.readAsDataURL(file);
-    });
-
-    // Reset input so the same files can be selected again
+    processFiles(files);
     e.target.value = "";
   };
 
   const handleDrop = (e: React.DragEvent) => {
     e.preventDefault();
-    const files = e.dataTransfer.files;
-    Array.from(files).forEach((file) => {
-      if (!file.type.startsWith("image/")) return;
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        onImageUpload(reader.result as string);
-      };
-      reader.readAsDataURL(file);
-    });
+    processFiles(e.dataTransfer.files);
   };
 
   const handleDragOver = (e: React.DragEvent) => {
