@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Monitor, Tablet, Smartphone, Loader2, RotateCcw } from "lucide-react";
+import { Monitor, Tablet, Smartphone, Loader2, ChevronLeft, ChevronRight, RotateCcw } from "lucide-react";
 
 type Viewport = "desktop" | "tablet" | "mobile";
 
@@ -32,17 +32,30 @@ export function PreviewPanel({
     <div className="flex flex-col h-full bg-[#0c0c0d]">
       {/* Top bar */}
       <div className="flex items-center justify-between px-4 py-2.5 border-b border-zinc-800/80 bg-[#0a0a0b]">
-        {/* Undo / previous version */}
-        <div className="w-28">
-          {canGoBack && (
-            <button
-              onClick={onBack}
-              className="flex items-center gap-1.5 px-3 py-1.5 text-[13px] font-medium text-zinc-400 hover:text-zinc-200 bg-zinc-900/80 hover:bg-zinc-800 rounded-lg border border-zinc-800/80 transition-all duration-150"
-            >
-              <RotateCcw className="w-3.5 h-3.5" />
-              Undo
-            </button>
-          )}
+        {/* Browser nav buttons */}
+        <div className="flex items-center gap-1">
+          <button
+            onClick={onBack}
+            disabled={!canGoBack}
+            className="p-1.5 rounded-md text-zinc-500 hover:text-zinc-300 disabled:text-zinc-700 disabled:cursor-not-allowed transition-colors"
+            title="Back"
+          >
+            <ChevronLeft className="w-4 h-4" />
+          </button>
+          <button
+            disabled
+            className="p-1.5 rounded-md text-zinc-700 cursor-not-allowed"
+            title="Forward"
+          >
+            <ChevronRight className="w-4 h-4" />
+          </button>
+          <button
+            disabled
+            className="p-1.5 rounded-md text-zinc-700 cursor-not-allowed"
+            title="Reload"
+          >
+            <RotateCcw className="w-3.5 h-3.5" />
+          </button>
         </div>
 
         {/* Viewport toggles */}
@@ -66,7 +79,7 @@ export function PreviewPanel({
           })}
         </div>
 
-        <div className="w-28" />
+        <div className="w-[88px]" />
       </div>
 
       {/* Preview area */}
