@@ -160,7 +160,7 @@ export function ChatPanel({
       </div>
 
       {/* Messages area */}
-      <div className="flex-1 overflow-y-auto px-5 py-5 space-y-5">
+      <div className="flex-1 overflow-y-auto px-5 py-5 space-y-5 relative" role="log" aria-label="Conversation" aria-live="polite">
         {/* Drag overlay */}
         {isDragging && (
           <div className="absolute inset-0 z-10 bg-indigo-500/5 border-2 border-dashed border-indigo-500/30 rounded-xl flex items-center justify-center backdrop-blur-sm">
@@ -304,6 +304,8 @@ export function ChatPanel({
             onKeyDown={handleKeyDown}
             placeholder="Describe what you want to build..."
             disabled={isGenerating}
+            aria-label="Message input"
+            autoComplete="off"
             className="flex-1 bg-transparent text-[14px] text-zinc-100 placeholder:text-zinc-600 focus:outline-none disabled:opacity-40"
           />
 

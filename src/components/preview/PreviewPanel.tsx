@@ -158,9 +158,10 @@ export function PreviewPanel({
             >
               <iframe
                 srcDoc={html}
-                sandbox="allow-scripts"
+                sandbox="allow-scripts allow-same-origin"
                 className="w-full h-full border-0"
                 title="Website Preview"
+                aria-label="Generated website preview"
               />
             </motion.div>
           </motion.div>

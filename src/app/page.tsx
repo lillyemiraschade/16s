@@ -137,8 +137,8 @@ export default function HomePage() {
   }, []);
 
   return (
-    <div className="flex h-screen overflow-hidden">
-      <div className="w-1/3 min-w-[360px]">
+    <div id="main-content" className="flex h-screen overflow-hidden">
+      <nav className="w-1/3 min-w-[360px]" aria-label="Chat">
         <ChatPanel
           messages={messages}
           onSend={handleSendMessage}
@@ -149,8 +149,8 @@ export default function HomePage() {
           inspoImages={inspoImages}
           onNewProject={handleNewProject}
         />
-      </div>
-      <div className="flex-1">
+      </nav>
+      <main className="flex-1" aria-label="Preview">
         <PreviewPanel
           html={currentPreview}
           viewport={viewport}
@@ -160,7 +160,7 @@ export default function HomePage() {
           onBack={handleBack}
           onExport={handleExport}
         />
-      </div>
+      </main>
     </div>
   );
 }
