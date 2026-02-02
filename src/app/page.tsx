@@ -121,7 +121,10 @@ export default function HomePage() {
         if (currentPreview) {
           setPreviewHistory((prev) => [...prev, currentPreview]);
         }
-        setCurrentPreview(data.html);
+        // Inject navigation guard to keep all clicks inside iframe
+        const navGuard = `<script>document.addEventListener('click',function(e){var a=e.target.closest('a');if(a){var h=a.getAttribute('href');if(!h||h==='#'||h==='/'||h.startsWith('#')){e.preventDefault();}}},true);</script>`;
+        const safeHtml = data.html.replace(/<head([^>]*)>/i, `<head$1>${navGuard}`);
+        setCurrentPreview(safeHtml);
       }
     } catch (error) {
       console.error("Error sending message:", error);
