@@ -11,7 +11,7 @@ interface Message {
   role: "user" | "assistant";
   content: string;
   pills?: string[];
-  showUpload?: boolean;
+  showUpload?: boolean | string;
   images?: string[];
 }
 

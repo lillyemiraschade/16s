@@ -11,7 +11,7 @@ interface Message {
   role: "user" | "assistant";
   content: string;
   pills?: string[];
-  showUpload?: boolean;
+  showUpload?: boolean | string;
   images?: string[];
 }
 
@@ -273,7 +273,7 @@ export function ChatPanel({
                       className="w-full px-4 py-3 text-[13px] font-medium bg-zinc-800/60 hover:bg-zinc-800 text-zinc-300 rounded-xl border border-dashed border-zinc-700/60 transition-all duration-150 flex items-center justify-center gap-2 hover:border-zinc-600"
                     >
                       <ImagePlus className="w-4 h-4" />
-                      Upload inspiration images
+                      {typeof message.showUpload === "string" ? message.showUpload : "Upload inspiration images"}
                     </button>
                   </div>
                 )}
@@ -336,7 +336,7 @@ export function ChatPanel({
           <button
             onClick={() => fileInputRef.current?.click()}
             className="p-1.5 hover:bg-zinc-800/80 rounded-lg transition-colors flex-shrink-0"
-            title="Upload inspo images"
+            title="Upload images"
           >
             <Paperclip className="w-4 h-4 text-zinc-500" />
           </button>

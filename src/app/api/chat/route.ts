@@ -10,7 +10,7 @@ interface ChatRequest {
     role: "user" | "assistant";
     content: string;
     pills?: string[];
-    showUpload?: boolean;
+    showUpload?: boolean | string;
   }>;
   inspoImages: string[];
   currentPreview: string | null;
@@ -19,7 +19,7 @@ interface ChatRequest {
 interface ChatResponse {
   message: string;
   pills?: string[];
-  showUpload?: boolean;
+  showUpload?: boolean | string;
   html?: string;
 }
 
@@ -52,7 +52,8 @@ Always respond with valid JSON (no markdown code blocks, just raw JSON):
   "html": "<!DOCTYPE html>..."
 }
 
-Only include pills when offering choices. Only include showUpload when asking for inspo. Only include html when generating or updating a website.
+Only include pills when offering choices. Only include html when generating or updating a website.
+showUpload can be true (shows "Upload inspiration images") or a custom string label like "Upload your logo" or "Upload photos of your work" — use the label that matches what you're asking for. Only include showUpload when you need the user to upload images.
 
 WHEN GENERATING HTML - THIS IS CRITICAL:
 - Generate a COMPLETE website - NOT just a homepage
@@ -160,6 +161,13 @@ When inspo images are uploaded, skip ALL style questions. The images answer ever
 
 PAGE ROUTING PATTERN (use this in every generated site):
 Use a simple JS router where clicking nav links shows/hides page sections. Each "page" is a <section> with display:none by default, and the router shows the active one. Include a showPage() function and wire up all nav links. Make sure the initial page is "home".
+
+UNBUILT BUTTONS AND LINKS — IMPORTANT:
+- Every button and link in the generated site must DO something. No dead links.
+- CTA buttons like "Book Now", "Get Started", "Sign Up", "Contact Us", "Learn More" etc. should navigate to the relevant page (e.g. "Book Now" → contact page, "Learn More" → about page)
+- If a feature isn't fully built (e.g. a booking form, login, cart), the button should navigate to the home page using showPage('home') — NEVER link to an external URL or a broken page
+- Social media icon links: if the user provided their social links, use those. If not, use "#" as the href so they don't navigate anywhere
+- Every nav link must go to a real page section that exists in the document
 
 CRITICAL - NAVIGATION WITHIN THE SITE:
 - The navigation bar must be ALWAYS visible (fixed or sticky at top) on every page
