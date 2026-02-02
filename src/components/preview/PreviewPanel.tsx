@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Monitor, Tablet, Smartphone, Loader2, ChevronLeft, ChevronRight, RotateCcw } from "lucide-react";
+import { Monitor, Tablet, Smartphone, Loader2, ChevronLeft, ChevronRight, RotateCcw, Download } from "lucide-react";
 
 type Viewport = "desktop" | "tablet" | "mobile";
 
@@ -12,6 +12,7 @@ interface PreviewPanelProps {
   isGenerating: boolean;
   canGoBack: boolean;
   onBack: () => void;
+  onExport: () => void;
 }
 
 const viewportConfig = {
@@ -27,6 +28,7 @@ export function PreviewPanel({
   isGenerating,
   canGoBack,
   onBack,
+  onExport,
 }: PreviewPanelProps) {
   return (
     <div className="flex flex-col h-full bg-[#0c0c0d]">
@@ -79,7 +81,18 @@ export function PreviewPanel({
           })}
         </div>
 
-        <div className="w-[88px]" />
+        <div className="w-[88px] flex justify-end">
+          {html && !isGenerating && (
+            <button
+              onClick={onExport}
+              className="flex items-center gap-1.5 px-2.5 py-1.5 text-[12px] font-medium text-zinc-400 hover:text-zinc-200 bg-zinc-900/60 hover:bg-zinc-800 rounded-lg border border-zinc-800/60 transition-all duration-150"
+              title="Download HTML"
+            >
+              <Download className="w-3.5 h-3.5" />
+              Export
+            </button>
+          )}
+        </div>
       </div>
 
       {/* Preview area */}

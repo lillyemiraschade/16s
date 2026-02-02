@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Paperclip, ArrowUp, X, ImagePlus } from "lucide-react";
+import { Paperclip, ArrowUp, X, ImagePlus, Plus } from "lucide-react";
 import { TypingIndicator } from "./TypingIndicator";
 
 interface Message {
@@ -22,6 +22,7 @@ interface ChatPanelProps {
   onImageRemove: (index: number) => void;
   isGenerating: boolean;
   inspoImages: string[];
+  onNewProject: () => void;
 }
 
 export function ChatPanel({
@@ -32,6 +33,7 @@ export function ChatPanel({
   onImageRemove,
   isGenerating,
   inspoImages,
+  onNewProject,
 }: ChatPanelProps) {
   const [input, setInput] = useState("");
   const [isDragging, setIsDragging] = useState(false);
@@ -140,13 +142,21 @@ export function ChatPanel({
       onDragLeave={handleDragLeave}
     >
       {/* Header */}
-      <div className="px-5 py-4 border-b border-zinc-800/80">
+      <div className="px-5 py-4 border-b border-zinc-800/80 flex items-center justify-between">
         <div className="flex items-center gap-2.5">
           <div className="w-7 h-7 rounded-lg bg-indigo-500 flex items-center justify-center">
             <span className="text-white text-xs font-bold tracking-tight">16</span>
           </div>
           <span className="text-[15px] font-semibold text-zinc-100 tracking-[-0.01em]">16s</span>
         </div>
+        <button
+          onClick={onNewProject}
+          className="flex items-center gap-1.5 px-2.5 py-1.5 text-[12px] font-medium text-zinc-400 hover:text-zinc-200 bg-zinc-900/60 hover:bg-zinc-800 rounded-lg border border-zinc-800/60 transition-all duration-150"
+          title="New project"
+        >
+          <Plus className="w-3.5 h-3.5" />
+          New
+        </button>
       </div>
 
       {/* Messages area */}

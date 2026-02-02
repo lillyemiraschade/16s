@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { ChatPanel } from "@/components/chat/ChatPanel";
 import { PreviewPanel } from "@/components/preview/PreviewPanel";
 
@@ -15,6 +15,12 @@ interface Message {
   images?: string[];
 }
 
+const INITIAL_MESSAGE: Message = {
+  id: "initial",
+  role: "assistant",
+  content: "Hey! What are we building today?",
+};
+
 export default function HomePage() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [currentPreview, setCurrentPreview] = useState<string | null>(null);
@@ -24,13 +30,7 @@ export default function HomePage() {
   const [inspoImages, setInspoImages] = useState<string[]>([]);
 
   useEffect(() => {
-    setMessages([
-      {
-        id: "initial",
-        role: "assistant",
-        content: "Hey! What are we building today?",
-      },
-    ]);
+    setMessages([INITIAL_MESSAGE]);
   }, []);
 
   const handleSendMessage = async (text: string) => {
@@ -47,9 +47,10 @@ export default function HomePage() {
     setIsGenerating(true);
 
     try {
-
-      // Strip images from message history to avoid huge payloads
-      const cleanMessages = [...messages, userMessage].map(({ images, ...rest }) => rest);
+      // Strip images and UI-only fields from message history
+      const cleanMessages = [...messages, userMessage].map(
+        ({ images, pills, showUpload, ...rest }) => rest
+      );
 
       const response = await fetch("/api/chat", {
         method: "POST",
@@ -63,9 +64,8 @@ export default function HomePage() {
 
       if (!response.ok) throw new Error("Failed to get response");
 
-      // Read streamed response - JSON is on the last line after spaces
-      const text = await response.text();
-      const data = JSON.parse(text.trim());
+      const responseText = await response.text();
+      const data = JSON.parse(responseText.trim());
 
       const aiMessage: Message = {
         id: (Date.now() + 1).toString(),
@@ -118,6 +118,24 @@ export default function HomePage() {
     }
   };
 
+  const handleExport = useCallback(() => {
+    if (!currentPreview) return;
+    const blob = new Blob([currentPreview], { type: "text/html" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "website.html";
+    a.click();
+    URL.revokeObjectURL(url);
+  }, [currentPreview]);
+
+  const handleNewProject = useCallback(() => {
+    setMessages([INITIAL_MESSAGE]);
+    setCurrentPreview(null);
+    setPreviewHistory([]);
+    setInspoImages([]);
+  }, []);
+
   return (
     <div className="flex h-screen overflow-hidden">
       <div className="w-1/3 min-w-[360px]">
@@ -129,6 +147,7 @@ export default function HomePage() {
           onImageRemove={handleImageRemove}
           isGenerating={isGenerating}
           inspoImages={inspoImages}
+          onNewProject={handleNewProject}
         />
       </div>
       <div className="flex-1">
@@ -139,6 +158,7 @@ export default function HomePage() {
           isGenerating={isGenerating}
           canGoBack={previewHistory.length > 0}
           onBack={handleBack}
+          onExport={handleExport}
         />
       </div>
     </div>

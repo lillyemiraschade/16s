@@ -131,7 +131,7 @@ export async function POST(req: Request) {
           const contentBlocks: (ImageBlockParam | TextBlockParam)[] = [];
 
           for (const img of inspoImages) {
-            const matches = img.match(/^data:(image\/[a-z]+);base64,(.+)$/);
+            const matches = img.match(/^data:(image\/[a-zA-Z]+);base64,(.+)$/);
             if (matches) {
               contentBlocks.push({
                 type: "image",
@@ -162,7 +162,7 @@ export async function POST(req: Request) {
     if (currentPreview && claudeMessages.length > 0) {
       const lastMessage = claudeMessages[claudeMessages.length - 1];
       if (lastMessage.role === "user" && typeof lastMessage.content === "string") {
-        lastMessage.content = `[The user currently has a website preview. Here is the current HTML (truncated):\n${currentPreview.substring(0, 6000)}\n]\n\nUser request: ${lastMessage.content}`;
+        lastMessage.content = `[The user currently has a website preview. Here is the current HTML:\n${currentPreview.substring(0, 30000)}\n]\n\nUser request: ${lastMessage.content}`;
       }
     }
 
