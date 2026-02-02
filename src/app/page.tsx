@@ -65,7 +65,7 @@ export default function HomePage() {
   // Randomized on each mount/reset
   const [welcomeKey, setWelcomeKey] = useState(0);
   const headline = useMemo(() => HEADLINES[Math.floor(Math.random() * HEADLINES.length)], [welcomeKey]);
-  const quickActions = useMemo(() => pickRandom(ALL_QUICK_ACTIONS, 4), [welcomeKey]);
+  const quickActions = useMemo(() => pickRandom(ALL_QUICK_ACTIONS, 3), [welcomeKey]);
 
   const [welcomeInput, setWelcomeInput] = useState("");
   const welcomeTextareaRef = useRef<HTMLTextAreaElement>(null);
@@ -352,12 +352,12 @@ export default function HomePage() {
               </div>
             </div>
 
-            <div className="flex flex-wrap justify-center gap-2">
+            <div className="flex justify-center gap-3">
               {quickActions.map((action) => (
                 <button
                   key={action}
                   onClick={() => handleSendMessage(action)}
-                  className="px-4 py-2 text-[13px] font-medium text-zinc-400 hover:text-zinc-200 glass-matte glass-hover rounded-full transition-all duration-200"
+                  className="px-5 py-2.5 text-[13px] font-medium text-zinc-400 hover:text-zinc-200 glass-matte glass-hover rounded-full transition-all duration-200"
                 >
                   {action}
                 </button>
