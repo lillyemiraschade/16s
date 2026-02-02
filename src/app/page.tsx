@@ -1,6 +1,8 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useRef, useCallback } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Paperclip, ArrowUp, ImagePlus, X, Phone } from "lucide-react";
 import { ChatPanel } from "@/components/chat/ChatPanel";
 import { PreviewPanel } from "@/components/preview/PreviewPanel";
 
@@ -15,11 +17,12 @@ interface Message {
   images?: string[];
 }
 
-const INITIAL_MESSAGE: Message = {
-  id: "initial",
-  role: "assistant",
-  content: "Hey! What are we building today?",
-};
+const QUICK_ACTIONS = [
+  "Build me a landing page",
+  "Design a portfolio site",
+  "Create a restaurant website",
+  "Make an agency homepage",
+];
 
 export default function HomePage() {
   const [messages, setMessages] = useState<Message[]>([]);
@@ -30,14 +33,18 @@ export default function HomePage() {
   const [inspoImages, setInspoImages] = useState<string[]>([]);
   const [isOnCall, setIsOnCall] = useState(false);
   const [lastAiResponse, setLastAiResponse] = useState<{ text: string; id: number } | null>(null);
+  const [hasStarted, setHasStarted] = useState(false);
 
-  useEffect(() => {
-    setMessages([INITIAL_MESSAGE]);
-  }, []);
+  // Welcome screen state
+  const [welcomeInput, setWelcomeInput] = useState("");
+  const welcomeTextareaRef = useRef<HTMLTextAreaElement>(null);
+  const welcomeFileRef = useRef<HTMLInputElement>(null);
 
-  const handleSendMessage = async (text: string) => {
-    const imagesToSend = [...inspoImages];
-    setInspoImages([]);
+  const handleSendMessage = async (text: string, imagesToInclude?: string[]) => {
+    const imagesToSend = imagesToInclude || [...inspoImages];
+    if (!imagesToInclude) setInspoImages([]);
+
+    if (!hasStarted) setHasStarted(true);
 
     const userMessage: Message = {
       id: Date.now().toString(),
@@ -49,7 +56,6 @@ export default function HomePage() {
     setIsGenerating(true);
 
     try {
-      // Strip images and UI-only fields from message history
       const cleanMessages = [...messages, userMessage].map(
         ({ images, pills, showUpload, ...rest }) => rest
       );
@@ -137,41 +143,253 @@ export default function HomePage() {
   }, [currentPreview]);
 
   const handleNewProject = useCallback(() => {
-    setMessages([INITIAL_MESSAGE]);
+    setMessages([]);
     setCurrentPreview(null);
     setPreviewHistory([]);
     setInspoImages([]);
+    setHasStarted(false);
+    setWelcomeInput("");
   }, []);
 
+  const handleWelcomeSend = () => {
+    if ((!welcomeInput.trim() && inspoImages.length === 0) || isGenerating) return;
+    const text = welcomeInput.trim() || "Here are my inspiration images. Please design based on these.";
+    const imgs = [...inspoImages];
+    setWelcomeInput("");
+    setInspoImages([]);
+    handleSendMessage(text, imgs);
+  };
+
+  const handleWelcomeKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();
+      handleWelcomeSend();
+    }
+  };
+
+  const readFileAsDataURL = (file: File): Promise<string> => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onloadend = () => resolve(reader.result as string);
+      reader.onerror = reject;
+      reader.readAsDataURL(file);
+    });
+  };
+
+  const compressImage = (dataUrl: string): Promise<string> => {
+    return new Promise((resolve) => {
+      const img = document.createElement("img");
+      img.onload = () => {
+        try {
+          const canvas = document.createElement("canvas");
+          const MAX = 1200;
+          let w = img.naturalWidth;
+          let h = img.naturalHeight;
+          if (w > MAX || h > MAX) {
+            if (w > h) { h = Math.round(h * MAX / w); w = MAX; }
+            else { w = Math.round(w * MAX / h); h = MAX; }
+          }
+          canvas.width = w;
+          canvas.height = h;
+          const ctx = canvas.getContext("2d");
+          if (!ctx) { resolve(dataUrl); return; }
+          ctx.drawImage(img, 0, 0, w, h);
+          resolve(canvas.toDataURL("image/jpeg", 0.7));
+        } catch {
+          resolve(dataUrl);
+        }
+      };
+      img.onerror = () => resolve(dataUrl);
+      img.src = dataUrl;
+    });
+  };
+
+  const processWelcomeFiles = async (files: FileList | File[]) => {
+    for (const file of Array.from(files)) {
+      if (!file.type.startsWith("image/")) continue;
+      try {
+        const dataUrl = await readFileAsDataURL(file);
+        const compressed = await compressImage(dataUrl);
+        handleImageUpload(compressed);
+      } catch (err) {
+        console.error("Failed to process image:", err);
+      }
+    }
+  };
+
+  const handleWelcomeFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      processWelcomeFiles(e.target.files);
+      e.target.value = "";
+    }
+  };
+
+  // Welcome screen — full width, centered, no split
+  if (!hasStarted) {
+    return (
+      <div id="main-content" className="h-screen bg-[#0a0a0b] dot-grid flex flex-col">
+        {/* Top bar */}
+        <div className="flex items-center justify-between px-6 py-4">
+          <img src="/logo.png" alt="16s logo" className="w-8 h-8 object-contain" />
+          <button
+            onClick={() => { setHasStarted(true); setIsOnCall(true); setLastAiResponse(null); }}
+            className="flex items-center gap-1.5 px-4 py-2 text-[12px] font-medium text-black bg-gradient-to-b from-green-400 to-green-500 hover:from-green-300 hover:to-green-400 rounded-full transition-all duration-200 glow-green"
+          >
+            <Phone className="w-3.5 h-3.5" />
+            Call an Agent
+          </button>
+        </div>
+
+        {/* Center content */}
+        <div className="flex-1 flex flex-col items-center justify-center px-6 -mt-16">
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, ease: "easeOut" }}
+            className="flex flex-col items-center gap-8 w-full max-w-[640px]"
+          >
+            {/* Logo + headline */}
+            <div className="flex flex-col items-center gap-4">
+              <img src="/logo.png" alt="" className="w-12 h-12 object-contain" />
+              <h1 className="text-[32px] font-medium text-zinc-200 tracking-[-0.02em] text-center">
+                What shall we build?
+              </h1>
+            </div>
+
+            {/* Input bar */}
+            <div className="w-full glass rounded-2xl p-1">
+              {/* Image previews inside input */}
+              {inspoImages.length > 0 && (
+                <div className="flex gap-2 flex-wrap px-3 pt-3">
+                  {inspoImages.map((img, idx) => (
+                    <div key={idx} className="relative group">
+                      <img
+                        src={img}
+                        alt={`Upload ${idx + 1}`}
+                        className="h-14 w-14 object-cover rounded-lg ring-1 ring-white/[0.06]"
+                      />
+                      <button
+                        onClick={() => handleImageRemove(idx)}
+                        className="absolute -top-1.5 -right-1.5 w-5 h-5 bg-zinc-800 hover:bg-red-500 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-150 ring-1 ring-white/[0.06]"
+                      >
+                        <X className="w-3 h-3 text-zinc-300" />
+                      </button>
+                    </div>
+                  ))}
+                  <button
+                    onClick={() => welcomeFileRef.current?.click()}
+                    className="h-14 w-14 rounded-lg glass glass-hover flex items-center justify-center transition-all duration-200"
+                  >
+                    <ImagePlus className="w-4 h-4 text-zinc-500" />
+                  </button>
+                </div>
+              )}
+              <div className="flex items-end gap-2 px-4 py-3">
+                <textarea
+                  ref={welcomeTextareaRef}
+                  value={welcomeInput}
+                  onChange={(e) => {
+                    setWelcomeInput(e.target.value);
+                    const el = welcomeTextareaRef.current;
+                    if (el) {
+                      el.style.height = "auto";
+                      el.style.height = Math.min(el.scrollHeight, 160) + "px";
+                    }
+                  }}
+                  onKeyDown={handleWelcomeKeyDown}
+                  placeholder="Describe what you want to build..."
+                  disabled={isGenerating}
+                  aria-label="Message input"
+                  autoComplete="off"
+                  rows={1}
+                  className="flex-1 bg-transparent text-[15px] text-zinc-100 placeholder:text-zinc-600 focus:outline-none disabled:opacity-40 resize-none overflow-y-auto leading-relaxed"
+                  style={{ maxHeight: 160 }}
+                />
+                <button
+                  onClick={handleWelcomeSend}
+                  disabled={(!welcomeInput.trim() && inspoImages.length === 0) || isGenerating}
+                  className="p-2.5 bg-gradient-to-b from-green-400 to-green-500 hover:from-green-300 hover:to-green-400 disabled:from-zinc-800 disabled:to-zinc-800 disabled:cursor-not-allowed rounded-full transition-all duration-200 flex-shrink-0 glow-green disabled:shadow-none"
+                  aria-label="Send message"
+                >
+                  <ArrowUp className="w-4 h-4 text-white" />
+                </button>
+              </div>
+              {/* Toolbar */}
+              <div className="flex items-center gap-1 px-4 pb-3">
+                <button
+                  onClick={() => welcomeFileRef.current?.click()}
+                  className="p-1.5 hover:bg-white/[0.04] rounded-lg transition-colors"
+                  title="Upload images"
+                >
+                  <Paperclip className="w-3.5 h-3.5 text-zinc-500" />
+                </button>
+                <input
+                  ref={welcomeFileRef}
+                  type="file"
+                  accept="image/*"
+                  multiple
+                  onChange={handleWelcomeFileUpload}
+                  className="hidden"
+                />
+              </div>
+            </div>
+
+            {/* Quick action pills */}
+            <div className="flex flex-wrap justify-center gap-2">
+              {QUICK_ACTIONS.map((action) => (
+                <button
+                  key={action}
+                  onClick={() => handleSendMessage(action)}
+                  className="px-4 py-2 text-[13px] font-medium text-zinc-400 hover:text-zinc-200 glass glass-hover rounded-full transition-all duration-200"
+                >
+                  {action}
+                </button>
+              ))}
+            </div>
+          </motion.div>
+        </div>
+      </div>
+    );
+  }
+
+  // Chat + Preview split layout
   return (
-    <div id="main-content" className="flex h-screen overflow-hidden">
-      <nav className="w-1/3 min-w-[360px]" aria-label="Chat">
-        <ChatPanel
-          messages={messages}
-          onSend={handleSendMessage}
-          onPillClick={handlePillClick}
-          onImageUpload={handleImageUpload}
-          onImageRemove={handleImageRemove}
-          isGenerating={isGenerating}
-          inspoImages={inspoImages}
-          onNewProject={handleNewProject}
-          isOnCall={isOnCall}
-          onStartCall={() => { setLastAiResponse(null); setIsOnCall(true); }}
-          onEndCall={() => setIsOnCall(false)}
-          lastAiResponse={lastAiResponse}
-        />
-      </nav>
-      <main className="flex-1" aria-label="Preview">
-        <PreviewPanel
-          html={currentPreview}
-          viewport={viewport}
-          onViewportChange={setViewport}
-          isGenerating={isGenerating}
-          canGoBack={previewHistory.length > 0}
-          onBack={handleBack}
-          onExport={handleExport}
-        />
-      </main>
-    </div>
+    <AnimatePresence>
+      <motion.div
+        id="main-content"
+        className="flex h-screen overflow-hidden"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.3 }}
+      >
+        <nav className="w-1/3 min-w-[360px]" aria-label="Chat">
+          <ChatPanel
+            messages={messages}
+            onSend={handleSendMessage}
+            onPillClick={handlePillClick}
+            onImageUpload={handleImageUpload}
+            onImageRemove={handleImageRemove}
+            isGenerating={isGenerating}
+            inspoImages={inspoImages}
+            onNewProject={handleNewProject}
+            isOnCall={isOnCall}
+            onStartCall={() => { setLastAiResponse(null); setIsOnCall(true); }}
+            onEndCall={() => setIsOnCall(false)}
+            lastAiResponse={lastAiResponse}
+          />
+        </nav>
+        <main className="flex-1" aria-label="Preview">
+          <PreviewPanel
+            html={currentPreview}
+            viewport={viewport}
+            onViewportChange={setViewport}
+            isGenerating={isGenerating}
+            canGoBack={previewHistory.length > 0}
+            onBack={handleBack}
+            onExport={handleExport}
+          />
+        </main>
+      </motion.div>
+    </AnimatePresence>
   );
 }
