@@ -49,6 +49,7 @@ export function ChatPanel({
   const [lightboxImage, setLightboxImage] = useState<string | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   const closeLightbox = useCallback(() => setLightboxImage(null), []);
 
@@ -73,6 +74,7 @@ export function ChatPanel({
     if ((!input.trim() && inspoImages.length === 0) || isGenerating) return;
     onSend(input.trim() || "Here are my inspiration images. Please design based on these.");
     setInput("");
+    if (textareaRef.current) textareaRef.current.style.height = "auto";
   };
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
@@ -332,10 +334,10 @@ export function ChatPanel({
           </div>
         )}
 
-        <div className="flex items-center gap-2 bg-zinc-900/60 border border-zinc-800/80 rounded-xl px-3 py-2 focus-within:border-indigo-500/40 transition-colors">
+        <div className="flex items-end gap-2 bg-zinc-900/60 border border-zinc-800/80 rounded-xl px-3 py-2 focus-within:border-indigo-500/40 transition-colors">
           <button
             onClick={() => fileInputRef.current?.click()}
-            className="p-1.5 hover:bg-zinc-800/80 rounded-lg transition-colors flex-shrink-0"
+            className="p-1.5 mb-0.5 hover:bg-zinc-800/80 rounded-lg transition-colors flex-shrink-0"
             title="Upload images"
           >
             <Paperclip className="w-4 h-4 text-zinc-500" />
@@ -349,22 +351,31 @@ export function ChatPanel({
             className="hidden"
           />
 
-          <input
-            type="text"
+          <textarea
+            ref={textareaRef}
             value={input}
-            onChange={(e) => setInput(e.target.value)}
+            onChange={(e) => {
+              setInput(e.target.value);
+              const el = textareaRef.current;
+              if (el) {
+                el.style.height = "auto";
+                el.style.height = Math.min(el.scrollHeight, 160) + "px";
+              }
+            }}
             onKeyDown={handleKeyDown}
             placeholder="Describe what you want to build..."
             disabled={isGenerating}
             aria-label="Message input"
             autoComplete="off"
-            className="flex-1 bg-transparent text-[14px] text-zinc-100 placeholder:text-zinc-600 focus:outline-none disabled:opacity-40"
+            rows={1}
+            className="flex-1 bg-transparent text-[14px] text-zinc-100 placeholder:text-zinc-600 focus:outline-none disabled:opacity-40 resize-none overflow-y-auto leading-relaxed"
+            style={{ maxHeight: 160 }}
           />
 
           <button
             onClick={handleSend}
             disabled={(!input.trim() && inspoImages.length === 0) || isGenerating}
-            className="p-1.5 bg-indigo-500 hover:bg-indigo-400 disabled:bg-zinc-800 disabled:cursor-not-allowed rounded-lg transition-all duration-150 flex-shrink-0"
+            className="p-1.5 mb-0.5 bg-indigo-500 hover:bg-indigo-400 disabled:bg-zinc-800 disabled:cursor-not-allowed rounded-lg transition-all duration-150 flex-shrink-0"
             aria-label="Send message"
           >
             <ArrowUp className="w-4 h-4 text-white" />
