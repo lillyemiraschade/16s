@@ -174,14 +174,14 @@ export function VoiceCall({ onSend, onHangUp, aiResponse, isGenerating }: VoiceC
         <motion.div
           animate={{ scale: pulseScale, opacity: [0.3, 0.6, 0.3] }}
           transition={{ duration: state === "listening" ? 1.5 : 2, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute w-32 h-32 rounded-full bg-indigo-500/20"
+          className="absolute w-32 h-32 rounded-full bg-green-600/20"
         />
         <motion.div
           animate={{ scale: pulseScale }}
           transition={{ duration: state === "listening" ? 1.5 : 2, repeat: Infinity, ease: "easeInOut", delay: 0.2 }}
-          className="absolute w-24 h-24 rounded-full bg-indigo-500/30"
+          className="absolute w-24 h-24 rounded-full bg-green-600/30"
         />
-        <div className="w-16 h-16 rounded-full bg-indigo-500 flex items-center justify-center">
+        <div className="w-16 h-16 rounded-full bg-green-600 flex items-center justify-center">
           <span className="text-white text-sm font-bold">16s</span>
         </div>
       </div>

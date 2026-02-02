@@ -177,7 +177,7 @@ export function ChatPanel({
       {/* Header */}
       <div className="px-5 py-4 border-b border-zinc-800/80 flex items-center justify-between">
         <div className="flex items-center gap-2.5">
-          <div className="w-7 h-7 rounded-lg bg-indigo-500 flex items-center justify-center">
+          <div className="w-7 h-7 rounded-lg bg-green-600 flex items-center justify-center">
             <span className="text-white text-xs font-bold tracking-tight">16</span>
           </div>
           <span className="text-[15px] font-semibold text-zinc-100 tracking-[-0.01em]">16s</span>
@@ -186,7 +186,7 @@ export function ChatPanel({
           <button
             onClick={onStartCall}
             disabled={isOnCall}
-            className="flex items-center gap-1.5 px-3 py-1.5 text-[12px] font-medium text-white bg-indigo-500 hover:bg-indigo-400 disabled:opacity-50 disabled:cursor-not-allowed rounded-lg transition-all duration-150 shadow-sm shadow-indigo-500/20"
+            className="flex items-center gap-1.5 px-3 py-1.5 text-[12px] font-medium text-white bg-green-600 hover:bg-green-500 disabled:opacity-50 disabled:cursor-not-allowed rounded-lg transition-all duration-150 shadow-sm shadow-green-600/20"
             title="Call an agent"
           >
             <Phone className="w-3.5 h-3.5" />
@@ -207,10 +207,10 @@ export function ChatPanel({
       <div className="flex-1 overflow-y-auto px-5 py-5 space-y-5 relative" role="log" aria-label="Conversation" aria-live="polite">
         {/* Drag overlay */}
         {isDragging && (
-          <div className="absolute inset-0 z-10 bg-indigo-500/5 border-2 border-dashed border-indigo-500/30 rounded-xl flex items-center justify-center backdrop-blur-sm">
+          <div className="absolute inset-0 z-10 bg-green-600/5 border-2 border-dashed border-green-600/30 rounded-xl flex items-center justify-center backdrop-blur-sm">
             <div className="text-center">
-              <ImagePlus className="w-8 h-8 text-indigo-400 mx-auto mb-2" />
-              <p className="text-sm text-indigo-300 font-medium">Drop images here</p>
+              <ImagePlus className="w-8 h-8 text-green-500 mx-auto mb-2" />
+              <p className="text-sm text-green-400 font-medium">Drop images here</p>
             </div>
           </div>
         )}
@@ -228,7 +228,7 @@ export function ChatPanel({
               <div
                 className={`${
                   message.role === "user"
-                    ? "bg-indigo-500/90 text-white ml-auto max-w-[85%]"
+                    ? "bg-green-600/90 text-white ml-auto max-w-[85%]"
                     : "bg-zinc-900/80 border border-zinc-800/80 text-zinc-200 max-w-[90%]"
                 } rounded-2xl px-4 py-3`}
               >
@@ -239,7 +239,7 @@ export function ChatPanel({
                       <button
                         key={idx}
                         onClick={() => setLightboxImage(img)}
-                        className="rounded-lg overflow-hidden hover:ring-2 hover:ring-indigo-400/50 transition-all duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400"
+                        className="rounded-lg overflow-hidden hover:ring-2 hover:ring-green-500/50 transition-all duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-green-500"
                       >
                         <img
                           src={img}
@@ -309,7 +309,7 @@ export function ChatPanel({
               <div key={idx} className="relative group">
                 <button
                   onClick={() => setLightboxImage(img)}
-                  className="rounded-lg overflow-hidden focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400"
+                  className="rounded-lg overflow-hidden focus:outline-none focus-visible:ring-2 focus-visible:ring-green-500"
                 >
                   <img
                     src={img}
@@ -334,7 +334,7 @@ export function ChatPanel({
           </div>
         )}
 
-        <div className="flex items-end gap-2 bg-zinc-900/60 border border-zinc-800/80 rounded-xl px-3 py-2 focus-within:border-indigo-500/40 transition-colors">
+        <div className="flex items-end gap-2 bg-zinc-900/60 border border-zinc-800/80 rounded-xl px-3 py-2 focus-within:border-green-600/40 transition-colors">
           <button
             onClick={() => fileInputRef.current?.click()}
             className="p-1.5 mb-0.5 hover:bg-zinc-800/80 rounded-lg transition-colors flex-shrink-0"
@@ -375,7 +375,7 @@ export function ChatPanel({
           <button
             onClick={handleSend}
             disabled={(!input.trim() && inspoImages.length === 0) || isGenerating}
-            className="p-1.5 mb-0.5 bg-indigo-500 hover:bg-indigo-400 disabled:bg-zinc-800 disabled:cursor-not-allowed rounded-lg transition-all duration-150 flex-shrink-0"
+            className="p-1.5 mb-0.5 bg-green-600 hover:bg-green-500 disabled:bg-zinc-800 disabled:cursor-not-allowed rounded-lg transition-all duration-150 flex-shrink-0"
             aria-label="Send message"
           >
             <ArrowUp className="w-4 h-4 text-white" />

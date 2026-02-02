@@ -127,7 +127,7 @@ export function PreviewPanel({
               {petals.map((i) => (
                 <motion.div
                   key={i}
-                  className="absolute left-1/2 top-1/2 w-3 h-8 rounded-full bg-indigo-400/60 origin-bottom"
+                  className="absolute left-1/2 top-1/2 w-3 h-8 rounded-full bg-green-500/60 origin-bottom"
                   style={{
                     marginLeft: -6,
                     marginTop: -32,
@@ -147,7 +147,7 @@ export function PreviewPanel({
                 />
               ))}
               <motion.div
-                className="absolute left-1/2 top-1/2 w-4 h-4 -ml-2 -mt-2 rounded-full bg-indigo-400"
+                className="absolute left-1/2 top-1/2 w-4 h-4 -ml-2 -mt-2 rounded-full bg-green-500"
                 animate={{ scale: [0.8, 1.2, 0.8], opacity: [0.6, 1, 0.6] }}
                 transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
               />
