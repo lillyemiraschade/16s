@@ -28,6 +28,8 @@ export default function HomePage() {
   const [viewport, setViewport] = useState<Viewport>("desktop");
   const [isGenerating, setIsGenerating] = useState(false);
   const [inspoImages, setInspoImages] = useState<string[]>([]);
+  const [isOnCall, setIsOnCall] = useState(false);
+  const [lastAiResponse, setLastAiResponse] = useState<string | null>(null);
 
   useEffect(() => {
     setMessages([INITIAL_MESSAGE]);
@@ -75,6 +77,7 @@ export default function HomePage() {
         showUpload: data.showUpload,
       };
       setMessages((prev) => [...prev, aiMessage]);
+      if (isOnCall) setLastAiResponse(data.message);
 
       if (data.html) {
         if (currentPreview) {
@@ -148,6 +151,10 @@ export default function HomePage() {
           isGenerating={isGenerating}
           inspoImages={inspoImages}
           onNewProject={handleNewProject}
+          isOnCall={isOnCall}
+          onStartCall={() => { setLastAiResponse(null); setIsOnCall(true); }}
+          onEndCall={() => setIsOnCall(false)}
+          lastAiResponse={lastAiResponse}
         />
       </nav>
       <main className="flex-1" aria-label="Preview">

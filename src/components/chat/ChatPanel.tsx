@@ -1,9 +1,10 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Paperclip, ArrowUp, X, ImagePlus, Plus } from "lucide-react";
+import { Paperclip, ArrowUp, X, ImagePlus, Plus, Phone } from "lucide-react";
 import { TypingIndicator } from "./TypingIndicator";
+import { VoiceCall } from "./VoiceCall";
 
 interface Message {
   id: string;
@@ -23,6 +24,10 @@ interface ChatPanelProps {
   isGenerating: boolean;
   inspoImages: string[];
   onNewProject: () => void;
+  isOnCall: boolean;
+  onStartCall: () => void;
+  onEndCall: () => void;
+  lastAiResponse: string | null;
 }
 
 export function ChatPanel({
@@ -34,11 +39,27 @@ export function ChatPanel({
   isGenerating,
   inspoImages,
   onNewProject,
+  isOnCall,
+  onStartCall,
+  onEndCall,
+  lastAiResponse,
 }: ChatPanelProps) {
   const [input, setInput] = useState("");
   const [isDragging, setIsDragging] = useState(false);
+  const [lightboxImage, setLightboxImage] = useState<string | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const closeLightbox = useCallback(() => setLightboxImage(null), []);
+
+  useEffect(() => {
+    if (!lightboxImage) return;
+    const handler = (e: KeyboardEvent) => {
+      if (e.key === "Escape") closeLightbox();
+    };
+    window.addEventListener("keydown", handler);
+    return () => window.removeEventListener("keydown", handler);
+  }, [lightboxImage, closeLightbox]);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -141,6 +162,16 @@ export function ChatPanel({
       onDragOver={handleDragOver}
       onDragLeave={handleDragLeave}
     >
+      {/* Voice call overlay */}
+      {isOnCall && (
+        <VoiceCall
+          onSend={onSend}
+          onHangUp={onEndCall}
+          aiResponse={lastAiResponse}
+          isGenerating={isGenerating}
+        />
+      )}
+
       {/* Header */}
       <div className="px-5 py-4 border-b border-zinc-800/80 flex items-center justify-between">
         <div className="flex items-center gap-2.5">
@@ -149,14 +180,24 @@ export function ChatPanel({
           </div>
           <span className="text-[15px] font-semibold text-zinc-100 tracking-[-0.01em]">16s</span>
         </div>
-        <button
-          onClick={onNewProject}
-          className="flex items-center gap-1.5 px-2.5 py-1.5 text-[12px] font-medium text-zinc-400 hover:text-zinc-200 bg-zinc-900/60 hover:bg-zinc-800 rounded-lg border border-zinc-800/60 transition-all duration-150"
-          title="New project"
-        >
-          <Plus className="w-3.5 h-3.5" />
-          New
-        </button>
+        <div className="flex items-center gap-2">
+          <button
+            onClick={onStartCall}
+            className="flex items-center gap-1.5 px-2.5 py-1.5 text-[12px] font-medium text-zinc-400 hover:text-zinc-200 bg-zinc-900/60 hover:bg-zinc-800 rounded-lg border border-zinc-800/60 transition-all duration-150"
+            title="Voice call"
+          >
+            <Phone className="w-3.5 h-3.5" />
+            Call
+          </button>
+          <button
+            onClick={onNewProject}
+            className="flex items-center gap-1.5 px-2.5 py-1.5 text-[12px] font-medium text-zinc-400 hover:text-zinc-200 bg-zinc-900/60 hover:bg-zinc-800 rounded-lg border border-zinc-800/60 transition-all duration-150"
+            title="New project"
+          >
+            <Plus className="w-3.5 h-3.5" />
+            New
+          </button>
+        </div>
       </div>
 
       {/* Messages area */}
@@ -192,12 +233,17 @@ export function ChatPanel({
                 {message.images && message.images.length > 0 && (
                   <div className="flex flex-wrap gap-1.5 mb-2.5">
                     {message.images.map((img, idx) => (
-                      <img
+                      <button
                         key={idx}
-                        src={img}
-                        alt={`Inspo ${idx + 1}`}
-                        className="h-16 w-16 object-cover rounded-lg"
-                      />
+                        onClick={() => setLightboxImage(img)}
+                        className="rounded-lg overflow-hidden hover:ring-2 hover:ring-indigo-400/50 transition-all duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400"
+                      >
+                        <img
+                          src={img}
+                          alt={`Inspiration image ${idx + 1}`}
+                          className="h-16 w-16 object-cover"
+                        />
+                      </button>
                     ))}
                   </div>
                 )}
@@ -258,11 +304,16 @@ export function ChatPanel({
           <div className="mb-3 flex gap-2 flex-wrap">
             {inspoImages.map((img, idx) => (
               <div key={idx} className="relative group">
-                <img
-                  src={img}
-                  alt={`Inspo ${idx + 1}`}
-                  className="h-14 w-14 object-cover rounded-lg ring-1 ring-zinc-700/50"
-                />
+                <button
+                  onClick={() => setLightboxImage(img)}
+                  className="rounded-lg overflow-hidden focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400"
+                >
+                  <img
+                    src={img}
+                    alt={`Inspiration image ${idx + 1}`}
+                    className="h-14 w-14 object-cover ring-1 ring-zinc-700/50"
+                  />
+                </button>
                 <button
                   onClick={() => onImageRemove(idx)}
                   className="absolute -top-1.5 -right-1.5 w-5 h-5 bg-zinc-800 hover:bg-red-500 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-150 ring-1 ring-zinc-700/50"
@@ -318,6 +369,40 @@ export function ChatPanel({
           </button>
         </div>
       </div>
+
+      {/* Image lightbox */}
+      <AnimatePresence>
+        {lightboxImage && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.15 }}
+            className="fixed inset-0 z-50 bg-black/90 flex items-center justify-center p-8 cursor-pointer"
+            onClick={closeLightbox}
+            role="dialog"
+            aria-label="Image preview"
+          >
+            <button
+              onClick={closeLightbox}
+              className="absolute top-4 right-4 p-2 rounded-lg bg-zinc-800/80 hover:bg-zinc-700 transition-colors"
+              aria-label="Close preview"
+            >
+              <X className="w-5 h-5 text-zinc-300" />
+            </button>
+            <motion.img
+              initial={{ scale: 0.95 }}
+              animate={{ scale: 1 }}
+              exit={{ scale: 0.95 }}
+              transition={{ duration: 0.15 }}
+              src={lightboxImage}
+              alt="Full size inspiration image"
+              className="max-w-full max-h-full object-contain rounded-lg"
+              onClick={(e) => e.stopPropagation()}
+            />
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
