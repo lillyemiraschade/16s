@@ -183,11 +183,12 @@ export function ChatPanel({
         <div className="flex items-center gap-2">
           <button
             onClick={onStartCall}
-            className="flex items-center gap-1.5 px-2.5 py-1.5 text-[12px] font-medium text-zinc-400 hover:text-zinc-200 bg-zinc-900/60 hover:bg-zinc-800 rounded-lg border border-zinc-800/60 transition-all duration-150"
-            title="Voice call"
+            disabled={isOnCall}
+            className="flex items-center gap-1.5 px-3 py-1.5 text-[12px] font-medium text-white bg-indigo-500 hover:bg-indigo-400 disabled:opacity-50 disabled:cursor-not-allowed rounded-lg transition-all duration-150 shadow-sm shadow-indigo-500/20"
+            title="Call an agent"
           >
             <Phone className="w-3.5 h-3.5" />
-            Call
+            Call an Agent
           </button>
           <button
             onClick={onNewProject}

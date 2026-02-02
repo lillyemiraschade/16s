@@ -87,14 +87,16 @@ export default function HomePage() {
       }
     } catch (error) {
       console.error("Error sending message:", error);
+      const errorMsg = "Sorry, something went wrong. Can you try again?";
       setMessages((prev) => [
         ...prev,
         {
           id: (Date.now() + 1).toString(),
           role: "assistant",
-          content: "Sorry, something went wrong. Can you try again?",
+          content: errorMsg,
         },
       ]);
+      if (isOnCall) setLastAiResponse(errorMsg);
     } finally {
       setIsGenerating(false);
     }

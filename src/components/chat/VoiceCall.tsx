@@ -20,11 +20,15 @@ export function VoiceCall({ onSend, onHangUp, aiResponse, isGenerating }: VoiceC
   const lastSpokenRef = useRef<string | null>(null);
   const mountedRef = useRef(true);
   const stateRef = useRef<CallState>("idle");
+  const onSendRef = useRef(onSend);
 
-  // Keep ref in sync with state
+  // Keep refs in sync
   useEffect(() => {
     stateRef.current = state;
   }, [state]);
+  useEffect(() => {
+    onSendRef.current = onSend;
+  }, [onSend]);
 
   const startListening = useCallback(() => {
     if (!mountedRef.current) return;
@@ -56,7 +60,7 @@ export function VoiceCall({ onSend, onHangUp, aiResponse, isGenerating }: VoiceC
         recognitionRef.current = null;
         setState("thinking");
         setTranscript("");
-        onSend(finalTranscript.trim());
+        onSendRef.current(finalTranscript.trim());
       }
     };
 
@@ -81,7 +85,7 @@ export function VoiceCall({ onSend, onHangUp, aiResponse, isGenerating }: VoiceC
       recognition.start();
       setState("listening");
     } catch {}
-  }, [onSend]);
+  }, []);
 
   const speak = useCallback((text: string) => {
     setState("speaking");
