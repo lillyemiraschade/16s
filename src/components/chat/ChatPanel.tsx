@@ -4,19 +4,12 @@ import { useEffect, useRef, useState, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Paperclip, ArrowUp, X, ImagePlus, Plus, Phone, Info } from "lucide-react";
 import { TypingIndicator } from "./TypingIndicator";
-
-interface Message {
-  id: string;
-  role: "user" | "assistant";
-  content: string;
-  pills?: string[];
-  showUpload?: boolean | string;
-  images?: string[];
-}
+import { processImageFiles } from "@/lib/images";
+import type { Message } from "@/lib/types";
 
 interface ChatPanelProps {
   messages: Message[];
-  onSend: (text: string) => void;
+  onSend: (text: string, imagesToInclude?: string[]) => void;
   onPillClick: (pill: string) => void;
   onImageUpload: (base64: string) => void;
   onImageRemove: (index: number) => void;
@@ -27,6 +20,7 @@ interface ChatPanelProps {
   onStartCall: () => void;
   onEndCall: () => void;
   lastAiResponse: { text: string; id: number } | null;
+  hasPreview: boolean;
 }
 
 export function ChatPanel({
@@ -41,7 +35,7 @@ export function ChatPanel({
   isOnCall,
   onStartCall,
   onEndCall,
-  lastAiResponse,
+  hasPreview,
 }: ChatPanelProps) {
   const [input, setInput] = useState("");
   const [isDragging, setIsDragging] = useState(false);
@@ -69,6 +63,13 @@ export function ChatPanel({
     scrollToBottom();
   }, [messages, isGenerating]);
 
+  // Focus textarea after generation completes
+  useEffect(() => {
+    if (!isGenerating) {
+      textareaRef.current?.focus();
+    }
+  }, [isGenerating]);
+
   const handleSend = () => {
     if ((!input.trim() && inspoImages.length === 0) || isGenerating) return;
     onSend(input.trim() || "Here are my inspiration images. Please design based on these.");
@@ -83,67 +84,17 @@ export function ChatPanel({
     }
   };
 
-  const readFileAsDataURL = (file: File): Promise<string> => {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.onloadend = () => resolve(reader.result as string);
-      reader.onerror = reject;
-      reader.readAsDataURL(file);
-    });
-  };
-
-  const compressImage = (dataUrl: string): Promise<string> => {
-    return new Promise((resolve) => {
-      const img = document.createElement("img");
-      img.onload = () => {
-        try {
-          const canvas = document.createElement("canvas");
-          const MAX = 1200;
-          let w = img.naturalWidth;
-          let h = img.naturalHeight;
-          if (w > MAX || h > MAX) {
-            if (w > h) { h = Math.round(h * MAX / w); w = MAX; }
-            else { w = Math.round(w * MAX / h); h = MAX; }
-          }
-          canvas.width = w;
-          canvas.height = h;
-          const ctx = canvas.getContext("2d");
-          if (!ctx) { resolve(dataUrl); return; }
-          ctx.drawImage(img, 0, 0, w, h);
-          resolve(canvas.toDataURL("image/jpeg", 0.7));
-        } catch {
-          resolve(dataUrl);
-        }
-      };
-      img.onerror = () => resolve(dataUrl);
-      img.src = dataUrl;
-    });
-  };
-
-  const processFiles = async (files: FileList | File[]) => {
-    for (const file of Array.from(files)) {
-      if (!file.type.startsWith("image/")) continue;
-      try {
-        const dataUrl = await readFileAsDataURL(file);
-        const compressed = await compressImage(dataUrl);
-        onImageUpload(compressed);
-      } catch (err) {
-        console.error("Failed to process image:", err);
-      }
-    }
-  };
-
   const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
     if (!files) return;
-    processFiles(files);
+    processImageFiles(files, onImageUpload);
     e.target.value = "";
   };
 
   const handleDrop = (e: React.DragEvent) => {
     e.preventDefault();
     setIsDragging(false);
-    processFiles(e.dataTransfer.files);
+    processImageFiles(e.dataTransfer.files, onImageUpload);
   };
 
   const handleDragOver = (e: React.DragEvent) => {
@@ -167,6 +118,10 @@ export function ChatPanel({
     setShowCallDisclaimer(false);
     onStartCall();
   };
+
+  const placeholder = hasPreview
+    ? "Describe what you want to change..."
+    : "Describe what you want to build...";
 
   return (
     <div
@@ -245,14 +200,21 @@ export function ChatPanel({
       {/* Messages area */}
       <div className="flex-1 overflow-y-auto px-5 py-5 space-y-5 relative" role="log" aria-label="Conversation" aria-live="polite">
         {/* Drag overlay */}
-        {isDragging && (
-          <div className="absolute inset-0 z-10 bg-green-500/[0.03] border-2 border-dashed border-green-500/20 rounded-xl flex items-center justify-center backdrop-blur-sm">
-            <div className="text-center">
-              <ImagePlus className="w-8 h-8 text-green-400 mx-auto mb-2" />
-              <p className="text-sm text-green-400 font-medium">Drop images here</p>
-            </div>
-          </div>
-        )}
+        <AnimatePresence>
+          {isDragging && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="absolute inset-0 z-10 bg-green-500/[0.03] border-2 border-dashed border-green-500/20 rounded-xl flex items-center justify-center backdrop-blur-sm"
+            >
+              <div className="text-center">
+                <ImagePlus className="w-8 h-8 text-green-400 mx-auto mb-2" />
+                <p className="text-sm text-green-400 font-medium">Drop images here</p>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
 
         <AnimatePresence>
           {messages.map((message) => (
@@ -298,7 +260,8 @@ export function ChatPanel({
                       <button
                         key={idx}
                         onClick={() => onPillClick(pill)}
-                        className="px-3.5 py-1.5 text-[13px] font-medium glass glass-hover text-zinc-200 rounded-full transition-all duration-200"
+                        disabled={isGenerating}
+                        className="px-3.5 py-1.5 text-[13px] font-medium glass glass-hover text-zinc-200 disabled:opacity-40 disabled:cursor-not-allowed rounded-full transition-all duration-200"
                       >
                         {pill}
                       </button>
@@ -359,6 +322,7 @@ export function ChatPanel({
                 <button
                   onClick={() => onImageRemove(idx)}
                   className="absolute -top-1.5 -right-1.5 w-5 h-5 bg-zinc-800 hover:bg-red-500 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-150 ring-1 ring-white/[0.06]"
+                  aria-label={`Remove image ${idx + 1}`}
                 >
                   <X className="w-3 h-3 text-zinc-300" />
                 </button>
@@ -367,6 +331,7 @@ export function ChatPanel({
             <button
               onClick={() => fileInputRef.current?.click()}
               className="h-14 w-14 rounded-lg glass glass-hover flex items-center justify-center transition-all duration-200"
+              aria-label="Add more images"
             >
               <ImagePlus className="w-4 h-4 text-zinc-500" />
             </button>
@@ -376,7 +341,7 @@ export function ChatPanel({
         {/* Input container — glass pill with inner glow */}
         <div className="glass-matte rounded-2xl p-1">
           <div className="flex items-end gap-2 px-3 py-2">
-            <img src="/logo.png" alt="" className="w-6 h-6 object-contain mb-1 opacity-30 flex-shrink-0" />
+            <img src="/logo.png" alt="" className="w-6 h-6 object-contain mb-1 opacity-30 flex-shrink-0" aria-hidden="true" />
             <textarea
               ref={textareaRef}
               value={input}
@@ -389,7 +354,7 @@ export function ChatPanel({
                 }
               }}
               onKeyDown={handleKeyDown}
-              placeholder="Describe what you want to build..."
+              placeholder={placeholder}
               disabled={isGenerating}
               aria-label="Message input"
               autoComplete="off"
@@ -412,6 +377,7 @@ export function ChatPanel({
               onClick={() => fileInputRef.current?.click()}
               className="p-1.5 hover:bg-white/[0.04] rounded-lg transition-colors flex-shrink-0"
               title="Upload images"
+              aria-label="Upload images"
             >
               <Paperclip className="w-3.5 h-3.5 text-zinc-500" />
             </button>
@@ -422,6 +388,7 @@ export function ChatPanel({
               multiple
               onChange={handleFileUpload}
               className="hidden"
+              aria-hidden="true"
             />
           </div>
         </div>
@@ -439,6 +406,7 @@ export function ChatPanel({
             onClick={closeLightbox}
             role="dialog"
             aria-label="Image preview"
+            aria-modal="true"
           >
             <button
               onClick={closeLightbox}

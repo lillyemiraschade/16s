@@ -1,10 +1,9 @@
 "use client";
 
-import { useRef, useCallback, useState } from "react";
+import { useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { Monitor, Tablet, Smartphone, ChevronLeft, RotateCcw, Download } from "lucide-react";
-
-type Viewport = "desktop" | "tablet" | "mobile";
+import type { Viewport } from "@/lib/types";
 
 interface PreviewPanelProps {
   html: string | null;
@@ -20,7 +19,7 @@ const viewportConfig = {
   desktop: { width: "100%", icon: Monitor, label: "Desktop" },
   tablet: { width: "768px", icon: Tablet, label: "Tablet" },
   mobile: { width: "375px", icon: Smartphone, label: "Mobile" },
-};
+} as const;
 
 export function PreviewPanel({
   html,
@@ -34,14 +33,6 @@ export function PreviewPanel({
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const [reloadKey, setReloadKey] = useState(0);
 
-  const handleIframeBack = useCallback(() => {
-    onBack();
-  }, [onBack]);
-
-  const handleIframeReload = useCallback(() => {
-    setReloadKey((k) => k + 1);
-  }, []);
-
   return (
     <div className="flex flex-col h-full bg-[#0c0c0d] dot-grid">
       {/* Top bar */}
@@ -49,7 +40,7 @@ export function PreviewPanel({
         {/* Browser nav buttons */}
         <div className="flex items-center gap-1">
           <button
-            onClick={handleIframeBack}
+            onClick={onBack}
             disabled={!canGoBack}
             className="p-1.5 rounded-full text-zinc-500 hover:text-zinc-300 hover:bg-white/[0.04] disabled:text-zinc-700 disabled:cursor-not-allowed transition-all duration-200"
             title="Back to previous version"
@@ -58,7 +49,7 @@ export function PreviewPanel({
             <ChevronLeft className="w-4 h-4" />
           </button>
           <button
-            onClick={handleIframeReload}
+            onClick={() => setReloadKey((k) => k + 1)}
             disabled={!html}
             className="p-1.5 rounded-full text-zinc-500 hover:text-zinc-300 hover:bg-white/[0.04] disabled:text-zinc-700 disabled:cursor-not-allowed transition-all duration-200"
             title="Reload"
@@ -82,6 +73,8 @@ export function PreviewPanel({
                     : "text-zinc-500 hover:text-zinc-300"
                 }`}
                 title={viewportConfig[vp].label}
+                aria-label={`${viewportConfig[vp].label} viewport`}
+                aria-pressed={viewport === vp}
               >
                 <Icon className="w-4 h-4" />
               </button>
@@ -108,7 +101,7 @@ export function PreviewPanel({
         {!html && !isGenerating && (
           <div className="flex flex-col items-center justify-center h-full gap-4">
             <div className="w-12 h-12 rounded-2xl glass flex items-center justify-center">
-              <img src="/logo.png" alt="16s" className="w-6 h-6 object-contain opacity-40" />
+              <img src="/logo.png" alt="" className="w-6 h-6 object-contain opacity-40" aria-hidden="true" />
             </div>
             <div className="text-center">
               <p className="text-zinc-500 text-[14px] font-medium">No preview yet</p>
@@ -119,7 +112,6 @@ export function PreviewPanel({
 
         {isGenerating && (
           <div className="flex flex-col items-center justify-center h-full gap-6">
-            {/* Logo pulse animation */}
             <div className="relative flex items-center justify-center">
               <motion.div
                 className="absolute w-24 h-24 rounded-full bg-green-500/10"

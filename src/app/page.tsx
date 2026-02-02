@@ -1,22 +1,13 @@
 "use client";
 
-import { useState, useRef, useCallback, useMemo } from "react";
+import { useState, useRef, useCallback, useMemo, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Paperclip, ArrowUp, ImagePlus, X } from "lucide-react";
 import { ChatPanel } from "@/components/chat/ChatPanel";
 import { PreviewPanel } from "@/components/preview/PreviewPanel";
 import { VoiceCall } from "@/components/chat/VoiceCall";
-
-type Viewport = "desktop" | "tablet" | "mobile";
-
-interface Message {
-  id: string;
-  role: "user" | "assistant";
-  content: string;
-  pills?: string[];
-  showUpload?: boolean | string;
-  images?: string[];
-}
+import { processImageFiles } from "@/lib/images";
+import type { Message, Viewport } from "@/lib/types";
 
 const HEADLINES = [
   "What shall we build?",
@@ -71,6 +62,12 @@ export default function HomePage() {
   const welcomeTextareaRef = useRef<HTMLTextAreaElement>(null);
   const welcomeFileRef = useRef<HTMLInputElement>(null);
 
+  const messagesRef = useRef(messages);
+  useEffect(() => { messagesRef.current = messages; }, [messages]);
+
+  // Abort controller for cancelling in-flight requests
+  const abortRef = useRef<AbortController | null>(null);
+
   const handleSendMessage = async (text: string, imagesToInclude?: string[]) => {
     const imagesToSend = imagesToInclude || [...inspoImages];
     if (!imagesToInclude) setInspoImages([]);
@@ -86,8 +83,13 @@ export default function HomePage() {
     setMessages((prev) => [...prev, userMessage]);
     setIsGenerating(true);
 
+    // Cancel any previous in-flight request
+    abortRef.current?.abort();
+    const controller = new AbortController();
+    abortRef.current = controller;
+
     try {
-      const cleanMessages = [...messages, userMessage].map(
+      const cleanMessages = [...messagesRef.current, userMessage].map(
         ({ images, pills, showUpload, ...rest }) => rest
       );
 
@@ -99,6 +101,7 @@ export default function HomePage() {
           inspoImages: imagesToSend,
           currentPreview,
         }),
+        signal: controller.signal,
       });
 
       if (!response.ok) throw new Error("Failed to get response");
@@ -122,11 +125,12 @@ export default function HomePage() {
           setPreviewHistory((prev) => [...prev, currentPreview]);
         }
         // Inject navigation guard to keep all clicks inside iframe
-        const navGuard = `<script>document.addEventListener('click',function(e){var a=e.target.closest('a');if(a){var h=a.getAttribute('href');if(!h||h==='#'||h==='/'||h.startsWith('#')){e.preventDefault();}}},true);</script>`;
+        const navGuard = `<script>document.addEventListener('click',function(e){var a=e.target.closest('a');if(a){var h=a.getAttribute('href');if(h&&h.startsWith('http')){e.preventDefault();return;}if(h&&!h.startsWith('javascript:')){e.preventDefault();}}},true);</script>`;
         const safeHtml = data.html.replace(/<head([^>]*)>/i, `<head$1>${navGuard}`);
         setCurrentPreview(safeHtml);
       }
     } catch (error) {
+      if (error instanceof DOMException && error.name === "AbortError") return;
       console.error("Error sending message:", error);
       const errorMsg = "Sorry, something went wrong. Can you try again?";
       setMessages((prev) => [
@@ -139,7 +143,9 @@ export default function HomePage() {
       ]);
       if (isOnCall) setLastAiResponse({ text: errorMsg, id: Date.now() });
     } finally {
-      setIsGenerating(false);
+      if (!controller.signal.aborted) {
+        setIsGenerating(false);
+      }
     }
   };
 
@@ -177,10 +183,12 @@ export default function HomePage() {
   }, [currentPreview]);
 
   const handleNewProject = useCallback(() => {
+    abortRef.current?.abort();
     setMessages([]);
     setCurrentPreview(null);
     setPreviewHistory([]);
     setInspoImages([]);
+    setIsGenerating(false);
     setHasStarted(false);
     setWelcomeInput("");
     setWelcomeKey((k) => k + 1);
@@ -204,59 +212,9 @@ export default function HomePage() {
     }
   };
 
-  const readFileAsDataURL = (file: File): Promise<string> => {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.onloadend = () => resolve(reader.result as string);
-      reader.onerror = reject;
-      reader.readAsDataURL(file);
-    });
-  };
-
-  const compressImage = (dataUrl: string): Promise<string> => {
-    return new Promise((resolve) => {
-      const img = document.createElement("img");
-      img.onload = () => {
-        try {
-          const canvas = document.createElement("canvas");
-          const MAX = 1200;
-          let w = img.naturalWidth;
-          let h = img.naturalHeight;
-          if (w > MAX || h > MAX) {
-            if (w > h) { h = Math.round(h * MAX / w); w = MAX; }
-            else { w = Math.round(w * MAX / h); h = MAX; }
-          }
-          canvas.width = w;
-          canvas.height = h;
-          const ctx = canvas.getContext("2d");
-          if (!ctx) { resolve(dataUrl); return; }
-          ctx.drawImage(img, 0, 0, w, h);
-          resolve(canvas.toDataURL("image/jpeg", 0.7));
-        } catch {
-          resolve(dataUrl);
-        }
-      };
-      img.onerror = () => resolve(dataUrl);
-      img.src = dataUrl;
-    });
-  };
-
-  const processWelcomeFiles = async (files: FileList | File[]) => {
-    for (const file of Array.from(files)) {
-      if (!file.type.startsWith("image/")) continue;
-      try {
-        const dataUrl = await readFileAsDataURL(file);
-        const compressed = await compressImage(dataUrl);
-        handleImageUpload(compressed);
-      } catch (err) {
-        console.error("Failed to process image:", err);
-      }
-    }
-  };
-
   const handleWelcomeFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
-      processWelcomeFiles(e.target.files);
+      processImageFiles(e.target.files, handleImageUpload);
       e.target.value = "";
     }
   };
@@ -293,6 +251,7 @@ export default function HomePage() {
                       <button
                         onClick={() => handleImageRemove(idx)}
                         className="absolute -top-1.5 -right-1.5 w-5 h-5 bg-zinc-800 hover:bg-red-500 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-150 ring-1 ring-white/[0.06]"
+                        aria-label={`Remove image ${idx + 1}`}
                       >
                         <X className="w-3 h-3 text-zinc-300" />
                       </button>
@@ -301,6 +260,7 @@ export default function HomePage() {
                   <button
                     onClick={() => welcomeFileRef.current?.click()}
                     className="h-14 w-14 rounded-lg glass glass-hover flex items-center justify-center transition-all duration-200"
+                    aria-label="Add more images"
                   >
                     <ImagePlus className="w-4 h-4 text-zinc-500" />
                   </button>
@@ -341,6 +301,7 @@ export default function HomePage() {
                   onClick={() => welcomeFileRef.current?.click()}
                   className="p-1.5 hover:bg-white/[0.04] rounded-lg transition-colors"
                   title="Upload images"
+                  aria-label="Upload images"
                 >
                   <Paperclip className="w-3.5 h-3.5 text-zinc-500" />
                 </button>
@@ -351,16 +312,18 @@ export default function HomePage() {
                   multiple
                   onChange={handleWelcomeFileUpload}
                   className="hidden"
+                  aria-hidden="true"
                 />
               </div>
             </div>
 
-            <div className="flex justify-center gap-3">
+            <div className="flex justify-center gap-3 flex-wrap">
               {quickActions.map((action) => (
                 <button
                   key={action}
                   onClick={() => handleSendMessage(action)}
-                  className="px-5 py-2.5 text-[13px] font-medium text-zinc-400 hover:text-zinc-200 glass-matte glass-hover rounded-full transition-all duration-200"
+                  disabled={isGenerating}
+                  className="px-5 py-2.5 text-[13px] font-medium text-zinc-400 hover:text-zinc-200 glass-matte glass-hover disabled:opacity-40 disabled:cursor-not-allowed rounded-full transition-all duration-200"
                 >
                   {action}
                 </button>
@@ -382,7 +345,7 @@ export default function HomePage() {
         animate={{ opacity: 1 }}
         transition={{ duration: 0.3 }}
       >
-        <nav className="w-1/3 min-w-[360px]" aria-label="Chat">
+        <nav className="w-1/3 min-w-[360px] max-w-[480px]" aria-label="Chat">
           <ChatPanel
             messages={messages}
             onSend={handleSendMessage}
@@ -396,6 +359,7 @@ export default function HomePage() {
             onStartCall={() => { setLastAiResponse(null); setIsOnCall(true); }}
             onEndCall={() => setIsOnCall(false)}
             lastAiResponse={lastAiResponse}
+            hasPreview={!!currentPreview}
           />
         </nav>
         <main className="flex-1 relative" aria-label="Preview">
