@@ -14,6 +14,7 @@ interface ChatRequest {
   }>;
   inspoImages: string[];
   currentPreview: string | null;
+  previewScreenshot?: string | null;
 }
 
 interface ChatResponse {
@@ -66,6 +67,7 @@ Phase 5 — Review (QA):
 - Mobile: does the hamburger menu work? Touch targets ≥44px? No horizontal scroll?
 - Are there any dead buttons or links that go nowhere?
 - Is the copy brand-specific or generic slop?
+- When a screenshot of the current site is provided, visually inspect it for layout issues, broken styling, or visual bugs that aren't apparent from HTML alone.
 
 These phases happen in your internal reasoning. The user never sees them. Your outward conversation stays identical — warm, efficient, non-technical.
 
@@ -263,7 +265,7 @@ VIBE OPTIONS to offer:
 export async function POST(req: Request) {
   try {
     const body: ChatRequest = await req.json();
-    const { messages, inspoImages, currentPreview } = body;
+    const { messages, inspoImages, currentPreview, previewScreenshot } = body;
 
     const claudeMessages: MessageParam[] = [];
 
@@ -307,8 +309,50 @@ export async function POST(req: Request) {
     // Inject current preview context for iteration
     if (currentPreview && claudeMessages.length > 0) {
       const lastMessage = claudeMessages[claudeMessages.length - 1];
-      if (lastMessage.role === "user" && typeof lastMessage.content === "string") {
-        lastMessage.content = `[The user currently has a website preview. Here is the current HTML:\n${currentPreview.substring(0, 30000)}\n]\n\nUser request: ${lastMessage.content}`;
+      const previewContext = `[The user currently has a website preview. Here is the current HTML:\n${currentPreview.substring(0, 30000)}\n]`;
+      if (lastMessage.role === "user") {
+        if (typeof lastMessage.content === "string") {
+          lastMessage.content = `${previewContext}\n\nUser request: ${lastMessage.content}`;
+        } else if (Array.isArray(lastMessage.content)) {
+          // Find the last text block and prepend context to it
+          const lastTextIndex = lastMessage.content.findLastIndex(
+            (block) => block.type === "text"
+          );
+          if (lastTextIndex >= 0) {
+            const textBlock = lastMessage.content[lastTextIndex] as TextBlockParam;
+            textBlock.text = `${previewContext}\n\nUser request: ${textBlock.text}`;
+          }
+        }
+      }
+    }
+
+    // Inject screenshot of current preview so Claude can visually verify its output
+    if (previewScreenshot && claudeMessages.length > 0) {
+      const lastMessage = claudeMessages[claudeMessages.length - 1];
+      const screenshotMatch = previewScreenshot.match(/^data:(image\/[a-zA-Z]+);base64,(.+)$/);
+      if (screenshotMatch) {
+        const screenshotImage: ImageBlockParam = {
+          type: "image",
+          source: {
+            type: "base64",
+            media_type: screenshotMatch[1] as "image/jpeg" | "image/png" | "image/gif" | "image/webp",
+            data: screenshotMatch[2],
+          },
+        };
+        const screenshotNote: TextBlockParam = {
+          type: "text",
+          text: "[VISUAL CONTEXT: This is a screenshot of the website the user currently sees. Use it to verify visual quality and catch rendering issues.]",
+        };
+
+        if (typeof lastMessage.content === "string") {
+          lastMessage.content = [
+            screenshotImage,
+            screenshotNote,
+            { type: "text" as const, text: lastMessage.content },
+          ];
+        } else if (Array.isArray(lastMessage.content)) {
+          lastMessage.content = [screenshotImage, screenshotNote, ...lastMessage.content];
+        }
       }
     }
 

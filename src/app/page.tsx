@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef, useCallback, useMemo, useEffect } from "react";
+import html2canvas from "html2canvas";
 import { motion, AnimatePresence } from "framer-motion";
 import { Paperclip, ArrowUp, ImagePlus, X } from "lucide-react";
 import { ChatPanel } from "@/components/chat/ChatPanel";
@@ -52,6 +53,7 @@ export default function HomePage() {
   const [isOnCall, setIsOnCall] = useState(false);
   const [lastAiResponse, setLastAiResponse] = useState<{ text: string; id: number } | null>(null);
   const [hasStarted, setHasStarted] = useState(false);
+  const [previewScreenshot, setPreviewScreenshot] = useState<string | null>(null);
 
   // Randomized on each mount/reset
   const [welcomeKey, setWelcomeKey] = useState(0);
@@ -64,6 +66,37 @@ export default function HomePage() {
 
   const messagesRef = useRef(messages);
   useEffect(() => { messagesRef.current = messages; }, [messages]);
+
+  const screenshotTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const captureScreenshot = useCallback(async (iframe: HTMLIFrameElement) => {
+    try {
+      const doc = iframe.contentDocument;
+      if (!doc?.body) return;
+      const canvas = await html2canvas(doc.body, {
+        useCORS: true,
+        scale: 0.5,
+        logging: false,
+        height: Math.min(doc.body.scrollHeight, 900),
+        windowHeight: 900,
+      });
+      const dataUrl = canvas.toDataURL("image/jpeg", 0.5);
+      setPreviewScreenshot(dataUrl);
+    } catch (err) {
+      console.error("Screenshot capture failed:", err);
+    }
+  }, []);
+
+  const handleIframeLoad = useCallback((iframe: HTMLIFrameElement) => {
+    if (screenshotTimerRef.current) clearTimeout(screenshotTimerRef.current);
+    screenshotTimerRef.current = setTimeout(() => captureScreenshot(iframe), 500);
+  }, [captureScreenshot]);
+
+  useEffect(() => {
+    return () => {
+      if (screenshotTimerRef.current) clearTimeout(screenshotTimerRef.current);
+    };
+  }, []);
 
   // Abort controller for cancelling in-flight requests
   const abortRef = useRef<AbortController | null>(null);
@@ -100,6 +133,7 @@ export default function HomePage() {
           messages: cleanMessages,
           inspoImages: imagesToSend,
           currentPreview,
+          previewScreenshot,
         }),
         signal: controller.signal,
       });
@@ -194,6 +228,7 @@ export default function HomePage() {
     setWelcomeKey((k) => k + 1);
     setIsOnCall(false);
     setLastAiResponse(null);
+    setPreviewScreenshot(null);
   }, []);
 
   const handleWelcomeSend = () => {
@@ -371,6 +406,7 @@ export default function HomePage() {
             canGoBack={previewHistory.length > 0}
             onBack={handleBack}
             onExport={handleExport}
+            onIframeLoad={handleIframeLoad}
           />
           {/* Voice call widget — top-right of preview area */}
           <AnimatePresence>

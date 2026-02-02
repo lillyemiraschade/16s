@@ -13,6 +13,7 @@ interface PreviewPanelProps {
   canGoBack: boolean;
   onBack: () => void;
   onExport: () => void;
+  onIframeLoad?: (iframe: HTMLIFrameElement) => void;
 }
 
 const viewportConfig = {
@@ -29,6 +30,7 @@ export function PreviewPanel({
   canGoBack,
   onBack,
   onExport,
+  onIframeLoad,
 }: PreviewPanelProps) {
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const [reloadKey, setReloadKey] = useState(0);
@@ -177,6 +179,11 @@ export function PreviewPanel({
                 className="w-full h-full border-0"
                 title="Website Preview"
                 aria-label="Generated website preview"
+                onLoad={() => {
+                  if (iframeRef.current && onIframeLoad) {
+                    onIframeLoad(iframeRef.current);
+                  }
+                }}
               />
             </motion.div>
           </motion.div>
