@@ -155,9 +155,17 @@
     border: 1px solid rgba(255, 255, 255, 0.06);
   }
 
+  /* Glass with matte finish — more opaque, frosted feel */
+  .glass-matte {
+    background: rgba(255, 255, 255, 0.04);
+    backdrop-filter: blur(24px) saturate(120%);
+    -webkit-backdrop-filter: blur(24px) saturate(120%);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
   .glass-hover:hover {
-    background: rgba(255, 255, 255, 0.06);
-    border-color: rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.07);
+    border-color: rgba(255, 255, 255, 0.12);
   }
 
   /* Glow button */

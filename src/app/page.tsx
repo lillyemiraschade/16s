@@ -1,10 +1,11 @@
 "use client";
 
-import { useState, useRef, useCallback } from "react";
+import { useState, useRef, useCallback, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Paperclip, ArrowUp, ImagePlus, X } from "lucide-react";
 import { ChatPanel } from "@/components/chat/ChatPanel";
 import { PreviewPanel } from "@/components/preview/PreviewPanel";
+import { VoiceCall } from "@/components/chat/VoiceCall";
 
 type Viewport = "desktop" | "tablet" | "mobile";
 
@@ -17,12 +18,38 @@ interface Message {
   images?: string[];
 }
 
-const QUICK_ACTIONS = [
+const HEADLINES = [
+  "What shall we build?",
+  "What idea should we bring to life?",
+  "Ready to design something new?",
+  "What\u2019s the vision?",
+  "Let\u2019s build something together.",
+  "Describe your dream site.",
+  "What are we creating today?",
+  "Got a project in mind?",
+];
+
+const ALL_QUICK_ACTIONS = [
   "Build me a landing page",
   "Design a portfolio site",
   "Create a restaurant website",
   "Make an agency homepage",
+  "Design a SaaS product page",
+  "Build an online store",
+  "Create a personal blog",
+  "Design a startup site",
+  "Make a fitness studio page",
+  "Build a photography portfolio",
+  "Create a coffee shop site",
+  "Design a law firm website",
+  "Make a real estate page",
+  "Build a wedding planner site",
 ];
+
+function pickRandom<T>(arr: T[], count: number): T[] {
+  const shuffled = [...arr].sort(() => Math.random() - 0.5);
+  return shuffled.slice(0, count);
+}
 
 export default function HomePage() {
   const [messages, setMessages] = useState<Message[]>([]);
@@ -35,7 +62,11 @@ export default function HomePage() {
   const [lastAiResponse, setLastAiResponse] = useState<{ text: string; id: number } | null>(null);
   const [hasStarted, setHasStarted] = useState(false);
 
-  // Welcome screen state
+  // Randomized on each mount/reset
+  const [welcomeKey, setWelcomeKey] = useState(0);
+  const headline = useMemo(() => HEADLINES[Math.floor(Math.random() * HEADLINES.length)], [welcomeKey]);
+  const quickActions = useMemo(() => pickRandom(ALL_QUICK_ACTIONS, 4), [welcomeKey]);
+
   const [welcomeInput, setWelcomeInput] = useState("");
   const welcomeTextareaRef = useRef<HTMLTextAreaElement>(null);
   const welcomeFileRef = useRef<HTMLInputElement>(null);
@@ -149,6 +180,9 @@ export default function HomePage() {
     setInspoImages([]);
     setHasStarted(false);
     setWelcomeInput("");
+    setWelcomeKey((k) => k + 1);
+    setIsOnCall(false);
+    setLastAiResponse(null);
   }, []);
 
   const handleWelcomeSend = () => {
@@ -224,16 +258,14 @@ export default function HomePage() {
     }
   };
 
-  // Welcome screen — full width, centered, no split
+  // Welcome screen
   if (!hasStarted) {
     return (
       <div id="main-content" className="h-screen welcome-bg flex flex-col">
-        {/* Top bar */}
         <div className="relative z-10 flex items-center justify-between px-6 py-4">
           <img src="/logo.png" alt="16s logo" className="w-8 h-8 object-contain" />
         </div>
 
-        {/* Center content */}
         <div className="relative z-10 flex-1 flex flex-col items-center justify-center px-6 -mt-16">
           <motion.div
             initial={{ opacity: 0, y: 16 }}
@@ -241,26 +273,20 @@ export default function HomePage() {
             transition={{ duration: 0.5, ease: "easeOut" }}
             className="flex flex-col items-center gap-8 w-full max-w-[640px]"
           >
-            {/* Logo + headline */}
             <div className="flex flex-col items-center gap-4">
               <img src="/logo.png" alt="" className="w-12 h-12 object-contain" />
               <h1 className="text-[32px] font-medium text-zinc-200 tracking-[-0.02em] text-center">
-                What shall we build?
+                {headline}
               </h1>
             </div>
 
             {/* Input bar */}
-            <div className="w-full glass rounded-2xl p-1">
-              {/* Image previews inside input */}
+            <div className="w-full glass-matte rounded-2xl p-1">
               {inspoImages.length > 0 && (
                 <div className="flex gap-2 flex-wrap px-3 pt-3">
                   {inspoImages.map((img, idx) => (
                     <div key={idx} className="relative group">
-                      <img
-                        src={img}
-                        alt={`Upload ${idx + 1}`}
-                        className="h-14 w-14 object-cover rounded-lg ring-1 ring-white/[0.06]"
-                      />
+                      <img src={img} alt={`Upload ${idx + 1}`} className="h-14 w-14 object-cover rounded-lg ring-1 ring-white/[0.06]" />
                       <button
                         onClick={() => handleImageRemove(idx)}
                         className="absolute -top-1.5 -right-1.5 w-5 h-5 bg-zinc-800 hover:bg-red-500 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-150 ring-1 ring-white/[0.06]"
@@ -301,13 +327,12 @@ export default function HomePage() {
                 <button
                   onClick={handleWelcomeSend}
                   disabled={(!welcomeInput.trim() && inspoImages.length === 0) || isGenerating}
-                  className="p-2.5 bg-gradient-to-b from-green-400 to-green-500 hover:from-green-300 hover:to-green-400 disabled:from-zinc-800 disabled:to-zinc-800 disabled:cursor-not-allowed rounded-full transition-all duration-200 flex-shrink-0 glow-green disabled:shadow-none"
+                  className="p-2.5 bg-green-500/80 hover:bg-green-400/80 disabled:bg-zinc-800/60 disabled:cursor-not-allowed rounded-full transition-all duration-200 flex-shrink-0 glow-green disabled:shadow-none"
                   aria-label="Send message"
                 >
                   <ArrowUp className="w-4 h-4 text-white" />
                 </button>
               </div>
-              {/* Toolbar */}
               <div className="flex items-center gap-1 px-4 pb-3">
                 <button
                   onClick={() => welcomeFileRef.current?.click()}
@@ -327,13 +352,12 @@ export default function HomePage() {
               </div>
             </div>
 
-            {/* Quick action pills */}
             <div className="flex flex-wrap justify-center gap-2">
-              {QUICK_ACTIONS.map((action) => (
+              {quickActions.map((action) => (
                 <button
                   key={action}
                   onClick={() => handleSendMessage(action)}
-                  className="px-4 py-2 text-[13px] font-medium text-zinc-400 hover:text-zinc-200 glass glass-hover rounded-full transition-all duration-200"
+                  className="px-4 py-2 text-[13px] font-medium text-zinc-400 hover:text-zinc-200 glass-matte glass-hover rounded-full transition-all duration-200"
                 >
                   {action}
                 </button>
@@ -371,7 +395,7 @@ export default function HomePage() {
             lastAiResponse={lastAiResponse}
           />
         </nav>
-        <main className="flex-1" aria-label="Preview">
+        <main className="flex-1 relative" aria-label="Preview">
           <PreviewPanel
             html={currentPreview}
             viewport={viewport}
@@ -381,6 +405,19 @@ export default function HomePage() {
             onBack={handleBack}
             onExport={handleExport}
           />
+          {/* Voice call widget — top-right of preview area */}
+          <AnimatePresence>
+            {isOnCall && (
+              <div className="absolute top-14 right-4 z-30">
+                <VoiceCall
+                  onSend={handleSendMessage}
+                  onHangUp={() => setIsOnCall(false)}
+                  aiResponse={lastAiResponse}
+                  isGenerating={isGenerating}
+                />
+              </div>
+            )}
+          </AnimatePresence>
         </main>
       </motion.div>
     </AnimatePresence>

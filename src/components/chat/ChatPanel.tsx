@@ -4,7 +4,6 @@ import { useEffect, useRef, useState, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Paperclip, ArrowUp, X, ImagePlus, Plus, Phone, Info } from "lucide-react";
 import { TypingIndicator } from "./TypingIndicator";
-import { VoiceCall } from "./VoiceCall";
 
 interface Message {
   id: string;
@@ -176,18 +175,6 @@ export function ChatPanel({
       onDragOver={handleDragOver}
       onDragLeave={handleDragLeave}
     >
-      {/* Voice call floating widget */}
-      <AnimatePresence>
-        {isOnCall && (
-          <VoiceCall
-            onSend={onSend}
-            onHangUp={onEndCall}
-            aiResponse={lastAiResponse}
-            isGenerating={isGenerating}
-          />
-        )}
-      </AnimatePresence>
-
       {/* Call disclaimer modal */}
       <AnimatePresence>
         {showCallDisclaimer && (
@@ -238,7 +225,7 @@ export function ChatPanel({
           <button
             onClick={handleCallClick}
             disabled={isOnCall}
-            className="flex items-center gap-1.5 px-3 py-2 text-[12px] font-medium text-zinc-400 hover:text-zinc-200 glass glass-hover disabled:opacity-40 disabled:cursor-not-allowed rounded-full transition-all duration-200"
+            className="flex items-center gap-1.5 px-3 py-2 text-[12px] font-medium text-zinc-400 hover:text-zinc-200 glass-matte glass-hover disabled:opacity-40 disabled:cursor-not-allowed rounded-full transition-all duration-200"
             title="Talk about the project on the phone"
           >
             <Phone className="w-3.5 h-3.5" />
@@ -280,8 +267,8 @@ export function ChatPanel({
               <div
                 className={`${
                   message.role === "user"
-                    ? "bg-gradient-to-b from-green-500/90 to-green-600/90 text-white ml-auto max-w-[85%] glow-green"
-                    : "glass text-zinc-200 max-w-[90%]"
+                    ? "bg-green-500/60 text-white ml-auto max-w-[85%]"
+                    : "glass-matte text-zinc-200 max-w-[90%]"
                 } rounded-2xl px-4 py-3`}
               >
                 {/* Attached images */}
@@ -387,7 +374,7 @@ export function ChatPanel({
         )}
 
         {/* Input container — glass pill with inner glow */}
-        <div className="glass rounded-2xl p-1">
+        <div className="glass-matte rounded-2xl p-1">
           <div className="flex items-end gap-2 px-3 py-2">
             <img src="/logo.png" alt="" className="w-6 h-6 object-contain mb-1 opacity-30 flex-shrink-0" />
             <textarea
@@ -413,7 +400,7 @@ export function ChatPanel({
             <button
               onClick={handleSend}
               disabled={(!input.trim() && inspoImages.length === 0) || isGenerating}
-              className="p-2 mb-0.5 bg-gradient-to-b from-green-400 to-green-500 hover:from-green-300 hover:to-green-400 disabled:from-zinc-800 disabled:to-zinc-800 disabled:cursor-not-allowed rounded-full transition-all duration-200 flex-shrink-0 glow-green disabled:shadow-none"
+              className="p-2 mb-0.5 bg-green-500/70 hover:bg-green-400/70 disabled:bg-zinc-800/50 disabled:cursor-not-allowed rounded-full transition-all duration-200 flex-shrink-0 glow-green disabled:shadow-none"
               aria-label="Send message"
             >
               <ArrowUp className="w-4 h-4 text-white" />
