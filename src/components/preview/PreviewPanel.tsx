@@ -1,7 +1,8 @@
 "use client";
 
+import { useRef, useCallback, useState } from "react";
 import { motion } from "framer-motion";
-import { Monitor, Tablet, Smartphone, Loader2, ChevronLeft, ChevronRight, RotateCcw, Download } from "lucide-react";
+import { Monitor, Tablet, Smartphone, ChevronLeft, ChevronRight, RotateCcw, Download } from "lucide-react";
 
 type Viewport = "desktop" | "tablet" | "mobile";
 
@@ -21,6 +22,9 @@ const viewportConfig = {
   mobile: { width: "375px", icon: Smartphone, label: "Mobile" },
 };
 
+const PETAL_COUNT = 6;
+const petals = Array.from({ length: PETAL_COUNT }, (_, i) => i);
+
 export function PreviewPanel({
   html,
   viewport,
@@ -30,6 +34,30 @@ export function PreviewPanel({
   onBack,
   onExport,
 }: PreviewPanelProps) {
+  const iframeRef = useRef<HTMLIFrameElement>(null);
+  const [reloadKey, setReloadKey] = useState(0);
+
+  const handleIframeBack = useCallback(() => {
+    try {
+      iframeRef.current?.contentWindow?.history.back();
+    } catch {
+      // cross-origin fallback: use the version history back
+      onBack();
+    }
+  }, [onBack]);
+
+  const handleIframeForward = useCallback(() => {
+    try {
+      iframeRef.current?.contentWindow?.history.forward();
+    } catch {
+      // no-op
+    }
+  }, []);
+
+  const handleIframeReload = useCallback(() => {
+    setReloadKey((k) => k + 1);
+  }, []);
+
   return (
     <div className="flex flex-col h-full bg-[#0c0c0d]">
       {/* Top bar */}
@@ -37,24 +65,29 @@ export function PreviewPanel({
         {/* Browser nav buttons */}
         <div className="flex items-center gap-1">
           <button
-            onClick={onBack}
-            disabled={!canGoBack}
+            onClick={handleIframeBack}
+            disabled={!html}
             className="p-1.5 rounded-md text-zinc-500 hover:text-zinc-300 disabled:text-zinc-700 disabled:cursor-not-allowed transition-colors"
             title="Back"
+            aria-label="Go back"
           >
             <ChevronLeft className="w-4 h-4" />
           </button>
           <button
-            disabled
-            className="p-1.5 rounded-md text-zinc-700 cursor-not-allowed"
+            onClick={handleIframeForward}
+            disabled={!html}
+            className="p-1.5 rounded-md text-zinc-500 hover:text-zinc-300 disabled:text-zinc-700 disabled:cursor-not-allowed transition-colors"
             title="Forward"
+            aria-label="Go forward"
           >
             <ChevronRight className="w-4 h-4" />
           </button>
           <button
-            disabled
-            className="p-1.5 rounded-md text-zinc-700 cursor-not-allowed"
+            onClick={handleIframeReload}
+            disabled={!html}
+            className="p-1.5 rounded-md text-zinc-500 hover:text-zinc-300 disabled:text-zinc-700 disabled:cursor-not-allowed transition-colors"
             title="Reload"
+            aria-label="Reload preview"
           >
             <RotateCcw className="w-3.5 h-3.5" />
           </button>
@@ -110,8 +143,37 @@ export function PreviewPanel({
         )}
 
         {isGenerating && (
-          <div className="flex flex-col items-center justify-center h-full gap-3">
-            <Loader2 className="w-6 h-6 text-indigo-400 animate-spin" />
+          <div className="flex flex-col items-center justify-center h-full gap-6">
+            {/* Bloom animation */}
+            <div className="relative w-16 h-16">
+              {petals.map((i) => (
+                <motion.div
+                  key={i}
+                  className="absolute left-1/2 top-1/2 w-3 h-8 rounded-full bg-indigo-400/60 origin-bottom"
+                  style={{
+                    marginLeft: -6,
+                    marginTop: -32,
+                    rotate: `${i * (360 / PETAL_COUNT)}deg`,
+                  }}
+                  animate={{
+                    scaleY: [0.4, 1, 0.4],
+                    scaleX: [0.8, 1.2, 0.8],
+                    opacity: [0.3, 0.8, 0.3],
+                  }}
+                  transition={{
+                    duration: 2,
+                    repeat: Infinity,
+                    delay: i * 0.2,
+                    ease: "easeInOut",
+                  }}
+                />
+              ))}
+              <motion.div
+                className="absolute left-1/2 top-1/2 w-4 h-4 -ml-2 -mt-2 rounded-full bg-indigo-400"
+                animate={{ scale: [0.8, 1.2, 0.8], opacity: [0.6, 1, 0.6] }}
+                transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+              />
+            </div>
             <p className="text-zinc-500 text-[13px] font-medium">Designing your site...</p>
           </div>
         )}
@@ -131,18 +193,12 @@ export function PreviewPanel({
                 maxWidth: "100%",
               }}
             >
-              <div className="flex items-center gap-2 px-4 py-2 border-b border-zinc-800/40">
-                <div className="flex items-center gap-1.5">
-                  <div className="w-2.5 h-2.5 rounded-full bg-zinc-700/80" />
-                  <div className="w-2.5 h-2.5 rounded-full bg-zinc-700/80" />
-                  <div className="w-2.5 h-2.5 rounded-full bg-zinc-700/80" />
-                </div>
+              <div className="flex items-center px-4 py-2 border-b border-zinc-800/40">
                 <div className="flex-1 flex items-center justify-center">
                   <div className="bg-zinc-900/80 rounded-md px-4 py-0.5 text-[11px] text-zinc-600 font-medium tracking-wide">
                     yoursite.com
                   </div>
                 </div>
-                <div className="w-[52px]" />
               </div>
             </div>
 
@@ -157,8 +213,10 @@ export function PreviewPanel({
               layout
             >
               <iframe
+                key={reloadKey}
+                ref={iframeRef}
                 srcDoc={html}
-                sandbox="allow-scripts allow-same-origin"
+                sandbox="allow-scripts"
                 className="w-full h-full border-0"
                 title="Website Preview"
                 aria-label="Generated website preview"
