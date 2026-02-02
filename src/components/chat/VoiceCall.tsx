@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef, useCallback } from "react";
 import { motion } from "framer-motion";
-import { PhoneOff } from "lucide-react";
+import { PhoneOff, Mic, Volume2 } from "lucide-react";
 
 type CallState = "idle" | "listening" | "thinking" | "speaking";
 
@@ -23,7 +23,6 @@ export function VoiceCall({ onSend, onHangUp, aiResponse, isGenerating }: VoiceC
   const stateRef = useRef<CallState>("idle");
   const onSendRef = useRef(onSend);
 
-  // Keep refs in sync
   useEffect(() => {
     stateRef.current = state;
   }, [state]);
@@ -36,7 +35,6 @@ export function VoiceCall({ onSend, onHangUp, aiResponse, isGenerating }: VoiceC
     const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
     if (!SR) return;
 
-    // Stop any existing recognition
     recognitionRef.current?.stop();
 
     const recognition = new SR();
@@ -65,17 +63,13 @@ export function VoiceCall({ onSend, onHangUp, aiResponse, isGenerating }: VoiceC
       }
     };
 
-    recognition.onerror = () => {
-      // no-op, onend will handle restart
-    };
+    recognition.onerror = () => {};
 
     recognition.onend = () => {
-      // Restart if we're still supposed to be listening (browser may auto-stop)
       if (mountedRef.current && stateRef.current === "listening") {
         try {
           recognition.start();
         } catch {
-          // If restart fails, create a fresh one
           recognitionRef.current = null;
         }
       }
@@ -95,9 +89,7 @@ export function VoiceCall({ onSend, onHangUp, aiResponse, isGenerating }: VoiceC
     utterance.rate = 1.05;
     utterance.pitch = 1;
     utterance.onend = () => {
-      if (mountedRef.current) {
-        startListening();
-      }
+      if (mountedRef.current) startListening();
     };
     utterance.onerror = () => {
       if (mountedRef.current) startListening();
@@ -105,7 +97,6 @@ export function VoiceCall({ onSend, onHangUp, aiResponse, isGenerating }: VoiceC
     speechSynthesis.speak(utterance);
   }, [startListening]);
 
-  // Greeting on mount + browser support check
   useEffect(() => {
     mountedRef.current = true;
     const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
@@ -113,8 +104,7 @@ export function VoiceCall({ onSend, onHangUp, aiResponse, isGenerating }: VoiceC
       setUnsupported(true);
       return;
     }
-    const greeting = "Hey! Tell me what you want to build.";
-    speak(greeting);
+    speak("Hey! Tell me about your project.");
     return () => {
       mountedRef.current = false;
       speechSynthesis.cancel();
@@ -123,7 +113,6 @@ export function VoiceCall({ onSend, onHangUp, aiResponse, isGenerating }: VoiceC
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // When AI responds, speak it
   useEffect(() => {
     if (aiResponse && aiResponse.id !== lastSpokenRef.current && !isGenerating) {
       lastSpokenRef.current = aiResponse.id;
@@ -131,7 +120,6 @@ export function VoiceCall({ onSend, onHangUp, aiResponse, isGenerating }: VoiceC
     }
   }, [aiResponse, isGenerating, speak]);
 
-  // Update state when generating
   useEffect(() => {
     if (isGenerating) setState("thinking");
   }, [isGenerating]);
@@ -143,65 +131,73 @@ export function VoiceCall({ onSend, onHangUp, aiResponse, isGenerating }: VoiceC
     onHangUp();
   };
 
-  const statusText: Record<CallState, string> = {
-    idle: "Connecting...",
-    listening: "Listening...",
-    thinking: "Thinking...",
-    speaking: "Speaking...",
-  };
+  const stateIcon = state === "listening" ? Mic : state === "speaking" ? Volume2 : Mic;
+  const StateIcon = stateIcon;
 
-  const pulseScale = state === "listening" ? [1, 1.3, 1] : state === "speaking" ? [1, 1.15, 1] : [1, 1.05, 1];
+  const statusLabel: Record<CallState, string> = {
+    idle: "Connecting...",
+    listening: "Listening",
+    thinking: "Thinking...",
+    speaking: "Speaking",
+  };
 
   if (unsupported) {
     return (
-      <div className="absolute inset-0 z-20 bg-[#0a0a0b] flex flex-col items-center justify-center gap-6 px-8">
-        <p className="text-zinc-200 text-lg font-medium text-center">Voice calls require Chrome or Edge</p>
-        <p className="text-zinc-500 text-sm text-center">Your browser doesn&apos;t support the Speech Recognition API.</p>
+      <motion.div
+        initial={{ opacity: 0, scale: 0.9, y: 20 }}
+        animate={{ opacity: 1, scale: 1, y: 0 }}
+        exit={{ opacity: 0, scale: 0.9, y: 20 }}
+        className="absolute bottom-4 left-4 z-30 glass rounded-2xl p-4 max-w-[260px]"
+      >
+        <p className="text-zinc-300 text-[13px] font-medium">Voice requires Chrome or Edge</p>
         <button
           onClick={handleHangUp}
-          className="px-4 py-2 text-sm font-medium text-zinc-200 glass glass-hover rounded-full transition-all duration-200"
+          className="mt-2 px-3 py-1.5 text-[12px] font-medium text-zinc-300 glass glass-hover rounded-full transition-all duration-200"
         >
-          Go back
+          Dismiss
         </button>
-      </div>
+      </motion.div>
     );
   }
 
   return (
-    <div className="absolute inset-0 z-20 bg-[#0a0a0b] dot-grid flex flex-col items-center justify-center gap-8">
-      {/* Animated circle */}
+    <motion.div
+      initial={{ opacity: 0, scale: 0.9, y: 20 }}
+      animate={{ opacity: 1, scale: 1, y: 0 }}
+      exit={{ opacity: 0, scale: 0.9, y: 20 }}
+      className="absolute bottom-20 left-4 z-30 glass rounded-2xl p-3 flex items-center gap-3"
+    >
+      {/* Pulsing status orb */}
       <div className="relative flex items-center justify-center">
         <motion.div
-          animate={{ scale: pulseScale, opacity: [0.15, 0.35, 0.15] }}
-          transition={{ duration: state === "listening" ? 1.5 : 2, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute w-32 h-32 rounded-full bg-green-500/20"
+          className="absolute w-10 h-10 rounded-full bg-green-500/20"
+          animate={{
+            scale: state === "listening" ? [1, 1.4, 1] : [1, 1.1, 1],
+            opacity: [0.2, 0.5, 0.2],
+          }}
+          transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
         />
-        <motion.div
-          animate={{ scale: pulseScale }}
-          transition={{ duration: state === "listening" ? 1.5 : 2, repeat: Infinity, ease: "easeInOut", delay: 0.2 }}
-          className="absolute w-24 h-24 rounded-full bg-green-500/25"
-        />
-        <div className="w-16 h-16 rounded-full bg-gradient-to-b from-green-400 to-green-600 flex items-center justify-center glow-green-strong">
-          <img src="/logo.png" alt="16s" className="w-9 h-9 object-contain" />
+        <div className="w-8 h-8 rounded-full bg-gradient-to-b from-green-400 to-green-600 flex items-center justify-center glow-green">
+          <StateIcon className="w-3.5 h-3.5 text-white" />
         </div>
       </div>
 
-      {/* Status */}
-      <div className="text-center">
-        <p className="text-zinc-200 text-lg font-medium">{statusText[state]}</p>
+      {/* Status text */}
+      <div className="min-w-[80px]">
+        <p className="text-zinc-200 text-[13px] font-medium leading-tight">{statusLabel[state]}</p>
         {transcript && (
-          <p className="text-zinc-500 text-sm mt-2 max-w-[250px] truncate">{transcript}</p>
+          <p className="text-zinc-500 text-[11px] truncate max-w-[140px]">{transcript}</p>
         )}
       </div>
 
       {/* Hang up */}
       <button
         onClick={handleHangUp}
-        className="w-14 h-14 rounded-full bg-red-500 hover:bg-red-400 flex items-center justify-center transition-all duration-200 glow-red"
+        className="w-8 h-8 rounded-full bg-red-500/80 hover:bg-red-400 flex items-center justify-center transition-all duration-200 flex-shrink-0"
         title="End call"
       >
-        <PhoneOff className="w-6 h-6 text-white" />
+        <PhoneOff className="w-3.5 h-3.5 text-white" />
       </button>
-    </div>
+    </motion.div>
   );
 }

@@ -2,7 +2,7 @@
 
 import { useState, useRef, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Paperclip, ArrowUp, ImagePlus, X, Phone } from "lucide-react";
+import { Paperclip, ArrowUp, ImagePlus, X } from "lucide-react";
 import { ChatPanel } from "@/components/chat/ChatPanel";
 import { PreviewPanel } from "@/components/preview/PreviewPanel";
 
@@ -227,21 +227,14 @@ export default function HomePage() {
   // Welcome screen — full width, centered, no split
   if (!hasStarted) {
     return (
-      <div id="main-content" className="h-screen bg-[#0a0a0b] dot-grid flex flex-col">
+      <div id="main-content" className="h-screen welcome-bg flex flex-col">
         {/* Top bar */}
-        <div className="flex items-center justify-between px-6 py-4">
+        <div className="relative z-10 flex items-center justify-between px-6 py-4">
           <img src="/logo.png" alt="16s logo" className="w-8 h-8 object-contain" />
-          <button
-            onClick={() => { setHasStarted(true); setIsOnCall(true); setLastAiResponse(null); }}
-            className="flex items-center gap-1.5 px-4 py-2 text-[12px] font-medium text-black bg-gradient-to-b from-green-400 to-green-500 hover:from-green-300 hover:to-green-400 rounded-full transition-all duration-200 glow-green"
-          >
-            <Phone className="w-3.5 h-3.5" />
-            Call an Agent
-          </button>
         </div>
 
         {/* Center content */}
-        <div className="flex-1 flex flex-col items-center justify-center px-6 -mt-16">
+        <div className="relative z-10 flex-1 flex flex-col items-center justify-center px-6 -mt-16">
           <motion.div
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}

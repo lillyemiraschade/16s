@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Paperclip, ArrowUp, X, ImagePlus, Plus, Phone } from "lucide-react";
+import { Paperclip, ArrowUp, X, ImagePlus, Plus, Phone, Info } from "lucide-react";
 import { TypingIndicator } from "./TypingIndicator";
 import { VoiceCall } from "./VoiceCall";
 
@@ -157,22 +157,77 @@ export function ChatPanel({
     setIsDragging(false);
   };
 
+  const [showCallDisclaimer, setShowCallDisclaimer] = useState(false);
+
+  const handleCallClick = () => {
+    if (isOnCall) return;
+    setShowCallDisclaimer(true);
+  };
+
+  const handleAcceptCall = () => {
+    setShowCallDisclaimer(false);
+    onStartCall();
+  };
+
   return (
     <div
-      className="flex flex-col h-full bg-[#0a0a0b] dot-grid border-r border-white/[0.04]"
+      className="flex flex-col h-full bg-[#0a0a0b] dot-grid border-r border-white/[0.04] relative"
       onDrop={handleDrop}
       onDragOver={handleDragOver}
       onDragLeave={handleDragLeave}
     >
-      {/* Voice call overlay */}
-      {isOnCall && (
-        <VoiceCall
-          onSend={onSend}
-          onHangUp={onEndCall}
-          aiResponse={lastAiResponse}
-          isGenerating={isGenerating}
-        />
-      )}
+      {/* Voice call floating widget */}
+      <AnimatePresence>
+        {isOnCall && (
+          <VoiceCall
+            onSend={onSend}
+            onHangUp={onEndCall}
+            aiResponse={lastAiResponse}
+            isGenerating={isGenerating}
+          />
+        )}
+      </AnimatePresence>
+
+      {/* Call disclaimer modal */}
+      <AnimatePresence>
+        {showCallDisclaimer && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="absolute inset-0 z-40 bg-black/60 backdrop-blur-sm flex items-center justify-center p-6"
+          >
+            <motion.div
+              initial={{ scale: 0.95, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.95, opacity: 0 }}
+              className="glass rounded-2xl p-6 max-w-[340px] w-full"
+            >
+              <div className="flex items-center gap-2 mb-3">
+                <Info className="w-4 h-4 text-green-400" />
+                <p className="text-zinc-200 text-[14px] font-medium">Before you call</p>
+              </div>
+              <p className="text-zinc-400 text-[13px] leading-relaxed mb-5">
+                You&apos;ll be speaking with an AI assistant about your project. Your call may be recorded for training and quality purposes.
+              </p>
+              <div className="flex gap-2">
+                <button
+                  onClick={() => setShowCallDisclaimer(false)}
+                  className="flex-1 px-4 py-2 text-[13px] font-medium text-zinc-400 glass glass-hover rounded-full transition-all duration-200"
+                >
+                  Cancel
+                </button>
+                <button
+                  onClick={handleAcceptCall}
+                  className="flex-1 px-4 py-2 text-[13px] font-medium text-black bg-gradient-to-b from-green-400 to-green-500 hover:from-green-300 hover:to-green-400 rounded-full transition-all duration-200 glow-green"
+                >
+                  Start call
+                </button>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* Header */}
       <div className="px-5 py-4 border-b border-white/[0.04] flex items-center justify-between">
@@ -181,13 +236,13 @@ export function ChatPanel({
         </div>
         <div className="flex items-center gap-2">
           <button
-            onClick={onStartCall}
+            onClick={handleCallClick}
             disabled={isOnCall}
-            className="flex items-center gap-1.5 px-4 py-2 text-[12px] font-medium text-black bg-gradient-to-b from-green-400 to-green-500 hover:from-green-300 hover:to-green-400 disabled:opacity-40 disabled:cursor-not-allowed rounded-full transition-all duration-200 glow-green"
-            title="Call an agent"
+            className="flex items-center gap-1.5 px-3 py-2 text-[12px] font-medium text-zinc-400 hover:text-zinc-200 glass glass-hover disabled:opacity-40 disabled:cursor-not-allowed rounded-full transition-all duration-200"
+            title="Talk about the project on the phone"
           >
             <Phone className="w-3.5 h-3.5" />
-            Call
+            Talk on phone
           </button>
           <button
             onClick={onNewProject}
