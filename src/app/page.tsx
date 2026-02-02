@@ -29,7 +29,7 @@ export default function HomePage() {
   const [isGenerating, setIsGenerating] = useState(false);
   const [inspoImages, setInspoImages] = useState<string[]>([]);
   const [isOnCall, setIsOnCall] = useState(false);
-  const [lastAiResponse, setLastAiResponse] = useState<string | null>(null);
+  const [lastAiResponse, setLastAiResponse] = useState<{ text: string; id: number } | null>(null);
 
   useEffect(() => {
     setMessages([INITIAL_MESSAGE]);
@@ -67,7 +67,8 @@ export default function HomePage() {
       if (!response.ok) throw new Error("Failed to get response");
 
       const responseText = await response.text();
-      const data = JSON.parse(responseText.trim());
+      const lines = responseText.trim().split("\n").filter((l) => l.trim());
+      const data = JSON.parse(lines[lines.length - 1]);
 
       const aiMessage: Message = {
         id: (Date.now() + 1).toString(),
@@ -77,7 +78,7 @@ export default function HomePage() {
         showUpload: data.showUpload,
       };
       setMessages((prev) => [...prev, aiMessage]);
-      if (isOnCall) setLastAiResponse(data.message);
+      if (isOnCall) setLastAiResponse({ text: data.message, id: Date.now() });
 
       if (data.html) {
         if (currentPreview) {
@@ -96,13 +97,14 @@ export default function HomePage() {
           content: errorMsg,
         },
       ]);
-      if (isOnCall) setLastAiResponse(errorMsg);
+      if (isOnCall) setLastAiResponse({ text: errorMsg, id: Date.now() });
     } finally {
       setIsGenerating(false);
     }
   };
 
   const handlePillClick = (pill: string) => {
+    if (isGenerating) return;
     handleSendMessage(pill);
   };
 

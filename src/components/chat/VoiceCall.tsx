@@ -9,15 +9,16 @@ type CallState = "idle" | "listening" | "thinking" | "speaking";
 interface VoiceCallProps {
   onSend: (text: string) => void;
   onHangUp: () => void;
-  aiResponse: string | null;
+  aiResponse: { text: string; id: number } | null;
   isGenerating: boolean;
 }
 
 export function VoiceCall({ onSend, onHangUp, aiResponse, isGenerating }: VoiceCallProps) {
   const [state, setState] = useState<CallState>("idle");
   const [transcript, setTranscript] = useState("");
+  const [unsupported, setUnsupported] = useState(false);
   const recognitionRef = useRef<SpeechRecognition | null>(null);
-  const lastSpokenRef = useRef<string | null>(null);
+  const lastSpokenRef = useRef<number | null>(null);
   const mountedRef = useRef(true);
   const stateRef = useRef<CallState>("idle");
   const onSendRef = useRef(onSend);
@@ -88,6 +89,7 @@ export function VoiceCall({ onSend, onHangUp, aiResponse, isGenerating }: VoiceC
   }, []);
 
   const speak = useCallback((text: string) => {
+    speechSynthesis.cancel();
     setState("speaking");
     const utterance = new SpeechSynthesisUtterance(text);
     utterance.rate = 1.05;
@@ -103,9 +105,14 @@ export function VoiceCall({ onSend, onHangUp, aiResponse, isGenerating }: VoiceC
     speechSynthesis.speak(utterance);
   }, [startListening]);
 
-  // Greeting on mount
+  // Greeting on mount + browser support check
   useEffect(() => {
     mountedRef.current = true;
+    const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (!SR || !window.speechSynthesis) {
+      setUnsupported(true);
+      return;
+    }
     const greeting = "Hey! Tell me what you want to build.";
     speak(greeting);
     return () => {
@@ -118,9 +125,9 @@ export function VoiceCall({ onSend, onHangUp, aiResponse, isGenerating }: VoiceC
 
   // When AI responds, speak it
   useEffect(() => {
-    if (aiResponse && aiResponse !== lastSpokenRef.current && !isGenerating) {
-      lastSpokenRef.current = aiResponse;
-      speak(aiResponse);
+    if (aiResponse && aiResponse.id !== lastSpokenRef.current && !isGenerating) {
+      lastSpokenRef.current = aiResponse.id;
+      speak(aiResponse.text);
     }
   }, [aiResponse, isGenerating, speak]);
 
@@ -144,6 +151,21 @@ export function VoiceCall({ onSend, onHangUp, aiResponse, isGenerating }: VoiceC
   };
 
   const pulseScale = state === "listening" ? [1, 1.3, 1] : state === "speaking" ? [1, 1.15, 1] : [1, 1.05, 1];
+
+  if (unsupported) {
+    return (
+      <div className="absolute inset-0 z-20 bg-[#0a0a0b] flex flex-col items-center justify-center gap-6 px-8">
+        <p className="text-zinc-200 text-lg font-medium text-center">Voice calls require Chrome or Edge</p>
+        <p className="text-zinc-500 text-sm text-center">Your browser doesn&apos;t support the Speech Recognition API.</p>
+        <button
+          onClick={handleHangUp}
+          className="px-4 py-2 text-sm font-medium text-zinc-200 bg-zinc-800 hover:bg-zinc-700 rounded-lg transition-colors"
+        >
+          Go back
+        </button>
+      </div>
+    );
+  }
 
   return (
     <div className="absolute inset-0 z-20 bg-[#0a0a0b] flex flex-col items-center justify-center gap-8">

@@ -2,7 +2,7 @@
 
 import { useRef, useCallback, useState } from "react";
 import { motion } from "framer-motion";
-import { Monitor, Tablet, Smartphone, ChevronLeft, ChevronRight, RotateCcw, Download } from "lucide-react";
+import { Monitor, Tablet, Smartphone, ChevronLeft, RotateCcw, Download } from "lucide-react";
 
 type Viewport = "desktop" | "tablet" | "mobile";
 
@@ -38,21 +38,8 @@ export function PreviewPanel({
   const [reloadKey, setReloadKey] = useState(0);
 
   const handleIframeBack = useCallback(() => {
-    try {
-      iframeRef.current?.contentWindow?.history.back();
-    } catch {
-      // cross-origin fallback: use the version history back
-      onBack();
-    }
+    onBack();
   }, [onBack]);
-
-  const handleIframeForward = useCallback(() => {
-    try {
-      iframeRef.current?.contentWindow?.history.forward();
-    } catch {
-      // no-op
-    }
-  }, []);
 
   const handleIframeReload = useCallback(() => {
     setReloadKey((k) => k + 1);
@@ -66,21 +53,12 @@ export function PreviewPanel({
         <div className="flex items-center gap-1">
           <button
             onClick={handleIframeBack}
-            disabled={!html}
+            disabled={!canGoBack}
             className="p-1.5 rounded-md text-zinc-500 hover:text-zinc-300 disabled:text-zinc-700 disabled:cursor-not-allowed transition-colors"
-            title="Back"
-            aria-label="Go back"
+            title="Back to previous version"
+            aria-label="Go back to previous version"
           >
             <ChevronLeft className="w-4 h-4" />
-          </button>
-          <button
-            onClick={handleIframeForward}
-            disabled={!html}
-            className="p-1.5 rounded-md text-zinc-500 hover:text-zinc-300 disabled:text-zinc-700 disabled:cursor-not-allowed transition-colors"
-            title="Forward"
-            aria-label="Go forward"
-          >
-            <ChevronRight className="w-4 h-4" />
           </button>
           <button
             onClick={handleIframeReload}

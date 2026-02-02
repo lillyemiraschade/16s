@@ -302,7 +302,7 @@ export async function POST(req: Request) {
         message: "Give me one more second...",
       }),
       {
-        status: 200,
+        status: 500,
         headers: { "Content-Type": "application/json" },
       }
     );

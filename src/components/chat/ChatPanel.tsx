@@ -27,7 +27,7 @@ interface ChatPanelProps {
   isOnCall: boolean;
   onStartCall: () => void;
   onEndCall: () => void;
-  lastAiResponse: string | null;
+  lastAiResponse: { text: string; id: number } | null;
 }
 
 export function ChatPanel({
@@ -248,7 +248,7 @@ export function ChatPanel({
                     ))}
                   </div>
                 )}
-                <p className="text-[14px] leading-relaxed whitespace-pre-wrap">{message.content}</p>
+                <p className="text-[14px] leading-relaxed whitespace-pre-wrap break-words">{message.content}</p>
 
                 {/* Pills */}
                 {message.pills && message.pills.length > 0 && (
@@ -365,6 +365,7 @@ export function ChatPanel({
             onClick={handleSend}
             disabled={(!input.trim() && inspoImages.length === 0) || isGenerating}
             className="p-1.5 bg-indigo-500 hover:bg-indigo-400 disabled:bg-zinc-800 disabled:cursor-not-allowed rounded-lg transition-all duration-150 flex-shrink-0"
+            aria-label="Send message"
           >
             <ArrowUp className="w-4 h-4 text-white" />
           </button>
