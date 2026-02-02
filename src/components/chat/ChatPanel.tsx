@@ -176,10 +176,8 @@ export function ChatPanel({
 
       {/* Header */}
       <div className="px-5 py-4 border-b border-zinc-800/80 flex items-center justify-between">
-        <div className="flex items-center gap-2.5">
-          <div className="w-7 h-7 rounded-lg bg-green-600 flex items-center justify-center">
-            <span className="text-white text-xs font-bold tracking-tight">16</span>
-          </div>
+        <div className="flex items-center gap-2">
+          <img src="/logo.png" alt="16s logo" className="w-7 h-7 object-contain" />
           <span className="text-[15px] font-semibold text-zinc-100 tracking-[-0.01em]">16s</span>
         </div>
         <div className="flex items-center gap-2">

@@ -182,7 +182,7 @@ export function VoiceCall({ onSend, onHangUp, aiResponse, isGenerating }: VoiceC
           className="absolute w-24 h-24 rounded-full bg-green-600/30"
         />
         <div className="w-16 h-16 rounded-full bg-green-600 flex items-center justify-center">
-          <span className="text-white text-sm font-bold">16s</span>
+          <img src="/logo.png" alt="16s" className="w-9 h-9 object-contain" />
         </div>
       </div>
 

@@ -22,9 +22,6 @@ const viewportConfig = {
   mobile: { width: "375px", icon: Smartphone, label: "Mobile" },
 };
 
-const PETAL_COUNT = 6;
-const petals = Array.from({ length: PETAL_COUNT }, (_, i) => i);
-
 export function PreviewPanel({
   html,
   viewport,
@@ -111,7 +108,7 @@ export function PreviewPanel({
         {!html && !isGenerating && (
           <div className="flex flex-col items-center justify-center h-full gap-4">
             <div className="w-12 h-12 rounded-2xl bg-zinc-900/80 border border-zinc-800/60 flex items-center justify-center">
-              <Monitor className="w-5 h-5 text-zinc-600" />
+              <img src="/logo.png" alt="16s" className="w-6 h-6 object-contain opacity-40" />
             </div>
             <div className="text-center">
               <p className="text-zinc-500 text-[14px] font-medium">No preview yet</p>
@@ -122,33 +119,23 @@ export function PreviewPanel({
 
         {isGenerating && (
           <div className="flex flex-col items-center justify-center h-full gap-6">
-            {/* Bloom animation */}
-            <div className="relative w-16 h-16">
-              {petals.map((i) => (
-                <motion.div
-                  key={i}
-                  className="absolute left-1/2 top-1/2 w-3 h-8 rounded-full bg-green-500/60 origin-bottom"
-                  style={{
-                    marginLeft: -6,
-                    marginTop: -32,
-                    rotate: `${i * (360 / PETAL_COUNT)}deg`,
-                  }}
-                  animate={{
-                    scaleY: [0.4, 1, 0.4],
-                    scaleX: [0.8, 1.2, 0.8],
-                    opacity: [0.3, 0.8, 0.3],
-                  }}
-                  transition={{
-                    duration: 2,
-                    repeat: Infinity,
-                    delay: i * 0.2,
-                    ease: "easeInOut",
-                  }}
-                />
-              ))}
+            {/* Logo pulse animation */}
+            <div className="relative flex items-center justify-center">
               <motion.div
-                className="absolute left-1/2 top-1/2 w-4 h-4 -ml-2 -mt-2 rounded-full bg-green-500"
-                animate={{ scale: [0.8, 1.2, 0.8], opacity: [0.6, 1, 0.6] }}
+                className="absolute w-24 h-24 rounded-full bg-green-600/15"
+                animate={{ scale: [1, 1.4, 1], opacity: [0.3, 0.6, 0.3] }}
+                transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+              />
+              <motion.div
+                className="absolute w-16 h-16 rounded-full bg-green-600/25"
+                animate={{ scale: [1, 1.2, 1], opacity: [0.4, 0.7, 0.4] }}
+                transition={{ duration: 2, repeat: Infinity, ease: "easeInOut", delay: 0.3 }}
+              />
+              <motion.img
+                src="/logo.png"
+                alt="Loading"
+                className="w-12 h-12 object-contain relative z-10"
+                animate={{ scale: [0.9, 1.1, 0.9], opacity: [0.7, 1, 0.7] }}
                 transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
               />
             </div>
