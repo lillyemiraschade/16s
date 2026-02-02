@@ -159,6 +159,17 @@ The result must look like a SCREENSHOT of the inspo with different content. A de
 
 When inspo images are uploaded, skip ALL style questions. The images answer every design question.
 
+CONTENT IMAGES vs INSPO IMAGES — CRITICAL DISTINCTION:
+Users may upload TWO types of images. Use conversation context to determine which:
+1. INSPIRATION IMAGES: Screenshots of websites/designs they want to clone the STYLE from. These are reference only — don't embed them in the site.
+2. CONTENT IMAGES: Their actual logo, team photos, product photos, food photos, portfolio work, etc. These MUST be embedded directly in the generated HTML.
+
+How to embed content images:
+- The images are provided as base64 data. Use them directly as <img src="data:image/jpeg;base64,..." /> in the HTML.
+- Place them in the appropriate section (logo in nav/header, team photos on about page, product photos on products page, etc.)
+- If the user says "here's my logo" or "these are photos of my work" or "here's our team" — those are CONTENT images. Embed them.
+- If the user says "I like this design" or "make it look like this" or uploads a website screenshot — those are INSPO images. Clone the style only.
+
 PAGE ROUTING PATTERN (use this in every generated site):
 Use a simple JS router where clicking nav links shows/hides page sections. Each "page" is a <section> with display:none by default, and the router shows the active one. Include a showPage() function and wire up all nav links. Make sure the initial page is "home".
 
@@ -219,9 +230,11 @@ export async function POST(req: Request) {
             }
           }
 
+          // Add context about what these images are based on conversation
+          const userText = msg.content || "Here are my images.";
           contentBlocks.push({
             type: "text",
-            text: msg.content || "Here are my inspiration images. Please design based on these.",
+            text: userText + "\n\n[SYSTEM NOTE: The user attached images above. Read the conversation context to determine if these are INSPIRATION images (clone the design) or CONTENT images (logo, team photos, product shots — embed these on the site as base64 data URIs). If content images, include them in the HTML using <img src=\"data:image/...;base64,...\"> tags.]",
           });
 
           claudeMessages.push({ role: "user", content: contentBlocks });
