@@ -159,7 +159,7 @@ export function VoiceCall({ onSend, onHangUp, aiResponse, isGenerating }: VoiceC
         <p className="text-zinc-500 text-sm text-center">Your browser doesn&apos;t support the Speech Recognition API.</p>
         <button
           onClick={handleHangUp}
-          className="px-4 py-2 text-sm font-medium text-zinc-200 bg-zinc-800 hover:bg-zinc-700 rounded-lg transition-colors"
+          className="px-4 py-2 text-sm font-medium text-zinc-200 glass glass-hover rounded-full transition-all duration-200"
         >
           Go back
         </button>
@@ -168,20 +168,20 @@ export function VoiceCall({ onSend, onHangUp, aiResponse, isGenerating }: VoiceC
   }
 
   return (
-    <div className="absolute inset-0 z-20 bg-[#0a0a0b] flex flex-col items-center justify-center gap-8">
+    <div className="absolute inset-0 z-20 bg-[#0a0a0b] dot-grid flex flex-col items-center justify-center gap-8">
       {/* Animated circle */}
       <div className="relative flex items-center justify-center">
         <motion.div
-          animate={{ scale: pulseScale, opacity: [0.3, 0.6, 0.3] }}
+          animate={{ scale: pulseScale, opacity: [0.15, 0.35, 0.15] }}
           transition={{ duration: state === "listening" ? 1.5 : 2, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute w-32 h-32 rounded-full bg-green-600/20"
+          className="absolute w-32 h-32 rounded-full bg-green-500/20"
         />
         <motion.div
           animate={{ scale: pulseScale }}
           transition={{ duration: state === "listening" ? 1.5 : 2, repeat: Infinity, ease: "easeInOut", delay: 0.2 }}
-          className="absolute w-24 h-24 rounded-full bg-green-600/30"
+          className="absolute w-24 h-24 rounded-full bg-green-500/25"
         />
-        <div className="w-16 h-16 rounded-full bg-green-600 flex items-center justify-center">
+        <div className="w-16 h-16 rounded-full bg-gradient-to-b from-green-400 to-green-600 flex items-center justify-center glow-green-strong">
           <img src="/logo.png" alt="16s" className="w-9 h-9 object-contain" />
         </div>
       </div>
@@ -197,7 +197,7 @@ export function VoiceCall({ onSend, onHangUp, aiResponse, isGenerating }: VoiceC
       {/* Hang up */}
       <button
         onClick={handleHangUp}
-        className="w-14 h-14 rounded-full bg-red-500 hover:bg-red-400 flex items-center justify-center transition-colors"
+        className="w-14 h-14 rounded-full bg-red-500 hover:bg-red-400 flex items-center justify-center transition-all duration-200 glow-red"
         title="End call"
       >
         <PhoneOff className="w-6 h-6 text-white" />

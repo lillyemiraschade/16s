@@ -159,7 +159,7 @@ export function ChatPanel({
 
   return (
     <div
-      className="flex flex-col h-full bg-[#0a0a0b] border-r border-zinc-800/80"
+      className="flex flex-col h-full bg-[#0a0a0b] dot-grid border-r border-white/[0.04]"
       onDrop={handleDrop}
       onDragOver={handleDragOver}
       onDragLeave={handleDragLeave}
@@ -175,24 +175,23 @@ export function ChatPanel({
       )}
 
       {/* Header */}
-      <div className="px-5 py-4 border-b border-zinc-800/80 flex items-center justify-between">
-        <div className="flex items-center gap-2">
-          <img src="/logo.png" alt="16s logo" className="w-7 h-7 object-contain" />
-          <span className="text-[15px] font-semibold text-zinc-100 tracking-[-0.01em]">16s</span>
+      <div className="px-5 py-4 border-b border-white/[0.04] flex items-center justify-between">
+        <div className="flex items-center">
+          <img src="/logo.png" alt="16s logo" className="w-8 h-8 object-contain" />
         </div>
         <div className="flex items-center gap-2">
           <button
             onClick={onStartCall}
             disabled={isOnCall}
-            className="flex items-center gap-1.5 px-3 py-1.5 text-[12px] font-medium text-white bg-green-600 hover:bg-green-500 disabled:opacity-50 disabled:cursor-not-allowed rounded-lg transition-all duration-150 shadow-sm shadow-green-600/20"
+            className="flex items-center gap-1.5 px-4 py-2 text-[12px] font-medium text-black bg-gradient-to-b from-green-400 to-green-500 hover:from-green-300 hover:to-green-400 disabled:opacity-40 disabled:cursor-not-allowed rounded-full transition-all duration-200 glow-green"
             title="Call an agent"
           >
             <Phone className="w-3.5 h-3.5" />
-            Call an Agent
+            Call
           </button>
           <button
             onClick={onNewProject}
-            className="flex items-center gap-1.5 px-2.5 py-1.5 text-[12px] font-medium text-zinc-400 hover:text-zinc-200 bg-zinc-900/60 hover:bg-zinc-800 rounded-lg border border-zinc-800/60 transition-all duration-150"
+            className="flex items-center gap-1.5 px-3 py-2 text-[12px] font-medium text-zinc-400 hover:text-zinc-200 glass glass-hover rounded-full transition-all duration-200"
             title="New project"
           >
             <Plus className="w-3.5 h-3.5" />
@@ -205,9 +204,9 @@ export function ChatPanel({
       <div className="flex-1 overflow-y-auto px-5 py-5 space-y-5 relative" role="log" aria-label="Conversation" aria-live="polite">
         {/* Drag overlay */}
         {isDragging && (
-          <div className="absolute inset-0 z-10 bg-green-600/5 border-2 border-dashed border-green-600/30 rounded-xl flex items-center justify-center backdrop-blur-sm">
+          <div className="absolute inset-0 z-10 bg-green-500/[0.03] border-2 border-dashed border-green-500/20 rounded-xl flex items-center justify-center backdrop-blur-sm">
             <div className="text-center">
-              <ImagePlus className="w-8 h-8 text-green-500 mx-auto mb-2" />
+              <ImagePlus className="w-8 h-8 text-green-400 mx-auto mb-2" />
               <p className="text-sm text-green-400 font-medium">Drop images here</p>
             </div>
           </div>
@@ -226,8 +225,8 @@ export function ChatPanel({
               <div
                 className={`${
                   message.role === "user"
-                    ? "bg-green-600/90 text-white ml-auto max-w-[85%]"
-                    : "bg-zinc-900/80 border border-zinc-800/80 text-zinc-200 max-w-[90%]"
+                    ? "bg-gradient-to-b from-green-500/90 to-green-600/90 text-white ml-auto max-w-[85%] glow-green"
+                    : "glass text-zinc-200 max-w-[90%]"
                 } rounded-2xl px-4 py-3`}
               >
                 {/* Attached images */}
@@ -257,7 +256,7 @@ export function ChatPanel({
                       <button
                         key={idx}
                         onClick={() => onPillClick(pill)}
-                        className="px-3.5 py-1.5 text-[13px] font-medium bg-zinc-800/80 hover:bg-zinc-700/80 text-zinc-200 rounded-full border border-zinc-700/60 transition-all duration-150 hover:border-zinc-600"
+                        className="px-3.5 py-1.5 text-[13px] font-medium glass glass-hover text-zinc-200 rounded-full transition-all duration-200"
                       >
                         {pill}
                       </button>
@@ -270,7 +269,7 @@ export function ChatPanel({
                   <div className="mt-3">
                     <button
                       onClick={() => fileInputRef.current?.click()}
-                      className="w-full px-4 py-3 text-[13px] font-medium bg-zinc-800/60 hover:bg-zinc-800 text-zinc-300 rounded-xl border border-dashed border-zinc-700/60 transition-all duration-150 flex items-center justify-center gap-2 hover:border-zinc-600"
+                      className="w-full px-4 py-3 text-[13px] font-medium glass glass-hover text-zinc-300 rounded-xl border-dashed transition-all duration-200 flex items-center justify-center gap-2"
                     >
                       <ImagePlus className="w-4 h-4" />
                       {typeof message.showUpload === "string" ? message.showUpload : "Upload inspiration images"}
@@ -289,7 +288,7 @@ export function ChatPanel({
             transition={{ duration: 0.2 }}
             className="flex justify-start"
           >
-            <div className="bg-zinc-900/80 border border-zinc-800/80 rounded-2xl px-4 py-3">
+            <div className="glass rounded-2xl px-4 py-3">
               <TypingIndicator />
             </div>
           </motion.div>
@@ -312,12 +311,12 @@ export function ChatPanel({
                   <img
                     src={img}
                     alt={`Inspiration image ${idx + 1}`}
-                    className="h-14 w-14 object-cover ring-1 ring-zinc-700/50"
+                    className="h-14 w-14 object-cover ring-1 ring-white/[0.06]"
                   />
                 </button>
                 <button
                   onClick={() => onImageRemove(idx)}
-                  className="absolute -top-1.5 -right-1.5 w-5 h-5 bg-zinc-800 hover:bg-red-500 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-150 ring-1 ring-zinc-700/50"
+                  className="absolute -top-1.5 -right-1.5 w-5 h-5 bg-zinc-800 hover:bg-red-500 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-150 ring-1 ring-white/[0.06]"
                 >
                   <X className="w-3 h-3 text-zinc-300" />
                 </button>
@@ -325,59 +324,64 @@ export function ChatPanel({
             ))}
             <button
               onClick={() => fileInputRef.current?.click()}
-              className="h-14 w-14 rounded-lg border border-dashed border-zinc-700/50 flex items-center justify-center hover:bg-zinc-900/80 transition-colors"
+              className="h-14 w-14 rounded-lg glass glass-hover flex items-center justify-center transition-all duration-200"
             >
               <ImagePlus className="w-4 h-4 text-zinc-500" />
             </button>
           </div>
         )}
 
-        <div className="flex items-end gap-2 bg-zinc-900/60 border border-zinc-800/80 rounded-xl px-3 py-2 focus-within:border-green-600/40 transition-colors">
-          <button
-            onClick={() => fileInputRef.current?.click()}
-            className="p-1.5 mb-0.5 hover:bg-zinc-800/80 rounded-lg transition-colors flex-shrink-0"
-            title="Upload images"
-          >
-            <Paperclip className="w-4 h-4 text-zinc-500" />
-          </button>
-          <input
-            ref={fileInputRef}
-            type="file"
-            accept="image/*"
-            multiple
-            onChange={handleFileUpload}
-            className="hidden"
-          />
-
-          <textarea
-            ref={textareaRef}
-            value={input}
-            onChange={(e) => {
-              setInput(e.target.value);
-              const el = textareaRef.current;
-              if (el) {
-                el.style.height = "auto";
-                el.style.height = Math.min(el.scrollHeight, 160) + "px";
-              }
-            }}
-            onKeyDown={handleKeyDown}
-            placeholder="Describe what you want to build..."
-            disabled={isGenerating}
-            aria-label="Message input"
-            autoComplete="off"
-            rows={1}
-            className="flex-1 bg-transparent text-[14px] text-zinc-100 placeholder:text-zinc-600 focus:outline-none disabled:opacity-40 resize-none overflow-y-auto leading-relaxed"
-            style={{ maxHeight: 160 }}
-          />
-
-          <button
-            onClick={handleSend}
-            disabled={(!input.trim() && inspoImages.length === 0) || isGenerating}
-            className="p-1.5 mb-0.5 bg-green-600 hover:bg-green-500 disabled:bg-zinc-800 disabled:cursor-not-allowed rounded-lg transition-all duration-150 flex-shrink-0"
-            aria-label="Send message"
-          >
-            <ArrowUp className="w-4 h-4 text-white" />
-          </button>
+        {/* Input container — glass pill with inner glow */}
+        <div className="glass rounded-2xl p-1">
+          <div className="flex items-end gap-2 px-3 py-2">
+            <img src="/logo.png" alt="" className="w-6 h-6 object-contain mb-1 opacity-30 flex-shrink-0" />
+            <textarea
+              ref={textareaRef}
+              value={input}
+              onChange={(e) => {
+                setInput(e.target.value);
+                const el = textareaRef.current;
+                if (el) {
+                  el.style.height = "auto";
+                  el.style.height = Math.min(el.scrollHeight, 160) + "px";
+                }
+              }}
+              onKeyDown={handleKeyDown}
+              placeholder="Describe what you want to build..."
+              disabled={isGenerating}
+              aria-label="Message input"
+              autoComplete="off"
+              rows={1}
+              className="flex-1 bg-transparent text-[14px] text-zinc-100 placeholder:text-zinc-600 focus:outline-none disabled:opacity-40 resize-none overflow-y-auto leading-relaxed"
+              style={{ maxHeight: 160 }}
+            />
+            <button
+              onClick={handleSend}
+              disabled={(!input.trim() && inspoImages.length === 0) || isGenerating}
+              className="p-2 mb-0.5 bg-gradient-to-b from-green-400 to-green-500 hover:from-green-300 hover:to-green-400 disabled:from-zinc-800 disabled:to-zinc-800 disabled:cursor-not-allowed rounded-full transition-all duration-200 flex-shrink-0 glow-green disabled:shadow-none"
+              aria-label="Send message"
+            >
+              <ArrowUp className="w-4 h-4 text-white" />
+            </button>
+          </div>
+          {/* Toolbar row */}
+          <div className="flex items-center gap-1 px-3 pb-2">
+            <button
+              onClick={() => fileInputRef.current?.click()}
+              className="p-1.5 hover:bg-white/[0.04] rounded-lg transition-colors flex-shrink-0"
+              title="Upload images"
+            >
+              <Paperclip className="w-3.5 h-3.5 text-zinc-500" />
+            </button>
+            <input
+              ref={fileInputRef}
+              type="file"
+              accept="image/*"
+              multiple
+              onChange={handleFileUpload}
+              className="hidden"
+            />
+          </div>
         </div>
       </div>
 
@@ -396,7 +400,7 @@ export function ChatPanel({
           >
             <button
               onClick={closeLightbox}
-              className="absolute top-4 right-4 p-2 rounded-lg bg-zinc-800/80 hover:bg-zinc-700 transition-colors"
+              className="absolute top-4 right-4 p-2 rounded-lg glass glass-hover transition-colors"
               aria-label="Close preview"
             >
               <X className="w-5 h-5 text-zinc-300" />

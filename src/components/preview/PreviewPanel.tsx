@@ -43,15 +43,15 @@ export function PreviewPanel({
   }, []);
 
   return (
-    <div className="flex flex-col h-full bg-[#0c0c0d]">
+    <div className="flex flex-col h-full bg-[#0c0c0d] dot-grid">
       {/* Top bar */}
-      <div className="flex items-center justify-between px-4 py-2.5 border-b border-zinc-800/80 bg-[#0a0a0b]">
+      <div className="flex items-center justify-between px-4 py-2.5 border-b border-white/[0.04]">
         {/* Browser nav buttons */}
         <div className="flex items-center gap-1">
           <button
             onClick={handleIframeBack}
             disabled={!canGoBack}
-            className="p-1.5 rounded-md text-zinc-500 hover:text-zinc-300 disabled:text-zinc-700 disabled:cursor-not-allowed transition-colors"
+            className="p-1.5 rounded-full text-zinc-500 hover:text-zinc-300 hover:bg-white/[0.04] disabled:text-zinc-700 disabled:cursor-not-allowed transition-all duration-200"
             title="Back to previous version"
             aria-label="Go back to previous version"
           >
@@ -60,7 +60,7 @@ export function PreviewPanel({
           <button
             onClick={handleIframeReload}
             disabled={!html}
-            className="p-1.5 rounded-md text-zinc-500 hover:text-zinc-300 disabled:text-zinc-700 disabled:cursor-not-allowed transition-colors"
+            className="p-1.5 rounded-full text-zinc-500 hover:text-zinc-300 hover:bg-white/[0.04] disabled:text-zinc-700 disabled:cursor-not-allowed transition-all duration-200"
             title="Reload"
             aria-label="Reload preview"
           >
@@ -69,16 +69,16 @@ export function PreviewPanel({
         </div>
 
         {/* Viewport toggles */}
-        <div className="flex items-center gap-1 bg-zinc-900/60 rounded-lg p-0.5 border border-zinc-800/60">
+        <div className="flex items-center gap-1 glass rounded-full p-0.5">
           {(Object.keys(viewportConfig) as Viewport[]).map((vp) => {
             const Icon = viewportConfig[vp].icon;
             return (
               <button
                 key={vp}
                 onClick={() => onViewportChange(vp)}
-                className={`p-2 rounded-md transition-all duration-150 ${
+                className={`p-2 rounded-full transition-all duration-200 ${
                   viewport === vp
-                    ? "bg-zinc-800 text-zinc-100 shadow-sm"
+                    ? "bg-white/[0.08] text-zinc-100"
                     : "text-zinc-500 hover:text-zinc-300"
                 }`}
                 title={viewportConfig[vp].label}
@@ -93,7 +93,7 @@ export function PreviewPanel({
           {html && !isGenerating && (
             <button
               onClick={onExport}
-              className="flex items-center gap-1.5 px-2.5 py-1.5 text-[12px] font-medium text-zinc-400 hover:text-zinc-200 bg-zinc-900/60 hover:bg-zinc-800 rounded-lg border border-zinc-800/60 transition-all duration-150"
+              className="flex items-center gap-1.5 px-3 py-1.5 text-[12px] font-medium text-zinc-400 hover:text-zinc-200 glass glass-hover rounded-full transition-all duration-200"
               title="Download HTML"
             >
               <Download className="w-3.5 h-3.5" />
@@ -107,7 +107,7 @@ export function PreviewPanel({
       <div className="flex-1 overflow-auto p-4 flex items-start justify-center">
         {!html && !isGenerating && (
           <div className="flex flex-col items-center justify-center h-full gap-4">
-            <div className="w-12 h-12 rounded-2xl bg-zinc-900/80 border border-zinc-800/60 flex items-center justify-center">
+            <div className="w-12 h-12 rounded-2xl glass flex items-center justify-center">
               <img src="/logo.png" alt="16s" className="w-6 h-6 object-contain opacity-40" />
             </div>
             <div className="text-center">
@@ -122,13 +122,13 @@ export function PreviewPanel({
             {/* Logo pulse animation */}
             <div className="relative flex items-center justify-center">
               <motion.div
-                className="absolute w-24 h-24 rounded-full bg-green-600/15"
-                animate={{ scale: [1, 1.4, 1], opacity: [0.3, 0.6, 0.3] }}
+                className="absolute w-24 h-24 rounded-full bg-green-500/10"
+                animate={{ scale: [1, 1.4, 1], opacity: [0.2, 0.5, 0.2] }}
                 transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
               />
               <motion.div
-                className="absolute w-16 h-16 rounded-full bg-green-600/25"
-                animate={{ scale: [1, 1.2, 1], opacity: [0.4, 0.7, 0.4] }}
+                className="absolute w-16 h-16 rounded-full bg-green-500/20"
+                animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.6, 0.3] }}
                 transition={{ duration: 2, repeat: Infinity, ease: "easeInOut", delay: 0.3 }}
               />
               <motion.img
@@ -152,15 +152,15 @@ export function PreviewPanel({
           >
             {/* Browser chrome */}
             <div
-              className="bg-[#131315] border border-zinc-800/60 rounded-t-xl transition-all duration-300"
+              className="glass rounded-t-xl transition-all duration-300"
               style={{
                 width: viewport === "desktop" ? "100%" : viewportConfig[viewport].width,
                 maxWidth: "100%",
               }}
             >
-              <div className="flex items-center px-4 py-2 border-b border-zinc-800/40">
+              <div className="flex items-center px-4 py-2 border-b border-white/[0.04]">
                 <div className="flex-1 flex items-center justify-center">
-                  <div className="bg-zinc-900/80 rounded-md px-4 py-0.5 text-[11px] text-zinc-600 font-medium tracking-wide">
+                  <div className="bg-white/[0.03] rounded-md px-4 py-0.5 text-[11px] text-zinc-600 font-medium tracking-wide">
                     yoursite.com
                   </div>
                 </div>
@@ -169,7 +169,7 @@ export function PreviewPanel({
 
             {/* iframe */}
             <motion.div
-              className="bg-white rounded-b-xl overflow-hidden border-x border-b border-zinc-800/60 shadow-2xl shadow-black/40 transition-all duration-300"
+              className="bg-white rounded-b-xl overflow-hidden border-x border-b border-white/[0.06] shadow-2xl shadow-black/40 transition-all duration-300"
               style={{
                 width: viewport === "desktop" ? "100%" : viewportConfig[viewport].width,
                 maxWidth: "100%",
