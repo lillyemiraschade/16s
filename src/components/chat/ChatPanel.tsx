@@ -198,7 +198,9 @@ export function ChatPanel({
       </div>
 
       {/* Messages area */}
-      <div className="flex-1 overflow-y-auto px-5 py-5 space-y-5 relative" role="log" aria-label="Conversation" aria-live="polite">
+      <div className="flex-1 overflow-y-auto px-5 py-5 space-y-5 relative flex flex-col" role="log" aria-label="Conversation" aria-live="polite">
+        {/* Spacer pushes messages to bottom when few */}
+        <div className="flex-1" />
         {/* Drag overlay */}
         <AnimatePresence>
           {isDragging && (
@@ -229,8 +231,8 @@ export function ChatPanel({
               <div
                 className={`${
                   message.role === "user"
-                    ? "bg-green-500/60 text-white ml-auto max-w-[85%]"
-                    : "glass-matte text-zinc-200 max-w-[90%]"
+                    ? "glass-bubble glass-bubble-user text-white ml-auto max-w-[85%]"
+                    : "glass-bubble text-zinc-200 max-w-[90%]"
                 } rounded-2xl px-4 py-3`}
               >
                 {/* Attached images */}
@@ -261,7 +263,7 @@ export function ChatPanel({
                         key={idx}
                         onClick={() => onPillClick(pill)}
                         disabled={isGenerating}
-                        className="px-3.5 py-1.5 text-[13px] font-medium glass glass-hover text-zinc-200 disabled:opacity-40 disabled:cursor-not-allowed rounded-full transition-all duration-200"
+                        className="px-3.5 py-1.5 text-[13px] font-medium glass-pill text-zinc-200 disabled:opacity-40 disabled:cursor-not-allowed rounded-full transition-all duration-200"
                       >
                         {pill}
                       </button>
@@ -274,7 +276,7 @@ export function ChatPanel({
                   <div className="mt-3">
                     <button
                       onClick={() => fileInputRef.current?.click()}
-                      className="w-full px-4 py-3 text-[13px] font-medium glass glass-hover text-zinc-300 rounded-xl border-dashed transition-all duration-200 flex items-center justify-center gap-2"
+                      className="w-full px-4 py-3 text-[13px] font-medium glass-pill text-zinc-300 rounded-xl transition-all duration-200 flex items-center justify-center gap-2"
                     >
                       <ImagePlus className="w-4 h-4" />
                       {typeof message.showUpload === "string" ? message.showUpload : "Upload inspiration images"}
@@ -293,7 +295,7 @@ export function ChatPanel({
             transition={{ duration: 0.2 }}
             className="flex justify-start"
           >
-            <div className="glass rounded-2xl px-4 py-3">
+            <div className="glass-bubble rounded-2xl px-4 py-3">
               <TypingIndicator />
             </div>
           </motion.div>
@@ -365,7 +367,7 @@ export function ChatPanel({
             <button
               onClick={handleSend}
               disabled={(!input.trim() && inspoImages.length === 0) || isGenerating}
-              className="p-2 mb-0.5 bg-green-500/70 hover:bg-green-400/70 disabled:bg-zinc-800/50 disabled:cursor-not-allowed rounded-full transition-all duration-200 flex-shrink-0 glow-green disabled:shadow-none"
+              className="p-2 mb-0.5 bg-green-500/60 hover:bg-green-400/70 disabled:bg-zinc-800/50 disabled:cursor-not-allowed rounded-full transition-all duration-200 flex-shrink-0 glow-green-strong disabled:shadow-none"
               aria-label="Send message"
             >
               <ArrowUp className="w-4 h-4 text-white" />

@@ -325,7 +325,7 @@ export default function HomePage() {
                 <button
                   onClick={handleWelcomeSend}
                   disabled={(!welcomeInput.trim() && inspoImages.length === 0) || isGenerating}
-                  className="p-2.5 bg-green-500/80 hover:bg-green-400/80 disabled:bg-zinc-800/60 disabled:cursor-not-allowed rounded-full transition-all duration-200 flex-shrink-0 glow-green disabled:shadow-none"
+                  className="p-2.5 bg-green-500/60 hover:bg-green-400/70 disabled:bg-zinc-800/60 disabled:cursor-not-allowed rounded-full transition-all duration-200 flex-shrink-0 glow-green-strong disabled:shadow-none"
                   aria-label="Send message"
                 >
                   <ArrowUp className="w-4 h-4 text-white" />
@@ -358,7 +358,7 @@ export default function HomePage() {
                   key={action}
                   onClick={() => handleSendMessage(action)}
                   disabled={isGenerating}
-                  className="px-5 py-2.5 text-[13px] font-medium text-zinc-400 hover:text-zinc-200 glass-matte glass-hover disabled:opacity-40 disabled:cursor-not-allowed rounded-full transition-all duration-200"
+                  className="px-5 py-2.5 text-[13px] font-medium text-zinc-400 hover:text-zinc-200 glass-pill disabled:opacity-40 disabled:cursor-not-allowed rounded-full transition-all duration-200"
                 >
                   {action}
                 </button>
