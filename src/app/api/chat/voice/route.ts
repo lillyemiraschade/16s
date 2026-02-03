@@ -9,8 +9,10 @@ const VoiceRequestSchema = z.object({
   voiceMessages: z.array(z.object({
     role: z.enum(["user", "assistant"]),
     content: z.string().max(10000),
+    source: z.enum(["voice", "typed"]).optional(),
   })).max(50),
   projectContext: z.string().max(5000).optional(),
+  hasTypedInput: z.boolean().optional(), // Flag when user typed something in chat during the call
 });
 
 interface VoiceResponse {
@@ -37,12 +39,20 @@ RULES:
 - Keep responses SHORT — this is voice, not text. 1-2 sentences max.
 - NEVER discuss HTML, code, or technical implementation details
 - NEVER generate any website code
-- When you have enough info to start designing, wrap up naturally with something like: "Awesome, I think I've got everything I need to get started. I'll get to work on this right now."
+
+TYPED INPUTS FROM CHAT:
+- Sometimes users will TYPE information in the chat while on the call (like emails, links, etc.)
+- When you see a message marked as [TYPED IN CHAT], acknowledge it naturally: "Perfect, I see you put that in the chat, got it!"
+- Continue the conversation naturally after acknowledging
+
+ENDING THE CALL — ALWAYS ASK FOR INSPO:
+- Before wrapping up, ALWAYS ask about inspiration images: "One last thing — do you have any screenshots or images of websites you love? You can drop those in after we hang up and I'll match that style exactly."
+- THEN wrap up: "Awesome, I've got everything I need. Drop any inspo images in the chat and I'll get started!"
 
 RESPONSE FORMAT: Always respond with raw JSON (no markdown, no code blocks):
 {"message": "your spoken response", "complete": false}
 
-Set "complete": true ONLY when you've gathered enough info and are wrapping up the call. This signals the call should end.`;
+Set "complete": true ONLY when you've gathered enough info AND asked about inspo images. This signals the call should end.`;
 
 export async function POST(req: Request) {
   try {
@@ -56,13 +66,17 @@ export async function POST(req: Request) {
       );
     }
 
-    const { voiceMessages, projectContext } = parsed.data;
+    const { voiceMessages, projectContext, hasTypedInput } = parsed.data;
 
-    // Build messages for Claude
-    const claudeMessages: MessageParam[] = voiceMessages.map((msg) => ({
-      role: msg.role,
-      content: msg.content,
-    }));
+    // Build messages for Claude, marking typed inputs
+    const claudeMessages: MessageParam[] = voiceMessages.map((msg) => {
+      let content = msg.content;
+      // Mark typed inputs so the voice agent knows to acknowledge them
+      if (msg.role === "user" && msg.source === "typed") {
+        content = `[TYPED IN CHAT]: ${msg.content}`;
+      }
+      return { role: msg.role, content };
+    });
 
     // Add project context to the first user message if provided
     if (projectContext && claudeMessages.length > 0) {
@@ -70,6 +84,14 @@ export async function POST(req: Request) {
       if (firstUserIdx >= 0 && typeof claudeMessages[firstUserIdx].content === "string") {
         claudeMessages[firstUserIdx].content =
           `[Context: The user previously mentioned they want to build: ${projectContext}]\n\n${claudeMessages[firstUserIdx].content}`;
+      }
+    }
+
+    // If this is a typed input, add a hint to acknowledge it
+    if (hasTypedInput && claudeMessages.length > 0) {
+      const lastMsg = claudeMessages[claudeMessages.length - 1];
+      if (lastMsg.role === "user" && typeof lastMsg.content === "string" && !lastMsg.content.startsWith("[TYPED IN CHAT]")) {
+        // Already marked above, but double-check
       }
     }
 

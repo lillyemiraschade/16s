@@ -7,7 +7,7 @@ import { Paperclip, ArrowUp, ImagePlus, X } from "lucide-react";
 import Image from "next/image";
 import { ChatPanel } from "@/components/chat/ChatPanel";
 import { PreviewPanel } from "@/components/preview/PreviewPanel";
-import { VoiceCall } from "@/components/chat/VoiceCall";
+import { VoiceCall, VoiceCallHandle } from "@/components/chat/VoiceCall";
 import { processImageFiles } from "@/lib/images";
 import { saveProject, loadProject, listProjects, deleteProject } from "@/lib/projects";
 import type { Message, Viewport, SavedProjectMeta, SelectedElement, VersionBookmark, UploadedImage } from "@/lib/types";
@@ -70,6 +70,7 @@ export default function HomePage() {
   useEffect(() => { messagesRef.current = messages; }, [messages]);
 
   const screenshotTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const voiceCallRef = useRef<VoiceCallHandle>(null);
 
   // Load saved projects list on mount
   useEffect(() => {
@@ -153,6 +154,12 @@ export default function HomePage() {
   const abortRef = useRef<AbortController | null>(null);
 
   const handleSendMessage = useCallback(async (text: string, imagesToInclude?: UploadedImage[]) => {
+    // If on a call, route typed messages to the voice agent instead
+    if (isOnCall && voiceCallRef.current) {
+      voiceCallRef.current.injectTypedMessage(text);
+      return; // Don't send to main chat
+    }
+
     const imagesToSend = imagesToInclude || [...uploadedImages];
     if (!imagesToInclude) setUploadedImages([]);
 
@@ -267,7 +274,7 @@ export default function HomePage() {
         setIsGenerating(false);
       }
     }
-  }, [uploadedImages, hasStarted, selectedElement, currentPreview, previewScreenshot]);
+  }, [isOnCall, uploadedImages, hasStarted, selectedElement, currentPreview, previewScreenshot]);
 
   const handlePillClick = (pill: string) => {
     if (isGenerating) return;
@@ -278,10 +285,115 @@ export default function HomePage() {
     handleSendMessage(pill);
   };
 
-  const handleCallComplete = (summary: string) => {
+  // Internal send that allows custom visible text vs actual API text
+  const handleSendMessageInternal = useCallback(async (
+    apiText: string,
+    imagesToInclude?: UploadedImage[],
+    visibleText?: string
+  ) => {
+    const imagesToSend = imagesToInclude || [...uploadedImages];
+    if (!imagesToInclude) setUploadedImages([]);
+
+    if (!hasStarted) setHasStarted(true);
+
+    const userMessage: Message = {
+      id: Date.now().toString(),
+      role: "user",
+      content: visibleText || apiText, // Show visible text to user
+      uploadedImages: imagesToSend.length > 0 ? imagesToSend : undefined,
+    };
+
+    setMessages((prev) => [...prev, userMessage]);
+    setIsGenerating(true);
+
+    abortRef.current?.abort();
+    const controller = new AbortController();
+    abortRef.current = controller;
+
+    try {
+      const apiUserMessage = { ...userMessage, content: apiText }; // Use full text for API
+      const cleanMessages = [...messagesRef.current, apiUserMessage].map(
+        ({ images, pills, showUpload, ...rest }) => rest
+      );
+
+      const response = await fetch("/api/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          messages: cleanMessages,
+          uploadedImages: imagesToSend,
+          currentPreview,
+          previewScreenshot,
+        }),
+        signal: controller.signal,
+      });
+
+      if (!response.ok) {
+        let errorMsg = "Something went wrong. Please try again.";
+        try {
+          const errorData = await response.json();
+          if (errorData.error) errorMsg = errorData.error;
+        } catch {
+          if (response.status === 413) errorMsg = "Request too large. Try with fewer or smaller images.";
+          else if (response.status === 429) errorMsg = "Too many requests. Please wait a moment.";
+        }
+        throw new Error(errorMsg);
+      }
+
+      const responseText = await response.text();
+      const lines = responseText.trim().split("\n").filter((l) => l.trim());
+      const data = JSON.parse(lines[lines.length - 1]);
+
+      if (data.error) {
+        throw new Error(data.error);
+      }
+
+      const aiMessage: Message = {
+        id: (Date.now() + 1).toString(),
+        role: "assistant",
+        content: data.message,
+        pills: data.pills,
+        showUpload: data.showUpload,
+      };
+      setMessages((prev) => [...prev, aiMessage]);
+
+      if (data.html) {
+        if (currentPreview) {
+          setPreviewHistory((prev) => [...prev, currentPreview]);
+        }
+        setRedoHistory([]);
+        const navGuard = `<script>document.addEventListener('click',function(e){var a=e.target.closest('a');if(a){var h=a.getAttribute('href');if(h&&h.startsWith('http')){e.preventDefault();return;}if(h&&!h.startsWith('javascript:')){e.preventDefault();}}},true);</script>`;
+        const safeHtml = data.html.replace(/<head([^>]*)>/i, `<head$1>${navGuard}`);
+        setCurrentPreview(safeHtml);
+      }
+    } catch (error) {
+      if (error instanceof DOMException && error.name === "AbortError") return;
+      console.error("Error sending message:", error);
+
+      setMessages((prev) => prev.filter((m) => m.id !== userMessage.id));
+
+      const errorMsg = error instanceof Error ? error.message : "Something went wrong. Please try again.";
+      setMessages((prev) => [
+        ...prev,
+        {
+          id: (Date.now() + 1).toString(),
+          role: "assistant",
+          content: errorMsg,
+        },
+      ]);
+    } finally {
+      if (!controller.signal.aborted) {
+        setIsGenerating(false);
+      }
+    }
+  }, [uploadedImages, hasStarted, currentPreview, previewScreenshot]);
+
+  const handleCallComplete = useCallback((visibleSummary: string, privateData: string) => {
     setIsOnCall(false);
-    handleSendMessage(summary);
-  };
+    // Send the private data to the AI (not visible to user as their message)
+    // but show a brief visible summary
+    handleSendMessageInternal(privateData, undefined, visibleSummary);
+  }, [handleSendMessageInternal]);
 
   const handleEditMessage = useCallback((messageId: string, newContent: string) => {
     // Find the message index
@@ -726,6 +838,7 @@ export default function HomePage() {
             {isOnCall && (
               <div className="absolute top-14 right-4 z-30">
                 <VoiceCall
+                  ref={voiceCallRef}
                   onCallComplete={handleCallComplete}
                   onHangUp={() => setIsOnCall(false)}
                 />
