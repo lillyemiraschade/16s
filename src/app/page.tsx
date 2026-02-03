@@ -230,47 +230,69 @@ export default function HomePage() {
 
       // Safely parse JSON with multiple fallback strategies
       let data;
-      try {
-        if (!lastLine || lastLine === "undefined") {
-          throw new Error("Empty response");
+
+      // Strategy 1: Try parsing the last line directly (most common case)
+      if (lastLine && lastLine !== "undefined" && lastLine.startsWith("{")) {
+        try {
+          data = JSON.parse(lastLine);
+        } catch {
+          // Continue to fallback strategies
         }
-        data = JSON.parse(lastLine);
-      } catch {
-        // Strategy 1: Find JSON with "message" field
-        let jsonMatch = responseText.match(/\{[\s\S]*"message"[\s\S]*?\}/);
-        if (jsonMatch) {
+      }
+
+      // Strategy 2: Find the last complete JSON object in the response
+      if (!data) {
+        // Look for JSON that starts with { and ends with }
+        const jsonStart = responseText.lastIndexOf("\n{");
+        if (jsonStart !== -1) {
+          const jsonCandidate = responseText.slice(jsonStart + 1).trim();
           try {
-            data = JSON.parse(jsonMatch[0]);
+            data = JSON.parse(jsonCandidate);
           } catch {
-            jsonMatch = null;
+            // Continue to next strategy
           }
         }
-        // Strategy 2: Find any valid JSON object
-        if (!data) {
-          const allJsonMatches = responseText.match(/\{[^{}]*\}/g);
-          if (allJsonMatches) {
-            for (const match of allJsonMatches) {
-              try {
-                const parsed = JSON.parse(match);
-                if (parsed.message) {
-                  data = parsed;
+      }
+
+      // Strategy 3: Try to find any JSON object with "message" field
+      if (!data) {
+        // Find the last occurrence of {"message" which is our response format
+        const msgIndex = responseText.lastIndexOf('{"message"');
+        if (msgIndex !== -1) {
+          const jsonCandidate = responseText.slice(msgIndex);
+          // Try to parse, handling potential trailing content
+          try {
+            data = JSON.parse(jsonCandidate);
+          } catch {
+            // Try to find where the JSON ends by counting braces
+            let depth = 0;
+            let endIndex = -1;
+            for (let i = 0; i < jsonCandidate.length; i++) {
+              const char = jsonCandidate[i];
+              if (char === "{") depth++;
+              else if (char === "}") {
+                depth--;
+                if (depth === 0) {
+                  endIndex = i + 1;
                   break;
                 }
+              }
+            }
+            if (endIndex > 0) {
+              try {
+                data = JSON.parse(jsonCandidate.slice(0, endIndex));
               } catch {
-                continue;
+                // Continue to fallback
               }
             }
           }
         }
-        // Strategy 3: Create a basic response from any text
-        if (!data) {
-          const textContent = responseText.replace(/[\s]+/g, " ").trim().slice(0, 500);
-          if (textContent && textContent !== "undefined") {
-            data = { message: "I'm working on that. Could you try again?" };
-          } else {
-            throw new Error("Failed to parse response");
-          }
-        }
+      }
+
+      // Strategy 4: Graceful fallback - never throw, always show something
+      if (!data) {
+        console.error("Failed to parse response:", responseText.slice(0, 500));
+        data = { message: "I'm working on that. Give me one more try?" };
       }
 
       // Check if API returned an error in the response body
@@ -393,39 +415,57 @@ export default function HomePage() {
 
       // Safely parse JSON with multiple fallback strategies
       let data;
-      try {
-        if (!lastLine || lastLine === "undefined") {
-          throw new Error("Empty response");
+
+      // Strategy 1: Try parsing the last line directly
+      if (lastLine && lastLine !== "undefined" && lastLine.startsWith("{")) {
+        try {
+          data = JSON.parse(lastLine);
+        } catch {
+          // Continue to fallback
         }
-        data = JSON.parse(lastLine);
-      } catch {
-        let jsonMatch = responseText.match(/\{[\s\S]*"message"[\s\S]*?\}/);
-        if (jsonMatch) {
+      }
+
+      // Strategy 2: Find the last complete JSON object
+      if (!data) {
+        const jsonStart = responseText.lastIndexOf("\n{");
+        if (jsonStart !== -1) {
+          const jsonCandidate = responseText.slice(jsonStart + 1).trim();
           try {
-            data = JSON.parse(jsonMatch[0]);
+            data = JSON.parse(jsonCandidate);
           } catch {
-            jsonMatch = null;
+            // Continue
           }
         }
-        if (!data) {
-          const allJsonMatches = responseText.match(/\{[^{}]*\}/g);
-          if (allJsonMatches) {
-            for (const match of allJsonMatches) {
-              try {
-                const parsed = JSON.parse(match);
-                if (parsed.message) {
-                  data = parsed;
-                  break;
-                }
-              } catch {
-                continue;
+      }
+
+      // Strategy 3: Find JSON with "message" field
+      if (!data) {
+        const msgIndex = responseText.lastIndexOf('{"message"');
+        if (msgIndex !== -1) {
+          const jsonCandidate = responseText.slice(msgIndex);
+          try {
+            data = JSON.parse(jsonCandidate);
+          } catch {
+            let depth = 0;
+            let endIndex = -1;
+            for (let i = 0; i < jsonCandidate.length; i++) {
+              if (jsonCandidate[i] === "{") depth++;
+              else if (jsonCandidate[i] === "}") {
+                depth--;
+                if (depth === 0) { endIndex = i + 1; break; }
               }
+            }
+            if (endIndex > 0) {
+              try { data = JSON.parse(jsonCandidate.slice(0, endIndex)); } catch { /* continue */ }
             }
           }
         }
-        if (!data) {
-          data = { message: "I'm working on that. Could you try again?" };
-        }
+      }
+
+      // Strategy 4: Graceful fallback
+      if (!data) {
+        console.error("Failed to parse response:", responseText.slice(0, 500));
+        data = { message: "I'm working on that. Give me one more try?" };
       }
 
       if (data.error) {
