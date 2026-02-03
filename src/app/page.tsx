@@ -316,11 +316,27 @@ export default function HomePage() {
         setRedoHistory([]); // Clear redo on new version
 
         // Replace content image placeholders with actual base64 data
+        // Collect ALL content images from the conversation history, not just current message
         let processedHtml = data.html;
-        const contentImages = imagesToSend.filter(img => img.type === "content");
-        for (let i = 0; i < contentImages.length; i++) {
+        const allContentImages: UploadedImage[] = [];
+        for (const msg of messagesRef.current) {
+          if (msg.uploadedImages) {
+            for (const img of msg.uploadedImages) {
+              if (img.type === "content") {
+                allContentImages.push(img);
+              }
+            }
+          }
+        }
+        // Also include images from current message (not yet in messagesRef)
+        for (const img of imagesToSend) {
+          if (img.type === "content") {
+            allContentImages.push(img);
+          }
+        }
+        for (let i = 0; i < allContentImages.length; i++) {
           const placeholder = `{{CONTENT_IMAGE_${i}}}`;
-          processedHtml = processedHtml.split(placeholder).join(contentImages[i].data);
+          processedHtml = processedHtml.split(placeholder).join(allContentImages[i].data);
         }
 
         // Inject navigation guard to keep all clicks inside iframe
@@ -497,11 +513,27 @@ export default function HomePage() {
         setRedoHistory([]);
 
         // Replace content image placeholders with actual base64 data
+        // Collect ALL content images from the conversation history, not just current message
         let processedHtml = data.html;
-        const contentImages = imagesToSend.filter(img => img.type === "content");
-        for (let i = 0; i < contentImages.length; i++) {
+        const allContentImages: UploadedImage[] = [];
+        for (const msg of messagesRef.current) {
+          if (msg.uploadedImages) {
+            for (const img of msg.uploadedImages) {
+              if (img.type === "content") {
+                allContentImages.push(img);
+              }
+            }
+          }
+        }
+        // Also include images from current message (not yet in messagesRef)
+        for (const img of imagesToSend) {
+          if (img.type === "content") {
+            allContentImages.push(img);
+          }
+        }
+        for (let i = 0; i < allContentImages.length; i++) {
           const placeholder = `{{CONTENT_IMAGE_${i}}}`;
-          processedHtml = processedHtml.split(placeholder).join(contentImages[i].data);
+          processedHtml = processedHtml.split(placeholder).join(allContentImages[i].data);
         }
 
         const navGuard = `<script>document.addEventListener('click',function(e){var a=e.target.closest('a');if(a){var h=a.getAttribute('href');if(h&&h.startsWith('http')){e.preventDefault();return;}if(h&&!h.startsWith('javascript:')){e.preventDefault();}}},true);</script>`;

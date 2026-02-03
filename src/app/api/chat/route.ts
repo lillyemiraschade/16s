@@ -245,6 +245,9 @@ export async function POST(req: Request) {
 
     const claudeMessages: MessageParam[] = [];
 
+    // Track global content image index across all messages
+    let globalContentImageIndex = 0;
+
     for (const msg of messages) {
       if (msg.role === "user") {
         const isLastUserMessage = messages.indexOf(msg) === messages.length - 1;
@@ -281,6 +284,7 @@ export async function POST(req: Request) {
           }
 
           // Add content images with placeholders - show visual + tell Claude which placeholder to use
+          // Use GLOBAL index so placeholders are consistent across the entire conversation
           if (contentImgs.length > 0) {
             contentBlocks.push({
               type: "text",
@@ -300,11 +304,12 @@ export async function POST(req: Request) {
                     data: matches[2],
                   },
                 });
-                // Tell Claude which placeholder to use for this image
+                // Tell Claude which placeholder to use for this image - use GLOBAL index
                 contentBlocks.push({
                   type: "text",
-                  text: `[Content image #${i}${labelNote} → Use placeholder: {{CONTENT_IMAGE_${i}}}]`,
+                  text: `[Content image #${globalContentImageIndex}${labelNote} → Use placeholder: {{CONTENT_IMAGE_${globalContentImageIndex}}}]`,
                 });
+                globalContentImageIndex++;
               }
             }
           }
