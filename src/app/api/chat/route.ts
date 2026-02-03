@@ -243,6 +243,47 @@ Something overlaps or extends beyond boundaries
 Headline is SPECIFIC: "We design brands that sell" not "Transform Your Business"
 No generic stock photos of people pointing at laptops or shaking hands
 
+CSS FOUNDATION — INCLUDE IN EVERY SITE (Figma/Framer/Lovable patterns):
+
+:root {
+  /* 8pt Spacing Grid */
+  --space-1: 4px; --space-2: 8px; --space-3: 12px; --space-4: 16px;
+  --space-5: 20px; --space-6: 24px; --space-8: 32px; --space-10: 40px;
+  --space-12: 48px; --space-16: 64px; --space-20: 80px; --space-24: 96px;
+
+  /* Typography Scale */
+  --text-xs: 0.75rem; --text-sm: 0.875rem; --text-base: 1rem;
+  --text-lg: 1.125rem; --text-xl: 1.25rem; --text-2xl: 1.5rem;
+  --text-3xl: 1.875rem; --text-4xl: 2.25rem; --text-5xl: 3rem; --text-6xl: 3.75rem;
+
+  /* Shadows (layered for realism) */
+  --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -2px rgba(0,0,0,0.1);
+  --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -4px rgba(0,0,0,0.1);
+  --shadow-xl: 0 20px 25px -5px rgba(0,0,0,0.1), 0 8px 10px -6px rgba(0,0,0,0.1);
+
+  /* Border Radius */
+  --radius-sm: 4px; --radius-md: 8px; --radius-lg: 12px; --radius-xl: 16px; --radius-full: 9999px;
+}
+
+/* Fluid Container */
+.container { width: 100%; max-width: 1280px; margin-inline: auto; padding-inline: clamp(16px, 5vw, 64px); }
+
+/* Flexbox Auto-Layout (Figma pattern) */
+.flex-col { display: flex; flex-direction: column; }
+.flex-row { display: flex; flex-direction: row; }
+.gap-4 { gap: var(--space-4); }
+.gap-6 { gap: var(--space-6); }
+.gap-8 { gap: var(--space-8); }
+
+/* Bento Grid (Lovable pattern) */
+.bento { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: var(--space-6); }
+.bento-wide { grid-column: span 2; }
+.bento-tall { grid-row: span 2; }
+
+/* Card Base */
+.card { background: var(--card-bg, #fff); border-radius: var(--radius-lg); padding: var(--space-6); box-shadow: var(--shadow-md); }
+
 MANDATORY ANIMATIONS (every site, no exceptions):
 Include this exact CSS and JS pattern:
 
@@ -269,11 +310,27 @@ document.querySelectorAll('.reveal, .stagger').forEach(el => observer.observe(el
 
 Apply classes: .reveal on sections/cards, .stagger on grids/lists, .hover-lift on cards, .btn-sweep on buttons
 
-HOVER STATES — EVERYTHING REACTS:
-- Buttons: sweep effect OR scale(1.02) + shadow increase
-- Cards: lift -8px + shadow deepen
-- Links: animated underline (scaleX 0→1) or color shift
-- Images: subtle scale(1.05) with overflow:hidden container
+MICRO-INTERACTIONS (Framer Motion patterns in CSS):
+/* Universal transition for all interactive elements */
+button, a, .card, .interactive { transition: all 0.15s ease; }
+
+/* Button states (spring-like feel) */
+button { cursor: pointer; }
+button:hover { transform: translateY(-2px); filter: brightness(1.05); }
+button:active { transform: scale(0.98); }
+button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+/* Card hover */
+.card:hover { transform: translateY(-4px); box-shadow: var(--shadow-xl); }
+
+/* Link underline animation */
+a { text-decoration: none; background-image: linear-gradient(currentColor, currentColor); background-size: 0% 1px; background-position: 0 100%; background-repeat: no-repeat; transition: background-size 0.3s ease; }
+a:hover { background-size: 100% 1px; }
+
+/* Image zoom on hover */
+.img-zoom { overflow: hidden; }
+.img-zoom img { transition: transform 0.4s ease; }
+.img-zoom:hover img { transform: scale(1.05); }
 
 COPY & CONTENT — AVOID GENERIC AI LANGUAGE:
 NEVER use these phrases: "quality services", "customer satisfaction", "innovative solutions", "cutting-edge", "state-of-the-art", "seamless experience", "unlock your potential", "take it to the next level"
