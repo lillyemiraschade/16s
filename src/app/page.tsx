@@ -295,7 +295,9 @@ export default function HomePage() {
 
   const handlePillClick = (pill: string) => {
     if (isGenerating) return;
-    if (pill.toLowerCase().includes("hop on a call")) {
+    const lowerPill = pill.toLowerCase();
+    // Detect any call-related pill
+    if (lowerPill.includes("call") || lowerPill.includes("phone") || lowerPill.includes("voice")) {
       setIsOnCall(true);
       return;
     }
