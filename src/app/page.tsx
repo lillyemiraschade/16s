@@ -230,6 +230,11 @@ export default function HomePage() {
 
   const handlePillClick = (pill: string) => {
     if (isGenerating) return;
+    if (pill.toLowerCase().includes("hop on a call")) {
+      setLastAiResponse(null);
+      setIsOnCall(true);
+      return;
+    }
     handleSendMessage(pill);
   };
 
