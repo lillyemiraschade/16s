@@ -107,12 +107,16 @@ User should say "this is EXACTLY what I showed you."
 
 IMAGE TYPES — CRITICAL:
 - INSPO images (website screenshots) → clone the STYLE only, don't embed the image itself
-- CONTENT images (logo, team photos, product photos) → EMBED DIRECTLY in the HTML
+- CONTENT images (logo, team photos, product photos) → use PLACEHOLDERS in the HTML
 
 HOW TO EMBED CONTENT IMAGES:
-When user uploads content images, you receive them with base64 data. Use that EXACT data in your HTML:
-<img src="data:image/jpeg;base64,/9j/4AAQ..." alt="Description" />
-Copy the FULL base64 string from the image data provided. Place the image in the appropriate section (logo in nav, team photos on about page, product photos on products page, etc.)
+When user uploads content images, you can SEE thumbnails of them. Use PLACEHOLDERS in your HTML:
+<img src="{{CONTENT_IMAGE_0}}" alt="Description" />
+<img src="{{CONTENT_IMAGE_1}}" alt="Another image" />
+
+The placeholder format is {{CONTENT_IMAGE_N}} where N is the image index (0, 1, 2...).
+The system will automatically replace these with the actual image data.
+Place images in appropriate sections (logo in nav, team photos on about, products on products page, etc.)
 
 BACKGROUND REMOVAL:
 Users can remove backgrounds from images using the sparkle button on uploaded images. If a user uploads a photo that would look better as a PNG cutout (headshots, product photos, logos with backgrounds), suggest they use the "Remove background" button before you build. PNG cutouts on solid/gradient backgrounds look more professional than rectangular photos.
@@ -276,13 +280,14 @@ export async function POST(req: Request) {
             }
           }
 
-          // Add content images with labels - include BOTH visual and the data URL for embedding
+          // Add content images with placeholders - show visual + tell Claude which placeholder to use
           if (contentImgs.length > 0) {
             contentBlocks.push({
               type: "text",
-              text: `[CONTENT IMAGES - These images should be embedded directly in the website HTML:]`,
+              text: `[CONTENT IMAGES - Use placeholders in your HTML. The system will replace them with actual images:]`,
             });
-            for (const img of contentImgs) {
+            for (let i = 0; i < contentImgs.length; i++) {
+              const img = contentImgs[i];
               const matches = img.data.match(/^data:(image\/[a-zA-Z]+);base64,(.+)$/);
               if (matches) {
                 const labelNote = img.label ? ` (${img.label})` : "";
@@ -295,11 +300,10 @@ export async function POST(req: Request) {
                     data: matches[2],
                   },
                 });
-                // ALSO provide the full data URL as text so AI can embed it
+                // Tell Claude which placeholder to use for this image
                 contentBlocks.push({
                   type: "text",
-                  text: `[Content image${labelNote} - USE THIS EXACT STRING as the img src:]
-${img.data}`,
+                  text: `[Content image #${i}${labelNote} → Use placeholder: {{CONTENT_IMAGE_${i}}}]`,
                 });
               }
             }
@@ -308,11 +312,11 @@ ${img.data}`,
           // Build the system note based on what types of images we have
           let systemNote = "";
           if (inspoImgs.length > 0 && contentImgs.length > 0) {
-            systemNote = "\n\n[SYSTEM NOTE: The user provided both INSPIRATION images (clone the design style) and CONTENT images (embed directly in the HTML using <img src=\"data:image/...;base64,...\">). For inspiration images: extract exact colors, typography, spacing, layout. For content images: use the full base64 data URL in the src attribute.]";
+            systemNote = "\n\n[SYSTEM NOTE: The user provided both INSPIRATION images (clone the design style) and CONTENT images (use placeholders like {{CONTENT_IMAGE_0}}). For inspiration images: extract exact colors, typography, spacing, layout. For content images: use the {{CONTENT_IMAGE_N}} placeholders in img src attributes.]";
           } else if (inspoImgs.length > 0) {
             systemNote = "\n\n[SYSTEM NOTE: These are INSPIRATION images. CLONE THE DESIGN PIXEL-PERFECTLY. Extract exact colors, typography, spacing, layout, button styles, nav style — everything. DO NOT interpret. CLONE EXACTLY what you see.]";
           } else if (contentImgs.length > 0) {
-            systemNote = "\n\n[SYSTEM NOTE: These are CONTENT images. Embed them directly in the HTML using <img src=\"data:image/...;base64,...\"> tags. Use the full base64 data URL provided. Place them in appropriate sections based on the labels.]";
+            systemNote = "\n\n[SYSTEM NOTE: These are CONTENT images. Use {{CONTENT_IMAGE_N}} placeholders in img src attributes. The system will replace them with actual image data.]";
           }
 
           const userText = msg.content || "Here are my images.";

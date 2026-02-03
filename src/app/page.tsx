@@ -314,9 +314,18 @@ export default function HomePage() {
           setPreviewHistory((prev) => [...prev, currentPreview]);
         }
         setRedoHistory([]); // Clear redo on new version
+
+        // Replace content image placeholders with actual base64 data
+        let processedHtml = data.html;
+        const contentImages = imagesToSend.filter(img => img.type === "content");
+        for (let i = 0; i < contentImages.length; i++) {
+          const placeholder = `{{CONTENT_IMAGE_${i}}}`;
+          processedHtml = processedHtml.split(placeholder).join(contentImages[i].data);
+        }
+
         // Inject navigation guard to keep all clicks inside iframe
         const navGuard = `<script>document.addEventListener('click',function(e){var a=e.target.closest('a');if(a){var h=a.getAttribute('href');if(h&&h.startsWith('http')){e.preventDefault();return;}if(h&&!h.startsWith('javascript:')){e.preventDefault();}}},true);</script>`;
-        const safeHtml = data.html.replace(/<head([^>]*)>/i, `<head$1>${navGuard}`);
+        const safeHtml = processedHtml.replace(/<head([^>]*)>/i, `<head$1>${navGuard}`);
         setCurrentPreview(safeHtml);
       }
     } catch (error) {
@@ -486,8 +495,17 @@ export default function HomePage() {
           setPreviewHistory((prev) => [...prev, currentPreview]);
         }
         setRedoHistory([]);
+
+        // Replace content image placeholders with actual base64 data
+        let processedHtml = data.html;
+        const contentImages = imagesToSend.filter(img => img.type === "content");
+        for (let i = 0; i < contentImages.length; i++) {
+          const placeholder = `{{CONTENT_IMAGE_${i}}}`;
+          processedHtml = processedHtml.split(placeholder).join(contentImages[i].data);
+        }
+
         const navGuard = `<script>document.addEventListener('click',function(e){var a=e.target.closest('a');if(a){var h=a.getAttribute('href');if(h&&h.startsWith('http')){e.preventDefault();return;}if(h&&!h.startsWith('javascript:')){e.preventDefault();}}},true);</script>`;
-        const safeHtml = data.html.replace(/<head([^>]*)>/i, `<head$1>${navGuard}`);
+        const safeHtml = processedHtml.replace(/<head([^>]*)>/i, `<head$1>${navGuard}`);
         setCurrentPreview(safeHtml);
       }
     } catch (error) {
