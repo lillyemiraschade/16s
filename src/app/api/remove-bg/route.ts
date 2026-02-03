@@ -3,7 +3,7 @@ import { NextRequest } from "next/server";
 export const runtime = "nodejs";
 export const maxDuration = 30;
 
-const REMOVE_BG_API_KEY = "6DBHPf12JCemWRVw2AnzsuHM";
+const REMOVE_BG_API_KEY = process.env.REMOVE_BG_API_KEY || "";
 
 export async function POST(req: NextRequest) {
   try {

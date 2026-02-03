@@ -153,6 +153,41 @@ export default function HomePage() {
   // Abort controller for cancelling in-flight requests
   const abortRef = useRef<AbortController | null>(null);
 
+  // Helper function to replace image placeholders in HTML
+  const replaceImagePlaceholders = useCallback((html: string): string => {
+    // Collect ALL content images from the conversation history
+    const allContentImages: UploadedImage[] = [];
+    for (const msg of messagesRef.current) {
+      if (msg.uploadedImages) {
+        for (const img of msg.uploadedImages) {
+          if (img.type === "content") {
+            allContentImages.push(img);
+          }
+        }
+      }
+    }
+
+    console.log(`[Image Replacement] Found ${allContentImages.length} content images in history`);
+
+    // Find all placeholders in the HTML using regex (handles variations in format)
+    const placeholderRegex = /\{\{\s*CONTENT_IMAGE_(\d+)\s*\}\}/g;
+    const foundPlaceholders = Array.from(html.matchAll(placeholderRegex));
+    console.log(`[Image Replacement] Found ${foundPlaceholders.length} placeholders in HTML:`, foundPlaceholders.map(m => m[0]));
+
+    // Replace each placeholder with the corresponding image
+    return html.replace(placeholderRegex, (match, indexStr) => {
+      const index = parseInt(indexStr, 10);
+      if (allContentImages[index]) {
+        console.log(`[Image Replacement] Replacing ${match} with image (${allContentImages[index].data.length} chars)`);
+        return allContentImages[index].data;
+      } else {
+        console.warn(`[Image Replacement] No image found for ${match} (have ${allContentImages.length} images)`);
+        // Return a 1x1 transparent pixel as fallback to prevent broken image icon
+        return "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7";
+      }
+    });
+  }, []);
+
   const handleSendMessage = useCallback(async (text: string, imagesToInclude?: UploadedImage[]) => {
     // If on a call, route typed messages to the voice agent instead
     if (isOnCall && voiceCallRef.current) {
@@ -316,28 +351,7 @@ export default function HomePage() {
         setRedoHistory([]); // Clear redo on new version
 
         // Replace content image placeholders with actual base64 data
-        // Collect ALL content images from the conversation history, not just current message
-        let processedHtml = data.html;
-        const allContentImages: UploadedImage[] = [];
-        for (const msg of messagesRef.current) {
-          if (msg.uploadedImages) {
-            for (const img of msg.uploadedImages) {
-              if (img.type === "content") {
-                allContentImages.push(img);
-              }
-            }
-          }
-        }
-        // Also include images from current message (not yet in messagesRef)
-        for (const img of imagesToSend) {
-          if (img.type === "content") {
-            allContentImages.push(img);
-          }
-        }
-        for (let i = 0; i < allContentImages.length; i++) {
-          const placeholder = `{{CONTENT_IMAGE_${i}}}`;
-          processedHtml = processedHtml.split(placeholder).join(allContentImages[i].data);
-        }
+        const processedHtml = replaceImagePlaceholders(data.html);
 
         // Inject navigation guard to keep all clicks inside iframe
         const navGuard = `<script>document.addEventListener('click',function(e){var a=e.target.closest('a');if(a){var h=a.getAttribute('href');if(h&&h.startsWith('http')){e.preventDefault();return;}if(h&&!h.startsWith('javascript:')){e.preventDefault();}}},true);</script>`;
@@ -513,28 +527,7 @@ export default function HomePage() {
         setRedoHistory([]);
 
         // Replace content image placeholders with actual base64 data
-        // Collect ALL content images from the conversation history, not just current message
-        let processedHtml = data.html;
-        const allContentImages: UploadedImage[] = [];
-        for (const msg of messagesRef.current) {
-          if (msg.uploadedImages) {
-            for (const img of msg.uploadedImages) {
-              if (img.type === "content") {
-                allContentImages.push(img);
-              }
-            }
-          }
-        }
-        // Also include images from current message (not yet in messagesRef)
-        for (const img of imagesToSend) {
-          if (img.type === "content") {
-            allContentImages.push(img);
-          }
-        }
-        for (let i = 0; i < allContentImages.length; i++) {
-          const placeholder = `{{CONTENT_IMAGE_${i}}}`;
-          processedHtml = processedHtml.split(placeholder).join(allContentImages[i].data);
-        }
+        const processedHtml = replaceImagePlaceholders(data.html);
 
         const navGuard = `<script>document.addEventListener('click',function(e){var a=e.target.closest('a');if(a){var h=a.getAttribute('href');if(h&&h.startsWith('http')){e.preventDefault();return;}if(h&&!h.startsWith('javascript:')){e.preventDefault();}}},true);</script>`;
         const safeHtml = processedHtml.replace(/<head([^>]*)>/i, `<head$1>${navGuard}`);
