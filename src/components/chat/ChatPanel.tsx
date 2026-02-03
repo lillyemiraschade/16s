@@ -180,7 +180,7 @@ export function ChatPanel({
           <button
             onClick={handleCallClick}
             disabled={isOnCall}
-            className="flex items-center gap-1.5 px-3 py-2 text-[12px] font-medium text-zinc-400 hover:text-zinc-200 glass-matte glass-hover disabled:opacity-40 disabled:cursor-not-allowed rounded-full transition-all duration-200"
+            className="flex items-center gap-1.5 px-3 py-2 text-[12px] font-medium text-zinc-300 hover:text-zinc-100 glass-pill disabled:opacity-40 disabled:cursor-not-allowed rounded-full transition-all duration-200"
             title="Talk about the project on the phone"
           >
             <Phone className="w-3.5 h-3.5" />
@@ -188,7 +188,7 @@ export function ChatPanel({
           </button>
           <button
             onClick={onNewProject}
-            className="flex items-center gap-1.5 px-3 py-2 text-[12px] font-medium text-zinc-400 hover:text-zinc-200 glass glass-hover rounded-full transition-all duration-200"
+            className="flex items-center gap-1.5 px-3 py-2 text-[12px] font-medium text-zinc-300 hover:text-zinc-100 glass-pill rounded-full transition-all duration-200"
             title="New project"
           >
             <Plus className="w-3.5 h-3.5" />
@@ -231,7 +231,7 @@ export function ChatPanel({
               <div
                 className={`${
                   message.role === "user"
-                    ? "glass-bubble glass-bubble-user text-white ml-auto max-w-[85%]"
+                    ? "glass-bubble glass-bubble-user text-green-100 ml-auto max-w-[85%]"
                     : "glass-bubble text-zinc-200 max-w-[90%]"
                 } rounded-2xl px-4 py-3`}
               >
@@ -340,8 +340,8 @@ export function ChatPanel({
           </div>
         )}
 
-        {/* Input container — glass pill with inner glow */}
-        <div className="glass-matte rounded-2xl p-1">
+        {/* Input container — glass with green glow border */}
+        <div className="glass-input-glow rounded-2xl p-1">
           <div className="flex items-end gap-2 px-3 py-2">
             <img src="/logo.png" alt="" className="w-6 h-6 object-contain mb-1 opacity-30 flex-shrink-0" aria-hidden="true" />
             <textarea

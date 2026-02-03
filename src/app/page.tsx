@@ -277,7 +277,7 @@ export default function HomePage() {
             </div>
 
             {/* Input bar */}
-            <div className="w-full glass-matte rounded-2xl p-1">
+            <div className="w-full glass-input-glow rounded-2xl p-1">
               {inspoImages.length > 0 && (
                 <div className="flex gap-2 flex-wrap px-3 pt-3">
                   {inspoImages.map((img, idx) => (
