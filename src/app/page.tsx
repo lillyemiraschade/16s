@@ -226,7 +226,24 @@ export default function HomePage() {
 
       const responseText = await response.text();
       const lines = responseText.trim().split("\n").filter((l) => l.trim());
-      const data = JSON.parse(lines[lines.length - 1]);
+      const lastLine = lines[lines.length - 1];
+
+      // Safely parse JSON with fallback
+      let data;
+      try {
+        if (!lastLine || lastLine === "undefined") {
+          throw new Error("Empty response");
+        }
+        data = JSON.parse(lastLine);
+      } catch {
+        // Try to find any JSON object in the response
+        const jsonMatch = responseText.match(/\{[\s\S]*"message"[\s\S]*\}/);
+        if (jsonMatch) {
+          data = JSON.parse(jsonMatch[0]);
+        } else {
+          throw new Error("Failed to parse response");
+        }
+      }
 
       // Check if API returned an error in the response body
       if (data.error) {
@@ -342,7 +359,23 @@ export default function HomePage() {
 
       const responseText = await response.text();
       const lines = responseText.trim().split("\n").filter((l) => l.trim());
-      const data = JSON.parse(lines[lines.length - 1]);
+      const lastLine = lines[lines.length - 1];
+
+      // Safely parse JSON with fallback
+      let data;
+      try {
+        if (!lastLine || lastLine === "undefined") {
+          throw new Error("Empty response");
+        }
+        data = JSON.parse(lastLine);
+      } catch {
+        const jsonMatch = responseText.match(/\{[\s\S]*"message"[\s\S]*\}/);
+        if (jsonMatch) {
+          data = JSON.parse(jsonMatch[0]);
+        } else {
+          throw new Error("Failed to parse response");
+        }
+      }
 
       if (data.error) {
         throw new Error(data.error);
