@@ -28,8 +28,11 @@ function formatTime(seconds: number): string {
 }
 
 function compileCallData(messages: VoiceMessage[]): { visibleSummary: string; privateData: string } {
+  // Filter out empty or invalid messages
+  const validMessages = messages.filter((m) => m.content && m.content.trim().length > 0);
+
   // Extract all user info for the private summary (sent to AI but not shown to user)
-  const allUserInfo = messages
+  const allUserInfo = validMessages
     .filter((m) => m.role === "user")
     .map((m) => {
       const sourceLabel = m.source === "typed" ? "[typed in chat]" : "[spoken]";
@@ -37,22 +40,30 @@ function compileCallData(messages: VoiceMessage[]): { visibleSummary: string; pr
     });
 
   // Extract key info from the conversation for structured data
-  const fullConversation = messages
+  const fullConversation = validMessages
     .map((m) => `${m.role === "assistant" ? "Agent" : "User"}: ${m.content}`)
     .join("\n");
 
   // Private data - full details for the AI to use
+  // Include a structured summary to help the main chat AI parse the info
   const privateData = `[VOICE CALL TRANSCRIPT - Use this information to build the website, but DO NOT show this raw data to the user]
 
+CONVERSATION:
 ${fullConversation}
+
+KEY INFO FROM USER:
+${allUserInfo.join("\n")}
 
 [END TRANSCRIPT]
 
-Based on this call, please design and build the website. Ask for inspiration images before generating.`;
+Based on this call, please design and build the website. Ask for inspiration images before generating if the user didn't mention them already.`;
 
   // Visible summary - just a brief note shown in chat
-  const visibleSummary = allUserInfo.length > 0
+  const userMessageCount = allUserInfo.length;
+  const visibleSummary = userMessageCount >= 3
     ? "Great call! I've got all the details. Let me ask one more thing..."
+    : userMessageCount > 0
+    ? "Got some info from our chat. Let me ask a few more things..."
     : "Quick call! Let's get some more details...";
 
   return { visibleSummary, privateData };
@@ -72,7 +83,18 @@ export const VoiceCall = forwardRef<VoiceCallHandle, VoiceCallProps>(
     const voiceMessagesRef = useRef<VoiceMessage[]>([]);
 
     useEffect(() => { stateRef.current = state; }, [state]);
-    useEffect(() => { voiceMessagesRef.current = voiceMessages; }, [voiceMessages]);
+    // Sync ref immediately on every voiceMessages change
+    useEffect(() => {
+      voiceMessagesRef.current = voiceMessages;
+    }, [voiceMessages]);
+    // Also update ref synchronously when setting state
+    const updateVoiceMessages = useCallback((updater: (prev: VoiceMessage[]) => VoiceMessage[]) => {
+      setVoiceMessages((prev) => {
+        const next = updater(prev);
+        voiceMessagesRef.current = next; // Sync ref immediately
+        return next;
+      });
+    }, []);
 
     // Timer
     useEffect(() => {
@@ -116,7 +138,7 @@ export const VoiceCall = forwardRef<VoiceCallHandle, VoiceCallProps>(
 
           // Add user message and send to voice API
           const userMessage: VoiceMessage = { role: "user", content: finalTranscript.trim(), source: "voice" };
-          setVoiceMessages((prev) => {
+          updateVoiceMessages((prev) => {
             const updated = [...prev, userMessage];
             sendToVoiceAPI(updated);
             return updated;
@@ -177,7 +199,7 @@ export const VoiceCall = forwardRef<VoiceCallHandle, VoiceCallProps>(
 
         if (!mountedRef.current) return;
 
-        setVoiceMessages((prev) => {
+        updateVoiceMessages((prev) => {
           const updated = [...prev, aiMessage];
 
           // If complete, end the call after speaking the final message
@@ -204,14 +226,14 @@ export const VoiceCall = forwardRef<VoiceCallHandle, VoiceCallProps>(
 
         // Add the typed message to the conversation
         const typedMessage: VoiceMessage = { role: "user", content: text, source: "typed" };
-        setVoiceMessages((prev) => {
+        updateVoiceMessages((prev) => {
           const updated = [...prev, typedMessage];
           // Send to voice API with flag indicating it's typed
           sendToVoiceAPI(updated, true);
           return updated;
         });
       },
-    }), [sendToVoiceAPI]);
+    }), [sendToVoiceAPI, updateVoiceMessages]);
 
     // Initial greeting and setup
     useEffect(() => {
@@ -222,7 +244,7 @@ export const VoiceCall = forwardRef<VoiceCallHandle, VoiceCallProps>(
       // Initial greeting
       const greeting = "Hey! Tell me about your project.";
       const initialMessage: VoiceMessage = { role: "assistant", content: greeting };
-      setVoiceMessages([initialMessage]);
+      updateVoiceMessages(() => [initialMessage]);
       speak(greeting);
 
       return () => {

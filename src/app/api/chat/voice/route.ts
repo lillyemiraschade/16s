@@ -22,11 +22,24 @@ interface VoiceResponse {
 
 const VOICE_SYSTEM_PROMPT = `You are 16s, an AI web designer on a voice call with a client. Your job is to gather ALL the information needed to build their website through natural conversation.
 
+INTERNAL STATE TRACKING — CRITICAL FOR LONGER CALLS:
+At each turn, mentally note what you've gathered so far:
+- Name: [gathered or not]
+- What they do: [gathered or not]
+- Target audience: [gathered or not]
+- Pages needed: [gathered or not]
+- Services/products/content: [gathered or not]
+- Contact info: [gathered or not]
+- Social links: [gathered or not]
+- Style/vibe: [gathered or not]
+
+This helps you remember what's been covered and what to ask next, especially in longer conversations.
+
 RULES:
 - Ask ONE question at a time — this is a phone call, not a form
 - Be warm, conversational, casual — like a real designer on a discovery call
-- Track what you've gathered and what's still missing
-- Cover these topics (but conversationally, not as a checklist):
+- REMEMBER what they've already told you — don't re-ask questions
+- Cover these topics (conversationally, not as a checklist):
   • Business/project name
   • What they do (services, products, or purpose)
   • Target audience (who is this site for?)
@@ -39,6 +52,7 @@ RULES:
 - Keep responses SHORT — this is voice, not text. 1-2 sentences max.
 - NEVER discuss HTML, code, or technical implementation details
 - NEVER generate any website code
+- If you feel like you're going in circles, summarize what you have and move to wrap-up
 
 TYPED INPUTS FROM CHAT:
 - Sometimes users will TYPE information in the chat while on the call (like emails, links, etc.)
@@ -46,6 +60,7 @@ TYPED INPUTS FROM CHAT:
 - Continue the conversation naturally after acknowledging
 
 ENDING THE CALL — ALWAYS ASK FOR INSPO:
+- After gathering 4-5 key pieces of info, start wrapping up
 - Before wrapping up, ALWAYS ask about inspiration images: "One last thing — do you have any screenshots or images of websites you love? You can drop those in after we hang up and I'll match that style exactly."
 - THEN wrap up: "Awesome, I've got everything I need. Drop any inspo images in the chat and I'll get started!"
 
@@ -87,17 +102,25 @@ export async function POST(req: Request) {
       }
     }
 
-    // If this is a typed input, add a hint to acknowledge it
-    if (hasTypedInput && claudeMessages.length > 0) {
-      const lastMsg = claudeMessages[claudeMessages.length - 1];
-      if (lastMsg.role === "user" && typeof lastMsg.content === "string" && !lastMsg.content.startsWith("[TYPED IN CHAT]")) {
-        // Already marked above, but double-check
+    // For longer conversations (10+ messages), add a summary hint to help the model track state
+    if (claudeMessages.length > 10) {
+      // Extract user messages to create a summary context
+      const userMessages = voiceMessages
+        .filter((m) => m.role === "user")
+        .map((m) => m.content)
+        .join(" | ");
+
+      // Prepend a context summary to the last user message
+      const lastIdx = claudeMessages.length - 1;
+      if (claudeMessages[lastIdx].role === "user" && typeof claudeMessages[lastIdx].content === "string") {
+        claudeMessages[lastIdx].content =
+          `[CONVERSATION SUMMARY - Info gathered so far: ${userMessages.slice(0, 500)}...]\n\nLatest message: ${claudeMessages[lastIdx].content}`;
       }
     }
 
     const response = await anthropic.messages.create({
       model: "claude-sonnet-4-20250514",
-      max_tokens: 500,
+      max_tokens: 800, // Increased from 500 for longer conversations
       system: VOICE_SYSTEM_PROMPT,
       messages: claudeMessages,
     });
