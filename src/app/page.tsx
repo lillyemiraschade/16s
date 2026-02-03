@@ -8,7 +8,8 @@ import { ChatPanel } from "@/components/chat/ChatPanel";
 import { PreviewPanel } from "@/components/preview/PreviewPanel";
 import { VoiceCall } from "@/components/chat/VoiceCall";
 import { processImageFiles } from "@/lib/images";
-import type { Message, Viewport } from "@/lib/types";
+import { saveProject, loadProject, listProjects, deleteProject } from "@/lib/projects";
+import type { Message, Viewport, SavedProjectMeta } from "@/lib/types";
 
 const HEADLINES = [
   "What shall we build?",
@@ -21,32 +22,24 @@ const HEADLINES = [
   "Got a project in mind?",
 ];
 
-const ALL_QUICK_ACTIONS = [
-  "Build me a landing page",
-  "Design a portfolio site",
-  "Create a restaurant website",
-  "Make an agency homepage",
-  "Design a SaaS product page",
-  "Build an online store",
-  "Create a personal blog",
-  "Design a startup site",
-  "Make a fitness studio page",
-  "Build a photography portfolio",
-  "Create a coffee shop site",
-  "Design a law firm website",
-  "Make a real estate page",
-  "Build a wedding planner site",
+const TEMPLATE_CATEGORIES = [
+  { label: "Portfolio", prompt: "Design a modern portfolio website for a creative professional" },
+  { label: "Business", prompt: "Build a professional business website with services and contact sections" },
+  { label: "Restaurant", prompt: "Create a restaurant website with menu, hours, and reservation info" },
+  { label: "E-commerce", prompt: "Design an online store with product grid, cart, and checkout" },
+  { label: "Blog", prompt: "Build a clean, minimal blog with featured posts and categories" },
+  { label: "Landing Page", prompt: "Create a conversion-focused landing page with hero, features, and CTA" },
 ];
 
-function pickRandom<T>(arr: T[], count: number): T[] {
-  const shuffled = [...arr].sort(() => Math.random() - 0.5);
-  return shuffled.slice(0, count);
+function generateId(): string {
+  return Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
 }
 
 export default function HomePage() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [currentPreview, setCurrentPreview] = useState<string | null>(null);
   const [previewHistory, setPreviewHistory] = useState<string[]>([]);
+  const [redoHistory, setRedoHistory] = useState<string[]>([]);
   const [viewport, setViewport] = useState<Viewport>("desktop");
   const [isGenerating, setIsGenerating] = useState(false);
   const [inspoImages, setInspoImages] = useState<string[]>([]);
@@ -55,10 +48,14 @@ export default function HomePage() {
   const [hasStarted, setHasStarted] = useState(false);
   const [previewScreenshot, setPreviewScreenshot] = useState<string | null>(null);
 
+  // Project state
+  const [currentProjectId, setCurrentProjectId] = useState<string | null>(null);
+  const [projectName, setProjectName] = useState<string>("Untitled");
+  const [savedProjects, setSavedProjects] = useState<SavedProjectMeta[]>([]);
+
   // Randomized on each mount/reset
   const [welcomeKey, setWelcomeKey] = useState(0);
   const headline = useMemo(() => HEADLINES[Math.floor(Math.random() * HEADLINES.length)], [welcomeKey]);
-  const quickActions = useMemo(() => pickRandom(ALL_QUICK_ACTIONS, 3), [welcomeKey]);
 
   const [welcomeInput, setWelcomeInput] = useState("");
   const welcomeTextareaRef = useRef<HTMLTextAreaElement>(null);
@@ -68,6 +65,53 @@ export default function HomePage() {
   useEffect(() => { messagesRef.current = messages; }, [messages]);
 
   const screenshotTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  // Load saved projects list on mount
+  useEffect(() => {
+    setSavedProjects(listProjects());
+  }, []);
+
+  // Auto-restore last project on mount
+  useEffect(() => {
+    const projects = listProjects();
+    if (projects.length > 0) {
+      const last = loadProject(projects[0].id);
+      if (last && last.messages.length > 0) {
+        setCurrentProjectId(last.id);
+        setProjectName(last.name);
+        setMessages(last.messages);
+        setCurrentPreview(last.currentPreview);
+        setPreviewHistory(last.previewHistory);
+        setHasStarted(true);
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // Auto-save project (debounced)
+  const saveTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  useEffect(() => {
+    if (!hasStarted || messages.length === 0) return;
+    if (saveTimerRef.current) clearTimeout(saveTimerRef.current);
+    saveTimerRef.current = setTimeout(() => {
+      const id = currentProjectId || generateId();
+      if (!currentProjectId) setCurrentProjectId(id);
+      const name = projectName === "Untitled" && messages.length > 0
+        ? messages.find((m) => m.role === "user")?.content.slice(0, 40) || "Untitled"
+        : projectName;
+      if (name !== projectName) setProjectName(name);
+      saveProject({
+        id,
+        name,
+        messages,
+        currentPreview,
+        previewHistory,
+        updatedAt: Date.now(),
+      });
+      setSavedProjects(listProjects());
+    }, 1000);
+    return () => { if (saveTimerRef.current) clearTimeout(saveTimerRef.current); };
+  }, [messages, currentPreview, previewHistory, hasStarted, currentProjectId, projectName]);
 
   const captureScreenshot = useCallback(async (iframe: HTMLIFrameElement) => {
     try {
@@ -158,6 +202,7 @@ export default function HomePage() {
         if (currentPreview) {
           setPreviewHistory((prev) => [...prev, currentPreview]);
         }
+        setRedoHistory([]); // Clear redo on new version
         // Inject navigation guard to keep all clicks inside iframe
         const navGuard = `<script>document.addEventListener('click',function(e){var a=e.target.closest('a');if(a){var h=a.getAttribute('href');if(h&&h.startsWith('http')){e.preventDefault();return;}if(h&&!h.startsWith('javascript:')){e.preventDefault();}}},true);</script>`;
         const safeHtml = data.html.replace(/<head([^>]*)>/i, `<head$1>${navGuard}`);
@@ -196,14 +241,25 @@ export default function HomePage() {
     setInspoImages((prev) => prev.filter((_, i) => i !== index));
   };
 
-  const handleBack = () => {
-    if (previewHistory.length > 0) {
+  const handleUndo = useCallback(() => {
+    if (previewHistory.length > 0 && currentPreview) {
       const prev = [...previewHistory];
       const last = prev.pop()!;
       setPreviewHistory(prev);
+      setRedoHistory((r) => [...r, currentPreview]);
       setCurrentPreview(last);
     }
-  };
+  }, [previewHistory, currentPreview]);
+
+  const handleRedo = useCallback(() => {
+    if (redoHistory.length > 0 && currentPreview) {
+      const redo = [...redoHistory];
+      const next = redo.pop()!;
+      setRedoHistory(redo);
+      setPreviewHistory((prev) => [...prev, currentPreview]);
+      setCurrentPreview(next);
+    }
+  }, [redoHistory, currentPreview]);
 
   const handleExport = useCallback(() => {
     if (!currentPreview) return;
@@ -216,11 +272,34 @@ export default function HomePage() {
     URL.revokeObjectURL(url);
   }, [currentPreview]);
 
+  const handleCopyToClipboard = useCallback(() => {
+    if (!currentPreview) return;
+    navigator.clipboard.writeText(currentPreview);
+  }, [currentPreview]);
+
+  const handleOpenInNewTab = useCallback(() => {
+    if (!currentPreview) return;
+    const blob = new Blob([currentPreview], { type: "text/html" });
+    const url = URL.createObjectURL(blob);
+    window.open(url, "_blank");
+  }, [currentPreview]);
+
+  const handleRestoreVersion = useCallback((index: number) => {
+    if (currentPreview) {
+      // Push current and all history after index into redo
+      const historyAfter = previewHistory.slice(index + 1);
+      setRedoHistory((r) => [...r, ...historyAfter, currentPreview]);
+      setCurrentPreview(previewHistory[index]);
+      setPreviewHistory(previewHistory.slice(0, index));
+    }
+  }, [currentPreview, previewHistory]);
+
   const handleNewProject = useCallback(() => {
     abortRef.current?.abort();
     setMessages([]);
     setCurrentPreview(null);
     setPreviewHistory([]);
+    setRedoHistory([]);
     setInspoImages([]);
     setIsGenerating(false);
     setHasStarted(false);
@@ -229,7 +308,66 @@ export default function HomePage() {
     setIsOnCall(false);
     setLastAiResponse(null);
     setPreviewScreenshot(null);
+    setCurrentProjectId(null);
+    setProjectName("Untitled");
   }, []);
+
+  const handleLoadProject = useCallback((id: string) => {
+    const proj = loadProject(id);
+    if (!proj) return;
+    abortRef.current?.abort();
+    setMessages(proj.messages);
+    setCurrentPreview(proj.currentPreview);
+    setPreviewHistory(proj.previewHistory);
+    setRedoHistory([]);
+    setInspoImages([]);
+    setIsGenerating(false);
+    setHasStarted(true);
+    setIsOnCall(false);
+    setLastAiResponse(null);
+    setPreviewScreenshot(null);
+    setCurrentProjectId(proj.id);
+    setProjectName(proj.name);
+  }, []);
+
+  const handleDeleteProject = useCallback((id: string) => {
+    deleteProject(id);
+    setSavedProjects(listProjects());
+    if (id === currentProjectId) {
+      handleNewProject();
+    }
+  }, [currentProjectId, handleNewProject]);
+
+  // Keyboard shortcuts
+  useEffect(() => {
+    if (!hasStarted) return;
+    const handler = (e: KeyboardEvent) => {
+      const mod = e.metaKey || e.ctrlKey;
+      if (!mod) return;
+
+      if (e.code === "KeyN" && !e.shiftKey) {
+        e.preventDefault();
+        handleNewProject();
+      } else if (e.code === "KeyE" && !e.shiftKey) {
+        e.preventDefault();
+        handleExport();
+      } else if (e.code === "KeyC" && e.shiftKey) {
+        e.preventDefault();
+        handleCopyToClipboard();
+      } else if (e.code === "KeyZ" && !e.shiftKey) {
+        e.preventDefault();
+        handleUndo();
+      } else if (e.code === "KeyZ" && e.shiftKey) {
+        e.preventDefault();
+        handleRedo();
+      } else if (e.key === "/") {
+        e.preventDefault();
+        window.dispatchEvent(new CustomEvent("toggle-code-view"));
+      }
+    };
+    window.addEventListener("keydown", handler);
+    return () => window.removeEventListener("keydown", handler);
+  }, [hasStarted, handleNewProject, handleExport, handleCopyToClipboard, handleUndo, handleRedo]);
 
   const handleWelcomeSend = () => {
     if ((!welcomeInput.trim() && inspoImages.length === 0) || isGenerating) return;
@@ -352,15 +490,16 @@ export default function HomePage() {
               </div>
             </div>
 
-            <div className="flex justify-center gap-3 flex-wrap">
-              {quickActions.map((action) => (
+            {/* Template categories */}
+            <div className="grid grid-cols-3 gap-3 w-full max-w-[480px]">
+              {TEMPLATE_CATEGORIES.map((cat) => (
                 <button
-                  key={action}
-                  onClick={() => handleSendMessage(action)}
+                  key={cat.label}
+                  onClick={() => handleSendMessage(cat.prompt)}
                   disabled={isGenerating}
-                  className="px-5 py-2.5 text-[13px] font-medium text-zinc-400 hover:text-zinc-200 glass-pill disabled:opacity-40 disabled:cursor-not-allowed rounded-full transition-all duration-200"
+                  className="px-4 py-3 text-[13px] font-medium text-zinc-400 hover:text-zinc-200 glass-pill disabled:opacity-40 disabled:cursor-not-allowed rounded-xl transition-all duration-200 text-center"
                 >
-                  {action}
+                  {cat.label}
                 </button>
               ))}
             </div>
@@ -390,6 +529,10 @@ export default function HomePage() {
             isGenerating={isGenerating}
             inspoImages={inspoImages}
             onNewProject={handleNewProject}
+            onLoadProject={handleLoadProject}
+            onDeleteProject={handleDeleteProject}
+            savedProjects={savedProjects}
+            currentProjectId={currentProjectId}
             isOnCall={isOnCall}
             onStartCall={() => { setLastAiResponse(null); setIsOnCall(true); }}
             onEndCall={() => setIsOnCall(false)}
@@ -404,9 +547,15 @@ export default function HomePage() {
             onViewportChange={setViewport}
             isGenerating={isGenerating}
             canGoBack={previewHistory.length > 0}
-            onBack={handleBack}
+            canRedo={redoHistory.length > 0}
+            onBack={handleUndo}
+            onRedo={handleRedo}
             onExport={handleExport}
+            onCopyToClipboard={handleCopyToClipboard}
+            onOpenInNewTab={handleOpenInNewTab}
             onIframeLoad={handleIframeLoad}
+            previewHistory={previewHistory}
+            onRestoreVersion={handleRestoreVersion}
           />
           {/* Voice call widget — top-right of preview area */}
           <AnimatePresence>

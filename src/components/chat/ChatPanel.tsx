@@ -2,10 +2,10 @@
 
 import { useEffect, useRef, useState, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Paperclip, ArrowUp, X, ImagePlus, Plus, Phone, Info } from "lucide-react";
+import { Paperclip, ArrowUp, X, ImagePlus, Plus, Phone, Info, ChevronDown, Trash2 } from "lucide-react";
 import { TypingIndicator } from "./TypingIndicator";
 import { processImageFiles } from "@/lib/images";
-import type { Message } from "@/lib/types";
+import type { Message, SavedProjectMeta } from "@/lib/types";
 
 interface ChatPanelProps {
   messages: Message[];
@@ -16,11 +16,25 @@ interface ChatPanelProps {
   isGenerating: boolean;
   inspoImages: string[];
   onNewProject: () => void;
+  onLoadProject: (id: string) => void;
+  onDeleteProject: (id: string) => void;
+  savedProjects: SavedProjectMeta[];
+  currentProjectId: string | null;
   isOnCall: boolean;
   onStartCall: () => void;
   onEndCall: () => void;
   lastAiResponse: { text: string; id: number } | null;
   hasPreview: boolean;
+}
+
+function formatRelativeTime(ts: number): string {
+  const diff = Date.now() - ts;
+  const mins = Math.floor(diff / 60000);
+  if (mins < 1) return "just now";
+  if (mins < 60) return `${mins}m ago`;
+  const hrs = Math.floor(mins / 60);
+  if (hrs < 24) return `${hrs}h ago`;
+  return `${Math.floor(hrs / 24)}d ago`;
 }
 
 export function ChatPanel({
@@ -32,6 +46,10 @@ export function ChatPanel({
   isGenerating,
   inspoImages,
   onNewProject,
+  onLoadProject,
+  onDeleteProject,
+  savedProjects,
+  currentProjectId,
   isOnCall,
   onStartCall,
   onEndCall,
@@ -107,7 +125,28 @@ export function ChatPanel({
     setIsDragging(false);
   };
 
+  const [showProjectMenu, setShowProjectMenu] = useState(false);
+  const projectMenuRef = useRef<HTMLDivElement>(null);
   const [showCallDisclaimer, setShowCallDisclaimer] = useState(false);
+
+  // Close project menu on outside click or Escape
+  useEffect(() => {
+    if (!showProjectMenu) return;
+    const handleClick = (e: MouseEvent) => {
+      if (projectMenuRef.current && !projectMenuRef.current.contains(e.target as Node)) {
+        setShowProjectMenu(false);
+      }
+    };
+    const handleKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setShowProjectMenu(false);
+    };
+    document.addEventListener("mousedown", handleClick);
+    document.addEventListener("keydown", handleKey);
+    return () => {
+      document.removeEventListener("mousedown", handleClick);
+      document.removeEventListener("keydown", handleKey);
+    };
+  }, [showProjectMenu]);
 
   const handleCallClick = () => {
     if (isOnCall) return;
@@ -186,14 +225,68 @@ export function ChatPanel({
             <Phone className="w-3.5 h-3.5" />
             Talk on phone
           </button>
-          <button
-            onClick={onNewProject}
-            className="flex items-center gap-1.5 px-3 py-2 text-[12px] font-medium text-zinc-300 hover:text-zinc-100 glass-pill rounded-full transition-all duration-200"
-            title="New project"
-          >
-            <Plus className="w-3.5 h-3.5" />
-            New
-          </button>
+          <div className="relative" ref={projectMenuRef}>
+            <button
+              onClick={() => setShowProjectMenu((v) => !v)}
+              className="flex items-center gap-1.5 px-3 py-2 text-[12px] font-medium text-zinc-300 hover:text-zinc-100 glass-pill rounded-full transition-all duration-200"
+              title="Projects"
+            >
+              <Plus className="w-3.5 h-3.5" />
+              New
+              <ChevronDown className="w-3 h-3" />
+            </button>
+            <AnimatePresence>
+              {showProjectMenu && (
+                <motion.div
+                  initial={{ opacity: 0, y: -4 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -4 }}
+                  transition={{ duration: 0.12 }}
+                  className="absolute top-full right-0 mt-1 z-30 glass rounded-xl overflow-hidden min-w-[220px] py-1 shadow-xl shadow-black/40"
+                >
+                  <button
+                    onClick={() => { onNewProject(); setShowProjectMenu(false); }}
+                    className="w-full flex items-center gap-2.5 px-4 py-2.5 text-[13px] text-green-400 hover:bg-white/[0.04] transition-colors font-medium"
+                  >
+                    <Plus className="w-3.5 h-3.5" />
+                    New Project
+                  </button>
+                  {savedProjects.length > 0 && (
+                    <>
+                      <div className="h-px bg-white/[0.06] mx-3 my-1" />
+                      <div className="max-h-[240px] overflow-y-auto">
+                        {savedProjects.map((proj) => (
+                          <div
+                            key={proj.id}
+                            className={`flex items-center gap-2 px-4 py-2 hover:bg-white/[0.04] transition-colors group ${
+                              proj.id === currentProjectId ? "bg-green-500/10" : ""
+                            }`}
+                          >
+                            <button
+                              onClick={() => { onLoadProject(proj.id); setShowProjectMenu(false); }}
+                              className="flex-1 text-left min-w-0"
+                            >
+                              <div className={`text-[13px] truncate ${proj.id === currentProjectId ? "text-green-400 font-medium" : "text-zinc-300"}`}>
+                                {proj.name}
+                              </div>
+                              <div className="text-[11px] text-zinc-600">{formatRelativeTime(proj.updatedAt)}</div>
+                            </button>
+                            <button
+                              onClick={(e) => { e.stopPropagation(); onDeleteProject(proj.id); }}
+                              className="p-1 rounded text-zinc-600 hover:text-red-400 opacity-0 group-hover:opacity-100 transition-all"
+                              title="Delete project"
+                            >
+                              <Trash2 className="w-3 h-3" />
+                            </button>
+                          </div>
+                        ))}
+                      </div>
+                    </>
+                  )}
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
         </div>
       </div>
 

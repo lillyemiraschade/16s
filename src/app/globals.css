@@ -257,4 +257,18 @@
       0 0 20px rgba(239, 68, 68, 0.2),
       0 0 60px rgba(239, 68, 68, 0.05);
   }
+
+  /* Code preview syntax highlighting */
+  .code-preview {
+    font-family: "SF Mono", "Fira Code", "Fira Mono", Menlo, Consolas, monospace;
+    color: #a1a1aa;
+    white-space: pre;
+    word-break: break-all;
+    tab-size: 2;
+  }
+
+  .code-preview .hl-tag { color: #f472b6; }
+  .code-preview .hl-attr { color: #93c5fd; }
+  .code-preview .hl-str { color: #86efac; }
+  .code-preview .hl-comment { color: #52525b; font-style: italic; }
 }

@@ -8,3 +8,18 @@ export interface Message {
 }
 
 export type Viewport = "desktop" | "tablet" | "mobile";
+
+export interface SavedProject {
+  id: string;
+  name: string;
+  messages: Message[];
+  currentPreview: string | null;
+  previewHistory: string[];
+  updatedAt: number;
+}
+
+export interface SavedProjectMeta {
+  id: string;
+  name: string;
+  updatedAt: number;
+}

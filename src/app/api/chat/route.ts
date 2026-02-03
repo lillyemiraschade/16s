@@ -1,27 +1,57 @@
 import { anthropic } from "@/lib/ai/anthropic";
 import { MessageParam, ImageBlockParam, TextBlockParam } from "@anthropic-ai/sdk/resources/messages";
+import { z } from "zod";
 
 export const runtime = "nodejs";
 export const maxDuration = 120;
 
-interface ChatRequest {
-  messages: Array<{
-    id: string;
-    role: "user" | "assistant";
-    content: string;
-    pills?: string[];
-    showUpload?: boolean | string;
-  }>;
-  inspoImages: string[];
-  currentPreview: string | null;
-  previewScreenshot?: string | null;
-}
+// Request validation
+const ChatRequestSchema = z.object({
+  messages: z.array(z.object({
+    id: z.string(),
+    role: z.enum(["user", "assistant"]),
+    content: z.string().max(50000),
+  })).max(200),
+  inspoImages: z.array(z.string()).max(10),
+  currentPreview: z.string().max(500000).nullable(),
+  previewScreenshot: z.string().max(2000000).nullable().optional(),
+});
+
+type ChatRequest = z.infer<typeof ChatRequestSchema>;
 
 interface ChatResponse {
   message: string;
   pills?: string[];
   showUpload?: boolean | string;
   html?: string;
+}
+
+// Simple in-memory rate limiter (per IP, 20 requests per minute)
+const rateLimitMap = new Map<string, { count: number; resetAt: number }>();
+const RATE_LIMIT = 20;
+const RATE_WINDOW_MS = 60_000;
+
+function checkRateLimit(ip: string): boolean {
+  const now = Date.now();
+  const entry = rateLimitMap.get(ip);
+  if (!entry || now > entry.resetAt) {
+    rateLimitMap.set(ip, { count: 1, resetAt: now + RATE_WINDOW_MS });
+    return true;
+  }
+  if (entry.count >= RATE_LIMIT) return false;
+  entry.count++;
+  return true;
+}
+
+// Clean stale entries periodically
+if (typeof globalThis !== "undefined") {
+  const cleanup = () => {
+    const now = Date.now();
+    rateLimitMap.forEach((val, key) => {
+      if (now > val.resetAt) rateLimitMap.delete(key);
+    });
+  };
+  setInterval(cleanup, RATE_WINDOW_MS);
 }
 
 const SYSTEM_PROMPT = `You are 16s, an AI web designer. You help non-technical users build beautiful websites through conversation.
@@ -263,9 +293,25 @@ VIBE OPTIONS to offer:
 - "Premium & sophisticated"`;
 
 export async function POST(req: Request) {
+  // Rate limiting
+  const ip = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
+  if (!checkRateLimit(ip)) {
+    return new Response(
+      JSON.stringify({ message: "You\u2019re sending requests too quickly. Please wait a moment." }),
+      { status: 429, headers: { "Content-Type": "application/json", "Retry-After": "60" } }
+    );
+  }
+
   try {
-    const body: ChatRequest = await req.json();
-    const { messages, inspoImages, currentPreview, previewScreenshot } = body;
+    const raw = await req.json();
+    const parsed = ChatRequestSchema.safeParse(raw);
+    if (!parsed.success) {
+      return new Response(
+        JSON.stringify({ message: "Invalid request format." }),
+        { status: 400, headers: { "Content-Type": "application/json" } }
+      );
+    }
+    const { messages, inspoImages, currentPreview, previewScreenshot } = parsed.data;
 
     const claudeMessages: MessageParam[] = [];
 
