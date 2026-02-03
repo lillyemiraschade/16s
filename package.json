@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.32.1",
+    "@vercel/blob": "^2.0.1",
     "clsx": "^2.1.1",
     "framer-motion": "^11.13.1",
     "html2canvas": "^1.4.1",

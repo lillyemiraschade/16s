@@ -8,7 +8,7 @@ import Image from "next/image";
 import { ChatPanel } from "@/components/chat/ChatPanel";
 import { PreviewPanel } from "@/components/preview/PreviewPanel";
 import { VoiceCall, VoiceCallHandle } from "@/components/chat/VoiceCall";
-import { processImageFiles, compressForContent } from "@/lib/images";
+import { processImageFiles, compressForContent, uploadToBlob } from "@/lib/images";
 import { saveProject, loadProject, listProjects, deleteProject } from "@/lib/projects";
 import type { Message, Viewport, SavedProjectMeta, SelectedElement, VersionBookmark, UploadedImage } from "@/lib/types";
 
@@ -595,8 +595,27 @@ export default function HomePage() {
     handleSendMessage(newContent, originalMessage.uploadedImages);
   }, [messages, previewHistory, handleSendMessage]);
 
-  const handleImageUpload = (base64: string, type: "inspo" | "content" = "content", label?: string) => {
-    setUploadedImages((prev) => [...prev, { data: base64, type, label }]);
+  const handleImageUpload = async (base64: string, type: "inspo" | "content" = "content", label?: string) => {
+    // Add image immediately with base64 for preview
+    const newImage: UploadedImage = { data: base64, type, label };
+    setUploadedImages((prev) => [...prev, newImage]);
+
+    // For content images, upload to Vercel Blob in background
+    if (type === "content") {
+      try {
+        const url = await uploadToBlob(base64, label);
+        // Update the image with the blob URL
+        setUploadedImages((prev) =>
+          prev.map((img) =>
+            img.data === base64 && img.type === "content" ? { ...img, url } : img
+          )
+        );
+        console.log(`[Blob Upload] Uploaded content image: ${url}`);
+      } catch (error) {
+        console.error("[Blob Upload] Failed to upload:", error);
+        // Image still works with base64 fallback
+      }
+    }
   };
 
   const handleImageRemove = (index: number) => {
@@ -609,16 +628,26 @@ export default function HomePage() {
 
     const newType = img.type === "inspo" ? "content" : "inspo";
 
-    // If switching to content, re-compress for smaller size (fits in HTML output)
+    // If switching to content, re-compress and upload to blob
     if (newType === "content") {
       try {
         const compressed = await compressForContent(img.data);
+        // Update type and compressed data first
         setUploadedImages((prev) =>
           prev.map((img, i) =>
             i === index ? { ...img, type: newType, data: compressed } : img
           )
         );
-      } catch {
+        // Then upload to blob
+        const url = await uploadToBlob(compressed, img.label);
+        setUploadedImages((prev) =>
+          prev.map((img, i) =>
+            i === index ? { ...img, url } : img
+          )
+        );
+        console.log(`[Blob Upload] Uploaded toggled image: ${url}`);
+      } catch (error) {
+        console.error("[Blob Upload] Failed:", error);
         // Fallback: just change type without re-compressing
         setUploadedImages((prev) =>
           prev.map((img, i) =>
@@ -627,10 +656,10 @@ export default function HomePage() {
         );
       }
     } else {
-      // Switching to inspo - no re-compression needed
+      // Switching to inspo - no re-compression needed, clear url
       setUploadedImages((prev) =>
         prev.map((img, i) =>
-          i === index ? { ...img, type: newType } : img
+          i === index ? { ...img, type: newType, url: undefined } : img
         )
       );
     }

@@ -5,6 +5,22 @@ const JPEG_QUALITY = 0.6;
 const MAX_BASE64_SIZE = 500_000; // ~500KB for inspo images (only sent to AI)
 const MAX_BASE64_SIZE_CONTENT = 100_000; // ~100KB for content images (must fit in HTML output)
 
+// Upload image to Vercel Blob and return URL
+export async function uploadToBlob(imageData: string, filename?: string): Promise<string> {
+  const response = await fetch("/api/upload", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ imageData, filename }),
+  });
+
+  if (!response.ok) {
+    throw new Error("Upload failed");
+  }
+
+  const data = await response.json();
+  return data.url;
+}
+
 // Remove background using remove.bg API
 export async function removeBackground(imageData: string): Promise<string> {
   const response = await fetch("/api/remove-bg", {

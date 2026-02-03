@@ -8,6 +8,7 @@ export const maxDuration = 120;
 // Image type for typed uploads
 const UploadedImageSchema = z.object({
   data: z.string(), // base64 data URL
+  url: z.string().optional(), // Vercel Blob URL for direct embedding
   type: z.enum(["inspo", "content"]),
   label: z.string().optional(),
 });
@@ -107,15 +108,14 @@ User should say "this is EXACTLY what I showed you."
 
 IMAGE TYPES — CRITICAL:
 - INSPO images (website screenshots) → clone the STYLE only, don't embed the image itself
-- CONTENT images (logo, team photos, product photos) → use PLACEHOLDERS in the HTML
+- CONTENT images (logo, team photos, product photos) → embed in the HTML using URLs or placeholders
 
 HOW TO EMBED CONTENT IMAGES:
-When user uploads content images, you can SEE thumbnails of them. Use PLACEHOLDERS in your HTML:
-<img src="{{CONTENT_IMAGE_0}}" alt="Description" />
-<img src="{{CONTENT_IMAGE_1}}" alt="Another image" />
+When user uploads content images, you can SEE thumbnails of them. Each image comes with either:
+1. A direct URL (preferred) - use it exactly as provided: <img src="https://..." alt="Description" />
+2. A placeholder format - use {{CONTENT_IMAGE_N}}: <img src="{{CONTENT_IMAGE_0}}" alt="Description" />
 
-The placeholder format is {{CONTENT_IMAGE_N}} where N is the image index (0, 1, 2...).
-The system will automatically replace these with the actual image data.
+IMPORTANT: If a URL is provided, use the EXACT URL. Do not modify it.
 Place images in appropriate sections (logo in nav, team photos on about, products on products page, etc.)
 
 BACKGROUND REMOVAL:
@@ -237,7 +237,7 @@ export async function POST(req: Request) {
     const { messages, uploadedImages, inspoImages, currentPreview, previewScreenshot } = parsed.data;
 
     // Normalize images: combine new typed format with legacy format
-    type UploadedImage = { data: string; type: "inspo" | "content"; label?: string };
+    type UploadedImage = { data: string; url?: string; type: "inspo" | "content"; label?: string };
     const allImages: UploadedImage[] = [
       ...(uploadedImages || []),
       ...(inspoImages || []).map((img) => ({ data: img, type: "inspo" as const })),
@@ -283,13 +283,23 @@ export async function POST(req: Request) {
             }
           }
 
-          // Add content images with placeholders - show visual + tell Claude which placeholder to use
-          // Use GLOBAL index so placeholders are consistent across the entire conversation
+          // Add content images - use URLs directly if available, otherwise fallback to placeholders
           if (contentImgs.length > 0) {
-            contentBlocks.push({
-              type: "text",
-              text: `[CONTENT IMAGES - Use placeholders in your HTML. The system will replace them with actual images:]`,
-            });
+            // Check if images have blob URLs
+            const hasUrls = contentImgs.some(img => img.url);
+
+            if (hasUrls) {
+              contentBlocks.push({
+                type: "text",
+                text: `[CONTENT IMAGES - Use the provided URLs directly in your HTML img src attributes:]`,
+              });
+            } else {
+              contentBlocks.push({
+                type: "text",
+                text: `[CONTENT IMAGES - Use placeholders in your HTML. The system will replace them with actual images:]`,
+              });
+            }
+
             for (let i = 0; i < contentImgs.length; i++) {
               const img = contentImgs[i];
               const matches = img.data.match(/^data:(image\/[a-zA-Z]+);base64,(.+)$/);
@@ -304,11 +314,18 @@ export async function POST(req: Request) {
                     data: matches[2],
                   },
                 });
-                // Tell Claude which placeholder to use for this image - use GLOBAL index
-                contentBlocks.push({
-                  type: "text",
-                  text: `[Content image #${globalContentImageIndex}${labelNote} → Use placeholder: {{CONTENT_IMAGE_${globalContentImageIndex}}}]`,
-                });
+                // Tell Claude to use URL directly if available, otherwise use placeholder
+                if (img.url) {
+                  contentBlocks.push({
+                    type: "text",
+                    text: `[Content image #${globalContentImageIndex}${labelNote} → Use this URL: ${img.url}]`,
+                  });
+                } else {
+                  contentBlocks.push({
+                    type: "text",
+                    text: `[Content image #${globalContentImageIndex}${labelNote} → Use placeholder: {{CONTENT_IMAGE_${globalContentImageIndex}}}]`,
+                  });
+                }
                 globalContentImageIndex++;
               }
             }
@@ -316,12 +333,21 @@ export async function POST(req: Request) {
 
           // Build the system note based on what types of images we have
           let systemNote = "";
+          const hasUrls = contentImgs.some(img => img.url);
           if (inspoImgs.length > 0 && contentImgs.length > 0) {
-            systemNote = "\n\n[SYSTEM NOTE: The user provided both INSPIRATION images (clone the design style) and CONTENT images (use placeholders like {{CONTENT_IMAGE_0}}). For inspiration images: extract exact colors, typography, spacing, layout. For content images: use the {{CONTENT_IMAGE_N}} placeholders in img src attributes.]";
+            if (hasUrls) {
+              systemNote = "\n\n[SYSTEM NOTE: The user provided both INSPIRATION images (clone the design style) and CONTENT images (use the provided URLs directly in img src). For inspiration images: extract exact colors, typography, spacing, layout. For content images: use the exact URLs provided above.]";
+            } else {
+              systemNote = "\n\n[SYSTEM NOTE: The user provided both INSPIRATION images (clone the design style) and CONTENT images (use placeholders like {{CONTENT_IMAGE_0}}). For inspiration images: extract exact colors, typography, spacing, layout. For content images: use the {{CONTENT_IMAGE_N}} placeholders in img src attributes.]";
+            }
           } else if (inspoImgs.length > 0) {
             systemNote = "\n\n[SYSTEM NOTE: These are INSPIRATION images. CLONE THE DESIGN PIXEL-PERFECTLY. Extract exact colors, typography, spacing, layout, button styles, nav style — everything. DO NOT interpret. CLONE EXACTLY what you see.]";
           } else if (contentImgs.length > 0) {
-            systemNote = "\n\n[SYSTEM NOTE: These are CONTENT images. Use {{CONTENT_IMAGE_N}} placeholders in img src attributes. The system will replace them with actual image data.]";
+            if (hasUrls) {
+              systemNote = "\n\n[SYSTEM NOTE: These are CONTENT images. Use the exact URLs provided above directly in img src attributes. Do NOT modify the URLs.]";
+            } else {
+              systemNote = "\n\n[SYSTEM NOTE: These are CONTENT images. Use {{CONTENT_IMAGE_N}} placeholders in img src attributes. The system will replace them with actual image data.]";
+            }
           }
 
           const userText = msg.content || "Here are my images.";

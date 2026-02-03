@@ -1,5 +1,6 @@
 export interface UploadedImage {
-  data: string; // base64 data URL
+  data: string; // base64 data URL (for thumbnails/AI vision)
+  url?: string; // Vercel Blob URL (for embedding in HTML)
   type: "inspo" | "content";
   label?: string; // e.g., "logo", "product photo", "team photo"
 }
