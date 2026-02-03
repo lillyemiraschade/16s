@@ -16,8 +16,9 @@ import {
   ChevronDown,
   Clock,
   X,
+  MousePointer2,
 } from "lucide-react";
-import type { Viewport } from "@/lib/types";
+import type { Viewport, SelectedElement } from "@/lib/types";
 
 interface PreviewPanelProps {
   html: string | null;
@@ -34,6 +35,10 @@ interface PreviewPanelProps {
   onIframeLoad?: (iframe: HTMLIFrameElement) => void;
   previewHistory: string[];
   onRestoreVersion: (index: number) => void;
+  selectMode: boolean;
+  onSelectModeChange: (enabled: boolean) => void;
+  selectedElement: SelectedElement | null;
+  onElementSelect: (element: SelectedElement | null) => void;
 }
 
 const viewportConfig = {
@@ -54,6 +59,85 @@ function highlightHtml(html: string): string {
     .replace(/(&lt;!--[\s\S]*?--&gt;)/g, '<span class="hl-comment">$1</span>');
 }
 
+// Script to inject into iframe for element selection
+const SELECT_MODE_SCRIPT = `
+<script>
+(function() {
+  let hoveredEl = null;
+  let selectedEl = null;
+  const overlay = document.createElement('div');
+  overlay.id = '16s-select-overlay';
+  overlay.style.cssText = 'position:fixed;pointer-events:none;border:2px solid #22c55e;background:rgba(34,197,94,0.1);z-index:999999;transition:all 0.1s ease;display:none;';
+  document.body.appendChild(overlay);
+
+  function getSelector(el) {
+    if (el.id) return '#' + el.id;
+    let path = el.tagName.toLowerCase();
+    if (el.className && typeof el.className === 'string') {
+      path += '.' + el.className.trim().split(/\\s+/).join('.');
+    }
+    return path;
+  }
+
+  function updateOverlay(el) {
+    if (!el) { overlay.style.display = 'none'; return; }
+    const rect = el.getBoundingClientRect();
+    overlay.style.display = 'block';
+    overlay.style.top = rect.top + 'px';
+    overlay.style.left = rect.left + 'px';
+    overlay.style.width = rect.width + 'px';
+    overlay.style.height = rect.height + 'px';
+  }
+
+  document.addEventListener('mousemove', function(e) {
+    if (!window.__selectMode) return;
+    const el = document.elementFromPoint(e.clientX, e.clientY);
+    if (el && el !== overlay && el !== document.body && el !== document.documentElement) {
+      hoveredEl = el;
+      updateOverlay(el);
+    }
+  });
+
+  document.addEventListener('click', function(e) {
+    if (!window.__selectMode) return;
+    e.preventDefault();
+    e.stopPropagation();
+    if (hoveredEl && hoveredEl !== overlay) {
+      selectedEl = hoveredEl;
+      const styles = window.getComputedStyle(selectedEl);
+      const data = {
+        tagName: selectedEl.tagName.toLowerCase(),
+        id: selectedEl.id || undefined,
+        className: selectedEl.className || undefined,
+        textContent: selectedEl.textContent?.slice(0, 100) || undefined,
+        computedStyles: {
+          color: styles.color,
+          backgroundColor: styles.backgroundColor,
+          fontSize: styles.fontSize,
+          fontFamily: styles.fontFamily,
+          padding: styles.padding,
+          margin: styles.margin,
+          borderRadius: styles.borderRadius,
+        },
+        path: getSelector(selectedEl),
+      };
+      window.parent.postMessage({ type: '16s-element-selected', element: data }, '*');
+    }
+  }, true);
+
+  window.__selectMode = false;
+  window.addEventListener('message', function(e) {
+    if (e.data?.type === '16s-set-select-mode') {
+      window.__selectMode = e.data.enabled;
+      if (!e.data.enabled) {
+        overlay.style.display = 'none';
+        hoveredEl = null;
+      }
+    }
+  });
+})();
+</script>`;
+
 export function PreviewPanel({
   html,
   viewport,
@@ -69,6 +153,10 @@ export function PreviewPanel({
   onIframeLoad,
   previewHistory,
   onRestoreVersion,
+  selectMode,
+  onSelectModeChange,
+  selectedElement,
+  onElementSelect,
 }: PreviewPanelProps) {
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const [reloadKey, setReloadKey] = useState(0);
@@ -76,6 +164,27 @@ export function PreviewPanel({
   const [showExportMenu, setShowExportMenu] = useState(false);
   const [showHistory, setShowHistory] = useState(false);
   const exportRef = useRef<HTMLDivElement>(null);
+
+  // Listen for element selection messages from iframe
+  useEffect(() => {
+    const handler = (e: MessageEvent) => {
+      if (e.data?.type === '16s-element-selected') {
+        onElementSelect(e.data.element);
+      }
+    };
+    window.addEventListener('message', handler);
+    return () => window.removeEventListener('message', handler);
+  }, [onElementSelect]);
+
+  // Notify iframe when select mode changes
+  useEffect(() => {
+    if (iframeRef.current?.contentWindow) {
+      iframeRef.current.contentWindow.postMessage({ type: '16s-set-select-mode', enabled: selectMode }, '*');
+    }
+  }, [selectMode]);
+
+  // Inject select mode script into HTML
+  const htmlWithSelectMode = html ? html.replace('</body>', `${SELECT_MODE_SCRIPT}</body>`) : null;
 
   // Listen for keyboard shortcut toggle
   useEffect(() => {
@@ -158,6 +267,23 @@ export function PreviewPanel({
               aria-label="Toggle version history"
             >
               <Clock className="w-3.5 h-3.5" />
+            </button>
+          )}
+          {html && !isGenerating && (
+            <button
+              onClick={() => {
+                onSelectModeChange(!selectMode);
+                if (selectMode) onElementSelect(null);
+              }}
+              className={`p-1.5 rounded-full transition-all duration-200 ${
+                selectMode
+                  ? "text-green-400 bg-green-500/10"
+                  : "text-zinc-500 hover:text-zinc-300 hover:bg-white/[0.04]"
+              }`}
+              title="Select element mode"
+              aria-label="Toggle element selection mode"
+            >
+              <MousePointer2 className="w-3.5 h-3.5" />
             </button>
           )}
         </div>
@@ -331,14 +457,20 @@ export function PreviewPanel({
                 <iframe
                   key={reloadKey}
                   ref={iframeRef}
-                  srcDoc={html}
+                  srcDoc={htmlWithSelectMode || ""}
                   sandbox="allow-scripts allow-same-origin"
-                  className="w-full h-full border-0"
+                  className={`w-full h-full border-0 ${selectMode ? "cursor-crosshair" : ""}`}
                   title="Website Preview"
                   aria-label="Generated website preview"
                   onLoad={() => {
-                    if (iframeRef.current && onIframeLoad) {
-                      onIframeLoad(iframeRef.current);
+                    if (iframeRef.current) {
+                      // Enable select mode if active
+                      if (selectMode) {
+                        iframeRef.current.contentWindow?.postMessage({ type: '16s-set-select-mode', enabled: true }, '*');
+                      }
+                      if (onIframeLoad) {
+                        onIframeLoad(iframeRef.current);
+                      }
                     }
                   }}
                 />
@@ -410,6 +542,69 @@ export function PreviewPanel({
           )}
         </AnimatePresence>
       </div>
+
+      {/* Selected element floating panel */}
+      <AnimatePresence>
+        {selectMode && selectedElement && (
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 10 }}
+            className="absolute bottom-4 left-4 right-4 glass rounded-xl p-4 shadow-xl shadow-black/40 border border-green-500/20"
+          >
+            <div className="flex items-start justify-between gap-4">
+              <div className="flex-1 min-w-0">
+                <div className="flex items-center gap-2 mb-2">
+                  <span className="px-2 py-0.5 text-[11px] font-mono font-medium text-green-400 bg-green-500/10 rounded">
+                    {selectedElement.tagName}
+                  </span>
+                  {selectedElement.id && (
+                    <span className="text-[11px] text-zinc-500 font-mono">#{selectedElement.id}</span>
+                  )}
+                  {selectedElement.className && (
+                    <span className="text-[11px] text-zinc-600 font-mono truncate max-w-[200px]">
+                      .{selectedElement.className.split(" ")[0]}
+                    </span>
+                  )}
+                </div>
+                {selectedElement.textContent && (
+                  <p className="text-[12px] text-zinc-400 truncate mb-2">
+                    &ldquo;{selectedElement.textContent.slice(0, 60)}...&rdquo;
+                  </p>
+                )}
+                <div className="flex flex-wrap gap-2">
+                  <div className="flex items-center gap-1.5">
+                    <div
+                      className="w-4 h-4 rounded border border-white/10"
+                      style={{ backgroundColor: selectedElement.computedStyles.backgroundColor }}
+                    />
+                    <span className="text-[11px] text-zinc-500">bg</span>
+                  </div>
+                  <div className="flex items-center gap-1.5">
+                    <div
+                      className="w-4 h-4 rounded border border-white/10"
+                      style={{ backgroundColor: selectedElement.computedStyles.color }}
+                    />
+                    <span className="text-[11px] text-zinc-500">text</span>
+                  </div>
+                  <span className="text-[11px] text-zinc-500">
+                    {selectedElement.computedStyles.fontSize}
+                  </span>
+                </div>
+              </div>
+              <button
+                onClick={() => onElementSelect(null)}
+                className="p-1 rounded-full text-zinc-500 hover:text-zinc-300 hover:bg-white/[0.04] transition-colors flex-shrink-0"
+              >
+                <X className="w-3.5 h-3.5" />
+              </button>
+            </div>
+            <p className="text-[11px] text-zinc-600 mt-3">
+              Type in chat to edit this element, e.g. &ldquo;change the color to blue&rdquo;
+            </p>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

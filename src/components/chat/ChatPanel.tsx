@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Paperclip, ArrowUp, X, ImagePlus, Plus, Phone, Info, ChevronDown, Trash2 } from "lucide-react";
 import { TypingIndicator } from "./TypingIndicator";
 import { processImageFiles } from "@/lib/images";
-import type { Message, SavedProjectMeta } from "@/lib/types";
+import type { Message, SavedProjectMeta, SelectedElement } from "@/lib/types";
 
 interface ChatPanelProps {
   messages: Message[];
@@ -24,6 +24,8 @@ interface ChatPanelProps {
   onStartCall: () => void;
   onEndCall: () => void;
   hasPreview: boolean;
+  selectedElement: SelectedElement | null;
+  onClearSelection: () => void;
 }
 
 function formatRelativeTime(ts: number): string {
@@ -53,6 +55,8 @@ export function ChatPanel({
   onStartCall,
   onEndCall,
   hasPreview,
+  selectedElement,
+  onClearSelection,
 }: ChatPanelProps) {
   const [input, setInput] = useState("");
   const [isDragging, setIsDragging] = useState(false);
@@ -162,7 +166,9 @@ export function ChatPanel({
     onStartCall();
   };
 
-  const placeholder = hasPreview
+  const placeholder = selectedElement
+    ? `Edit this ${selectedElement.tagName}...`
+    : hasPreview
     ? "Describe what you want to change..."
     : "Describe what you want to build...";
 
@@ -430,6 +436,33 @@ export function ChatPanel({
 
       {/* Input bar */}
       <div className="px-5 pb-5 pt-3">
+        {/* Selected element indicator */}
+        <AnimatePresence>
+          {selectedElement && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: "auto" }}
+              exit={{ opacity: 0, height: 0 }}
+              className="mb-3"
+            >
+              <div className="flex items-center gap-2 px-3 py-2 rounded-xl bg-green-500/10 border border-green-500/20">
+                <span className="px-1.5 py-0.5 text-[10px] font-mono font-medium text-green-400 bg-green-500/20 rounded">
+                  {selectedElement.tagName}
+                </span>
+                <span className="text-[12px] text-zinc-400 truncate flex-1">
+                  {selectedElement.textContent?.slice(0, 30) || selectedElement.className?.split(" ")[0] || "Element selected"}
+                </span>
+                <button
+                  onClick={onClearSelection}
+                  className="p-0.5 rounded text-zinc-500 hover:text-zinc-300 transition-colors"
+                >
+                  <X className="w-3 h-3" />
+                </button>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
         {/* Image previews */}
         {inspoImages.length > 0 && (
           <div className="mb-3 flex gap-2 flex-wrap">

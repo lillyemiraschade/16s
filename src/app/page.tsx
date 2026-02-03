@@ -9,7 +9,7 @@ import { PreviewPanel } from "@/components/preview/PreviewPanel";
 import { VoiceCall } from "@/components/chat/VoiceCall";
 import { processImageFiles } from "@/lib/images";
 import { saveProject, loadProject, listProjects, deleteProject } from "@/lib/projects";
-import type { Message, Viewport, SavedProjectMeta } from "@/lib/types";
+import type { Message, Viewport, SavedProjectMeta, SelectedElement } from "@/lib/types";
 
 const HEADLINES = [
   "What shall we build?",
@@ -46,6 +46,8 @@ export default function HomePage() {
   const [isOnCall, setIsOnCall] = useState(false);
   const [hasStarted, setHasStarted] = useState(false);
   const [previewScreenshot, setPreviewScreenshot] = useState<string | null>(null);
+  const [selectMode, setSelectMode] = useState(false);
+  const [selectedElement, setSelectedElement] = useState<SelectedElement | null>(null);
 
   // Project state
   const [currentProjectId, setCurrentProjectId] = useState<string | null>(null);
@@ -151,10 +153,20 @@ export default function HomePage() {
 
     if (!hasStarted) setHasStarted(true);
 
+    // Include selected element context in the message
+    let messageText = text;
+    if (selectedElement) {
+      const elementDesc = `[User has selected a <${selectedElement.tagName}> element${selectedElement.id ? ` with id="${selectedElement.id}"` : ""}${selectedElement.className ? ` with class="${selectedElement.className}"` : ""}. Apply the following change to this specific element:]`;
+      messageText = `${elementDesc}\n${text}`;
+      // Clear selection after sending
+      setSelectedElement(null);
+      setSelectMode(false);
+    }
+
     const userMessage: Message = {
       id: Date.now().toString(),
       role: "user",
-      content: text,
+      content: text, // Show original text to user
       images: imagesToSend.length > 0 ? imagesToSend : undefined,
     };
 
@@ -168,7 +180,9 @@ export default function HomePage() {
     abortRef.current = controller;
 
     try {
-      const cleanMessages = [...messagesRef.current, userMessage].map(
+      // Use messageText (with element context) for API, not the displayed text
+      const apiUserMessage = { ...userMessage, content: messageText };
+      const cleanMessages = [...messagesRef.current, apiUserMessage].map(
         ({ images, pills, showUpload, ...rest }) => rest
       );
 
@@ -341,6 +355,8 @@ export default function HomePage() {
     setPreviewScreenshot(null);
     setCurrentProjectId(null);
     setProjectName("Untitled");
+    setSelectMode(false);
+    setSelectedElement(null);
   }, []);
 
   const handleLoadProject = useCallback((id: string) => {
@@ -358,6 +374,8 @@ export default function HomePage() {
     setPreviewScreenshot(null);
     setCurrentProjectId(proj.id);
     setProjectName(proj.name);
+    setSelectMode(false);
+    setSelectedElement(null);
   }, []);
 
   const handleDeleteProject = useCallback((id: string) => {
@@ -586,6 +604,8 @@ export default function HomePage() {
             onStartCall={() => setIsOnCall(true)}
             onEndCall={() => setIsOnCall(false)}
             hasPreview={!!currentPreview}
+            selectedElement={selectedElement}
+            onClearSelection={() => { setSelectedElement(null); setSelectMode(false); }}
           />
         </nav>
         <main className="flex-1 relative" aria-label="Preview">
@@ -604,6 +624,10 @@ export default function HomePage() {
             onIframeLoad={handleIframeLoad}
             previewHistory={previewHistory}
             onRestoreVersion={handleRestoreVersion}
+            selectMode={selectMode}
+            onSelectModeChange={setSelectMode}
+            selectedElement={selectedElement}
+            onElementSelect={setSelectedElement}
           />
           {/* Voice call widget — top-right of preview area */}
           <AnimatePresence>
