@@ -4,12 +4,13 @@ import { useState, useRef, useCallback, useMemo, useEffect } from "react";
 import html2canvas from "html2canvas";
 import { motion, AnimatePresence } from "framer-motion";
 import { Paperclip, ArrowUp, ImagePlus, X } from "lucide-react";
+import Image from "next/image";
 import { ChatPanel } from "@/components/chat/ChatPanel";
 import { PreviewPanel } from "@/components/preview/PreviewPanel";
 import { VoiceCall } from "@/components/chat/VoiceCall";
 import { processImageFiles } from "@/lib/images";
 import { saveProject, loadProject, listProjects, deleteProject } from "@/lib/projects";
-import type { Message, Viewport, SavedProjectMeta, SelectedElement } from "@/lib/types";
+import type { Message, Viewport, SavedProjectMeta, SelectedElement, VersionBookmark, UploadedImage } from "@/lib/types";
 
 const HEADLINES = [
   "What shall we build?",
@@ -42,12 +43,13 @@ export default function HomePage() {
   const [redoHistory, setRedoHistory] = useState<string[]>([]);
   const [viewport, setViewport] = useState<Viewport>("desktop");
   const [isGenerating, setIsGenerating] = useState(false);
-  const [inspoImages, setInspoImages] = useState<string[]>([]);
+  const [uploadedImages, setUploadedImages] = useState<UploadedImage[]>([]);
   const [isOnCall, setIsOnCall] = useState(false);
   const [hasStarted, setHasStarted] = useState(false);
   const [previewScreenshot, setPreviewScreenshot] = useState<string | null>(null);
   const [selectMode, setSelectMode] = useState(false);
   const [selectedElement, setSelectedElement] = useState<SelectedElement | null>(null);
+  const [bookmarks, setBookmarks] = useState<VersionBookmark[]>([]);
 
   // Project state
   const [currentProjectId, setCurrentProjectId] = useState<string | null>(null);
@@ -56,6 +58,7 @@ export default function HomePage() {
 
   // Randomized on each mount/reset
   const [welcomeKey, setWelcomeKey] = useState(0);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const headline = useMemo(() => HEADLINES[Math.floor(Math.random() * HEADLINES.length)], [welcomeKey]);
 
   const [welcomeInput, setWelcomeInput] = useState("");
@@ -84,6 +87,7 @@ export default function HomePage() {
         setMessages(last.messages);
         setCurrentPreview(last.currentPreview);
         setPreviewHistory(last.previewHistory);
+        setBookmarks(last.bookmarks || []);
         setHasStarted(true);
       }
     }
@@ -108,12 +112,13 @@ export default function HomePage() {
         messages,
         currentPreview,
         previewHistory,
+        bookmarks,
         updatedAt: Date.now(),
       });
       setSavedProjects(listProjects());
     }, 1000);
     return () => { if (saveTimerRef.current) clearTimeout(saveTimerRef.current); };
-  }, [messages, currentPreview, previewHistory, hasStarted, currentProjectId, projectName]);
+  }, [messages, currentPreview, previewHistory, bookmarks, hasStarted, currentProjectId, projectName]);
 
   const captureScreenshot = useCallback(async (iframe: HTMLIFrameElement) => {
     try {
@@ -147,9 +152,9 @@ export default function HomePage() {
   // Abort controller for cancelling in-flight requests
   const abortRef = useRef<AbortController | null>(null);
 
-  const handleSendMessage = async (text: string, imagesToInclude?: string[]) => {
-    const imagesToSend = imagesToInclude || [...inspoImages];
-    if (!imagesToInclude) setInspoImages([]);
+  const handleSendMessage = useCallback(async (text: string, imagesToInclude?: UploadedImage[]) => {
+    const imagesToSend = imagesToInclude || [...uploadedImages];
+    if (!imagesToInclude) setUploadedImages([]);
 
     if (!hasStarted) setHasStarted(true);
 
@@ -167,7 +172,7 @@ export default function HomePage() {
       id: Date.now().toString(),
       role: "user",
       content: text, // Show original text to user
-      images: imagesToSend.length > 0 ? imagesToSend : undefined,
+      uploadedImages: imagesToSend.length > 0 ? imagesToSend : undefined,
     };
 
     // Add user message optimistically
@@ -191,7 +196,7 @@ export default function HomePage() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           messages: cleanMessages,
-          inspoImages: imagesToSend,
+          uploadedImages: imagesToSend,
           currentPreview,
           previewScreenshot,
         }),
@@ -262,7 +267,7 @@ export default function HomePage() {
         setIsGenerating(false);
       }
     }
-  };
+  }, [uploadedImages, hasStarted, selectedElement, currentPreview, previewScreenshot]);
 
   const handlePillClick = (pill: string) => {
     if (isGenerating) return;
@@ -308,15 +313,25 @@ export default function HomePage() {
     }
 
     // Send the edited message
-    handleSendMessage(newContent, originalMessage.images);
+    handleSendMessage(newContent, originalMessage.uploadedImages);
   }, [messages, previewHistory, handleSendMessage]);
 
-  const handleImageUpload = (base64: string) => {
-    setInspoImages((prev) => [...prev, base64]);
+  const handleImageUpload = (base64: string, type: "inspo" | "content" = "inspo", label?: string) => {
+    setUploadedImages((prev) => [...prev, { data: base64, type, label }]);
   };
 
   const handleImageRemove = (index: number) => {
-    setInspoImages((prev) => prev.filter((_, i) => i !== index));
+    setUploadedImages((prev) => prev.filter((_, i) => i !== index));
+  };
+
+  const handleImageTypeToggle = (index: number) => {
+    setUploadedImages((prev) =>
+      prev.map((img, i) =>
+        i === index
+          ? { ...img, type: img.type === "inspo" ? "content" : "inspo" }
+          : img
+      )
+    );
   };
 
   const handleUndo = useCallback(() => {
@@ -370,6 +385,8 @@ export default function HomePage() {
       setRedoHistory((r) => [...r, ...historyAfter, currentPreview]);
       setCurrentPreview(previewHistory[index]);
       setPreviewHistory(previewHistory.slice(0, index));
+      // Invalidate bookmarks that point to versions no longer in history
+      setBookmarks((prev) => prev.filter((b) => b.versionIndex <= index));
     }
   }, [currentPreview, previewHistory]);
 
@@ -379,7 +396,7 @@ export default function HomePage() {
     setCurrentPreview(null);
     setPreviewHistory([]);
     setRedoHistory([]);
-    setInspoImages([]);
+    setUploadedImages([]);
     setIsGenerating(false);
     setHasStarted(false);
     setWelcomeInput("");
@@ -390,6 +407,7 @@ export default function HomePage() {
     setProjectName("Untitled");
     setSelectMode(false);
     setSelectedElement(null);
+    setBookmarks([]);
   }, []);
 
   const handleLoadProject = useCallback((id: string) => {
@@ -400,7 +418,7 @@ export default function HomePage() {
     setCurrentPreview(proj.currentPreview);
     setPreviewHistory(proj.previewHistory);
     setRedoHistory([]);
-    setInspoImages([]);
+    setUploadedImages([]);
     setIsGenerating(false);
     setHasStarted(true);
     setIsOnCall(false);
@@ -409,6 +427,7 @@ export default function HomePage() {
     setProjectName(proj.name);
     setSelectMode(false);
     setSelectedElement(null);
+    setBookmarks(proj.bookmarks || []);
   }, []);
 
   const handleDeleteProject = useCallback((id: string) => {
@@ -418,6 +437,31 @@ export default function HomePage() {
       handleNewProject();
     }
   }, [currentProjectId, handleNewProject]);
+
+  const handleAddBookmark = useCallback((name: string) => {
+    const newBookmark: VersionBookmark = {
+      id: generateId(),
+      name,
+      versionIndex: previewHistory.length, // Current version is at end of history
+      createdAt: Date.now(),
+    };
+    setBookmarks((prev) => [...prev, newBookmark]);
+  }, [previewHistory.length]);
+
+  const handleRemoveBookmark = useCallback((bookmarkId: string) => {
+    setBookmarks((prev) => prev.filter((b) => b.id !== bookmarkId));
+  }, []);
+
+  const handleRestoreBookmark = useCallback((bookmark: VersionBookmark) => {
+    if (bookmark.versionIndex === previewHistory.length) {
+      // Already at current version
+      return;
+    }
+    if (bookmark.versionIndex < previewHistory.length) {
+      // Restore to a historical version
+      handleRestoreVersion(bookmark.versionIndex);
+    }
+  }, [previewHistory.length, handleRestoreVersion]);
 
   // Keyboard shortcuts
   useEffect(() => {
@@ -451,11 +495,11 @@ export default function HomePage() {
   }, [hasStarted, handleNewProject, handleExport, handleCopyToClipboard, handleUndo, handleRedo]);
 
   const handleWelcomeSend = () => {
-    if ((!welcomeInput.trim() && inspoImages.length === 0) || isGenerating) return;
-    const text = welcomeInput.trim() || "Here are my inspiration images. Please design based on these.";
-    const imgs = [...inspoImages];
+    if ((!welcomeInput.trim() && uploadedImages.length === 0) || isGenerating) return;
+    const text = welcomeInput.trim() || "Here are my images.";
+    const imgs = [...uploadedImages];
     setWelcomeInput("");
-    setInspoImages([]);
+    setUploadedImages([]);
     handleSendMessage(text, imgs);
   };
 
@@ -483,7 +527,7 @@ export default function HomePage() {
     return (
       <div id="main-content" className="h-screen welcome-bg flex flex-col">
         <div className="relative z-10 flex items-center justify-between px-6 py-4">
-          <img src="/logo.png" alt="16s logo" className="w-8 h-8 object-contain" />
+          <Image src="/logo.png" alt="16s logo" width={32} height={32} className="object-contain" />
         </div>
 
         <div className="relative z-10 flex-1 flex flex-col items-center justify-center px-6 -mt-16">
@@ -494,7 +538,7 @@ export default function HomePage() {
             className="flex flex-col items-center gap-8 w-full max-w-[640px]"
           >
             <div className="flex flex-col items-center gap-4">
-              <img src="/logo.png" alt="" className="w-12 h-12 object-contain" />
+              <Image src="/logo.png" alt="" width={48} height={48} className="object-contain" />
               <h1 className="text-[36px] font-semibold text-zinc-100 tracking-[-0.03em] text-center">
                 {headline}
               </h1>
@@ -516,11 +560,21 @@ export default function HomePage() {
 
             {/* Input bar */}
             <div className="w-full glass-input-glow rounded-2xl">
-              {inspoImages.length > 0 && (
+              {uploadedImages.length > 0 && (
                 <div className="flex gap-2 flex-wrap px-4 pt-4">
-                  {inspoImages.map((img, idx) => (
+                  {uploadedImages.map((img, idx) => (
                     <div key={idx} className="relative group">
-                      <img src={img} alt={`Upload ${idx + 1}`} className="h-14 w-14 object-cover rounded-lg ring-1 ring-white/[0.06]" />
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img src={img.data} alt={`Upload ${idx + 1}`} className="h-14 w-14 object-cover rounded-lg ring-1 ring-white/[0.06]" />
+                      <button
+                        onClick={() => handleImageTypeToggle(idx)}
+                        className={`absolute -bottom-1 left-1/2 -translate-x-1/2 px-1.5 py-0.5 text-[9px] font-medium rounded cursor-pointer hover:opacity-80 transition-opacity ${
+                          img.type === "content" ? "bg-green-500/80 text-white" : "bg-zinc-700 text-zinc-300"
+                        }`}
+                        title="Click to toggle: inspo (design reference) / content (use in website)"
+                      >
+                        {img.type === "content" ? (img.label || "content") : "inspo"}
+                      </button>
                       <button
                         onClick={() => handleImageRemove(idx)}
                         className="absolute -top-1.5 -right-1.5 w-5 h-5 bg-zinc-800 hover:bg-red-500 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-150 ring-1 ring-white/[0.06]"
@@ -562,7 +616,7 @@ export default function HomePage() {
                 />
                 <button
                   onClick={handleWelcomeSend}
-                  disabled={(!welcomeInput.trim() && inspoImages.length === 0) || isGenerating}
+                  disabled={(!welcomeInput.trim() && uploadedImages.length === 0) || isGenerating}
                   className="p-3 bg-green-500/60 hover:bg-green-400/70 disabled:bg-zinc-800/60 disabled:cursor-not-allowed rounded-full transition-all duration-200 flex-shrink-0 glow-green-strong disabled:shadow-none"
                   aria-label="Send message"
                 >
@@ -626,8 +680,9 @@ export default function HomePage() {
             onPillClick={handlePillClick}
             onImageUpload={handleImageUpload}
             onImageRemove={handleImageRemove}
+            onImageTypeToggle={handleImageTypeToggle}
             isGenerating={isGenerating}
-            inspoImages={inspoImages}
+            uploadedImages={uploadedImages}
             onNewProject={handleNewProject}
             onLoadProject={handleLoadProject}
             onDeleteProject={handleDeleteProject}
@@ -635,7 +690,6 @@ export default function HomePage() {
             currentProjectId={currentProjectId}
             isOnCall={isOnCall}
             onStartCall={() => setIsOnCall(true)}
-            onEndCall={() => setIsOnCall(false)}
             hasPreview={!!currentPreview}
             selectedElement={selectedElement}
             onClearSelection={() => { setSelectedElement(null); setSelectMode(false); }}
@@ -662,6 +716,10 @@ export default function HomePage() {
             onSelectModeChange={setSelectMode}
             selectedElement={selectedElement}
             onElementSelect={setSelectedElement}
+            bookmarks={bookmarks}
+            onAddBookmark={handleAddBookmark}
+            onRemoveBookmark={handleRemoveBookmark}
+            onRestoreBookmark={handleRestoreBookmark}
           />
           {/* Voice call widget — top-right of preview area */}
           <AnimatePresence>

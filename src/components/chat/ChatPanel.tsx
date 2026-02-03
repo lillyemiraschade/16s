@@ -3,18 +3,20 @@
 import { useEffect, useRef, useState, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Paperclip, ArrowUp, X, ImagePlus, Plus, Phone, Info, ChevronDown, Trash2, Pencil } from "lucide-react";
+import Image from "next/image";
 import { TypingIndicator } from "./TypingIndicator";
 import { processImageFiles } from "@/lib/images";
-import type { Message, SavedProjectMeta, SelectedElement } from "@/lib/types";
+import type { Message, SavedProjectMeta, SelectedElement, UploadedImage } from "@/lib/types";
 
 interface ChatPanelProps {
   messages: Message[];
-  onSend: (text: string, imagesToInclude?: string[]) => void;
+  onSend: (text: string, imagesToInclude?: UploadedImage[]) => void;
   onPillClick: (pill: string) => void;
-  onImageUpload: (base64: string) => void;
+  onImageUpload: (base64: string, type?: "inspo" | "content", label?: string) => void;
   onImageRemove: (index: number) => void;
+  onImageTypeToggle: (index: number) => void;
   isGenerating: boolean;
-  inspoImages: string[];
+  uploadedImages: UploadedImage[];
   onNewProject: () => void;
   onLoadProject: (id: string) => void;
   onDeleteProject: (id: string) => void;
@@ -22,7 +24,6 @@ interface ChatPanelProps {
   currentProjectId: string | null;
   isOnCall: boolean;
   onStartCall: () => void;
-  onEndCall: () => void;
   hasPreview: boolean;
   selectedElement: SelectedElement | null;
   onClearSelection: () => void;
@@ -45,8 +46,9 @@ export function ChatPanel({
   onPillClick,
   onImageUpload,
   onImageRemove,
+  onImageTypeToggle,
   isGenerating,
-  inspoImages,
+  uploadedImages,
   onNewProject,
   onLoadProject,
   onDeleteProject,
@@ -54,7 +56,6 @@ export function ChatPanel({
   currentProjectId,
   isOnCall,
   onStartCall,
-  onEndCall,
   hasPreview,
   selectedElement,
   onClearSelection,
@@ -68,6 +69,7 @@ export function ChatPanel({
   const [uploadError, setUploadError] = useState<string | null>(null);
   const [editingMessageId, setEditingMessageId] = useState<string | null>(null);
   const [editingContent, setEditingContent] = useState("");
+  const [deleteConfirmId, setDeleteConfirmId] = useState<string | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
@@ -100,8 +102,8 @@ export function ChatPanel({
   }, [isGenerating]);
 
   const handleSend = () => {
-    if ((!input.trim() && inspoImages.length === 0) || isGenerating) return;
-    onSend(input.trim() || "Here are my inspiration images. Please design based on these.");
+    if ((!input.trim() && uploadedImages.length === 0) || isGenerating) return;
+    onSend(input.trim() || "Here are my images.");
     setInput("");
     if (textareaRef.current) textareaRef.current.style.height = "auto";
   };
@@ -227,7 +229,7 @@ export function ChatPanel({
       {/* Header */}
       <div className="px-5 py-4 border-b border-white/[0.04] flex items-center justify-between">
         <div className="flex items-center">
-          <img src="/logo.png" alt="16s logo" className="w-8 h-8 object-contain" />
+          <Image src="/logo.png" alt="16s logo" width={32} height={32} className="object-contain" />
         </div>
         <div className="flex items-center gap-2">
           <button
@@ -285,13 +287,30 @@ export function ChatPanel({
                               </div>
                               <div className="text-[11px] text-zinc-600">{formatRelativeTime(proj.updatedAt)}</div>
                             </button>
-                            <button
-                              onClick={(e) => { e.stopPropagation(); onDeleteProject(proj.id); }}
-                              className="p-1 rounded text-zinc-600 hover:text-red-400 opacity-0 group-hover:opacity-100 transition-all"
-                              title="Delete project"
-                            >
-                              <Trash2 className="w-3 h-3" />
-                            </button>
+                            {deleteConfirmId === proj.id ? (
+                              <div className="flex items-center gap-1">
+                                <button
+                                  onClick={(e) => { e.stopPropagation(); onDeleteProject(proj.id); setDeleteConfirmId(null); }}
+                                  className="px-1.5 py-0.5 text-[10px] font-medium text-red-400 hover:text-red-300 bg-red-500/10 rounded transition-colors"
+                                >
+                                  Delete
+                                </button>
+                                <button
+                                  onClick={(e) => { e.stopPropagation(); setDeleteConfirmId(null); }}
+                                  className="px-1.5 py-0.5 text-[10px] text-zinc-500 hover:text-zinc-300 transition-colors"
+                                >
+                                  Cancel
+                                </button>
+                              </div>
+                            ) : (
+                              <button
+                                onClick={(e) => { e.stopPropagation(); setDeleteConfirmId(proj.id); }}
+                                className="p-1 rounded text-zinc-600 hover:text-red-400 opacity-0 group-hover:opacity-100 transition-all"
+                                title="Delete project"
+                              >
+                                <Trash2 className="w-3 h-3" />
+                              </button>
+                            )}
                           </div>
                         ))}
                       </div>
@@ -368,7 +387,32 @@ export function ChatPanel({
                       : "glass-bubble text-zinc-200 max-w-[90%]"
                   } ${cornerClass} px-4 py-3`}
                 >
-                  {/* Attached images */}
+                  {/* Attached images (new typed format) */}
+                  {message.uploadedImages && message.uploadedImages.length > 0 && (
+                    <div className="flex flex-wrap gap-1.5 mb-2.5">
+                      {message.uploadedImages.map((img, idx) => (
+                        <div key={idx} className="relative">
+                          <button
+                            onClick={() => setLightboxImage(img.data)}
+                            className="rounded-lg overflow-hidden hover:ring-2 hover:ring-green-500/50 transition-all duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-green-500"
+                          >
+                            {/* eslint-disable-next-line @next/next/no-img-element */}
+                            <img
+                              src={img.data}
+                              alt={`${img.type === "content" ? "Content" : "Inspiration"} image ${idx + 1}`}
+                              className="h-16 w-16 object-cover"
+                            />
+                          </button>
+                          <span className={`absolute -bottom-1 left-1/2 -translate-x-1/2 px-1.5 py-0.5 text-[9px] font-medium rounded ${
+                            img.type === "content" ? "bg-green-500/80 text-white" : "bg-zinc-700 text-zinc-300"
+                          }`}>
+                            {img.type === "content" ? (img.label || "content") : "inspo"}
+                          </span>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                  {/* Legacy attached images */}
                   {message.images && message.images.length > 0 && (
                     <div className="flex flex-wrap gap-1.5 mb-2.5">
                       {message.images.map((img, idx) => (
@@ -377,6 +421,7 @@ export function ChatPanel({
                           onClick={() => setLightboxImage(img)}
                           className="rounded-lg overflow-hidden hover:ring-2 hover:ring-green-500/50 transition-all duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-green-500"
                         >
+                          {/* eslint-disable-next-line @next/next/no-img-element */}
                           <img
                             src={img}
                             alt={`Inspiration image ${idx + 1}`}
@@ -513,19 +558,29 @@ export function ChatPanel({
         </AnimatePresence>
 
         {/* Image previews */}
-        {inspoImages.length > 0 && (
+        {uploadedImages.length > 0 && (
           <div className="mb-3 flex gap-2 flex-wrap">
-            {inspoImages.map((img, idx) => (
+            {uploadedImages.map((img, idx) => (
               <div key={idx} className="relative group">
                 <button
-                  onClick={() => setLightboxImage(img)}
+                  onClick={() => setLightboxImage(img.data)}
                   className="rounded-lg overflow-hidden focus:outline-none focus-visible:ring-2 focus-visible:ring-green-500"
                 >
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
-                    src={img}
-                    alt={`Inspiration image ${idx + 1}`}
+                    src={img.data}
+                    alt={`${img.type === "content" ? "Content" : "Inspiration"} image ${idx + 1}`}
                     className="h-14 w-14 object-cover ring-1 ring-white/[0.06]"
                   />
+                </button>
+                <button
+                  onClick={() => onImageTypeToggle(idx)}
+                  className={`absolute -bottom-1 left-1/2 -translate-x-1/2 px-1.5 py-0.5 text-[9px] font-medium rounded cursor-pointer hover:opacity-80 transition-opacity ${
+                    img.type === "content" ? "bg-green-500/80 text-white" : "bg-zinc-700 text-zinc-300"
+                  }`}
+                  title="Click to toggle: inspo (design reference) / content (use in website)"
+                >
+                  {img.type === "content" ? (img.label || "content") : "inspo"}
                 </button>
                 <button
                   onClick={() => onImageRemove(idx)}
@@ -588,7 +643,7 @@ export function ChatPanel({
             />
             <button
               onClick={handleSend}
-              disabled={(!input.trim() && inspoImages.length === 0) || isGenerating}
+              disabled={(!input.trim() && uploadedImages.length === 0) || isGenerating}
               className="p-2.5 mb-0.5 bg-green-500/60 hover:bg-green-400/70 disabled:bg-zinc-800/50 disabled:cursor-not-allowed rounded-full transition-all duration-200 flex-shrink-0 glow-green-strong disabled:shadow-none"
               aria-label="Send message"
             >
@@ -619,6 +674,7 @@ export function ChatPanel({
             >
               <X className="w-5 h-5 text-zinc-300" />
             </button>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
             <motion.img
               initial={{ scale: 0.95 }}
               animate={{ scale: 1 }}

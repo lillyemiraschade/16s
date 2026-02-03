@@ -1,10 +1,17 @@
+export interface UploadedImage {
+  data: string; // base64 data URL
+  type: "inspo" | "content";
+  label?: string; // e.g., "logo", "product photo", "team photo"
+}
+
 export interface Message {
   id: string;
   role: "user" | "assistant";
   content: string;
   pills?: string[];
   showUpload?: boolean | string;
-  images?: string[];
+  images?: string[]; // legacy: plain base64 strings
+  uploadedImages?: UploadedImage[]; // new: typed images
 }
 
 export type Viewport = "desktop" | "tablet" | "mobile";
@@ -26,12 +33,20 @@ export interface SelectedElement {
   path: string; // CSS selector path to element
 }
 
+export interface VersionBookmark {
+  id: string;
+  name: string;
+  versionIndex: number; // Index in previewHistory, or -1 for current
+  createdAt: number;
+}
+
 export interface SavedProject {
   id: string;
   name: string;
   messages: Message[];
   currentPreview: string | null;
   previewHistory: string[];
+  bookmarks: VersionBookmark[];
   updatedAt: number;
 }
 
