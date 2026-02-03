@@ -278,6 +278,39 @@ export default function HomePage() {
     handleSendMessage(summary);
   };
 
+  const handleEditMessage = useCallback((messageId: string, newContent: string) => {
+    // Find the message index
+    const messageIndex = messages.findIndex((m) => m.id === messageId);
+    if (messageIndex === -1) return;
+
+    // Get the message to edit
+    const originalMessage = messages[messageIndex];
+    if (originalMessage.role !== "user") return;
+
+    // Truncate messages after this one (keep messages up to and including the edited one)
+    const truncatedMessages = messages.slice(0, messageIndex);
+
+    // Update messages state
+    setMessages(truncatedMessages);
+
+    // Find the preview state at this point - roll back preview history
+    // Each user message after a preview change means we need to go back in history
+    const messagesWithPreview = truncatedMessages.filter(
+      (m) => m.role === "assistant"
+    ).length;
+    const historyTarget = Math.max(0, messagesWithPreview - 1);
+
+    if (previewHistory.length > historyTarget) {
+      const newHistory = previewHistory.slice(0, historyTarget);
+      const restoredPreview = historyTarget > 0 ? previewHistory[historyTarget - 1] : null;
+      setPreviewHistory(newHistory);
+      setCurrentPreview(restoredPreview);
+    }
+
+    // Send the edited message
+    handleSendMessage(newContent, originalMessage.images);
+  }, [messages, previewHistory, handleSendMessage]);
+
   const handleImageUpload = (base64: string) => {
     setInspoImages((prev) => [...prev, base64]);
   };
@@ -606,6 +639,7 @@ export default function HomePage() {
             hasPreview={!!currentPreview}
             selectedElement={selectedElement}
             onClearSelection={() => { setSelectedElement(null); setSelectMode(false); }}
+            onEditMessage={handleEditMessage}
           />
         </nav>
         <main className="flex-1 relative" aria-label="Preview">

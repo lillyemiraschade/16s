@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Paperclip, ArrowUp, X, ImagePlus, Plus, Phone, Info, ChevronDown, Trash2 } from "lucide-react";
+import { Paperclip, ArrowUp, X, ImagePlus, Plus, Phone, Info, ChevronDown, Trash2, Pencil } from "lucide-react";
 import { TypingIndicator } from "./TypingIndicator";
 import { processImageFiles } from "@/lib/images";
 import type { Message, SavedProjectMeta, SelectedElement } from "@/lib/types";
@@ -26,6 +26,7 @@ interface ChatPanelProps {
   hasPreview: boolean;
   selectedElement: SelectedElement | null;
   onClearSelection: () => void;
+  onEditMessage: (messageId: string, newContent: string) => void;
 }
 
 function formatRelativeTime(ts: number): string {
@@ -57,6 +58,7 @@ export function ChatPanel({
   hasPreview,
   selectedElement,
   onClearSelection,
+  onEditMessage,
 }: ChatPanelProps) {
   const [input, setInput] = useState("");
   const [isDragging, setIsDragging] = useState(false);
@@ -64,6 +66,8 @@ export function ChatPanel({
   const [showProjectMenu, setShowProjectMenu] = useState(false);
   const [showCallDisclaimer, setShowCallDisclaimer] = useState(false);
   const [uploadError, setUploadError] = useState<string | null>(null);
+  const [editingMessageId, setEditingMessageId] = useState<string | null>(null);
+  const [editingContent, setEditingContent] = useState("");
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
@@ -382,7 +386,52 @@ export function ChatPanel({
                       ))}
                     </div>
                   )}
-                  <p className="text-[15px] leading-relaxed whitespace-pre-wrap break-words">{message.content}</p>
+                  {/* Message content or edit form */}
+                  {editingMessageId === message.id ? (
+                    <div className="flex flex-col gap-2">
+                      <textarea
+                        value={editingContent}
+                        onChange={(e) => setEditingContent(e.target.value)}
+                        className="w-full bg-black/20 text-[15px] text-zinc-100 rounded-lg px-3 py-2 focus:outline-none focus:ring-1 focus:ring-green-500/50 resize-none"
+                        rows={3}
+                        autoFocus
+                      />
+                      <div className="flex gap-2 justify-end">
+                        <button
+                          onClick={() => { setEditingMessageId(null); setEditingContent(""); }}
+                          className="px-3 py-1 text-[12px] text-zinc-400 hover:text-zinc-200 transition-colors"
+                        >
+                          Cancel
+                        </button>
+                        <button
+                          onClick={() => {
+                            if (editingContent.trim()) {
+                              onEditMessage(message.id, editingContent.trim());
+                              setEditingMessageId(null);
+                              setEditingContent("");
+                            }
+                          }}
+                          disabled={!editingContent.trim() || isGenerating}
+                          className="px-3 py-1 text-[12px] font-medium text-green-400 hover:text-green-300 disabled:opacity-40 transition-colors"
+                        >
+                          Save & Regenerate
+                        </button>
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="group/msg relative">
+                      <p className="text-[15px] leading-relaxed whitespace-pre-wrap break-words">{message.content}</p>
+                      {isUser && !isGenerating && (
+                        <button
+                          onClick={() => { setEditingMessageId(message.id); setEditingContent(message.content); }}
+                          className="absolute -right-1 -top-1 p-1 rounded-full bg-white/5 text-zinc-500 hover:text-zinc-300 hover:bg-white/10 opacity-0 group-hover/msg:opacity-100 transition-all"
+                          title="Edit message"
+                        >
+                          <Pencil className="w-3 h-3" />
+                        </button>
+                      )}
+                    </div>
+                  )}
 
                   {/* Pills */}
                   {message.pills && message.pills.length > 0 && (
