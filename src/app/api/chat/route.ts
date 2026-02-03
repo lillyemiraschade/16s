@@ -105,8 +105,14 @@ When user provides inspo, analyze then replicate:
 Build it EXACTLY. If inspo has purple gradients → use purple gradients.
 User should say "this is EXACTLY what I showed you."
 
-CONTENT images (logo, photos) → embed with base64
-INSPO images (screenshots) → clone style only, don't embed
+IMAGE TYPES — CRITICAL:
+- INSPO images (website screenshots) → clone the STYLE only, don't embed the image itself
+- CONTENT images (logo, team photos, product photos) → EMBED DIRECTLY in the HTML
+
+HOW TO EMBED CONTENT IMAGES:
+When user uploads content images, you receive them with base64 data. Use that EXACT data in your HTML:
+<img src="data:image/jpeg;base64,/9j/4AAQ..." alt="Description" />
+Copy the FULL base64 string from the image data provided. Place the image in the appropriate section (logo in nav, team photos on about page, product photos on products page, etc.)
 
 ═══════════════════════════════════════════════════════════════════
 NO INSPO? USE THESE DEFAULTS
@@ -267,20 +273,17 @@ export async function POST(req: Request) {
             }
           }
 
-          // Add content images with labels
+          // Add content images with labels - include BOTH visual and the data URL for embedding
           if (contentImgs.length > 0) {
             contentBlocks.push({
               type: "text",
-              text: `[CONTENT IMAGES - Embed these directly in the website:]`,
+              text: `[CONTENT IMAGES - These images should be embedded directly in the website HTML:]`,
             });
             for (const img of contentImgs) {
               const matches = img.data.match(/^data:(image\/[a-zA-Z]+);base64,(.+)$/);
               if (matches) {
                 const labelNote = img.label ? ` (${img.label})` : "";
-                contentBlocks.push({
-                  type: "text",
-                  text: `[Content image${labelNote} - embed this in the HTML using the full base64 data URL:]`,
-                });
+                // Show the image visually so AI can see what it is
                 contentBlocks.push({
                   type: "image",
                   source: {
@@ -288,6 +291,12 @@ export async function POST(req: Request) {
                     media_type: matches[1] as "image/jpeg" | "image/png" | "image/gif" | "image/webp",
                     data: matches[2],
                   },
+                });
+                // ALSO provide the full data URL as text so AI can embed it
+                contentBlocks.push({
+                  type: "text",
+                  text: `[Content image${labelNote} - USE THIS EXACT STRING as the img src:]
+${img.data}`,
                 });
               }
             }
