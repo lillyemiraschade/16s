@@ -228,7 +228,7 @@ export default function HomePage() {
       const lines = responseText.trim().split("\n").filter((l) => l.trim());
       const lastLine = lines[lines.length - 1];
 
-      // Safely parse JSON with fallback
+      // Safely parse JSON with multiple fallback strategies
       let data;
       try {
         if (!lastLine || lastLine === "undefined") {
@@ -236,12 +236,40 @@ export default function HomePage() {
         }
         data = JSON.parse(lastLine);
       } catch {
-        // Try to find any JSON object in the response
-        const jsonMatch = responseText.match(/\{[\s\S]*"message"[\s\S]*\}/);
+        // Strategy 1: Find JSON with "message" field
+        let jsonMatch = responseText.match(/\{[\s\S]*"message"[\s\S]*?\}/);
         if (jsonMatch) {
-          data = JSON.parse(jsonMatch[0]);
-        } else {
-          throw new Error("Failed to parse response");
+          try {
+            data = JSON.parse(jsonMatch[0]);
+          } catch {
+            jsonMatch = null;
+          }
+        }
+        // Strategy 2: Find any valid JSON object
+        if (!data) {
+          const allJsonMatches = responseText.match(/\{[^{}]*\}/g);
+          if (allJsonMatches) {
+            for (const match of allJsonMatches) {
+              try {
+                const parsed = JSON.parse(match);
+                if (parsed.message) {
+                  data = parsed;
+                  break;
+                }
+              } catch {
+                continue;
+              }
+            }
+          }
+        }
+        // Strategy 3: Create a basic response from any text
+        if (!data) {
+          const textContent = responseText.replace(/[\s]+/g, " ").trim().slice(0, 500);
+          if (textContent && textContent !== "undefined") {
+            data = { message: "I'm working on that. Could you try again?" };
+          } else {
+            throw new Error("Failed to parse response");
+          }
         }
       }
 
@@ -363,7 +391,7 @@ export default function HomePage() {
       const lines = responseText.trim().split("\n").filter((l) => l.trim());
       const lastLine = lines[lines.length - 1];
 
-      // Safely parse JSON with fallback
+      // Safely parse JSON with multiple fallback strategies
       let data;
       try {
         if (!lastLine || lastLine === "undefined") {
@@ -371,11 +399,32 @@ export default function HomePage() {
         }
         data = JSON.parse(lastLine);
       } catch {
-        const jsonMatch = responseText.match(/\{[\s\S]*"message"[\s\S]*\}/);
+        let jsonMatch = responseText.match(/\{[\s\S]*"message"[\s\S]*?\}/);
         if (jsonMatch) {
-          data = JSON.parse(jsonMatch[0]);
-        } else {
-          throw new Error("Failed to parse response");
+          try {
+            data = JSON.parse(jsonMatch[0]);
+          } catch {
+            jsonMatch = null;
+          }
+        }
+        if (!data) {
+          const allJsonMatches = responseText.match(/\{[^{}]*\}/g);
+          if (allJsonMatches) {
+            for (const match of allJsonMatches) {
+              try {
+                const parsed = JSON.parse(match);
+                if (parsed.message) {
+                  data = parsed;
+                  break;
+                }
+              } catch {
+                continue;
+              }
+            }
+          }
+        }
+        if (!data) {
+          data = { message: "I'm working on that. Could you try again?" };
         }
       }
 

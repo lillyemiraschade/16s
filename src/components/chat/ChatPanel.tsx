@@ -70,6 +70,7 @@ export function ChatPanel({
   const [editingMessageId, setEditingMessageId] = useState<string | null>(null);
   const [editingContent, setEditingContent] = useState("");
   const [deleteConfirmId, setDeleteConfirmId] = useState<string | null>(null);
+  const [uploadContext, setUploadContext] = useState<{ type: "inspo" | "content"; label?: string }>({ type: "inspo" });
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
@@ -123,14 +124,21 @@ export function ChatPanel({
   const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
     if (!files) return;
-    processImageFiles(files, onImageUpload, handleImageError);
+    // Use uploadContext to determine image type
+    const uploadWithType = (base64: string) => {
+      onImageUpload(base64, uploadContext.type, uploadContext.label);
+    };
+    processImageFiles(files, uploadWithType, handleImageError);
     e.target.value = "";
   };
 
   const handleDrop = (e: React.DragEvent) => {
     e.preventDefault();
     setIsDragging(false);
-    processImageFiles(e.dataTransfer.files, onImageUpload, handleImageError);
+    const uploadWithType = (base64: string) => {
+      onImageUpload(base64, uploadContext.type, uploadContext.label);
+    };
+    processImageFiles(e.dataTransfer.files, uploadWithType, handleImageError);
   };
 
   const handleDragOver = (e: React.DragEvent) => {
@@ -498,7 +506,18 @@ export function ChatPanel({
                   {message.showUpload && (
                     <div className="mt-3">
                       <button
-                        onClick={() => fileInputRef.current?.click()}
+                        onClick={() => {
+                          // Determine if this is content (logo, photos, etc.) or inspo based on label
+                          const label = typeof message.showUpload === "string" ? message.showUpload.toLowerCase() : "";
+                          const isContent = label.includes("logo") || label.includes("photo") || label.includes("team") ||
+                                          label.includes("product") || label.includes("work") || label.includes("menu") ||
+                                          label.includes("food") || label.includes("portfolio");
+                          setUploadContext({
+                            type: isContent ? "content" : "inspo",
+                            label: isContent ? label : undefined
+                          });
+                          fileInputRef.current?.click();
+                        }}
                         className="w-full px-4 py-3 text-[13px] font-medium glass-pill text-zinc-300 rounded-xl transition-all duration-200 flex items-center justify-center gap-2"
                       >
                         <ImagePlus className="w-4 h-4" />
