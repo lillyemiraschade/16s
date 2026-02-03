@@ -364,15 +364,40 @@ export async function POST(req: Request) {
       }
     }
 
-    // Inject current preview context for iteration
+    // Determine if this is a simple iteration or complex generation
+    const lastUserMessage = messages[messages.length - 1]?.content.toLowerCase() || "";
+    const hasImages = inspoImages && inspoImages.length > 0;
+    const isFirstGeneration = !currentPreview;
+
+    // Simple iterations: color changes, text tweaks, small adjustments
+    const simplePatterns = [
+      /^(change|make|set|update|switch|use)\s+(the\s+)?(color|colour|background|font|text|size|padding|margin|spacing)/i,
+      /^(make\s+it|change\s+it\s+to)\s+(bigger|smaller|larger|darker|lighter|bolder)/i,
+      /^(add|remove|delete|hide|show)\s+(the\s+)?(button|link|image|section|text|border|shadow)/i,
+      /^(move|align|center|left|right)\s+(the\s+)?/i,
+      /^(change|update|edit|fix)\s+(the\s+)?(title|heading|subtitle|paragraph|caption|label)/i,
+      /\b(color|colour|#[0-9a-f]{3,6}|rgb|hsl)\b/i,
+    ];
+
+    const isSimpleIteration = currentPreview &&
+      !hasImages &&
+      !isFirstGeneration &&
+      lastUserMessage.length < 200 &&
+      simplePatterns.some(pattern => pattern.test(lastUserMessage));
+
+    // Select model and tokens based on complexity
+    const model = isSimpleIteration ? "claude-3-5-haiku-20241022" : "claude-sonnet-4-20250514";
+    const maxTokens = isSimpleIteration ? 8000 : 16000;
+
+    // Inject current preview context - use smaller context for simple iterations
     if (currentPreview && claudeMessages.length > 0) {
       const lastMessage = claudeMessages[claudeMessages.length - 1];
-      const previewContext = `[The user currently has a website preview. Here is the current HTML:\n${currentPreview.substring(0, 30000)}\n]`;
+      const contextLimit = isSimpleIteration ? 15000 : 30000; // Less context for fast iterations
+      const previewContext = `[The user currently has a website preview. Here is the current HTML:\n${currentPreview.substring(0, contextLimit)}\n]`;
       if (lastMessage.role === "user") {
         if (typeof lastMessage.content === "string") {
           lastMessage.content = `${previewContext}\n\nUser request: ${lastMessage.content}`;
         } else if (Array.isArray(lastMessage.content)) {
-          // Find the last text block and prepend context to it
           const lastTextIndex = lastMessage.content.findLastIndex(
             (block) => block.type === "text"
           );
@@ -384,8 +409,8 @@ export async function POST(req: Request) {
       }
     }
 
-    // Inject screenshot of current preview so Claude can visually verify its output
-    if (previewScreenshot && claudeMessages.length > 0) {
+    // Inject screenshot only for complex generations (Sonnet) - skip for simple iterations
+    if (!isSimpleIteration && previewScreenshot && claudeMessages.length > 0) {
       const lastMessage = claudeMessages[claudeMessages.length - 1];
       const screenshotMatch = previewScreenshot.match(/^data:(image\/[a-zA-Z]+);base64,(.+)$/);
       if (screenshotMatch) {
@@ -416,8 +441,8 @@ export async function POST(req: Request) {
 
     // Use streaming to avoid Vercel function timeout
     const stream = anthropic.messages.stream({
-      model: "claude-sonnet-4-20250514",
-      max_tokens: 16000,
+      model,
+      max_tokens: maxTokens,
       system: SYSTEM_PROMPT,
       messages: claudeMessages,
     });
