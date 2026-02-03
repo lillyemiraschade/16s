@@ -198,7 +198,7 @@ export function ChatPanel({
       </div>
 
       {/* Messages area */}
-      <div className="flex-1 overflow-y-auto px-5 py-5 space-y-5 relative flex flex-col" role="log" aria-label="Conversation" aria-live="polite">
+      <div className="flex-1 overflow-y-auto px-5 py-5 relative flex flex-col" role="log" aria-label="Conversation" aria-live="polite">
         {/* Spacer pushes messages to bottom when few */}
         <div className="flex-1" />
         {/* Drag overlay */}
@@ -219,73 +219,91 @@ export function ChatPanel({
         </AnimatePresence>
 
         <AnimatePresence>
-          {messages.map((message) => (
-            <motion.div
-              key={message.id}
-              initial={{ opacity: 0, y: 8 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.2, ease: "easeOut" }}
-              className={`flex ${message.role === "user" ? "justify-end" : "justify-start"}`}
-            >
-              <div
-                className={`${
-                  message.role === "user"
-                    ? "glass-bubble glass-bubble-user text-green-100 ml-auto max-w-[85%]"
-                    : "glass-bubble text-zinc-200 max-w-[90%]"
-                } rounded-2xl px-4 py-3`}
+          {messages.map((message, index) => {
+            const prev = messages[index - 1];
+            const next = messages[index + 1];
+            const isFirstInGroup = !prev || prev.role !== message.role;
+            const isLastInGroup = !next || next.role !== message.role;
+            const isUser = message.role === "user";
+
+            let cornerClass: string;
+            if (isFirstInGroup && isLastInGroup) {
+              cornerClass = isUser ? "bubble-tail-right" : "bubble-tail-left";
+            } else if (isLastInGroup) {
+              cornerClass = isUser ? "bubble-tail-right" : "bubble-tail-left";
+            } else {
+              cornerClass = isUser ? "bubble-grouped-right" : "bubble-grouped-left";
+            }
+
+            return (
+              <motion.div
+                key={message.id}
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.2, ease: "easeOut" }}
+                className={`flex ${isUser ? "justify-end" : "justify-start"} ${isFirstInGroup ? "mt-4" : "mt-1.5"}`}
+                style={index === 0 ? { marginTop: 0 } : undefined}
               >
-                {/* Attached images */}
-                {message.images && message.images.length > 0 && (
-                  <div className="flex flex-wrap gap-1.5 mb-2.5">
-                    {message.images.map((img, idx) => (
-                      <button
-                        key={idx}
-                        onClick={() => setLightboxImage(img)}
-                        className="rounded-lg overflow-hidden hover:ring-2 hover:ring-green-500/50 transition-all duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-green-500"
-                      >
-                        <img
-                          src={img}
-                          alt={`Inspiration image ${idx + 1}`}
-                          className="h-16 w-16 object-cover"
-                        />
-                      </button>
-                    ))}
-                  </div>
-                )}
-                <p className="text-[14px] leading-relaxed whitespace-pre-wrap break-words">{message.content}</p>
+                <div
+                  className={`${
+                    isUser
+                      ? "glass-bubble glass-bubble-user text-green-100 ml-auto max-w-[85%]"
+                      : "glass-bubble text-zinc-200 max-w-[90%]"
+                  } ${cornerClass} px-4 py-3`}
+                >
+                  {/* Attached images */}
+                  {message.images && message.images.length > 0 && (
+                    <div className="flex flex-wrap gap-1.5 mb-2.5">
+                      {message.images.map((img, idx) => (
+                        <button
+                          key={idx}
+                          onClick={() => setLightboxImage(img)}
+                          className="rounded-lg overflow-hidden hover:ring-2 hover:ring-green-500/50 transition-all duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-green-500"
+                        >
+                          <img
+                            src={img}
+                            alt={`Inspiration image ${idx + 1}`}
+                            className="h-16 w-16 object-cover"
+                          />
+                        </button>
+                      ))}
+                    </div>
+                  )}
+                  <p className="text-[15px] leading-relaxed whitespace-pre-wrap break-words">{message.content}</p>
 
-                {/* Pills */}
-                {message.pills && message.pills.length > 0 && (
-                  <div className="flex flex-wrap gap-2 mt-3">
-                    {message.pills.map((pill, idx) => (
-                      <button
-                        key={idx}
-                        onClick={() => onPillClick(pill)}
-                        disabled={isGenerating}
-                        className="px-3.5 py-1.5 text-[13px] font-medium glass-pill text-zinc-200 disabled:opacity-40 disabled:cursor-not-allowed rounded-full transition-all duration-200"
-                      >
-                        {pill}
-                      </button>
-                    ))}
-                  </div>
-                )}
+                  {/* Pills */}
+                  {message.pills && message.pills.length > 0 && (
+                    <div className="flex flex-wrap gap-2 mt-3">
+                      {message.pills.map((pill, idx) => (
+                        <button
+                          key={idx}
+                          onClick={() => onPillClick(pill)}
+                          disabled={isGenerating}
+                          className="px-4 py-2 text-[13px] font-medium glass-pill text-zinc-200 disabled:opacity-40 disabled:cursor-not-allowed rounded-full transition-all duration-200"
+                        >
+                          {pill}
+                        </button>
+                      ))}
+                    </div>
+                  )}
 
-                {/* Upload zone */}
-                {message.showUpload && (
-                  <div className="mt-3">
-                    <button
-                      onClick={() => fileInputRef.current?.click()}
-                      className="w-full px-4 py-3 text-[13px] font-medium glass-pill text-zinc-300 rounded-xl transition-all duration-200 flex items-center justify-center gap-2"
-                    >
-                      <ImagePlus className="w-4 h-4" />
-                      {typeof message.showUpload === "string" ? message.showUpload : "Upload inspiration images"}
-                    </button>
-                  </div>
-                )}
-              </div>
-            </motion.div>
-          ))}
+                  {/* Upload zone */}
+                  {message.showUpload && (
+                    <div className="mt-3">
+                      <button
+                        onClick={() => fileInputRef.current?.click()}
+                        className="w-full px-4 py-3 text-[13px] font-medium glass-pill text-zinc-300 rounded-xl transition-all duration-200 flex items-center justify-center gap-2"
+                      >
+                        <ImagePlus className="w-4 h-4" />
+                        {typeof message.showUpload === "string" ? message.showUpload : "Upload inspiration images"}
+                      </button>
+                    </div>
+                  )}
+                </div>
+              </motion.div>
+            );
+          })}
         </AnimatePresence>
 
         {isGenerating && (
@@ -293,9 +311,9 @@ export function ChatPanel({
             initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.2 }}
-            className="flex justify-start"
+            className="flex justify-start mt-4"
           >
-            <div className="glass-bubble rounded-2xl px-4 py-3">
+            <div className="glass-bubble bubble-tail-left px-4 py-3">
               <TypingIndicator />
             </div>
           </motion.div>
@@ -341,9 +359,25 @@ export function ChatPanel({
         )}
 
         {/* Input container — glass with green glow border */}
-        <div className="glass-input-glow rounded-2xl p-1">
-          <div className="flex items-end gap-2 px-3 py-2">
-            <img src="/logo.png" alt="" className="w-6 h-6 object-contain mb-1 opacity-30 flex-shrink-0" aria-hidden="true" />
+        <div className="glass-input-glow rounded-2xl">
+          <div className="flex items-end gap-2 px-4 py-3">
+            <button
+              onClick={() => fileInputRef.current?.click()}
+              className="p-1.5 mb-0.5 hover:bg-white/[0.06] rounded-lg transition-colors flex-shrink-0"
+              title="Upload images"
+              aria-label="Upload images"
+            >
+              <Paperclip className="w-4 h-4 text-zinc-500" />
+            </button>
+            <input
+              ref={fileInputRef}
+              type="file"
+              accept="image/*"
+              multiple
+              onChange={handleFileUpload}
+              className="hidden"
+              aria-hidden="true"
+            />
             <textarea
               ref={textareaRef}
               value={input}
@@ -361,37 +395,17 @@ export function ChatPanel({
               aria-label="Message input"
               autoComplete="off"
               rows={1}
-              className="flex-1 bg-transparent text-[14px] text-zinc-100 placeholder:text-zinc-600 focus:outline-none disabled:opacity-40 resize-none overflow-y-auto leading-relaxed"
+              className="flex-1 bg-transparent text-[15px] text-zinc-100 placeholder:text-zinc-600 focus:outline-none disabled:opacity-40 resize-none overflow-y-auto leading-relaxed"
               style={{ maxHeight: 160 }}
             />
             <button
               onClick={handleSend}
               disabled={(!input.trim() && inspoImages.length === 0) || isGenerating}
-              className="p-2 mb-0.5 bg-green-500/60 hover:bg-green-400/70 disabled:bg-zinc-800/50 disabled:cursor-not-allowed rounded-full transition-all duration-200 flex-shrink-0 glow-green-strong disabled:shadow-none"
+              className="p-2.5 mb-0.5 bg-green-500/60 hover:bg-green-400/70 disabled:bg-zinc-800/50 disabled:cursor-not-allowed rounded-full transition-all duration-200 flex-shrink-0 glow-green-strong disabled:shadow-none"
               aria-label="Send message"
             >
               <ArrowUp className="w-4 h-4 text-white" />
             </button>
-          </div>
-          {/* Toolbar row */}
-          <div className="flex items-center gap-1 px-3 pb-2">
-            <button
-              onClick={() => fileInputRef.current?.click()}
-              className="p-1.5 hover:bg-white/[0.04] rounded-lg transition-colors flex-shrink-0"
-              title="Upload images"
-              aria-label="Upload images"
-            >
-              <Paperclip className="w-3.5 h-3.5 text-zinc-500" />
-            </button>
-            <input
-              ref={fileInputRef}
-              type="file"
-              accept="image/*"
-              multiple
-              onChange={handleFileUpload}
-              className="hidden"
-              aria-hidden="true"
-            />
           </div>
         </div>
       </div>

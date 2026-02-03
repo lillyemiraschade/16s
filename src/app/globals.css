@@ -207,6 +207,24 @@
     border-color: rgba(255, 255, 255, 0.2);
   }
 
+  /* Asymmetric bubble corners — iMessage-style tails */
+  .bubble-tail-right {
+    border-radius: 18px 18px 6px 18px;
+  }
+
+  .bubble-tail-left {
+    border-radius: 18px 18px 18px 6px;
+  }
+
+  /* Grouped messages — tighter spacing, no tail */
+  .bubble-grouped-right {
+    border-radius: 18px 6px 6px 18px;
+  }
+
+  .bubble-grouped-left {
+    border-radius: 6px 18px 18px 6px;
+  }
+
   /* Glass input with green glow border */
   .glass-input-glow {
     background: rgba(255, 255, 255, 0.03);

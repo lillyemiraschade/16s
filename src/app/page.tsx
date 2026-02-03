@@ -271,15 +271,15 @@ export default function HomePage() {
           >
             <div className="flex flex-col items-center gap-4">
               <img src="/logo.png" alt="" className="w-12 h-12 object-contain" />
-              <h1 className="text-[32px] font-medium text-zinc-200 tracking-[-0.02em] text-center">
+              <h1 className="text-[36px] font-semibold text-zinc-100 tracking-[-0.03em] text-center">
                 {headline}
               </h1>
             </div>
 
             {/* Input bar */}
-            <div className="w-full glass-input-glow rounded-2xl p-1">
+            <div className="w-full glass-input-glow rounded-2xl">
               {inspoImages.length > 0 && (
-                <div className="flex gap-2 flex-wrap px-3 pt-3">
+                <div className="flex gap-2 flex-wrap px-4 pt-4">
                   {inspoImages.map((img, idx) => (
                     <div key={idx} className="relative group">
                       <img src={img} alt={`Upload ${idx + 1}`} className="h-14 w-14 object-cover rounded-lg ring-1 ring-white/[0.06]" />
@@ -301,7 +301,7 @@ export default function HomePage() {
                   </button>
                 </div>
               )}
-              <div className="flex items-end gap-2 px-4 py-3">
+              <div className="flex items-end gap-2 px-5 py-4">
                 <textarea
                   ref={welcomeTextareaRef}
                   value={welcomeInput}
@@ -319,19 +319,19 @@ export default function HomePage() {
                   aria-label="Message input"
                   autoComplete="off"
                   rows={1}
-                  className="flex-1 bg-transparent text-[15px] text-zinc-100 placeholder:text-zinc-600 focus:outline-none disabled:opacity-40 resize-none overflow-y-auto leading-relaxed"
+                  className="flex-1 bg-transparent text-[16px] text-zinc-100 placeholder:text-zinc-600 focus:outline-none disabled:opacity-40 resize-none overflow-y-auto leading-relaxed"
                   style={{ maxHeight: 160 }}
                 />
                 <button
                   onClick={handleWelcomeSend}
                   disabled={(!welcomeInput.trim() && inspoImages.length === 0) || isGenerating}
-                  className="p-2.5 bg-green-500/60 hover:bg-green-400/70 disabled:bg-zinc-800/60 disabled:cursor-not-allowed rounded-full transition-all duration-200 flex-shrink-0 glow-green-strong disabled:shadow-none"
+                  className="p-3 bg-green-500/60 hover:bg-green-400/70 disabled:bg-zinc-800/60 disabled:cursor-not-allowed rounded-full transition-all duration-200 flex-shrink-0 glow-green-strong disabled:shadow-none"
                   aria-label="Send message"
                 >
                   <ArrowUp className="w-4 h-4 text-white" />
                 </button>
               </div>
-              <div className="flex items-center gap-1 px-4 pb-3">
+              <div className="flex items-center gap-1 px-5 pb-3">
                 <button
                   onClick={() => welcomeFileRef.current?.click()}
                   className="p-1.5 hover:bg-white/[0.04] rounded-lg transition-colors"
