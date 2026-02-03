@@ -44,7 +44,6 @@ export default function HomePage() {
   const [isGenerating, setIsGenerating] = useState(false);
   const [inspoImages, setInspoImages] = useState<string[]>([]);
   const [isOnCall, setIsOnCall] = useState(false);
-  const [lastAiResponse, setLastAiResponse] = useState<{ text: string; id: number } | null>(null);
   const [hasStarted, setHasStarted] = useState(false);
   const [previewScreenshot, setPreviewScreenshot] = useState<string | null>(null);
 
@@ -196,7 +195,6 @@ export default function HomePage() {
         showUpload: data.showUpload,
       };
       setMessages((prev) => [...prev, aiMessage]);
-      if (isOnCall) setLastAiResponse({ text: data.message, id: Date.now() });
 
       if (data.html) {
         if (currentPreview) {
@@ -220,7 +218,6 @@ export default function HomePage() {
           content: errorMsg,
         },
       ]);
-      if (isOnCall) setLastAiResponse({ text: errorMsg, id: Date.now() });
     } finally {
       if (!controller.signal.aborted) {
         setIsGenerating(false);
@@ -231,11 +228,15 @@ export default function HomePage() {
   const handlePillClick = (pill: string) => {
     if (isGenerating) return;
     if (pill.toLowerCase().includes("hop on a call")) {
-      setLastAiResponse(null);
       setIsOnCall(true);
       return;
     }
     handleSendMessage(pill);
+  };
+
+  const handleCallComplete = (summary: string) => {
+    setIsOnCall(false);
+    handleSendMessage(summary);
   };
 
   const handleImageUpload = (base64: string) => {
@@ -312,7 +313,6 @@ export default function HomePage() {
     setWelcomeInput("");
     setWelcomeKey((k) => k + 1);
     setIsOnCall(false);
-    setLastAiResponse(null);
     setPreviewScreenshot(null);
     setCurrentProjectId(null);
     setProjectName("Untitled");
@@ -330,7 +330,6 @@ export default function HomePage() {
     setIsGenerating(false);
     setHasStarted(true);
     setIsOnCall(false);
-    setLastAiResponse(null);
     setPreviewScreenshot(null);
     setCurrentProjectId(proj.id);
     setProjectName(proj.name);
@@ -540,9 +539,8 @@ export default function HomePage() {
             savedProjects={savedProjects}
             currentProjectId={currentProjectId}
             isOnCall={isOnCall}
-            onStartCall={() => { setLastAiResponse(null); setIsOnCall(true); }}
+            onStartCall={() => setIsOnCall(true)}
             onEndCall={() => setIsOnCall(false)}
-            lastAiResponse={lastAiResponse}
             hasPreview={!!currentPreview}
           />
         </nav>
@@ -568,10 +566,8 @@ export default function HomePage() {
             {isOnCall && (
               <div className="absolute top-14 right-4 z-30">
                 <VoiceCall
-                  onSend={handleSendMessage}
+                  onCallComplete={handleCallComplete}
                   onHangUp={() => setIsOnCall(false)}
-                  aiResponse={lastAiResponse}
-                  isGenerating={isGenerating}
                 />
               </div>
             )}

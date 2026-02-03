@@ -23,7 +23,6 @@ interface ChatPanelProps {
   isOnCall: boolean;
   onStartCall: () => void;
   onEndCall: () => void;
-  lastAiResponse: { text: string; id: number } | null;
   hasPreview: boolean;
 }
 

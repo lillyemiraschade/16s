@@ -6,11 +6,14 @@ import { PhoneOff, Mic, Volume2 } from "lucide-react";
 
 type CallState = "idle" | "listening" | "thinking" | "speaking";
 
+interface VoiceMessage {
+  role: "user" | "assistant";
+  content: string;
+}
+
 interface VoiceCallProps {
-  onSend: (text: string) => void;
+  onCallComplete: (summary: string) => void;
   onHangUp: () => void;
-  aiResponse: { text: string; id: number } | null;
-  isGenerating: boolean;
 }
 
 function formatTime(seconds: number): string {
@@ -19,25 +22,48 @@ function formatTime(seconds: number): string {
   return `${m}:${s.toString().padStart(2, "0")}`;
 }
 
-export function VoiceCall({ onSend, onHangUp, aiResponse, isGenerating }: VoiceCallProps) {
+function compileSummary(messages: VoiceMessage[]): string {
+  // Extract user responses to build a summary
+  const userMessages = messages
+    .filter((m) => m.role === "user")
+    .map((m) => m.content);
+
+  if (userMessages.length === 0) {
+    return "I had a brief call but didn't gather any details. Let's start fresh.";
+  }
+
+  // Build a natural summary from the conversation
+  return `Here's what I gathered from our call:\n\n${userMessages.join("\n\n")}\n\nPlease design a website based on this information.`;
+}
+
+export function VoiceCall({ onCallComplete, onHangUp }: VoiceCallProps) {
   const [state, setState] = useState<CallState>("idle");
   const [transcript, setTranscript] = useState("");
   const [unsupported, setUnsupported] = useState(false);
   const [elapsed, setElapsed] = useState(0);
+  const [voiceMessages, setVoiceMessages] = useState<VoiceMessage[]>([]);
+
   const recognitionRef = useRef<SpeechRecognition | null>(null);
-  const lastSpokenRef = useRef<number | null>(null);
   const mountedRef = useRef(true);
   const stateRef = useRef<CallState>("idle");
-  const onSendRef = useRef(onSend);
+  const voiceMessagesRef = useRef<VoiceMessage[]>([]);
 
   useEffect(() => { stateRef.current = state; }, [state]);
-  useEffect(() => { onSendRef.current = onSend; }, [onSend]);
+  useEffect(() => { voiceMessagesRef.current = voiceMessages; }, [voiceMessages]);
 
   // Timer
   useEffect(() => {
     const interval = setInterval(() => setElapsed((e) => e + 1), 1000);
     return () => clearInterval(interval);
   }, []);
+
+  const endCall = useCallback((messages: VoiceMessage[]) => {
+    mountedRef.current = false;
+    speechSynthesis.cancel();
+    recognitionRef.current?.stop();
+    const summary = compileSummary(messages);
+    onCallComplete(summary);
+  }, [onCallComplete]);
 
   const startListening = useCallback(() => {
     if (!mountedRef.current) return;
@@ -64,7 +90,14 @@ export function VoiceCall({ onSend, onHangUp, aiResponse, isGenerating }: VoiceC
         recognitionRef.current = null;
         setState("thinking");
         setTranscript("");
-        onSendRef.current(finalTranscript.trim());
+
+        // Add user message and send to voice API
+        const userMessage: VoiceMessage = { role: "user", content: finalTranscript.trim() };
+        setVoiceMessages((prev) => {
+          const updated = [...prev, userMessage];
+          sendToVoiceAPI(updated);
+          return updated;
+        });
       }
     };
 
@@ -77,42 +110,89 @@ export function VoiceCall({ onSend, onHangUp, aiResponse, isGenerating }: VoiceC
 
     recognitionRef.current = recognition;
     try { recognition.start(); setState("listening"); } catch {}
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const speak = useCallback((text: string) => {
+  const speak = useCallback((text: string, onEnd?: () => void) => {
     speechSynthesis.cancel();
     setState("speaking");
     const utterance = new SpeechSynthesisUtterance(text);
     utterance.rate = 1.05;
     utterance.pitch = 1;
-    utterance.onend = () => { if (mountedRef.current) startListening(); };
-    utterance.onerror = () => { if (mountedRef.current) startListening(); };
+    utterance.onend = () => {
+      if (mountedRef.current) {
+        if (onEnd) onEnd();
+        else startListening();
+      }
+    };
+    utterance.onerror = () => {
+      if (mountedRef.current) {
+        if (onEnd) onEnd();
+        else startListening();
+      }
+    };
     speechSynthesis.speak(utterance);
   }, [startListening]);
 
+  const sendToVoiceAPI = useCallback(async (messages: VoiceMessage[]) => {
+    if (!mountedRef.current) return;
+
+    try {
+      const response = await fetch("/api/chat/voice", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ voiceMessages: messages }),
+      });
+
+      if (!response.ok) throw new Error("Voice API failed");
+
+      const data = await response.json();
+      const aiMessage: VoiceMessage = { role: "assistant", content: data.message };
+
+      if (!mountedRef.current) return;
+
+      setVoiceMessages((prev) => {
+        const updated = [...prev, aiMessage];
+
+        // If complete, end the call after speaking the final message
+        if (data.complete) {
+          speak(data.message, () => endCall(updated));
+        } else {
+          speak(data.message);
+        }
+
+        return updated;
+      });
+    } catch (error) {
+      console.error("Voice API error:", error);
+      if (mountedRef.current) {
+        speak("Sorry, I didn't catch that. Could you say that again?");
+      }
+    }
+  }, [speak, endCall]);
+
+  // Initial greeting and setup
   useEffect(() => {
     mountedRef.current = true;
     const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
     if (!SR || !window.speechSynthesis) { setUnsupported(true); return; }
-    speak("Hey! Tell me about your project.");
-    return () => { mountedRef.current = false; speechSynthesis.cancel(); recognitionRef.current?.stop(); };
+
+    // Initial greeting
+    const greeting = "Hey! Tell me about your project.";
+    const initialMessage: VoiceMessage = { role: "assistant", content: greeting };
+    setVoiceMessages([initialMessage]);
+    speak(greeting);
+
+    return () => {
+      mountedRef.current = false;
+      speechSynthesis.cancel();
+      recognitionRef.current?.stop();
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  useEffect(() => {
-    if (aiResponse && aiResponse.id !== lastSpokenRef.current && !isGenerating) {
-      lastSpokenRef.current = aiResponse.id;
-      speak(aiResponse.text);
-    }
-  }, [aiResponse, isGenerating, speak]);
-
-  useEffect(() => { if (isGenerating) setState("thinking"); }, [isGenerating]);
-
   const handleHangUp = () => {
-    mountedRef.current = false;
-    speechSynthesis.cancel();
-    recognitionRef.current?.stop();
-    onHangUp();
+    endCall(voiceMessagesRef.current);
   };
 
   const StateIcon = state === "speaking" ? Volume2 : Mic;
@@ -133,7 +213,7 @@ export function VoiceCall({ onSend, onHangUp, aiResponse, isGenerating }: VoiceC
         className="glass-matte rounded-2xl p-4 max-w-[260px]"
       >
         <p className="text-zinc-300 text-[13px] font-medium">Voice requires Chrome or Edge</p>
-        <button onClick={handleHangUp} className="mt-2 px-3 py-1.5 text-[12px] font-medium text-zinc-300 glass glass-hover rounded-full transition-all duration-200">
+        <button onClick={() => onHangUp()} className="mt-2 px-3 py-1.5 text-[12px] font-medium text-zinc-300 glass glass-hover rounded-full transition-all duration-200">
           Dismiss
         </button>
       </motion.div>
