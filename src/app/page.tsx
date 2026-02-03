@@ -570,7 +570,7 @@ export default function HomePage() {
     handleSendMessage(newContent, originalMessage.uploadedImages);
   }, [messages, previewHistory, handleSendMessage]);
 
-  const handleImageUpload = (base64: string, type: "inspo" | "content" = "inspo", label?: string) => {
+  const handleImageUpload = (base64: string, type: "inspo" | "content" = "content", label?: string) => {
     setUploadedImages((prev) => [...prev, { data: base64, type, label }]);
   };
 
