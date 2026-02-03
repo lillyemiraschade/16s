@@ -305,11 +305,21 @@ export async function POST(req: Request) {
   }
 
   try {
-    const raw = await req.json();
+    let raw;
+    try {
+      raw = await req.json();
+    } catch {
+      return new Response(
+        JSON.stringify({ error: "Request too large. Try with fewer or smaller images." }),
+        { status: 413, headers: { "Content-Type": "application/json" } }
+      );
+    }
+
     const parsed = ChatRequestSchema.safeParse(raw);
     if (!parsed.success) {
+      const errorDetail = parsed.error.issues[0]?.message || "Invalid format";
       return new Response(
-        JSON.stringify({ message: "Invalid request format." }),
+        JSON.stringify({ error: `Invalid request: ${errorDetail}` }),
         { status: 400, headers: { "Content-Type": "application/json" } }
       );
     }
@@ -480,10 +490,16 @@ export async function POST(req: Request) {
     const errMsg = error instanceof Error ? error.message : String(error);
     console.error("Chat API error:", errMsg);
 
+    // Provide more specific error messages
+    let userMessage = "Something went wrong. Please try again.";
+    if (errMsg.includes("body") || errMsg.includes("size") || errMsg.includes("large")) {
+      userMessage = "Request too large. Try with fewer or smaller images.";
+    } else if (errMsg.includes("timeout") || errMsg.includes("ETIMEDOUT")) {
+      userMessage = "Request timed out. Please try again.";
+    }
+
     return new Response(
-      JSON.stringify({
-        message: "Give me one more second...",
-      }),
+      JSON.stringify({ error: userMessage }),
       {
         status: 500,
         headers: { "Content-Type": "application/json" },

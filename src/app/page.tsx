@@ -57,6 +57,7 @@ export default function HomePage() {
   const headline = useMemo(() => HEADLINES[Math.floor(Math.random() * HEADLINES.length)], [welcomeKey]);
 
   const [welcomeInput, setWelcomeInput] = useState("");
+  const [welcomeError, setWelcomeError] = useState<string | null>(null);
   const welcomeTextareaRef = useRef<HTMLTextAreaElement>(null);
   const welcomeFileRef = useRef<HTMLInputElement>(null);
 
@@ -156,6 +157,8 @@ export default function HomePage() {
       content: text,
       images: imagesToSend.length > 0 ? imagesToSend : undefined,
     };
+
+    // Add user message optimistically
     setMessages((prev) => [...prev, userMessage]);
     setIsGenerating(true);
 
@@ -181,11 +184,28 @@ export default function HomePage() {
         signal: controller.signal,
       });
 
-      if (!response.ok) throw new Error("Failed to get response");
+      // Handle error responses - try to get specific error message
+      if (!response.ok) {
+        let errorMsg = "Something went wrong. Please try again.";
+        try {
+          const errorData = await response.json();
+          if (errorData.error) errorMsg = errorData.error;
+        } catch {
+          // If we can't parse error response, use status-based message
+          if (response.status === 413) errorMsg = "Request too large. Try with fewer or smaller images.";
+          else if (response.status === 429) errorMsg = "Too many requests. Please wait a moment.";
+        }
+        throw new Error(errorMsg);
+      }
 
       const responseText = await response.text();
       const lines = responseText.trim().split("\n").filter((l) => l.trim());
       const data = JSON.parse(lines[lines.length - 1]);
+
+      // Check if API returned an error in the response body
+      if (data.error) {
+        throw new Error(data.error);
+      }
 
       const aiMessage: Message = {
         id: (Date.now() + 1).toString(),
@@ -209,7 +229,12 @@ export default function HomePage() {
     } catch (error) {
       if (error instanceof DOMException && error.name === "AbortError") return;
       console.error("Error sending message:", error);
-      const errorMsg = "Sorry, something went wrong. Can you try again?";
+
+      // Remove the failed user message to keep history clean
+      setMessages((prev) => prev.filter((m) => m.id !== userMessage.id));
+
+      // Show the actual error message
+      const errorMsg = error instanceof Error ? error.message : "Something went wrong. Please try again.";
       setMessages((prev) => [
         ...prev,
         {
@@ -390,9 +415,14 @@ export default function HomePage() {
     }
   };
 
+  const handleWelcomeError = (msg: string) => {
+    setWelcomeError(msg);
+    setTimeout(() => setWelcomeError(null), 4000);
+  };
+
   const handleWelcomeFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
-      processImageFiles(e.target.files, handleImageUpload);
+      processImageFiles(e.target.files, handleImageUpload, handleWelcomeError);
       e.target.value = "";
     }
   };
@@ -418,6 +448,20 @@ export default function HomePage() {
                 {headline}
               </h1>
             </div>
+
+            {/* Error toast */}
+            <AnimatePresence>
+              {welcomeError && (
+                <motion.div
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  className="w-full glass rounded-xl px-4 py-3 border border-red-500/20"
+                >
+                  <p className="text-[13px] text-red-400 text-center">{welcomeError}</p>
+                </motion.div>
+              )}
+            </AnimatePresence>
 
             {/* Input bar */}
             <div className="w-full glass-input-glow rounded-2xl">

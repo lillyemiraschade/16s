@@ -59,6 +59,7 @@ export function ChatPanel({
   const [lightboxImage, setLightboxImage] = useState<string | null>(null);
   const [showProjectMenu, setShowProjectMenu] = useState(false);
   const [showCallDisclaimer, setShowCallDisclaimer] = useState(false);
+  const [uploadError, setUploadError] = useState<string | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
@@ -104,17 +105,22 @@ export function ChatPanel({
     }
   };
 
+  const handleImageError = useCallback((msg: string) => {
+    setUploadError(msg);
+    setTimeout(() => setUploadError(null), 4000);
+  }, []);
+
   const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
     if (!files) return;
-    processImageFiles(files, onImageUpload);
+    processImageFiles(files, onImageUpload, handleImageError);
     e.target.value = "";
   };
 
   const handleDrop = (e: React.DragEvent) => {
     e.preventDefault();
     setIsDragging(false);
-    processImageFiles(e.dataTransfer.files, onImageUpload);
+    processImageFiles(e.dataTransfer.files, onImageUpload, handleImageError);
   };
 
   const handleDragOver = (e: React.DragEvent) => {
@@ -305,6 +311,20 @@ export function ChatPanel({
                 <ImagePlus className="w-8 h-8 text-green-400 mx-auto mb-2" />
                 <p className="text-sm text-green-400 font-medium">Drop images here</p>
               </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        {/* Upload error toast */}
+        <AnimatePresence>
+          {uploadError && (
+            <motion.div
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              className="absolute top-4 left-4 right-4 z-20 glass rounded-xl px-4 py-3 border border-red-500/20"
+            >
+              <p className="text-[13px] text-red-400">{uploadError}</p>
             </motion.div>
           )}
         </AnimatePresence>
