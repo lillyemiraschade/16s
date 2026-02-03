@@ -2,10 +2,10 @@
 
 import { useEffect, useRef, useState, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Paperclip, ArrowUp, X, ImagePlus, Plus, Phone, Info, ChevronDown, Trash2, Pencil } from "lucide-react";
+import { Paperclip, ArrowUp, X, ImagePlus, Plus, Phone, Info, ChevronDown, Trash2, Pencil, Sparkles, Loader2 } from "lucide-react";
 import Image from "next/image";
 import { TypingIndicator } from "./TypingIndicator";
-import { processImageFiles } from "@/lib/images";
+import { processImageFiles, removeBackground, compressForContent } from "@/lib/images";
 import type { Message, SavedProjectMeta, SelectedElement, UploadedImage } from "@/lib/types";
 
 interface ChatPanelProps {
@@ -15,6 +15,7 @@ interface ChatPanelProps {
   onImageUpload: (base64: string, type?: "inspo" | "content", label?: string) => void;
   onImageRemove: (index: number) => void;
   onImageTypeToggle: (index: number) => void;
+  onImageUpdate: (index: number, newData: string) => void;
   isGenerating: boolean;
   uploadedImages: UploadedImage[];
   onNewProject: () => void;
@@ -47,6 +48,7 @@ export function ChatPanel({
   onImageUpload,
   onImageRemove,
   onImageTypeToggle,
+  onImageUpdate,
   isGenerating,
   uploadedImages,
   onNewProject,
@@ -71,12 +73,28 @@ export function ChatPanel({
   const [editingContent, setEditingContent] = useState("");
   const [deleteConfirmId, setDeleteConfirmId] = useState<string | null>(null);
   const [uploadContext, setUploadContext] = useState<{ type: "inspo" | "content"; label?: string }>({ type: "inspo" });
+  const [removingBgIndex, setRemovingBgIndex] = useState<number | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const projectMenuRef = useRef<HTMLDivElement>(null);
 
   const closeLightbox = useCallback(() => setLightboxImage(null), []);
+
+  const handleRemoveBackground = useCallback(async (index: number) => {
+    if (removingBgIndex !== null) return; // Already processing
+    setRemovingBgIndex(index);
+    try {
+      const img = uploadedImages[index];
+      const result = await removeBackground(img.data);
+      onImageUpdate(index, result);
+    } catch (err) {
+      console.error("Failed to remove background:", err);
+      handleImageError("Failed to remove background. Please try again.");
+    } finally {
+      setRemovingBgIndex(null);
+    }
+  }, [removingBgIndex, uploadedImages, onImageUpdate]);
 
   useEffect(() => {
     if (!lightboxImage) return;
@@ -128,7 +146,8 @@ export function ChatPanel({
     const uploadWithType = (base64: string) => {
       onImageUpload(base64, uploadContext.type, uploadContext.label);
     };
-    processImageFiles(files, uploadWithType, handleImageError);
+    // Compress more aggressively for content images (they need to fit in HTML output)
+    processImageFiles(files, uploadWithType, handleImageError, uploadContext.type === "content");
     e.target.value = "";
   };
 
@@ -138,7 +157,8 @@ export function ChatPanel({
     const uploadWithType = (base64: string) => {
       onImageUpload(base64, uploadContext.type, uploadContext.label);
     };
-    processImageFiles(e.dataTransfer.files, uploadWithType, handleImageError);
+    // Compress more aggressively for content images (they need to fit in HTML output)
+    processImageFiles(e.dataTransfer.files, uploadWithType, handleImageError, uploadContext.type === "content");
   };
 
   const handleDragOver = (e: React.DragEvent) => {
@@ -591,6 +611,22 @@ export function ChatPanel({
                     alt={`${img.type === "content" ? "Content" : "Inspiration"} image ${idx + 1}`}
                     className="h-14 w-14 object-cover ring-1 ring-white/[0.06]"
                   />
+                </button>
+                {/* Remove background button */}
+                <button
+                  onClick={() => handleRemoveBackground(idx)}
+                  disabled={removingBgIndex !== null}
+                  className={`absolute -top-1.5 -left-1.5 w-5 h-5 bg-violet-600 hover:bg-violet-500 disabled:bg-zinc-700 rounded-full flex items-center justify-center transition-all duration-150 ring-1 ring-white/[0.06] ${
+                    removingBgIndex === idx ? "opacity-100" : "opacity-0 group-hover:opacity-100"
+                  }`}
+                  aria-label="Remove background"
+                  title="Remove background"
+                >
+                  {removingBgIndex === idx ? (
+                    <Loader2 className="w-3 h-3 text-white animate-spin" />
+                  ) : (
+                    <Sparkles className="w-3 h-3 text-white" />
+                  )}
                 </button>
                 <button
                   onClick={() => onImageTypeToggle(idx)}

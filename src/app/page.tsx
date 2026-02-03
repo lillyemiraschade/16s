@@ -8,7 +8,7 @@ import Image from "next/image";
 import { ChatPanel } from "@/components/chat/ChatPanel";
 import { PreviewPanel } from "@/components/preview/PreviewPanel";
 import { VoiceCall, VoiceCallHandle } from "@/components/chat/VoiceCall";
-import { processImageFiles } from "@/lib/images";
+import { processImageFiles, compressForContent } from "@/lib/images";
 import { saveProject, loadProject, listProjects, deleteProject } from "@/lib/projects";
 import type { Message, Viewport, SavedProjectMeta, SelectedElement, VersionBookmark, UploadedImage } from "@/lib/types";
 
@@ -520,12 +520,43 @@ export default function HomePage() {
     setUploadedImages((prev) => prev.filter((_, i) => i !== index));
   };
 
-  const handleImageTypeToggle = (index: number) => {
+  const handleImageTypeToggle = async (index: number) => {
+    const img = uploadedImages[index];
+    if (!img) return;
+
+    const newType = img.type === "inspo" ? "content" : "inspo";
+
+    // If switching to content, re-compress for smaller size (fits in HTML output)
+    if (newType === "content") {
+      try {
+        const compressed = await compressForContent(img.data);
+        setUploadedImages((prev) =>
+          prev.map((img, i) =>
+            i === index ? { ...img, type: newType, data: compressed } : img
+          )
+        );
+      } catch {
+        // Fallback: just change type without re-compressing
+        setUploadedImages((prev) =>
+          prev.map((img, i) =>
+            i === index ? { ...img, type: newType } : img
+          )
+        );
+      }
+    } else {
+      // Switching to inspo - no re-compression needed
+      setUploadedImages((prev) =>
+        prev.map((img, i) =>
+          i === index ? { ...img, type: newType } : img
+        )
+      );
+    }
+  };
+
+  const handleImageUpdate = (index: number, newData: string) => {
     setUploadedImages((prev) =>
       prev.map((img, i) =>
-        i === index
-          ? { ...img, type: img.type === "inspo" ? "content" : "inspo" }
-          : img
+        i === index ? { ...img, data: newData } : img
       )
     );
   };
@@ -877,6 +908,7 @@ export default function HomePage() {
             onImageUpload={handleImageUpload}
             onImageRemove={handleImageRemove}
             onImageTypeToggle={handleImageTypeToggle}
+            onImageUpdate={handleImageUpdate}
             isGenerating={isGenerating}
             uploadedImages={uploadedImages}
             onNewProject={handleNewProject}
