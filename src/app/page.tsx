@@ -282,6 +282,7 @@ export default function HomePage() {
     const blob = new Blob([currentPreview], { type: "text/html" });
     const url = URL.createObjectURL(blob);
     window.open(url, "_blank");
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
   }, [currentPreview]);
 
   const handleRestoreVersion = useCallback((index: number) => {

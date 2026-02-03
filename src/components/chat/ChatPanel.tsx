@@ -58,9 +58,12 @@ export function ChatPanel({
   const [input, setInput] = useState("");
   const [isDragging, setIsDragging] = useState(false);
   const [lightboxImage, setLightboxImage] = useState<string | null>(null);
+  const [showProjectMenu, setShowProjectMenu] = useState(false);
+  const [showCallDisclaimer, setShowCallDisclaimer] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const projectMenuRef = useRef<HTMLDivElement>(null);
 
   const closeLightbox = useCallback(() => setLightboxImage(null), []);
 
@@ -124,10 +127,6 @@ export function ChatPanel({
     e.preventDefault();
     setIsDragging(false);
   };
-
-  const [showProjectMenu, setShowProjectMenu] = useState(false);
-  const projectMenuRef = useRef<HTMLDivElement>(null);
-  const [showCallDisclaimer, setShowCallDisclaimer] = useState(false);
 
   // Close project menu on outside click or Escape
   useEffect(() => {
@@ -319,14 +318,9 @@ export function ChatPanel({
             const isLastInGroup = !next || next.role !== message.role;
             const isUser = message.role === "user";
 
-            let cornerClass: string;
-            if (isFirstInGroup && isLastInGroup) {
-              cornerClass = isUser ? "bubble-tail-right" : "bubble-tail-left";
-            } else if (isLastInGroup) {
-              cornerClass = isUser ? "bubble-tail-right" : "bubble-tail-left";
-            } else {
-              cornerClass = isUser ? "bubble-grouped-right" : "bubble-grouped-left";
-            }
+            const cornerClass = isLastInGroup
+              ? isUser ? "bubble-tail-right" : "bubble-tail-left"
+              : isUser ? "bubble-grouped-right" : "bubble-grouped-left";
 
             return (
               <motion.div

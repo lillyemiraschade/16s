@@ -262,7 +262,7 @@
   .code-preview {
     font-family: "SF Mono", "Fira Code", "Fira Mono", Menlo, Consolas, monospace;
     color: #a1a1aa;
-    white-space: pre;
+    white-space: pre-wrap;
     word-break: break-all;
     tab-size: 2;
   }

@@ -51,7 +51,8 @@ if (typeof globalThis !== "undefined") {
       if (now > val.resetAt) rateLimitMap.delete(key);
     });
   };
-  setInterval(cleanup, RATE_WINDOW_MS);
+  const timer = setInterval(cleanup, RATE_WINDOW_MS);
+  if (typeof timer === "object" && "unref" in timer) timer.unref();
 }
 
 const SYSTEM_PROMPT = `You are 16s, an AI web designer. You help non-technical users build beautiful websites through conversation.
