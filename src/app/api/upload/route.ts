@@ -5,6 +5,15 @@ export const runtime = "nodejs";
 
 export async function POST(req: NextRequest) {
   try {
+    // Check if blob token is configured
+    if (!process.env.BLOB_READ_WRITE_TOKEN) {
+      console.error("BLOB_READ_WRITE_TOKEN is not set");
+      return new Response(
+        JSON.stringify({ error: "Blob storage not configured" }),
+        { status: 500, headers: { "Content-Type": "application/json" } }
+      );
+    }
+
     const { imageData, filename } = await req.json();
 
     if (!imageData) {
@@ -31,11 +40,15 @@ export async function POST(req: NextRequest) {
     const ext = mimeType.split("/")[1] || "png";
     const uniqueFilename = `images/${filename || Date.now()}-${Math.random().toString(36).slice(2, 8)}.${ext}`;
 
+    console.log(`[Blob] Uploading ${uniqueFilename} (${imageBuffer.length} bytes)...`);
+
     // Upload to Vercel Blob
     const { url } = await put(uniqueFilename, imageBuffer, {
       access: "public",
       contentType: mimeType,
     });
+
+    console.log(`[Blob] Upload success: ${url}`);
 
     return new Response(
       JSON.stringify({ url }),
@@ -43,8 +56,9 @@ export async function POST(req: NextRequest) {
     );
   } catch (error) {
     console.error("Upload error:", error);
+    const errorMessage = error instanceof Error ? error.message : "Unknown error";
     return new Response(
-      JSON.stringify({ error: "Failed to upload image" }),
+      JSON.stringify({ error: `Failed to upload: ${errorMessage}` }),
       { status: 500, headers: { "Content-Type": "application/json" } }
     );
   }
