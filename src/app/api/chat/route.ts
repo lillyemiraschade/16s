@@ -134,42 +134,115 @@ You MUST match:
 - All links that appear in inspo nav
 - Visual style (transparent, solid, etc.)
 
-CSS REFERENCE — USE THESE TECHNIQUES:
+MANDATORY STEP 6 — DO NOT ADD ELEMENTS NOT IN INSPO:
+- If inspo doesn't have a "Get Started" button → DO NOT add one
+- If inspo doesn't have a feature → DO NOT add it
+- ONLY include what you can SEE in the inspo image
 
-/* Glowing portal/arch effect */
+═══════════════════════════════════════════════════════════════════
+CSS REFERENCE — MANDATORY TECHNIQUES
+═══════════════════════════════════════════════════════════════════
+
+FONT WEIGHTS — USE CORRECT VALUES:
+- Hairline/Thin: font-weight: 100 or 200 (very light strokes)
+- Light: font-weight: 300
+- Regular: font-weight: 400
+- Medium: font-weight: 500
+- Bold: font-weight: 700
+
+If inspo shows THIN text, you MUST use font-weight: 100 or 200.
+Load thin weights from Google Fonts: ?family=Font+Name:wght@100;200;300
+
+/* Example thin italic serif */
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,300&display=swap');
+.thin-italic { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-style: italic; }
+
+PORTAL/ARCH WITH GLOWING BORDER — Multiple box-shadows create depth:
 .portal {
-  background: linear-gradient(to top, #8B5CF6, #C084FC);
-  border-radius: 100px 100px 0 0;
-  box-shadow: 0 0 100px 50px rgba(139, 92, 246, 0.3),
-              0 0 200px 100px rgba(139, 92, 246, 0.15);
+  position: relative;
+  background: linear-gradient(to top, #7C3AED 0%, #A78BFA 50%, #C4B5FD 100%);
+  border-radius: 200px 200px 0 0;
+  /* OUTER GLOW - spreads outward */
+  box-shadow:
+    0 0 60px 20px rgba(167, 139, 250, 0.4),
+    0 0 120px 60px rgba(139, 92, 246, 0.2),
+    0 0 200px 100px rgba(139, 92, 246, 0.1);
 }
-
-/* Starfield background - generate many random positions */
-.stars::before {
+/* BORDER GLOW - use pseudo-element */
+.portal::before {
+  content: '';
+  position: absolute;
+  inset: -3px;
+  border-radius: inherit;
+  background: linear-gradient(to top, #F59E0B, #FBBF24, transparent 50%);
+  z-index: -1;
+  filter: blur(2px);
+}
+/* INNER GLOW - inset shadow */
+.portal::after {
   content: '';
   position: absolute;
   inset: 0;
+  border-radius: inherit;
+  box-shadow: inset 0 0 60px 30px rgba(255,255,255,0.1);
+}
+
+STARFIELD — Generate 20+ random positions:
+.stars {
+  position: absolute;
+  inset: 0;
   background-image:
-    radial-gradient(1px 1px at 10% 20%, white, transparent),
-    radial-gradient(1px 1px at 30% 50%, white, transparent),
-    radial-gradient(2px 2px at 50% 10%, white, transparent),
-    radial-gradient(1px 1px at 70% 80%, white, transparent),
-    radial-gradient(1px 1px at 90% 30%, white, transparent);
-  background-size: 250px 250px;
-  animation: twinkle 4s ease-in-out infinite;
+    radial-gradient(1px 1px at 5% 15%, rgba(255,255,255,0.8), transparent),
+    radial-gradient(1px 1px at 12% 45%, rgba(255,255,255,0.6), transparent),
+    radial-gradient(2px 2px at 20% 25%, rgba(255,255,255,0.9), transparent),
+    radial-gradient(1px 1px at 35% 65%, rgba(255,255,255,0.5), transparent),
+    radial-gradient(1px 1px at 45% 10%, rgba(255,255,255,0.7), transparent),
+    radial-gradient(2px 2px at 55% 85%, rgba(255,255,255,0.6), transparent),
+    radial-gradient(1px 1px at 65% 35%, rgba(255,255,255,0.8), transparent),
+    radial-gradient(1px 1px at 75% 55%, rgba(255,255,255,0.5), transparent),
+    radial-gradient(1px 1px at 85% 20%, rgba(255,255,255,0.7), transparent),
+    radial-gradient(2px 2px at 95% 75%, rgba(255,255,255,0.6), transparent);
+  background-size: 200px 200px;
 }
 
-/* Purple gradient atmosphere/glow */
+ATMOSPHERIC GLOW — Radial gradient from bottom:
 .atmosphere {
-  background: radial-gradient(ellipse at 50% 100%, rgba(139,92,246,0.4) 0%, transparent 60%);
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 80% 50% at 50% 100%, rgba(139,92,246,0.5) 0%, transparent 70%);
+  pointer-events: none;
 }
 
-/* Wave/landscape SVG */
-.wave { clip-path: url(#wave-path); /* or use inline SVG */ }
+WAVE/LANDSCAPE — Use SVG path:
+<svg class="wave" viewBox="0 0 1440 200" preserveAspectRatio="none">
+  <path fill="rgba(139,92,246,0.3)" d="M0,100 C360,150 720,50 1080,100 C1260,125 1380,100 1440,100 L1440,200 L0,200 Z"/>
+</svg>
+.wave { position: absolute; bottom: 0; width: 100%; height: 200px; }
 
-⚠️ CRITICAL RULE: If inspo has text on the LEFT, DO NOT center it.
-The spatial arrangement is the MOST recognizable aspect of any design.
-Getting layout wrong = completely wrong output.
+LAYERING WITH Z-INDEX:
+.hero { position: relative; }
+.stars { z-index: 1; }
+.atmosphere { z-index: 2; }
+.portal { z-index: 3; }
+.content { z-index: 4; position: relative; }
+.overlay-text { z-index: 5; } /* Text that appears over portal */
+
+TEXT OVER PORTAL (faint/ghost text):
+.ghost-text {
+  position: absolute;
+  right: 10%;
+  top: 50%;
+  color: rgba(255,255,255,0.15);
+  font-size: 14px;
+  max-width: 200px;
+}
+
+⚠️ CRITICAL RULES:
+1. If inspo has LEFT-aligned text → DO NOT center it
+2. If inspo has THIN font → use font-weight: 100-300, NOT 400+
+3. If inspo has glowing border → use multiple box-shadows + pseudo-elements
+4. If inspo has overlapping elements → use z-index layering
+5. If inspo does NOT have a button → DO NOT add one
 
 IMAGE TYPES — CRITICAL:
 - INSPO images (website screenshots) → clone the STYLE only, don't embed the image itself
