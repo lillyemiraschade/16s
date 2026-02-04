@@ -202,6 +202,25 @@ async function deleteCloudProject(id: string, userId: string): Promise<void> {
 // MIGRATION: localStorage -> Supabase
 // ============================================================================
 
+// Check if a string is a valid UUID
+function isValidUUID(str: string): boolean {
+  const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+  return uuidRegex.test(str);
+}
+
+// Generate a new UUID
+function generateUUID(): string {
+  if (typeof crypto !== "undefined" && crypto.randomUUID) {
+    return crypto.randomUUID();
+  }
+  // Fallback for older browsers
+  return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, (c) => {
+    const r = (Math.random() * 16) | 0;
+    const v = c === "x" ? r : (r & 0x3) | 0x8;
+    return v.toString(16);
+  });
+}
+
 export async function migrateLocalToCloud(userId: string): Promise<number> {
   const localProjects = getLocalAll();
   if (localProjects.length === 0) return 0;
@@ -210,7 +229,14 @@ export async function migrateLocalToCloud(userId: string): Promise<number> {
 
   for (const project of localProjects) {
     try {
-      await saveCloudProject(project, userId);
+      // Convert old non-UUID IDs to UUIDs for Supabase compatibility
+      const migratedProject = {
+        ...project,
+        id: isValidUUID(project.id) ? project.id : generateUUID(),
+      };
+
+      console.log("[Migration] Migrating project:", project.id, "->", migratedProject.id);
+      await saveCloudProject(migratedProject, userId);
       migrated++;
     } catch (e) {
       console.error("[Migration] Failed to migrate project:", project.id, e);

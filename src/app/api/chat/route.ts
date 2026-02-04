@@ -1676,10 +1676,15 @@ export async function POST(req: Request) {
           }
 
           // Parse the complete response
+          console.log("[Chat API] Full response length:", fullText.length);
+          console.log("[Chat API] Full response preview:", fullText.slice(0, 500));
+
           let parsedResponse: ChatResponse;
           try {
             parsedResponse = JSON.parse(fullText.trim());
-          } catch {
+          } catch (parseError) {
+            console.error("[Chat API] JSON parse failed:", parseError);
+            console.error("[Chat API] Raw response was:", fullText.slice(0, 1000));
             try {
               const jsonMatch = fullText.match(/```(?:json)?\n?([\s\S]+?)\n?```/);
               if (jsonMatch) {
@@ -1703,7 +1708,10 @@ export async function POST(req: Request) {
           controller.close();
         } catch (error) {
           const errMsg = error instanceof Error ? error.message : String(error);
+          const errStack = error instanceof Error ? error.stack : "";
           console.error("Stream error:", errMsg);
+          console.error("Stream error stack:", errStack);
+          console.error("Stream error full:", error);
           const isCredits = errMsg.includes("credit balance");
           controller.enqueue(
             encoder.encode(
