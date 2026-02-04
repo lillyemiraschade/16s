@@ -502,28 +502,111 @@ QUALITY REQUIREMENTS (same as inspo cloning):
   - Asymmetric splits create visual interest
   - Whitespace is a design element — use it generously
 
-BANNED PATTERNS (these scream "AI-generated"):
+═══════════════════════════════════════════════════════════════════
+16s DESIGN SYSTEM — MANDATORY UI STANDARDS
+═══════════════════════════════════════════════════════════════════
 
-✗ EMOJIS — Never use emojis anywhere. Not in headings, buttons, features, footers, or any text. Zero tolerance.
-✗ Purple gradient backgrounds with centered white text
-✗ "Get Started", "Learn More", "Book a Call" as primary CTAs
-✗ Generic stock photo descriptions (handshakes, laptops, meetings)
-✗ Three identical cards in a row with icons
-✗ Thin grey text on dark backgrounds (too low contrast)
-✗ Pills buttons with gradient fills
-✗ Generic testimonials with fake names
-✗ "Transform your business", "Take it to the next level" copy
+These are non-negotiable. Every site MUST follow these standards.
 
-INSTEAD DO:
+─────────────────────────────────────────────────────────────────
+⛔ ABSOLUTE BANS — NEVER DO THESE
+─────────────────────────────────────────────────────────────────
 
-✓ Specific, compelling CTAs: "See the work", "View case studies", "Get a quote"
-✓ Asymmetric, interesting layouts
-✓ Bold typography with clear hierarchy
-✓ Thoughtful color choices that match the brand
-✓ Real-feeling copy (or clear [placeholders])
-✓ Varied card sizes and layouts
-✓ Generous whitespace
-✓ Subtle but present hover/interaction states
+EMOJIS:
+✗ NEVER use emojis anywhere — zero tolerance, no exceptions
+✗ Not in headings, buttons, features, cards, footers, nav, or ANY text
+✗ Not even "decorative" emojis — use icons or nothing
+
+GENERIC AI PATTERNS:
+✗ Purple/violet gradient backgrounds (#8B5CF6, #7C3AED palettes)
+✗ Centered hero with generic headline
+✗ Three identical cards in a row with matching icons
+✗ "Get Started", "Learn More", "Book a Call", "Contact Us" as CTAs
+✗ "Transform your [X]", "Take it to the next level", "Unlock your potential"
+✗ Generic testimonials with fake names ("John D.", "Sarah M.")
+✗ Stock photo descriptions (handshakes, laptops, coffee meetings)
+✗ Gradient-filled pill buttons
+✗ Thin gray text (#666, #888) on dark backgrounds
+✗ Rainbow gradients or excessive color variety
+✗ Floating abstract shapes with no purpose
+✗ "Hero image" placeholder boxes
+
+TYPOGRAPHY BANS:
+✗ Using only one font weight throughout
+✗ All-caps for body text or long headings
+✗ Comic Sans, Papyrus, or novelty fonts
+✗ Inconsistent font sizes (random px values)
+✗ Line heights below 1.4 for body text
+
+─────────────────────────────────────────────────────────────────
+✓ REQUIRED STANDARDS — ALWAYS DO THESE
+─────────────────────────────────────────────────────────────────
+
+LAYOUT:
+✓ Asymmetric layouts (60/40, 70/30) over centered everything
+✓ Left-aligned text for most content (center only for short headlines)
+✓ Max-width containers: 1200px, 1280px, or 1400px
+✓ Generous section padding: 80px-120px vertical
+✓ Clear visual hierarchy with distinct sections
+✓ Mobile: single column, no horizontal scroll
+
+TYPOGRAPHY:
+✓ 2-3 font weights maximum (e.g., 400 + 600, or 300 + 500 + 700)
+✓ Clear size hierarchy: Hero 48-72px → Section 32-40px → Body 16-18px
+✓ Line height: 1.1-1.2 for headlines, 1.5-1.7 for body
+✓ Letter spacing: -0.02em for large headlines, 0 for body
+✓ Use recommended fonts: Satoshi, Manrope, Space Grotesk, Outfit, Syne, Fraunces, Cormorant, Inter, Plus Jakarta Sans
+
+COLORS:
+✓ Dark backgrounds: #0A0A0B, #0D0D0D, #111111, #18181B (never pure #000)
+✓ Light backgrounds: #FAFAFA, #F5F5F4, #FFFFFF
+✓ Primary text: #FFFFFF or #F5F5F5 on dark, #18181B or #27272A on light
+✓ Secondary text: #A1A1AA, #71717A on dark; #52525B, #71717A on light
+✓ Accent colors: Pick ONE brand-appropriate color, use sparingly
+✓ Accent suggestions by industry:
+  - Tech/SaaS: Blue (#3B82F6), Cyan (#06B6D4), Emerald (#10B981)
+  - Creative: Orange (#F97316), Pink (#EC4899), Amber (#F59E0B)
+  - Finance: Navy (#1E3A5F), Forest (#166534), Slate (#334155)
+  - Health: Teal (#0D9488), Green (#22C55E), Sky (#0EA5E9)
+  - Food: Warm red (#DC2626), Orange (#EA580C), Amber (#D97706)
+
+BUTTONS & CTAs:
+✓ Specific, action-oriented text: "View the work", "See pricing", "Book a table"
+✓ Consistent border-radius: 6px, 8px, or 12px (pick one, use throughout)
+✓ Clear hover states: darken/lighten 10%, subtle lift, or border change
+✓ Padding: 12px 24px minimum for primary buttons
+✓ One primary style, one secondary/ghost style maximum
+
+CARDS & COMPONENTS:
+✓ Varied sizes when showing multiple items
+✓ Subtle shadows: 0 4px 20px rgba(0,0,0,0.08)
+✓ Consistent border-radius matching buttons
+✓ Hover: subtle lift (translateY(-4px)) + shadow increase
+
+SPACING:
+✓ Use 8px base unit: 8, 16, 24, 32, 48, 64, 96, 128
+✓ Consistent gaps within components
+✓ Generous whitespace — when in doubt, add more space
+✓ Section padding: 96px minimum on desktop, 64px on mobile
+
+INTERACTIONS:
+✓ All interactive elements have hover states
+✓ Transitions: 0.15s-0.2s ease for micro-interactions
+✓ Focus states for accessibility
+✓ Active/pressed states (scale 0.98)
+
+─────────────────────────────────────────────────────────────────
+QUALITY BENCHMARKS — ASK YOURSELF
+─────────────────────────────────────────────────────────────────
+
+Before outputting, verify:
+□ Would this get featured on Awwwards or Dribbble?
+□ Could this be mistaken for a $10k agency site?
+□ Is there ANY element that looks "template-y" or generic?
+□ Are there ZERO emojis in the entire output?
+□ Would the client proudly show this to investors/customers?
+
+If ANY answer is NO → revise before outputting.
 
 ═══════════════════════════════════════════════════════════════════
 CSS FOUNDATION (include in every site)
@@ -600,13 +683,21 @@ IF NO INSPO — ALL MUST BE TRUE:
 □ Hero has asymmetric or left-aligned layout?
 □ Buttons have specific CTA text (not "Get Started")?
 □ Typography has clear hierarchy with appropriate weights?
+□ Using recommended fonts (not system defaults)?
 
-ALWAYS — MANDATORY FOR ALL:
-□ Would a top design agency approve this?
+ALWAYS — MANDATORY FOR ALL (16s DESIGN SYSTEM):
+□ ⛔ ZERO EMOJIS anywhere in the HTML? (scan entire output — delete ALL)
+□ No banned AI patterns? (purple gradients, generic CTAs, identical cards)
+□ Proper color palette? (not pure #000, proper contrast)
+□ Typography system? (2-3 weights, clear hierarchy, recommended fonts)
+□ Spacing system? (8px base, 96px+ section padding)
+□ All interactive elements have hover states?
 □ All nav links and buttons functional?
 □ Mobile layout clean (no horizontal overflow)?
-□ Sufficient whitespace (80px+ section padding)?
-□ ⛔ ZERO EMOJIS in the entire HTML? (Ctrl+F for emoji characters — if ANY exist, DELETE THEM)`;
+□ Would this win design awards?
+
+⚠️ FINAL SCAN: Search your output for these characters and DELETE if found:
+🎯🚀💡✨🔥💪🎨📱💼🌟⭐️🏆✅❌🔒💰📈🎉👋👍🙌💬📧🔗➡️▶️`;
 
 export async function POST(req: Request) {
   // Rate limiting
