@@ -1224,17 +1224,19 @@ export default function HomePage() {
 
             {/* Scrolling idea suggestions marquee */}
             {randomIdeas.length > 0 && (
-              <div className="w-full max-w-[90vw] md:max-w-[700px] overflow-hidden relative">
-                {/* Gradient masks for smooth fade edges */}
-                <div className="absolute left-0 top-0 bottom-0 w-12 md:w-20 bg-gradient-to-r from-[#0a0a0b] to-transparent z-10 pointer-events-none" />
-                <div className="absolute right-0 top-0 bottom-0 w-12 md:w-20 bg-gradient-to-l from-[#0a0a0b] to-transparent z-10 pointer-events-none" />
-
+              <div
+                className="w-full max-w-[90vw] md:max-w-[700px] overflow-hidden"
+                style={{
+                  maskImage: "linear-gradient(to right, transparent, black 15%, black 85%, transparent)",
+                  WebkitMaskImage: "linear-gradient(to right, transparent, black 15%, black 85%, transparent)",
+                }}
+              >
                 <motion.div
                   className="flex gap-4 py-2"
                   animate={{ x: [0, "-50%"] }}
                   transition={{
                     x: {
-                      duration: 30,
+                      duration: 18,
                       repeat: Infinity,
                       ease: "linear",
                     },
