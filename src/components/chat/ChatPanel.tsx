@@ -82,6 +82,11 @@ export function ChatPanel({
 
   const closeLightbox = useCallback(() => setLightboxImage(null), []);
 
+  const handleImageError = useCallback((msg: string) => {
+    setUploadError(msg);
+    setTimeout(() => setUploadError(null), 4000);
+  }, []);
+
   const handleRemoveBackground = useCallback(async (index: number) => {
     if (removingBgIndex !== null) return; // Already processing
     setRemovingBgIndex(index);
@@ -134,11 +139,6 @@ export function ChatPanel({
       handleSend();
     }
   };
-
-  const handleImageError = useCallback((msg: string) => {
-    setUploadError(msg);
-    setTimeout(() => setUploadError(null), 4000);
-  }, []);
 
   const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
