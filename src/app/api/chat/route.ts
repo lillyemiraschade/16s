@@ -1191,11 +1191,12 @@ export async function POST(req: Request) {
                 if (objMatch) {
                   parsedResponse = JSON.parse(objMatch[0]);
                 } else {
-                  parsedResponse = { message: fullText || "Let me try that again..." };
+                  // Be honest - use the text if available, otherwise admit failure
+                  parsedResponse = { message: fullText || "Sorry, I couldn't process that. Could you try rephrasing?" };
                 }
               }
             } catch {
-              parsedResponse = { message: fullText || "Let me try that again..." };
+              parsedResponse = { message: fullText || "Sorry, I couldn't process that. Could you try rephrasing?" };
             }
           }
 
@@ -1211,8 +1212,8 @@ export async function POST(req: Request) {
               "\n" +
                 JSON.stringify({
                   message: isCredits
-                    ? "Looks like the AI service needs its credits topped up. The team is on it!"
-                    : "Give me one more second...",
+                    ? "The AI service is temporarily unavailable. Please try again in a moment."
+                    : "Something went wrong. Please try again.",
                 })
             )
           );

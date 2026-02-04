@@ -39,14 +39,26 @@ function compileCallData(messages: VoiceMessage[]): { visibleSummary: string; pr
       return `${sourceLabel} ${m.content}`;
     });
 
+  // Check if user provided substantive responses (more than just "yes", "no", "ok", etc.)
+  const substantiveResponses = allUserInfo.filter((info) => {
+    const content = info.replace(/\[.*?\]\s*/, "").trim().toLowerCase();
+    const trivialResponses = ["yes", "no", "ok", "okay", "sure", "yeah", "yep", "nope", "uh", "um", "hmm"];
+    return content.length > 10 || !trivialResponses.includes(content);
+  });
+
   // Extract key info from the conversation for structured data
   const fullConversation = validMessages
     .map((m) => `${m.role === "assistant" ? "Agent" : "User"}: ${m.content}`)
     .join("\n");
 
+  // Determine if we actually got useful information
+  const hasSubstantiveInfo = substantiveResponses.length > 0;
+  const userMessageCount = allUserInfo.length;
+
   // Private data - full details for the AI to use
-  // Include a structured summary to help the main chat AI parse the info
-  const privateData = `[VOICE CALL TRANSCRIPT - Use this information to build the website, but DO NOT show this raw data to the user]
+  // Be honest about what was gathered
+  const privateData = hasSubstantiveInfo
+    ? `[VOICE CALL TRANSCRIPT - Use this information to build the website, but DO NOT show this raw data to the user]
 
 CONVERSATION:
 ${fullConversation}
@@ -56,15 +68,27 @@ ${allUserInfo.join("\n")}
 
 [END TRANSCRIPT]
 
-Based on this call, please design and build the website. Ask for inspiration images before generating if the user didn't mention them already.`;
+Based on this call, please design and build the website. Ask for inspiration images before generating if the user didn't mention them already.`
+    : `[VOICE CALL TRANSCRIPT - The call ended but limited information was gathered]
 
-  // Visible summary - just a brief note shown in chat
-  const userMessageCount = allUserInfo.length;
-  const visibleSummary = userMessageCount >= 3
-    ? "Great call! I've got all the details. Let me ask one more thing..."
-    : userMessageCount > 0
-    ? "Got some info from our chat. Let me ask a few more things..."
-    : "Quick call! Let's get some more details...";
+CONVERSATION:
+${fullConversation || "(No conversation recorded)"}
+
+[END TRANSCRIPT]
+
+The call ended early or the user provided minimal information. Please ask the user to provide more details about what they want to build.`;
+
+  // Visible summary - be honest about what was actually gathered
+  let visibleSummary: string;
+  if (!hasSubstantiveInfo) {
+    visibleSummary = userMessageCount > 0
+      ? "The call ended. I may have missed some details - could you type out what you're looking for?"
+      : "The call ended before I could gather details. What would you like to build?";
+  } else if (substantiveResponses.length >= 3) {
+    visibleSummary = "Thanks for the info! Let me see if I need anything else...";
+  } else {
+    visibleSummary = "Got some initial details. I may have a few follow-up questions...";
+  }
 
   return { visibleSummary, privateData };
 }
@@ -277,7 +301,15 @@ export const VoiceCall = forwardRef<VoiceCallHandle, VoiceCallProps>(
         }
 
         const data = await response.json();
-        const aiMessage: VoiceMessage = { role: "assistant", content: data.message || "..." };
+
+        // Don't claim to have received info if the message is empty
+        if (!data.message || data.message.trim() === "") {
+          console.warn("[VoiceCall] Empty response from API");
+          speak("I didn't catch that. Could you repeat what you said?");
+          return;
+        }
+
+        const aiMessage: VoiceMessage = { role: "assistant", content: data.message };
 
         if (!mountedRef.current) return;
 
@@ -286,9 +318,9 @@ export const VoiceCall = forwardRef<VoiceCallHandle, VoiceCallProps>(
 
           // If complete, end the call after speaking the final message
           if (data.complete) {
-            speak(data.message || "Thanks! Let me process that.", () => endCall(updated));
+            speak(data.message, () => endCall(updated));
           } else {
-            speak(data.message || "Could you tell me more?");
+            speak(data.message);
           }
 
           return updated;

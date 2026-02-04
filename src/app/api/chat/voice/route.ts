@@ -39,6 +39,9 @@ RULES:
 - Ask ONE question at a time — this is a phone call, not a form
 - Be warm, conversational, casual — like a real designer on a discovery call
 - REMEMBER what they've already told you — don't re-ask questions
+- NEVER make up or assume information the user hasn't explicitly told you
+- If you didn't hear or understand something, ASK for clarification — don't guess
+- If the call ends abruptly or you have minimal info, acknowledge that honestly
 - Cover these topics (conversationally, not as a checklist):
   • Business/project name
   • What they do (services, products, or purpose)
@@ -59,10 +62,12 @@ TYPED INPUTS FROM CHAT:
 - When you see a message marked as [TYPED IN CHAT], acknowledge it naturally: "Perfect, I see you put that in the chat, got it!"
 - Continue the conversation naturally after acknowledging
 
-ENDING THE CALL — ALWAYS ASK FOR INSPO:
+ENDING THE CALL — BE HONEST ABOUT WHAT YOU GATHERED:
 - After gathering 4-5 key pieces of info, start wrapping up
 - Before wrapping up, ALWAYS ask about inspiration images: "One last thing — do you have any screenshots or images of websites you love? You can drop those in after we hang up and I'll match that style exactly."
-- THEN wrap up: "Awesome, I've got everything I need. Drop any inspo images in the chat and I'll get started!"
+- Only say you have "everything you need" if you ACTUALLY gathered substantial information
+- If the call was short or you only got basic info, be honest: "I got the basics — I may follow up with a few questions in the chat."
+- NEVER claim to have information you didn't receive
 
 RESPONSE FORMAT: Always respond with raw JSON (no markdown, no code blocks):
 {"message": "your spoken response", "complete": false}
@@ -141,16 +146,24 @@ export async function POST(req: Request) {
         try {
           parsedResponse = JSON.parse(jsonMatch[0]);
         } catch {
-          parsedResponse = { message: fullText || "Could you say that again?", complete: false };
+          // Use the raw text if it exists, otherwise admit we didn't get a response
+          parsedResponse = {
+            message: fullText.trim() || "I didn't catch that. Could you repeat?",
+            complete: false
+          };
         }
       } else {
-        parsedResponse = { message: fullText || "Could you say that again?", complete: false };
+        parsedResponse = {
+          message: fullText.trim() || "I didn't catch that. Could you repeat?",
+          complete: false
+        };
       }
     }
 
-    // Ensure response has required fields
-    if (!parsedResponse.message) {
-      parsedResponse.message = "Could you tell me more?";
+    // Ensure response has required fields - be honest if message is missing
+    if (!parsedResponse.message || parsedResponse.message.trim() === "") {
+      console.warn("[Voice API] Empty message in response");
+      parsedResponse.message = "I didn't catch that. What were you saying?";
     }
     if (typeof parsedResponse.complete !== "boolean") {
       parsedResponse.complete = false;
@@ -162,8 +175,9 @@ export async function POST(req: Request) {
     });
   } catch (error) {
     console.error("Voice API error:", error);
+    // Be honest about the error - don't claim to be "thinking"
     return new Response(
-      JSON.stringify({ message: "Let me think about that...", complete: false }),
+      JSON.stringify({ message: "Sorry, I had trouble with that. Could you try again?", complete: false }),
       { status: 500, headers: { "Content-Type": "application/json" } }
     );
   }
