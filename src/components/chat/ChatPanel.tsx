@@ -95,7 +95,7 @@ export function ChatPanel({
     } finally {
       setRemovingBgIndex(null);
     }
-  }, [removingBgIndex, uploadedImages, onImageUpdate]);
+  }, [removingBgIndex, uploadedImages, onImageUpdate, handleImageError]);
 
   useEffect(() => {
     if (!lightboxImage) return;

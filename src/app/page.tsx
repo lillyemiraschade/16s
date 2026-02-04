@@ -137,32 +137,24 @@ export default function HomePage() {
   const [showAuthModal, setShowAuthModal] = useState(false);
   const [pendingPrompt, setPendingPrompt] = useState<{ text: string; images?: UploadedImage[] } | null>(null);
 
+  // Ref to store the send function for use in auth callback
+  const sendMessageRef = useRef<((text: string, images?: UploadedImage[]) => void) | null>(null);
+
   // When user logs in after submitting a pending prompt, send it
   const pendingPromptRef = useRef(pendingPrompt);
   useEffect(() => { pendingPromptRef.current = pendingPrompt; }, [pendingPrompt]);
 
   useEffect(() => {
-    if (user && pendingPromptRef.current) {
+    if (user && pendingPromptRef.current && sendMessageRef.current) {
       const { text, images } = pendingPromptRef.current;
       setPendingPrompt(null);
       setShowAuthModal(false);
-      // Use a small delay to ensure auth state is fully propagated
+      // Small delay to ensure auth state is fully propagated
       setTimeout(() => {
-        if (!hasStarted) setHasStarted(true);
-        // Send the pending message - we need to do this without calling handleSendMessage
-        // to avoid the circular dependency, so we'll set up the images and trigger send
-        if (images && images.length > 0) {
-          setUploadedImages(images);
-        }
-        setWelcomeInput(text);
-        // Trigger send after state updates
-        setTimeout(() => {
-          const sendBtn = document.querySelector('[aria-label="Send message"]') as HTMLButtonElement;
-          if (sendBtn && !sendBtn.disabled) sendBtn.click();
-        }, 100);
+        sendMessageRef.current?.(text, images);
       }, 100);
     }
-  }, [user, hasStarted]);
+  }, [user]);
 
   const welcomeTextareaRef = useRef<HTMLTextAreaElement>(null);
   const welcomeFileRef = useRef<HTMLInputElement>(null);
@@ -641,6 +633,11 @@ export default function HomePage() {
     }
   }, [isOnCall, uploadedImages, hasStarted, selectedElement, currentPreview, previewScreenshot, isConfigured, user, replaceImagePlaceholders]);
 
+  // Keep ref updated for auth callback
+  useEffect(() => {
+    sendMessageRef.current = handleSendMessage;
+  }, [handleSendMessage]);
+
   const handlePillClick = (pill: string) => {
     if (isGenerating) return;
     const lowerPill = pill.toLowerCase();
@@ -818,7 +815,7 @@ export default function HomePage() {
         setIsGenerating(false);
       }
     }
-  }, [uploadedImages, hasStarted, currentPreview, previewScreenshot]);
+  }, [uploadedImages, hasStarted, currentPreview, previewScreenshot, replaceImagePlaceholders]);
 
   const handleCallComplete = useCallback((visibleSummary: string, privateData: string) => {
     setIsOnCall(false);

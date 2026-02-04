@@ -11,7 +11,6 @@ import {
   RotateCw,
   Download,
   Code,
-  Code2,
   Copy,
   ExternalLink,
   ChevronDown,
@@ -24,7 +23,6 @@ import {
   Rocket,
   Loader2,
   CheckCircle,
-  ExternalLink as LinkIcon,
   FileCode,
 } from "lucide-react";
 import type { Viewport, SelectedElement, VersionBookmark, CodeMode } from "@/lib/types";
@@ -71,18 +69,6 @@ const viewportConfig = {
   tablet: { width: "768px", icon: Tablet, label: "Tablet" },
   mobile: { width: "375px", icon: Smartphone, label: "Mobile" },
 } as const;
-
-function highlightHtml(html: string): string {
-  return html
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/(&lt;\/?)([\w-]+)/g, '<span class="hl-tag">$1$2</span>')
-    .replace(/([\w-]+)(=)/g, '<span class="hl-attr">$1</span>$2')
-    .replace(/("(?:[^"\\]|\\.)*")/g, '<span class="hl-str">$1</span>')
-    .replace(/('(?:[^'\\]|\\.)*')/g, '<span class="hl-str">$1</span>')
-    .replace(/(&lt;!--[\s\S]*?--&gt;)/g, '<span class="hl-comment">$1</span>');
-}
 
 // Script to inject into iframe for element selection
 const SELECT_MODE_SCRIPT = `
@@ -446,7 +432,7 @@ export function PreviewPanel({
                           >
                             <CheckCircle className="w-3.5 h-3.5 text-green-500" />
                             <span className="truncate flex-1">{lastDeployUrl.replace("https://", "")}</span>
-                            <LinkIcon className="w-3 h-3 flex-shrink-0" />
+                            <ExternalLink className="w-3 h-3 flex-shrink-0" />
                           </a>
                         )}
                       </>

@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Search, Plus, Monitor, Trash2, ExternalLink, Pencil } from "lucide-react";
+import { Search, Plus, Monitor, Trash2, Pencil } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";

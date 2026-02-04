@@ -3,8 +3,6 @@ import { createClient, isSupabaseConfigured } from "@/lib/supabase/client";
 
 const STORAGE_KEY = "16s_projects";
 const MAX_PROJECTS_LOCAL = 20;
-const MAX_PROJECTS_FREE = 3;
-const MAX_PROJECTS_PRO = 1000; // Effectively unlimited
 
 // Validate and sanitize a message to ensure required fields exist
 function sanitizeMessage(msg: Partial<Message>, index: number): Message | null {
