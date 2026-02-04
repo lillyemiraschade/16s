@@ -503,139 +503,318 @@ QUALITY REQUIREMENTS (same as inspo cloning):
   - Whitespace is a design element — use it generously
 
 ═══════════════════════════════════════════════════════════════════
-16s DESIGN SYSTEM — MANDATORY UI STANDARDS
+16s DESIGN SYSTEM — MANDATORY PROFESSIONAL UI STANDARDS
 ═══════════════════════════════════════════════════════════════════
 
-These are non-negotiable. Every site MUST follow these standards.
+This separates a $500 Fiverr site from a $50,000 agency site.
+Every site you generate MUST meet these standards.
 
 ─────────────────────────────────────────────────────────────────
-⛔ ABSOLUTE BANS — NEVER DO THESE
+⛔ ABSOLUTE BANS — "VIBE-CODED" AMATEUR PATTERNS
 ─────────────────────────────────────────────────────────────────
 
-EMOJIS:
-✗ NEVER use emojis anywhere — zero tolerance, no exceptions
-✗ Not in headings, buttons, features, cards, footers, nav, or ANY text
-✗ Not even "decorative" emojis — use icons or nothing
+EMOJIS (ZERO TOLERANCE):
+✗ NEVER use emojis anywhere — headings, buttons, features, cards, footers, nav
+✗ Not even "decorative" emojis — use Lucide icons or SVG instead
+✗ Emojis as icons (🎙️, ✅, 🚀) — this is amateur hour
 
-GENERIC AI PATTERNS:
-✗ Purple/violet gradient backgrounds (#8B5CF6, #7C3AED palettes)
-✗ Centered hero with generic headline
-✗ Three identical cards in a row with matching icons
-✗ "Get Started", "Learn More", "Book a Call", "Contact Us" as CTAs
+GENERIC AI PATTERNS (these scream "AI-generated"):
+✗ Purple/violet gradients (#8B5CF6, #7C3AED) — the default AI color
+✗ Centered hero with generic headline and three identical cards below
+✗ Cookie-cutter flow: Hero → Features → How It Works → CTA → Footer
+✗ "Get Started", "Learn More", "Book a Call", "Contact Us" CTAs
 ✗ "Transform your [X]", "Take it to the next level", "Unlock your potential"
-✗ Generic testimonials with fake names ("John D.", "Sarah M.")
-✗ Stock photo descriptions (handshakes, laptops, coffee meetings)
-✗ Gradient-filled pill buttons
-✗ Thin gray text (#666, #888) on dark backgrounds
-✗ Rainbow gradients or excessive color variety
-✗ Floating abstract shapes with no purpose
-✗ "Hero image" placeholder boxes
+✗ "Trusted by 10,000+ customers" with fake logos
+✗ Generic testimonials ("John D.", "Sarah M." with stock headshots)
+✗ Three identical feature cards with matching gradient icons
+✗ Gradient-filled pill buttons with shadow
+✗ Floating abstract blobs/shapes with no purpose
+✗ "Hero image" placeholder rectangles
 
-TYPOGRAPHY BANS:
-✗ Using only one font weight throughout
-✗ All-caps for body text or long headings
-✗ Comic Sans, Papyrus, or novelty fonts
-✗ Inconsistent font sizes (random px values)
-✗ Line heights below 1.4 for body text
+AMATEUR TYPOGRAPHY:
+✗ 1-2 fonts with only regular/bold weights
+✗ Predictable sizing (just H1 > H2 > H3)
+✗ Default line-height and letter-spacing
+✗ All-caps body text or long headings
+✗ Random px values (17px, 23px, 41px)
+✗ System fonts without fallback chain
 
-─────────────────────────────────────────────────────────────────
-✓ REQUIRED STANDARDS — ALWAYS DO THESE
-─────────────────────────────────────────────────────────────────
+AMATEUR SPACING:
+✗ Arbitrary padding (20px, 40px, 60px)
+✗ Inconsistent rhythm between sections
+✗ Symmetrical everything
+✗ Cramped components
 
-LAYOUT:
-✓ Asymmetric layouts (60/40, 70/30) over centered everything
-✓ Left-aligned text for most content (center only for short headlines)
-✓ Max-width containers: 1200px, 1280px, or 1400px
-✓ Generous section padding: 80px-120px vertical
-✓ Clear visual hierarchy with distinct sections
-✓ Mobile: single column, no horizontal scroll
-
-TYPOGRAPHY:
-✓ 2-3 font weights maximum (e.g., 400 + 600, or 300 + 500 + 700)
-✓ Clear size hierarchy: Hero 48-72px → Section 32-40px → Body 16-18px
-✓ Line height: 1.1-1.2 for headlines, 1.5-1.7 for body
-✓ Letter spacing: -0.02em for large headlines, 0 for body
-✓ Use recommended fonts: Satoshi, Manrope, Space Grotesk, Outfit, Syne, Fraunces, Cormorant, Inter, Plus Jakarta Sans
-
-COLORS:
-✓ Dark backgrounds: #0A0A0B, #0D0D0D, #111111, #18181B (never pure #000)
-✓ Light backgrounds: #FAFAFA, #F5F5F4, #FFFFFF
-✓ Primary text: #FFFFFF or #F5F5F5 on dark, #18181B or #27272A on light
-✓ Secondary text: #A1A1AA, #71717A on dark; #52525B, #71717A on light
-✓ Accent colors: Pick ONE brand-appropriate color, use sparingly
-✓ Accent suggestions by industry:
-  - Tech/SaaS: Blue (#3B82F6), Cyan (#06B6D4), Emerald (#10B981)
-  - Creative: Orange (#F97316), Pink (#EC4899), Amber (#F59E0B)
-  - Finance: Navy (#1E3A5F), Forest (#166534), Slate (#334155)
-  - Health: Teal (#0D9488), Green (#22C55E), Sky (#0EA5E9)
-  - Food: Warm red (#DC2626), Orange (#EA580C), Amber (#D97706)
-
-BUTTONS & CTAs:
-✓ Specific, action-oriented text: "View the work", "See pricing", "Book a table"
-✓ Consistent border-radius: 6px, 8px, or 12px (pick one, use throughout)
-✓ Clear hover states: darken/lighten 10%, subtle lift, or border change
-✓ Padding: 12px 24px minimum for primary buttons
-✓ One primary style, one secondary/ghost style maximum
-
-CARDS & COMPONENTS:
-✓ Varied sizes when showing multiple items
-✓ Subtle shadows: 0 4px 20px rgba(0,0,0,0.08)
-✓ Consistent border-radius matching buttons
-✓ Hover: subtle lift (translateY(-4px)) + shadow increase
-
-SPACING:
-✓ Use 8px base unit: 8, 16, 24, 32, 48, 64, 96, 128
-✓ Consistent gaps within components
-✓ Generous whitespace — when in doubt, add more space
-✓ Section padding: 96px minimum on desktop, 64px on mobile
-
-INTERACTIONS:
-✓ All interactive elements have hover states
-✓ Transitions: 0.15s-0.2s ease for micro-interactions
-✓ Focus states for accessibility
-✓ Active/pressed states (scale 0.98)
+AMATEUR MOTION:
+✗ transition: all 0.3s ease (the lazy default)
+✗ Generic fade-in on scroll
+✗ No hover states
+✗ No choreography or staggering
 
 ─────────────────────────────────────────────────────────────────
-QUALITY BENCHMARKS — ASK YOURSELF
+✓ PROFESSIONAL TYPOGRAPHY SYSTEM
 ─────────────────────────────────────────────────────────────────
 
-Before outputting, verify:
-□ Would this get featured on Awwwards or Dribbble?
-□ Could this be mistaken for a $10k agency site?
-□ Is there ANY element that looks "template-y" or generic?
-□ Are there ZERO emojis in the entire output?
-□ Would the client proudly show this to investors/customers?
+FONT PAIRING (display + text):
+✓ Display fonts for headlines: Syne, Cabinet Grotesk, Clash Display, Satoshi
+✓ Text fonts for body: Inter, Söhne, Manrope, Plus Jakarta Sans
+✓ Load specific weights: @import url('...wght@300;400;500;600;700&display=swap')
 
-If ANY answer is NO → revise before outputting.
+FLUID TYPOGRAPHY (use clamp() for responsive sizing):
+✓ Hero: clamp(2.5rem, 5vw + 1rem, 5rem) — scales 40px to 80px
+✓ Section: clamp(1.75rem, 3vw + 0.5rem, 2.5rem) — scales 28px to 40px
+✓ Body: clamp(1rem, 0.9rem + 0.5vw, 1.125rem) — scales 16px to 18px
+✓ Small: clamp(0.75rem, 0.7rem + 0.25vw, 0.875rem) — scales 12px to 14px
+
+LETTER SPACING PER CONTEXT:
+✓ Large headlines (48px+): -0.02em to -0.04em (tighter)
+✓ Body text: 0em (default)
+✓ Small caps/labels: 0.05em to 0.1em (looser)
+✓ All-caps text: 0.05em minimum
+
+LINE HEIGHT RATIOS:
+✓ Headlines: 1.0 to 1.15
+✓ Subheads: 1.2 to 1.3
+✓ Body: 1.5 to 1.7
+✓ Captions: 1.4
+
+FONT WEIGHT USAGE:
+✓ Use 2-3 weights with clear purpose
+✓ Light (300) for large display text
+✓ Regular (400) for body
+✓ Medium (500) for emphasis
+✓ Semibold (600) for headings
+✓ Never use bold (700) unless intentional contrast
+
+─────────────────────────────────────────────────────────────────
+✓ PROFESSIONAL SPACING SYSTEM (8pt Grid)
+─────────────────────────────────────────────────────────────────
+
+USE THESE EXACT VALUES:
+--space-1: 4px;   --space-2: 8px;   --space-3: 12px;  --space-4: 16px;
+--space-5: 20px;  --space-6: 24px;  --space-8: 32px;  --space-10: 40px;
+--space-12: 48px; --space-16: 64px; --space-20: 80px; --space-24: 96px;
+--space-32: 128px;
+
+SECTION PADDING:
+✓ Desktop: 96px-128px vertical (--space-24 to --space-32)
+✓ Mobile: 64px-80px vertical (--space-16 to --space-20)
+✓ Container padding: clamp(16px, 5vw, 64px) horizontal
+
+COMPONENT GAPS:
+✓ Tight: 8px-16px (within components)
+✓ Normal: 24px-32px (between related elements)
+✓ Generous: 48px-64px (between distinct groups)
+
+─────────────────────────────────────────────────────────────────
+✓ PROFESSIONAL COLOR SYSTEM
+─────────────────────────────────────────────────────────────────
+
+DARK MODE (preferred):
+✓ Background: #0A0A0B, #0D0D0D, #111111, #18181B (NEVER pure #000)
+✓ Surface elevated: #1C1C1E, #27272A
+✓ Primary text: #FAFAFA, #F4F4F5
+✓ Secondary text: #A1A1AA, #71717A
+✓ Border: rgba(255,255,255,0.1)
+
+LIGHT MODE:
+✓ Background: #FFFFFF, #FAFAFA, #F5F5F4
+✓ Surface: #FFFFFF with subtle shadow
+✓ Primary text: #18181B, #27272A
+✓ Secondary text: #52525B, #71717A
+✓ Border: rgba(0,0,0,0.1)
+
+ACCENT BY INDUSTRY (pick ONE, use sparingly):
+✓ Tech/SaaS: #3B82F6 (blue), #06B6D4 (cyan), #10B981 (emerald)
+✓ Creative: #F97316 (orange), #EC4899 (pink), #8B5CF6 (violet — only if intentional)
+✓ Finance: #1E3A5F (navy), #166534 (forest), #0F172A (slate)
+✓ Health: #0D9488 (teal), #22C55E (green), #0EA5E9 (sky)
+✓ Food/Hospitality: #DC2626 (red), #EA580C (orange), #D97706 (amber)
+
+─────────────────────────────────────────────────────────────────
+✓ PROFESSIONAL MOTION SYSTEM
+─────────────────────────────────────────────────────────────────
+
+EASING CURVES (not just "ease"):
+✓ Enter (decelerate): cubic-bezier(0, 0, 0.2, 1)
+✓ Exit (accelerate): cubic-bezier(0.4, 0, 1, 1)
+✓ Standard: cubic-bezier(0.4, 0, 0.2, 1)
+✓ Bounce: cubic-bezier(0.34, 1.56, 0.64, 1)
+
+DURATION BY DISTANCE:
+✓ Micro (color, opacity): 0.1s-0.15s
+✓ Small (transform, hover): 0.15s-0.2s
+✓ Medium (expand, collapse): 0.25s-0.3s
+✓ Large (page transition): 0.4s-0.6s
+
+SCROLL ANIMATIONS:
+✓ Staggered reveal with 0.05s-0.1s delay between items
+✓ translateY(30px) → translateY(0) for enter
+✓ Intersection Observer with threshold: 0.1
+✓ prefers-reduced-motion: reduce fallback
+
+HOVER STATES (required on ALL interactive elements):
+✓ Buttons: translateY(-2px) + slight shadow increase
+✓ Cards: translateY(-4px) + shadow-lg
+✓ Links: color shift + optional underline
+✓ Active: scale(0.98)
+
+─────────────────────────────────────────────────────────────────
+✓ PROFESSIONAL LAYOUT PATTERNS
+─────────────────────────────────────────────────────────────────
+
+ASYMMETRIC LAYOUTS (not centered everything):
+✓ 60/40 split for hero with image
+✓ 70/30 for content with sidebar
+✓ Left-aligned text (center only for short headlines)
+✓ Intentional negative space to create hierarchy
+
+GRID SYSTEM:
+✓ 12-column base with CSS Grid
+✓ Max-width: 1200px, 1280px, or 1400px
+✓ Break the grid intentionally for visual interest
+✓ Overlap elements where appropriate
+
+VISUAL HIERARCHY:
+✓ Clear focal point per section
+✓ Size contrast (large headline vs small body)
+✓ Color contrast (accent vs muted)
+✓ Isolation (whitespace around important elements)
+
+RESPONSIVE APPROACH:
+✓ Mobile-first with progressive enhancement
+✓ Fluid values with clamp() between breakpoints
+✓ Container queries for component-level responsiveness
+✓ No horizontal scroll ever
+
+─────────────────────────────────────────────────────────────────
+✓ PROFESSIONAL COMPONENT PATTERNS
+─────────────────────────────────────────────────────────────────
+
+BUTTONS:
+✓ Specific CTAs: "View the work", "See pricing", "Book a table"
+✓ Consistent radius: 6px, 8px, or 12px (pick one)
+✓ Padding: 12px 24px minimum
+✓ One primary + one ghost/secondary style max
+✓ 44px minimum touch target
+
+CARDS:
+✓ Varied sizes (not three identical cards)
+✓ Subtle shadow: 0 4px 20px rgba(0,0,0,0.08)
+✓ Hover: lift + shadow increase
+✓ Border-radius matching buttons
+
+NAVIGATION:
+✓ Fixed with backdrop-blur on scroll
+✓ Logo left, links center or right
+✓ Mobile: hamburger with slide-out menu
+✓ Active state for current page
+
+FORMS:
+✓ Floating labels or clear placeholders
+✓ Inline validation (not alert boxes)
+✓ Focus states with ring
+✓ Error states with red border + message
+
+─────────────────────────────────────────────────────────────────
+✓ ACCESSIBILITY REQUIREMENTS
+─────────────────────────────────────────────────────────────────
+
+ALWAYS:
+✓ Semantic HTML (nav, main, section, article, footer)
+✓ WCAG AA contrast (4.5:1 for text, 3:1 for large)
+✓ 44px minimum touch targets
+✓ Focus-visible states on all interactive elements
+✓ Skip link (visually hidden until focused)
+✓ Alt text on all images
+✓ prefers-reduced-motion: reduce support
+
+─────────────────────────────────────────────────────────────────
+✓ QUALITY BENCHMARKS — VERIFY BEFORE OUTPUT
+─────────────────────────────────────────────────────────────────
+
+Typography Test: Is the font pairing intentional? Is there visual rhythm?
+Color Test: Are there subtle color variations, or just 3 flat colors?
+Spacing Test: Does the whitespace feel composed, or random?
+Motion Test: Do interactions feel alive, or generic transitions?
+Composition Test: Are there clear focal points, or is everything equal?
+Details Test: Are corners, shadows, and borders refined, or default?
+
+Would a senior designer believe a human made this? If NO → revise.
 
 ═══════════════════════════════════════════════════════════════════
 CSS FOUNDATION (include in every site)
 ═══════════════════════════════════════════════════════════════════
 
 :root {
-  --space-2: 8px; --space-4: 16px; --space-6: 24px; --space-8: 32px;
-  --space-12: 48px; --space-16: 64px; --space-24: 96px;
+  /* Spacing (8pt grid) */
+  --space-1: 4px; --space-2: 8px; --space-3: 12px; --space-4: 16px;
+  --space-5: 20px; --space-6: 24px; --space-8: 32px; --space-10: 40px;
+  --space-12: 48px; --space-16: 64px; --space-20: 80px; --space-24: 96px;
+
+  /* Typography (fluid) */
+  --text-xs: clamp(0.75rem, 0.7rem + 0.25vw, 0.875rem);
+  --text-sm: clamp(0.875rem, 0.8rem + 0.35vw, 1rem);
+  --text-base: clamp(1rem, 0.9rem + 0.5vw, 1.125rem);
+  --text-lg: clamp(1.125rem, 1rem + 0.6vw, 1.25rem);
+  --text-xl: clamp(1.25rem, 1rem + 1vw, 1.5rem);
+  --text-2xl: clamp(1.5rem, 1.2rem + 1.5vw, 2rem);
+  --text-3xl: clamp(1.875rem, 1.4rem + 2.3vw, 2.5rem);
+  --text-4xl: clamp(2.25rem, 1.5rem + 3.5vw, 3.5rem);
+  --text-5xl: clamp(3rem, 2rem + 5vw, 5rem);
+
+  /* Shadows */
   --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
   --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -2px rgba(0,0,0,0.1);
   --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -4px rgba(0,0,0,0.1);
-  --radius-md: 8px; --radius-lg: 12px;
+  --shadow-xl: 0 20px 25px -5px rgba(0,0,0,0.1), 0 8px 10px -6px rgba(0,0,0,0.1);
+
+  /* Radius */
+  --radius-sm: 6px; --radius-md: 8px; --radius-lg: 12px; --radius-xl: 16px;
+
+  /* Easing */
+  --ease-out: cubic-bezier(0, 0, 0.2, 1);
+  --ease-in: cubic-bezier(0.4, 0, 1, 1);
+  --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
 }
+
+/* Container */
 .container { max-width: 1280px; margin-inline: auto; padding-inline: clamp(16px, 5vw, 64px); }
 
-/* Scroll animations */
-.reveal { opacity: 0; transform: translateY(30px); transition: 0.6s ease; }
+/* Scroll animations with stagger */
+.reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.6s var(--ease-out), transform 0.6s var(--ease-out); }
 .reveal.visible { opacity: 1; transform: none; }
-@media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; } }
+.reveal-stagger > * { opacity: 0; transform: translateY(20px); transition: opacity 0.5s var(--ease-out), transform 0.5s var(--ease-out); }
+.reveal-stagger.visible > *:nth-child(1) { transition-delay: 0s; }
+.reveal-stagger.visible > *:nth-child(2) { transition-delay: 0.1s; }
+.reveal-stagger.visible > *:nth-child(3) { transition-delay: 0.2s; }
+.reveal-stagger.visible > *:nth-child(4) { transition-delay: 0.3s; }
+.reveal-stagger.visible > * { opacity: 1; transform: none; }
 
-/* Interactions */
-button, a, .card { transition: all 0.15s ease; }
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+  .reveal, .reveal-stagger > * { opacity: 1; transform: none; }
+}
+
+/* Professional interactions */
+button, a, .card { transition: transform 0.15s var(--ease-out), box-shadow 0.15s var(--ease-out), background-color 0.15s var(--ease-out); }
 button:hover { transform: translateY(-2px); }
 button:active { transform: scale(0.98); }
-.card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+.card:hover { transform: translateY(-4px); box-shadow: var(--shadow-xl); }
+
+/* Focus visible (accessibility) */
+:focus-visible { outline: 2px solid currentColor; outline-offset: 2px; }
+button:focus-visible, a:focus-visible { outline: 2px solid var(--accent, #3B82F6); outline-offset: 2px; }
+
+/* Skip link (accessibility) */
+.skip-link { position: absolute; top: -100%; left: 50%; transform: translateX(-50%); padding: 8px 16px; background: #000; color: #fff; z-index: 9999; }
+.skip-link:focus { top: 8px; }
 
 /* Intersection Observer (before </body>) */
-const obs = new IntersectionObserver(e => e.forEach(el => el.isIntersecting && el.target.classList.add('visible')), {threshold: 0.1});
-document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+const obs = new IntersectionObserver(e => e.forEach(el => { if(el.isIntersecting) el.target.classList.add('visible'); }), {threshold: 0.1, rootMargin: '0px 0px -50px 0px'});
+document.querySelectorAll('.reveal, .reveal-stagger').forEach(el => obs.observe(el));
 
 ═══════════════════════════════════════════════════════════════════
 HTML GENERATION RULES
@@ -677,27 +856,48 @@ IF INSPO PROVIDED — ALL MUST BE TRUE OR REDO:
 □ COLORS: Using same color palette as inspo?
 ⚠️ If ANY item fails → DO NOT OUTPUT → fix and re-verify
 
-IF NO INSPO — ALL MUST BE TRUE:
-□ NOT using generic AI look (purple gradients + centered hero)?
+IF NO INSPO — PROFESSIONAL STANDARDS:
+□ NOT using generic AI look (purple gradients + centered hero + three cards)?
 □ Using business-appropriate accent color (not default purple)?
 □ Hero has asymmetric or left-aligned layout?
 □ Buttons have specific CTA text (not "Get Started")?
-□ Typography has clear hierarchy with appropriate weights?
-□ Using recommended fonts (not system defaults)?
+□ Using font pairing (display + text fonts)?
+□ Using fluid typography with clamp()?
+□ Using 8pt spacing grid?
 
-ALWAYS — MANDATORY FOR ALL (16s DESIGN SYSTEM):
-□ ⛔ ZERO EMOJIS anywhere in the HTML? (scan entire output — delete ALL)
-□ No banned AI patterns? (purple gradients, generic CTAs, identical cards)
-□ Proper color palette? (not pure #000, proper contrast)
-□ Typography system? (2-3 weights, clear hierarchy, recommended fonts)
-□ Spacing system? (8px base, 96px+ section padding)
-□ All interactive elements have hover states?
-□ All nav links and buttons functional?
-□ Mobile layout clean (no horizontal overflow)?
-□ Would this win design awards?
+TYPOGRAPHY CHECK:
+□ 2-3 font weights with clear purpose?
+□ Letter-spacing: tight on headlines (-0.02em), normal on body?
+□ Line-height: 1.1 on headlines, 1.5+ on body?
+□ Fluid sizing with clamp() for responsive?
 
-⚠️ FINAL SCAN: Search your output for these characters and DELETE if found:
-🎯🚀💡✨🔥💪🎨📱💼🌟⭐️🏆✅❌🔒💰📈🎉👋👍🙌💬📧🔗➡️▶️`;
+SPACING CHECK:
+□ Using 8pt grid values? (8, 16, 24, 32, 48, 64, 96, 128)
+□ Section padding: 96px+ desktop, 64px+ mobile?
+□ Generous whitespace (when in doubt, add more)?
+
+MOTION CHECK:
+□ Professional easing curves (not just "ease")?
+□ Hover states on ALL interactive elements?
+□ Staggered reveal animations?
+□ prefers-reduced-motion support?
+
+ACCESSIBILITY CHECK:
+□ Semantic HTML (nav, main, section, footer)?
+□ 44px minimum touch targets?
+□ Focus-visible states?
+□ Skip link included?
+□ WCAG AA contrast (4.5:1)?
+
+FINAL QUALITY GATES:
+□ ⛔ ZERO EMOJIS anywhere? (scan entire output)
+□ No banned AI patterns? (identical cards, generic CTAs, purple gradients)
+□ Would this get featured on Awwwards?
+□ Could this be mistaken for a $50k agency site?
+□ Would a senior designer believe a human made this?
+
+⚠️ EMOJI SCAN — DELETE ANY OF THESE IF FOUND:
+🎯🚀💡✨🔥💪🎨📱💼🌟⭐️🏆✅❌🔒💰📈🎉👋👍🙌💬📧🔗➡️▶️📊🔧⚡️💎🌐📌🎁💫⭕️`;
 
 export async function POST(req: Request) {
   // Rate limiting
