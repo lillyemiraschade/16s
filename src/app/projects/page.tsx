@@ -1,0 +1,238 @@
+"use client";
+
+import { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Search, Plus, Monitor, Trash2, ExternalLink, Pencil } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useAuth } from "@/lib/auth/AuthContext";
+import { useProjects } from "@/lib/hooks/useProjects";
+import { UserMenu } from "@/components/auth/UserMenu";
+import { AuthModal } from "@/components/auth/AuthModal";
+import type { SavedProjectMeta } from "@/lib/types";
+
+type SortOption = "recent" | "name" | "oldest";
+
+export default function ProjectsPage() {
+  const router = useRouter();
+  const { user, loading: authLoading, isConfigured } = useAuth();
+  const { list: listProjects, remove: deleteProject, isAuthLoading } = useProjects();
+
+  const [projects, setProjects] = useState<SavedProjectMeta[]>([]);
+  const [search, setSearch] = useState("");
+  const [sort, setSort] = useState<SortOption>("recent");
+  const [deleteConfirm, setDeleteConfirm] = useState<string | null>(null);
+  const [showAuthModal, setShowAuthModal] = useState(false);
+
+  // Load projects
+  useEffect(() => {
+    if (isAuthLoading) return;
+    const loadProjects = async () => {
+      const list = await listProjects();
+      setProjects(list);
+    };
+    loadProjects();
+  }, [isAuthLoading, listProjects]);
+
+  // Filter and sort projects
+  const filteredProjects = projects
+    .filter((p) => p.name.toLowerCase().includes(search.toLowerCase()))
+    .sort((a, b) => {
+      if (sort === "recent") return b.updatedAt - a.updatedAt;
+      if (sort === "oldest") return a.updatedAt - b.updatedAt;
+      return a.name.localeCompare(b.name);
+    });
+
+  const handleDelete = async (id: string) => {
+    await deleteProject(id);
+    setProjects((prev) => prev.filter((p) => p.id !== id));
+    setDeleteConfirm(null);
+  };
+
+  const handleOpenProject = (id: string) => {
+    // Navigate to main page and load project (using URL param)
+    router.push(`/?project=${id}`);
+  };
+
+  const formatDate = (ts: number) => {
+    const date = new Date(ts);
+    return date.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
+  };
+
+  if (authLoading || isAuthLoading) {
+    return (
+      <div className="min-h-screen bg-[#0a0a0b] flex items-center justify-center">
+        <div className="w-8 h-8 border-2 border-green-500/30 border-t-green-500 rounded-full animate-spin" />
+      </div>
+    );
+  }
+
+  return (
+    <div className="min-h-screen bg-[#0a0a0b]">
+      {/* Header */}
+      <header className="h-[60px] border-b border-white/[0.04] px-6 flex items-center justify-between">
+        <div className="flex items-center gap-8">
+          <Link href="/" className="flex items-center gap-2">
+            <Image src="/logo.png" alt="16s" width={28} height={28} className="object-contain" />
+          </Link>
+          <nav className="flex items-center gap-1">
+            <Link
+              href="/"
+              className="px-3 py-1.5 text-[13px] font-medium text-zinc-400 hover:text-zinc-200 rounded-lg transition-colors"
+            >
+              Home
+            </Link>
+            <Link
+              href="/projects"
+              className="px-3 py-1.5 text-[13px] font-medium text-zinc-100 bg-white/[0.06] rounded-lg"
+            >
+              My Projects
+            </Link>
+          </nav>
+        </div>
+        <div className="flex items-center gap-4">
+          {!user && isConfigured && (
+            <button
+              onClick={() => setShowAuthModal(true)}
+              className="px-3 py-1.5 text-[13px] font-medium text-zinc-300 hover:text-white transition-colors"
+            >
+              Sign in
+            </button>
+          )}
+          <UserMenu />
+        </div>
+      </header>
+
+      {/* Main content */}
+      <main className="max-w-6xl mx-auto px-6 py-10">
+        <div className="flex items-center justify-between mb-8">
+          <h1 className="text-2xl font-semibold text-zinc-100">My Projects</h1>
+          <Link
+            href="/"
+            className="flex items-center gap-2 px-4 py-2 bg-green-500/80 hover:bg-green-500 text-white text-[13px] font-medium rounded-lg transition-colors"
+          >
+            <Plus className="w-4 h-4" />
+            New Project
+          </Link>
+        </div>
+
+        {/* Search and sort */}
+        <div className="flex items-center gap-4 mb-6">
+          <div className="flex-1 relative">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-500" />
+            <input
+              type="text"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              placeholder="Search by project name"
+              className="w-full pl-10 pr-4 py-2.5 bg-white/[0.03] border border-white/[0.06] rounded-lg text-[13px] text-zinc-200 placeholder:text-zinc-500 focus:outline-none focus:border-zinc-600 transition-colors"
+            />
+          </div>
+          <select
+            value={sort}
+            onChange={(e) => setSort(e.target.value as SortOption)}
+            className="px-4 py-2.5 bg-white/[0.03] border border-white/[0.06] rounded-lg text-[13px] text-zinc-300 focus:outline-none focus:border-zinc-600 transition-colors cursor-pointer"
+          >
+            <option value="recent">Last Modified</option>
+            <option value="name">Name</option>
+            <option value="oldest">Oldest First</option>
+          </select>
+        </div>
+
+        {/* Projects grid */}
+        {filteredProjects.length === 0 ? (
+          <div className="text-center py-20">
+            <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-white/[0.03] flex items-center justify-center">
+              <Monitor className="w-8 h-8 text-zinc-600" />
+            </div>
+            <p className="text-zinc-400 text-[15px] mb-2">
+              {search ? "No projects match your search" : "No projects yet"}
+            </p>
+            <p className="text-zinc-600 text-[13px] mb-6">
+              {search ? "Try a different search term" : "Create your first project to get started"}
+            </p>
+            {!search && (
+              <Link
+                href="/"
+                className="inline-flex items-center gap-2 px-4 py-2 bg-green-500/80 hover:bg-green-500 text-white text-[13px] font-medium rounded-lg transition-colors"
+              >
+                <Plus className="w-4 h-4" />
+                Create Project
+              </Link>
+            )}
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <AnimatePresence mode="popLayout">
+              {filteredProjects.map((project) => (
+                <motion.div
+                  key={project.id}
+                  layout
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.95 }}
+                  className="group relative bg-white/[0.02] border border-white/[0.06] rounded-xl overflow-hidden hover:border-white/[0.1] transition-all"
+                >
+                  {/* Preview placeholder */}
+                  <div className="aspect-[16/10] bg-gradient-to-br from-zinc-800/50 to-zinc-900/50 flex items-center justify-center">
+                    <div className="text-center">
+                      <Monitor className="w-10 h-10 text-zinc-600 mx-auto mb-2" />
+                      <p className="text-zinc-500 text-[11px]">Preview after next edit</p>
+                    </div>
+                  </div>
+
+                  {/* Project info */}
+                  <div className="p-4">
+                    <h3 className="text-[14px] font-medium text-zinc-200 truncate mb-1">
+                      {project.name}
+                    </h3>
+                    <p className="text-[12px] text-zinc-500">
+                      Modified {formatDate(project.updatedAt)}
+                    </p>
+                  </div>
+
+                  {/* Hover actions */}
+                  <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
+                    <button
+                      onClick={() => handleOpenProject(project.id)}
+                      className="flex items-center gap-1.5 px-3 py-2 bg-green-500/90 hover:bg-green-500 text-white text-[12px] font-medium rounded-lg transition-colors"
+                    >
+                      <Pencil className="w-3.5 h-3.5" />
+                      Edit
+                    </button>
+                    {deleteConfirm === project.id ? (
+                      <div className="flex items-center gap-1">
+                        <button
+                          onClick={() => handleDelete(project.id)}
+                          className="px-3 py-2 bg-red-500/90 hover:bg-red-500 text-white text-[12px] font-medium rounded-lg transition-colors"
+                        >
+                          Confirm
+                        </button>
+                        <button
+                          onClick={() => setDeleteConfirm(null)}
+                          className="px-3 py-2 bg-zinc-600/90 hover:bg-zinc-600 text-white text-[12px] font-medium rounded-lg transition-colors"
+                        >
+                          Cancel
+                        </button>
+                      </div>
+                    ) : (
+                      <button
+                        onClick={() => setDeleteConfirm(project.id)}
+                        className="p-2 bg-zinc-700/90 hover:bg-red-500/90 text-zinc-300 hover:text-white rounded-lg transition-colors"
+                      >
+                        <Trash2 className="w-4 h-4" />
+                      </button>
+                    )}
+                  </div>
+                </motion.div>
+              ))}
+            </AnimatePresence>
+          </div>
+        )}
+      </main>
+
+      <AuthModal isOpen={showAuthModal} onClose={() => setShowAuthModal(false)} />
+    </div>
+  );
+}

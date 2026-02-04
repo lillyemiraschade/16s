@@ -84,8 +84,9 @@ export function AuthModal({ isOpen, onClose }: AuthModalProps) {
             initial={{ opacity: 0, scale: 0.95, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 20 }}
-            className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-50 w-full max-w-[380px] p-1"
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 pointer-events-none"
           >
+            <div className="w-full max-w-[380px] pointer-events-auto">
             <div className="glass-matte rounded-2xl p-6 shadow-2xl shadow-black/40">
               {/* Header */}
               <div className="flex items-center justify-between mb-6">
@@ -200,6 +201,7 @@ export function AuthModal({ isOpen, onClose }: AuthModalProps) {
                   {mode === "signin" ? "Sign up" : "Sign in"}
                 </button>
               </p>
+            </div>
             </div>
           </motion.div>
         </>

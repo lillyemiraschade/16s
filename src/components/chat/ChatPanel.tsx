@@ -310,8 +310,6 @@ export function ChatPanel({
             <Phone className="w-3.5 h-3.5" />
             <span>Call</span>
           </button>
-        </div>
-        <div className="flex items-center gap-2">
           <div className="relative" ref={projectMenuRef}>
             <button
               onClick={() => setShowProjectMenu((v) => !v)}
@@ -391,8 +389,8 @@ export function ChatPanel({
               )}
             </AnimatePresence>
           </div>
-          <UserMenu />
         </div>
+        <UserMenu />
       </div>
 
       {/* Messages area */}

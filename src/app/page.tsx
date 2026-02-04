@@ -3,8 +3,10 @@
 import { useState, useRef, useCallback, useMemo, useEffect } from "react";
 import html2canvas from "html2canvas";
 import { motion, AnimatePresence } from "framer-motion";
-import { Paperclip, ArrowUp, ImagePlus, X } from "lucide-react";
+import { Paperclip, ArrowUp, ImagePlus, X, FolderOpen } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import { ChatPanel } from "@/components/chat/ChatPanel";
 import { PreviewPanel } from "@/components/preview/PreviewPanel";
 import { VoiceCall, VoiceCallHandle } from "@/components/chat/VoiceCall";
@@ -65,6 +67,7 @@ export default function HomePage() {
   const { save: saveProject, load: loadProject, list: listProjects, remove: deleteProject, isCloud, isAuthLoading, migrationStatus, migratedCount } = useProjects();
   const { user, isConfigured } = useAuth();
   const { deploy, isDeploying, lastDeployment } = useDeployment();
+  const searchParams = useSearchParams();
 
   // Randomized on client only to avoid hydration mismatch
   const [headline, setHeadline] = useState(HEADLINES[0]);
@@ -93,10 +96,30 @@ export default function HomePage() {
     loadProjectsList();
   }, [isAuthLoading, listProjects, isCloud]);
 
-  // Auto-restore last project on mount
+  // Auto-restore last project on mount or load from URL param
   useEffect(() => {
     if (isAuthLoading) return;
-    const restoreLastProject = async () => {
+    const projectIdFromUrl = searchParams.get("project");
+
+    const restoreProject = async () => {
+      // If URL has project param, load that specific project
+      if (projectIdFromUrl) {
+        const proj = await loadProject(projectIdFromUrl);
+        if (proj) {
+          setCurrentProjectId(proj.id);
+          setProjectName(proj.name);
+          setMessages(proj.messages);
+          setCurrentPreview(proj.currentPreview);
+          setPreviewHistory(proj.previewHistory);
+          setBookmarks(proj.bookmarks || []);
+          setHasStarted(true);
+          // Clear the URL param
+          window.history.replaceState({}, "", "/");
+          return;
+        }
+      }
+
+      // Otherwise, restore last project
       const projects = await listProjects();
       if (projects.length > 0) {
         const last = await loadProject(projects[0].id);
@@ -111,9 +134,9 @@ export default function HomePage() {
         }
       }
     };
-    restoreLastProject();
+    restoreProject();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isAuthLoading]);
+  }, [isAuthLoading, searchParams]);
 
   // Auto-save project (debounced)
   const saveTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -1011,10 +1034,24 @@ export default function HomePage() {
   if (!hasStarted) {
     return (
       <div id="main-content" className="h-screen welcome-bg flex flex-col">
-        <div className="relative z-10 flex items-center justify-between px-6 py-4">
-          <Image src="/logo.png" alt="16s logo" width={32} height={32} className="object-contain" />
+        <header className="relative z-10 h-[60px] flex items-center justify-between px-6">
+          <div className="flex items-center gap-8">
+            <Image src="/logo.png" alt="16s logo" width={28} height={28} className="object-contain" />
+            <nav className="flex items-center gap-1">
+              <span className="px-3 py-1.5 text-[13px] font-medium text-zinc-100 bg-white/[0.06] rounded-lg">
+                Home
+              </span>
+              <Link
+                href="/projects"
+                className="flex items-center gap-1.5 px-3 py-1.5 text-[13px] font-medium text-zinc-400 hover:text-zinc-200 rounded-lg transition-colors"
+              >
+                <FolderOpen className="w-4 h-4" />
+                My Projects
+              </Link>
+            </nav>
+          </div>
           <UserMenu />
-        </div>
+        </header>
 
         <div className="relative z-10 flex-1 flex flex-col items-center justify-center px-6 -mt-16">
           <motion.div
