@@ -71,31 +71,32 @@ export default function ProjectsPage() {
   return (
     <div className="min-h-screen bg-[#0a0a0b]">
       {/* Header */}
-      <header className="h-[60px] border-b border-white/[0.04] px-6 flex items-center justify-between">
-        <div className="flex items-center gap-8">
+      <header className="h-14 md:h-[60px] border-b border-white/[0.04] px-4 md:px-6 flex items-center justify-between">
+        <div className="flex items-center gap-4 md:gap-8">
           <Link href="/" className="flex items-center gap-2">
             <Image src="/logo.png" alt="16s" width={28} height={28} className="object-contain" />
           </Link>
           <nav className="flex items-center gap-1">
             <Link
               href="/"
-              className="px-3 py-1.5 text-[13px] font-medium text-zinc-400 hover:text-zinc-200 rounded-lg transition-colors"
+              className="px-2 md:px-3 py-1.5 text-[12px] md:text-[13px] font-medium text-zinc-400 hover:text-zinc-200 rounded-lg transition-colors"
             >
               Home
             </Link>
             <Link
               href="/projects"
-              className="px-3 py-1.5 text-[13px] font-medium text-zinc-100 bg-white/[0.06] rounded-lg"
+              className="px-2 md:px-3 py-1.5 text-[12px] md:text-[13px] font-medium text-zinc-100 bg-white/[0.06] rounded-lg"
             >
-              My Projects
+              <span className="sm:hidden">Projects</span>
+              <span className="hidden sm:inline">My Projects</span>
             </Link>
           </nav>
         </div>
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-2 md:gap-4">
           {!user && isConfigured && (
             <button
               onClick={() => setShowAuthModal(true)}
-              className="px-3 py-1.5 text-[13px] font-medium text-zinc-300 hover:text-white transition-colors"
+              className="px-2 md:px-3 py-1.5 text-[12px] md:text-[13px] font-medium text-zinc-300 hover:text-white transition-colors"
             >
               Sign in
             </button>
@@ -105,27 +106,28 @@ export default function ProjectsPage() {
       </header>
 
       {/* Main content */}
-      <main className="max-w-6xl mx-auto px-6 py-10">
-        <div className="flex items-center justify-between mb-8">
-          <h1 className="text-2xl font-semibold text-zinc-100">My Projects</h1>
+      <main className="max-w-6xl mx-auto px-4 md:px-6 py-6 md:py-10">
+        <div className="flex items-center justify-between mb-6 md:mb-8">
+          <h1 className="text-xl md:text-2xl font-semibold text-zinc-100">My Projects</h1>
           <Link
             href="/"
-            className="flex items-center gap-2 px-4 py-2 bg-green-500/80 hover:bg-green-500 text-white text-[13px] font-medium rounded-lg transition-colors"
+            className="flex items-center gap-1.5 md:gap-2 px-3 md:px-4 py-2 bg-green-500/80 hover:bg-green-500 text-white text-[12px] md:text-[13px] font-medium rounded-lg transition-colors"
           >
             <Plus className="w-4 h-4" />
-            New Project
+            <span className="hidden sm:inline">New Project</span>
+            <span className="sm:hidden">New</span>
           </Link>
         </div>
 
         {/* Search and sort */}
-        <div className="flex items-center gap-4 mb-6">
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4 mb-6">
           <div className="flex-1 relative">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-500" />
             <input
               type="text"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              placeholder="Search by project name"
+              placeholder="Search projects..."
               className="w-full pl-10 pr-4 py-2.5 bg-white/[0.03] border border-white/[0.06] rounded-lg text-[13px] text-zinc-200 placeholder:text-zinc-500 focus:outline-none focus:border-zinc-600 transition-colors"
             />
           </div>
@@ -142,14 +144,14 @@ export default function ProjectsPage() {
 
         {/* Projects grid */}
         {filteredProjects.length === 0 ? (
-          <div className="text-center py-20">
-            <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-white/[0.03] flex items-center justify-center">
-              <Monitor className="w-8 h-8 text-zinc-600" />
+          <div className="text-center py-12 md:py-20">
+            <div className="w-14 h-14 md:w-16 md:h-16 mx-auto mb-4 rounded-2xl bg-white/[0.03] flex items-center justify-center">
+              <Monitor className="w-7 h-7 md:w-8 md:h-8 text-zinc-600" />
             </div>
-            <p className="text-zinc-400 text-[15px] mb-2">
+            <p className="text-zinc-400 text-[14px] md:text-[15px] mb-2">
               {search ? "No projects match your search" : "No projects yet"}
             </p>
-            <p className="text-zinc-600 text-[13px] mb-6">
+            <p className="text-zinc-600 text-[12px] md:text-[13px] mb-6">
               {search ? "Try a different search term" : "Create your first project to get started"}
             </p>
             {!search && (
@@ -163,7 +165,7 @@ export default function ProjectsPage() {
             )}
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4">
             <AnimatePresence mode="popLayout">
               {filteredProjects.map((project) => (
                 <motion.div

@@ -1034,19 +1034,20 @@ export default function HomePage() {
   if (!hasStarted) {
     return (
       <div id="main-content" className="h-screen welcome-bg flex flex-col">
-        <header className="relative z-10 h-[60px] flex items-center justify-between px-6">
-          <div className="flex items-center gap-8">
+        <header className="relative z-10 h-14 md:h-[60px] flex items-center justify-between px-4 md:px-6">
+          <div className="flex items-center gap-4 md:gap-8">
             <Image src="/logo.png" alt="16s logo" width={28} height={28} className="object-contain" />
-            <nav className="flex items-center gap-1">
-              <span className="px-3 py-1.5 text-[13px] font-medium text-zinc-100 bg-white/[0.06] rounded-lg">
+            <nav className="flex items-center gap-0.5 md:gap-1">
+              <span className="px-2.5 md:px-3 py-1.5 text-[12px] md:text-[13px] font-medium text-zinc-100 bg-white/[0.06] rounded-lg">
                 Home
               </span>
               <Link
                 href="/projects"
-                className="flex items-center gap-1.5 px-3 py-1.5 text-[13px] font-medium text-zinc-400 hover:text-zinc-200 rounded-lg transition-colors"
+                className="flex items-center gap-1.5 px-2.5 md:px-3 py-1.5 text-[12px] md:text-[13px] font-medium text-zinc-400 hover:text-zinc-200 rounded-lg transition-colors"
               >
                 <FolderOpen className="w-4 h-4" />
-                My Projects
+                <span className="hidden sm:inline">My Projects</span>
+                <span className="sm:hidden">Projects</span>
               </Link>
             </nav>
           </div>

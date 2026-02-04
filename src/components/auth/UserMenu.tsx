@@ -61,23 +61,23 @@ export function UserMenu() {
     <div className="relative" ref={dropdownRef}>
       <button
         onClick={() => setShowDropdown(!showDropdown)}
-        className="flex items-center gap-2 px-2 py-1 rounded-lg hover:bg-white/[0.04] transition-all duration-150"
+        className="flex items-center gap-2 px-1.5 md:px-2 py-1 rounded-lg hover:bg-white/[0.04] transition-all duration-150"
       >
         {avatarUrl ? (
           <img
             src={avatarUrl}
             alt={displayName}
-            className="w-6 h-6 rounded-full ring-1 ring-white/10"
+            className="w-7 h-7 md:w-6 md:h-6 rounded-full ring-1 ring-white/10"
           />
         ) : (
-          <div className="w-6 h-6 rounded-full bg-zinc-700 flex items-center justify-center ring-1 ring-white/10">
-            <User className="w-3 h-3 text-zinc-400" />
+          <div className="w-7 h-7 md:w-6 md:h-6 rounded-full bg-zinc-700 flex items-center justify-center ring-1 ring-white/10">
+            <User className="w-3.5 h-3.5 md:w-3 md:h-3 text-zinc-400" />
           </div>
         )}
-        <span className="text-[11px] font-medium text-zinc-300 max-w-[80px] truncate hidden sm:block">
+        <span className="text-[12px] md:text-[11px] font-medium text-zinc-300 max-w-[100px] truncate hidden sm:block">
           {displayName}
         </span>
-        <ChevronDown className={`w-3 h-3 text-zinc-500 transition-transform duration-150 ${showDropdown ? "rotate-180" : ""}`} />
+        <ChevronDown className={`w-3 h-3 text-zinc-500 transition-transform duration-150 hidden sm:block ${showDropdown ? "rotate-180" : ""}`} />
       </button>
 
       <AnimatePresence>
