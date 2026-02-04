@@ -7,13 +7,26 @@ export async function GET(request: Request) {
   const next = searchParams.get("next") ?? "/";
 
   if (code) {
-    const supabase = await createClient();
-    const { error } = await supabase.auth.exchangeCodeForSession(code);
-    if (!error) {
-      return NextResponse.redirect(`${origin}${next}`);
+    try {
+      const supabase = await createClient();
+      const { data, error } = await supabase.auth.exchangeCodeForSession(code);
+
+      if (error) {
+        console.error("[Auth Callback] Exchange error:", error.message);
+        return NextResponse.redirect(`${origin}/?error=auth&message=${encodeURIComponent(error.message)}`);
+      }
+
+      console.log("[Auth Callback] Success, user:", data.user?.email);
+
+      // Redirect to home page after successful auth
+      const response = NextResponse.redirect(`${origin}${next}`);
+      return response;
+    } catch (e) {
+      console.error("[Auth Callback] Exception:", e);
+      return NextResponse.redirect(`${origin}/?error=auth`);
     }
   }
 
-  // Return to home page with error
-  return NextResponse.redirect(`${origin}/?error=auth`);
+  // No code provided
+  return NextResponse.redirect(`${origin}/?error=no_code`);
 }

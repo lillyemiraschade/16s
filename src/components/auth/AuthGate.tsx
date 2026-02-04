@@ -15,8 +15,11 @@ export function AuthGate({ children }: AuthGateProps) {
   const { user, loading, isConfigured } = useAuth();
   const [showAuthModal, setShowAuthModal] = useState(false);
 
+  console.log("[AuthGate] isConfigured:", isConfigured, "loading:", loading, "user:", user?.email ?? "none");
+
   // If Supabase isn't configured, allow access (dev mode without auth)
   if (!isConfigured) {
+    console.log("[AuthGate] Supabase not configured, allowing access");
     return <>{children}</>;
   }
 
@@ -31,6 +34,7 @@ export function AuthGate({ children }: AuthGateProps) {
 
   // If authenticated, show the app
   if (user) {
+    console.log("[AuthGate] User authenticated, allowing access");
     return <>{children}</>;
   }
 

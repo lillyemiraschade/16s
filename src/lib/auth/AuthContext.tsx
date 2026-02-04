@@ -28,13 +28,19 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     // If Supabase isn't configured, skip auth and stay in guest mode
     if (!supabase) {
+      console.log("[Auth] Supabase not configured, skipping auth");
       setLoading(false);
       return;
     }
 
     // Get initial session
     const getSession = async () => {
-      const { data: { session } } = await supabase.auth.getSession();
+      console.log("[Auth] Getting initial session...");
+      const { data: { session }, error } = await supabase.auth.getSession();
+      if (error) {
+        console.error("[Auth] getSession error:", error);
+      }
+      console.log("[Auth] Initial session:", session?.user?.email ?? "none");
       setSession(session);
       setUser(session?.user ?? null);
       setLoading(false);
@@ -44,7 +50,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
     // Listen for auth changes
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      (_event: AuthChangeEvent, session: Session | null) => {
+      (event: AuthChangeEvent, session: Session | null) => {
+        console.log("[Auth] Auth state changed:", event, session?.user?.email ?? "none");
         setSession(session);
         setUser(session?.user ?? null);
         setLoading(false);
