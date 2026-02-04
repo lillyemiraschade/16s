@@ -230,22 +230,30 @@ function HomePageContent() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isAuthLoading, searchParams]);
 
-  // Auto-save project (debounced)
+  // Auto-save project (debounced) - saves immediately when project starts
   const saveTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const pendingSaveRef = useRef<(() => Promise<void>) | null>(null);
 
   useEffect(() => {
-    if (!hasStarted || messages.length === 0 || isAuthLoading) return;
+    // Save as soon as project starts (hasStarted), don't wait for messages
+    if (!hasStarted || isAuthLoading) return;
     if (saveTimerRef.current) clearTimeout(saveTimerRef.current);
 
     // Create the save function so we can call it immediately on page leave
     const doSave = async () => {
       const id = currentProjectId || generateId();
       if (!currentProjectId) setCurrentProjectId(id);
-      const name = projectName === "Untitled" && messages.length > 0
-        ? messages.find((m) => m.role === "user")?.content.slice(0, 40) || "Untitled"
-        : projectName;
+
+      // Generate name from first user message, or use "Untitled" / "New Project"
+      let name = projectName;
+      if (projectName === "Untitled" && messages.length > 0) {
+        const firstUserMsg = messages.find((m) => m.role === "user");
+        name = firstUserMsg?.content.slice(0, 40) || "New Project";
+      } else if (projectName === "Untitled" && messages.length === 0) {
+        name = "New Project";
+      }
       if (name !== projectName) setProjectName(name);
+
       await saveProject({
         id,
         name,
@@ -261,7 +269,9 @@ function HomePageContent() {
     };
 
     pendingSaveRef.current = doSave;
-    saveTimerRef.current = setTimeout(doSave, 1000);
+    // Save immediately when project first starts, debounce subsequent saves
+    const delay = currentProjectId ? 1000 : 0;
+    saveTimerRef.current = setTimeout(doSave, delay);
 
     return () => { if (saveTimerRef.current) clearTimeout(saveTimerRef.current); };
   }, [messages, currentPreview, previewHistory, bookmarks, hasStarted, currentProjectId, projectName, saveProject, listProjects, isAuthLoading]);
@@ -272,9 +282,13 @@ function HomePageContent() {
       if (pendingSaveRef.current) {
         // Use sendBeacon for reliable save on page unload
         const id = currentProjectId || generateId();
-        const name = projectName === "Untitled" && messages.length > 0
-          ? messages.find((m) => m.role === "user")?.content.slice(0, 40) || "Untitled"
-          : projectName;
+        let name = projectName;
+        if (projectName === "Untitled" && messages.length > 0) {
+          const firstUserMsg = messages.find((m) => m.role === "user");
+          name = firstUserMsg?.content.slice(0, 40) || "New Project";
+        } else if (projectName === "Untitled") {
+          name = "New Project";
+        }
         const project = {
           id,
           name,
