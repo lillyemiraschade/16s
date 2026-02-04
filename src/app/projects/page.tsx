@@ -17,7 +17,7 @@ type SortOption = "recent" | "name" | "oldest";
 export default function ProjectsPage() {
   const router = useRouter();
   const { user, loading: authLoading, isConfigured } = useAuth();
-  const { list: listProjects, remove: deleteProject, isAuthLoading } = useProjects();
+  const { list: listProjects, remove: deleteProject, isAuthLoading, migrationStatus } = useProjects();
 
   const [projects, setProjects] = useState<SavedProjectMeta[]>([]);
   const [search, setSearch] = useState("");
@@ -25,15 +25,18 @@ export default function ProjectsPage() {
   const [deleteConfirm, setDeleteConfirm] = useState<string | null>(null);
   const [showAuthModal, setShowAuthModal] = useState(false);
 
-  // Load projects
+  // Load projects (wait for migration to complete if signed in)
   useEffect(() => {
     if (isAuthLoading) return;
+    // Wait for migration to complete before loading cloud projects
+    if (migrationStatus === "migrating") return;
+
     const loadProjects = async () => {
       const list = await listProjects();
       setProjects(list);
     };
     loadProjects();
-  }, [isAuthLoading, listProjects]);
+  }, [isAuthLoading, listProjects, migrationStatus]);
 
   // Filter and sort projects
   const filteredProjects = projects
@@ -60,7 +63,7 @@ export default function ProjectsPage() {
     return date.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
   };
 
-  if (authLoading || isAuthLoading) {
+  if (authLoading || isAuthLoading || migrationStatus === "migrating") {
     return (
       <div className="min-h-screen bg-[#0a0a0b] flex items-center justify-center">
         <div className="w-8 h-8 border-2 border-green-500/30 border-t-green-500 rounded-full animate-spin" />
