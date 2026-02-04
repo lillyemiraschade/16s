@@ -73,13 +73,27 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }, [supabase]);
 
   const signInWithOAuth = useCallback(async (provider: "google" | "github") => {
-    if (!supabase) return { error: new Error("Auth not configured") };
-    const { error } = await supabase.auth.signInWithOAuth({
+    if (!supabase) {
+      console.error("[Auth] Supabase not configured");
+      return { error: new Error("Auth not configured") };
+    }
+
+    const redirectTo = `${window.location.origin}/auth/callback`;
+    console.log("[Auth] Starting OAuth with", provider, "redirect:", redirectTo);
+
+    const { data, error } = await supabase.auth.signInWithOAuth({
       provider,
       options: {
-        redirectTo: `${window.location.origin}/auth/callback`,
+        redirectTo,
       },
     });
+
+    if (error) {
+      console.error("[Auth] OAuth error:", error.message);
+    } else {
+      console.log("[Auth] OAuth initiated, redirect URL:", data?.url);
+    }
+
     return { error: error as Error | null };
   }, [supabase]);
 

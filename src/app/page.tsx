@@ -133,6 +133,18 @@ function HomePageContent() {
   const [welcomeInput, setWelcomeInput] = useState("");
   const [welcomeError, setWelcomeError] = useState<string | null>(null);
 
+  // Check for auth errors in URL and display them
+  useEffect(() => {
+    const authError = searchParams.get("auth_error");
+    if (authError) {
+      const errorMessage = decodeURIComponent(authError);
+      console.error("[Auth] Error from callback:", errorMessage);
+      setWelcomeError(`Sign in failed: ${errorMessage}`);
+      // Clear the error from URL
+      window.history.replaceState({}, "", "/");
+    }
+  }, [searchParams]);
+
   // Auth state for new user flow
   const [showAuthModal, setShowAuthModal] = useState(false);
   const [pendingPrompt, setPendingPrompt] = useState<{ text: string; images?: UploadedImage[] } | null>(null);

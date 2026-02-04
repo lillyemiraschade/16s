@@ -48,12 +48,27 @@ export function AuthModal({ isOpen, onClose, title, subtitle }: AuthModalProps) 
   const handleOAuth = async (provider: "google" | "github") => {
     setLoading(true);
     setError(null);
-    const { error } = await signInWithOAuth(provider);
-    if (error) {
-      setError(error.message);
+
+    try {
+      const { error } = await signInWithOAuth(provider);
+      if (error) {
+        console.error("[OAuth] Error:", error.message);
+        setError(error.message);
+        setLoading(false);
+        return;
+      }
+
+      // If we're still here after 3 seconds, the redirect didn't happen
+      // This catches silent failures where OAuth doesn't initiate properly
+      setTimeout(() => {
+        setLoading(false);
+        setError("Sign in failed to start. Please check that popups are allowed and try again.");
+      }, 3000);
+    } catch (err) {
+      console.error("[OAuth] Exception:", err);
+      setError(err instanceof Error ? err.message : "An unexpected error occurred");
       setLoading(false);
     }
-    // OAuth will redirect, so no need to setLoading(false) on success
   };
 
   const resetForm = () => {
