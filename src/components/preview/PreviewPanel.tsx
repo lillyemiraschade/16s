@@ -20,6 +20,10 @@ import {
   Bookmark,
   BookmarkCheck,
   Trash2,
+  Rocket,
+  Loader2,
+  CheckCircle,
+  ExternalLink as LinkIcon,
 } from "lucide-react";
 import type { Viewport, SelectedElement, VersionBookmark } from "@/lib/types";
 import Image from "next/image";
@@ -47,6 +51,10 @@ interface PreviewPanelProps {
   onAddBookmark: (name: string) => void;
   onRemoveBookmark: (id: string) => void;
   onRestoreBookmark: (bookmark: VersionBookmark) => void;
+  // Deployment
+  onDeploy?: () => void;
+  isDeploying?: boolean;
+  lastDeployUrl?: string | null;
 }
 
 const viewportConfig = {
@@ -169,6 +177,9 @@ export function PreviewPanel({
   onAddBookmark,
   onRemoveBookmark,
   onRestoreBookmark,
+  onDeploy,
+  isDeploying,
+  lastDeployUrl,
 }: PreviewPanelProps) {
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const [reloadKey, setReloadKey] = useState(0);
@@ -402,6 +413,35 @@ export function PreviewPanel({
                       <ExternalLink className="w-3.5 h-3.5" />
                       Open in New Tab
                     </button>
+                    {onDeploy && (
+                      <>
+                        <div className="border-t border-zinc-700/50 my-1" />
+                        <button
+                          onClick={() => handleExportAction(onDeploy)}
+                          disabled={isDeploying}
+                          className="w-full flex items-center gap-2.5 px-4 py-2.5 text-[13px] text-green-400 hover:text-green-300 hover:bg-white/[0.04] transition-colors disabled:opacity-50"
+                        >
+                          {isDeploying ? (
+                            <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                          ) : (
+                            <Rocket className="w-3.5 h-3.5" />
+                          )}
+                          {isDeploying ? "Deploying..." : "Deploy to Web"}
+                        </button>
+                        {lastDeployUrl && (
+                          <a
+                            href={lastDeployUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="w-full flex items-center gap-2.5 px-4 py-2.5 text-[13px] text-zinc-400 hover:text-zinc-200 hover:bg-white/[0.04] transition-colors"
+                          >
+                            <CheckCircle className="w-3.5 h-3.5 text-green-500" />
+                            <span className="truncate flex-1">{lastDeployUrl.replace("https://", "")}</span>
+                            <LinkIcon className="w-3 h-3 flex-shrink-0" />
+                          </a>
+                        )}
+                      </>
+                    )}
                   </motion.div>
                 )}
               </AnimatePresence>

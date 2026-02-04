@@ -10,6 +10,7 @@ import { PreviewPanel } from "@/components/preview/PreviewPanel";
 import { VoiceCall, VoiceCallHandle } from "@/components/chat/VoiceCall";
 import { processImageFiles, compressForContent, uploadToBlob } from "@/lib/images";
 import { useProjects } from "@/lib/hooks/useProjects";
+import { useDeployment } from "@/lib/hooks/useDeployment";
 import { MigrationBanner } from "@/components/auth/MigrationBanner";
 import { UserMenu } from "@/components/auth/UserMenu";
 import { useAuth } from "@/lib/auth/AuthContext";
@@ -62,6 +63,7 @@ export default function HomePage() {
   // Cloud-aware projects API
   const { save: saveProject, load: loadProject, list: listProjects, remove: deleteProject, isCloud, isAuthLoading, migrationStatus, migratedCount } = useProjects();
   const { user, isConfigured } = useAuth();
+  const { deploy, isDeploying, lastDeployment } = useDeployment();
 
   // Randomized on client only to avoid hydration mismatch
   const [headline, setHeadline] = useState(HEADLINES[0]);
@@ -817,6 +819,15 @@ export default function HomePage() {
     setTimeout(() => URL.revokeObjectURL(url), 1000);
   }, [currentPreview]);
 
+  const handleDeploy = useCallback(async () => {
+    if (!currentPreview || !currentProjectId) return;
+    const result = await deploy(currentPreview, currentProjectId, projectName);
+    if (result.success && result.url) {
+      // Open the deployed site in a new tab
+      window.open(result.url, "_blank");
+    }
+  }, [currentPreview, currentProjectId, projectName, deploy]);
+
   const handleRestoreVersion = useCallback((index: number) => {
     if (currentPreview) {
       // Push current and all history after index into redo
@@ -1164,6 +1175,9 @@ export default function HomePage() {
             onAddBookmark={handleAddBookmark}
             onRemoveBookmark={handleRemoveBookmark}
             onRestoreBookmark={handleRestoreBookmark}
+            onDeploy={handleDeploy}
+            isDeploying={isDeploying}
+            lastDeployUrl={lastDeployment?.url}
           />
           {/* Voice call widget — top-right of preview area */}
           <AnimatePresence>
