@@ -6,6 +6,13 @@ const nextConfig = {
       bodySizeLimit: "10mb",
     },
   },
+  // Disable webpack persistent caching to prevent corruption issues
+  webpack: (config, { dev }) => {
+    if (dev) {
+      config.cache = false;
+    }
+    return config;
+  },
   async headers() {
     return [
       {
