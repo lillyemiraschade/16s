@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Paperclip, ArrowUp, X, ImagePlus, Plus, Phone, Info, ChevronDown, Trash2, Pencil, Sparkles, Loader2 } from "lucide-react";
 import Image from "next/image";
 import { TypingIndicator } from "./TypingIndicator";
+import { UserMenu } from "@/components/auth/UserMenu";
 import { processImageFiles, removeBackground, compressForContent } from "@/lib/images";
 import type { Message, SavedProjectMeta, SelectedElement, UploadedImage } from "@/lib/types";
 
@@ -348,6 +349,7 @@ export function ChatPanel({
               )}
             </AnimatePresence>
           </div>
+          <UserMenu />
         </div>
       </div>
 

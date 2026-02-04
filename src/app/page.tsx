@@ -9,7 +9,10 @@ import { ChatPanel } from "@/components/chat/ChatPanel";
 import { PreviewPanel } from "@/components/preview/PreviewPanel";
 import { VoiceCall, VoiceCallHandle } from "@/components/chat/VoiceCall";
 import { processImageFiles, compressForContent, uploadToBlob } from "@/lib/images";
-import { saveProject, loadProject, listProjects, deleteProject } from "@/lib/projects";
+import { useProjects } from "@/lib/hooks/useProjects";
+import { MigrationBanner } from "@/components/auth/MigrationBanner";
+import { UserMenu } from "@/components/auth/UserMenu";
+import { useAuth } from "@/lib/auth/AuthContext";
 import type { Message, Viewport, SavedProjectMeta, SelectedElement, VersionBookmark, UploadedImage } from "@/lib/types";
 
 const HEADLINES = [
@@ -56,6 +59,10 @@ export default function HomePage() {
   const [projectName, setProjectName] = useState<string>("Untitled");
   const [savedProjects, setSavedProjects] = useState<SavedProjectMeta[]>([]);
 
+  // Cloud-aware projects API
+  const { save: saveProject, load: loadProject, list: listProjects, remove: deleteProject, isCloud, isAuthLoading, migrationStatus, migratedCount } = useProjects();
+  const { user, isConfigured } = useAuth();
+
   // Randomized on client only to avoid hydration mismatch
   const [headline, setHeadline] = useState(HEADLINES[0]);
   useEffect(() => {
@@ -73,42 +80,51 @@ export default function HomePage() {
   const screenshotTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const voiceCallRef = useRef<VoiceCallHandle>(null);
 
-  // Load saved projects list on mount
+  // Load saved projects list on mount and when auth changes
   useEffect(() => {
-    setSavedProjects(listProjects());
-  }, []);
+    if (isAuthLoading) return;
+    const loadProjectsList = async () => {
+      const projects = await listProjects();
+      setSavedProjects(projects);
+    };
+    loadProjectsList();
+  }, [isAuthLoading, listProjects, isCloud]);
 
   // Auto-restore last project on mount
   useEffect(() => {
-    const projects = listProjects();
-    if (projects.length > 0) {
-      const last = loadProject(projects[0].id);
-      if (last && last.messages.length > 0) {
-        setCurrentProjectId(last.id);
-        setProjectName(last.name);
-        setMessages(last.messages);
-        setCurrentPreview(last.currentPreview);
-        setPreviewHistory(last.previewHistory);
-        setBookmarks(last.bookmarks || []);
-        setHasStarted(true);
+    if (isAuthLoading) return;
+    const restoreLastProject = async () => {
+      const projects = await listProjects();
+      if (projects.length > 0) {
+        const last = await loadProject(projects[0].id);
+        if (last && last.messages.length > 0) {
+          setCurrentProjectId(last.id);
+          setProjectName(last.name);
+          setMessages(last.messages);
+          setCurrentPreview(last.currentPreview);
+          setPreviewHistory(last.previewHistory);
+          setBookmarks(last.bookmarks || []);
+          setHasStarted(true);
+        }
       }
-    }
+    };
+    restoreLastProject();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [isAuthLoading]);
 
   // Auto-save project (debounced)
   const saveTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   useEffect(() => {
-    if (!hasStarted || messages.length === 0) return;
+    if (!hasStarted || messages.length === 0 || isAuthLoading) return;
     if (saveTimerRef.current) clearTimeout(saveTimerRef.current);
-    saveTimerRef.current = setTimeout(() => {
+    saveTimerRef.current = setTimeout(async () => {
       const id = currentProjectId || generateId();
       if (!currentProjectId) setCurrentProjectId(id);
       const name = projectName === "Untitled" && messages.length > 0
         ? messages.find((m) => m.role === "user")?.content.slice(0, 40) || "Untitled"
         : projectName;
       if (name !== projectName) setProjectName(name);
-      saveProject({
+      await saveProject({
         id,
         name,
         messages,
@@ -117,10 +133,11 @@ export default function HomePage() {
         bookmarks,
         updatedAt: Date.now(),
       });
-      setSavedProjects(listProjects());
+      const updatedList = await listProjects();
+      setSavedProjects(updatedList);
     }, 1000);
     return () => { if (saveTimerRef.current) clearTimeout(saveTimerRef.current); };
-  }, [messages, currentPreview, previewHistory, bookmarks, hasStarted, currentProjectId, projectName]);
+  }, [messages, currentPreview, previewHistory, bookmarks, hasStarted, currentProjectId, projectName, saveProject, listProjects, isAuthLoading]);
 
   const captureScreenshot = useCallback(async (iframe: HTMLIFrameElement) => {
     try {
@@ -832,8 +849,8 @@ export default function HomePage() {
     setBookmarks([]);
   }, []);
 
-  const handleLoadProject = useCallback((id: string) => {
-    const proj = loadProject(id);
+  const handleLoadProject = useCallback(async (id: string) => {
+    const proj = await loadProject(id);
     if (!proj) return;
     abortRef.current?.abort();
     setMessages(proj.messages);
@@ -850,15 +867,16 @@ export default function HomePage() {
     setSelectMode(false);
     setSelectedElement(null);
     setBookmarks(proj.bookmarks || []);
-  }, []);
+  }, [loadProject]);
 
-  const handleDeleteProject = useCallback((id: string) => {
-    deleteProject(id);
-    setSavedProjects(listProjects());
+  const handleDeleteProject = useCallback(async (id: string) => {
+    await deleteProject(id);
+    const updatedList = await listProjects();
+    setSavedProjects(updatedList);
     if (id === currentProjectId) {
       handleNewProject();
     }
-  }, [currentProjectId, handleNewProject]);
+  }, [currentProjectId, handleNewProject, deleteProject, listProjects]);
 
   const handleAddBookmark = useCallback((name: string) => {
     const newBookmark: VersionBookmark = {
@@ -950,6 +968,7 @@ export default function HomePage() {
       <div id="main-content" className="h-screen welcome-bg flex flex-col">
         <div className="relative z-10 flex items-center justify-between px-6 py-4">
           <Image src="/logo.png" alt="16s logo" width={32} height={32} className="object-contain" />
+          <UserMenu />
         </div>
 
         <div className="relative z-10 flex-1 flex flex-col items-center justify-center px-6 -mt-16">
@@ -1087,15 +1106,17 @@ export default function HomePage() {
 
   // Chat + Preview split layout
   return (
-    <AnimatePresence>
-      <motion.div
-        id="main-content"
-        className="flex h-screen overflow-hidden"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.3 }}
-      >
-        <nav className="w-1/3 min-w-[360px] max-w-[480px]" aria-label="Chat">
+    <>
+      <MigrationBanner status={migrationStatus} count={migratedCount} />
+      <AnimatePresence>
+        <motion.div
+          id="main-content"
+          className="flex h-screen overflow-hidden"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.3 }}
+        >
+          <nav className="w-1/3 min-w-[360px] max-w-[480px]" aria-label="Chat">
           <ChatPanel
             messages={messages}
             onSend={handleSendMessage}
@@ -1159,5 +1180,6 @@ export default function HomePage() {
         </main>
       </motion.div>
     </AnimatePresence>
+    </>
   );
 }

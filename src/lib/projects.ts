@@ -1,7 +1,10 @@
 import type { SavedProject, SavedProjectMeta, Message } from "./types";
+import { createClient, isSupabaseConfigured } from "@/lib/supabase/client";
 
 const STORAGE_KEY = "16s_projects";
-const MAX_PROJECTS = 20;
+const MAX_PROJECTS_LOCAL = 20;
+const MAX_PROJECTS_FREE = 3;
+const MAX_PROJECTS_PRO = 1000; // Effectively unlimited
 
 // Validate and sanitize a message to ensure required fields exist
 function sanitizeMessage(msg: Partial<Message>, index: number): Message | null {
@@ -38,7 +41,12 @@ function sanitizeMessages(messages: unknown[]): Message[] {
     .filter((msg): msg is Message => msg !== null);
 }
 
-function getAll(): SavedProject[] {
+// ============================================================================
+// LOCAL STORAGE (Guest mode)
+// ============================================================================
+
+function getLocalAll(): SavedProject[] {
+  if (typeof window === "undefined") return [];
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
     const projects = raw ? JSON.parse(raw) : [];
@@ -52,12 +60,13 @@ function getAll(): SavedProject[] {
   }
 }
 
-function setAll(projects: SavedProject[]): void {
+function setLocalAll(projects: SavedProject[]): void {
+  if (typeof window === "undefined") return;
   localStorage.setItem(STORAGE_KEY, JSON.stringify(projects));
 }
 
-export function saveProject(project: SavedProject): void {
-  const projects = getAll();
+function saveLocalProject(project: SavedProject): void {
+  const projects = getLocalAll();
   const idx = projects.findIndex((p) => p.id === project.id);
   if (idx >= 0) {
     projects[idx] = project;
@@ -65,20 +74,199 @@ export function saveProject(project: SavedProject): void {
     projects.unshift(project);
   }
   // FIFO eviction
-  while (projects.length > MAX_PROJECTS) {
+  while (projects.length > MAX_PROJECTS_LOCAL) {
     projects.pop();
   }
-  setAll(projects);
+  setLocalAll(projects);
+}
+
+function loadLocalProject(id: string): SavedProject | null {
+  return getLocalAll().find((p) => p.id === id) ?? null;
+}
+
+function listLocalProjects(): SavedProjectMeta[] {
+  return getLocalAll().map(({ id, name, updatedAt }) => ({ id, name, updatedAt }));
+}
+
+function deleteLocalProject(id: string): void {
+  setLocalAll(getLocalAll().filter((p) => p.id !== id));
+}
+
+// ============================================================================
+// SUPABASE (Authenticated mode)
+// ============================================================================
+
+function getSupabase() {
+  const client = createClient();
+  if (!client) {
+    throw new Error("Supabase not configured");
+  }
+  return client;
+}
+
+async function saveCloudProject(project: SavedProject, userId: string): Promise<void> {
+  const supabase = getSupabase();
+
+  const { error } = await supabase
+    .from("projects")
+    .upsert({
+      id: project.id,
+      user_id: userId,
+      name: project.name,
+      messages: project.messages,
+      current_preview: project.currentPreview,
+      preview_history: project.previewHistory,
+      bookmarks: project.bookmarks,
+      updated_at: new Date().toISOString(),
+    }, { onConflict: "id" });
+
+  if (error) {
+    console.error("[Projects] Cloud save error:", error);
+    throw error;
+  }
+}
+
+async function loadCloudProject(id: string, userId: string): Promise<SavedProject | null> {
+  const supabase = getSupabase();
+
+  const { data, error } = await supabase
+    .from("projects")
+    .select("*")
+    .eq("id", id)
+    .eq("user_id", userId)
+    .single();
+
+  if (error) {
+    if (error.code === "PGRST116") return null; // Not found
+    console.error("[Projects] Cloud load error:", error);
+    return null;
+  }
+
+  return {
+    id: data.id,
+    name: data.name,
+    messages: sanitizeMessages(data.messages as unknown[]),
+    currentPreview: data.current_preview,
+    previewHistory: data.preview_history as string[],
+    bookmarks: data.bookmarks as SavedProject["bookmarks"],
+    updatedAt: new Date(data.updated_at).getTime(),
+  };
+}
+
+async function listCloudProjects(userId: string): Promise<SavedProjectMeta[]> {
+  const supabase = getSupabase();
+
+  const { data, error } = await supabase
+    .from("projects")
+    .select("id, name, updated_at")
+    .eq("user_id", userId)
+    .order("updated_at", { ascending: false });
+
+  if (error) {
+    console.error("[Projects] Cloud list error:", error);
+    return [];
+  }
+
+  return (data || []).map((p: { id: string; name: string; updated_at: string }) => ({
+    id: p.id,
+    name: p.name,
+    updatedAt: new Date(p.updated_at).getTime(),
+  }));
+}
+
+async function deleteCloudProject(id: string, userId: string): Promise<void> {
+  const supabase = getSupabase();
+
+  const { error } = await supabase
+    .from("projects")
+    .delete()
+    .eq("id", id)
+    .eq("user_id", userId);
+
+  if (error) {
+    console.error("[Projects] Cloud delete error:", error);
+    throw error;
+  }
+}
+
+// ============================================================================
+// MIGRATION: localStorage -> Supabase
+// ============================================================================
+
+export async function migrateLocalToCloud(userId: string): Promise<number> {
+  const localProjects = getLocalAll();
+  if (localProjects.length === 0) return 0;
+
+  let migrated = 0;
+
+  for (const project of localProjects) {
+    try {
+      await saveCloudProject(project, userId);
+      migrated++;
+    } catch (e) {
+      console.error("[Migration] Failed to migrate project:", project.id, e);
+    }
+  }
+
+  // Clear local storage after successful migration
+  if (migrated > 0) {
+    localStorage.removeItem(STORAGE_KEY);
+  }
+
+  return migrated;
+}
+
+// ============================================================================
+// UNIFIED API (auto-selects local vs cloud based on auth)
+// ============================================================================
+
+interface ProjectsAPI {
+  save: (project: SavedProject) => Promise<void>;
+  load: (id: string) => Promise<SavedProject | null>;
+  list: () => Promise<SavedProjectMeta[]>;
+  delete: (id: string) => Promise<void>;
+  migrate: () => Promise<number>;
+}
+
+export function createProjectsAPI(userId?: string | null): ProjectsAPI {
+  // Use localStorage if not authenticated OR Supabase isn't configured
+  if (!userId || !isSupabaseConfigured()) {
+    // Guest mode - use localStorage
+    return {
+      save: async (project) => saveLocalProject(project),
+      load: async (id) => loadLocalProject(id),
+      list: async () => listLocalProjects(),
+      delete: async (id) => deleteLocalProject(id),
+      migrate: async () => 0, // No migration for guests
+    };
+  }
+
+  // Authenticated mode - use Supabase
+  return {
+    save: async (project) => saveCloudProject(project, userId),
+    load: async (id) => loadCloudProject(id, userId),
+    list: async () => listCloudProjects(userId),
+    delete: async (id) => deleteCloudProject(id, userId),
+    migrate: async () => migrateLocalToCloud(userId),
+  };
+}
+
+// ============================================================================
+// LEGACY EXPORTS (for backward compatibility during migration)
+// ============================================================================
+
+export function saveProject(project: SavedProject): void {
+  saveLocalProject(project);
 }
 
 export function loadProject(id: string): SavedProject | null {
-  return getAll().find((p) => p.id === id) ?? null;
+  return loadLocalProject(id);
 }
 
 export function listProjects(): SavedProjectMeta[] {
-  return getAll().map(({ id, name, updatedAt }) => ({ id, name, updatedAt }));
+  return listLocalProjects();
 }
 
 export function deleteProject(id: string): void {
-  setAll(getAll().filter((p) => p.id !== id));
+  deleteLocalProject(id);
 }

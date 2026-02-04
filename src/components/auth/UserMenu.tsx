@@ -1,0 +1,123 @@
+"use client";
+
+import { useState, useRef, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { User, LogOut, Cloud, HardDrive, ChevronDown } from "lucide-react";
+import { useAuth } from "@/lib/auth/AuthContext";
+import { AuthModal } from "./AuthModal";
+
+export function UserMenu() {
+  const { user, loading, signOut, isConfigured } = useAuth();
+  const [showAuthModal, setShowAuthModal] = useState(false);
+  const [showDropdown, setShowDropdown] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  // Close dropdown on outside click
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
+        setShowDropdown(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="w-8 h-8 rounded-full glass animate-pulse" />
+    );
+  }
+
+  // Auth not configured - show simple guest mode indicator
+  if (!isConfigured) {
+    return (
+      <div className="flex items-center gap-2 px-3 py-1.5 rounded-full glass text-[12px] font-medium text-zinc-400">
+        <HardDrive className="w-3.5 h-3.5 text-zinc-500" />
+        <span>Local</span>
+      </div>
+    );
+  }
+
+  if (!user) {
+    return (
+      <>
+        <button
+          onClick={() => setShowAuthModal(true)}
+          className="flex items-center gap-2 px-3 py-1.5 rounded-full glass glass-hover text-[12px] font-medium text-zinc-300 transition-all duration-200"
+        >
+          <HardDrive className="w-3.5 h-3.5 text-zinc-500" />
+          <span>Guest</span>
+          <span className="text-zinc-500">|</span>
+          <span className="text-zinc-100">Sign in</span>
+        </button>
+        <AuthModal isOpen={showAuthModal} onClose={() => setShowAuthModal(false)} />
+      </>
+    );
+  }
+
+  const displayName = user.user_metadata?.full_name || user.email?.split("@")[0] || "User";
+  const avatarUrl = user.user_metadata?.avatar_url;
+
+  return (
+    <div className="relative" ref={dropdownRef}>
+      <button
+        onClick={() => setShowDropdown(!showDropdown)}
+        className="flex items-center gap-2 px-2 py-1.5 rounded-full glass glass-hover transition-all duration-200"
+      >
+        <Cloud className="w-3.5 h-3.5 text-green-400" />
+        {avatarUrl ? (
+          <img
+            src={avatarUrl}
+            alt={displayName}
+            className="w-5 h-5 rounded-full"
+          />
+        ) : (
+          <div className="w-5 h-5 rounded-full bg-zinc-600 flex items-center justify-center">
+            <User className="w-3 h-3 text-zinc-300" />
+          </div>
+        )}
+        <span className="text-[12px] font-medium text-zinc-300 max-w-[100px] truncate">
+          {displayName}
+        </span>
+        <ChevronDown className={`w-3 h-3 text-zinc-500 transition-transform ${showDropdown ? "rotate-180" : ""}`} />
+      </button>
+
+      <AnimatePresence>
+        {showDropdown && (
+          <motion.div
+            initial={{ opacity: 0, y: 4, scale: 0.95 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 4, scale: 0.95 }}
+            className="absolute right-0 top-full mt-2 w-48 glass-matte rounded-xl p-1 shadow-xl shadow-black/30 z-50"
+          >
+            <div className="px-3 py-2 border-b border-zinc-700/50">
+              <p className="text-[11px] text-zinc-500">Signed in as</p>
+              <p className="text-[12px] text-zinc-200 truncate">{user.email}</p>
+            </div>
+
+            <div className="py-1">
+              <div className="flex items-center gap-2 px-3 py-2 text-[12px] text-zinc-400">
+                <Cloud className="w-3.5 h-3.5 text-green-400" />
+                <span>Cloud sync enabled</span>
+              </div>
+            </div>
+
+            <div className="border-t border-zinc-700/50 pt-1">
+              <button
+                onClick={() => {
+                  signOut();
+                  setShowDropdown(false);
+                }}
+                className="w-full flex items-center gap-2 px-3 py-2 rounded-lg text-[12px] text-zinc-300 hover:bg-zinc-700/50 transition-colors"
+              >
+                <LogOut className="w-3.5 h-3.5" />
+                <span>Sign out</span>
+              </button>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+}
