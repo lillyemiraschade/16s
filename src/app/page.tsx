@@ -136,6 +136,7 @@ export default function HomePage() {
   // Auth state for new user flow
   const [showAuthModal, setShowAuthModal] = useState(false);
   const [pendingPrompt, setPendingPrompt] = useState<{ text: string; images?: UploadedImage[] } | null>(null);
+  const [authModalMessage, setAuthModalMessage] = useState<{ title?: string; subtitle?: string } | null>(null);
 
   // Ref to store the send function for use in auth callback
   const sendMessageRef = useRef<((text: string, images?: UploadedImage[]) => void) | null>(null);
@@ -360,6 +361,10 @@ export default function HomePage() {
     // If auth is configured but user is not signed in, prompt them to sign up
     if (isConfigured && !user) {
       setPendingPrompt({ text, images: imagesToInclude || [...uploadedImages] });
+      setAuthModalMessage({
+        title: "Let's get you signed in",
+        subtitle: "Before we bring your dream site to life, we need you to create an account or sign in."
+      });
       setShowAuthModal(true);
       return;
     }
@@ -1187,7 +1192,21 @@ export default function HomePage() {
               </Link>
             </nav>
           </div>
-          <UserMenu />
+          {user ? (
+            <UserMenu />
+          ) : isConfigured ? (
+            <button
+              onClick={() => {
+                setAuthModalMessage(null);
+                setShowAuthModal(true);
+              }}
+              className="px-4 py-2 text-[13px] font-medium text-zinc-900 bg-white rounded-lg hover:bg-zinc-100 transition-colors"
+            >
+              Sign up
+            </button>
+          ) : (
+            <UserMenu />
+          )}
         </header>
 
         <div className="relative z-10 flex-1 flex flex-col items-center justify-center px-6 -mt-16">
@@ -1342,7 +1361,15 @@ export default function HomePage() {
         </div>
 
         {/* Auth modal for new user sign-up flow */}
-        <AuthModal isOpen={showAuthModal} onClose={() => setShowAuthModal(false)} />
+        <AuthModal
+          isOpen={showAuthModal}
+          onClose={() => {
+            setShowAuthModal(false);
+            setAuthModalMessage(null);
+          }}
+          title={authModalMessage?.title}
+          subtitle={authModalMessage?.subtitle}
+        />
       </div>
     );
   }

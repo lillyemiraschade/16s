@@ -8,11 +8,13 @@ import { useAuth } from "@/lib/auth/AuthContext";
 interface AuthModalProps {
   isOpen: boolean;
   onClose: () => void;
+  title?: string;
+  subtitle?: string;
 }
 
 type AuthMode = "signin" | "signup";
 
-export function AuthModal({ isOpen, onClose }: AuthModalProps) {
+export function AuthModal({ isOpen, onClose, title, subtitle }: AuthModalProps) {
   const [mode, setMode] = useState<AuthMode>("signin");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -89,9 +91,9 @@ export function AuthModal({ isOpen, onClose }: AuthModalProps) {
             <div className="w-full max-w-[380px] pointer-events-auto">
             <div className="glass-matte rounded-2xl p-6 shadow-2xl shadow-black/40">
               {/* Header */}
-              <div className="flex items-center justify-between mb-6">
+              <div className="flex items-center justify-between mb-2">
                 <h2 className="text-lg font-semibold text-zinc-100">
-                  {mode === "signin" ? "Sign in" : "Create account"}
+                  {title || (mode === "signin" ? "Sign in" : "Create account")}
                 </h2>
                 <button
                   onClick={onClose}
@@ -100,6 +102,10 @@ export function AuthModal({ isOpen, onClose }: AuthModalProps) {
                   <X className="w-4 h-4 text-zinc-400" />
                 </button>
               </div>
+              {subtitle && (
+                <p className="text-[13px] text-zinc-400 mb-6">{subtitle}</p>
+              )}
+              {!subtitle && <div className="mb-4" />}
 
               {/* OAuth buttons */}
               <div className="space-y-2 mb-4">
