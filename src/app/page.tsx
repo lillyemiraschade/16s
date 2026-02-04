@@ -56,10 +56,11 @@ export default function HomePage() {
   const [projectName, setProjectName] = useState<string>("Untitled");
   const [savedProjects, setSavedProjects] = useState<SavedProjectMeta[]>([]);
 
-  // Randomized on each mount/reset
-  const [welcomeKey, setWelcomeKey] = useState(0);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const headline = useMemo(() => HEADLINES[Math.floor(Math.random() * HEADLINES.length)], [welcomeKey]);
+  // Randomized on client only to avoid hydration mismatch
+  const [headline, setHeadline] = useState(HEADLINES[0]);
+  useEffect(() => {
+    setHeadline(HEADLINES[Math.floor(Math.random() * HEADLINES.length)]);
+  }, []);
 
   const [welcomeInput, setWelcomeInput] = useState("");
   const [welcomeError, setWelcomeError] = useState<string | null>(null);
@@ -299,9 +300,15 @@ export default function HomePage() {
       const apiUserMessage = { ...userMessage, content: messageText };
       // Re-read messages to get updated URLs
       const currentMessages = messagesRef.current;
-      const cleanMessages = [...currentMessages, apiUserMessage].map(
-        ({ images, pills, showUpload, ...rest }) => rest
-      );
+      const cleanMessages = [...currentMessages, apiUserMessage]
+        .map(({ images, pills, showUpload, ...rest }) => rest)
+        // Ensure all messages have required fields to prevent API validation errors
+        .filter(msg => msg.id && msg.role && typeof msg.content === "string")
+        .map(msg => ({
+          ...msg,
+          id: msg.id || `msg-${Date.now()}`,
+          content: msg.content || (msg.role === "user" ? "[Empty]" : "..."),
+        }));
 
       const response = await fetch("/api/chat", {
         method: "POST",
@@ -408,7 +415,7 @@ export default function HomePage() {
       const aiMessage: Message = {
         id: (Date.now() + 1).toString(),
         role: "assistant",
-        content: data.message,
+        content: data.message || "I'm working on your request...",
         pills: data.pills,
         showUpload: data.showUpload,
       };
@@ -490,9 +497,15 @@ export default function HomePage() {
 
     try {
       const apiUserMessage = { ...userMessage, content: apiText }; // Use full text for API
-      const cleanMessages = [...messagesRef.current, apiUserMessage].map(
-        ({ images, pills, showUpload, ...rest }) => rest
-      );
+      const cleanMessages = [...messagesRef.current, apiUserMessage]
+        .map(({ images, pills, showUpload, ...rest }) => rest)
+        // Ensure all messages have required fields to prevent API validation errors
+        .filter(msg => msg.id && msg.role && typeof msg.content === "string")
+        .map(msg => ({
+          ...msg,
+          id: msg.id || `msg-${Date.now()}`,
+          content: msg.content || (msg.role === "user" ? "[Empty]" : "..."),
+        }));
 
       const response = await fetch("/api/chat", {
         method: "POST",
@@ -584,7 +597,7 @@ export default function HomePage() {
       const aiMessage: Message = {
         id: (Date.now() + 1).toString(),
         role: "assistant",
-        content: data.message,
+        content: data.message || "I'm working on your request...",
         pills: data.pills,
         showUpload: data.showUpload,
       };
@@ -809,7 +822,7 @@ export default function HomePage() {
     setIsGenerating(false);
     setHasStarted(false);
     setWelcomeInput("");
-    setWelcomeKey((k) => k + 1);
+    setHeadline(HEADLINES[Math.floor(Math.random() * HEADLINES.length)]);
     setIsOnCall(false);
     setPreviewScreenshot(null);
     setCurrentProjectId(null);

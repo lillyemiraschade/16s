@@ -4,7 +4,7 @@ import { useState, useEffect, useRef, useCallback, useImperativeHandle, forwardR
 import { motion } from "framer-motion";
 import { PhoneOff, Mic, Volume2 } from "lucide-react";
 
-type CallState = "idle" | "listening" | "thinking" | "speaking";
+type CallState = "idle" | "listening" | "thinking" | "speaking" | "error";
 
 interface VoiceMessage {
   role: "user" | "assistant";
@@ -76,6 +76,7 @@ export const VoiceCall = forwardRef<VoiceCallHandle, VoiceCallProps>(
     const [unsupported, setUnsupported] = useState(false);
     const [elapsed, setElapsed] = useState(0);
     const [voiceMessages, setVoiceMessages] = useState<VoiceMessage[]>([]);
+    const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
     const recognitionRef = useRef<SpeechRecognition | null>(null);
     const mountedRef = useRef(true);
@@ -146,15 +147,44 @@ export const VoiceCall = forwardRef<VoiceCallHandle, VoiceCallProps>(
         }
       };
 
-      recognition.onerror = () => {};
+      recognition.onerror = (event: SpeechRecognitionErrorEvent) => {
+        console.error("Speech recognition error:", event.error);
+        if (!mountedRef.current) return;
+
+        if (event.error === "not-allowed" || event.error === "service-not-allowed") {
+          setErrorMessage("Microphone access denied. Please allow microphone access.");
+          setState("error");
+        } else if (event.error === "no-speech") {
+          // No speech detected - just restart listening
+          if (stateRef.current === "listening") {
+            try { recognition.start(); } catch { /* ignore */ }
+          }
+        } else if (event.error === "network") {
+          setErrorMessage("Network error. Check your connection.");
+          setState("error");
+        } else if (event.error === "audio-capture") {
+          setErrorMessage("No microphone found. Please connect a microphone.");
+          setState("error");
+        }
+      };
       recognition.onend = () => {
         if (mountedRef.current && stateRef.current === "listening") {
-          try { recognition.start(); } catch { recognitionRef.current = null; }
+          try { recognition.start(); } catch {
+            console.error("Failed to restart recognition");
+            recognitionRef.current = null;
+          }
         }
       };
 
       recognitionRef.current = recognition;
-      try { recognition.start(); setState("listening"); } catch {}
+      try {
+        recognition.start();
+        setState("listening");
+      } catch (e) {
+        console.error("Failed to start recognition:", e);
+        setErrorMessage("Could not start voice recognition.");
+        setState("error");
+      }
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
@@ -164,13 +194,28 @@ export const VoiceCall = forwardRef<VoiceCallHandle, VoiceCallProps>(
       const utterance = new SpeechSynthesisUtterance(text);
       utterance.rate = 1.05;
       utterance.pitch = 1;
+
+      // Timeout to prevent speech synthesis from hanging
+      const maxDuration = Math.max(10000, text.length * 100); // At least 10s, or ~100ms per character
+      const timeoutId = setTimeout(() => {
+        console.warn("Speech synthesis timeout, forcing end");
+        speechSynthesis.cancel();
+        if (mountedRef.current) {
+          if (onEnd) onEnd();
+          else startListening();
+        }
+      }, maxDuration);
+
       utterance.onend = () => {
+        clearTimeout(timeoutId);
         if (mountedRef.current) {
           if (onEnd) onEnd();
           else startListening();
         }
       };
-      utterance.onerror = () => {
+      utterance.onerror = (event) => {
+        clearTimeout(timeoutId);
+        console.error("Speech synthesis error:", event);
         if (mountedRef.current) {
           if (onEnd) onEnd();
           else startListening();
@@ -182,6 +227,10 @@ export const VoiceCall = forwardRef<VoiceCallHandle, VoiceCallProps>(
     const sendToVoiceAPI = useCallback(async (messages: VoiceMessage[], isTypedInput = false) => {
       if (!mountedRef.current) return;
 
+      // Create abort controller for timeout
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 30000); // 30 second timeout
+
       try {
         const response = await fetch("/api/chat/voice", {
           method: "POST",
@@ -190,12 +239,18 @@ export const VoiceCall = forwardRef<VoiceCallHandle, VoiceCallProps>(
             voiceMessages: messages,
             hasTypedInput: isTypedInput,
           }),
+          signal: controller.signal,
         });
 
-        if (!response.ok) throw new Error("Voice API failed");
+        clearTimeout(timeoutId);
+
+        if (!response.ok) {
+          const errorText = await response.text().catch(() => "Unknown error");
+          throw new Error(`Voice API failed: ${response.status} - ${errorText}`);
+        }
 
         const data = await response.json();
-        const aiMessage: VoiceMessage = { role: "assistant", content: data.message };
+        const aiMessage: VoiceMessage = { role: "assistant", content: data.message || "..." };
 
         if (!mountedRef.current) return;
 
@@ -204,20 +259,27 @@ export const VoiceCall = forwardRef<VoiceCallHandle, VoiceCallProps>(
 
           // If complete, end the call after speaking the final message
           if (data.complete) {
-            speak(data.message, () => endCall(updated));
+            speak(data.message || "Thanks! Let me process that.", () => endCall(updated));
           } else {
-            speak(data.message);
+            speak(data.message || "Could you tell me more?");
           }
 
           return updated;
         });
       } catch (error) {
+        clearTimeout(timeoutId);
         console.error("Voice API error:", error);
-        if (mountedRef.current) {
-          speak("Sorry, I didn't catch that. Could you say that again?");
+        if (!mountedRef.current) return;
+
+        if (error instanceof Error && error.name === "AbortError") {
+          setErrorMessage("Request timed out. Please try again.");
+          setState("error");
+        } else {
+          // Recoverable error - try to continue the call
+          speak("Sorry, I had trouble hearing that. Could you say it again?");
         }
       }
-    }, [speak, endCall]);
+    }, [speak, endCall, updateVoiceMessages]);
 
     // Expose method to inject typed messages from chat
     useImperativeHandle(ref, () => ({
@@ -266,6 +328,7 @@ export const VoiceCall = forwardRef<VoiceCallHandle, VoiceCallProps>(
       listening: "Listening",
       thinking: "Thinking...",
       speaking: "Speaking",
+      error: "Error",
     };
 
     if (unsupported) {
@@ -276,10 +339,42 @@ export const VoiceCall = forwardRef<VoiceCallHandle, VoiceCallProps>(
           exit={{ opacity: 0, scale: 0.9, y: -10 }}
           className="glass-matte rounded-2xl p-4 max-w-[260px]"
         >
-          <p className="text-zinc-300 text-[13px] font-medium">Voice requires Chrome or Edge</p>
+          <p className="text-zinc-300 text-[13px] font-medium">Voice requires Chrome, Edge, or Safari 14.1+</p>
           <button onClick={() => onHangUp()} className="mt-2 px-3 py-1.5 text-[12px] font-medium text-zinc-300 glass glass-hover rounded-full transition-all duration-200">
             Dismiss
           </button>
+        </motion.div>
+      );
+    }
+
+    if (state === "error") {
+      return (
+        <motion.div
+          initial={{ opacity: 0, scale: 0.9, y: -10 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          exit={{ opacity: 0, scale: 0.9, y: -10 }}
+          className="glass-matte rounded-2xl p-4 max-w-[280px]"
+        >
+          <p className="text-red-400 text-[13px] font-medium mb-1">Voice Error</p>
+          <p className="text-zinc-400 text-[12px]">{errorMessage || "Something went wrong"}</p>
+          <div className="flex gap-2 mt-3">
+            <button
+              onClick={() => {
+                setErrorMessage(null);
+                setState("idle");
+                startListening();
+              }}
+              className="px-3 py-1.5 text-[12px] font-medium text-zinc-300 glass glass-hover rounded-full transition-all duration-200"
+            >
+              Retry
+            </button>
+            <button
+              onClick={handleHangUp}
+              className="px-3 py-1.5 text-[12px] font-medium text-red-400 glass glass-hover rounded-full transition-all duration-200"
+            >
+              End Call
+            </button>
+          </div>
         </motion.div>
       );
     }

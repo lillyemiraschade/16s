@@ -13,12 +13,12 @@ const UploadedImageSchema = z.object({
   label: z.string().optional(),
 });
 
-// Request validation
+// Request validation with defaults for resilience
 const ChatRequestSchema = z.object({
   messages: z.array(z.object({
-    id: z.string(),
+    id: z.string().default(() => `msg-${Date.now()}-${Math.random().toString(36).slice(2)}`),
     role: z.enum(["user", "assistant"]),
-    content: z.string().max(50000),
+    content: z.string().max(50000).default(""),
     uploadedImages: z.array(UploadedImageSchema).optional(),
   })).max(200),
   uploadedImages: z.array(UploadedImageSchema).max(10).optional(), // New typed format
@@ -226,9 +226,31 @@ export async function POST(req: Request) {
       );
     }
 
+    // DEBUG: Log the raw request
+    console.log("[Chat API] Raw request keys:", Object.keys(raw));
+    console.log("[Chat API] Messages count:", raw.messages?.length ?? "NO MESSAGES");
+    if (raw.messages?.[0]) {
+      console.log("[Chat API] First message:", JSON.stringify(raw.messages[0]).slice(0, 200));
+    }
+
+    // Pre-sanitize messages to fix common issues before validation
+    if (raw.messages && Array.isArray(raw.messages)) {
+      raw.messages = raw.messages
+        .filter((m: Record<string, unknown>) => m && typeof m === "object" && m.role)
+        .map((m: Record<string, unknown>, i: number) => ({
+          ...m,
+          id: m.id || `msg-${Date.now()}-${i}`,
+          content: typeof m.content === "string" && m.content ? m.content : "[No content]",
+        }));
+      console.log("[Chat API] After sanitize, messages count:", raw.messages.length);
+    }
+
     const parsed = ChatRequestSchema.safeParse(raw);
     if (!parsed.success) {
-      const errorDetail = parsed.error.issues[0]?.message || "Invalid format";
+      const issue = parsed.error.issues[0];
+      const errorDetail = issue ? `${issue.path.join(".")}: ${issue.message}` : "Invalid format";
+      console.error("[Chat API] Validation FAILED:", JSON.stringify(parsed.error.issues, null, 2));
+      console.error("[Chat API] Raw messages were:", JSON.stringify(raw.messages)?.slice(0, 500));
       return new Response(
         JSON.stringify({ error: `Invalid request: ${errorDetail}` }),
         { status: 400, headers: { "Content-Type": "application/json" } }
@@ -358,10 +380,10 @@ export async function POST(req: Request) {
 
           claudeMessages.push({ role: "user", content: contentBlocks });
         } else {
-          claudeMessages.push({ role: "user", content: msg.content });
+          claudeMessages.push({ role: "user", content: msg.content || "[No content]" });
         }
       } else {
-        claudeMessages.push({ role: "assistant", content: msg.content });
+        claudeMessages.push({ role: "assistant", content: msg.content || "..." });
       }
     }
 
