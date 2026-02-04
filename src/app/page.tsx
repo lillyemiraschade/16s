@@ -14,7 +14,7 @@ import { useDeployment } from "@/lib/hooks/useDeployment";
 import { MigrationBanner } from "@/components/auth/MigrationBanner";
 import { UserMenu } from "@/components/auth/UserMenu";
 import { useAuth } from "@/lib/auth/AuthContext";
-import type { Message, Viewport, SavedProjectMeta, SelectedElement, VersionBookmark, UploadedImage } from "@/lib/types";
+import type { Message, Viewport, SavedProjectMeta, SelectedElement, VersionBookmark, UploadedImage, CodeMode } from "@/lib/types";
 
 const HEADLINES = [
   "What shall we build?",
@@ -54,6 +54,7 @@ export default function HomePage() {
   const [selectMode, setSelectMode] = useState(false);
   const [selectedElement, setSelectedElement] = useState<SelectedElement | null>(null);
   const [bookmarks, setBookmarks] = useState<VersionBookmark[]>([]);
+  const [codeMode, setCodeMode] = useState<CodeMode>("html");
 
   // Project state
   const [currentProjectId, setCurrentProjectId] = useState<string | null>(null);
@@ -858,6 +859,7 @@ export default function HomePage() {
     setSelectMode(false);
     setSelectedElement(null);
     setBookmarks([]);
+    setCodeMode("html");
   }, []);
 
   const handleLoadProject = useCallback(async (id: string) => {
@@ -913,6 +915,38 @@ export default function HomePage() {
       handleRestoreVersion(bookmark.versionIndex);
     }
   }, [previewHistory.length, handleRestoreVersion]);
+
+  // Handle code edits from the Monaco editor (debounced to avoid too many history entries)
+  const codeEditTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const lastCodeRef = useRef<string | null>(null);
+
+  const handleCodeChange = useCallback((newCode: string) => {
+    // Update preview immediately for live feedback
+    setCurrentPreview(newCode);
+
+    // Debounce history push - only create a history entry after 1s of no edits
+    if (codeEditTimerRef.current) clearTimeout(codeEditTimerRef.current);
+
+    codeEditTimerRef.current = setTimeout(() => {
+      // Only push to history if this is the first edit or after a pause
+      if (lastCodeRef.current && lastCodeRef.current !== newCode) {
+        setPreviewHistory((prev) => {
+          // Avoid duplicate entries
+          if (prev[prev.length - 1] === lastCodeRef.current) return prev;
+          return [...prev, lastCodeRef.current!];
+        });
+        setRedoHistory([]); // Clear redo on manual edit
+      }
+      lastCodeRef.current = newCode;
+    }, 1000);
+  }, []);
+
+  // Initialize lastCodeRef when preview changes from AI
+  useEffect(() => {
+    if (currentPreview && !lastCodeRef.current) {
+      lastCodeRef.current = currentPreview;
+    }
+  }, [currentPreview]);
 
   // Keyboard shortcuts
   useEffect(() => {
@@ -1178,6 +1212,9 @@ export default function HomePage() {
             onDeploy={handleDeploy}
             isDeploying={isDeploying}
             lastDeployUrl={lastDeployment?.url}
+            onCodeChange={handleCodeChange}
+            codeMode={codeMode}
+            onCodeModeChange={setCodeMode}
           />
           {/* Voice call widget — top-right of preview area */}
           <AnimatePresence>

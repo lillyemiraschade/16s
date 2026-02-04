@@ -56,3 +56,10 @@ export interface SavedProjectMeta {
   name: string;
   updatedAt: number;
 }
+
+// Code generation mode
+export type CodeMode = "html" | "react";
+
+export interface ProjectSettings {
+  codeMode: CodeMode;
+}

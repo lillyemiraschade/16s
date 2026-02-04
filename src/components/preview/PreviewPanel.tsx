@@ -11,6 +11,7 @@ import {
   RotateCw,
   Download,
   Code,
+  Code2,
   Copy,
   ExternalLink,
   ChevronDown,
@@ -24,9 +25,12 @@ import {
   Loader2,
   CheckCircle,
   ExternalLink as LinkIcon,
+  FileCode,
 } from "lucide-react";
-import type { Viewport, SelectedElement, VersionBookmark } from "@/lib/types";
+import type { Viewport, SelectedElement, VersionBookmark, CodeMode } from "@/lib/types";
 import Image from "next/image";
+import { CodeEditor } from "./CodeEditor";
+import { isReactCode, createReactPreviewHtml } from "@/lib/react-preview";
 
 interface PreviewPanelProps {
   html: string | null;
@@ -55,6 +59,11 @@ interface PreviewPanelProps {
   onDeploy?: () => void;
   isDeploying?: boolean;
   lastDeployUrl?: string | null;
+  // Code editing
+  onCodeChange?: (code: string) => void;
+  // Code mode
+  codeMode?: CodeMode;
+  onCodeModeChange?: (mode: CodeMode) => void;
 }
 
 const viewportConfig = {
@@ -180,6 +189,9 @@ export function PreviewPanel({
   onDeploy,
   isDeploying,
   lastDeployUrl,
+  onCodeChange,
+  codeMode = "html",
+  onCodeModeChange,
 }: PreviewPanelProps) {
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const [reloadKey, setReloadKey] = useState(0);
@@ -215,8 +227,13 @@ export function PreviewPanel({
     }
   }, [selectMode]);
 
-  // Inject select mode script into HTML
-  const htmlWithSelectMode = html ? html.replace('</body>', `${SELECT_MODE_SCRIPT}</body>`) : null;
+  // Detect if content is React code and prepare preview HTML
+  const isReact = html && codeMode === "react";
+  const previewHtml = html
+    ? isReact
+      ? createReactPreviewHtml(html)
+      : html.replace('</body>', `${SELECT_MODE_SCRIPT}</body>`)
+    : null;
 
   // Listen for keyboard shortcut toggle
   useEffect(() => {
@@ -366,6 +383,20 @@ export function PreviewPanel({
               aria-pressed={showCode}
             >
               <Code className="w-4 h-4" />
+            </button>
+          )}
+          {onCodeModeChange && (
+            <button
+              onClick={() => onCodeModeChange(codeMode === "html" ? "react" : "html")}
+              className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-full text-[11px] font-medium transition-all duration-200 ${
+                codeMode === "react"
+                  ? "text-blue-400 bg-blue-500/10"
+                  : "text-zinc-500 hover:text-zinc-300 hover:bg-white/[0.04]"
+              }`}
+              title={`Code mode: ${codeMode.toUpperCase()}. Click to toggle.`}
+            >
+              <FileCode className="w-3.5 h-3.5" />
+              {codeMode.toUpperCase()}
             </button>
           )}
         </div>
@@ -529,7 +560,7 @@ export function PreviewPanel({
                 <iframe
                   key={reloadKey}
                   ref={iframeRef}
-                  srcDoc={htmlWithSelectMode || ""}
+                  srcDoc={previewHtml || ""}
                   sandbox="allow-scripts allow-same-origin"
                   className={`w-full h-full border-0 ${selectMode ? "cursor-crosshair" : ""}`}
                   title="Website Preview"
@@ -551,16 +582,14 @@ export function PreviewPanel({
           )}
 
           {html && !isGenerating && showCode && (
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.15 }}
-              className="w-full h-full"
-            >
-              <pre className="code-preview w-full h-full overflow-auto rounded-xl glass p-6 text-[13px] leading-relaxed">
-                <code dangerouslySetInnerHTML={{ __html: highlightHtml(html) }} />
-              </pre>
-            </motion.div>
+            <div className="w-full h-full">
+              <CodeEditor
+                code={html}
+                onChange={(code) => onCodeChange?.(code)}
+                language={codeMode === "react" ? "typescript" : "html"}
+                readOnly={!onCodeChange}
+              />
+            </div>
           )}
         </div>
 
