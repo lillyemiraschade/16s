@@ -70,6 +70,94 @@ const viewportConfig = {
   mobile: { width: "375px", icon: Smartphone, label: "Mobile" },
 } as const;
 
+// Tips and fun messages for the loading state
+const TIPS = [
+  "Drop inspiration images for pixel-perfect cloning",
+  "Try the voice call feature - it's like having a designer on speed dial",
+  "You can select any element and ask to change it",
+  "Use bookmarks to save versions you love",
+  "Export to HTML or deploy directly to the web",
+  "Ask for specific vibes: 'make it feel like Apple'",
+  "Upload your logo and it'll be placed automatically",
+  "Say 'make it more minimal' or 'add more personality'",
+  "You can edit the code directly with Cmd+/",
+  "Try 'hop on a call' for a 2-minute design session",
+];
+
+const REVISION_MESSAGES = [
+  "One sec, redecorating...",
+  "Hold tight, moving some pixels around",
+  "Brewing up something fresh",
+  "Almost there, just adding some magic",
+  "Working on it, no peeking!",
+  "The pixels are doing their thing",
+  "Making it even better...",
+  "Give me a moment to work my magic",
+  "Tweaking things behind the scenes",
+  "Just a sec, perfectionism takes time",
+];
+
+function GeneratingState({ isRevision }: { isRevision: boolean }) {
+  const [tipIndex, setTipIndex] = useState(0);
+  const [revisionMessage] = useState(() =>
+    REVISION_MESSAGES[Math.floor(Math.random() * REVISION_MESSAGES.length)]
+  );
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setTipIndex((prev) => (prev + 1) % TIPS.length);
+    }, 4000);
+    return () => clearInterval(interval);
+  }, []);
+
+  return (
+    <div className="flex flex-col items-center justify-center h-full gap-6">
+      <div className="relative flex items-center justify-center">
+        <motion.div
+          className="absolute w-24 h-24 rounded-full bg-green-500/10"
+          animate={{ scale: [1, 1.4, 1], opacity: [0.2, 0.5, 0.2] }}
+          transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+        />
+        <motion.div
+          className="absolute w-16 h-16 rounded-full bg-green-500/20"
+          animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.6, 0.3] }}
+          transition={{ duration: 2, repeat: Infinity, ease: "easeInOut", delay: 0.3 }}
+        />
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <motion.img
+          src="/logo.png"
+          alt="Loading"
+          className="w-12 h-12 object-contain relative z-10"
+          animate={{ scale: [0.9, 1.1, 0.9], opacity: [0.7, 1, 0.7] }}
+          transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+        />
+      </div>
+
+      <div className="text-center">
+        <p className="text-zinc-300 text-[15px] font-medium mb-4">
+          {isRevision ? revisionMessage : "Preview will be available soon"}
+        </p>
+
+        {/* Rotating tips */}
+        <div className="h-6 relative overflow-hidden">
+          <AnimatePresence mode="wait">
+            <motion.p
+              key={tipIndex}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.4, ease: "easeOut" }}
+              className="text-zinc-500 text-[13px] absolute inset-x-0"
+            >
+              {TIPS[tipIndex]}
+            </motion.p>
+          </AnimatePresence>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 // Script to inject into iframe for element selection
 const SELECT_MODE_SCRIPT = `
 <script>
@@ -462,29 +550,7 @@ export function PreviewPanel({
           )}
 
           {isGenerating && (
-            <div className="flex flex-col items-center justify-center h-full gap-6">
-              <div className="relative flex items-center justify-center">
-                <motion.div
-                  className="absolute w-24 h-24 rounded-full bg-green-500/10"
-                  animate={{ scale: [1, 1.4, 1], opacity: [0.2, 0.5, 0.2] }}
-                  transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-                />
-                <motion.div
-                  className="absolute w-16 h-16 rounded-full bg-green-500/20"
-                  animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.6, 0.3] }}
-                  transition={{ duration: 2, repeat: Infinity, ease: "easeInOut", delay: 0.3 }}
-                />
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <motion.img
-                  src="/logo.png"
-                  alt="Loading"
-                  className="w-12 h-12 object-contain relative z-10"
-                  animate={{ scale: [0.9, 1.1, 0.9], opacity: [0.7, 1, 0.7] }}
-                  transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-                />
-              </div>
-              <p className="text-zinc-500 text-[13px] font-medium">Designing your site...</p>
-            </div>
+            <GeneratingState isRevision={previewHistory.length > 0 || !!html} />
           )}
 
           {html && !isGenerating && !showCode && (
