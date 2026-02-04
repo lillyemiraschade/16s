@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Paperclip, ArrowUp, X, ImagePlus, Plus, Phone, Info, ChevronDown, Trash2, Pencil, Sparkles, Loader2 } from "lucide-react";
+import { Paperclip, ArrowUp, X, ImagePlus, Plus, Phone, Info, ChevronDown, Trash2, Pencil, Sparkles, Loader2, Mic } from "lucide-react";
 import Image from "next/image";
 import { TypingIndicator } from "./TypingIndicator";
 import { UserMenu } from "@/components/auth/UserMenu";
@@ -221,33 +221,71 @@ export function ChatPanel({
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="absolute inset-0 z-40 bg-black/60 backdrop-blur-sm flex items-center justify-center p-6"
+            className="absolute inset-0 z-40 bg-black/80 backdrop-blur-md flex items-center justify-center p-6"
           >
             <motion.div
-              initial={{ scale: 0.95, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.95, opacity: 0 }}
-              className="glass rounded-2xl p-6 max-w-[340px] w-full"
+              initial={{ scale: 0.9, opacity: 0, y: 20 }}
+              animate={{ scale: 1, opacity: 1, y: 0 }}
+              exit={{ scale: 0.9, opacity: 0, y: 20 }}
+              transition={{ type: "spring", duration: 0.5 }}
+              className="glass-matte rounded-2xl p-8 max-w-[400px] w-full shadow-2xl shadow-black/50"
             >
-              <div className="flex items-center gap-2 mb-3">
-                <Info className="w-4 h-4 text-green-400" />
-                <p className="text-zinc-200 text-[14px] font-medium">Before you call</p>
+              {/* AI Agent Icon */}
+              <div className="flex justify-center mb-6">
+                <div className="relative">
+                  <div className="w-16 h-16 rounded-full bg-gradient-to-b from-green-400 to-green-600 flex items-center justify-center">
+                    <Phone className="w-7 h-7 text-white" />
+                  </div>
+                  <motion.div
+                    className="absolute inset-0 rounded-full bg-green-400/30"
+                    animate={{ scale: [1, 1.3, 1], opacity: [0.5, 0, 0.5] }}
+                    transition={{ duration: 2, repeat: Infinity }}
+                  />
+                </div>
               </div>
-              <p className="text-zinc-400 text-[13px] leading-relaxed mb-5">
-                You&apos;ll be speaking with an AI assistant about your project. Your call may be recorded for training and quality purposes.
+
+              <h2 className="text-zinc-100 text-[18px] font-semibold text-center mb-2">
+                Start AI Voice Call
+              </h2>
+              <p className="text-zinc-400 text-[14px] leading-relaxed text-center mb-6">
+                You&apos;re about to speak with an <span className="text-green-400 font-medium">AI design assistant</span>.
+                Tell it about your project and it will help design your website.
               </p>
-              <div className="flex gap-2">
+
+              {/* Features */}
+              <div className="space-y-3 mb-6">
+                <div className="flex items-center gap-3 text-[13px] text-zinc-300">
+                  <div className="w-6 h-6 rounded-full bg-green-500/20 flex items-center justify-center flex-shrink-0">
+                    <Mic className="w-3 h-3 text-green-400" />
+                  </div>
+                  <span>Speak naturally about your project</span>
+                </div>
+                <div className="flex items-center gap-3 text-[13px] text-zinc-300">
+                  <div className="w-6 h-6 rounded-full bg-green-500/20 flex items-center justify-center flex-shrink-0">
+                    <Sparkles className="w-3 h-3 text-green-400" />
+                  </div>
+                  <span>AI will ask clarifying questions</span>
+                </div>
+                <div className="flex items-center gap-3 text-[13px] text-zinc-300">
+                  <div className="w-6 h-6 rounded-full bg-green-500/20 flex items-center justify-center flex-shrink-0">
+                    <Info className="w-3 h-3 text-green-400" />
+                  </div>
+                  <span>Hang up anytime to start designing</span>
+                </div>
+              </div>
+
+              <div className="flex gap-3">
                 <button
                   onClick={() => setShowCallDisclaimer(false)}
-                  className="flex-1 px-4 py-2 text-[13px] font-medium text-zinc-400 glass glass-hover rounded-full transition-all duration-200"
+                  className="flex-1 px-4 py-3 text-[14px] font-medium text-zinc-400 glass glass-hover rounded-xl transition-all duration-200"
                 >
                   Cancel
                 </button>
                 <button
                   onClick={handleAcceptCall}
-                  className="flex-1 px-4 py-2 text-[13px] font-medium text-black bg-gradient-to-b from-green-400 to-green-500 hover:from-green-300 hover:to-green-400 rounded-full transition-all duration-200 glow-green"
+                  className="flex-1 px-4 py-3 text-[14px] font-medium text-black bg-gradient-to-b from-green-400 to-green-500 hover:from-green-300 hover:to-green-400 rounded-xl transition-all duration-200 shadow-lg shadow-green-500/25"
                 >
-                  Start call
+                  Start Call
                 </button>
               </div>
             </motion.div>

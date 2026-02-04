@@ -122,7 +122,34 @@ export const VoiceCall = forwardRef<VoiceCallHandle, VoiceCallProps>(
       recognition.interimResults = true;
       recognition.lang = "en-US";
 
+      // Accumulate transcript and use silence detection
+      let accumulatedTranscript = "";
+      let silenceTimer: ReturnType<typeof setTimeout> | null = null;
+      const SILENCE_TIMEOUT = 1500; // Wait 1.5s of silence before processing
+
+      const processTranscript = () => {
+        if (accumulatedTranscript.trim()) {
+          recognition.stop();
+          recognitionRef.current = null;
+          setState("thinking");
+          const finalText = accumulatedTranscript.trim();
+          setTranscript("");
+          accumulatedTranscript = "";
+
+          // Add user message and send to voice API
+          const userMessage: VoiceMessage = { role: "user", content: finalText, source: "voice" };
+          updateVoiceMessages((prev) => {
+            const updated = [...prev, userMessage];
+            sendToVoiceAPI(updated);
+            return updated;
+          });
+        }
+      };
+
       recognition.onresult = (event: SpeechRecognitionEvent) => {
+        // Clear previous silence timer
+        if (silenceTimer) clearTimeout(silenceTimer);
+
         let finalTranscript = "";
         let interimTranscript = "";
         for (let i = event.resultIndex; i < event.results.length; i++) {
@@ -130,21 +157,21 @@ export const VoiceCall = forwardRef<VoiceCallHandle, VoiceCallProps>(
           if (result.isFinal) finalTranscript += result[0].transcript;
           else interimTranscript += result[0].transcript;
         }
-        setTranscript(interimTranscript || finalTranscript);
-        if (finalTranscript.trim()) {
-          recognition.stop();
-          recognitionRef.current = null;
-          setState("thinking");
-          setTranscript("");
 
-          // Add user message and send to voice API
-          const userMessage: VoiceMessage = { role: "user", content: finalTranscript.trim(), source: "voice" };
-          updateVoiceMessages((prev) => {
-            const updated = [...prev, userMessage];
-            sendToVoiceAPI(updated);
-            return updated;
-          });
+        // Accumulate final transcripts
+        if (finalTranscript) {
+          accumulatedTranscript += " " + finalTranscript;
         }
+
+        // Show current transcript (accumulated + interim)
+        setTranscript((accumulatedTranscript + " " + interimTranscript).trim());
+
+        // Set silence timer - process when user stops speaking
+        silenceTimer = setTimeout(() => {
+          if (accumulatedTranscript.trim()) {
+            processTranscript();
+          }
+        }, SILENCE_TIMEOUT);
       };
 
       recognition.onerror = (event: SpeechRecognitionErrorEvent) => {
