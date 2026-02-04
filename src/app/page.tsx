@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useCallback, useMemo, useEffect } from "react";
+import { useState, useRef, useCallback, useMemo, useEffect, Suspense } from "react";
 import html2canvas from "html2canvas";
 import { motion, AnimatePresence } from "framer-motion";
 import { Paperclip, ArrowUp, ImagePlus, X, FolderOpen } from "lucide-react";
@@ -94,7 +94,7 @@ function generateId(): string {
   return Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
 }
 
-export default function HomePage() {
+function HomePageContent() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [currentPreview, setCurrentPreview] = useState<string | null>(null);
   const [previewHistory, setPreviewHistory] = useState<string[]>([]);
@@ -1457,5 +1457,13 @@ export default function HomePage() {
       </motion.div>
     </AnimatePresence>
     </>
+  );
+}
+
+export default function HomePage() {
+  return (
+    <Suspense fallback={<div className="h-screen welcome-bg" />}>
+      <HomePageContent />
+    </Suspense>
   );
 }
