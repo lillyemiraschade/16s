@@ -195,8 +195,32 @@ export default function HomePage() {
       return; // Don't send to main chat
     }
 
-    const imagesToSend = imagesToInclude || [...uploadedImages];
+    let imagesToSend = imagesToInclude || [...uploadedImages];
     if (!imagesToInclude) setUploadedImages([]);
+
+    // Ensure all content images have blob URLs before sending
+    const contentImagesNeedingUpload = imagesToSend.filter(img => img.type === "content" && !img.url);
+    if (contentImagesNeedingUpload.length > 0) {
+      console.log(`[Blob Upload] Uploading ${contentImagesNeedingUpload.length} content images before sending...`);
+      const uploadPromises = contentImagesNeedingUpload.map(async (img) => {
+        try {
+          const url = await uploadToBlob(img.data, img.label);
+          return { ...img, url };
+        } catch (error) {
+          console.error("[Blob Upload] Failed:", error);
+          return img; // Keep original without URL as fallback
+        }
+      });
+      const uploadedImages = await Promise.all(uploadPromises);
+      // Update imagesToSend with the uploaded URLs
+      imagesToSend = imagesToSend.map(img => {
+        if (img.type === "content" && !img.url) {
+          const uploaded = uploadedImages.find(u => u.data === img.data);
+          return uploaded || img;
+        }
+        return img;
+      });
+    }
 
     if (!hasStarted) setHasStarted(true);
 
@@ -227,9 +251,55 @@ export default function HomePage() {
     abortRef.current = controller;
 
     try {
+      // Collect all content images from history that need URLs
+      const historyImagesNeedingUpload: { msgIndex: number; imgIndex: number; img: UploadedImage }[] = [];
+      messagesRef.current.forEach((msg, msgIndex) => {
+        msg.uploadedImages?.forEach((img, imgIndex) => {
+          if (img.type === "content" && !img.url) {
+            historyImagesNeedingUpload.push({ msgIndex, imgIndex, img });
+          }
+        });
+      });
+
+      // Upload history images if needed
+      if (historyImagesNeedingUpload.length > 0) {
+        console.log(`[Blob Upload] Uploading ${historyImagesNeedingUpload.length} history images...`);
+        const uploadPromises = historyImagesNeedingUpload.map(async ({ img }) => {
+          try {
+            const url = await uploadToBlob(img.data, img.label);
+            return { ...img, url };
+          } catch (error) {
+            console.error("[Blob Upload] History upload failed:", error);
+            return img;
+          }
+        });
+        const uploadedHistoryImages = await Promise.all(uploadPromises);
+
+        // Update messages with uploaded URLs
+        setMessages((prev) =>
+          prev.map((msg, msgIndex) => {
+            const updates = historyImagesNeedingUpload.filter(h => h.msgIndex === msgIndex);
+            if (updates.length === 0 || !msg.uploadedImages) return msg;
+            return {
+              ...msg,
+              uploadedImages: msg.uploadedImages.map((img, imgIndex) => {
+                const update = updates.find(u => u.imgIndex === imgIndex);
+                if (update) {
+                  const uploaded = uploadedHistoryImages.find(u => u.data === img.data);
+                  return uploaded || img;
+                }
+                return img;
+              }),
+            };
+          })
+        );
+      }
+
       // Use messageText (with element context) for API, not the displayed text
       const apiUserMessage = { ...userMessage, content: messageText };
-      const cleanMessages = [...messagesRef.current, apiUserMessage].map(
+      // Re-read messages to get updated URLs
+      const currentMessages = messagesRef.current;
+      const cleanMessages = [...currentMessages, apiUserMessage].map(
         ({ images, pills, showUpload, ...rest }) => rest
       );
 
