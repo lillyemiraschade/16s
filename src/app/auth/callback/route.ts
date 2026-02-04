@@ -9,24 +9,17 @@ export async function GET(request: Request) {
   if (code) {
     try {
       const supabase = await createClient();
-      const { data, error } = await supabase.auth.exchangeCodeForSession(code);
+      const { error } = await supabase.auth.exchangeCodeForSession(code);
 
       if (error) {
-        console.error("[Auth Callback] Exchange error:", error.message);
-        return NextResponse.redirect(`${origin}/?error=auth&message=${encodeURIComponent(error.message)}`);
+        return NextResponse.redirect(`${origin}/?error=auth`);
       }
 
-      console.log("[Auth Callback] Success, user:", data.user?.email);
-
-      // Redirect to home page after successful auth
-      const response = NextResponse.redirect(`${origin}${next}`);
-      return response;
-    } catch (e) {
-      console.error("[Auth Callback] Exception:", e);
+      return NextResponse.redirect(`${origin}${next}`);
+    } catch {
       return NextResponse.redirect(`${origin}/?error=auth`);
     }
   }
 
-  // No code provided
   return NextResponse.redirect(`${origin}/?error=no_code`);
 }
