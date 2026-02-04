@@ -327,7 +327,7 @@ export function ChatPanel({
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -4 }}
                   transition={{ duration: 0.12 }}
-                  className="absolute top-full right-0 mt-1 z-30 glass rounded-xl overflow-hidden min-w-[220px] py-1 shadow-xl shadow-black/40"
+                  className="absolute top-full right-0 mt-1 z-50 bg-zinc-900/95 backdrop-blur-xl border border-white/10 rounded-xl overflow-hidden min-w-[220px] py-1 shadow-2xl shadow-black/60"
                 >
                   <button
                     onClick={() => { onNewProject(); setShowProjectMenu(false); }}

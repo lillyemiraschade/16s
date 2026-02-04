@@ -242,6 +242,7 @@ function HomePageContent() {
   // Auto-save project (debounced) - saves immediately when project starts
   const saveTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const pendingSaveRef = useRef<(() => Promise<void>) | null>(null);
+  const pendingProjectIdRef = useRef<string | null>(null);
 
   useEffect(() => {
     // Save as soon as project starts (hasStarted), don't wait for messages
@@ -250,31 +251,45 @@ function HomePageContent() {
 
     // Create the save function so we can call it immediately on page leave
     const doSave = async () => {
-      const id = currentProjectId || generateId();
-      if (!currentProjectId) setCurrentProjectId(id);
+      try {
+        // Use existing ID, pending ID, or generate new one
+        const id = currentProjectId || pendingProjectIdRef.current || generateId();
+        if (!currentProjectId) {
+          pendingProjectIdRef.current = id;
+          setCurrentProjectId(id);
+        }
 
-      // Generate name from first user message, or use "Untitled" / "New Project"
-      let name = projectName;
-      if (projectName === "Untitled" && messages.length > 0) {
-        const firstUserMsg = messages.find((m) => m.role === "user");
-        name = firstUserMsg?.content.slice(0, 40) || "New Project";
-      } else if (projectName === "Untitled" && messages.length === 0) {
-        name = "New Project";
+        // Generate name from first user message, or use "Untitled" / "New Project"
+        let name = projectName;
+        if (projectName === "Untitled" && messages.length > 0) {
+          const firstUserMsg = messages.find((m) => m.role === "user");
+          name = firstUserMsg?.content.slice(0, 40) || "New Project";
+        } else if (projectName === "Untitled" && messages.length === 0) {
+          name = "New Project";
+        }
+        if (name !== projectName) setProjectName(name);
+
+        console.log("[AutoSave] Saving project:", { id, name, messageCount: messages.length, isCloud });
+
+        await saveProject({
+          id,
+          name,
+          messages,
+          currentPreview,
+          previewHistory,
+          bookmarks,
+          updatedAt: Date.now(),
+        });
+
+        console.log("[AutoSave] Save successful");
+        const updatedList = await listProjects();
+        setSavedProjects(updatedList);
+        pendingSaveRef.current = null;
+        pendingProjectIdRef.current = null;
+      } catch (error) {
+        console.error("[AutoSave] Failed to save project:", error);
+        // Don't clear pendingSaveRef so it can retry
       }
-      if (name !== projectName) setProjectName(name);
-
-      await saveProject({
-        id,
-        name,
-        messages,
-        currentPreview,
-        previewHistory,
-        bookmarks,
-        updatedAt: Date.now(),
-      });
-      const updatedList = await listProjects();
-      setSavedProjects(updatedList);
-      pendingSaveRef.current = null;
     };
 
     pendingSaveRef.current = doSave;
@@ -283,7 +298,7 @@ function HomePageContent() {
     saveTimerRef.current = setTimeout(doSave, delay);
 
     return () => { if (saveTimerRef.current) clearTimeout(saveTimerRef.current); };
-  }, [messages, currentPreview, previewHistory, bookmarks, hasStarted, currentProjectId, projectName, saveProject, listProjects, isAuthLoading]);
+  }, [messages, currentPreview, previewHistory, bookmarks, hasStarted, currentProjectId, projectName, saveProject, listProjects, isAuthLoading, isCloud]);
 
   // Save immediately when leaving the page
   useEffect(() => {
@@ -566,7 +581,19 @@ function HomePageContent() {
         }
       }
 
-      // Strategy 2: Find the last complete JSON object in the response
+      // Strategy 2: Handle markdown-wrapped JSON (```json...```)
+      if (!data) {
+        const jsonMatch = responseText.match(/```(?:json)?\n?([\s\S]+?)\n?```/);
+        if (jsonMatch) {
+          try {
+            data = JSON.parse(jsonMatch[1].trim());
+          } catch {
+            // Continue to next strategy
+          }
+        }
+      }
+
+      // Strategy 3: Find the last complete JSON object in the response
       if (!data) {
         // Look for JSON that starts with { and ends with }
         const jsonStart = responseText.lastIndexOf("\n{");
@@ -580,7 +607,7 @@ function HomePageContent() {
         }
       }
 
-      // Strategy 3: Try to find any JSON object with "message" field
+      // Strategy 4: Try to find any JSON object with "message" field
       if (!data) {
         // Find the last occurrence of {"message" which is our response format
         const msgIndex = responseText.lastIndexOf('{"message"');
@@ -615,10 +642,23 @@ function HomePageContent() {
         }
       }
 
-      // Strategy 4: Graceful fallback - never throw, always show something
+      // Strategy 5: Extract any JSON object from the response
+      if (!data) {
+        const objMatch = responseText.match(/\{[\s\S]*\}/);
+        if (objMatch) {
+          try {
+            data = JSON.parse(objMatch[0]);
+          } catch {
+            // Continue to fallback
+          }
+        }
+      }
+
+      // Strategy 6: Use raw text as message if available, else show error
       if (!data) {
         console.error("Failed to parse response:", responseText.slice(0, 500));
-        data = { message: "I'm working on that. Give me one more try?" };
+        const rawText = responseText.trim();
+        data = { message: rawText || "Something went wrong. Please try again." };
       }
 
       // Check if API returned an error in the response body
@@ -766,7 +806,19 @@ function HomePageContent() {
         }
       }
 
-      // Strategy 2: Find the last complete JSON object
+      // Strategy 2: Handle markdown-wrapped JSON (```json...```)
+      if (!data) {
+        const jsonMatch = responseText.match(/```(?:json)?\n?([\s\S]+?)\n?```/);
+        if (jsonMatch) {
+          try {
+            data = JSON.parse(jsonMatch[1].trim());
+          } catch {
+            // Continue to next strategy
+          }
+        }
+      }
+
+      // Strategy 3: Find the last complete JSON object
       if (!data) {
         const jsonStart = responseText.lastIndexOf("\n{");
         if (jsonStart !== -1) {
@@ -779,7 +831,7 @@ function HomePageContent() {
         }
       }
 
-      // Strategy 3: Find JSON with "message" field
+      // Strategy 4: Find JSON with "message" field
       if (!data) {
         const msgIndex = responseText.lastIndexOf('{"message"');
         if (msgIndex !== -1) {
@@ -803,10 +855,23 @@ function HomePageContent() {
         }
       }
 
-      // Strategy 4: Graceful fallback
+      // Strategy 5: Extract any JSON object from the response
+      if (!data) {
+        const objMatch = responseText.match(/\{[\s\S]*\}/);
+        if (objMatch) {
+          try {
+            data = JSON.parse(objMatch[0]);
+          } catch {
+            // Continue to fallback
+          }
+        }
+      }
+
+      // Strategy 6: Use raw text as message if available, else show error
       if (!data) {
         console.error("Failed to parse response:", responseText.slice(0, 500));
-        data = { message: "I'm working on that. Give me one more try?" };
+        const rawText = responseText.trim();
+        data = { message: rawText || "Something went wrong. Please try again." };
       }
 
       if (data.error) {
@@ -1042,6 +1107,9 @@ function HomePageContent() {
 
   const handleNewProject = useCallback(() => {
     abortRef.current?.abort();
+    if (saveTimerRef.current) clearTimeout(saveTimerRef.current);
+    pendingProjectIdRef.current = null;
+    pendingSaveRef.current = null;
     setMessages([]);
     setCurrentPreview(null);
     setPreviewHistory([]);

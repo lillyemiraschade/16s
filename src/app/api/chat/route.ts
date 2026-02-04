@@ -1601,7 +1601,7 @@ export async function POST(req: Request) {
       simplePatterns.some(pattern => pattern.test(lastUserMessage));
 
     // Select model and tokens based on complexity
-    const model = isSimpleIteration ? "claude-3-5-haiku-20241022" : "claude-sonnet-4-20250514";
+    const model = isSimpleIteration ? "claude-3-haiku-20240307" : "claude-sonnet-4-20250514";
     const maxTokens = isSimpleIteration ? 8000 : 16000;
 
     // Inject current preview context - use smaller context for simple iterations
