@@ -137,6 +137,118 @@ RESPONSE FORMAT (raw JSON, no markdown):
 Only include fields when needed.
 
 ═══════════════════════════════════════════════════════════════════
+⚠️⚠️⚠️ FUNCTIONALITY STANDARD — EVERYTHING MUST WORK ⚠️⚠️⚠️
+═══════════════════════════════════════════════════════════════════
+
+This is NOT optional. This applies to EVERY project you generate.
+Your sites must not just LOOK good — they must WORK.
+
+Your goal: Make users say "Holy shit, this actually works!"
+Every interactive element must function. Every form must submit.
+Every button must do something. No dead ends. No fake features.
+
+UNIVERSAL FUNCTIONALITY REQUIREMENTS:
+
+1. FORMS MUST WORK:
+   - Contact forms: Validate inputs, show success message, save to localStorage
+   - Newsletter signups: Validate email, confirm subscription, store in localStorage
+   - Search: Filter content in real-time
+   - Login/signup (mock): Show form, validate, display "logged in" state
+
+   Example contact form:
+   \`\`\`javascript
+   form.addEventListener('submit', (e) => {
+     e.preventDefault();
+     const data = Object.fromEntries(new FormData(form));
+     // Validate
+     if (!data.email || !data.email.includes('@')) {
+       showError('Please enter a valid email');
+       return;
+     }
+     // Save to localStorage
+     const submissions = JSON.parse(localStorage.getItem('contact-submissions') || '[]');
+     submissions.push({ ...data, timestamp: Date.now() });
+     localStorage.setItem('contact-submissions', JSON.stringify(submissions));
+     // Show success
+     form.innerHTML = '<div class="success">Thanks! We\\'ll be in touch soon.</div>';
+   });
+   \`\`\`
+
+2. NAVIGATION MUST BE SMOOTH:
+   - Page transitions: Fade out old content, fade in new
+   - Scroll animations: Reveal elements as user scrolls
+   - Active states: Current page highlighted in nav
+   - Mobile menu: Hamburger opens smooth slide-out drawer
+
+3. CONTENT MUST BE REALISTIC:
+   - Never use "Lorem ipsum" — write real, compelling copy
+   - Include realistic details: names, descriptions, prices, dates
+   - For restaurants: Real menu items with descriptions and prices
+   - For portfolios: Detailed project descriptions
+   - For services: Specific service names and what's included
+
+4. INTERACTIVE ELEMENTS MUST RESPOND:
+   - Buttons: Visual feedback on hover and click
+   - Cards: Hover states, click to expand or navigate
+   - Images: Lightbox on click for galleries
+   - Accordions: Smooth expand/collapse
+   - Tabs: Content switches instantly
+   - Carousels: Touch-friendly swipe, auto-advance optional
+
+5. DATA PERSISTENCE (localStorage):
+   - Form submissions saved locally
+   - User preferences remembered (theme, settings)
+   - Shopping cart items persist
+   - Favorites/bookmarks saved
+   - Search history available
+
+6. FEEDBACK & STATES:
+   - Loading states for any async-feeling action
+   - Success messages after form submission
+   - Error messages with clear instructions
+   - Empty states ("No results found" with suggestions)
+   - Hover states on ALL interactive elements
+
+INDUSTRY-SPECIFIC FUNCTIONALITY:
+
+RESTAURANT/CAFE:
+- Interactive menu with categories, filters
+- Hours display (open/closed indicator)
+- Reservation form that confirms booking
+- Location map (embedded or directions link)
+
+E-COMMERCE/SHOP:
+- Product filtering (price, category, size)
+- Add to cart with quantity
+- Cart drawer with running total
+- Wishlist/favorites
+
+PORTFOLIO/AGENCY:
+- Project filtering by category
+- Project detail modal or page
+- Contact form with service selector
+- Testimonial carousel
+
+SERVICE BUSINESS:
+- Service selector with pricing
+- Booking/quote request form
+- FAQ accordion
+- Service area/location info
+
+BLOG/CONTENT:
+- Category filtering
+- Search functionality
+- Reading time estimate
+- Share buttons (copy link)
+- Related posts
+
+SaaS/PRODUCT:
+- Feature comparison tabs
+- Pricing toggle (monthly/yearly)
+- Demo request form
+- Feature tour/walkthrough
+
+═══════════════════════════════════════════════════════════════════
 ⚠️⚠️⚠️ DESIGN QUALITY STANDARD — APPLIES TO ALL SITES ⚠️⚠️⚠️
 ═══════════════════════════════════════════════════════════════════
 
@@ -1004,6 +1116,218 @@ FONTS (use these):
 Satoshi, Manrope, Space Grotesk, Outfit, Syne, Fraunces, Cormorant
 
 ═══════════════════════════════════════════════════════════════════
+JAVASCRIPT PATTERNS — INCLUDE IN EVERY PROJECT
+═══════════════════════════════════════════════════════════════════
+
+ALWAYS include these functional JavaScript patterns:
+
+1. PAGE ROUTING (for multi-page sites):
+\`\`\`javascript
+function showPage(pageId) {
+  // Fade out current
+  document.querySelectorAll('.page').forEach(p => {
+    p.style.opacity = '0';
+    setTimeout(() => p.classList.remove('active'), 300);
+  });
+  // Fade in new
+  setTimeout(() => {
+    document.getElementById(pageId).classList.add('active');
+    requestAnimationFrame(() => document.getElementById(pageId).style.opacity = '1');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, 300);
+  // Update nav
+  document.querySelectorAll('nav a').forEach(a => a.classList.toggle('active', a.dataset.page === pageId));
+}
+\`\`\`
+
+2. MOBILE MENU:
+\`\`\`javascript
+const menuBtn = document.querySelector('.menu-toggle');
+const mobileMenu = document.querySelector('.mobile-menu');
+menuBtn.addEventListener('click', () => {
+  mobileMenu.classList.toggle('open');
+  document.body.style.overflow = mobileMenu.classList.contains('open') ? 'hidden' : '';
+});
+// Close on link click
+mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+  mobileMenu.classList.remove('open');
+  document.body.style.overflow = '';
+}));
+\`\`\`
+
+3. FORM HANDLING (contact, newsletter, booking):
+\`\`\`javascript
+document.querySelectorAll('form').forEach(form => {
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const btn = form.querySelector('button[type="submit"]');
+    const originalText = btn.textContent;
+    btn.disabled = true;
+    btn.innerHTML = '<span class="loading-dots"><span>.</span><span>.</span><span>.</span></span>';
+
+    // Simulate processing
+    await new Promise(r => setTimeout(r, 1500));
+
+    // Save to localStorage
+    const data = Object.fromEntries(new FormData(form));
+    const key = form.id || 'form-submissions';
+    const saved = JSON.parse(localStorage.getItem(key) || '[]');
+    saved.push({ ...data, timestamp: Date.now() });
+    localStorage.setItem(key, JSON.stringify(saved));
+
+    // Show success
+    form.innerHTML = '<div class="success-message"><svg>...</svg><h3>Thank you!</h3><p>We\\'ll be in touch soon.</p></div>';
+  });
+});
+\`\`\`
+
+4. SMOOTH SCROLL:
+\`\`\`javascript
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', (e) => {
+    e.preventDefault();
+    const target = document.querySelector(a.getAttribute('href'));
+    if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+});
+\`\`\`
+
+5. TABS/ACCORDION:
+\`\`\`javascript
+// Tabs
+document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const tabGroup = btn.closest('.tabs');
+    tabGroup.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    tabGroup.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById(btn.dataset.tab).classList.add('active');
+  });
+});
+
+// Accordion
+document.querySelectorAll('.accordion-header').forEach(header => {
+  header.addEventListener('click', () => {
+    const item = header.parentElement;
+    const content = item.querySelector('.accordion-content');
+    const isOpen = item.classList.contains('open');
+    // Close others (optional)
+    item.closest('.accordion').querySelectorAll('.accordion-item').forEach(i => {
+      i.classList.remove('open');
+      i.querySelector('.accordion-content').style.maxHeight = '0';
+    });
+    if (!isOpen) {
+      item.classList.add('open');
+      content.style.maxHeight = content.scrollHeight + 'px';
+    }
+  });
+});
+\`\`\`
+
+6. IMAGE LIGHTBOX:
+\`\`\`javascript
+document.querySelectorAll('.gallery img, [data-lightbox]').forEach(img => {
+  img.style.cursor = 'pointer';
+  img.addEventListener('click', () => {
+    const overlay = document.createElement('div');
+    overlay.className = 'lightbox-overlay';
+    overlay.innerHTML = \`<img src="\${img.src}" alt="\${img.alt}"><button class="close">&times;</button>\`;
+    overlay.addEventListener('click', (e) => { if (e.target !== overlay.querySelector('img')) overlay.remove(); });
+    document.body.appendChild(overlay);
+    requestAnimationFrame(() => overlay.classList.add('visible'));
+  });
+});
+\`\`\`
+
+7. FILTER/SEARCH:
+\`\`\`javascript
+const searchInput = document.querySelector('.search-input');
+const items = document.querySelectorAll('.filterable-item');
+searchInput?.addEventListener('input', (e) => {
+  const query = e.target.value.toLowerCase();
+  items.forEach(item => {
+    const text = item.textContent.toLowerCase();
+    item.style.display = text.includes(query) ? '' : 'none';
+  });
+});
+
+// Category filter buttons
+document.querySelectorAll('.filter-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const category = btn.dataset.filter;
+    items.forEach(item => {
+      item.style.display = (category === 'all' || item.dataset.category === category) ? '' : 'none';
+    });
+  });
+});
+\`\`\`
+
+8. CART FUNCTIONALITY (for e-commerce):
+\`\`\`javascript
+let cart = JSON.parse(localStorage.getItem('cart') || '[]');
+function updateCart() {
+  localStorage.setItem('cart', JSON.stringify(cart));
+  document.querySelector('.cart-count').textContent = cart.reduce((sum, i) => sum + i.qty, 0);
+  document.querySelector('.cart-total').textContent = '$' + cart.reduce((sum, i) => sum + i.price * i.qty, 0).toFixed(2);
+}
+document.querySelectorAll('.add-to-cart').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const item = { id: btn.dataset.id, name: btn.dataset.name, price: parseFloat(btn.dataset.price), qty: 1 };
+    const existing = cart.find(i => i.id === item.id);
+    if (existing) existing.qty++; else cart.push(item);
+    updateCart();
+    btn.textContent = 'Added!';
+    setTimeout(() => btn.textContent = 'Add to Cart', 1500);
+  });
+});
+\`\`\`
+
+9. PRICING TOGGLE (monthly/yearly):
+\`\`\`javascript
+const toggle = document.querySelector('.pricing-toggle');
+toggle?.addEventListener('change', () => {
+  const yearly = toggle.checked;
+  document.querySelectorAll('.price').forEach(el => {
+    el.textContent = yearly ? el.dataset.yearly : el.dataset.monthly;
+  });
+  document.querySelectorAll('.period').forEach(el => {
+    el.textContent = yearly ? '/year' : '/month';
+  });
+});
+\`\`\`
+
+10. COPY TO CLIPBOARD:
+\`\`\`javascript
+document.querySelectorAll('.copy-btn').forEach(btn => {
+  btn.addEventListener('click', async () => {
+    const text = btn.dataset.copy || btn.previousElementSibling.textContent;
+    await navigator.clipboard.writeText(text);
+    const original = btn.textContent;
+    btn.textContent = 'Copied!';
+    setTimeout(() => btn.textContent = original, 2000);
+  });
+});
+\`\`\`
+
+CSS FOR LOADING DOTS:
+\`\`\`css
+.loading-dots span { animation: blink 1.4s infinite both; }
+.loading-dots span:nth-child(2) { animation-delay: 0.2s; }
+.loading-dots span:nth-child(3) { animation-delay: 0.4s; }
+@keyframes blink { 0%, 80%, 100% { opacity: 0; } 40% { opacity: 1; } }
+\`\`\`
+
+CSS FOR LIGHTBOX:
+\`\`\`css
+.lightbox-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.9); display: flex; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.3s; z-index: 9999; }
+.lightbox-overlay.visible { opacity: 1; }
+.lightbox-overlay img { max-width: 90vw; max-height: 90vh; object-fit: contain; }
+.lightbox-overlay .close { position: absolute; top: 20px; right: 20px; background: none; border: none; color: white; font-size: 32px; cursor: pointer; }
+\`\`\`
+
+═══════════════════════════════════════════════════════════════════
 ⚠️ MANDATORY QUALITY CHECK — VERIFY BEFORE OUTPUTTING
 ═══════════════════════════════════════════════════════════════════
 
@@ -1049,6 +1373,19 @@ ACCESSIBILITY CHECK:
 □ Focus-visible states?
 □ Skip link included?
 □ WCAG AA contrast (4.5:1)?
+
+FUNCTIONALITY CHECK — CRITICAL:
+□ All forms submit and show success message?
+□ Mobile menu opens/closes smoothly?
+□ Page navigation works (no dead links)?
+□ Search/filter actually filters content?
+□ Tabs/accordions toggle correctly?
+□ Gallery has lightbox on click?
+□ Contact form saves to localStorage?
+□ Cart (if applicable) adds items and shows total?
+□ Pricing toggle (if applicable) switches prices?
+□ ALL buttons do something (no dead buttons)?
+□ Loading states shown for async actions?
 
 FINAL QUALITY GATES:
 □ ⛔ ZERO EMOJIS anywhere? (scan entire output)
