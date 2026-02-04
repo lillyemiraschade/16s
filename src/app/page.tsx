@@ -123,9 +123,18 @@ export default function HomePage() {
   // Randomized on client only to avoid hydration mismatch
   const [headline, setHeadline] = useState(HEADLINES[0]);
   const [randomIdeas, setRandomIdeas] = useState<string[]>([]);
+  const [ideaKey, setIdeaKey] = useState(0); // For triggering re-animation
   useEffect(() => {
     setHeadline(HEADLINES[Math.floor(Math.random() * HEADLINES.length)]);
     setRandomIdeas(getRandomIdeas(3));
+
+    // Auto-shuffle ideas every 10 seconds
+    const shuffleInterval = setInterval(() => {
+      setRandomIdeas(getRandomIdeas(3));
+      setIdeaKey(k => k + 1);
+    }, 10000);
+
+    return () => clearInterval(shuffleInterval);
   }, []);
 
   const [welcomeInput, setWelcomeInput] = useState("");
@@ -1223,17 +1232,49 @@ export default function HomePage() {
 
             {/* Random idea suggestions */}
             {randomIdeas.length > 0 && (
-              <div className="flex flex-wrap justify-center gap-2 w-full max-w-[600px]">
-                {randomIdeas.map((idea, idx) => (
-                  <button
-                    key={idx}
-                    onClick={() => handleSendMessage(idea)}
-                    disabled={isGenerating}
-                    className="px-4 py-2.5 text-[12px] md:text-[13px] font-medium text-zinc-400 hover:text-zinc-200 glass-pill disabled:opacity-40 disabled:cursor-not-allowed rounded-xl transition-all duration-200 text-center"
+              <div className="flex justify-center gap-3 w-full overflow-hidden">
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={ideaKey}
+                    className="flex gap-3"
+                    initial="hidden"
+                    animate="visible"
+                    exit="exit"
+                    variants={{
+                      hidden: {},
+                      visible: { transition: { staggerChildren: 0.1 } },
+                      exit: { transition: { staggerChildren: 0.05 } },
+                    }}
                   >
-                    {idea}
-                  </button>
-                ))}
+                    {randomIdeas.map((idea, idx) => (
+                      <motion.button
+                        key={`${ideaKey}-${idx}`}
+                        onClick={() => handleSendMessage(idea)}
+                        disabled={isGenerating}
+                        className="px-5 py-2.5 text-[13px] font-medium text-zinc-400 hover:text-zinc-200 hover:bg-white/[0.06] glass-pill disabled:opacity-40 disabled:cursor-not-allowed rounded-xl transition-colors duration-200 whitespace-nowrap"
+                        variants={{
+                          hidden: { opacity: 0, y: 20, scale: 0.9 },
+                          visible: {
+                            opacity: 1,
+                            y: 0,
+                            scale: 1,
+                            transition: { type: "spring", stiffness: 300, damping: 24 }
+                          },
+                          exit: {
+                            opacity: 0,
+                            y: -20,
+                            scale: 0.9,
+                            transition: { duration: 0.2 }
+                          },
+                        }}
+                        whileHover={{ scale: 1.02 }}
+                        whileTap={{ scale: 0.98 }}
+                      >
+                        {idea}
+                      </motion.button>
+                    ))}
+                  </motion.div>
+                </AnimatePresence>
               </div>
             )}
           </motion.div>
