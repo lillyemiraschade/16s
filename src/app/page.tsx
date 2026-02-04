@@ -194,10 +194,14 @@ export default function HomePage() {
 
   // Auto-save project (debounced)
   const saveTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const pendingSaveRef = useRef<(() => Promise<void>) | null>(null);
+
   useEffect(() => {
     if (!hasStarted || messages.length === 0 || isAuthLoading) return;
     if (saveTimerRef.current) clearTimeout(saveTimerRef.current);
-    saveTimerRef.current = setTimeout(async () => {
+
+    // Create the save function so we can call it immediately on page leave
+    const doSave = async () => {
       const id = currentProjectId || generateId();
       if (!currentProjectId) setCurrentProjectId(id);
       const name = projectName === "Untitled" && messages.length > 0
@@ -215,9 +219,50 @@ export default function HomePage() {
       });
       const updatedList = await listProjects();
       setSavedProjects(updatedList);
-    }, 1000);
+      pendingSaveRef.current = null;
+    };
+
+    pendingSaveRef.current = doSave;
+    saveTimerRef.current = setTimeout(doSave, 1000);
+
     return () => { if (saveTimerRef.current) clearTimeout(saveTimerRef.current); };
   }, [messages, currentPreview, previewHistory, bookmarks, hasStarted, currentProjectId, projectName, saveProject, listProjects, isAuthLoading]);
+
+  // Save immediately when leaving the page
+  useEffect(() => {
+    const handleBeforeUnload = () => {
+      if (pendingSaveRef.current) {
+        // Use sendBeacon for reliable save on page unload
+        const id = currentProjectId || generateId();
+        const name = projectName === "Untitled" && messages.length > 0
+          ? messages.find((m) => m.role === "user")?.content.slice(0, 40) || "Untitled"
+          : projectName;
+        const project = {
+          id,
+          name,
+          messages,
+          currentPreview,
+          previewHistory,
+          bookmarks,
+          updatedAt: Date.now(),
+        };
+        // Save to localStorage as backup (works synchronously)
+        try {
+          const key = `16s_projects`;
+          const existing = JSON.parse(localStorage.getItem(key) || "[]");
+          const idx = existing.findIndex((p: { id: string }) => p.id === id);
+          if (idx >= 0) existing[idx] = project;
+          else existing.unshift(project);
+          localStorage.setItem(key, JSON.stringify(existing.slice(0, 20)));
+        } catch (e) {
+          console.error("[Save] Failed to save on unload:", e);
+        }
+      }
+    };
+
+    window.addEventListener("beforeunload", handleBeforeUnload);
+    return () => window.removeEventListener("beforeunload", handleBeforeUnload);
+  }, [currentProjectId, projectName, messages, currentPreview, previewHistory, bookmarks]);
 
   const captureScreenshot = useCallback(async (iframe: HTMLIFrameElement) => {
     try {
