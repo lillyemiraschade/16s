@@ -1034,7 +1034,7 @@ export default function HomePage() {
   if (!hasStarted) {
     return (
       <div id="main-content" className="h-screen welcome-bg flex flex-col">
-        <header className="relative z-10 h-14 md:h-[60px] flex items-center justify-between px-4 md:px-6">
+        <header className="relative z-20 h-14 md:h-[60px] flex items-center justify-between px-4 md:px-6">
           <div className="flex items-center gap-4 md:gap-8">
             <Image src="/logo.png" alt="16s logo" width={28} height={28} className="object-contain" />
             <nav className="flex items-center gap-0.5 md:gap-1">
