@@ -294,29 +294,33 @@ export function ChatPanel({
       </AnimatePresence>
 
       {/* Header */}
-      <div className="px-5 py-4 border-b border-white/[0.04] flex items-center justify-between">
-        <div className="flex items-center">
-          <Image src="/logo.png" alt="16s logo" width={32} height={32} className="object-contain" />
-        </div>
-        <div className="flex items-center gap-2">
+      <div className="h-[52px] px-4 border-b border-white/[0.04] flex items-center justify-between">
+        <div className="flex items-center gap-3">
+          <Image src="/logo.png" alt="16s logo" width={28} height={28} className="object-contain" />
           <button
             onClick={handleCallClick}
             disabled={isOnCall}
-            className="flex items-center gap-1.5 px-3 py-2 text-[12px] font-medium text-zinc-300 hover:text-zinc-100 glass-pill disabled:opacity-40 disabled:cursor-not-allowed rounded-full transition-all duration-200"
-            title="Talk about the project on the phone"
+            className={`flex items-center gap-1.5 px-2.5 py-1.5 text-[11px] font-medium rounded-lg transition-all duration-200 ${
+              isOnCall
+                ? "text-green-400 bg-green-500/15"
+                : "text-zinc-400 hover:text-zinc-200 hover:bg-white/[0.04]"
+            } disabled:cursor-not-allowed`}
+            title="Voice call with AI"
           >
             <Phone className="w-3.5 h-3.5" />
-            Talk on phone
+            <span>Call</span>
           </button>
+        </div>
+        <div className="flex items-center gap-2">
           <div className="relative" ref={projectMenuRef}>
             <button
               onClick={() => setShowProjectMenu((v) => !v)}
-              className="flex items-center gap-1.5 px-3 py-2 text-[12px] font-medium text-zinc-300 hover:text-zinc-100 glass-pill rounded-full transition-all duration-200"
+              className="flex items-center gap-1.5 px-2.5 py-1.5 text-[11px] font-medium text-zinc-400 hover:text-zinc-200 hover:bg-white/[0.04] rounded-lg transition-all duration-200"
               title="Projects"
             >
               <Plus className="w-3.5 h-3.5" />
-              New
-              <ChevronDown className="w-3 h-3" />
+              <span>New</span>
+              <ChevronDown className="w-3 h-3 opacity-50" />
             </button>
             <AnimatePresence>
               {showProjectMenu && (

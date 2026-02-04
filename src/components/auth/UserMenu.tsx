@@ -25,15 +25,15 @@ export function UserMenu() {
 
   if (loading) {
     return (
-      <div className="w-8 h-8 rounded-full glass animate-pulse" />
+      <div className="w-7 h-7 rounded-full bg-white/[0.04] animate-pulse" />
     );
   }
 
-  // Auth not configured - show simple guest mode indicator
+  // Auth not configured - show simple local indicator
   if (!isConfigured) {
     return (
-      <div className="flex items-center gap-2 px-3 py-1.5 rounded-full glass text-[12px] font-medium text-zinc-400">
-        <HardDrive className="w-3.5 h-3.5 text-zinc-500" />
+      <div className="flex items-center gap-1.5 px-2 py-1 rounded-lg text-[11px] font-medium text-zinc-500">
+        <HardDrive className="w-3 h-3" />
         <span>Local</span>
       </div>
     );
@@ -44,12 +44,10 @@ export function UserMenu() {
       <>
         <button
           onClick={() => setShowAuthModal(true)}
-          className="flex items-center gap-2 px-3 py-1.5 rounded-full glass glass-hover text-[12px] font-medium text-zinc-300 transition-all duration-200"
+          className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-[11px] font-medium text-zinc-400 hover:text-zinc-200 hover:bg-white/[0.04] transition-all duration-150"
         >
-          <HardDrive className="w-3.5 h-3.5 text-zinc-500" />
-          <span>Guest</span>
-          <span className="text-zinc-500">|</span>
-          <span className="text-zinc-100">Sign in</span>
+          <User className="w-3.5 h-3.5" />
+          <span>Sign in</span>
         </button>
         <AuthModal isOpen={showAuthModal} onClose={() => setShowAuthModal(false)} />
       </>
@@ -63,24 +61,23 @@ export function UserMenu() {
     <div className="relative" ref={dropdownRef}>
       <button
         onClick={() => setShowDropdown(!showDropdown)}
-        className="flex items-center gap-2 px-2 py-1.5 rounded-full glass glass-hover transition-all duration-200"
+        className="flex items-center gap-2 px-2 py-1 rounded-lg hover:bg-white/[0.04] transition-all duration-150"
       >
-        <Cloud className="w-3.5 h-3.5 text-green-400" />
         {avatarUrl ? (
           <img
             src={avatarUrl}
             alt={displayName}
-            className="w-5 h-5 rounded-full"
+            className="w-6 h-6 rounded-full ring-1 ring-white/10"
           />
         ) : (
-          <div className="w-5 h-5 rounded-full bg-zinc-600 flex items-center justify-center">
-            <User className="w-3 h-3 text-zinc-300" />
+          <div className="w-6 h-6 rounded-full bg-zinc-700 flex items-center justify-center ring-1 ring-white/10">
+            <User className="w-3 h-3 text-zinc-400" />
           </div>
         )}
-        <span className="text-[12px] font-medium text-zinc-300 max-w-[100px] truncate">
+        <span className="text-[11px] font-medium text-zinc-300 max-w-[80px] truncate hidden sm:block">
           {displayName}
         </span>
-        <ChevronDown className={`w-3 h-3 text-zinc-500 transition-transform ${showDropdown ? "rotate-180" : ""}`} />
+        <ChevronDown className={`w-3 h-3 text-zinc-500 transition-transform duration-150 ${showDropdown ? "rotate-180" : ""}`} />
       </button>
 
       <AnimatePresence>

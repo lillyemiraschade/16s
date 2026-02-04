@@ -274,63 +274,52 @@ export function PreviewPanel({
   return (
     <div className="flex flex-col h-full bg-[#0c0c0d] dot-grid">
       {/* Top bar */}
-      <div className="flex items-center justify-between px-4 py-2.5 border-b border-white/[0.04]">
-        {/* Browser nav buttons */}
-        <div className="flex items-center gap-1">
+      <div className="h-[52px] flex items-center justify-between px-4 border-b border-white/[0.04]">
+        {/* Left: Nav buttons */}
+        <div className="flex items-center gap-0.5">
           <button
             onClick={onBack}
             disabled={!canGoBack}
-            className="p-1.5 rounded-full text-zinc-500 hover:text-zinc-300 hover:bg-white/[0.04] disabled:text-zinc-700 disabled:cursor-not-allowed transition-all duration-200"
+            className="p-2 rounded-lg text-zinc-500 hover:text-zinc-300 hover:bg-white/[0.04] disabled:text-zinc-700 disabled:cursor-not-allowed transition-all duration-150"
             title="Undo (Cmd+Z)"
-            aria-label="Go back to previous version"
           >
             <ChevronLeft className="w-4 h-4" />
           </button>
           <button
             onClick={onRedo}
             disabled={!canRedo}
-            className="p-1.5 rounded-full text-zinc-500 hover:text-zinc-300 hover:bg-white/[0.04] disabled:text-zinc-700 disabled:cursor-not-allowed transition-all duration-200"
+            className="p-2 rounded-lg text-zinc-500 hover:text-zinc-300 hover:bg-white/[0.04] disabled:text-zinc-700 disabled:cursor-not-allowed transition-all duration-150"
             title="Redo (Cmd+Shift+Z)"
-            aria-label="Redo"
           >
             <RotateCw className="w-3.5 h-3.5" />
           </button>
           <button
             onClick={() => setReloadKey((k) => k + 1)}
             disabled={!html}
-            className="p-1.5 rounded-full text-zinc-500 hover:text-zinc-300 hover:bg-white/[0.04] disabled:text-zinc-700 disabled:cursor-not-allowed transition-all duration-200"
+            className="p-2 rounded-lg text-zinc-500 hover:text-zinc-300 hover:bg-white/[0.04] disabled:text-zinc-700 disabled:cursor-not-allowed transition-all duration-150"
             title="Reload"
-            aria-label="Reload preview"
           >
             <RotateCcw className="w-3.5 h-3.5" />
           </button>
+          <div className="w-px h-4 bg-white/[0.06] mx-1" />
           {totalVersions > 1 && (
             <button
               onClick={() => setShowHistory((v) => !v)}
-              className={`p-1.5 rounded-full transition-all duration-200 ${
-                showHistory
-                  ? "text-green-400 bg-green-500/10"
-                  : "text-zinc-500 hover:text-zinc-300 hover:bg-white/[0.04]"
+              className={`p-2 rounded-lg transition-all duration-150 ${
+                showHistory ? "text-green-400 bg-green-500/10" : "text-zinc-500 hover:text-zinc-300 hover:bg-white/[0.04]"
               }`}
               title="Version history"
-              aria-label="Toggle version history"
             >
               <Clock className="w-3.5 h-3.5" />
             </button>
           )}
           {html && !isGenerating && (
             <button
-              onClick={() => {
-                onSelectModeChange(!selectMode);
-                if (selectMode) onElementSelect(null);
-              }}
-              className={`p-1.5 rounded-full transition-all duration-200 ${
-                selectMode
-                  ? "text-green-400 bg-green-500/10"
-                  : "text-zinc-500 hover:text-zinc-300 hover:bg-white/[0.04]"
+              onClick={() => { onSelectModeChange(!selectMode); if (selectMode) onElementSelect(null); }}
+              className={`p-2 rounded-lg transition-all duration-150 ${
+                selectMode ? "text-green-400 bg-green-500/10" : "text-zinc-500 hover:text-zinc-300 hover:bg-white/[0.04]"
               }`}
-              title="Select element mode"
-              aria-label="Toggle element selection mode"
+              title="Select element"
             >
               <MousePointer2 className="w-3.5 h-3.5" />
             </button>
@@ -338,49 +327,41 @@ export function PreviewPanel({
           {html && !isGenerating && (
             <button
               onClick={() => setShowBookmarkInput(true)}
-              className="p-1.5 rounded-full text-zinc-500 hover:text-zinc-300 hover:bg-white/[0.04] transition-all duration-200"
-              title="Bookmark this version"
-              aria-label="Bookmark this version"
+              className="p-2 rounded-lg text-zinc-500 hover:text-zinc-300 hover:bg-white/[0.04] transition-all duration-150"
+              title="Bookmark"
             >
               <Bookmark className="w-3.5 h-3.5" />
             </button>
           )}
         </div>
 
-        {/* Viewport toggles + code toggle */}
-        <div className="flex items-center gap-2">
-          <div className="flex items-center gap-1 glass rounded-full p-0.5">
+        {/* Center: Viewport + Code toggles */}
+        <div className="flex items-center gap-1">
+          <div className="flex items-center bg-white/[0.03] rounded-lg p-0.5">
             {(Object.keys(viewportConfig) as Viewport[]).map((vp) => {
               const Icon = viewportConfig[vp].icon;
               return (
                 <button
                   key={vp}
                   onClick={() => onViewportChange(vp)}
-                  className={`p-2 rounded-full transition-all duration-200 ${
-                    viewport === vp
-                      ? "bg-white/[0.08] text-zinc-100"
-                      : "text-zinc-500 hover:text-zinc-300"
+                  className={`p-1.5 rounded-md transition-all duration-150 ${
+                    viewport === vp ? "bg-white/[0.08] text-zinc-100" : "text-zinc-500 hover:text-zinc-300"
                   }`}
                   title={viewportConfig[vp].label}
-                  aria-label={`${viewportConfig[vp].label} viewport`}
-                  aria-pressed={viewport === vp}
                 >
                   <Icon className="w-4 h-4" />
                 </button>
               );
             })}
           </div>
+          <div className="w-px h-4 bg-white/[0.06] mx-1" />
           {html && !isGenerating && (
             <button
               onClick={() => setShowCode((v) => !v)}
-              className={`p-2 rounded-full transition-all duration-200 ${
-                showCode
-                  ? "text-green-400 bg-green-500/10"
-                  : "text-zinc-500 hover:text-zinc-300 hover:bg-white/[0.04]"
+              className={`p-1.5 rounded-lg transition-all duration-150 ${
+                showCode ? "text-green-400 bg-green-500/10" : "text-zinc-500 hover:text-zinc-300 hover:bg-white/[0.04]"
               }`}
-              title="Toggle code view (Cmd+/)"
-              aria-label="Toggle code view"
-              aria-pressed={showCode}
+              title="Code view (Cmd+/)"
             >
               <Code className="w-4 h-4" />
             </button>
@@ -388,31 +369,28 @@ export function PreviewPanel({
           {onCodeModeChange && (
             <button
               onClick={() => onCodeModeChange(codeMode === "html" ? "react" : "html")}
-              className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-full text-[11px] font-medium transition-all duration-200 ${
-                codeMode === "react"
-                  ? "text-blue-400 bg-blue-500/10"
-                  : "text-zinc-500 hover:text-zinc-300 hover:bg-white/[0.04]"
+              className={`p-1.5 rounded-lg transition-all duration-150 ${
+                codeMode === "react" ? "text-blue-400 bg-blue-500/10" : "text-zinc-500 hover:text-zinc-300 hover:bg-white/[0.04]"
               }`}
-              title={`Code mode: ${codeMode.toUpperCase()}. Click to toggle.`}
+              title={`${codeMode === "html" ? "HTML" : "React"} mode`}
             >
-              <FileCode className="w-3.5 h-3.5" />
-              {codeMode.toUpperCase()}
+              <FileCode className="w-4 h-4" />
             </button>
           )}
         </div>
 
-        {/* Export dropdown */}
-        <div className="w-[88px] flex justify-end relative" ref={exportRef}>
+        {/* Right: Export */}
+        <div className="flex justify-end relative" ref={exportRef}>
           {html && !isGenerating && (
             <>
               <button
                 onClick={() => setShowExportMenu((v) => !v)}
-                className="flex items-center gap-1 px-3 py-1.5 text-[12px] font-medium text-zinc-400 hover:text-zinc-200 glass glass-hover rounded-full transition-all duration-200"
+                className="flex items-center gap-1.5 px-2.5 py-1.5 text-[11px] font-medium text-zinc-400 hover:text-zinc-200 hover:bg-white/[0.04] rounded-lg transition-all duration-150"
                 title="Export options"
               >
                 <Download className="w-3.5 h-3.5" />
-                Export
-                <ChevronDown className="w-3 h-3" />
+                <span>Export</span>
+                <ChevronDown className="w-3 h-3 opacity-50" />
               </button>
               <AnimatePresence>
                 {showExportMenu && (
