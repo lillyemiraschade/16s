@@ -133,13 +133,13 @@ function GeneratingState({ isRevision }: { isRevision: boolean }) {
         />
       </div>
 
-      <div className="text-center">
+      <div className="text-center max-w-md px-4">
         <p className="text-zinc-300 text-[15px] font-medium mb-4">
           {isRevision ? revisionMessage : "Preview will be available soon"}
         </p>
 
         {/* Rotating tips */}
-        <div className="h-6 relative overflow-hidden">
+        <div className="h-10 relative">
           <AnimatePresence mode="wait">
             <motion.p
               key={tipIndex}
@@ -147,7 +147,7 @@ function GeneratingState({ isRevision }: { isRevision: boolean }) {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
               transition={{ duration: 0.4, ease: "easeOut" }}
-              className="text-zinc-500 text-[13px] absolute inset-x-0"
+              className="text-zinc-500 text-[13px] absolute inset-x-0 leading-relaxed"
             >
               {TIPS[tipIndex]}
             </motion.p>
