@@ -220,12 +220,92 @@ WAVE/LANDSCAPE — Use SVG path:
 .wave { position: absolute; bottom: 0; width: 100%; height: 200px; }
 
 LAYERING WITH Z-INDEX:
-.hero { position: relative; }
+.hero { position: relative; min-height: 100vh; overflow: hidden; }
 .stars { z-index: 1; }
-.atmosphere { z-index: 2; }
-.portal { z-index: 3; }
-.content { z-index: 4; position: relative; }
-.overlay-text { z-index: 5; } /* Text that appears over portal */
+.wave { z-index: 2; }
+.atmosphere { z-index: 3; }
+.portal { z-index: 4; }
+.content { z-index: 5; position: relative; }
+.overlay-text { z-index: 6; } /* Text that appears over portal */
+
+═══════════════════════════════════════════════════════════════════
+FINAL POLISH — THE LAST 10% THAT MAKES IT PERFECT
+═══════════════════════════════════════════════════════════════════
+
+PORTAL PROPORTIONS — Match the aspect ratio:
+- Tall narrow portal: width: 400px; height: 600px; (1:1.5 ratio)
+- Wide portal: width: 500px; height: 500px; (1:1 ratio)
+- Estimate from inspo and MATCH it exactly
+
+PORTAL POSITIONING — Use precise placement:
+.portal {
+  position: absolute;
+  right: 10%; /* Adjust based on inspo */
+  top: 50%;
+  transform: translateY(-40%); /* Adjust vertical center */
+  width: 35vw; /* Responsive width */
+  max-width: 450px;
+  aspect-ratio: 2/3; /* Height = 1.5x width */
+}
+
+BUTTON INSIDE PORTAL — Center it properly:
+.portal-button {
+  position: absolute;
+  left: 50%;
+  top: 60%; /* Below center, adjust based on inspo */
+  transform: translateX(-50%);
+}
+
+DESCRIPTION TEXT POSITIONING — Inside portal area:
+.portal-description {
+  position: absolute;
+  right: 5%;
+  top: 45%;
+  max-width: 280px;
+  text-align: left;
+  color: rgba(255,255,255,0.9);
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+WAVE MUST BE INCLUDED — Don't skip it:
+.wave-container {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 25vh;
+  overflow: hidden;
+}
+.wave-container svg {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+}
+/* Multiple wave layers for depth */
+.wave-1 { opacity: 0.3; }
+.wave-2 { opacity: 0.2; transform: translateY(20px); }
+
+ATMOSPHERE MUST BE STRONG — Increase if too subtle:
+.atmosphere {
+  background:
+    radial-gradient(ellipse 100% 60% at 60% 100%, rgba(139,92,246,0.6) 0%, transparent 50%),
+    radial-gradient(ellipse 80% 40% at 50% 90%, rgba(167,139,250,0.4) 0%, transparent 60%);
+}
+
+SPACING PRECISION:
+- Measure approximate spacing in inspo (use grid overlay mentally)
+- Hero padding: typically 80-120px top, 40-80px sides
+- Text to portal gap: typically 40-80px
+- Element vertical spacing: typically 16-32px
+
+COMMON MISTAKES TO AVOID:
+1. Portal too wide/short → check aspect ratio
+2. Wave missing → ALWAYS include if inspo has landscape
+3. Atmosphere too weak → increase opacity to 0.5-0.7
+4. Elements overlapping badly → use precise positioning
+5. Border glow missing → use ::before pseudo-element
 
 TEXT OVER PORTAL (faint/ghost text):
 .ghost-text {
