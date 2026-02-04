@@ -140,172 +140,137 @@ MANDATORY STEP 6 — DO NOT ADD ELEMENTS NOT IN INSPO:
 - ONLY include what you can SEE in the inspo image
 
 ═══════════════════════════════════════════════════════════════════
-CSS REFERENCE — MANDATORY TECHNIQUES
+UNIVERSAL CSS TOOLKIT — FOR CLONING ANY DESIGN
 ═══════════════════════════════════════════════════════════════════
 
-FONT WEIGHTS — USE CORRECT VALUES:
-- Hairline/Thin: font-weight: 100 or 200 (very light strokes)
-- Light: font-weight: 300
-- Regular: font-weight: 400
-- Medium: font-weight: 500
-- Bold: font-weight: 700
+This is a reference for recreating ANY visual effect. Identify what's in
+the inspo, then apply the appropriate technique.
 
-If inspo shows THIN text, you MUST use font-weight: 100 or 200.
-Load thin weights from Google Fonts: ?family=Font+Name:wght@100;200;300
+─────────────────────────────────────────────────────────────────
+TYPOGRAPHY — Match the exact weight and style
+─────────────────────────────────────────────────────────────────
+Font weight scale:
+  100-200 = Hairline/Thin (very light strokes)
+  300 = Light
+  400 = Regular/Normal
+  500 = Medium
+  600 = Semibold
+  700 = Bold
+  800-900 = Black/Heavy
 
-/* Example thin italic serif */
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,300&display=swap');
-.thin-italic { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-style: italic; }
+If inspo text looks THIN → use 100-300
+If inspo text looks REGULAR → use 400-500
+If inspo text looks BOLD → use 600-700
 
-PORTAL/ARCH WITH GLOWING BORDER — Multiple box-shadows create depth:
-.portal {
-  position: relative;
-  background: linear-gradient(to top, #7C3AED 0%, #A78BFA 50%, #C4B5FD 100%);
-  border-radius: 200px 200px 0 0;
-  /* OUTER GLOW - spreads outward */
-  box-shadow:
-    0 0 60px 20px rgba(167, 139, 250, 0.4),
-    0 0 120px 60px rgba(139, 92, 246, 0.2),
-    0 0 200px 100px rgba(139, 92, 246, 0.1);
-}
-/* BORDER GLOW - use pseudo-element */
-.portal::before {
-  content: '';
-  position: absolute;
-  inset: -3px;
-  border-radius: inherit;
-  background: linear-gradient(to top, #F59E0B, #FBBF24, transparent 50%);
-  z-index: -1;
-  filter: blur(2px);
-}
-/* INNER GLOW - inset shadow */
-.portal::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  box-shadow: inset 0 0 60px 30px rgba(255,255,255,0.1);
-}
+Load specific weights: @import url('https://fonts.googleapis.com/css2?family=FONTNAME:wght@100;200;300;400;500;600;700&display=swap');
 
-STARFIELD — Generate 20+ random positions:
-.stars {
-  position: absolute;
-  inset: 0;
-  background-image:
-    radial-gradient(1px 1px at 5% 15%, rgba(255,255,255,0.8), transparent),
-    radial-gradient(1px 1px at 12% 45%, rgba(255,255,255,0.6), transparent),
-    radial-gradient(2px 2px at 20% 25%, rgba(255,255,255,0.9), transparent),
-    radial-gradient(1px 1px at 35% 65%, rgba(255,255,255,0.5), transparent),
-    radial-gradient(1px 1px at 45% 10%, rgba(255,255,255,0.7), transparent),
-    radial-gradient(2px 2px at 55% 85%, rgba(255,255,255,0.6), transparent),
-    radial-gradient(1px 1px at 65% 35%, rgba(255,255,255,0.8), transparent),
-    radial-gradient(1px 1px at 75% 55%, rgba(255,255,255,0.5), transparent),
-    radial-gradient(1px 1px at 85% 20%, rgba(255,255,255,0.7), transparent),
-    radial-gradient(2px 2px at 95% 75%, rgba(255,255,255,0.6), transparent);
+Letter-spacing:
+  Tight: letter-spacing: -0.02em to -0.05em
+  Normal: letter-spacing: 0
+  Wide: letter-spacing: 0.05em to 0.2em
+
+─────────────────────────────────────────────────────────────────
+BACKGROUNDS — Solid, gradient, or layered
+─────────────────────────────────────────────────────────────────
+Solid: background: #COLOR;
+Linear gradient: background: linear-gradient(DIRECTION, COLOR1, COLOR2);
+Radial gradient: background: radial-gradient(SHAPE at POSITION, COLOR1, COLOR2);
+Multiple layers: background: gradient1, gradient2, gradient3;
+
+─────────────────────────────────────────────────────────────────
+GLOWS & SHADOWS — For depth and lighting effects
+─────────────────────────────────────────────────────────────────
+Outer glow: box-shadow: 0 0 BLUR SPREAD rgba(R,G,B,OPACITY);
+Multiple glows: box-shadow: glow1, glow2, glow3;
+Inner glow: box-shadow: inset 0 0 BLUR SPREAD rgba(R,G,B,OPACITY);
+Text glow: text-shadow: 0 0 BLUR rgba(R,G,B,OPACITY);
+
+Glowing border (use pseudo-element):
+  .element::before {
+    content: ''; position: absolute; inset: -2px;
+    background: linear-gradient(...); border-radius: inherit;
+    z-index: -1; filter: blur(4px);
+  }
+
+─────────────────────────────────────────────────────────────────
+SHAPES — Rounded, curved, custom
+─────────────────────────────────────────────────────────────────
+Rounded corners: border-radius: Xpx;
+Pill shape: border-radius: 9999px;
+Arch/portal top: border-radius: 999px 999px 0 0;
+Circle: border-radius: 50%;
+Custom shape: clip-path: polygon(...) or SVG
+
+─────────────────────────────────────────────────────────────────
+DECORATIVE ELEMENTS — Particles, patterns, textures
+─────────────────────────────────────────────────────────────────
+Stars/dots: Use multiple radial-gradient backgrounds
+  background-image: radial-gradient(Npx Npx at X% Y%, COLOR, transparent), ...;
   background-size: 200px 200px;
-}
 
-ATMOSPHERIC GLOW — Radial gradient from bottom:
-.atmosphere {
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(ellipse 80% 50% at 50% 100%, rgba(139,92,246,0.5) 0%, transparent 70%);
-  pointer-events: none;
-}
+Noise/grain: Use SVG filter or semi-transparent noise PNG
+Waves/curves: Use SVG <path> elements
+Blobs: Use border-radius with different values per corner
 
-WAVE/LANDSCAPE — Use SVG path:
-<svg class="wave" viewBox="0 0 1440 200" preserveAspectRatio="none">
-  <path fill="rgba(139,92,246,0.3)" d="M0,100 C360,150 720,50 1080,100 C1260,125 1380,100 1440,100 L1440,200 L0,200 Z"/>
-</svg>
-.wave { position: absolute; bottom: 0; width: 100%; height: 200px; }
+─────────────────────────────────────────────────────────────────
+LAYERING — Proper stacking of elements
+─────────────────────────────────────────────────────────────────
+.container { position: relative; }
+.background-effect { position: absolute; inset: 0; z-index: 1; }
+.decorative-element { position: absolute; z-index: 2; }
+.main-visual { position: relative; z-index: 3; }
+.content { position: relative; z-index: 4; }
+.overlay-elements { position: relative; z-index: 5; }
 
-LAYERING WITH Z-INDEX:
-.hero { position: relative; min-height: 100vh; overflow: hidden; }
-.stars { z-index: 1; }
-.wave { z-index: 2; }
-.atmosphere { z-index: 3; }
-.portal { z-index: 4; }
-.content { z-index: 5; position: relative; }
-.overlay-text { z-index: 6; } /* Text that appears over portal */
+─────────────────────────────────────────────────────────────────
+POSITIONING — Precise placement
+─────────────────────────────────────────────────────────────────
+Estimate position from inspo as percentage:
+  - Left edge: left: 5-15%
+  - Center: left: 50%; transform: translateX(-50%);
+  - Right edge: right: 5-15%
+  - Top: top: 10-20%
+  - Vertical center: top: 50%; transform: translateY(-50%);
+  - Bottom: bottom: 5-15%
+
+─────────────────────────────────────────────────────────────────
+SPACING — Match the visual rhythm
+─────────────────────────────────────────────────────────────────
+Estimate from inspo:
+  - Tight spacing: 8-16px
+  - Normal spacing: 24-32px
+  - Generous spacing: 48-64px
+  - Section padding: 80-120px
+  - Hero height: 90-100vh
+
+─────────────────────────────────────────────────────────────────
+COMMON UI PATTERNS — Quick reference
+─────────────────────────────────────────────────────────────────
+Glass/frosted: background: rgba(255,255,255,0.1); backdrop-filter: blur(10px);
+Card with shadow: box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+Hover lift: transform: translateY(-4px); box-shadow: larger;
+Image overlay: position: relative; &::after { position: absolute; inset: 0; background: gradient; }
+Text over image: position: absolute; color: white; text-shadow for readability;
+Sticky nav: position: fixed; top: 0; width: 100%; z-index: 1000;
+Grid layout: display: grid; grid-template-columns: repeat(N, 1fr); gap: Xpx;
+Flex layout: display: flex; justify-content: X; align-items: Y; gap: Xpx;
 
 ═══════════════════════════════════════════════════════════════════
-FINAL POLISH — THE LAST 10% THAT MAKES IT PERFECT
+PIXEL-PERFECT CHECKLIST — VERIFY EVERY ELEMENT
 ═══════════════════════════════════════════════════════════════════
 
-PORTAL PROPORTIONS — Match the aspect ratio:
-- Tall narrow portal: width: 400px; height: 600px; (1:1.5 ratio)
-- Wide portal: width: 500px; height: 500px; (1:1 ratio)
-- Estimate from inspo and MATCH it exactly
+For EACH element visible in inspo, ask:
+□ Position: Where exactly is it? (top/bottom/left/right/center, percentage)
+□ Size: How big is it relative to viewport? (width, height, aspect-ratio)
+□ Shape: What's the border-radius? Any clip-path?
+□ Color: What's the exact color or gradient?
+□ Effects: Any shadows, glows, blurs, or filters?
+□ Typography: Weight, style, size, spacing, line-height?
+□ Spacing: Gap from other elements?
+□ Layer: What's in front/behind it?
 
-PORTAL POSITIONING — Use precise placement:
-.portal {
-  position: absolute;
-  right: 10%; /* Adjust based on inspo */
-  top: 50%;
-  transform: translateY(-40%); /* Adjust vertical center */
-  width: 35vw; /* Responsive width */
-  max-width: 450px;
-  aspect-ratio: 2/3; /* Height = 1.5x width */
-}
-
-BUTTON INSIDE PORTAL — Center it properly:
-.portal-button {
-  position: absolute;
-  left: 50%;
-  top: 60%; /* Below center, adjust based on inspo */
-  transform: translateX(-50%);
-}
-
-DESCRIPTION TEXT POSITIONING — Inside portal area:
-.portal-description {
-  position: absolute;
-  right: 5%;
-  top: 45%;
-  max-width: 280px;
-  text-align: left;
-  color: rgba(255,255,255,0.9);
-  font-size: 14px;
-  line-height: 1.6;
-}
-
-WAVE MUST BE INCLUDED — Don't skip it:
-.wave-container {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 25vh;
-  overflow: hidden;
-}
-.wave-container svg {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  height: 100%;
-}
-/* Multiple wave layers for depth */
-.wave-1 { opacity: 0.3; }
-.wave-2 { opacity: 0.2; transform: translateY(20px); }
-
-ATMOSPHERE MUST BE STRONG — Increase if too subtle:
-.atmosphere {
-  background:
-    radial-gradient(ellipse 100% 60% at 60% 100%, rgba(139,92,246,0.6) 0%, transparent 50%),
-    radial-gradient(ellipse 80% 40% at 50% 90%, rgba(167,139,250,0.4) 0%, transparent 60%);
-}
-
-SPACING PRECISION:
-- Measure approximate spacing in inspo (use grid overlay mentally)
-- Hero padding: typically 80-120px top, 40-80px sides
-- Text to portal gap: typically 40-80px
-- Element vertical spacing: typically 16-32px
-
-COMMON MISTAKES TO AVOID:
-1. Portal too wide/short → check aspect ratio
-2. Wave missing → ALWAYS include if inspo has landscape
-3. Atmosphere too weak → increase opacity to 0.5-0.7
-4. Elements overlapping badly → use precise positioning
-5. Border glow missing → use ::before pseudo-element
+If you cannot answer ALL questions for an element → look closer at inspo.
+If your output differs from inspo on ANY answer → fix it.
 
 TEXT OVER PORTAL (faint/ghost text):
 .ghost-text {
