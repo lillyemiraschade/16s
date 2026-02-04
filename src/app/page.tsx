@@ -123,18 +123,10 @@ export default function HomePage() {
   // Randomized on client only to avoid hydration mismatch
   const [headline, setHeadline] = useState(HEADLINES[0]);
   const [randomIdeas, setRandomIdeas] = useState<string[]>([]);
-  const [ideaKey, setIdeaKey] = useState(0); // For triggering re-animation
   useEffect(() => {
     setHeadline(HEADLINES[Math.floor(Math.random() * HEADLINES.length)]);
-    setRandomIdeas(getRandomIdeas(3));
-
-    // Auto-shuffle ideas every 10 seconds
-    const shuffleInterval = setInterval(() => {
-      setRandomIdeas(getRandomIdeas(3));
-      setIdeaKey(k => k + 1);
-    }, 10000);
-
-    return () => clearInterval(shuffleInterval);
+    // Get more ideas for the marquee
+    setRandomIdeas(getRandomIdeas(8));
   }, []);
 
   const [welcomeInput, setWelcomeInput] = useState("");
@@ -1230,51 +1222,36 @@ export default function HomePage() {
               </div>
             </div>
 
-            {/* Random idea suggestions */}
+            {/* Scrolling idea suggestions marquee */}
             {randomIdeas.length > 0 && (
-              <div className="flex justify-center gap-3 w-full overflow-hidden">
-                <AnimatePresence mode="wait">
-                  <motion.div
-                    key={ideaKey}
-                    className="flex gap-3"
-                    initial="hidden"
-                    animate="visible"
-                    exit="exit"
-                    variants={{
-                      hidden: {},
-                      visible: { transition: { staggerChildren: 0.1 } },
-                      exit: { transition: { staggerChildren: 0.05 } },
-                    }}
-                  >
-                    {randomIdeas.map((idea, idx) => (
-                      <motion.button
-                        key={`${ideaKey}-${idx}`}
-                        onClick={() => handleSendMessage(idea)}
-                        disabled={isGenerating}
-                        className="px-5 py-2.5 text-[13px] font-medium text-zinc-400 hover:text-zinc-200 hover:bg-white/[0.06] glass-pill disabled:opacity-40 disabled:cursor-not-allowed rounded-xl transition-colors duration-200 whitespace-nowrap"
-                        variants={{
-                          hidden: { opacity: 0, y: 20, scale: 0.9 },
-                          visible: {
-                            opacity: 1,
-                            y: 0,
-                            scale: 1,
-                            transition: { type: "spring", stiffness: 300, damping: 24 }
-                          },
-                          exit: {
-                            opacity: 0,
-                            y: -20,
-                            scale: 0.9,
-                            transition: { duration: 0.2 }
-                          },
-                        }}
-                        whileHover={{ scale: 1.02 }}
-                        whileTap={{ scale: 0.98 }}
-                      >
-                        {idea}
-                      </motion.button>
-                    ))}
-                  </motion.div>
-                </AnimatePresence>
+              <div className="w-full max-w-[90vw] md:max-w-[700px] overflow-hidden relative">
+                {/* Gradient masks for smooth fade edges */}
+                <div className="absolute left-0 top-0 bottom-0 w-12 md:w-20 bg-gradient-to-r from-[#0a0a0b] to-transparent z-10 pointer-events-none" />
+                <div className="absolute right-0 top-0 bottom-0 w-12 md:w-20 bg-gradient-to-l from-[#0a0a0b] to-transparent z-10 pointer-events-none" />
+
+                <motion.div
+                  className="flex gap-4 py-2"
+                  animate={{ x: [0, "-50%"] }}
+                  transition={{
+                    x: {
+                      duration: 30,
+                      repeat: Infinity,
+                      ease: "linear",
+                    },
+                  }}
+                >
+                  {/* Duplicate ideas for seamless loop */}
+                  {[...randomIdeas, ...randomIdeas].map((idea, idx) => (
+                    <button
+                      key={idx}
+                      onClick={() => handleSendMessage(idea)}
+                      disabled={isGenerating}
+                      className="flex-shrink-0 px-5 py-2.5 text-[12px] md:text-[13px] font-medium text-zinc-400 hover:text-zinc-200 hover:bg-white/[0.08] glass-pill disabled:opacity-40 disabled:cursor-not-allowed rounded-xl transition-colors duration-200 whitespace-nowrap"
+                    >
+                      {idea}
+                    </button>
+                  ))}
+                </motion.div>
               </div>
             )}
           </motion.div>
