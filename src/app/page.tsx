@@ -29,14 +29,65 @@ const HEADLINES = [
   "Got a project in mind?",
 ];
 
-const TEMPLATE_CATEGORIES = [
-  { label: "Portfolio", prompt: "Design a modern portfolio website for a creative professional" },
-  { label: "Business", prompt: "Build a professional business website with services and contact sections" },
-  { label: "Restaurant", prompt: "Create a restaurant website with menu, hours, and reservation info" },
-  { label: "E-commerce", prompt: "Design an online store with product grid, cart, and checkout" },
-  { label: "Blog", prompt: "Build a clean, minimal blog with featured posts and categories" },
-  { label: "Landing Page", prompt: "Create a conversion-focused landing page with hero, features, and CTA" },
+// Large pool of random buildable website ideas
+const IDEA_POOL = [
+  "A minimalist portfolio for a photographer with a masonry gallery",
+  "A coffee shop website with menu, locations, and online ordering",
+  "A personal blog with dark mode and reading time estimates",
+  "A SaaS landing page with pricing tiers and feature comparison",
+  "A fitness studio site with class schedules and trainer bios",
+  "A podcast website with episode player and show notes",
+  "A recipe collection site with search and dietary filters",
+  "A music artist page with discography and tour dates",
+  "A real estate listing site with property cards and filters",
+  "A freelancer portfolio with case studies and testimonials",
+  "A bookstore website with featured reads and wishlists",
+  "A travel blog with destination guides and photo galleries",
+  "A startup landing page with waitlist signup",
+  "A wedding website with RSVP form and photo timeline",
+  "A vinyl record shop with collection browser",
+  "A yoga studio site with booking calendar",
+  "A tech conference website with speakers and schedule",
+  "A pet adoption site with animal profiles",
+  "A cocktail recipe app with ingredient search",
+  "A movie review site with ratings and watchlists",
+  "A coworking space website with amenities and pricing",
+  "A bakery site with custom cake order form",
+  "A newsletter landing page with archive access",
+  "A tattoo artist portfolio with booking integration",
+  "A plant shop with care guides for each species",
+  "A language learning app dashboard",
+  "A vintage clothing store with era filters",
+  "A game studio website with trailer embeds",
+  "A charity organization site with donation goals",
+  "A barber shop with appointment booking",
+  "An architecture firm portfolio with project galleries",
+  "A meal prep service with weekly menu preview",
+  "A car dealership site with inventory and financing",
+  "A meditation app landing page with audio previews",
+  "A sneaker resale marketplace layout",
+  "A film production company portfolio",
+  "A local newspaper homepage with sections",
+  "A wine subscription service landing page",
+  "A coding bootcamp site with curriculum preview",
+  "A therapist practice website with booking",
+  "A ceramics studio with workshop calendar",
+  "A food truck finder with map and menus",
+  "A digital agency site with services and work samples",
+  "A museum website with exhibits and ticket booking",
+  "A cryptocurrency dashboard interface",
+  "A fashion brand lookbook with seasonal collections",
+  "A home renovation portfolio with before/after sliders",
+  "A DJ booking site with mixes and availability",
+  "A book club platform with reading lists",
+  "A sports team fan site with stats and news",
 ];
+
+// Shuffle and pick n random items
+function getRandomIdeas(count: number): string[] {
+  const shuffled = [...IDEA_POOL].sort(() => Math.random() - 0.5);
+  return shuffled.slice(0, count);
+}
 
 function generateId(): string {
   return Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
@@ -71,8 +122,10 @@ export default function HomePage() {
 
   // Randomized on client only to avoid hydration mismatch
   const [headline, setHeadline] = useState(HEADLINES[0]);
+  const [randomIdeas, setRandomIdeas] = useState<string[]>([]);
   useEffect(() => {
     setHeadline(HEADLINES[Math.floor(Math.random() * HEADLINES.length)]);
+    setRandomIdeas(getRandomIdeas(3));
   }, []);
 
   const [welcomeInput, setWelcomeInput] = useState("");
@@ -1168,19 +1221,21 @@ export default function HomePage() {
               </div>
             </div>
 
-            {/* Template categories */}
-            <div className="grid grid-cols-3 gap-3 w-full max-w-[480px]">
-              {TEMPLATE_CATEGORIES.map((cat) => (
-                <button
-                  key={cat.label}
-                  onClick={() => handleSendMessage(cat.prompt)}
-                  disabled={isGenerating}
-                  className="px-4 py-3 text-[13px] font-medium text-zinc-400 hover:text-zinc-200 glass-pill disabled:opacity-40 disabled:cursor-not-allowed rounded-xl transition-all duration-200 text-center"
-                >
-                  {cat.label}
-                </button>
-              ))}
-            </div>
+            {/* Random idea suggestions */}
+            {randomIdeas.length > 0 && (
+              <div className="flex flex-wrap justify-center gap-2 w-full max-w-[600px]">
+                {randomIdeas.map((idea, idx) => (
+                  <button
+                    key={idx}
+                    onClick={() => handleSendMessage(idea)}
+                    disabled={isGenerating}
+                    className="px-4 py-2.5 text-[12px] md:text-[13px] font-medium text-zinc-400 hover:text-zinc-200 glass-pill disabled:opacity-40 disabled:cursor-not-allowed rounded-xl transition-all duration-200 text-center"
+                  >
+                    {idea}
+                  </button>
+                ))}
+              </div>
+            )}
           </motion.div>
         </div>
       </div>
