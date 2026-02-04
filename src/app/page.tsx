@@ -15,6 +15,7 @@ import { useProjects } from "@/lib/hooks/useProjects";
 import { useDeployment } from "@/lib/hooks/useDeployment";
 import { MigrationBanner } from "@/components/auth/MigrationBanner";
 import { UserMenu } from "@/components/auth/UserMenu";
+import { AuthModal } from "@/components/auth/AuthModal";
 import { useAuth } from "@/lib/auth/AuthContext";
 import type { Message, Viewport, SavedProjectMeta, SelectedElement, VersionBookmark, UploadedImage, CodeMode } from "@/lib/types";
 
@@ -131,6 +132,38 @@ export default function HomePage() {
 
   const [welcomeInput, setWelcomeInput] = useState("");
   const [welcomeError, setWelcomeError] = useState<string | null>(null);
+
+  // Auth state for new user flow
+  const [showAuthModal, setShowAuthModal] = useState(false);
+  const [pendingPrompt, setPendingPrompt] = useState<{ text: string; images?: UploadedImage[] } | null>(null);
+
+  // When user logs in after submitting a pending prompt, send it
+  const pendingPromptRef = useRef(pendingPrompt);
+  useEffect(() => { pendingPromptRef.current = pendingPrompt; }, [pendingPrompt]);
+
+  useEffect(() => {
+    if (user && pendingPromptRef.current) {
+      const { text, images } = pendingPromptRef.current;
+      setPendingPrompt(null);
+      setShowAuthModal(false);
+      // Use a small delay to ensure auth state is fully propagated
+      setTimeout(() => {
+        if (!hasStarted) setHasStarted(true);
+        // Send the pending message - we need to do this without calling handleSendMessage
+        // to avoid the circular dependency, so we'll set up the images and trigger send
+        if (images && images.length > 0) {
+          setUploadedImages(images);
+        }
+        setWelcomeInput(text);
+        // Trigger send after state updates
+        setTimeout(() => {
+          const sendBtn = document.querySelector('[aria-label="Send message"]') as HTMLButtonElement;
+          if (sendBtn && !sendBtn.disabled) sendBtn.click();
+        }, 100);
+      }, 100);
+    }
+  }, [user, hasStarted]);
+
   const welcomeTextareaRef = useRef<HTMLTextAreaElement>(null);
   const welcomeFileRef = useRef<HTMLInputElement>(null);
 
@@ -332,6 +365,13 @@ export default function HomePage() {
   }, []);
 
   const handleSendMessage = useCallback(async (text: string, imagesToInclude?: UploadedImage[]) => {
+    // If auth is configured but user is not signed in, prompt them to sign up
+    if (isConfigured && !user) {
+      setPendingPrompt({ text, images: imagesToInclude || [...uploadedImages] });
+      setShowAuthModal(true);
+      return;
+    }
+
     // If on a call, route typed messages to the voice agent instead
     if (isOnCall && voiceCallRef.current) {
       voiceCallRef.current.injectTypedMessage(text);
@@ -599,7 +639,7 @@ export default function HomePage() {
         setIsGenerating(false);
       }
     }
-  }, [isOnCall, uploadedImages, hasStarted, selectedElement, currentPreview, previewScreenshot]);
+  }, [isOnCall, uploadedImages, hasStarted, selectedElement, currentPreview, previewScreenshot, isConfigured, user, replaceImagePlaceholders]);
 
   const handlePillClick = (pill: string) => {
     if (isGenerating) return;
@@ -1303,6 +1343,9 @@ export default function HomePage() {
             )}
           </motion.div>
         </div>
+
+        {/* Auth modal for new user sign-up flow */}
+        <AuthModal isOpen={showAuthModal} onClose={() => setShowAuthModal(false)} />
       </div>
     );
   }
