@@ -439,54 +439,54 @@ export function ChatPanel({
 
                   {/* BMAD Plan Card */}
                   {message.plan && (
-                    <div className="mt-3 p-4 rounded-xl bg-gradient-to-br from-blue-500/10 to-purple-500/10 border border-blue-500/20">
-                      <div className="flex items-center gap-2 mb-2">
-                        <FileText className="w-4 h-4 text-blue-400" />
-                        <span className="text-[13px] font-medium text-blue-400">The Plan</span>
+                    <div className="mt-3 p-4 rounded-xl bg-white/[0.03] border border-white/[0.06]">
+                      <div className="flex items-center gap-2 mb-3">
+                        <div className="w-5 h-5 rounded-md bg-green-500/20 flex items-center justify-center">
+                          <FileText className="w-3 h-3 text-green-400" />
+                        </div>
+                        <span className="text-[12px] font-medium text-zinc-500 uppercase tracking-wide">Plan</span>
                       </div>
-                      <p className="text-[14px] text-zinc-200 font-medium mb-2">{message.plan.summary}</p>
-                      <div className="flex flex-wrap gap-1.5 mb-2">
+                      <p className="text-[15px] text-zinc-200 leading-relaxed mb-3">{message.plan.summary}</p>
+                      <div className="flex flex-wrap gap-2 mb-3">
                         {message.plan.sections.map((section, idx) => (
-                          <span key={idx} className="px-2 py-0.5 text-[11px] bg-white/5 text-zinc-400 rounded-full">
+                          <span key={idx} className="px-2.5 py-1 text-[12px] bg-white/[0.04] text-zinc-300 rounded-lg border border-white/[0.04]">
                             {section}
                           </span>
                         ))}
                       </div>
-                      <p className="text-[12px] text-zinc-500 italic">{message.plan.style}</p>
+                      <p className="text-[13px] text-zinc-500">{message.plan.style}</p>
                     </div>
                   )}
 
                   {/* BMAD QA Report */}
                   {message.qaReport && (
-                    <div className={`mt-3 p-4 rounded-xl border ${
-                      message.qaReport.status === "all_good"
-                        ? "bg-green-500/10 border-green-500/20"
-                        : "bg-amber-500/10 border-amber-500/20"
-                    }`}>
-                      <div className="flex items-center gap-2 mb-2">
-                        {message.qaReport.status === "all_good" ? (
-                          <CheckCircle className="w-4 h-4 text-green-400" />
-                        ) : (
-                          <AlertCircle className="w-4 h-4 text-amber-400" />
-                        )}
-                        <span className={`text-[13px] font-medium ${
-                          message.qaReport.status === "all_good" ? "text-green-400" : "text-amber-400"
+                    <div className="mt-3 p-4 rounded-xl bg-white/[0.03] border border-white/[0.06]">
+                      <div className="flex items-center gap-2 mb-3">
+                        <div className={`w-5 h-5 rounded-md flex items-center justify-center ${
+                          message.qaReport.status === "all_good" ? "bg-green-500/20" : "bg-amber-500/20"
                         }`}>
-                          {message.qaReport.status === "all_good" ? "Quality Check Passed" : "Quality Notes"}
+                          {message.qaReport.status === "all_good" ? (
+                            <CheckCircle className="w-3 h-3 text-green-400" />
+                          ) : (
+                            <AlertCircle className="w-3 h-3 text-amber-400" />
+                          )}
+                        </div>
+                        <span className="text-[12px] font-medium text-zinc-500 uppercase tracking-wide">
+                          {message.qaReport.status === "all_good" ? "Verified" : "Notes"}
                         </span>
                       </div>
-                      <div className="flex flex-wrap gap-2 mb-2">
+                      <div className="flex flex-wrap gap-2 mb-3">
                         {message.qaReport.checks.map((check, idx) => (
-                          <span key={idx} className={`flex items-center gap-1 px-2 py-0.5 text-[11px] rounded-full ${
+                          <span key={idx} className={`flex items-center gap-1.5 px-2.5 py-1 text-[12px] rounded-lg border ${
                             check.passed
-                              ? "bg-green-500/20 text-green-400"
-                              : "bg-amber-500/20 text-amber-400"
+                              ? "bg-green-500/10 border-green-500/20 text-green-400"
+                              : "bg-amber-500/10 border-amber-500/20 text-amber-400"
                           }`}>
                             {check.passed ? "✓" : "!"} {check.name}
                           </span>
                         ))}
                       </div>
-                      <p className="text-[12px] text-zinc-400">{message.qaReport.summary}</p>
+                      <p className="text-[13px] text-zinc-500">{message.qaReport.summary}</p>
                     </div>
                   )}
 
