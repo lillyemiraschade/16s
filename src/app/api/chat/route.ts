@@ -25,6 +25,7 @@ const ChatRequestSchema = z.object({
   inspoImages: z.array(z.string()).max(10).optional(), // Legacy format for backward compat
   currentPreview: z.string().max(500000).nullable(),
   previewScreenshot: z.string().max(2000000).nullable().optional(),
+  outputFormat: z.enum(["html", "react"]).default("html"), // Output format: vanilla HTML or React components
 });
 
 type ChatRequest = z.infer<typeof ChatRequestSchema>;
@@ -34,6 +35,7 @@ interface ChatResponse {
   pills?: string[];
   showUpload?: boolean | string;
   html?: string;
+  react?: string; // React component code when outputFormat is "react"
 }
 
 // Simple in-memory rate limiter (per IP, 20 requests per minute)
@@ -1395,7 +1397,312 @@ FINAL QUALITY GATES:
 □ Would a senior designer believe a human made this?
 
 ⚠️ EMOJI SCAN — DELETE ANY OF THESE IF FOUND:
-🎯🚀💡✨🔥💪🎨📱💼🌟⭐️🏆✅❌🔒💰📈🎉👋👍🙌💬📧🔗➡️▶️📊🔧⚡️💎🌐📌🎁💫⭕️`;
+🎯🚀💡✨🔥💪🎨📱💼🌟⭐️🏆✅❌🔒💰📈🎉👋👍🙌💬📧🔗➡️▶️📊🔧⚡️💎🌐📌🎁💫⭕️
+
+═══════════════════════════════════════════════════════════════════
+MODERN COMPONENT PATTERNS — 21st.dev / shadcn/ui INSPIRED
+═══════════════════════════════════════════════════════════════════
+
+Use these modern patterns to create polished, production-ready components:
+
+BUTTONS — Use subtle shadows, smooth transitions, proper padding
+\`\`\`css
+.btn-primary {
+  background: linear-gradient(135deg, #18181b 0%, #27272a 100%);
+  color: white;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-weight: 500;
+  border: 1px solid rgba(255,255,255,0.1);
+  box-shadow: 0 1px 2px rgba(0,0,0,0.1), inset 0 1px 0 rgba(255,255,255,0.05);
+  transition: all 0.15s ease;
+}
+.btn-primary:hover {
+  background: linear-gradient(135deg, #27272a 0%, #3f3f46 100%);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  transform: translateY(-1px);
+}
+.btn-outline {
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.2);
+  color: #fafafa;
+  transition: all 0.15s ease;
+}
+.btn-outline:hover {
+  background: rgba(255,255,255,0.05);
+  border-color: rgba(255,255,255,0.3);
+}
+\`\`\`
+
+CARDS — Subtle borders, layered shadows, glass effects
+\`\`\`css
+.card {
+  background: rgba(24,24,27,0.8);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 12px;
+  padding: 24px;
+  backdrop-filter: blur(8px);
+  box-shadow: 0 4px 24px rgba(0,0,0,0.2);
+  transition: all 0.2s ease;
+}
+.card:hover {
+  border-color: rgba(255,255,255,0.15);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+  transform: translateY(-2px);
+}
+.card-gradient {
+  background: linear-gradient(145deg, rgba(39,39,42,0.9) 0%, rgba(24,24,27,0.95) 100%);
+  border: 1px solid transparent;
+  background-clip: padding-box;
+  position: relative;
+}
+.card-gradient::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(145deg, rgba(255,255,255,0.15), rgba(255,255,255,0.05));
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  pointer-events: none;
+}
+\`\`\`
+
+INPUT FIELDS — Focus rings, subtle backgrounds
+\`\`\`css
+.input {
+  background: rgba(24,24,27,0.6);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 8px;
+  padding: 12px 16px;
+  color: #fafafa;
+  font-size: 14px;
+  transition: all 0.15s ease;
+}
+.input:focus {
+  outline: none;
+  border-color: rgba(59,130,246,0.5);
+  box-shadow: 0 0 0 3px rgba(59,130,246,0.15);
+}
+.input::placeholder {
+  color: rgba(161,161,170,0.6);
+}
+\`\`\`
+
+BADGES & TAGS — Pill shapes, subtle backgrounds
+\`\`\`css
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 12px;
+  font-size: 12px;
+  font-weight: 500;
+  border-radius: 9999px;
+  background: rgba(59,130,246,0.15);
+  color: #60a5fa;
+  border: 1px solid rgba(59,130,246,0.2);
+}
+.badge-success { background: rgba(34,197,94,0.15); color: #4ade80; border-color: rgba(34,197,94,0.2); }
+.badge-warning { background: rgba(234,179,8,0.15); color: #facc15; border-color: rgba(234,179,8,0.2); }
+\`\`\`
+
+NAVIGATION — Blur backdrop, subtle borders
+\`\`\`css
+.nav {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  padding: 16px 24px;
+  background: rgba(9,9,11,0.8);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  z-index: 50;
+}
+.nav-link {
+  color: rgba(161,161,170,1);
+  font-size: 14px;
+  font-weight: 500;
+  transition: color 0.15s ease;
+}
+.nav-link:hover, .nav-link.active {
+  color: #fafafa;
+}
+\`\`\`
+
+HERO SECTIONS — Large typography, gradient accents
+\`\`\`css
+.hero-title {
+  font-size: clamp(40px, 8vw, 80px);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  background: linear-gradient(135deg, #fafafa 0%, #a1a1aa 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.hero-subtitle {
+  font-size: clamp(16px, 2vw, 20px);
+  color: rgba(161,161,170,0.9);
+  max-width: 600px;
+  line-height: 1.6;
+}
+\`\`\`
+
+ANIMATIONS — Smooth, subtle, purposeful
+\`\`\`css
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+.animate-in { animation: fadeInUp 0.5s ease-out forwards; }
+.animate-pulse { animation: pulse 2s ease-in-out infinite; }
+\`\`\`
+
+GRADIENT BACKGROUNDS — Depth and visual interest
+\`\`\`css
+.bg-gradient-radial {
+  background: radial-gradient(ellipse 80% 50% at 50% -20%, rgba(59,130,246,0.15), transparent);
+}
+.bg-grid {
+  background-image: linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+                    linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+  background-size: 64px 64px;
+}
+.bg-noise {
+  position: relative;
+}
+.bg-noise::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%' height='100%' filter='url(%23noise)'/%3E%3C/svg%3E");
+  opacity: 0.03;
+  pointer-events: none;
+}
+\`\`\`
+
+TABLES — Clean, scannable data display
+\`\`\`css
+.table { width: 100%; border-collapse: collapse; }
+.table th {
+  text-align: left;
+  padding: 12px 16px;
+  font-size: 12px;
+  font-weight: 500;
+  color: rgba(161,161,170,0.8);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+.table td {
+  padding: 16px;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  color: #fafafa;
+}
+.table tr:hover td { background: rgba(255,255,255,0.02); }
+\`\`\`
+
+MODALS & OVERLAYS — Smooth entrance, proper layering
+\`\`\`css
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.7);
+  backdrop-filter: blur(4px);
+  z-index: 100;
+}
+.modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #18181b;
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 16px;
+  padding: 24px;
+  max-width: 500px;
+  width: 90%;
+  z-index: 101;
+  box-shadow: 0 24px 48px rgba(0,0,0,0.4);
+}
+\`\`\`
+`;
+
+// React output mode addendum
+const REACT_ADDENDUM = `
+═══════════════════════════════════════════════════════════════════
+REACT OUTPUT MODE — Generate React/Next.js Components
+═══════════════════════════════════════════════════════════════════
+
+You are now generating REACT code instead of vanilla HTML.
+
+OUTPUT FORMAT:
+Instead of returning a full HTML document, return a SINGLE React component file.
+The component should be a complete, self-contained page component.
+
+RESPONSE FORMAT (raw JSON, no markdown):
+{"message": "...", "pills": ["A", "B"], "react": "import React from 'react';..."}
+
+Use "react" field instead of "html" field.
+
+RULES FOR REACT OUTPUT:
+1. Use TypeScript syntax (but .tsx extension implied)
+2. Use Tailwind CSS classes for ALL styling (no inline styles or CSS files)
+3. Use modern React patterns (hooks, functional components)
+4. Include all interactivity with useState, useEffect
+5. Use semantic HTML elements
+6. Make it fully responsive with Tailwind breakpoints
+7. Include proper TypeScript types where helpful
+
+COMPONENT STRUCTURE EXAMPLE:
+'use client';
+import React, { useState, useEffect } from 'react';
+export default function ComponentName() {
+  const [state, setState] = useState(initialValue);
+  return (
+    <div className="min-h-screen bg-zinc-950 text-zinc-50">
+      <nav className="fixed top-0 w-full px-6 py-4 bg-zinc-950/80 backdrop-blur-lg border-b border-white/5 z-50">...</nav>
+      <section className="pt-32 pb-20 px-6">...</section>
+      <section className="py-20 px-6">...</section>
+      <footer className="py-12 px-6 border-t border-white/5">...</footer>
+    </div>
+  );
+}
+
+TAILWIND PATTERNS TO USE:
+- Backgrounds: bg-zinc-950, bg-zinc-900, bg-zinc-900/80
+- Text: text-zinc-50, text-zinc-400, text-zinc-500
+- Borders: border-white/5, border-white/10, border-zinc-800
+- Spacing: space-y-4, gap-6, px-6, py-4
+- Flex/Grid: flex, items-center, justify-between, grid, grid-cols-3
+- Responsive: sm:, md:, lg:, xl: prefixes
+- Hover: hover:bg-white/5, hover:text-white
+- Transitions: transition-all, duration-200
+- Rounded: rounded-lg, rounded-xl, rounded-full
+- Shadows: shadow-lg, shadow-xl
+
+INTERACTIVE ELEMENTS:
+- Use useState for toggles, forms, tabs
+- Use onClick, onChange handlers
+- Include loading states
+- Add form validation
+- Store data in localStorage when needed
+
+ICONS - Use Lucide React:
+import { Menu, X, ChevronRight, Star, Check } from 'lucide-react';
+
+REMEMBER:
+- Single file component
+- All styling via Tailwind
+- Fully functional interactivity
+- TypeScript-safe
+- Mobile-first responsive
+`;
 
 export async function POST(req: Request) {
   // Rate limiting
@@ -1448,7 +1755,7 @@ export async function POST(req: Request) {
         { status: 400, headers: { "Content-Type": "application/json" } }
       );
     }
-    const { messages, uploadedImages, inspoImages, currentPreview, previewScreenshot } = parsed.data;
+    const { messages, uploadedImages, inspoImages, currentPreview, previewScreenshot, outputFormat } = parsed.data;
 
     // Normalize images: combine new typed format with legacy format
     type UploadedImage = { data: string; url?: string; type: "inspo" | "content"; label?: string };
@@ -1654,11 +1961,16 @@ export async function POST(req: Request) {
       }
     }
 
+    // Build system prompt based on output format
+    const systemPrompt = outputFormat === "react"
+      ? SYSTEM_PROMPT + "\n\n" + REACT_ADDENDUM
+      : SYSTEM_PROMPT;
+
     // Use streaming to avoid Vercel function timeout
     const stream = anthropic.messages.stream({
       model,
       max_tokens: maxTokens,
-      system: SYSTEM_PROMPT,
+      system: systemPrompt,
       messages: claudeMessages,
     });
 

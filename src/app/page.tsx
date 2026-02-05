@@ -118,6 +118,8 @@ function HomePageContent() {
   const [selectedElement, setSelectedElement] = useState<SelectedElement | null>(null);
   const [bookmarks, setBookmarks] = useState<VersionBookmark[]>([]);
   const [codeMode, setCodeMode] = useState<CodeMode>("html");
+  const [outputFormat, setOutputFormat] = useState<"html" | "react">("html");
+  const [reactCode, setReactCode] = useState<string | null>(null);
 
   // Project state
   const [currentProjectId, setCurrentProjectId] = useState<string | null>(null);
@@ -547,6 +549,7 @@ function HomePageContent() {
           uploadedImages: imagesToSend,
           currentPreview,
           previewScreenshot,
+          outputFormat,
         }),
         signal: controller.signal,
       });
@@ -688,6 +691,13 @@ function HomePageContent() {
         const navGuard = `<script>document.addEventListener('click',function(e){var a=e.target.closest('a');if(a){var h=a.getAttribute('href');if(h&&h.startsWith('http')){e.preventDefault();return;}if(h&&!h.startsWith('javascript:')){e.preventDefault();}}},true);</script>`;
         const safeHtml = processedHtml.replace(/<head([^>]*)>/i, `<head$1>${navGuard}`);
         setCurrentPreview(safeHtml);
+        setReactCode(null); // Clear React code when HTML is generated
+      }
+
+      // Handle React output
+      if (data.react) {
+        setReactCode(data.react);
+        // For React mode, we don't set preview HTML - show code instead
       }
     } catch (error) {
       if (error instanceof DOMException && error.name === "AbortError") return;
@@ -774,6 +784,7 @@ function HomePageContent() {
           uploadedImages: imagesToSend,
           currentPreview,
           previewScreenshot,
+          outputFormat,
         }),
         signal: controller.signal,
       });
@@ -899,6 +910,12 @@ function HomePageContent() {
         const navGuard = `<script>document.addEventListener('click',function(e){var a=e.target.closest('a');if(a){var h=a.getAttribute('href');if(h&&h.startsWith('http')){e.preventDefault();return;}if(h&&!h.startsWith('javascript:')){e.preventDefault();}}},true);</script>`;
         const safeHtml = processedHtml.replace(/<head([^>]*)>/i, `<head$1>${navGuard}`);
         setCurrentPreview(safeHtml);
+        setReactCode(null);
+      }
+
+      // Handle React output
+      if (data.react) {
+        setReactCode(data.react);
       }
     } catch (error) {
       if (error instanceof DOMException && error.name === "AbortError") return;
