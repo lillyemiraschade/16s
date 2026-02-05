@@ -379,9 +379,11 @@ function HomePageContent() {
   const abortRef = useRef<AbortController | null>(null);
 
   // Helper function to replace image placeholders in HTML
-  const replaceImagePlaceholders = useCallback((html: string): string => {
-    // Collect ALL content images from the conversation history
+  const replaceImagePlaceholders = useCallback((html: string, currentImages?: UploadedImage[]): string => {
+    // Collect ALL content images from the conversation history AND current message
     const allContentImages: UploadedImage[] = [];
+
+    // Add images from conversation history
     for (const msg of messagesRef.current) {
       if (msg.uploadedImages) {
         for (const img of msg.uploadedImages) {
@@ -392,25 +394,58 @@ function HomePageContent() {
       }
     }
 
+    // Add current images that might not be in messagesRef yet
+    if (currentImages) {
+      for (const img of currentImages) {
+        if (img.type === "content" && !allContentImages.some(existing => existing.data === img.data)) {
+          allContentImages.push(img);
+        }
+      }
+    }
+
     console.log(`[Image Replacement] Found ${allContentImages.length} content images in history`);
 
-    // Find all placeholders in the HTML using regex (handles variations in format)
+    let result = html;
+
+    // Step 1: Replace {{CONTENT_IMAGE_N}} placeholders with base64 data
     const placeholderRegex = /\{\{\s*CONTENT_IMAGE_(\d+)\s*\}\}/g;
     const foundPlaceholders = Array.from(html.matchAll(placeholderRegex));
     console.log(`[Image Replacement] Found ${foundPlaceholders.length} placeholders in HTML:`, foundPlaceholders.map(m => m[0]));
 
-    // Replace each placeholder with the corresponding image
-    return html.replace(placeholderRegex, (match, indexStr) => {
+    result = result.replace(placeholderRegex, (match, indexStr) => {
       const index = parseInt(indexStr, 10);
       if (allContentImages[index]) {
         console.log(`[Image Replacement] Replacing ${match} with image (${allContentImages[index].data.length} chars)`);
         return allContentImages[index].data;
       } else {
         console.warn(`[Image Replacement] No image found for ${match} (have ${allContentImages.length} images)`);
-        // Return a 1x1 transparent pixel as fallback to prevent broken image icon
         return "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7";
       }
     });
+
+    // Step 2: Validate blob URLs - replace any unrecognized blob URLs with base64
+    // This catches cases where AI uses a URL that doesn't exist
+    const blobUrlRegex = /src="(https:\/\/[^"]*\.public\.blob\.vercel-storage\.com\/[^"]*)"/g;
+    const validUrls = allContentImages.map(img => img.url).filter(Boolean);
+
+    result = result.replace(blobUrlRegex, (match, url) => {
+      // Check if this URL matches any of our valid uploaded images
+      if (validUrls.includes(url)) {
+        console.log(`[Image Replacement] Blob URL validated: ${url.slice(0, 50)}...`);
+        return match; // Keep the valid URL
+      }
+
+      // URL doesn't match - find the corresponding image by index or use first content image
+      console.warn(`[Image Replacement] Unrecognized blob URL, replacing with base64: ${url.slice(0, 50)}...`);
+      if (allContentImages.length > 0) {
+        // Use the first content image as fallback
+        return `src="${allContentImages[0].data}"`;
+      }
+      // No content images at all - use transparent pixel
+      return 'src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"';
+    });
+
+    return result;
   }, []);
 
   const handleSendMessage = useCallback(async (text: string, imagesToInclude?: UploadedImage[]) => {
@@ -696,7 +731,8 @@ function HomePageContent() {
         setRedoHistory([]); // Clear redo on new version
 
         // Replace content image placeholders with actual base64 data
-        const processedHtml = replaceImagePlaceholders(data.html);
+        // Pass imagesToSend to ensure current images are included (messagesRef might not be updated yet)
+        const processedHtml = replaceImagePlaceholders(data.html, imagesToSend);
 
         // Inject navigation guard to keep all clicks inside iframe
         const navGuard = `<script>document.addEventListener('click',function(e){var a=e.target.closest('a');if(a){var h=a.getAttribute('href');if(h&&h.startsWith('http')){e.preventDefault();return;}if(h&&!h.startsWith('javascript:')){e.preventDefault();}}},true);</script>`;
@@ -922,7 +958,8 @@ function HomePageContent() {
         setRedoHistory([]);
 
         // Replace content image placeholders with actual base64 data
-        const processedHtml = replaceImagePlaceholders(data.html);
+        // Pass imagesToSend to ensure current images are included
+        const processedHtml = replaceImagePlaceholders(data.html, imagesToSend);
 
         const navGuard = `<script>document.addEventListener('click',function(e){var a=e.target.closest('a');if(a){var h=a.getAttribute('href');if(h&&h.startsWith('http')){e.preventDefault();return;}if(h&&!h.startsWith('javascript:')){e.preventDefault();}}},true);</script>`;
         const safeHtml = processedHtml.replace(/<head([^>]*)>/i, `<head$1>${navGuard}`);
