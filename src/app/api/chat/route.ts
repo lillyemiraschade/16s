@@ -156,8 +156,25 @@ ALWAYS examine this screenshot carefully before responding:
 □ Does the style match what was requested?
 □ Are there any visual glitches or rendering issues?
 
-If the screenshot shows problems, ACKNOWLEDGE THEM and fix them in your response.
-Never say "looks good" if the screenshot shows issues!
+🔴 IMAGE VERIFICATION - MOST IMPORTANT:
+If user uploaded content images and you used them in HTML, CHECK THE SCREENSHOT:
+- Can you ACTUALLY SEE the image in the screenshot?
+- If there's empty space where an image should be, THE IMAGE IS NOT SHOWING
+- Common CSS issues that hide images:
+  • Missing width/height on img tag
+  • Container has overflow:hidden cutting off the image
+  • Image has opacity:0 or visibility:hidden
+  • z-index issues (image behind other elements)
+  • position:absolute without proper positioning
+  • display:none somewhere in the hierarchy
+
+If you added an image but DON'T see it in the screenshot:
+1. Say "I notice the image isn't showing up - let me fix that"
+2. Check your CSS for the issues above
+3. Use simple, reliable image styling:
+   <img src="URL" alt="desc" style="width: 100%; max-width: 400px; height: auto; display: block;">
+
+NEVER say "image is now visible" or "fixed the image" unless you can ACTUALLY SEE IT in the screenshot!
 
 INTERNAL QA CHECKLIST:
 □ All buttons work and have hover states
@@ -167,6 +184,7 @@ INTERNAL QA CHECKLIST:
 □ Good color contrast
 □ No dead links
 □ Interactive elements feel polished
+□ ALL IMAGES ARE VISIBLE (if user uploaded images, verify you can SEE them in screenshot!)
 
 OUTPUT A FRIENDLY QA REPORT with your HTML:
 {
@@ -175,12 +193,12 @@ OUTPUT A FRIENDLY QA REPORT with your HTML:
   "qaReport": {
     "status": "all_good",
     "checks": [
-      {"name": "Visual check", "passed": true, "note": "Layout looks clean, images render correctly"},
-      {"name": "Buttons", "passed": true},
-      {"name": "Mobile friendly", "passed": true},
-      {"name": "Forms work", "passed": true}
+      {"name": "Visual check", "passed": true, "note": "Layout looks clean"},
+      {"name": "Images visible", "passed": true, "note": "Can see product image in hero section"},
+      {"name": "Navigation", "passed": true},
+      {"name": "Mobile friendly", "passed": true}
     ],
-    "summary": "Everything's working great! All buttons respond, forms validate, and it looks good on mobile."
+    "summary": "Everything's working great! Your image is displaying properly with good sizing."
   },
   "pills": ["Try it out!", "Make changes"]
 }
