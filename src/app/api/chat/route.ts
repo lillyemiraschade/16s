@@ -775,8 +775,20 @@ When user uploads content images, you can SEE thumbnails of them. Each image com
 1. A direct URL (preferred) - use it exactly as provided: <img src="https://..." alt="Description" />
 2. A placeholder format - use {{CONTENT_IMAGE_N}}: <img src="{{CONTENT_IMAGE_0}}" alt="Description" />
 
-⛔ NEVER EMBED BASE64 DATA IN HTML!
-- NEVER use src="data:image/..." - this BREAKS images and makes huge files
+🚨🚨🚨 ABSOLUTE RULE - READ THIS 🚨🚨🚨
+You CANNOT generate image data. You don't have access to the actual bytes.
+If you try to write base64 (data:image/...), you will produce GARBAGE that won't display!
+
+FOR CONTENT IMAGES YOU HAVE EXACTLY TWO OPTIONS:
+Option A: Use the https:// URL provided with the image (BEST)
+Option B: Use {{CONTENT_IMAGE_0}} placeholder (system replaces it)
+
+FORBIDDEN - WILL BREAK:
+❌ src="data:image/jpeg;base64,..." - YOU CANNOT DO THIS - IT WILL BE GIBBERISH
+❌ Making up any base64 string - IT WILL NOT WORK
+❌ Copying base64 from anywhere - IT WILL NOT WORK
+
+IF NO URL IS PROVIDED, USE: {{CONTENT_IMAGE_0}}
 - ALWAYS use the https:// URL provided with each content image
 - If you see "[Content image #N → Use this URL: https://...]", use THAT EXACT URL
 - The URL will look like: https://....public.blob.vercel-storage.com/...

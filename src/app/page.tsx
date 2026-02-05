@@ -438,12 +438,28 @@ function HomePageContent() {
       // URL doesn't match - find the corresponding image by index or use first content image
       console.warn(`[Image Replacement] Unrecognized blob URL, replacing with base64: ${url.slice(0, 50)}...`);
       if (allContentImages.length > 0) {
-        // Use the first content image as fallback
         return `src="${allContentImages[0].data}"`;
       }
-      // No content images at all - use transparent pixel
       return 'src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"';
     });
+
+    // Step 3: Replace AI-generated base64 (which is gibberish) with real content images
+    // The AI cannot generate valid base64 - it just makes up garbage that won't display
+    // Detect long base64 strings that aren't from our content images and replace them
+    if (allContentImages.length > 0) {
+      const aiBase64Regex = /src="(data:image\/[^;]+;base64,[A-Za-z0-9+/=]{100,})"/g;
+      const validBase64s = allContentImages.map(img => img.data);
+
+      result = result.replace(aiBase64Regex, (match, base64) => {
+        // Check if this is one of our valid images
+        if (validBase64s.includes(base64)) {
+          return match; // Keep it
+        }
+        // This is AI-generated gibberish - replace with first content image
+        console.warn(`[Image Replacement] Replacing AI-generated base64 with real image`);
+        return `src="${allContentImages[0].data}"`;
+      });
+    }
 
     return result;
   }, []);
