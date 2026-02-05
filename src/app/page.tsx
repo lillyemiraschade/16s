@@ -17,7 +17,7 @@ import { MigrationBanner } from "@/components/auth/MigrationBanner";
 import { UserMenu } from "@/components/auth/UserMenu";
 import { AuthModal } from "@/components/auth/AuthModal";
 import { useAuth } from "@/lib/auth/AuthContext";
-import type { Message, Viewport, SavedProjectMeta, SelectedElement, VersionBookmark, UploadedImage, CodeMode } from "@/lib/types";
+import type { Message, Viewport, SavedProjectMeta, SelectedElement, VersionBookmark, UploadedImage, CodeMode, ProjectContext } from "@/lib/types";
 
 const HEADLINES = [
   "What shall we build?",
@@ -125,6 +125,7 @@ function HomePageContent() {
   const [currentProjectId, setCurrentProjectId] = useState<string | null>(null);
   const [projectName, setProjectName] = useState<string>("Untitled");
   const [savedProjects, setSavedProjects] = useState<SavedProjectMeta[]>([]);
+  const [projectContext, setProjectContext] = useState<ProjectContext | undefined>(undefined);
 
   // Cloud-aware projects API
   const { save: saveProject, load: loadProject, list: listProjects, remove: deleteProject, isCloud, isAuthLoading, migrationStatus, migratedCount } = useProjects();
@@ -215,6 +216,7 @@ function HomePageContent() {
           setCurrentPreview(proj.currentPreview);
           setPreviewHistory(proj.previewHistory);
           setBookmarks(proj.bookmarks || []);
+          setProjectContext(proj.context);
           setHasStarted(true);
           // Clear the URL param
           window.history.replaceState({}, "", "/");
@@ -233,6 +235,7 @@ function HomePageContent() {
           setCurrentPreview(last.currentPreview);
           setPreviewHistory(last.previewHistory);
           setBookmarks(last.bookmarks || []);
+          setProjectContext(last.context);
           setHasStarted(true);
         }
       }
@@ -280,6 +283,7 @@ function HomePageContent() {
           currentPreview,
           previewHistory,
           bookmarks,
+          context: projectContext,
           updatedAt: Date.now(),
         });
 
@@ -550,6 +554,7 @@ function HomePageContent() {
           currentPreview,
           previewScreenshot,
           outputFormat,
+          context: projectContext,
         }),
         signal: controller.signal,
       });
@@ -785,6 +790,7 @@ function HomePageContent() {
           currentPreview,
           previewScreenshot,
           outputFormat,
+          context: projectContext,
         }),
         signal: controller.signal,
       });
@@ -1144,6 +1150,7 @@ function HomePageContent() {
     setSelectedElement(null);
     setBookmarks([]);
     setCodeMode("html");
+    setProjectContext(undefined);
   }, []);
 
   const handleLoadProject = useCallback(async (id: string) => {
@@ -1164,6 +1171,7 @@ function HomePageContent() {
     setSelectMode(false);
     setSelectedElement(null);
     setBookmarks(proj.bookmarks || []);
+    setProjectContext(proj.context);
   }, [loadProject]);
 
   const handleDeleteProject = useCallback(async (id: string) => {

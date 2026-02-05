@@ -13,6 +13,19 @@ const UploadedImageSchema = z.object({
   label: z.string().optional(),
 });
 
+// Project context schema (learned preferences - invisible to user)
+const ProjectContextSchema = z.object({
+  brandName: z.string().optional(),
+  industry: z.string().optional(),
+  targetAudience: z.string().optional(),
+  stylePreferences: z.array(z.string()).optional(),
+  colorPreferences: z.array(z.string()).optional(),
+  fontPreferences: z.array(z.string()).optional(),
+  featuresRequested: z.array(z.string()).optional(),
+  thingsToAvoid: z.array(z.string()).optional(),
+  lastUpdated: z.number().optional(),
+}).optional();
+
 // Request validation with defaults for resilience
 const ChatRequestSchema = z.object({
   messages: z.array(z.object({
@@ -26,6 +39,7 @@ const ChatRequestSchema = z.object({
   currentPreview: z.string().max(500000).nullable(),
   previewScreenshot: z.string().max(2000000).nullable().optional(),
   outputFormat: z.enum(["html", "react"]).default("html"), // Output format: vanilla HTML or React components
+  context: ProjectContextSchema, // Learned preferences (invisible memory)
 });
 
 type ChatRequest = z.infer<typeof ChatRequestSchema>;
@@ -68,6 +82,41 @@ if (typeof globalThis !== "undefined") {
 }
 
 const SYSTEM_PROMPT = `You are 16s, an AI web designer. You build beautiful websites through conversation.
+
+═══════════════════════════════════════════════════════════════════
+INVISIBLE INTELLIGENCE — THINK BEFORE YOU BUILD
+═══════════════════════════════════════════════════════════════════
+
+Before generating ANY code, SILENTLY work through this mental checklist (never show this to the user):
+
+INTERNAL PLANNING (do this in your head, not in your response):
+□ What type of site/app is this? (landing page, portfolio, tool, etc.)
+□ Who is the target audience? What do they care about?
+□ What's the primary goal? (sell, inform, collect leads, provide utility)
+□ What sections are needed? In what order?
+□ What's the right visual style for this brand/audience?
+□ What interactions will make this feel polished?
+□ What could go wrong? (dead buttons, broken forms, bad mobile layout)
+
+CONTEXT EXTRACTION (silently note these from conversation):
+□ Brand name and what they do
+□ Color preferences mentioned
+□ Style words used (modern, minimal, bold, elegant, retro, etc.)
+□ Target audience hints
+□ Specific features requested
+□ Things they said they DON'T want
+
+SELF-QA BEFORE OUTPUT (check your code silently):
+□ Every button has a hover state and does something
+□ Every form validates and shows success/error states
+□ Mobile layout works (check your responsive breakpoints)
+□ No lorem ipsum — all real, compelling copy
+□ Colors have proper contrast
+□ Interactive elements have visual feedback
+□ No dead links or placeholder URLs
+□ Navigation works on all screen sizes
+
+If you find issues during self-QA, FIX THEM before outputting. Never ship broken code.
 
 ═══════════════════════════════════════════════════════════════════
 PERSONALITY & CONVERSATION
@@ -1755,7 +1804,7 @@ export async function POST(req: Request) {
         { status: 400, headers: { "Content-Type": "application/json" } }
       );
     }
-    const { messages, uploadedImages, inspoImages, currentPreview, previewScreenshot, outputFormat } = parsed.data;
+    const { messages, uploadedImages, inspoImages, currentPreview, previewScreenshot, outputFormat, context } = parsed.data;
 
     // Normalize images: combine new typed format with legacy format
     type UploadedImage = { data: string; url?: string; type: "inspo" | "content"; label?: string };
@@ -1961,10 +2010,34 @@ export async function POST(req: Request) {
       }
     }
 
-    // Build system prompt based on output format
-    const systemPrompt = outputFormat === "react"
-      ? SYSTEM_PROMPT + "\n\n" + REACT_ADDENDUM
-      : SYSTEM_PROMPT;
+    // Build context injection if we have learned preferences
+    let contextInjection = "";
+    if (context) {
+      const parts: string[] = [];
+      if (context.brandName) parts.push(`Brand: ${context.brandName}`);
+      if (context.industry) parts.push(`Industry: ${context.industry}`);
+      if (context.targetAudience) parts.push(`Audience: ${context.targetAudience}`);
+      if (context.stylePreferences?.length) parts.push(`Style: ${context.stylePreferences.join(", ")}`);
+      if (context.colorPreferences?.length) parts.push(`Colors: ${context.colorPreferences.join(", ")}`);
+      if (context.fontPreferences?.length) parts.push(`Fonts: ${context.fontPreferences.join(", ")}`);
+      if (context.featuresRequested?.length) parts.push(`Features wanted: ${context.featuresRequested.join(", ")}`);
+      if (context.thingsToAvoid?.length) parts.push(`AVOID: ${context.thingsToAvoid.join(", ")}`);
+
+      if (parts.length > 0) {
+        contextInjection = `\n\n═══════════════════════════════════════════════════════════════════
+PROJECT MEMORY (learned from this conversation)
+═══════════════════════════════════════════════════════════════════
+${parts.join("\n")}
+
+Use this context to inform your designs. Don't ask about things you already know.
+═══════════════════════════════════════════════════════════════════\n`;
+      }
+    }
+
+    // Build system prompt based on output format and context
+    let systemPrompt = SYSTEM_PROMPT;
+    if (contextInjection) systemPrompt += contextInjection;
+    if (outputFormat === "react") systemPrompt += "\n\n" + REACT_ADDENDUM;
 
     // Use streaming to avoid Vercel function timeout
     const stream = anthropic.messages.stream({

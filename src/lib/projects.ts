@@ -117,6 +117,7 @@ async function saveCloudProject(project: SavedProject, userId: string): Promise<
       current_preview: project.currentPreview,
       preview_history: project.previewHistory,
       bookmarks: project.bookmarks,
+      context: project.context || null,
       updated_at: new Date().toISOString(),
     }, { onConflict: "id" })
     .select();
@@ -153,6 +154,7 @@ async function loadCloudProject(id: string, userId: string): Promise<SavedProjec
     currentPreview: data.current_preview,
     previewHistory: data.preview_history as string[],
     bookmarks: data.bookmarks as SavedProject["bookmarks"],
+    context: data.context as SavedProject["context"],
     updatedAt: new Date(data.updated_at).getTime(),
   };
 }

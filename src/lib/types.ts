@@ -41,6 +41,19 @@ export interface VersionBookmark {
   createdAt: number;
 }
 
+// Project context - learned preferences (invisible to user)
+export interface ProjectContext {
+  brandName?: string;
+  industry?: string;
+  targetAudience?: string;
+  stylePreferences?: string[]; // "modern", "minimal", "bold", etc.
+  colorPreferences?: string[]; // hex codes or color names
+  fontPreferences?: string[];
+  featuresRequested?: string[];
+  thingsToAvoid?: string[];
+  lastUpdated?: number;
+}
+
 export interface SavedProject {
   id: string;
   name: string;
@@ -48,6 +61,7 @@ export interface SavedProject {
   currentPreview: string | null;
   previewHistory: string[];
   bookmarks: VersionBookmark[];
+  context?: ProjectContext; // Learned preferences
   updatedAt: number;
 }
 
