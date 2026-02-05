@@ -2044,18 +2044,32 @@ Use this context to inform your designs. Don't ask about things you already know
     }
 
     // Build system prompt based on output format and context
-    let systemPrompt = SYSTEM_PROMPT;
-    if (contextInjection) systemPrompt += contextInjection;
-    if (outputFormat === "react") systemPrompt += "\n\n" + REACT_ADDENDUM;
+    let systemPromptText = SYSTEM_PROMPT;
+    if (contextInjection) systemPromptText += contextInjection;
+    if (outputFormat === "react") systemPromptText += "\n\n" + REACT_ADDENDUM;
+
+    // Use prompt caching for the system prompt (90% cost reduction on cache hits)
+    // The base SYSTEM_PROMPT is static and cacheable
+    // Context injection and React addendum are dynamic but small
+    const systemPromptWithCache = [
+      {
+        type: "text" as const,
+        text: SYSTEM_PROMPT,
+        cache_control: { type: "ephemeral" as const }, // Cache the large static portion
+      },
+      // Add dynamic parts without caching (they change per request)
+      ...(contextInjection ? [{ type: "text" as const, text: contextInjection }] : []),
+      ...(outputFormat === "react" ? [{ type: "text" as const, text: "\n\n" + REACT_ADDENDUM }] : []),
+    ];
 
     // Use streaming to avoid Vercel function timeout - with retry logic
     const makeRequest = async (retryCount = 0): Promise<string> => {
       try {
-        console.log(`[Chat API] Making request (attempt ${retryCount + 1}), model: ${model}`);
+        console.log(`[Chat API] Making request (attempt ${retryCount + 1}), model: ${model}, cached: true`);
         const stream = anthropic.messages.stream({
           model,
           max_tokens: maxTokens,
-          system: systemPrompt,
+          system: systemPromptWithCache,
           messages: claudeMessages,
         });
 
