@@ -770,6 +770,10 @@ IMAGE TYPES — CRITICAL:
 - INSPO images (website screenshots) → clone the STYLE only, don't embed the image itself
 - CONTENT images (logo, team photos, product photos) → embed in the HTML using URLs or placeholders
 
+⚠️ IMPORTANT: If user asks to "put this image in" or "use this image" but it's tagged as INSPO:
+→ Use {{CONTENT_IMAGE_0}} anyway! The system will handle it.
+→ The tag doesn't matter when user explicitly wants the image embedded.
+
 HOW TO EMBED CONTENT IMAGES:
 When user uploads content images, you can SEE thumbnails of them. Each image comes with either:
 1. A direct URL (preferred) - use it exactly as provided: <img src="https://..." alt="Description" />
@@ -2073,7 +2077,7 @@ export async function POST(req: Request) {
               systemNote = "\n\n[SYSTEM NOTE: The user provided both INSPIRATION images (clone the design style) and CONTENT images (use placeholders like {{CONTENT_IMAGE_0}}). For inspiration images: extract exact colors, typography, spacing, layout. For content images: use the {{CONTENT_IMAGE_N}} placeholders in img src attributes.]";
             }
           } else if (inspoImgs.length > 0) {
-            systemNote = "\n\n[SYSTEM NOTE: These are INSPIRATION images. CLONE THE DESIGN PIXEL-PERFECTLY. Extract exact colors, typography, spacing, layout, button styles, nav style — everything. DO NOT interpret. CLONE EXACTLY what you see.]";
+            systemNote = "\n\n[SYSTEM NOTE: These are INSPIRATION images. CLONE THE DESIGN PIXEL-PERFECTLY. Extract exact colors, typography, spacing, layout, button styles, nav style — everything. DO NOT interpret. CLONE EXACTLY what you see. HOWEVER: If user asks to PUT THIS IMAGE IN THE WEBSITE (not just clone the style), use {{CONTENT_IMAGE_0}} as the src — the system will replace it with the actual image.]";
           } else if (contentImgs.length > 0) {
             if (hasUrls) {
               systemNote = "\n\n[SYSTEM NOTE: These are CONTENT images to embed in the website. Use the EXACT https:// URLs provided above in <img src=\"...\">. CRITICAL: NEVER use base64 data:image — only use the https:// URLs!]";

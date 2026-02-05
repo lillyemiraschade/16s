@@ -380,8 +380,10 @@ function HomePageContent() {
 
   // Helper function to replace image placeholders in HTML
   const replaceImagePlaceholders = useCallback((html: string, currentImages?: UploadedImage[]): string => {
-    // Collect ALL content images from the conversation history AND current message
+    // Collect ALL images from the conversation history AND current message
+    // We collect both content AND inspo images because users often want inspo images embedded too
     const allContentImages: UploadedImage[] = [];
+    const allInspoImages: UploadedImage[] = [];
 
     // Add images from conversation history
     for (const msg of messagesRef.current) {
@@ -389,6 +391,8 @@ function HomePageContent() {
         for (const img of msg.uploadedImages) {
           if (img.type === "content") {
             allContentImages.push(img);
+          } else {
+            allInspoImages.push(img);
           }
         }
       }
@@ -399,65 +403,69 @@ function HomePageContent() {
       for (const img of currentImages) {
         if (img.type === "content" && !allContentImages.some(existing => existing.data === img.data)) {
           allContentImages.push(img);
+        } else if (img.type === "inspo" && !allInspoImages.some(existing => existing.data === img.data)) {
+          allInspoImages.push(img);
         }
       }
     }
 
-    console.log(`[Image Replacement] Found ${allContentImages.length} content images in history`);
+    // If no content images but we have inspo images, use inspo as fallback
+    // This handles the common case where user uploads an image tagged as inspo
+    // but actually wants it embedded in the website
+    const imagesToUse = allContentImages.length > 0 ? allContentImages : allInspoImages;
+
+    console.log(`[Image Replacement] Found ${allContentImages.length} content images, ${allInspoImages.length} inspo images, using ${imagesToUse.length} total`);
 
     let result = html;
 
-    // Step 1: Replace {{CONTENT_IMAGE_N}} placeholders with base64 data
+    // Step 1: Replace {{CONTENT_IMAGE_N}} placeholders with image data
     const placeholderRegex = /\{\{\s*CONTENT_IMAGE_(\d+)\s*\}\}/g;
     const foundPlaceholders = Array.from(html.matchAll(placeholderRegex));
     console.log(`[Image Replacement] Found ${foundPlaceholders.length} placeholders in HTML:`, foundPlaceholders.map(m => m[0]));
 
     result = result.replace(placeholderRegex, (match, indexStr) => {
       const index = parseInt(indexStr, 10);
-      if (allContentImages[index]) {
-        console.log(`[Image Replacement] Replacing ${match} with image (${allContentImages[index].data.length} chars)`);
-        return allContentImages[index].data;
+      if (imagesToUse[index]) {
+        console.log(`[Image Replacement] Replacing ${match} with image`);
+        return imagesToUse[index].url || imagesToUse[index].data;
+      } else if (imagesToUse.length > 0) {
+        // Use first available image as fallback
+        console.log(`[Image Replacement] Index ${index} not found, using first image`);
+        return imagesToUse[0].url || imagesToUse[0].data;
       } else {
-        console.warn(`[Image Replacement] No image found for ${match} (have ${allContentImages.length} images)`);
+        console.warn(`[Image Replacement] No images available for ${match}`);
         return "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7";
       }
     });
 
-    // Step 2: Validate blob URLs - replace any unrecognized blob URLs with base64
-    // This catches cases where AI uses a URL that doesn't exist
+    // Step 2: Validate blob URLs - replace any unrecognized blob URLs
     const blobUrlRegex = /src="(https:\/\/[^"]*\.public\.blob\.vercel-storage\.com\/[^"]*)"/g;
-    const validUrls = allContentImages.map(img => img.url).filter(Boolean);
+    const validUrls = imagesToUse.map(img => img.url).filter(Boolean);
 
     result = result.replace(blobUrlRegex, (match, url) => {
-      // Check if this URL matches any of our valid uploaded images
       if (validUrls.includes(url)) {
-        console.log(`[Image Replacement] Blob URL validated: ${url.slice(0, 50)}...`);
-        return match; // Keep the valid URL
+        console.log(`[Image Replacement] Blob URL validated`);
+        return match;
       }
-
-      // URL doesn't match - find the corresponding image by index or use first content image
-      console.warn(`[Image Replacement] Unrecognized blob URL, replacing with base64: ${url.slice(0, 50)}...`);
-      if (allContentImages.length > 0) {
-        return `src="${allContentImages[0].data}"`;
+      console.warn(`[Image Replacement] Unrecognized blob URL, replacing`);
+      if (imagesToUse.length > 0) {
+        return `src="${imagesToUse[0].url || imagesToUse[0].data}"`;
       }
       return 'src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"';
     });
 
-    // Step 3: Replace AI-generated base64 (which is gibberish) with real content images
-    // The AI cannot generate valid base64 - it just makes up garbage that won't display
-    // Detect long base64 strings that aren't from our content images and replace them
-    if (allContentImages.length > 0) {
+    // Step 3: Replace AI-generated base64 (gibberish) with real images
+    // AI cannot generate valid base64 - detect and replace
+    if (imagesToUse.length > 0) {
       const aiBase64Regex = /src="(data:image\/[^;]+;base64,[A-Za-z0-9+/=]{100,})"/g;
-      const validBase64s = allContentImages.map(img => img.data);
+      const validBase64s = imagesToUse.map(img => img.data);
 
       result = result.replace(aiBase64Regex, (match, base64) => {
-        // Check if this is one of our valid images
         if (validBase64s.includes(base64)) {
-          return match; // Keep it
+          return match;
         }
-        // This is AI-generated gibberish - replace with first content image
         console.warn(`[Image Replacement] Replacing AI-generated base64 with real image`);
-        return `src="${allContentImages[0].data}"`;
+        return `src="${imagesToUse[0].url || imagesToUse[0].data}"`;
       });
     }
 
