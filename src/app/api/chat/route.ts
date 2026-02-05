@@ -757,6 +757,12 @@ When user uploads content images, you can SEE thumbnails of them. Each image com
 1. A direct URL (preferred) - use it exactly as provided: <img src="https://..." alt="Description" />
 2. A placeholder format - use {{CONTENT_IMAGE_N}}: <img src="{{CONTENT_IMAGE_0}}" alt="Description" />
 
+⛔ NEVER EMBED BASE64 DATA IN HTML!
+- NEVER use src="data:image/..." - this BREAKS images and makes huge files
+- ALWAYS use the https:// URL provided with each content image
+- If you see "[Content image #N → Use this URL: https://...]", use THAT EXACT URL
+- The URL will look like: https://....public.blob.vercel-storage.com/...
+
 IMPORTANT: If a URL is provided, use the EXACT URL. Do not modify it.
 Place images in appropriate sections (logo in nav, team photos on about, products on products page, etc.)
 
@@ -2014,7 +2020,7 @@ export async function POST(req: Request) {
                 if (img.url) {
                   contentBlocks.push({
                     type: "text",
-                    text: `[Content image #${globalContentImageIndex}${labelNote} → Use this URL: ${img.url}]`,
+                    text: `[Content image #${globalContentImageIndex}${labelNote} → Use this EXACT URL in img src: ${img.url} — NEVER use base64 data:image]`,
                   });
                 } else {
                   contentBlocks.push({
@@ -2032,7 +2038,7 @@ export async function POST(req: Request) {
           const hasUrls = contentImgs.some(img => img.url);
           if (inspoImgs.length > 0 && contentImgs.length > 0) {
             if (hasUrls) {
-              systemNote = "\n\n[SYSTEM NOTE: The user provided both INSPIRATION images (clone the design style) and CONTENT images (use the provided URLs directly in img src). For inspiration images: extract exact colors, typography, spacing, layout. For content images: use the exact URLs provided above.]";
+              systemNote = "\n\n[SYSTEM NOTE: The user provided both INSPIRATION images (clone the design style) and CONTENT images. For inspiration images: extract exact colors, typography, spacing, layout. For content images: use the EXACT https:// URLs provided above in img src. NEVER embed base64 data:image — it breaks images!]";
             } else {
               systemNote = "\n\n[SYSTEM NOTE: The user provided both INSPIRATION images (clone the design style) and CONTENT images (use placeholders like {{CONTENT_IMAGE_0}}). For inspiration images: extract exact colors, typography, spacing, layout. For content images: use the {{CONTENT_IMAGE_N}} placeholders in img src attributes.]";
             }
@@ -2040,7 +2046,7 @@ export async function POST(req: Request) {
             systemNote = "\n\n[SYSTEM NOTE: These are INSPIRATION images. CLONE THE DESIGN PIXEL-PERFECTLY. Extract exact colors, typography, spacing, layout, button styles, nav style — everything. DO NOT interpret. CLONE EXACTLY what you see.]";
           } else if (contentImgs.length > 0) {
             if (hasUrls) {
-              systemNote = "\n\n[SYSTEM NOTE: These are CONTENT images. Use the exact URLs provided above directly in img src attributes. Do NOT modify the URLs.]";
+              systemNote = "\n\n[SYSTEM NOTE: These are CONTENT images to embed in the website. Use the EXACT https:// URLs provided above in <img src=\"...\">. CRITICAL: NEVER use base64 data:image — only use the https:// URLs!]";
             } else {
               systemNote = "\n\n[SYSTEM NOTE: These are CONTENT images. Use {{CONTENT_IMAGE_N}} placeholders in img src attributes. The system will replace them with actual image data.]";
             }
