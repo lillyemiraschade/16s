@@ -2,12 +2,12 @@
 
 import { useEffect, useRef, useState, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Paperclip, ArrowUp, X, ImagePlus, Plus, Phone, Info, ChevronDown, Trash2, Pencil, Sparkles, Loader2, Mic } from "lucide-react";
+import { Paperclip, ArrowUp, X, ImagePlus, Plus, Phone, Info, Pencil, Sparkles, Loader2, Mic } from "lucide-react";
 import Image from "next/image";
 import { TypingIndicator } from "./TypingIndicator";
 import { UserMenu } from "@/components/auth/UserMenu";
 import { processImageFiles, removeBackground, compressForContent } from "@/lib/images";
-import type { Message, SavedProjectMeta, SelectedElement, UploadedImage } from "@/lib/types";
+import type { Message, SelectedElement, UploadedImage } from "@/lib/types";
 
 interface ChatPanelProps {
   messages: Message[];
@@ -20,26 +20,12 @@ interface ChatPanelProps {
   isGenerating: boolean;
   uploadedImages: UploadedImage[];
   onNewProject: () => void;
-  onLoadProject: (id: string) => void;
-  onDeleteProject: (id: string) => void;
-  savedProjects: SavedProjectMeta[];
-  currentProjectId: string | null;
   isOnCall: boolean;
   onStartCall: () => void;
   hasPreview: boolean;
   selectedElement: SelectedElement | null;
   onClearSelection: () => void;
   onEditMessage: (messageId: string, newContent: string) => void;
-}
-
-function formatRelativeTime(ts: number): string {
-  const diff = Date.now() - ts;
-  const mins = Math.floor(diff / 60000);
-  if (mins < 1) return "just now";
-  if (mins < 60) return `${mins}m ago`;
-  const hrs = Math.floor(mins / 60);
-  if (hrs < 24) return `${hrs}h ago`;
-  return `${Math.floor(hrs / 24)}d ago`;
 }
 
 export function ChatPanel({
@@ -53,10 +39,6 @@ export function ChatPanel({
   isGenerating,
   uploadedImages,
   onNewProject,
-  onLoadProject,
-  onDeleteProject,
-  savedProjects,
-  currentProjectId,
   isOnCall,
   onStartCall,
   hasPreview,
@@ -67,18 +49,15 @@ export function ChatPanel({
   const [input, setInput] = useState("");
   const [isDragging, setIsDragging] = useState(false);
   const [lightboxImage, setLightboxImage] = useState<string | null>(null);
-  const [showProjectMenu, setShowProjectMenu] = useState(false);
   const [showCallDisclaimer, setShowCallDisclaimer] = useState(false);
   const [uploadError, setUploadError] = useState<string | null>(null);
   const [editingMessageId, setEditingMessageId] = useState<string | null>(null);
   const [editingContent, setEditingContent] = useState("");
-  const [deleteConfirmId, setDeleteConfirmId] = useState<string | null>(null);
   const [uploadContext, setUploadContext] = useState<{ type: "inspo" | "content"; label?: string }>({ type: "content" });
   const [removingBgIndex, setRemovingBgIndex] = useState<number | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
-  const projectMenuRef = useRef<HTMLDivElement>(null);
 
   const closeLightbox = useCallback(() => setLightboxImage(null), []);
 
@@ -171,25 +150,6 @@ export function ChatPanel({
     e.preventDefault();
     setIsDragging(false);
   };
-
-  // Close project menu on outside click or Escape
-  useEffect(() => {
-    if (!showProjectMenu) return;
-    const handleClick = (e: MouseEvent) => {
-      if (projectMenuRef.current && !projectMenuRef.current.contains(e.target as Node)) {
-        setShowProjectMenu(false);
-      }
-    };
-    const handleKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setShowProjectMenu(false);
-    };
-    document.addEventListener("mousedown", handleClick);
-    document.addEventListener("keydown", handleKey);
-    return () => {
-      document.removeEventListener("mousedown", handleClick);
-      document.removeEventListener("keydown", handleKey);
-    };
-  }, [showProjectMenu]);
 
   const handleCallClick = () => {
     if (isOnCall) return;
@@ -310,85 +270,14 @@ export function ChatPanel({
             <Phone className="w-3.5 h-3.5" />
             <span>Call</span>
           </button>
-          <div className="relative" ref={projectMenuRef}>
-            <button
-              onClick={() => setShowProjectMenu((v) => !v)}
-              className="flex items-center gap-1.5 px-2.5 py-1.5 text-[11px] font-medium text-zinc-400 hover:text-zinc-200 hover:bg-white/[0.04] rounded-lg transition-all duration-200"
-              title="Projects"
-            >
-              <Plus className="w-3.5 h-3.5" />
-              <span>New</span>
-              <ChevronDown className="w-3 h-3 opacity-50" />
-            </button>
-            <AnimatePresence>
-              {showProjectMenu && (
-                <motion.div
-                  initial={{ opacity: 0, y: -4 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -4 }}
-                  transition={{ duration: 0.12 }}
-                  className="absolute top-full right-0 mt-1 z-50 bg-zinc-900/95 backdrop-blur-xl border border-white/10 rounded-xl overflow-hidden min-w-[280px] max-w-[400px] py-1 shadow-2xl shadow-black/60"
-                >
-                  <button
-                    onClick={() => { onNewProject(); setShowProjectMenu(false); }}
-                    className="w-full flex items-center gap-2.5 px-4 py-2.5 text-[13px] text-green-400 hover:bg-white/[0.04] transition-colors font-medium"
-                  >
-                    <Plus className="w-3.5 h-3.5" />
-                    New Project
-                  </button>
-                  {savedProjects.length > 0 && (
-                    <>
-                      <div className="h-px bg-white/[0.06] mx-3 my-1" />
-                      <div className="max-h-[240px] overflow-y-auto">
-                        {savedProjects.map((proj) => (
-                          <div
-                            key={proj.id}
-                            className={`flex items-center gap-2 px-4 py-2 hover:bg-white/[0.04] transition-colors group ${
-                              proj.id === currentProjectId ? "bg-green-500/10" : ""
-                            }`}
-                          >
-                            <button
-                              onClick={() => { onLoadProject(proj.id); setShowProjectMenu(false); }}
-                              className="flex-1 text-left min-w-0"
-                            >
-                              <div className={`text-[13px] truncate max-w-[280px] ${proj.id === currentProjectId ? "text-green-400 font-medium" : "text-zinc-300"}`}>
-                                {proj.name}
-                              </div>
-                              <div className="text-[11px] text-zinc-600">{formatRelativeTime(proj.updatedAt)}</div>
-                            </button>
-                            {deleteConfirmId === proj.id ? (
-                              <div className="flex items-center gap-1">
-                                <button
-                                  onClick={(e) => { e.stopPropagation(); onDeleteProject(proj.id); setDeleteConfirmId(null); }}
-                                  className="px-1.5 py-0.5 text-[10px] font-medium text-red-400 hover:text-red-300 bg-red-500/10 rounded transition-colors"
-                                >
-                                  Delete
-                                </button>
-                                <button
-                                  onClick={(e) => { e.stopPropagation(); setDeleteConfirmId(null); }}
-                                  className="px-1.5 py-0.5 text-[10px] text-zinc-500 hover:text-zinc-300 transition-colors"
-                                >
-                                  Cancel
-                                </button>
-                              </div>
-                            ) : (
-                              <button
-                                onClick={(e) => { e.stopPropagation(); setDeleteConfirmId(proj.id); }}
-                                className="p-1 rounded text-zinc-600 hover:text-red-400 opacity-0 group-hover:opacity-100 transition-all"
-                                title="Delete project"
-                              >
-                                <Trash2 className="w-3 h-3" />
-                              </button>
-                            )}
-                          </div>
-                        ))}
-                      </div>
-                    </>
-                  )}
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </div>
+          <button
+            onClick={onNewProject}
+            className="flex items-center gap-1.5 px-2.5 py-1.5 text-[11px] font-medium text-zinc-400 hover:text-zinc-200 hover:bg-white/[0.04] rounded-lg transition-all duration-200"
+            title="Start new project"
+          >
+            <Plus className="w-3.5 h-3.5" />
+            <span>New</span>
+          </button>
         </div>
         <UserMenu />
       </div>

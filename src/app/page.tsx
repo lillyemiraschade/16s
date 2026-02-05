@@ -1526,10 +1526,6 @@ function HomePageContent() {
             isGenerating={isGenerating}
             uploadedImages={uploadedImages}
             onNewProject={handleNewProject}
-            onLoadProject={handleLoadProject}
-            onDeleteProject={handleDeleteProject}
-            savedProjects={savedProjects}
-            currentProjectId={currentProjectId}
             isOnCall={isOnCall}
             onStartCall={() => setIsOnCall(true)}
             hasPreview={!!currentPreview}
