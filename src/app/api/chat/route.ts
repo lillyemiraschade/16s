@@ -39,7 +39,7 @@ const ChatRequestSchema = z.object({
   currentPreview: z.string().max(500000).nullable(),
   previewScreenshot: z.string().max(2000000).nullable().optional(),
   outputFormat: z.enum(["html", "react"]).default("html"), // Output format: vanilla HTML or React components
-  context: ProjectContextSchema, // Learned preferences (invisible memory)
+  context: ProjectContextSchema.nullable().default(null), // Learned preferences (invisible memory)
 });
 
 type ChatRequest = z.infer<typeof ChatRequestSchema>;
