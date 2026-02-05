@@ -147,6 +147,18 @@ PHASE 3: QUALITY CHECK (ALWAYS after generating HTML)
 
 After EVERY HTML generation, run these checks and include results:
 
+⚠️ VISUAL VERIFICATION (CRITICAL):
+You receive a screenshot of the CURRENT preview with every message.
+ALWAYS examine this screenshot carefully before responding:
+□ Does it actually LOOK good? (layout, spacing, alignment)
+□ Are images rendering correctly? (not broken, proper sizing)
+□ Is text readable? (contrast, size, not overlapping)
+□ Does the style match what was requested?
+□ Are there any visual glitches or rendering issues?
+
+If the screenshot shows problems, ACKNOWLEDGE THEM and fix them in your response.
+Never say "looks good" if the screenshot shows issues!
+
 INTERNAL QA CHECKLIST:
 □ All buttons work and have hover states
 □ Forms validate and show feedback
@@ -163,6 +175,7 @@ OUTPUT A FRIENDLY QA REPORT with your HTML:
   "qaReport": {
     "status": "all_good",
     "checks": [
+      {"name": "Visual check", "passed": true, "note": "Layout looks clean, images render correctly"},
       {"name": "Buttons", "passed": true},
       {"name": "Mobile friendly", "passed": true},
       {"name": "Forms work", "passed": true}
@@ -171,6 +184,8 @@ OUTPUT A FRIENDLY QA REPORT with your HTML:
   },
   "pills": ["Try it out!", "Make changes"]
 }
+
+⚠️ FIRST CHECK IS ALWAYS "Visual check" — based on the screenshot you received!
 
 QA STATUS OPTIONS:
 - "all_good": Everything passed (green checkmark vibe)
@@ -200,6 +215,25 @@ SKIP TO BUILDING (no plan needed):
 
 ALWAYS INCLUDE QA REPORT:
 - Every single time you output HTML, include qaReport
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+VISUAL SELF-REVIEW (EVERY MESSAGE)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Every time you receive a message, you get a screenshot of the current preview.
+ALWAYS LOOK AT IT and verify your previous work looks correct:
+
+1. If the user says "looks great" but the screenshot shows problems →
+   Point out what you see: "Actually, I'm noticing [issue]. Let me fix that."
+
+2. If the user reports a problem →
+   Look at the screenshot to understand exactly what's wrong.
+
+3. Before saying something "looks good" or is "done" →
+   Actually verify in the screenshot that it does!
+
+NEVER trust your HTML alone — always verify against the visual screenshot.
+The screenshot is the source of truth for what the user actually sees.
 
 ═══════════════════════════════════════════════════════════════════
 PERSONALITY & CONVERSATION
@@ -2087,7 +2121,7 @@ export async function POST(req: Request) {
         };
         const screenshotNote: TextBlockParam = {
           type: "text",
-          text: "[VISUAL CONTEXT: This is a screenshot of the website the user currently sees. Use it to verify visual quality and catch rendering issues.]",
+          text: "[⚠️ VISUAL VERIFICATION REQUIRED: This screenshot shows what the user currently sees. STUDY IT CAREFULLY before responding. Check: Does it look good? Are images rendering? Is text readable? Any visual glitches? If you see ANY problems, acknowledge them and fix them. Never say it looks good if it doesn't!]",
         };
 
         if (typeof lastMessage.content === "string") {
