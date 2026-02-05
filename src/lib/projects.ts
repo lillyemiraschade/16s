@@ -107,19 +107,25 @@ async function saveCloudProject(project: SavedProject, userId: string): Promise<
 
   console.log("[Projects] Saving to cloud:", { id: project.id, name: project.name, userId });
 
+  // Build the upsert data - context is optional (requires DB migration)
+  const upsertData: Record<string, unknown> = {
+    id: project.id,
+    user_id: userId,
+    name: project.name,
+    messages: project.messages,
+    current_preview: project.currentPreview,
+    preview_history: project.previewHistory,
+    bookmarks: project.bookmarks,
+    updated_at: new Date().toISOString(),
+  };
+
+  // Only include context if it exists (column may not exist in older DBs)
+  // To enable context, run: ALTER TABLE projects ADD COLUMN context JSONB;
+  // For now, skip context to avoid 400 errors on DBs without the column
+
   const { data, error } = await supabase
     .from("projects")
-    .upsert({
-      id: project.id,
-      user_id: userId,
-      name: project.name,
-      messages: project.messages,
-      current_preview: project.currentPreview,
-      preview_history: project.previewHistory,
-      bookmarks: project.bookmarks,
-      context: project.context || null,
-      updated_at: new Date().toISOString(),
-    }, { onConflict: "id" })
+    .upsert(upsertData, { onConflict: "id" })
     .select();
 
   if (error) {
@@ -154,7 +160,8 @@ async function loadCloudProject(id: string, userId: string): Promise<SavedProjec
     currentPreview: data.current_preview,
     previewHistory: data.preview_history as string[],
     bookmarks: data.bookmarks as SavedProject["bookmarks"],
-    context: data.context as SavedProject["context"],
+    // Context is optional - may not exist in DB yet
+    context: (data as Record<string, unknown>).context as SavedProject["context"] | undefined,
     updatedAt: new Date(data.updated_at).getTime(),
   };
 }
