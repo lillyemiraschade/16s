@@ -53,7 +53,7 @@ export function ChatPanel({
   const [uploadError, setUploadError] = useState<string | null>(null);
   const [editingMessageId, setEditingMessageId] = useState<string | null>(null);
   const [editingContent, setEditingContent] = useState("");
-  const [uploadContext, setUploadContext] = useState<{ type: "inspo" | "content"; label?: string }>({ type: "content" });
+  const [uploadContext, setUploadContext] = useState<{ type: "inspo" | "content"; label?: string }>({ type: "inspo" });
   const [removingBgIndex, setRemovingBgIndex] = useState<number | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);

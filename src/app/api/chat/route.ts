@@ -3,7 +3,7 @@ import { MessageParam, ImageBlockParam, TextBlockParam } from "@anthropic-ai/sdk
 import { z } from "zod";
 
 export const runtime = "nodejs";
-export const maxDuration = 120;
+export const maxDuration = 300; // 5 minutes max for Pro plans
 
 // Image type for typed uploads
 const UploadedImageSchema = z.object({
