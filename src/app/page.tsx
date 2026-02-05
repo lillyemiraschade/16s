@@ -561,14 +561,18 @@ function HomePageContent() {
 
       // Handle error responses - try to get specific error message
       if (!response.ok) {
-        let errorMsg = "Something went wrong. Please try again.";
+        let errorMsg = "Let me try that again...";
         try {
           const errorData = await response.json();
-          if (errorData.error) errorMsg = errorData.error;
+          // Check both error and message fields
+          if (errorData.message) errorMsg = errorData.message;
+          else if (errorData.error) errorMsg = errorData.error;
         } catch {
           // If we can't parse error response, use status-based message
           if (response.status === 413) errorMsg = "Request too large. Try with fewer or smaller images.";
           else if (response.status === 429) errorMsg = "Too many requests. Please wait a moment.";
+          else if (response.status === 503) errorMsg = "The AI is busy right now. Please try again.";
+          else if (response.status === 504) errorMsg = "Request timed out. Please try again.";
         }
         throw new Error(errorMsg);
       }
@@ -666,7 +670,7 @@ function HomePageContent() {
       if (!data) {
         console.error("Failed to parse response:", responseText.slice(0, 500));
         const rawText = responseText.trim();
-        data = { message: rawText || "Something went wrong. Please try again." };
+        data = { message: rawText || "Let me try that again..." };
       }
 
       // Check if API returned an error in the response body
@@ -712,7 +716,7 @@ function HomePageContent() {
       setMessages((prev) => prev.filter((m) => m.id !== userMessage.id));
 
       // Show the actual error message
-      const errorMsg = error instanceof Error ? error.message : "Something went wrong. Please try again.";
+      const errorMsg = error instanceof Error ? error.message : "Let me try that again...";
       setMessages((prev) => [
         ...prev,
         {
@@ -796,13 +800,16 @@ function HomePageContent() {
       });
 
       if (!response.ok) {
-        let errorMsg = "Something went wrong. Please try again.";
+        let errorMsg = "Let me try that again...";
         try {
           const errorData = await response.json();
-          if (errorData.error) errorMsg = errorData.error;
+          if (errorData.message) errorMsg = errorData.message;
+          else if (errorData.error) errorMsg = errorData.error;
         } catch {
           if (response.status === 413) errorMsg = "Request too large. Try with fewer or smaller images.";
           else if (response.status === 429) errorMsg = "Too many requests. Please wait a moment.";
+          else if (response.status === 503) errorMsg = "The AI is busy right now. Please try again.";
+          else if (response.status === 504) errorMsg = "Request timed out. Please try again.";
         }
         throw new Error(errorMsg);
       }
@@ -888,7 +895,7 @@ function HomePageContent() {
       if (!data) {
         console.error("Failed to parse response:", responseText.slice(0, 500));
         const rawText = responseText.trim();
-        data = { message: rawText || "Something went wrong. Please try again." };
+        data = { message: rawText || "Let me try that again..." };
       }
 
       if (data.error) {
@@ -929,7 +936,7 @@ function HomePageContent() {
 
       setMessages((prev) => prev.filter((m) => m.id !== userMessage.id));
 
-      const errorMsg = error instanceof Error ? error.message : "Something went wrong. Please try again.";
+      const errorMsg = error instanceof Error ? error.message : "Let me try that again...";
       setMessages((prev) => [
         ...prev,
         {

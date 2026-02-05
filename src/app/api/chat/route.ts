@@ -2039,26 +2039,51 @@ Use this context to inform your designs. Don't ask about things you already know
     if (contextInjection) systemPrompt += contextInjection;
     if (outputFormat === "react") systemPrompt += "\n\n" + REACT_ADDENDUM;
 
-    // Use streaming to avoid Vercel function timeout
-    const stream = anthropic.messages.stream({
-      model,
-      max_tokens: maxTokens,
-      system: systemPrompt,
-      messages: claudeMessages,
-    });
+    // Use streaming to avoid Vercel function timeout - with retry logic
+    const makeRequest = async (retryCount = 0): Promise<string> => {
+      try {
+        console.log(`[Chat API] Making request (attempt ${retryCount + 1}), model: ${model}`);
+        const stream = anthropic.messages.stream({
+          model,
+          max_tokens: maxTokens,
+          system: systemPrompt,
+          messages: claudeMessages,
+        });
+
+        let fullText = "";
+        for await (const event of stream) {
+          if (event.type === "content_block_delta" && event.delta.type === "text_delta") {
+            fullText += event.delta.text;
+          }
+        }
+        return fullText;
+      } catch (apiError) {
+        const errMsg = apiError instanceof Error ? apiError.message : String(apiError);
+        console.error(`[Chat API] API error (attempt ${retryCount + 1}):`, errMsg);
+
+        // Retry on transient errors (overloaded, rate limits, network issues)
+        const isRetryable = errMsg.includes("overloaded") ||
+                           errMsg.includes("529") ||
+                           errMsg.includes("rate") ||
+                           errMsg.includes("timeout") ||
+                           errMsg.includes("ECONNRESET") ||
+                           errMsg.includes("503");
+
+        if (isRetryable && retryCount < 2) {
+          const delay = (retryCount + 1) * 2000; // 2s, 4s backoff
+          console.log(`[Chat API] Retrying in ${delay}ms...`);
+          await new Promise(resolve => setTimeout(resolve, delay));
+          return makeRequest(retryCount + 1);
+        }
+        throw apiError;
+      }
+    };
 
     const encoder = new TextEncoder();
     const readable = new ReadableStream({
       async start(controller) {
         try {
-          let fullText = "";
-          for await (const event of stream) {
-            if (event.type === "content_block_delta" && event.delta.type === "text_delta") {
-              fullText += event.delta.text;
-              // Send keepalive chunks so Vercel doesn't kill the connection
-              controller.enqueue(encoder.encode(" "));
-            }
-          }
+          const fullText = await makeRequest();
 
           // Parse the complete response
           console.log("[Chat API] Full response length:", fullText.length);
@@ -2094,19 +2119,25 @@ Use this context to inform your designs. Don't ask about things you already know
         } catch (error) {
           const errMsg = error instanceof Error ? error.message : String(error);
           const errStack = error instanceof Error ? error.stack : "";
-          console.error("Stream error:", errMsg);
-          console.error("Stream error stack:", errStack);
-          console.error("Stream error full:", error);
-          const isCredits = errMsg.includes("credit balance");
+          console.error("[Chat API] Stream error:", errMsg);
+          console.error("[Chat API] Stream error stack:", errStack);
+
+          // Determine specific error type for better user messaging
+          let userMessage = "Let me try that again...";
+          if (errMsg.includes("credit balance") || errMsg.includes("insufficient")) {
+            userMessage = "The AI service is temporarily unavailable. Please try again shortly.";
+          } else if (errMsg.includes("overloaded") || errMsg.includes("529")) {
+            userMessage = "The AI is busy right now. Give me a moment and try again.";
+          } else if (errMsg.includes("rate") || errMsg.includes("429")) {
+            userMessage = "Too many requests. Please wait a few seconds and try again.";
+          } else if (errMsg.includes("timeout") || errMsg.includes("ETIMEDOUT")) {
+            userMessage = "The request timed out. Please try again.";
+          } else if (errMsg.includes("invalid") || errMsg.includes("400")) {
+            userMessage = "I had trouble understanding that. Could you rephrase your request?";
+          }
+
           controller.enqueue(
-            encoder.encode(
-              "\n" +
-                JSON.stringify({
-                  message: isCredits
-                    ? "The AI service is temporarily unavailable. Please try again in a moment."
-                    : "Something went wrong. Please try again.",
-                })
-            )
+            encoder.encode("\n" + JSON.stringify({ message: userMessage }))
           );
           controller.close();
         }
@@ -2122,20 +2153,34 @@ Use this context to inform your designs. Don't ask about things you already know
     });
   } catch (error) {
     const errMsg = error instanceof Error ? error.message : String(error);
-    console.error("Chat API error:", errMsg);
+    const errStack = error instanceof Error ? error.stack : "";
+    console.error("[Chat API] Outer error:", errMsg);
+    console.error("[Chat API] Outer error stack:", errStack);
 
     // Provide more specific error messages
-    let userMessage = "Something went wrong. Please try again.";
+    let userMessage = "Let me try that again...";
+    let statusCode = 500;
+
     if (errMsg.includes("body") || errMsg.includes("size") || errMsg.includes("large")) {
       userMessage = "Request too large. Try with fewer or smaller images.";
+      statusCode = 413;
     } else if (errMsg.includes("timeout") || errMsg.includes("ETIMEDOUT")) {
       userMessage = "Request timed out. Please try again.";
+      statusCode = 504;
+    } else if (errMsg.includes("overloaded") || errMsg.includes("529")) {
+      userMessage = "The AI is busy right now. Please try again in a moment.";
+      statusCode = 503;
+    } else if (errMsg.includes("rate") || errMsg.includes("429")) {
+      userMessage = "Too many requests. Please wait a few seconds.";
+      statusCode = 429;
+    } else if (errMsg.includes("Supabase") || errMsg.includes("not configured")) {
+      userMessage = "Service configuration error. Please try again.";
     }
 
     return new Response(
-      JSON.stringify({ error: userMessage }),
+      JSON.stringify({ message: userMessage }),
       {
-        status: 500,
+        status: statusCode,
         headers: { "Content-Type": "application/json" },
       }
     );
