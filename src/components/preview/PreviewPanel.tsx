@@ -376,17 +376,18 @@ export function PreviewPanel({
             <RotateCcw className="w-3.5 h-3.5" />
           </button>
           <div className="w-px h-4 bg-white/[0.06] mx-1" />
-          {totalVersions > 1 && (
-            <button
-              onClick={() => setShowHistory((v) => !v)}
-              className={`p-2 rounded-lg transition-all duration-150 ${
-                showHistory ? "text-green-400 bg-green-500/10" : "text-zinc-500 hover:text-zinc-300 hover:bg-white/[0.04]"
-              }`}
-              title="Version history"
-            >
-              <Clock className="w-3.5 h-3.5" />
-            </button>
-          )}
+          <button
+            onClick={() => totalVersions > 1 && setShowHistory((v) => !v)}
+            disabled={totalVersions <= 1}
+            className={`p-2 rounded-lg transition-all duration-150 ${
+              showHistory ? "text-green-400 bg-green-500/10" :
+              totalVersions > 1 ? "text-zinc-500 hover:text-zinc-300 hover:bg-white/[0.04]" :
+              "text-zinc-700 cursor-not-allowed"
+            }`}
+            title={totalVersions > 1 ? "Version history" : "Version history (make changes to build history)"}
+          >
+            <Clock className="w-3.5 h-3.5" />
+          </button>
           {html && !isGenerating && (
             <button
               onClick={() => { onSelectModeChange(!selectMode); if (selectMode) onElementSelect(null); }}
