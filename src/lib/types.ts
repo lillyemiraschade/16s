@@ -5,6 +5,20 @@ export interface UploadedImage {
   label?: string; // e.g., "logo", "product photo", "team photo"
 }
 
+// BMAD Plan (shown for user approval before building)
+export interface BMadPlan {
+  summary: string;
+  sections: string[];
+  style: string;
+}
+
+// BMAD QA Report (shown after generation)
+export interface BMadQAReport {
+  status: "all_good" | "minor_notes" | "needs_fixes";
+  checks: Array<{ name: string; passed: boolean; note?: string }>;
+  summary: string;
+}
+
 export interface Message {
   id: string;
   role: "user" | "assistant";
@@ -13,6 +27,8 @@ export interface Message {
   showUpload?: boolean | string;
   images?: string[]; // legacy: plain base64 strings
   uploadedImages?: UploadedImage[]; // new: typed images
+  plan?: BMadPlan; // BMAD planning phase
+  qaReport?: BMadQAReport; // BMAD quality report
 }
 
 export type Viewport = "desktop" | "tablet" | "mobile";

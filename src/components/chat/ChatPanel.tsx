@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Paperclip, ArrowUp, X, ImagePlus, Plus, Phone, Info, Pencil, Sparkles, Loader2, Mic } from "lucide-react";
+import { Paperclip, ArrowUp, X, ImagePlus, Plus, Phone, Info, Pencil, Sparkles, Loader2, Mic, CheckCircle, AlertCircle, FileText } from "lucide-react";
 import Image from "next/image";
 import { TypingIndicator } from "./TypingIndicator";
 import { UserMenu } from "@/components/auth/UserMenu";
@@ -434,6 +434,59 @@ export function ChatPanel({
                           <Pencil className="w-3 h-3" />
                         </button>
                       )}
+                    </div>
+                  )}
+
+                  {/* BMAD Plan Card */}
+                  {message.plan && (
+                    <div className="mt-3 p-4 rounded-xl bg-gradient-to-br from-blue-500/10 to-purple-500/10 border border-blue-500/20">
+                      <div className="flex items-center gap-2 mb-2">
+                        <FileText className="w-4 h-4 text-blue-400" />
+                        <span className="text-[13px] font-medium text-blue-400">The Plan</span>
+                      </div>
+                      <p className="text-[14px] text-zinc-200 font-medium mb-2">{message.plan.summary}</p>
+                      <div className="flex flex-wrap gap-1.5 mb-2">
+                        {message.plan.sections.map((section, idx) => (
+                          <span key={idx} className="px-2 py-0.5 text-[11px] bg-white/5 text-zinc-400 rounded-full">
+                            {section}
+                          </span>
+                        ))}
+                      </div>
+                      <p className="text-[12px] text-zinc-500 italic">{message.plan.style}</p>
+                    </div>
+                  )}
+
+                  {/* BMAD QA Report */}
+                  {message.qaReport && (
+                    <div className={`mt-3 p-4 rounded-xl border ${
+                      message.qaReport.status === "all_good"
+                        ? "bg-green-500/10 border-green-500/20"
+                        : "bg-amber-500/10 border-amber-500/20"
+                    }`}>
+                      <div className="flex items-center gap-2 mb-2">
+                        {message.qaReport.status === "all_good" ? (
+                          <CheckCircle className="w-4 h-4 text-green-400" />
+                        ) : (
+                          <AlertCircle className="w-4 h-4 text-amber-400" />
+                        )}
+                        <span className={`text-[13px] font-medium ${
+                          message.qaReport.status === "all_good" ? "text-green-400" : "text-amber-400"
+                        }`}>
+                          {message.qaReport.status === "all_good" ? "Quality Check Passed" : "Quality Notes"}
+                        </span>
+                      </div>
+                      <div className="flex flex-wrap gap-2 mb-2">
+                        {message.qaReport.checks.map((check, idx) => (
+                          <span key={idx} className={`flex items-center gap-1 px-2 py-0.5 text-[11px] rounded-full ${
+                            check.passed
+                              ? "bg-green-500/20 text-green-400"
+                              : "bg-amber-500/20 text-amber-400"
+                          }`}>
+                            {check.passed ? "✓" : "!"} {check.name}
+                          </span>
+                        ))}
+                      </div>
+                      <p className="text-[12px] text-zinc-400">{message.qaReport.summary}</p>
                     </div>
                   )}
 

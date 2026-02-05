@@ -684,6 +684,8 @@ function HomePageContent() {
         content: data.message || "I'm working on your request...",
         pills: data.pills,
         showUpload: data.showUpload,
+        plan: data.plan,
+        qaReport: data.qaReport,
       };
       setMessages((prev) => [...prev, aiMessage]);
 
@@ -908,6 +910,8 @@ function HomePageContent() {
         content: data.message || "I'm working on your request...",
         pills: data.pills,
         showUpload: data.showUpload,
+        plan: data.plan,
+        qaReport: data.qaReport,
       };
       setMessages((prev) => [...prev, aiMessage]);
 
