@@ -1,5 +1,13 @@
 # 16s Changelog
 
+## [2026-02-06 18:50] — Code: Increase max_tokens for complex generations (16K → 18K)
+
+**What:** Increased max_tokens from 16000 to 18000 for complex (Sonnet) generations. This provides more room for the AI to output the full JSON response including pills, qaReport, and context fields at the end, reducing truncation that could cause pills to be lost.
+
+**Files:** `src/app/api/chat/route.ts`
+**Type:** Code (bug fix)
+**Ref:** R5-6
+
 ## [2026-02-06 18:40] — Prompt: Add social link placement rules + showUpload hint for content photos
 
 **What:** Enhanced guided journey step 3 (PERSONALIZE) with `showUpload` hint to trigger content upload UI with descriptive label. Enhanced step 4 (REFINE) with intelligent social link placement rules: Instagram/TikTok → visual feed/grid section, LinkedIn/Twitter → footer, YouTube → embedded video. Added "don't just dump all socials in a row of icons" rule. Improved info parsing confirmation to list what was extracted.
