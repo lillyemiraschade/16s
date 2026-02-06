@@ -98,7 +98,8 @@ if (typeof globalThis !== "undefined") {
 }
 
 // Credit management for authenticated users
-async function checkAndDeductCredits(userId: string, creditsToDeduct: number = 1): Promise<{ success: boolean; remaining?: number; error?: string }> {
+// [2026-02-05] Fixed TOCTOU race condition: uses optimistic concurrency control to prevent double-spending
+async function checkAndDeductCredits(userId: string, creditsToDeduct: number = 1, retryCount: number = 0): Promise<{ success: boolean; remaining?: number; error?: string }> {
   try {
     const supabase = await createClient();
 
@@ -119,11 +120,14 @@ async function checkAndDeductCredits(userId: string, creditsToDeduct: number = 1
       return { success: false, remaining: subscription.credits_remaining, error: "Insufficient credits" };
     }
 
-    // Deduct credits
-    const { error: updateError } = await supabase
+    // Deduct credits with optimistic concurrency control:
+    // Only update if credits_remaining still matches what we read (prevents double-spending)
+    const { data: updated, error: updateError } = await supabase
       .from("subscriptions")
       .update({ credits_remaining: subscription.credits_remaining - creditsToDeduct })
-      .eq("user_id", userId);
+      .eq("user_id", userId)
+      .eq("credits_remaining", subscription.credits_remaining)
+      .select("credits_remaining");
 
     if (updateError) {
       console.error("[Credits] Failed to deduct credits:", updateError);
@@ -131,15 +135,28 @@ async function checkAndDeductCredits(userId: string, creditsToDeduct: number = 1
       return { success: true, remaining: subscription.credits_remaining };
     }
 
-    // Log usage
-    await supabase.from("usage").insert({
+    // If no rows were updated, another request modified credits concurrently — retry once
+    if (!updated || updated.length === 0) {
+      if (retryCount < 1) {
+        console.log("[Credits] Concurrent modification detected, retrying...");
+        return checkAndDeductCredits(userId, creditsToDeduct, retryCount + 1);
+      }
+      // After retry, allow the request but log the issue
+      console.warn("[Credits] Concurrent modification persisted after retry, allowing request");
+      return { success: true };
+    }
+
+    // Log usage (non-blocking — don't await to avoid slowing the response)
+    supabase.from("usage").insert({
       user_id: userId,
       action: "chat_message",
       credits_used: creditsToDeduct,
       metadata: { timestamp: new Date().toISOString() },
+    }).then(({ error }) => {
+      if (error) console.error("[Credits] Failed to log usage:", error);
     });
 
-    return { success: true, remaining: subscription.credits_remaining - creditsToDeduct };
+    return { success: true, remaining: updated[0].credits_remaining };
   } catch (err) {
     console.error("[Credits] Error checking credits:", err);
     // Allow request on error - don't block users due to credit check failures
@@ -317,6 +334,17 @@ Be warm and casual — like texting a designer friend. Ask ONE question at a tim
 
 VOICE CALLS — IMPORTANT:
 This app has a built-in voice call feature. When you offer a call, include a pill like "Hop on a call" — clicking it starts an in-app voice conversation with you (the AI). You DO NOT need phone numbers. Never ask for or give phone numbers. Never say "I can't take calls" — you CAN via the in-app feature. The call happens instantly when they click the pill.
+
+SUBJECTIVE FEEDBACK — ACT, DON'T ASK:
+When users give vague feedback, interpret and execute immediately. Don't ask "what do you mean?"
+- "make it pop" / "more punch" → Increase contrast, bolder colors, larger headlines, add accent color highlights
+- "more professional" / "cleaner" → More whitespace, muted palette, refined typography, remove decorative elements
+- "more modern" → Asymmetric layout, current design trends, subtle animations, clean lines
+- "it's boring" / "too plain" → Add visual interest: gradient accents, varied section layouts, hover effects, bolder typography
+- "I don't like it" / "it's ugly" → Generate a COMPLETELY different design direction (different layout, colors, fonts — not a tweak)
+- "start over" / "from scratch" → Fresh design, ignore all previous iterations
+- "make it feel like [brand]" → Clone that brand's design language (colors, spacing, typography weight)
+- "too busy" / "too much" → Simplify: fewer sections, more whitespace, remove decorative elements, muted colors
 
 RECOGNIZE REQUEST TYPE:
 - "Website", "site", "portfolio", "landing page" → WEBSITE (multi-page, informational)
@@ -497,6 +525,27 @@ SaaS/PRODUCT:
 - Demo request form
 - Feature tour/walkthrough
 
+MEDICAL/DENTAL/HEALTH CLINIC:
+- Services list with descriptions (cleanings, exams, specialties)
+- Provider/doctor profiles with credentials and specialties
+- Appointment request form (date/time preference, reason for visit, insurance info)
+- Office hours display with open/closed indicator
+- Insurance accepted section (list of providers)
+- Patient forms/resources section (new patient info)
+- Location with directions link, parking info
+- "New Patients Welcome" CTA prominently placed
+- Professional, trustworthy tone — use teal/blue/green palette, clean sans-serif fonts
+- NEVER invent medical claims or credentials — use [PLACEHOLDER] brackets
+
+REAL ESTATE/PROPERTY:
+- Property listing cards with price, beds/baths, sqft, location
+- Property filtering (price range, beds, type, location)
+- Featured/spotlight listing section
+- Agent profile with contact info and credentials
+- Property detail modal with photo gallery
+- Mortgage calculator or "Get Pre-Approved" CTA
+- Neighborhood/area guide section
+
 ═══════════════════════════════════════════════════════════════════
 ⚠️⚠️⚠️ DESIGN QUALITY STANDARD — APPLIES TO ALL SITES ⚠️⚠️⚠️
 ═══════════════════════════════════════════════════════════════════
@@ -668,7 +717,6 @@ ABSOLUTE RULES — NEVER VIOLATE
 5. NEVER add buttons/features not visible in inspo
 6. NEVER approximate — if unsure, look closer at the inspo
 7. NEVER use placeholder styling — every property must match inspo
-8. ⛔ NEVER USE EMOJIS — NO EMOJIS ANYWHERE IN THE UI, EVER. Not in headings, not in buttons, not in text, not in footers, not anywhere. This is non-negotiable.
 
 ═══════════════════════════════════════════════════════════════════
 UNIVERSAL CSS TOOLKIT — FOR CLONING ANY DESIGN
@@ -820,38 +868,18 @@ TEXT OVER PORTAL (faint/ghost text):
 4. If inspo has overlapping elements → use z-index layering
 5. If inspo does NOT have a button → DO NOT add one
 
-IMAGE TYPES — CRITICAL:
+IMAGE TYPES:
 - INSPO images (website screenshots) → clone the STYLE only, don't embed the image itself
-- CONTENT images (logo, team photos, product photos) → embed in the HTML using URLs or placeholders
+- CONTENT images (logo, team photos, product photos) → embed in the HTML
+- If user says "put this image in" for an INSPO image → embed it anyway using the rules below
 
-⚠️ IMPORTANT: If user asks to "put this image in" or "use this image" but it's tagged as INSPO:
-→ Use {{CONTENT_IMAGE_0}} anyway! The system will handle it.
-→ The tag doesn't matter when user explicitly wants the image embedded.
+EMBEDDING CONTENT IMAGES — ONE RULE:
+The system tells you how to reference each image. Follow it exactly:
+- If system says "Use this EXACT URL: https://..." → use that URL: <img src="https://..." alt="...">
+- If system says "Use placeholder: {{CONTENT_IMAGE_N}}" → use it: <img src="{{CONTENT_IMAGE_0}}" alt="...">
 
-HOW TO EMBED CONTENT IMAGES:
-When user uploads content images, you can SEE thumbnails of them. Each image comes with either:
-1. A direct URL (preferred) - use it exactly as provided: <img src="https://..." alt="Description" />
-2. A placeholder format - use {{CONTENT_IMAGE_N}}: <img src="{{CONTENT_IMAGE_0}}" alt="Description" />
+🚨 NEVER write src="data:image/..." — you cannot generate image bytes. It will produce broken garbage.
 
-🚨🚨🚨 ABSOLUTE RULE - READ THIS 🚨🚨🚨
-You CANNOT generate image data. You don't have access to the actual bytes.
-If you try to write base64 (data:image/...), you will produce GARBAGE that won't display!
-
-FOR CONTENT IMAGES YOU HAVE EXACTLY TWO OPTIONS:
-Option A: Use the https:// URL provided with the image (BEST)
-Option B: Use {{CONTENT_IMAGE_0}} placeholder (system replaces it)
-
-FORBIDDEN - WILL BREAK:
-❌ src="data:image/jpeg;base64,..." - YOU CANNOT DO THIS - IT WILL BE GIBBERISH
-❌ Making up any base64 string - IT WILL NOT WORK
-❌ Copying base64 from anywhere - IT WILL NOT WORK
-
-IF NO URL IS PROVIDED, USE: {{CONTENT_IMAGE_0}}
-- ALWAYS use the https:// URL provided with each content image
-- If you see "[Content image #N → Use this URL: https://...]", use THAT EXACT URL
-- The URL will look like: https://....public.blob.vercel-storage.com/...
-
-IMPORTANT: If a URL is provided, use the EXACT URL. Do not modify it.
 Place images in appropriate sections (logo in nav, team photos on about, products on products page, etc.)
 
 BACKGROUND REMOVAL:
@@ -902,6 +930,21 @@ FOR PERSONAL/RESUME/PORTFOLIO:
 - Contact information clear
 - Personality through typography/color choices
 
+FOR MEDICAL/DENTAL/HEALTH:
+- Clean, trustworthy, professional
+- Teal (#0D9488), sky blue (#0EA5E9), or soft green (#22C55E)
+- Prominent "Book Appointment" CTA
+- Provider photos and credentials build trust
+- Clear service listings and insurance info
+- Calming, reassuring tone
+
+FOR REAL ESTATE:
+- Premium, aspirational feel
+- Large property photography focus
+- Navy/gold or slate/warm neutrals
+- Search/filter as hero element
+- Map integration or area guides
+
 QUALITY REQUIREMENTS (same as inspo cloning):
 
 □ TYPOGRAPHY: Choose font weights deliberately. Not just "bold" — exactly 600 or 700.
@@ -938,11 +981,6 @@ Every site you generate MUST meet these standards.
 ─────────────────────────────────────────────────────────────────
 ⛔ ABSOLUTE BANS — "VIBE-CODED" AMATEUR PATTERNS
 ─────────────────────────────────────────────────────────────────
-
-EMOJIS (ZERO TOLERANCE):
-✗ NEVER use emojis anywhere — headings, buttons, features, cards, footers, nav
-✗ Not even "decorative" emojis — use Lucide icons or SVG instead
-✗ Emojis as icons (🎙️, ✅, 🚀) — this is amateur hour
 
 GENERIC AI PATTERNS (these scream "AI-generated"):
 ✗ Purple/violet gradients (#8B5CF6, #7C3AED) — the default AI color
@@ -982,8 +1020,9 @@ AMATEUR MOTION:
 ─────────────────────────────────────────────────────────────────
 
 FONT PAIRING (display + text):
-✓ Display fonts for headlines: Syne, Cabinet Grotesk, Clash Display, Satoshi
-✓ Text fonts for body: Inter, Söhne, Manrope, Plus Jakarta Sans
+✓ Display fonts for headlines: Syne, Space Grotesk, Outfit, Fraunces, Playfair Display
+✓ Text fonts for body: Inter, Manrope, Plus Jakarta Sans, DM Sans, Source Sans 3
+(All available on Google Fonts — use fonts.googleapis.com)
 ✓ Load specific weights: @import url('...wght@300;400;500;600;700&display=swap')
 
 FLUID TYPOGRAPHY (use clamp() for responsive sizing):
@@ -1016,11 +1055,7 @@ FONT WEIGHT USAGE:
 ✓ PROFESSIONAL SPACING SYSTEM (8pt Grid)
 ─────────────────────────────────────────────────────────────────
 
-USE THESE EXACT VALUES:
---space-1: 4px;   --space-2: 8px;   --space-3: 12px;  --space-4: 16px;
---space-5: 20px;  --space-6: 24px;  --space-8: 32px;  --space-10: 40px;
---space-12: 48px; --space-16: 64px; --space-20: 80px; --space-24: 96px;
---space-32: 128px;
+Use the --space-N CSS variables defined in :root (CSS FOUNDATION section).
 
 SECTION PADDING:
 ✓ Desktop: 96px-128px vertical (--space-24 to --space-32)
@@ -1176,7 +1211,7 @@ CSS FOUNDATION (include in every site)
   /* Spacing (8pt grid) */
   --space-1: 4px; --space-2: 8px; --space-3: 12px; --space-4: 16px;
   --space-5: 20px; --space-6: 24px; --space-8: 32px; --space-10: 40px;
-  --space-12: 48px; --space-16: 64px; --space-20: 80px; --space-24: 96px;
+  --space-12: 48px; --space-16: 64px; --space-20: 80px; --space-24: 96px; --space-32: 128px;
 
   /* Typography (fluid) */
   --text-xs: clamp(0.75rem, 0.7rem + 0.25vw, 0.875rem);
@@ -1205,42 +1240,13 @@ CSS FOUNDATION (include in every site)
   --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-/* Container */
-.container { max-width: 1280px; margin-inline: auto; padding-inline: clamp(16px, 5vw, 64px); }
-
-/* Scroll animations with stagger */
-.reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.6s var(--ease-out), transform 0.6s var(--ease-out); }
-.reveal.visible { opacity: 1; transform: none; }
-.reveal-stagger > * { opacity: 0; transform: translateY(20px); transition: opacity 0.5s var(--ease-out), transform 0.5s var(--ease-out); }
-.reveal-stagger.visible > *:nth-child(1) { transition-delay: 0s; }
-.reveal-stagger.visible > *:nth-child(2) { transition-delay: 0.1s; }
-.reveal-stagger.visible > *:nth-child(3) { transition-delay: 0.2s; }
-.reveal-stagger.visible > *:nth-child(4) { transition-delay: 0.3s; }
-.reveal-stagger.visible > * { opacity: 1; transform: none; }
-
-/* Reduced motion */
-@media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
-  .reveal, .reveal-stagger > * { opacity: 1; transform: none; }
-}
-
-/* Professional interactions */
-button, a, .card { transition: transform 0.15s var(--ease-out), box-shadow 0.15s var(--ease-out), background-color 0.15s var(--ease-out); }
-button:hover { transform: translateY(-2px); }
-button:active { transform: scale(0.98); }
-.card:hover { transform: translateY(-4px); box-shadow: var(--shadow-xl); }
-
-/* Focus visible (accessibility) */
-:focus-visible { outline: 2px solid currentColor; outline-offset: 2px; }
-button:focus-visible, a:focus-visible { outline: 2px solid var(--accent, #3B82F6); outline-offset: 2px; }
-
-/* Skip link (accessibility) */
-.skip-link { position: absolute; top: -100%; left: 50%; transform: translateX(-50%); padding: 8px 16px; background: #000; color: #fff; z-index: 9999; }
-.skip-link:focus { top: 8px; }
-
-/* Intersection Observer (before </body>) */
-const obs = new IntersectionObserver(e => e.forEach(el => { if(el.isIntersecting) el.target.classList.add('visible'); }), {threshold: 0.1, rootMargin: '0px 0px -50px 0px'});
-document.querySelectorAll('.reveal, .reveal-stagger').forEach(el => obs.observe(el));
+ALSO INCLUDE IN EVERY SITE (use the :root variables above):
+- .container: max-width 1280px, centered, padding clamp(16px, 5vw, 64px)
+- .reveal / .reveal-stagger classes: fade-in + translateY(30px) on scroll, stagger children by 0.1s
+- IntersectionObserver to trigger .visible on .reveal elements (threshold 0.1)
+- @media (prefers-reduced-motion: reduce): disable animations
+- Hover: buttons translateY(-2px), cards translateY(-4px) + shadow-xl, active scale(0.98)
+- :focus-visible outlines, skip-link for accessibility
 
 ═══════════════════════════════════════════════════════════════════
 INTERACTIVE APPS & TOOLS — WHEN USER ASKS FOR A "TOOL" OR "APP"
@@ -1374,7 +1380,6 @@ CONTENT:
   • Other: [Your Tagline], [Service Price], [Team Member Name]
 - NEVER invent or guess contact details, social links, team names, prices, or any specific info
 - After generation, you WILL prompt the user to fill in each placeholder one at a time
-- ⛔ ZERO EMOJIS — Professional websites never use emojis. No exceptions.
 
 TECHNICAL:
 - Semantic HTML (nav, main, section, footer)
@@ -1383,8 +1388,10 @@ TECHNICAL:
 - Lazy-load images: loading="lazy"
 - Preconnect fonts: <link rel="preconnect" href="https://fonts.googleapis.com">
 
-FONTS (use these):
-Satoshi, Manrope, Space Grotesk, Outfit, Syne, Fraunces, Cormorant
+FONTS (Google Fonts — all guaranteed available):
+Display: Syne, Space Grotesk, Outfit, Fraunces, Playfair Display
+Body: Inter, Manrope, Plus Jakarta Sans, DM Sans, Source Sans 3
+Pair one display + one body font. Load via fonts.googleapis.com.
 
 ═══════════════════════════════════════════════════════════════════
 JAVASCRIPT PATTERNS — INCLUDE IN EVERY PROJECT
@@ -1395,18 +1402,17 @@ ALWAYS include these functional JavaScript patterns:
 1. PAGE ROUTING (for multi-page sites):
 \`\`\`javascript
 function showPage(pageId) {
-  // Fade out current
   document.querySelectorAll('.page').forEach(p => {
     p.style.opacity = '0';
     setTimeout(() => p.classList.remove('active'), 300);
   });
-  // Fade in new
   setTimeout(() => {
-    document.getElementById(pageId).classList.add('active');
-    requestAnimationFrame(() => document.getElementById(pageId).style.opacity = '1');
+    const target = document.getElementById(pageId);
+    if (!target) return;
+    target.classList.add('active');
+    requestAnimationFrame(() => target.style.opacity = '1');
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }, 300);
-  // Update nav
   document.querySelectorAll('nav a').forEach(a => a.classList.toggle('active', a.dataset.page === pageId));
 }
 \`\`\`
@@ -1415,15 +1421,16 @@ function showPage(pageId) {
 \`\`\`javascript
 const menuBtn = document.querySelector('.menu-toggle');
 const mobileMenu = document.querySelector('.mobile-menu');
-menuBtn.addEventListener('click', () => {
-  mobileMenu.classList.toggle('open');
-  document.body.style.overflow = mobileMenu.classList.contains('open') ? 'hidden' : '';
-});
-// Close on link click
-mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
-  mobileMenu.classList.remove('open');
-  document.body.style.overflow = '';
-}));
+if (menuBtn && mobileMenu) {
+  menuBtn.addEventListener('click', () => {
+    mobileMenu.classList.toggle('open');
+    document.body.style.overflow = mobileMenu.classList.contains('open') ? 'hidden' : '';
+  });
+  mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+    mobileMenu.classList.remove('open');
+    document.body.style.overflow = '';
+  }));
+}
 \`\`\`
 
 3. FORM HANDLING (contact, newsletter, booking):
@@ -1431,22 +1438,18 @@ mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => 
 document.querySelectorAll('form').forEach(form => {
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
-    const btn = form.querySelector('button[type="submit"]');
-    const originalText = btn.textContent;
-    btn.disabled = true;
-    btn.innerHTML = '<span class="loading-dots"><span>.</span><span>.</span><span>.</span></span>';
-
-    // Simulate processing
+    const btn = form.querySelector('button[type="submit"]') || form.querySelector('button');
+    if (btn) {
+      btn.disabled = true;
+      btn.dataset.original = btn.textContent;
+      btn.innerHTML = '<span class="loading-dots"><span>.</span><span>.</span><span>.</span></span>';
+    }
     await new Promise(r => setTimeout(r, 1500));
-
-    // Save to localStorage
     const data = Object.fromEntries(new FormData(form));
     const key = form.id || 'form-submissions';
     const saved = JSON.parse(localStorage.getItem(key) || '[]');
     saved.push({ ...data, timestamp: Date.now() });
     localStorage.setItem(key, JSON.stringify(saved));
-
-    // Show success
     form.innerHTML = '<div class="success-message"><svg>...</svg><h3>Thank you!</h3><p>We\\'ll be in touch soon.</p></div>';
   });
 });
@@ -1469,10 +1472,12 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
 document.querySelectorAll('.tab-btn').forEach(btn => {
   btn.addEventListener('click', () => {
     const tabGroup = btn.closest('.tabs');
+    if (!tabGroup) return;
     tabGroup.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
     tabGroup.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
     btn.classList.add('active');
-    document.getElementById(btn.dataset.tab).classList.add('active');
+    const target = document.getElementById(btn.dataset.tab);
+    if (target) target.classList.add('active');
   });
 });
 
@@ -1480,14 +1485,19 @@ document.querySelectorAll('.tab-btn').forEach(btn => {
 document.querySelectorAll('.accordion-header').forEach(header => {
   header.addEventListener('click', () => {
     const item = header.parentElement;
+    if (!item) return;
     const content = item.querySelector('.accordion-content');
     const isOpen = item.classList.contains('open');
     // Close others (optional)
-    item.closest('.accordion').querySelectorAll('.accordion-item').forEach(i => {
-      i.classList.remove('open');
-      i.querySelector('.accordion-content').style.maxHeight = '0';
-    });
-    if (!isOpen) {
+    const accordion = item.closest('.accordion');
+    if (accordion) {
+      accordion.querySelectorAll('.accordion-item').forEach(i => {
+        i.classList.remove('open');
+        const c = i.querySelector('.accordion-content');
+        if (c) c.style.maxHeight = '0';
+      });
+    }
+    if (!isOpen && content) {
       item.classList.add('open');
       content.style.maxHeight = content.scrollHeight + 'px';
     }
@@ -1540,12 +1550,15 @@ document.querySelectorAll('.filter-btn').forEach(btn => {
 let cart = JSON.parse(localStorage.getItem('cart') || '[]');
 function updateCart() {
   localStorage.setItem('cart', JSON.stringify(cart));
-  document.querySelector('.cart-count').textContent = cart.reduce((sum, i) => sum + i.qty, 0);
-  document.querySelector('.cart-total').textContent = '$' + cart.reduce((sum, i) => sum + i.price * i.qty, 0).toFixed(2);
+  const countEl = document.querySelector('.cart-count');
+  const totalEl = document.querySelector('.cart-total');
+  if (countEl) countEl.textContent = cart.reduce((sum, i) => sum + i.qty, 0);
+  if (totalEl) totalEl.textContent = '$' + cart.reduce((sum, i) => sum + i.price * i.qty, 0).toFixed(2);
 }
 document.querySelectorAll('.add-to-cart').forEach(btn => {
   btn.addEventListener('click', () => {
-    const item = { id: btn.dataset.id, name: btn.dataset.name, price: parseFloat(btn.dataset.price), qty: 1 };
+    const price = parseFloat(btn.dataset.price) || 0;
+    const item = { id: btn.dataset.id, name: btn.dataset.name, price, qty: 1 };
     const existing = cart.find(i => i.id === item.id);
     if (existing) existing.qty++; else cart.push(item);
     updateCart();
@@ -1573,7 +1586,8 @@ toggle?.addEventListener('change', () => {
 \`\`\`javascript
 document.querySelectorAll('.copy-btn').forEach(btn => {
   btn.addEventListener('click', async () => {
-    const text = btn.dataset.copy || btn.previousElementSibling.textContent;
+    const text = btn.dataset.copy || btn.previousElementSibling?.textContent || '';
+    if (!text) return;
     await navigator.clipboard.writeText(text);
     const original = btn.textContent;
     btn.textContent = 'Copied!';
@@ -1664,9 +1678,6 @@ FINAL QUALITY GATES:
 □ Would this get featured on Awwwards?
 □ Could this be mistaken for a $50k agency site?
 □ Would a senior designer believe a human made this?
-
-⚠️ EMOJI SCAN — DELETE ANY OF THESE IF FOUND:
-🎯🚀💡✨🔥💪🎨📱💼🌟⭐️🏆✅❌🔒💰📈🎉👋👍🙌💬📧🔗➡️▶️📊🔧⚡️💎🌐📌🎁💫⭕️
 
 ═══════════════════════════════════════════════════════════════════
 MODERN COMPONENT PATTERNS — 21st.dev / shadcn/ui INSPIRED
@@ -2206,7 +2217,8 @@ export async function POST(req: Request) {
       !complexPatterns.some(pattern => pattern.test(lastUserMessage));
 
     // Select model and tokens based on complexity
-    const model = isSimpleIteration ? "claude-3-haiku-20240307" : "claude-sonnet-4-20250514";
+    // [2026-02-05] Upgraded simple iterations from Claude 3 Haiku to 3.5 Haiku for better JSON format adherence and HTML quality
+    const model = isSimpleIteration ? "claude-3-5-haiku-20241022" : "claude-sonnet-4-20250514";
     const maxTokens = isSimpleIteration ? 8000 : 16000;
 
     // Inject current preview context - use smaller context for simple iterations

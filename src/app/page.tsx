@@ -617,6 +617,7 @@ function HomePageContent() {
     }
 
     let imagesToSend = imagesToInclude || [...uploadedImages];
+    const hadOwnImages = !imagesToInclude && uploadedImages.length > 0;
     if (!imagesToInclude) setUploadedImages([]);
 
     // Ensure all content images have blob URLs before sending
@@ -730,13 +731,19 @@ function HomePageContent() {
           content: msg.content || (msg.role === "user" ? "[Empty]" : "..."),
         }));
 
+      // [2026-02-05] Truncate preview client-side — server truncates to 30K anyway, saves bandwidth
+      const MAX_PREVIEW_FOR_API = 30_000;
+      const previewForApi = currentPreview && currentPreview.length > MAX_PREVIEW_FOR_API
+        ? currentPreview.substring(0, MAX_PREVIEW_FOR_API)
+        : currentPreview;
+
       const response = await fetch("/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           messages: cleanMessages,
           uploadedImages: imagesToSend,
-          currentPreview,
+          currentPreview: previewForApi,
           previewScreenshot,
           outputFormat,
           context: projectContext,
@@ -785,6 +792,11 @@ function HomePageContent() {
 
       // Remove the failed user message to keep history clean
       setMessages((prev) => prev.filter((m) => m.id !== userMessage.id));
+
+      // Restore uploaded images so user doesn't lose them on error
+      if (hadOwnImages) {
+        setUploadedImages(imagesToSend);
+      }
 
       // Show the actual error message
       const errorMsg = error instanceof Error ? error.message : "Let me try that again...";
@@ -856,13 +868,18 @@ function HomePageContent() {
           content: msg.content || (msg.role === "user" ? "[Empty]" : "..."),
         }));
 
+      const MAX_PREVIEW_FOR_API = 30_000;
+      const previewForApi = currentPreview && currentPreview.length > MAX_PREVIEW_FOR_API
+        ? currentPreview.substring(0, MAX_PREVIEW_FOR_API)
+        : currentPreview;
+
       const response = await fetch("/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           messages: cleanMessages,
           uploadedImages: imagesToSend,
-          currentPreview,
+          currentPreview: previewForApi,
           previewScreenshot,
           outputFormat,
           context: projectContext,
@@ -1243,9 +1260,14 @@ function HomePageContent() {
         e.preventDefault();
         handleCopyToClipboard();
       } else if (e.code === "KeyZ" && !e.shiftKey) {
+        // Don't override native text undo in inputs/textareas
+        const tag = document.activeElement?.tagName?.toLowerCase();
+        if (tag === "input" || tag === "textarea") return;
         e.preventDefault();
         handleUndo();
       } else if (e.code === "KeyZ" && e.shiftKey) {
+        const tag = document.activeElement?.tagName?.toLowerCase();
+        if (tag === "input" || tag === "textarea") return;
         e.preventDefault();
         handleRedo();
       } else if (e.key === "/") {

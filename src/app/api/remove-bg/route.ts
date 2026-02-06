@@ -5,14 +5,57 @@ export const maxDuration = 30;
 
 const REMOVE_BG_API_KEY = process.env.REMOVE_BG_API_KEY || "";
 
+// [2026-02-05] Added rate limiting — remove.bg is a paid API, prevent abuse
+const rateLimitMap = new Map<string, { count: number; resetAt: number }>();
+const RATE_LIMIT = 5; // 5 removals per minute per IP (generous for real users, blocks bots)
+const RATE_WINDOW_MS = 60_000;
+
+function checkRateLimit(ip: string): boolean {
+  const now = Date.now();
+  const entry = rateLimitMap.get(ip);
+  if (!entry || now > entry.resetAt) {
+    rateLimitMap.set(ip, { count: 1, resetAt: now + RATE_WINDOW_MS });
+    return true;
+  }
+  if (entry.count >= RATE_LIMIT) return false;
+  entry.count++;
+  return true;
+}
+
 export async function POST(req: NextRequest) {
+  // Rate limiting
+  const ip = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
+  if (!checkRateLimit(ip)) {
+    return new Response(
+      JSON.stringify({ error: "Too many requests. Please wait a moment." }),
+      { status: 429, headers: { "Content-Type": "application/json", "Retry-After": "60" } }
+    );
+  }
+
   try {
+    // [2026-02-05] Server-side payload size check — reject oversized requests before processing
+    const contentLength = parseInt(req.headers.get("content-length") || "0", 10);
+    const MAX_PAYLOAD_BYTES = 10 * 1024 * 1024; // 10MB (remove.bg supports up to 12MB)
+    if (contentLength > MAX_PAYLOAD_BYTES) {
+      return new Response(
+        JSON.stringify({ error: "Image too large. Maximum 10MB." }),
+        { status: 413, headers: { "Content-Type": "application/json" } }
+      );
+    }
+
     const { imageData } = await req.json();
 
-    if (!imageData) {
+    if (!imageData || typeof imageData !== "string") {
       return new Response(
         JSON.stringify({ error: "No image data provided" }),
         { status: 400, headers: { "Content-Type": "application/json" } }
+      );
+    }
+
+    if (imageData.length > MAX_PAYLOAD_BYTES) {
+      return new Response(
+        JSON.stringify({ error: "Image too large. Maximum 10MB." }),
+        { status: 413, headers: { "Content-Type": "application/json" } }
       );
     }
 

@@ -3,7 +3,33 @@ import { NextRequest } from "next/server";
 
 export const runtime = "nodejs";
 
+// [2026-02-05] Added rate limiting — prevents abuse of Vercel Blob storage quota
+const rateLimitMap = new Map<string, { count: number; resetAt: number }>();
+const RATE_LIMIT = 15; // 15 uploads per minute per IP
+const RATE_WINDOW_MS = 60_000;
+
+function checkRateLimit(ip: string): boolean {
+  const now = Date.now();
+  const entry = rateLimitMap.get(ip);
+  if (!entry || now > entry.resetAt) {
+    rateLimitMap.set(ip, { count: 1, resetAt: now + RATE_WINDOW_MS });
+    return true;
+  }
+  if (entry.count >= RATE_LIMIT) return false;
+  entry.count++;
+  return true;
+}
+
 export async function POST(req: NextRequest) {
+  // Rate limiting
+  const ip = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
+  if (!checkRateLimit(ip)) {
+    return new Response(
+      JSON.stringify({ error: "Too many uploads. Please wait a moment." }),
+      { status: 429, headers: { "Content-Type": "application/json", "Retry-After": "60" } }
+    );
+  }
+
   try {
     // Check if blob token is configured
     if (!process.env.BLOB_READ_WRITE_TOKEN) {
@@ -14,12 +40,30 @@ export async function POST(req: NextRequest) {
       );
     }
 
+    // [2026-02-05] Server-side payload size check — reject before parsing oversized requests
+    const contentLength = parseInt(req.headers.get("content-length") || "0", 10);
+    const MAX_PAYLOAD_BYTES = 5 * 1024 * 1024; // 5MB (generous — frontend compresses to ~100KB)
+    if (contentLength > MAX_PAYLOAD_BYTES) {
+      return new Response(
+        JSON.stringify({ error: "Image too large. Maximum 5MB." }),
+        { status: 413, headers: { "Content-Type": "application/json" } }
+      );
+    }
+
     const { imageData, filename } = await req.json();
 
-    if (!imageData) {
+    if (!imageData || typeof imageData !== "string") {
       return new Response(
         JSON.stringify({ error: "No image data provided" }),
         { status: 400, headers: { "Content-Type": "application/json" } }
+      );
+    }
+
+    // Second size check on actual data (content-length can be spoofed or absent)
+    if (imageData.length > MAX_PAYLOAD_BYTES) {
+      return new Response(
+        JSON.stringify({ error: "Image too large. Maximum 5MB." }),
+        { status: 413, headers: { "Content-Type": "application/json" } }
       );
     }
 

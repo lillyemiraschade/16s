@@ -1,9 +1,27 @@
 import { anthropic } from "@/lib/ai/anthropic";
 import { MessageParam } from "@anthropic-ai/sdk/resources/messages";
 import { z } from "zod";
+import { NextRequest } from "next/server";
 
 export const runtime = "nodejs";
 export const maxDuration = 60;
+
+// [2026-02-05] Rate limiting — voice uses expensive Sonnet model, prevent abuse
+const rateLimitMap = new Map<string, { count: number; resetAt: number }>();
+const RATE_LIMIT = 30; // 30 req/min (voice needs fast back-and-forth but still needs limits)
+const RATE_WINDOW_MS = 60_000;
+
+function checkRateLimit(ip: string): boolean {
+  const now = Date.now();
+  const entry = rateLimitMap.get(ip);
+  if (!entry || now > entry.resetAt) {
+    rateLimitMap.set(ip, { count: 1, resetAt: now + RATE_WINDOW_MS });
+    return true;
+  }
+  if (entry.count >= RATE_LIMIT) return false;
+  entry.count++;
+  return true;
+}
 
 const VoiceRequestSchema = z.object({
   voiceMessages: z.array(z.object({
@@ -74,7 +92,16 @@ RESPONSE FORMAT: Always respond with raw JSON (no markdown, no code blocks):
 
 Set "complete": true ONLY when you've gathered enough info AND asked about inspo images. This signals the call should end.`;
 
-export async function POST(req: Request) {
+export async function POST(req: NextRequest) {
+  // Rate limiting
+  const ip = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
+  if (!checkRateLimit(ip)) {
+    return new Response(
+      JSON.stringify({ message: "Too many requests. Please wait a moment.", complete: false }),
+      { status: 429, headers: { "Content-Type": "application/json", "Retry-After": "60" } }
+    );
+  }
+
   try {
     const raw = await req.json();
     const parsed = VoiceRequestSchema.safeParse(raw);

@@ -228,6 +228,7 @@ export async function migrateLocalToCloud(userId: string): Promise<number> {
   if (localProjects.length === 0) return 0;
 
   let migrated = 0;
+  const migratedIds = new Set<string>();
 
   for (const project of localProjects) {
     try {
@@ -239,15 +240,23 @@ export async function migrateLocalToCloud(userId: string): Promise<number> {
 
       console.log("[Migration] Migrating project:", project.id, "->", migratedProject.id);
       await saveCloudProject(migratedProject, userId);
+      migratedIds.add(project.id);
       migrated++;
     } catch (e) {
       console.error("[Migration] Failed to migrate project:", project.id, e);
     }
   }
 
-  // Clear local storage after successful migration
+  // [2026-02-05] Only remove successfully migrated projects — keep failed ones in localStorage
   if (migrated > 0) {
-    localStorage.removeItem(STORAGE_KEY);
+    if (migrated === localProjects.length) {
+      // All migrated — clear everything
+      localStorage.removeItem(STORAGE_KEY);
+    } else {
+      // Partial migration — keep only the ones that failed
+      const remaining = localProjects.filter(p => !migratedIds.has(p.id));
+      setLocalAll(remaining);
+    }
   }
 
   return migrated;
