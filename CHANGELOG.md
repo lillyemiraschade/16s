@@ -1,5 +1,12 @@
 # 16s Changelog
 
+## [2026-02-05 02:16] — Prompt: Compress aesthetic direction section (~500 tokens saved)
+
+**What:** Compressed the "NO INSPO?" intro (7 lines of motivational text already covered by the design quality standard), 7 industry aesthetic direction blocks (35 lines × 5 bullet points each) into 7 single-line summaries, and the design system intro (5 lines) into 1 line. Prompt now ~9.5K tokens.
+**Why:** The "NO INSPO?" section was redundant with the design quality standard that already says "WITHOUT INSPO: Design something worthy of being inspo." Each industry's aesthetic was 5 bullet points where 1 line captures the key differentiators (layout type, palette, primary CTA, tone). The design system intro repeated the "mandatory" framing already established.
+**Files:** src/app/api/chat/route.ts (SYSTEM_PROMPT)
+**Type:** prompt
+
 ## [2026-02-05 02:14] — Code: Compress design quality intro + forensic analysis (~350 tokens saved)
 
 **What:** Compressed the DESIGN QUALITY STANDARD intro from 13 lines of motivational text to 1 line ("WITH INSPO: Clone pixel-perfectly. WITHOUT INSPO: Design something worthy of being inspo."). Compressed the forensic analysis from 19 lines to 8 (removed the MICRO-DETAILS and VERIFY subsections, folded their key points into the analysis list). Prompt now ~10K tokens.
