@@ -1,5 +1,12 @@
 # 16s Changelog
 
+## [2026-02-05 04:20] — Feature: Add "Copy URL" button to deployed site link in export menu
+
+**What:** Added a Copy icon button next to the deployed site URL in the export dropdown. Clicking it copies the full deploy URL to clipboard and shows the existing "Copied!" toast. The deployed link now lives in a flex row with the copy button alongside it.
+**Why:** After deploying, users often want to share the URL. Previously they had to manually select and copy the URL from the link text. The copy button provides a one-click sharing workflow.
+**Files:** src/components/preview/PreviewPanel.tsx
+**Type:** feature
+
 ## [2026-02-05 04:15] — Prompt: Compress SPACING + MOTION systems (~350 tokens saved)
 
 **What:** Compressed SPACING SYSTEM from 16 lines (2 sub-sections with ✓ bullets + reference line) to 1 line. Compressed MOTION SYSTEM from 18 lines (3 sub-sections with ✓ bullets) to 3 lines. Both sections used verbose multi-line formatting for simple reference values that fit naturally on single lines.

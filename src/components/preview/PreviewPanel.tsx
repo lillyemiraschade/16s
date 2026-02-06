@@ -533,16 +533,31 @@ export function PreviewPanel({
                           {isDeploying ? "Deploying..." : "Deploy to Web"}
                         </button>
                         {lastDeployUrl && (
-                          <a
-                            href={lastDeployUrl}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="w-full flex items-center gap-2.5 px-4 py-2.5 text-[13px] text-zinc-400 hover:text-zinc-200 hover:bg-white/[0.04] transition-colors"
-                          >
-                            <CheckCircle className="w-3.5 h-3.5 text-green-500" />
-                            <span className="truncate flex-1">{lastDeployUrl.replace("https://", "")}</span>
-                            <ExternalLink className="w-3 h-3 flex-shrink-0" />
-                          </a>
+                          <div className="flex items-center">
+                            <a
+                              href={lastDeployUrl}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="flex-1 flex items-center gap-2.5 px-4 py-2.5 text-[13px] text-zinc-400 hover:text-zinc-200 hover:bg-white/[0.04] transition-colors"
+                            >
+                              <CheckCircle className="w-3.5 h-3.5 text-green-500" />
+                              <span className="truncate flex-1">{lastDeployUrl.replace("https://", "")}</span>
+                              <ExternalLink className="w-3 h-3 flex-shrink-0" />
+                            </a>
+                            <button
+                              onClick={() => {
+                                navigator.clipboard.writeText(lastDeployUrl);
+                                setCopyToast(true);
+                                setTimeout(() => setCopyToast(false), 2000);
+                                setShowExportMenu(false);
+                              }}
+                              className="px-2.5 py-2.5 text-zinc-500 hover:text-zinc-200 transition-colors"
+                              title="Copy URL"
+                              aria-label="Copy deploy URL"
+                            >
+                              <Copy className="w-3.5 h-3.5" />
+                            </button>
+                          </div>
                         )}
                       </>
                     )}
