@@ -233,9 +233,7 @@ function HomePageContent() {
   const [selectedElement, setSelectedElement] = useState<SelectedElement | null>(null);
   const [bookmarks, setBookmarks] = useState<VersionBookmark[]>([]);
   const [codeMode, setCodeMode] = useState<CodeMode>("html");
-  const [outputFormat, setOutputFormat] = useState<"html" | "react">("html");
   const [showShortcuts, setShowShortcuts] = useState(false);
-  const [reactCode, setReactCode] = useState<string | null>(null);
 
   // Project state
   const [currentProjectId, setCurrentProjectId] = useState<string | null>(null);
@@ -625,7 +623,7 @@ function HomePageContent() {
         uploadedImages: imagesToSend,
         currentPreview: previewForApi,
         previewScreenshot,
-        outputFormat,
+        outputFormat: "html",
         context: projectContext,
       }),
       signal: controller.signal,
@@ -653,18 +651,13 @@ function HomePageContent() {
       const navGuard = `<script>document.addEventListener('click',function(e){var a=e.target.closest('a');if(a){var h=a.getAttribute('href');if(h&&h.startsWith('http')){e.preventDefault();return;}if(h&&!h.startsWith('javascript:')){e.preventDefault();}}},true);</script>`;
       const safeHtml = processedHtml.replace(/<head([^>]*)>/i, `<head$1>${navGuard}`);
       setCurrentPreview(safeHtml);
-      setReactCode(null);
-    }
-
-    if (data.react) {
-      setReactCode(data.react);
     }
 
     // Save learned context (invisible memory) if AI returned it
     if (data.context) {
       setProjectContext((prev) => prev ? { ...prev, ...data.context } : data.context);
     }
-  }, [currentPreview, previewScreenshot, outputFormat, projectContext, replaceImagePlaceholders]);
+  }, [currentPreview, previewScreenshot, projectContext, replaceImagePlaceholders]);
 
   const handleSendMessage = useCallback(async (text: string, imagesToInclude?: UploadedImage[]) => {
     // If auth is configured but user is not signed in, prompt them to sign up

@@ -1,5 +1,13 @@
 # 16s Changelog
 
+## [2026-02-06 15:30] — Code: Remove dead React output state (-8 lines)
+
+**What:** Removed unused `reactCode`/`setReactCode` and `outputFormat`/`setOutputFormat` state from page.tsx. `reactCode` was set but never read. `outputFormat` was never changed from "html". Removed dead `setReactCode` calls and `data.react` handling in `sendAndProcessChat`. Hardcoded `outputFormat: "html"` in API call.
+
+**Files:** `src/app/page.tsx`
+**Type:** Code cleanup
+**Ref:** R4-1
+
 ## [2026-02-06 14:55] — Feature: Auto-focus welcome textarea on page load
 
 **What:** Added `autoFocus` to the welcome screen textarea. Users can start typing immediately on page load without clicking into the input.
