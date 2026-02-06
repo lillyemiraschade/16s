@@ -21,6 +21,7 @@ what kind of photos to give, and the AI doesn't guide them through it.
 - R5-1: PROMPT — Rewrite CONVERSATION FLOW to guided 6-step journey (inspo-first, smart photo placement, structured info gathering)
 - R5-2: CODE — Add fallback pill generation when pills missing from AI response
 - R5-3: PROMPT — Update voice call flow with conversation arc + inspo handoff
+- R5-4: CODE — Improve bg removal + image type toggle discoverability
 
 ## In Progress
-(next: CODE — bg removal tooltip + image type UX)
+(next: PROMPT — add social link placement + info parsing rules)

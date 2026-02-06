@@ -679,15 +679,15 @@ export const ChatPanel = memo(function ChatPanel({
                     className="h-14 w-14 object-cover ring-1 ring-white/[0.06]"
                   />
                 </button>
-                {/* Remove background button */}
+                {/* Remove background button — always visible so users discover it */}
                 <button
                   onClick={() => handleRemoveBackground(idx)}
                   disabled={removingBgIndex !== null}
                   className={`absolute -top-1.5 -left-1.5 w-5 h-5 bg-violet-600 hover:bg-violet-500 disabled:bg-zinc-700 rounded-full flex items-center justify-center transition-all duration-150 ring-1 ring-white/[0.06] ${
-                    removingBgIndex === idx ? "opacity-100" : "opacity-0 group-hover:opacity-100"
+                    removingBgIndex === idx ? "opacity-100" : "opacity-50 group-hover:opacity-100"
                   }`}
-                  aria-label="Remove background"
-                  title="Remove background"
+                  aria-label="Remove image background"
+                  title="Remove background — great for headshots, logos, product photos"
                 >
                   {removingBgIndex === idx ? (
                     <Loader2 className="w-3 h-3 text-white animate-spin" />
@@ -700,8 +700,10 @@ export const ChatPanel = memo(function ChatPanel({
                   className={`absolute -bottom-1 left-1/2 -translate-x-1/2 px-1.5 py-0.5 text-[9px] font-medium rounded cursor-pointer hover:opacity-80 transition-opacity ${
                     img.type === "content" ? "bg-green-500/80 text-white" : "bg-zinc-700 text-zinc-300"
                   }`}
-                  title="Click to toggle: inspo (design reference) / content (use in website)"
-                  aria-label={`Toggle image ${idx + 1} type: currently ${img.type === "content" ? "content" : "inspiration"}`}
+                  title={img.type === "content"
+                    ? "Content: this image will be placed in your website. Click to switch to inspo (design reference)."
+                    : "Inspo: AI will clone this design style. Click to switch to content (embed in website)."}
+                  aria-label={`Toggle image ${idx + 1} type: currently ${img.type === "content" ? "content (embedded in site)" : "inspiration (design reference)"}`}
                 >
                   {img.type === "content" ? (img.label || "content") : "inspo"}
                 </button>

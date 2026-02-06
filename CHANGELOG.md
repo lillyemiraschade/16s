@@ -1,5 +1,13 @@
 # 16s Changelog
 
+## [2026-02-06 18:30] — Code: Improve bg removal + image type toggle discoverability
+
+**What:** Made the background removal (sparkle) button always visible at 50% opacity instead of hidden behind hover (opacity-0 → opacity-50). Updated tooltip to explain when to use it: "great for headshots, logos, product photos." Improved inspo/content toggle tooltips to explain what each mode does: content = "placed in your website", inspo = "AI will clone this design style."
+
+**Files:** `src/components/chat/ChatPanel.tsx`
+**Type:** Code (UX)
+**Ref:** R5-4
+
 ## [2026-02-06 18:20] — Prompt: Update voice call flow with conversation arc + inspo handoff
 
 **What:** Added NATURAL CONVERSATION ARC to VOICE_SYSTEM_PROMPT with 5-step flow: start with "what are you building", dig into audience/uniqueness, ask about style preferences (primes for inspo), gather details, wrap up with inspo handoff. Strengthened ENDING section with specific inspo handoff language: "drop 1-3 screenshots of websites you love — even from a different industry." Added fallback for users without inspo: offer style directions after the call. Compressed rules to remove redundancy.
