@@ -653,9 +653,13 @@ function HomePageContent() {
     const data = await fetchAndParseChat(response);
 
     // Fallback pills when AI response truncated or missing pills
-    const pills = (data.pills && data.pills.length > 0)
-      ? data.pills
-      : getContextualFallbackPills(!!currentPreview, !!data.html, !!data.plan, cleanMessages.length);
+    // Don't add pills to error messages (streamed errors arrive as status 200)
+    const isErrorResponse = !data.html && !data.plan && /unavailable|try again|timed? out|too many|busy/i.test(data.message || "");
+    const pills = isErrorResponse
+      ? undefined
+      : (data.pills && data.pills.length > 0)
+        ? data.pills
+        : getContextualFallbackPills(!!currentPreview, !!data.html, !!data.plan, cleanMessages.length);
 
     const aiMessage: Message = {
       id: (Date.now() + 1).toString(),
