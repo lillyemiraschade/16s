@@ -1,5 +1,12 @@
 # 16s Changelog
 
+## [2026-02-05 01:05] — Prompt: Add fitness/gym template + compress CSS toolkit
+
+**What:** Added FITNESS/GYM/STUDIO industry template (class schedule, membership tiers, trainer profiles, facility tour, trial offer CTA, energetic palette). Simultaneously compressed the "UNIVERSAL CSS TOOLKIT" section from ~115 lines of basic CSS reference (font weights, backgrounds, shadows, shapes, positioning, spacing, patterns) down to 5 lines of 16s-specific reminders. Claude knows basic CSS — only non-obvious patterns (glowing borders, star particles, z-index layering) were kept.
+**Why:** Fitness/gym sites are a top business type with specific needs (class schedules, membership comparison). The CSS toolkit was the single largest token waste in the prompt — ~800 tokens of CSS properties Claude already knows.
+**Files:** src/app/api/chat/route.ts (SYSTEM_PROMPT)
+**Type:** prompt
+
 ## [2026-02-05 01:04] — Code: Add html2canvas CORS fallback with allowTaint retry
 
 **What:** Refactored `captureScreenshot` to use a two-tier approach: first try `useCORS: true, allowTaint: false` for a clean exportable canvas, then fallback to `allowTaint: true` which renders all images (including cross-origin) but may produce a tainted canvas. The `toDataURL` call on the tainted canvas is wrapped in its own try/catch so it fails gracefully.

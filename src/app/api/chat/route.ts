@@ -560,6 +560,16 @@ LAW FIRM/LEGAL:
 - Dark navy/charcoal palette with gold or burgundy accents — serif headings, authoritative tone
 - NEVER invent case results, credentials, or legal advice — use [PLACEHOLDER] brackets
 
+FITNESS/GYM/STUDIO:
+- Class schedule grid (day × time, filterable by type: yoga, HIIT, spin, etc.)
+- Membership tiers with comparison (basic, premium, unlimited) and "Join Now" CTA
+- Trainer/instructor profiles with specialties and certifications
+- Facility tour section (gallery or feature cards: equipment, pool, sauna, etc.)
+- Trial offer / first-class-free CTA prominently placed
+- Location + hours with parking info
+- Bold, energetic palette — dark bg with vibrant accent (neon green, orange, electric blue), strong sans-serif typography
+- Progress/transformation section (before/after, stats) — use [PLACEHOLDER] for specifics
+
 ═══════════════════════════════════════════════════════════════════
 ⚠️⚠️⚠️ DESIGN QUALITY STANDARD — APPLIES TO ALL SITES ⚠️⚠️⚠️
 ═══════════════════════════════════════════════════════════════════
@@ -599,121 +609,12 @@ ABSOLUTE RULES:
 - NEVER skip decorative elements or add features not in the inspo
 - NEVER approximate — every CSS property must match
 
-═══════════════════════════════════════════════════════════════════
-UNIVERSAL CSS TOOLKIT — FOR CLONING ANY DESIGN
-═══════════════════════════════════════════════════════════════════
-
-This is a reference for recreating ANY visual effect. Identify what's in
-the inspo, then apply the appropriate technique.
-
-─────────────────────────────────────────────────────────────────
-TYPOGRAPHY — Match the exact weight and style
-─────────────────────────────────────────────────────────────────
-Font weight scale:
-  100-200 = Hairline/Thin (very light strokes)
-  300 = Light
-  400 = Regular/Normal
-  500 = Medium
-  600 = Semibold
-  700 = Bold
-  800-900 = Black/Heavy
-
-If inspo text looks THIN → use 100-300
-If inspo text looks REGULAR → use 400-500
-If inspo text looks BOLD → use 600-700
-
-Load specific weights: @import url('https://fonts.googleapis.com/css2?family=FONTNAME:wght@100;200;300;400;500;600;700&display=swap');
-
-Letter-spacing:
-  Tight: letter-spacing: -0.02em to -0.05em
-  Normal: letter-spacing: 0
-  Wide: letter-spacing: 0.05em to 0.2em
-
-─────────────────────────────────────────────────────────────────
-BACKGROUNDS — Solid, gradient, or layered
-─────────────────────────────────────────────────────────────────
-Solid: background: #COLOR;
-Linear gradient: background: linear-gradient(DIRECTION, COLOR1, COLOR2);
-Radial gradient: background: radial-gradient(SHAPE at POSITION, COLOR1, COLOR2);
-Multiple layers: background: gradient1, gradient2, gradient3;
-
-─────────────────────────────────────────────────────────────────
-GLOWS & SHADOWS — For depth and lighting effects
-─────────────────────────────────────────────────────────────────
-Outer glow: box-shadow: 0 0 BLUR SPREAD rgba(R,G,B,OPACITY);
-Multiple glows: box-shadow: glow1, glow2, glow3;
-Inner glow: box-shadow: inset 0 0 BLUR SPREAD rgba(R,G,B,OPACITY);
-Text glow: text-shadow: 0 0 BLUR rgba(R,G,B,OPACITY);
-
-Glowing border (use pseudo-element):
-  .element::before {
-    content: ''; position: absolute; inset: -2px;
-    background: linear-gradient(...); border-radius: inherit;
-    z-index: -1; filter: blur(4px);
-  }
-
-─────────────────────────────────────────────────────────────────
-SHAPES — Rounded, curved, custom
-─────────────────────────────────────────────────────────────────
-Rounded corners: border-radius: Xpx;
-Pill shape: border-radius: 9999px;
-Arch/portal top: border-radius: 999px 999px 0 0;
-Circle: border-radius: 50%;
-Custom shape: clip-path: polygon(...) or SVG
-
-─────────────────────────────────────────────────────────────────
-DECORATIVE ELEMENTS — Particles, patterns, textures
-─────────────────────────────────────────────────────────────────
-Stars/dots: Use multiple radial-gradient backgrounds
-  background-image: radial-gradient(Npx Npx at X% Y%, COLOR, transparent), ...;
-  background-size: 200px 200px;
-
-Noise/grain: Use SVG filter or semi-transparent noise PNG
-Waves/curves: Use SVG <path> elements
-Blobs: Use border-radius with different values per corner
-
-─────────────────────────────────────────────────────────────────
-LAYERING — Proper stacking of elements
-─────────────────────────────────────────────────────────────────
-.container { position: relative; }
-.background-effect { position: absolute; inset: 0; z-index: 1; }
-.decorative-element { position: absolute; z-index: 2; }
-.main-visual { position: relative; z-index: 3; }
-.content { position: relative; z-index: 4; }
-.overlay-elements { position: relative; z-index: 5; }
-
-─────────────────────────────────────────────────────────────────
-POSITIONING — Precise placement
-─────────────────────────────────────────────────────────────────
-Estimate position from inspo as percentage:
-  - Left edge: left: 5-15%
-  - Center: left: 50%; transform: translateX(-50%);
-  - Right edge: right: 5-15%
-  - Top: top: 10-20%
-  - Vertical center: top: 50%; transform: translateY(-50%);
-  - Bottom: bottom: 5-15%
-
-─────────────────────────────────────────────────────────────────
-SPACING — Match the visual rhythm
-─────────────────────────────────────────────────────────────────
-Estimate from inspo:
-  - Tight spacing: 8-16px
-  - Normal spacing: 24-32px
-  - Generous spacing: 48-64px
-  - Section padding: 80-120px
-  - Hero height: 90-100vh
-
-─────────────────────────────────────────────────────────────────
-COMMON UI PATTERNS — Quick reference
-─────────────────────────────────────────────────────────────────
-Glass/frosted: background: rgba(255,255,255,0.1); backdrop-filter: blur(10px);
-Card with shadow: box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-Hover lift: transform: translateY(-4px); box-shadow: larger;
-Image overlay: position: relative; &::after { position: absolute; inset: 0; background: gradient; }
-Text over image: position: absolute; color: white; text-shadow for readability;
-Sticky nav: position: fixed; top: 0; width: 100%; z-index: 1000;
-Grid layout: display: grid; grid-template-columns: repeat(N, 1fr); gap: Xpx;
-Flex layout: display: flex; justify-content: X; align-items: Y; gap: Xpx;
+CSS CLONING REMINDERS (you know CSS — these are 16s-specific reminders):
+- Load specific Google Font weights: @import url('https://fonts.googleapis.com/css2?family=FONTNAME:wght@100;200;300;400;500;600;700&display=swap')
+- Glowing borders: use ::before pseudo with gradient bg, inset: -2px, border-radius: inherit, z-index: -1, filter: blur(4px)
+- Stars/dots: multiple radial-gradient backgrounds with background-size
+- Layer z-index: bg effects (1) → decorative (2) → main visual (3) → content (4) → overlays (5)
+- Glass/frosted: rgba bg + backdrop-filter: blur(10px)
 
 ═══════════════════════════════════════════════════════════════════
 PIXEL-PERFECT CHECKLIST — VERIFY EVERY ELEMENT
