@@ -1,5 +1,12 @@
 # 16s Changelog
 
+## [2026-02-05 01:06] — Feature: Add contextual pill suggestions by industry
+
+**What:** Added "CONTEXTUAL PILL SUGGESTIONS" section to the BMAD system instructions that maps industry types to relevant next-step pills (e.g., restaurant → "Add online ordering", law firm → "Add case results", fitness → "Add class schedule"). Includes explicit instruction to never suggest generic pills like "Change colors" after a full build.
+**Why:** After generating a restaurant site, the AI would suggest generic pills like "Make changes" instead of industry-relevant features like "Add online ordering." Contextual pills dramatically improve the follow-up UX by suggesting what users actually want next.
+**Files:** src/app/api/chat/route.ts (SYSTEM_PROMPT)
+**Type:** feature
+
 ## [2026-02-05 01:05] — Prompt: Add fitness/gym template + compress CSS toolkit
 
 **What:** Added FITNESS/GYM/STUDIO industry template (class schedule, membership tiers, trainer profiles, facility tour, trial offer CTA, energetic palette). Simultaneously compressed the "UNIVERSAL CSS TOOLKIT" section from ~115 lines of basic CSS reference (font weights, backgrounds, shadows, shapes, positioning, spacing, patterns) down to 5 lines of 16s-specific reminders. Claude knows basic CSS — only non-obvious patterns (glowing borders, star particles, z-index layering) were kept.

@@ -24,6 +24,7 @@
 - R2-3 [FEATURE] Plan card consistency + first-message intelligence
 - R2-4 [CODE] html2canvas CORS fallback with allowTaint retry
 - R2-5 [PROMPT] Add fitness/gym template + compress CSS toolkit (~800 tokens saved)
+- R2-6 [FEATURE] Contextual pill suggestions by industry
 
 ## Still Open (Round 2 targets)
 - Stripe API version: verified correct for stripe@20.3.0 (not a bug)

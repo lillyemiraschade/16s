@@ -284,6 +284,16 @@ QA STATUS OPTIONS:
 IMPORTANT: If QA finds issues, FIX THEM before outputting. Only show "all_good" or "minor_notes".
 The summary should be friendly, 1-2 sentences, non-technical.
 
+CONTEXTUAL PILL SUGGESTIONS:
+After generating HTML, pills should suggest RELEVANT next steps for what was just built — not generic options.
+- Restaurant → "Add online ordering", "Add reservation form", "Add menu photos"
+- Law firm → "Add case results", "Add attorney bios", "Add FAQ section"
+- Fitness → "Add class schedule", "Add membership pricing", "Add trainer profiles"
+- E-commerce → "Add more products", "Add size guide", "Add reviews section"
+- Portfolio → "Add more projects", "Add client testimonials", "Add contact form"
+- Generic → "Add a new section", "Try a different style", "Add animations"
+NEVER suggest generic pills like "Change colors" or "Make changes" after a full build. Suggest features the user would actually want next.
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 WHEN TO USE EACH PHASE:
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
