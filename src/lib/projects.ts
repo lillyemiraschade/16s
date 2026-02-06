@@ -289,23 +289,3 @@ export function createProjectsAPI(userId?: string | null): ProjectsAPI {
     migrate: async () => migrateLocalToCloud(userId),
   };
 }
-
-// ============================================================================
-// LEGACY EXPORTS (for backward compatibility during migration)
-// ============================================================================
-
-export function saveProject(project: SavedProject): void {
-  saveLocalProject(project);
-}
-
-export function loadProject(id: string): SavedProject | null {
-  return loadLocalProject(id);
-}
-
-export function listProjects(): SavedProjectMeta[] {
-  return listLocalProjects();
-}
-
-export function deleteProject(id: string): void {
-  deleteLocalProject(id);
-}

@@ -1,5 +1,12 @@
 # 16s Changelog
 
+## [2026-02-06 14:45] — Code: Remove dead legacy exports from projects.ts (-19 lines)
+
+**What:** Removed 4 unused legacy wrapper functions (saveProject, loadProject, listProjects, deleteProject) from projects.ts. These were labeled "for backward compatibility during migration" but are not imported anywhere — all consumers use the `useProjects` hook instead.
+**Why:** Dead code. The migration from direct exports to the useProjects hook was completed long ago. These wrappers added 19 lines of unused code.
+**Files:** src/lib/projects.ts
+**Type:** code
+
 ## [2026-02-06 14:40] — Feature: Drag-and-drop image upload on welcome screen
 
 **What:** Added `onDrop` and `onDragOver` handlers to the welcome screen container. Users can now drag images directly onto the welcome screen to upload them, matching the ChatPanel behavior.

@@ -74,6 +74,7 @@
 - R3-34 [CODE] Un-export internal-only functions in images.ts (readFileAsDataURL, compressImage)
 - R3-35 [PROMPT] Compress FORENSIC ANALYSIS + ABSOLUTE RULES (~60 tokens saved)
 - R3-36 [FEATURE] Drag-and-drop image upload on welcome screen
+- R3-37 [CODE] Remove dead legacy exports from projects.ts (-19 lines)
 
 ## In Progress
 (continuing Round 3)
