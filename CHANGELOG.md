@@ -1,5 +1,12 @@
 # 16s Changelog
 
+## [2026-02-05 02:55] — Feature: Add a11y + Escape key handler to AuthModal
+
+**What:** Added `role="dialog"`, `aria-modal="true"`, `aria-labelledby="auth-modal-title"` to the modal container. Added `id="auth-modal-title"` to the h2 heading. Added `aria-label="Close"` to the close button. Added `aria-label` to email and password inputs (which only had placeholders). Added Escape key handler to dismiss the modal.
+**Why:** AuthModal was missing all standard dialog ARIA attributes and keyboard dismiss. Screen readers couldn't identify it as a modal dialog, and keyboard users couldn't close it with Escape. The email/password inputs relied on placeholder text only, which isn't accessible to screen readers. Consistent with the a11y patterns already applied to the bookmark dialog, call disclaimer modal, and lightbox.
+**Files:** src/components/auth/AuthModal.tsx
+**Type:** feature
+
 ## [2026-02-05 02:50] — Prompt: Compress FUNCTIONALITY STANDARD section (~350 tokens saved)
 
 **What:** Compressed the FUNCTIONALITY STANDARD intro from 6 motivational lines to 1 line, and the 6 UNIVERSAL FUNCTIONALITY REQUIREMENTS blocks from 42 lines of bulleted lists to 6 compact single-line summaries. All key requirements preserved: form validation/persistence, smooth navigation, realistic content, interactive elements, localStorage persistence, and feedback states.

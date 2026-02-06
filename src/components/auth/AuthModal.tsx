@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, Mail, Github, Loader2 } from "lucide-react";
 import { useAuth } from "@/lib/auth/AuthContext";
@@ -23,6 +23,16 @@ export function AuthModal({ isOpen, onClose, title, subtitle }: AuthModalProps) 
   const [message, setMessage] = useState<string | null>(null);
 
   const { signInWithEmail, signUpWithEmail, signInWithOAuth } = useAuth();
+
+  // Close on Escape key
+  useEffect(() => {
+    if (!isOpen) return;
+    const handler = (e: KeyboardEvent) => {
+      if (e.key === "Escape") onClose();
+    };
+    window.addEventListener("keydown", handler);
+    return () => window.removeEventListener("keydown", handler);
+  }, [isOpen, onClose]);
 
   const handleEmailAuth = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -103,16 +113,22 @@ export function AuthModal({ isOpen, onClose, title, subtitle }: AuthModalProps) 
             exit={{ opacity: 0, scale: 0.95, y: 20 }}
             className="fixed inset-0 z-50 flex items-center justify-center p-4 pointer-events-none"
           >
-            <div className="w-full max-w-[380px] pointer-events-auto">
+            <div
+              className="w-full max-w-[380px] pointer-events-auto"
+              role="dialog"
+              aria-modal="true"
+              aria-labelledby="auth-modal-title"
+            >
             <div className="glass-matte rounded-2xl p-6 shadow-2xl shadow-black/40">
               {/* Header */}
               <div className="flex items-center justify-between mb-2">
-                <h2 className="text-lg font-semibold text-zinc-100">
+                <h2 id="auth-modal-title" className="text-lg font-semibold text-zinc-100">
                   {title || (mode === "signin" ? "Sign in" : "Create account")}
                 </h2>
                 <button
                   onClick={onClose}
                   className="p-1.5 rounded-lg hover:bg-zinc-700/50 transition-colors"
+                  aria-label="Close"
                 >
                   <X className="w-4 h-4 text-zinc-400" />
                 </button>
@@ -174,6 +190,7 @@ export function AuthModal({ isOpen, onClose, title, subtitle }: AuthModalProps) 
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="Email"
+                    aria-label="Email"
                     required
                     className="w-full px-4 py-2.5 rounded-xl glass text-[13px] text-zinc-200 placeholder:text-zinc-500 focus:outline-none focus:ring-1 focus:ring-zinc-500"
                   />
@@ -184,6 +201,7 @@ export function AuthModal({ isOpen, onClose, title, subtitle }: AuthModalProps) 
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     placeholder="Password"
+                    aria-label="Password"
                     required
                     minLength={6}
                     className="w-full px-4 py-2.5 rounded-xl glass text-[13px] text-zinc-200 placeholder:text-zinc-500 focus:outline-none focus:ring-1 focus:ring-zinc-500"
