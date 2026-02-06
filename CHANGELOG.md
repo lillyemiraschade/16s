@@ -1,5 +1,13 @@
 # 16s Changelog
 
+## [2026-02-06 18:20] — Prompt: Update voice call flow with conversation arc + inspo handoff
+
+**What:** Added NATURAL CONVERSATION ARC to VOICE_SYSTEM_PROMPT with 5-step flow: start with "what are you building", dig into audience/uniqueness, ask about style preferences (primes for inspo), gather details, wrap up with inspo handoff. Strengthened ENDING section with specific inspo handoff language: "drop 1-3 screenshots of websites you love — even from a different industry." Added fallback for users without inspo: offer style directions after the call. Compressed rules to remove redundancy.
+
+**Files:** `src/app/api/chat/voice/route.ts` (VOICE_SYSTEM_PROMPT)
+**Type:** Prompt
+**Ref:** R5-3
+
 ## [2026-02-06 18:10] — Code: Add fallback pill generation when pills missing from AI response
 
 **What:** Added `getContextualFallbackPills()` function that generates stage-appropriate pills when the AI response is truncated or missing the pills array. Fallback pills are context-aware: discovery pills when no preview, plan approval pills when plan shown, personalize pills after first generation, refinement pills during iteration, polish/deploy pills after several rounds. Used in `sendAndProcessChat` as automatic fallback.
