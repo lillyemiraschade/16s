@@ -698,6 +698,15 @@ CSS CLONING REMINDERS (you know CSS — these are 16s-specific reminders):
 - Layer z-index: bg effects (1) → decorative (2) → main visual (3) → content (4) → overlays (5)
 - Glass/frosted: rgba bg + backdrop-filter: blur(10px)
 
+MODERN CSS PATTERNS (use when appropriate for contemporary designs):
+- Bento grid: display: grid with varied span sizes (grid-column: span 2, grid-row: span 2) for magazine-style layouts
+- Text gradients: background: linear-gradient(...); -webkit-background-clip: text; -webkit-text-fill-color: transparent
+- Gradient mesh bg: layered radial-gradient() at different positions for organic color blending
+- Scroll-driven reveal: @keyframes fade-in { from { opacity: 0; transform: translateY(20px) } } with IntersectionObserver or animation-timeline: view()
+- Container queries: @container (min-width: 400px) { ... } for component-level responsive design
+- color-mix(): color-mix(in srgb, var(--accent) 20%, transparent) for dynamic opacity/tinting
+- :has() selector: .card:has(img) { ... } for parent selection based on children
+
 IMAGE TYPES:
 - INSPO images (website screenshots) → clone the STYLE only, don't embed the image itself
 - CONTENT images (logo, team photos, product photos) → embed in the HTML

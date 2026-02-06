@@ -1,5 +1,12 @@
 # 16s Changelog
 
+## [2026-02-05 01:14] — Prompt: Add modern CSS patterns to design system
+
+**What:** Added MODERN CSS PATTERNS section with 7 contemporary techniques: bento grids (varied span sizes), text gradients (background-clip), gradient mesh backgrounds (layered radial-gradient), scroll-driven reveals (IntersectionObserver/animation-timeline), container queries (@container), color-mix() for dynamic opacity, and :has() selector for parent selection.
+**Why:** Generated sites were using only basic CSS patterns. Modern websites use bento grids, text gradients, and scroll animations as standard practice. Adding these patterns encourages the AI to produce more contemporary-looking designs.
+**Files:** src/app/api/chat/route.ts (SYSTEM_PROMPT)
+**Type:** prompt
+
 ## [2026-02-05 01:13] — Prompt: Add multi-request handling and undo/revert flow
 
 **What:** Added two conversation flow improvements: (1) MULTI-REQUEST HANDLING — when user sends multiple changes in one message, handle all of them and list what changed. (2) UNDO/REVERT REQUESTS — when user says "go back" or "undo", tell them about Cmd+Z for built-in undo, and acknowledge what's being reverted instead of regenerating from scratch.
