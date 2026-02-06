@@ -1,5 +1,12 @@
 # 16s Changelog
 
+## [2026-02-06 14:25] — Feature: Clipboard image paste on welcome screen
+
+**What:** Added `handleWelcomePaste` handler and `onPaste` to the welcome screen textarea. Users can now paste screenshots/images directly on the initial welcome screen, not just in the chat panel.
+**Why:** The ChatPanel already supported paste (R3-27), but the welcome screen textarea was missing it. Users often start by pasting an inspo screenshot.
+**Files:** src/app/page.tsx
+**Type:** feature
+
 ## [2026-02-06 14:20] — Prompt: Compress CONVERSATION FLOW + PLACEHOLDERS (~120 tokens saved)
 
 **What:** Compressed CONVERSATION FLOW from 7 lines to 4, and merged GENERATE WITH PLACEHOLDERS + AFTER GENERATION into a single line. All flows preserved: website with call option, apps/tools inspo request, style mentions, inspo upload, text paste.

@@ -1228,6 +1228,21 @@ function HomePageContent() {
     }
   };
 
+  const handleWelcomePaste = (e: React.ClipboardEvent) => {
+    const items = e.clipboardData?.items;
+    if (!items) return;
+    const imageFiles: File[] = [];
+    for (let i = 0; i < items.length; i++) {
+      if (items[i].type.startsWith("image/")) {
+        const file = items[i].getAsFile();
+        if (file) imageFiles.push(file);
+      }
+    }
+    if (imageFiles.length === 0) return;
+    e.preventDefault();
+    processImageFiles(imageFiles, handleImageUpload, handleWelcomeError);
+  };
+
   const handleWelcomeError = (msg: string) => {
     setWelcomeError(msg);
     setTimeout(() => setWelcomeError(null), 4000);
@@ -1356,6 +1371,7 @@ function HomePageContent() {
                     }
                   }}
                   onKeyDown={handleWelcomeKeyDown}
+                  onPaste={handleWelcomePaste}
                   placeholder="Describe what you want to build..."
                   disabled={isGenerating}
                   aria-label="Message input"
