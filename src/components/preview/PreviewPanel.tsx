@@ -429,6 +429,7 @@ export function PreviewPanel({
                     viewport === vp ? "bg-white/[0.08] text-zinc-100" : "text-zinc-500 hover:text-zinc-300"
                   }`}
                   title={viewportConfig[vp].label}
+                  aria-label={`${viewportConfig[vp].label} viewport${viewport === vp ? " (active)" : ""}`}
                 >
                   <Icon className="w-4 h-4" />
                 </button>
@@ -443,6 +444,7 @@ export function PreviewPanel({
                 showCode ? "text-green-400 bg-green-500/10" : "text-zinc-500 hover:text-zinc-300 hover:bg-white/[0.04]"
               }`}
               title="Code view (Cmd+/)"
+              aria-label={showCode ? "Hide code view" : "Show code view"}
             >
               <Code className="w-4 h-4" />
             </button>
@@ -454,6 +456,7 @@ export function PreviewPanel({
                 codeMode === "react" ? "text-blue-400 bg-blue-500/10" : "text-zinc-500 hover:text-zinc-300 hover:bg-white/[0.04]"
               }`}
               title={`${codeMode === "html" ? "HTML" : "React"} mode`}
+              aria-label={`Switch to ${codeMode === "html" ? "React" : "HTML"} mode`}
             >
               <FileCode className="w-4 h-4" />
             </button>

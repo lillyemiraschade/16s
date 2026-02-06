@@ -50,6 +50,7 @@
 - R2-29 [FEATURE] Add a11y to bookmark dialog + welcome screen image toggle aria-labels
 - R2-30 [CODE] Fix variable shadowing bug + sanitize PII from error logs
 - R2-31 [PROMPT] Compress conversation flow + placeholder sections (~500 tokens saved, now ~10.8K)
+- R2-32 [FEATURE] Add aria-labels to PreviewPanel toolbar buttons (viewport, code view, code mode)
 
 ## Still Open (Round 2 targets)
 - Stripe API version: verified correct for stripe@20.3.0 (not a bug)

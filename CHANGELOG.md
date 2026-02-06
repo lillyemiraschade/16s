@@ -1,5 +1,12 @@
 # 16s Changelog
 
+## [2026-02-05 02:06] — Feature: Add aria-labels to PreviewPanel toolbar buttons
+
+**What:** Added descriptive `aria-label` to three groups of icon-only buttons in the PreviewPanel toolbar: viewport toggle buttons (Desktop/Tablet/Mobile with active state), code view toggle ("Show/Hide code view"), and code mode toggle ("Switch to React/HTML mode"). These buttons previously only had `title` tooltips.
+**Why:** Icon-only buttons need aria-label for screen reader accessibility. `title` is not reliably announced by all screen readers and is a tooltip, not a programmatic name. This completes the aria-label audit across all interactive icon buttons in the app.
+**Files:** src/components/preview/PreviewPanel.tsx
+**Type:** feature
+
 ## [2026-02-05 02:04] — Prompt: Compress conversation flow + placeholder sections (~500 tokens saved)
 
 **What:** Compressed the FLOW FOR WEBSITES (5-step numbered list + example dialogue), FLOW FOR APPS (5 steps), ALWAYS ASK FOR INSPO (6 lines), GENERATE WITH PLACEHOLDERS (11 placeholder examples), and AFTER GENERATION (5 example prompts + 4 IMPORTANT rules) into a single concise CONVERSATION FLOW section plus 2 short paragraphs. All behaviors preserved: call offer, inspo requests, placeholder usage, one-at-a-time content collection. Prompt now ~10.8K tokens.
