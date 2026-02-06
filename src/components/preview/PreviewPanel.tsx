@@ -425,11 +425,14 @@ export function PreviewPanel({
                 <button
                   key={vp}
                   onClick={() => onViewportChange(vp)}
+                  disabled={!html}
                   className={`p-1.5 rounded-md transition-all duration-150 ${
-                    viewport === vp ? "bg-white/[0.08] text-zinc-100" : "text-zinc-500 hover:text-zinc-300"
+                    !html
+                      ? "text-zinc-600 cursor-not-allowed opacity-50"
+                      : viewport === vp ? "bg-white/[0.08] text-zinc-100" : "text-zinc-500 hover:text-zinc-300"
                   }`}
-                  title={viewportConfig[vp].label}
-                  aria-label={`${viewportConfig[vp].label} viewport${viewport === vp ? " (active)" : ""}`}
+                  title={html ? viewportConfig[vp].label : "Generate a website first"}
+                  aria-label={`${viewportConfig[vp].label} viewport${viewport === vp ? " (active)" : ""}${!html ? " (disabled)" : ""}`}
                 >
                   <Icon className="w-4 h-4" />
                 </button>

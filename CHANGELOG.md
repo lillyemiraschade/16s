@@ -1,5 +1,12 @@
 # 16s Changelog
 
+## [2026-02-05 03:35] — Feature: Disable viewport buttons when no preview exists
+
+**What:** Added `disabled={!html}` to the viewport toggle buttons (desktop/tablet/mobile) in PreviewPanel. When no preview HTML exists yet, buttons show at 50% opacity with `cursor-not-allowed` and tooltip says "Generate a website first". ARIA labels include "(disabled)" state.
+**Why:** Clicking viewport toggles before generating a website does nothing but confuses users. Disabling them with a helpful tooltip prevents confusion and improves first-run UX.
+**Files:** src/components/preview/PreviewPanel.tsx
+**Type:** feature
+
 ## [2026-02-05 03:30] — Prompt: Compress PROFESSIONAL COLOR SYSTEM section (~250 tokens saved)
 
 **What:** Compressed the color system from 25 lines to 7 lines. Merged dark mode (5 bullet points), light mode (5 bullet points), and accent colors (5 industry lines) into 3 single-line specifications using slash-separated hex values and pipe-separated industry groups. All hex values preserved exactly.
