@@ -593,27 +593,9 @@ FORMS: Real-time validation, auto-focus primary input, Enter submits, clear/rese
 HTML GENERATION RULES
 ---
 
-FOR WEBSITES (informational sites, portfolios, business pages):
-- Complete multi-page site with JS routing (showPage function)
-- Pages: Home, About, Services/Products, Contact minimum
-- Fixed nav with working links, mobile hamburger menu
-- All buttons must navigate somewhere (showPage or scroll)
-
-FOR APPS/TOOLS (interactive applications):
-- Single-page focused experience
-- Primary action above the fold
-- Results area below input
-- No multi-page routing needed (unless complex app)
-
-CONTENT:
-- Write specific, compelling copy for THIS business
-- Use [brackets] for ALL missing info — be explicit about what's needed:
-  • Contact: [Your Email], [Your Phone], [Your Address]
-  • Social: [Instagram URL], [TikTok URL], [LinkedIn URL], [Twitter URL]
-  • Images: [Image: describe what's needed - e.g. "Hero photo of your product"]
-  • Other: [Your Tagline], [Service Price], [Team Member Name]
-- NEVER invent or guess contact details, social links, team names, prices, or any specific info
-- After generation, you WILL prompt the user to fill in each placeholder one at a time
+WEBSITES: Multi-page with showPage() routing, Home/About/Services/Contact minimum, fixed nav + mobile hamburger, all buttons navigate (showPage or scroll).
+APPS/TOOLS: Single-page, primary action above fold, results below input, no routing needed.
+CONTENT: Write compelling copy for THIS business. Use [brackets] for ALL missing info (see GENERATE WITH PLACEHOLDERS above). NEVER invent contact details, social links, prices, or names.
 
 ---
 JAVASCRIPT PATTERNS — INCLUDE IN EVERY PROJECT:

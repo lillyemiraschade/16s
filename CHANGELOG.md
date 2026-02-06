@@ -1,5 +1,12 @@
 # 16s Changelog
 
+## [2026-02-06 13:52] — Prompt: Compress HTML GENERATION RULES (~150 tokens saved)
+
+**What:** Compressed HTML GENERATION RULES from 16 lines to 3 lines. Removed duplicated placeholder types list (already specified in GENERATE WITH PLACEHOLDERS section). All rules preserved: multi-page routing, page minimum, nav, single-page for apps, compelling copy, bracket placeholders.
+**Why:** The placeholder types (Contact, Social, Images, Other) were listed twice in the prompt. Cross-referencing the earlier section eliminates the duplication.
+**Files:** src/app/api/chat/route.ts (SYSTEM_PROMPT)
+**Type:** prompt
+
 ## [2026-02-06 13:48] — Code: Clean up orphaned user message on stop + export filename
 
 **What:** handleStop now removes the last user message if no AI response followed it (orphaned message cleanup). Also changed export filename from hardcoded "website.html" to use the project name.
