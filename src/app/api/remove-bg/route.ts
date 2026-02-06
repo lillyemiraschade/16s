@@ -90,7 +90,7 @@ export async function POST(req: NextRequest) {
 
     if (!response.ok) {
       const errorText = await response.text();
-      console.error("remove.bg error:", errorText);
+      console.debug("remove.bg error:", errorText);
       return new Response(
         JSON.stringify({ error: "Background removal failed" }),
         { status: 500, headers: { "Content-Type": "application/json" } }
@@ -107,7 +107,7 @@ export async function POST(req: NextRequest) {
       { status: 200, headers: { "Content-Type": "application/json" } }
     );
   } catch (error) {
-    console.error("remove-bg API error:", error);
+    console.debug("remove-bg API error:", error);
     return new Response(
       JSON.stringify({ error: "Failed to process image" }),
       { status: 500, headers: { "Content-Type": "application/json" } }

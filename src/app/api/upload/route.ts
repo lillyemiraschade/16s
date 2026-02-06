@@ -36,7 +36,7 @@ export async function POST(req: NextRequest) {
   try {
     // Check if blob token is configured
     if (!process.env.BLOB_READ_WRITE_TOKEN) {
-      console.error("BLOB_READ_WRITE_TOKEN is not set");
+      console.debug("BLOB_READ_WRITE_TOKEN is not set");
       return new Response(
         JSON.stringify({ error: "Blob storage not configured" }),
         { status: 500, headers: { "Content-Type": "application/json" } }
@@ -102,7 +102,7 @@ export async function POST(req: NextRequest) {
       { status: 200, headers: { "Content-Type": "application/json" } }
     );
   } catch (error) {
-    console.error("Upload error:", error);
+    console.debug("Upload error:", error);
     const errorMessage = error instanceof Error ? error.message : "Unknown error";
     return new Response(
       JSON.stringify({ error: `Failed to upload: ${errorMessage}` }),

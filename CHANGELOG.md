@@ -1,5 +1,13 @@
 # 16s Changelog
 
+## [2026-02-06 16:00] — Code: Downgrade all server-side console.error → console.debug
+
+**What:** Downgraded all `console.error` calls across API routes to `console.debug` for clean production logs. Routes updated: deploy (5), remove-bg (2), upload (2), chat/route (4), chat/voice (1), stripe/checkout (1), stripe/portal (1), auth/callback (4). Only Stripe webhook `console.error` calls remain (CLAUDE.md restriction). Zero `console.error` in non-webhook code.
+
+**Files:** `src/app/api/deploy/route.ts`, `src/app/api/remove-bg/route.ts`, `src/app/api/upload/route.ts`, `src/app/api/chat/route.ts`, `src/app/api/chat/voice/route.ts`, `src/app/api/stripe/checkout/route.ts`, `src/app/api/stripe/portal/route.ts`, `src/app/auth/callback/route.ts`
+**Type:** Code cleanup
+**Ref:** R4-4
+
 ## [2026-02-06 15:50] — Feature: Keyboard navigation in export dropdown menu
 
 **What:** Added Arrow Up/Down key navigation to the export dropdown menu. Menu items cycle with wrapping. First item auto-focuses when menu opens via keyboard. Escape already closes it. This completes ARIA `role="menu"` / `role="menuitem"` pattern with proper keyboard interaction.

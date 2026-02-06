@@ -89,7 +89,7 @@ export async function POST(request: NextRequest) {
 
     if (!vercelResponse.ok) {
       const errorText = await vercelResponse.text();
-      console.error("[Deploy] Vercel API error:", errorText);
+      console.debug("[Deploy] Vercel API error:", errorText);
       return NextResponse.json({ error: "Deployment failed", details: errorText }, { status: 500 });
     }
 
@@ -106,7 +106,7 @@ export async function POST(request: NextRequest) {
     });
 
     if (dbError) {
-      console.error("[Deploy] Database error:", dbError);
+      console.debug("[Deploy] Database error:", dbError);
       // Don't fail the request, deployment still succeeded
     }
 
@@ -117,7 +117,7 @@ export async function POST(request: NextRequest) {
       inspectorUrl: deployment.inspectorUrl,
     });
   } catch (error) {
-    console.error("[Deploy] Error:", error);
+    console.debug("[Deploy] Error:", error);
     return NextResponse.json({ error: "Deployment failed" }, { status: 500 });
   }
 }
@@ -148,13 +148,13 @@ export async function GET(request: Request) {
       .limit(10);
 
     if (error) {
-      console.error("[Deploy] Query error:", error);
+      console.debug("[Deploy] Query error:", error);
       return NextResponse.json({ error: "Failed to fetch deployments" }, { status: 500 });
     }
 
     return NextResponse.json({ deployments });
   } catch (error) {
-    console.error("[Deploy] Error:", error);
+    console.debug("[Deploy] Error:", error);
     return NextResponse.json({ error: "Failed to fetch deployments" }, { status: 500 });
   }
 }

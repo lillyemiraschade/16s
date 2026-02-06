@@ -160,7 +160,7 @@ async function checkAndDeductCredits(userId: string, creditsToDeduct: number = 1
       .select("credits_remaining");
 
     if (updateError) {
-      console.error("[Credits] Failed to deduct credits:", updateError);
+      console.debug("[Credits] Failed to deduct credits:", updateError);
       // Still allow request if deduction fails - don't block users
       return { success: true, remaining: subscription.credits_remaining };
     }
@@ -183,12 +183,12 @@ async function checkAndDeductCredits(userId: string, creditsToDeduct: number = 1
       credits_used: creditsToDeduct,
       metadata: { timestamp: new Date().toISOString() },
     }).then(({ error }) => {
-      if (error) console.error("[Credits] Failed to log usage:", error);
+      if (error) console.debug("[Credits] Failed to log usage:", error);
     });
 
     return { success: true, remaining: updated[0].credits_remaining };
   } catch (err) {
-    console.error("[Credits] Error checking credits:", err);
+    console.debug("[Credits] Error checking credits:", err);
     // Allow request on error - don't block users due to credit check failures
     return { success: true };
   }
@@ -706,7 +706,7 @@ export async function POST(req: Request) {
     if (!parsed.success) {
       const issue = parsed.error.issues[0];
       const errorDetail = issue ? `${issue.path.join(".")}: ${issue.message}` : "Invalid format";
-      console.error("[Chat API] Validation failed:", errorDetail);
+      console.debug("[Chat API] Validation failed:", errorDetail);
       return new Response(
         JSON.stringify({ error: `Invalid request: ${errorDetail}` }),
         { status: 400, headers: { "Content-Type": "application/json" } }
@@ -732,7 +732,7 @@ export async function POST(req: Request) {
       }
     } catch (creditError) {
       // Log but don't block - credit check is non-critical
-      console.error("[Credits] Credit check failed, allowing request:", creditError);
+      console.debug("[Credits] Credit check failed, allowing request:", creditError);
     }
 
     // Normalize images: combine new typed format with legacy format
@@ -1005,7 +1005,7 @@ Use this context to inform your designs. Don't ask about things you already know
         return fullText;
       } catch (apiError) {
         const errMsg = apiError instanceof Error ? apiError.message : String(apiError);
-        console.error(`[Chat API] API error (attempt ${retryCount + 1}):`, errMsg);
+        console.debug(`[Chat API] API error (attempt ${retryCount + 1}):`, errMsg);
 
         // Retry on transient errors (overloaded, rate limits, network issues)
         const isRetryable = errMsg.includes("overloaded") ||
@@ -1034,7 +1034,7 @@ Use this context to inform your designs. Don't ask about things you already know
           try {
             parsedResponse = JSON.parse(fullText.trim());
           } catch (parseError) {
-            console.error("[Chat API] JSON parse failed, attempting fallback extraction");
+            console.debug("[Chat API] JSON parse failed, attempting fallback extraction");
             try {
               const jsonMatch = fullText.match(/```(?:json)?\n?([\s\S]+?)\n?```/);
               if (jsonMatch) {
@@ -1059,7 +1059,7 @@ Use this context to inform your designs. Don't ask about things you already know
         } catch (error) {
           const errMsg = error instanceof Error ? error.message : String(error);
 
-          console.error("[Chat API] Stream error:", errMsg);
+          console.debug("[Chat API] Stream error:", errMsg);
 
           const { message: userMessage } = getUserFriendlyError(errMsg);
           controller.enqueue(
@@ -1079,7 +1079,7 @@ Use this context to inform your designs. Don't ask about things you already know
     });
   } catch (error) {
     const errMsg = error instanceof Error ? error.message : String(error);
-    console.error("[Chat API] Outer error:", errMsg);
+    console.debug("[Chat API] Outer error:", errMsg);
 
     const { message: userMessage, statusCode } = getUserFriendlyError(errMsg);
     return new Response(

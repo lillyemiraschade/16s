@@ -204,7 +204,7 @@ export async function POST(req: NextRequest) {
       headers: { "Content-Type": "application/json" },
     });
   } catch (error) {
-    console.error("Voice API error:", error);
+    console.debug("Voice API error:", error);
     // Be honest about the error - don't claim to be "thinking"
     return new Response(
       JSON.stringify({ message: "Sorry, I had trouble with that. Could you try again?", complete: false }),
