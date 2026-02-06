@@ -1,5 +1,12 @@
 # 16s Changelog
 
+## [2026-02-05 01:13] — Prompt: Add multi-request handling and undo/revert flow
+
+**What:** Added two conversation flow improvements: (1) MULTI-REQUEST HANDLING — when user sends multiple changes in one message, handle all of them and list what changed. (2) UNDO/REVERT REQUESTS — when user says "go back" or "undo", tell them about Cmd+Z for built-in undo, and acknowledge what's being reverted instead of regenerating from scratch.
+**Why:** Users frequently send compound requests like "make the header blue and add a footer" and the AI would only address one change. Users also say "go back" expecting the AI to know about the undo feature. Both are common friction points.
+**Files:** src/app/api/chat/route.ts (SYSTEM_PROMPT)
+**Type:** prompt
+
 ## [2026-02-05 01:12] — Feature: Complete context persistence — AI can now learn and return preferences
 
 **What:** Added `context` field to ChatResponse (route.ts) so the AI can return learned preferences. Added "CONTEXT LEARNING" instructions to the system prompt telling AI when to include context (first plan response, preference changes). Updated client (page.tsx) to merge returned context into `projectContext` state, which auto-saves with the project and gets injected back into future messages.
