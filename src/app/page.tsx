@@ -17,7 +17,7 @@ import { MigrationBanner } from "@/components/auth/MigrationBanner";
 import { UserMenu } from "@/components/auth/UserMenu";
 import { AuthModal } from "@/components/auth/AuthModal";
 import { useAuth } from "@/lib/auth/AuthContext";
-import type { Message, Viewport, SavedProjectMeta, SelectedElement, VersionBookmark, UploadedImage, CodeMode, ProjectContext } from "@/lib/types";
+import type { Message, Viewport, SavedProjectMeta, SelectedElement, VersionBookmark, UploadedImage, CodeMode, ProjectContext, BMadPlan, BMadQAReport } from "@/lib/types";
 
 const HEADLINES = [
   "What shall we build?",
@@ -101,6 +101,115 @@ function generateId(): string {
     const v = c === "x" ? r : (r & 0x3) | 0x8;
     return v.toString(16);
   });
+}
+
+interface ChatAPIResponse {
+  message?: string;
+  pills?: string[];
+  showUpload?: boolean | string;
+  html?: string;
+  react?: string;
+  plan?: BMadPlan;
+  qaReport?: BMadQAReport;
+  error?: string;
+}
+
+async function fetchAndParseChat(response: Response): Promise<ChatAPIResponse> {
+  if (!response.ok) {
+    let errorMsg = "Let me try that again...";
+    try {
+      const errorData = await response.json();
+      if (errorData.message) errorMsg = errorData.message;
+      else if (errorData.error) errorMsg = errorData.error;
+    } catch {
+      if (response.status === 413) errorMsg = "Request too large. Try with fewer or smaller images.";
+      else if (response.status === 429) errorMsg = "Too many requests. Please wait a moment.";
+      else if (response.status === 503) errorMsg = "The AI is busy right now. Please try again.";
+      else if (response.status === 504) errorMsg = "Request timed out. Please try again.";
+    }
+    throw new Error(errorMsg);
+  }
+
+  const responseText = await response.text();
+  const lines = responseText.trim().split("\n").filter((l) => l.trim());
+  const lastLine = lines[lines.length - 1];
+
+  let data: ChatAPIResponse | undefined;
+
+  // Strategy 1: Try parsing the last line directly (most common case)
+  if (lastLine && lastLine !== "undefined" && lastLine.startsWith("{")) {
+    try {
+      data = JSON.parse(lastLine);
+    } catch { /* continue */ }
+  }
+
+  // Strategy 2: Handle markdown-wrapped JSON (```json...```)
+  if (!data) {
+    const jsonMatch = responseText.match(/```(?:json)?\n?([\s\S]+?)\n?```/);
+    if (jsonMatch) {
+      try {
+        data = JSON.parse(jsonMatch[1].trim());
+      } catch { /* continue */ }
+    }
+  }
+
+  // Strategy 3: Find the last complete JSON object in the response
+  if (!data) {
+    const jsonStart = responseText.lastIndexOf("\n{");
+    if (jsonStart !== -1) {
+      const jsonCandidate = responseText.slice(jsonStart + 1).trim();
+      try {
+        data = JSON.parse(jsonCandidate);
+      } catch { /* continue */ }
+    }
+  }
+
+  // Strategy 4: Find JSON with "message" field
+  if (!data) {
+    const msgIndex = responseText.lastIndexOf('{"message"');
+    if (msgIndex !== -1) {
+      const jsonCandidate = responseText.slice(msgIndex);
+      try {
+        data = JSON.parse(jsonCandidate);
+      } catch {
+        let depth = 0;
+        let endIndex = -1;
+        for (let i = 0; i < jsonCandidate.length; i++) {
+          if (jsonCandidate[i] === "{") depth++;
+          else if (jsonCandidate[i] === "}") {
+            depth--;
+            if (depth === 0) { endIndex = i + 1; break; }
+          }
+        }
+        if (endIndex > 0) {
+          try { data = JSON.parse(jsonCandidate.slice(0, endIndex)); } catch { /* continue */ }
+        }
+      }
+    }
+  }
+
+  // Strategy 5: Extract any JSON object from the response
+  if (!data) {
+    const objMatch = responseText.match(/\{[\s\S]*\}/);
+    if (objMatch) {
+      try {
+        data = JSON.parse(objMatch[0]);
+      } catch { /* continue */ }
+    }
+  }
+
+  // Strategy 6: Use raw text as message if available, else show error
+  if (!data) {
+    console.error("Failed to parse response:", responseText.slice(0, 500));
+    const rawText = responseText.trim();
+    data = { message: rawText || "Let me try that again..." };
+  }
+
+  if (data.error) {
+    throw new Error(String(data.error));
+  }
+
+  return data;
 }
 
 function HomePageContent() {
@@ -304,7 +413,7 @@ function HomePageContent() {
     saveTimerRef.current = setTimeout(doSave, delay);
 
     return () => { if (saveTimerRef.current) clearTimeout(saveTimerRef.current); };
-  }, [messages, currentPreview, previewHistory, bookmarks, hasStarted, currentProjectId, projectName, saveProject, listProjects, isAuthLoading, isCloud]);
+  }, [messages, currentPreview, previewHistory, bookmarks, hasStarted, currentProjectId, projectName, projectContext, saveProject, listProjects, isAuthLoading, isCloud]);
 
   // Save immediately when leaving the page
   useEffect(() => {
@@ -326,6 +435,7 @@ function HomePageContent() {
           currentPreview,
           previewHistory,
           bookmarks,
+          context: projectContext,
           updatedAt: Date.now(),
         };
         // Save to localStorage as backup (works synchronously)
@@ -344,7 +454,7 @@ function HomePageContent() {
 
     window.addEventListener("beforeunload", handleBeforeUnload);
     return () => window.removeEventListener("beforeunload", handleBeforeUnload);
-  }, [currentProjectId, projectName, messages, currentPreview, previewHistory, bookmarks]);
+  }, [currentProjectId, projectName, messages, currentPreview, previewHistory, bookmarks, projectContext]);
 
   const captureScreenshot = useCallback(async (iframe: HTMLIFrameElement) => {
     try {
@@ -352,15 +462,31 @@ function HomePageContent() {
       if (!doc?.body) return;
       const canvas = await html2canvas(doc.body, {
         useCORS: true,
+        allowTaint: false,
         scale: 0.5,
         logging: false,
         height: Math.min(doc.body.scrollHeight, 900),
         windowHeight: 900,
+        onclone: (clonedDoc) => {
+          // Remove cross-origin images that might cause taint errors
+          clonedDoc.querySelectorAll("img").forEach((img) => {
+            if (img.crossOrigin === null) {
+              img.crossOrigin = "anonymous";
+            }
+          });
+        },
       });
       const dataUrl = canvas.toDataURL("image/jpeg", 0.5);
       setPreviewScreenshot(dataUrl);
     } catch (err) {
-      console.error("Screenshot capture failed:", err);
+      // Silently handle cross-origin/taint errors - screenshot is optional context
+      const errMsg = err instanceof Error ? err.message : String(err);
+      if (errMsg.includes("taint") || errMsg.includes("cross-origin") || errMsg.includes("SecurityError")) {
+        // Cross-origin image prevented screenshot - continue without it
+        console.debug("Screenshot skipped due to cross-origin content");
+      } else {
+        console.error("Screenshot capture failed:", err);
+      }
     }
   }, []);
 
@@ -618,124 +744,7 @@ function HomePageContent() {
         signal: controller.signal,
       });
 
-      // Handle error responses - try to get specific error message
-      if (!response.ok) {
-        let errorMsg = "Let me try that again...";
-        try {
-          const errorData = await response.json();
-          // Check both error and message fields
-          if (errorData.message) errorMsg = errorData.message;
-          else if (errorData.error) errorMsg = errorData.error;
-        } catch {
-          // If we can't parse error response, use status-based message
-          if (response.status === 413) errorMsg = "Request too large. Try with fewer or smaller images.";
-          else if (response.status === 429) errorMsg = "Too many requests. Please wait a moment.";
-          else if (response.status === 503) errorMsg = "The AI is busy right now. Please try again.";
-          else if (response.status === 504) errorMsg = "Request timed out. Please try again.";
-        }
-        throw new Error(errorMsg);
-      }
-
-      const responseText = await response.text();
-      const lines = responseText.trim().split("\n").filter((l) => l.trim());
-      const lastLine = lines[lines.length - 1];
-
-      // Safely parse JSON with multiple fallback strategies
-      let data;
-
-      // Strategy 1: Try parsing the last line directly (most common case)
-      if (lastLine && lastLine !== "undefined" && lastLine.startsWith("{")) {
-        try {
-          data = JSON.parse(lastLine);
-        } catch {
-          // Continue to fallback strategies
-        }
-      }
-
-      // Strategy 2: Handle markdown-wrapped JSON (```json...```)
-      if (!data) {
-        const jsonMatch = responseText.match(/```(?:json)?\n?([\s\S]+?)\n?```/);
-        if (jsonMatch) {
-          try {
-            data = JSON.parse(jsonMatch[1].trim());
-          } catch {
-            // Continue to next strategy
-          }
-        }
-      }
-
-      // Strategy 3: Find the last complete JSON object in the response
-      if (!data) {
-        // Look for JSON that starts with { and ends with }
-        const jsonStart = responseText.lastIndexOf("\n{");
-        if (jsonStart !== -1) {
-          const jsonCandidate = responseText.slice(jsonStart + 1).trim();
-          try {
-            data = JSON.parse(jsonCandidate);
-          } catch {
-            // Continue to next strategy
-          }
-        }
-      }
-
-      // Strategy 4: Try to find any JSON object with "message" field
-      if (!data) {
-        // Find the last occurrence of {"message" which is our response format
-        const msgIndex = responseText.lastIndexOf('{"message"');
-        if (msgIndex !== -1) {
-          const jsonCandidate = responseText.slice(msgIndex);
-          // Try to parse, handling potential trailing content
-          try {
-            data = JSON.parse(jsonCandidate);
-          } catch {
-            // Try to find where the JSON ends by counting braces
-            let depth = 0;
-            let endIndex = -1;
-            for (let i = 0; i < jsonCandidate.length; i++) {
-              const char = jsonCandidate[i];
-              if (char === "{") depth++;
-              else if (char === "}") {
-                depth--;
-                if (depth === 0) {
-                  endIndex = i + 1;
-                  break;
-                }
-              }
-            }
-            if (endIndex > 0) {
-              try {
-                data = JSON.parse(jsonCandidate.slice(0, endIndex));
-              } catch {
-                // Continue to fallback
-              }
-            }
-          }
-        }
-      }
-
-      // Strategy 5: Extract any JSON object from the response
-      if (!data) {
-        const objMatch = responseText.match(/\{[\s\S]*\}/);
-        if (objMatch) {
-          try {
-            data = JSON.parse(objMatch[0]);
-          } catch {
-            // Continue to fallback
-          }
-        }
-      }
-
-      // Strategy 6: Use raw text as message if available, else show error
-      if (!data) {
-        console.error("Failed to parse response:", responseText.slice(0, 500));
-        const rawText = responseText.trim();
-        data = { message: rawText || "Let me try that again..." };
-      }
-
-      // Check if API returned an error in the response body
-      if (data.error) {
-        throw new Error(data.error);
-      }
+      const data = await fetchAndParseChat(response);
 
       const aiMessage: Message = {
         id: (Date.now() + 1).toString(),
@@ -792,7 +801,7 @@ function HomePageContent() {
         setIsGenerating(false);
       }
     }
-  }, [isOnCall, uploadedImages, hasStarted, selectedElement, currentPreview, previewScreenshot, isConfigured, user, replaceImagePlaceholders]);
+  }, [isOnCall, uploadedImages, hasStarted, selectedElement, currentPreview, previewScreenshot, isConfigured, user, outputFormat, projectContext, replaceImagePlaceholders]);
 
   // Keep ref updated for auth callback
   useEffect(() => {
@@ -861,108 +870,7 @@ function HomePageContent() {
         signal: controller.signal,
       });
 
-      if (!response.ok) {
-        let errorMsg = "Let me try that again...";
-        try {
-          const errorData = await response.json();
-          if (errorData.message) errorMsg = errorData.message;
-          else if (errorData.error) errorMsg = errorData.error;
-        } catch {
-          if (response.status === 413) errorMsg = "Request too large. Try with fewer or smaller images.";
-          else if (response.status === 429) errorMsg = "Too many requests. Please wait a moment.";
-          else if (response.status === 503) errorMsg = "The AI is busy right now. Please try again.";
-          else if (response.status === 504) errorMsg = "Request timed out. Please try again.";
-        }
-        throw new Error(errorMsg);
-      }
-
-      const responseText = await response.text();
-      const lines = responseText.trim().split("\n").filter((l) => l.trim());
-      const lastLine = lines[lines.length - 1];
-
-      // Safely parse JSON with multiple fallback strategies
-      let data;
-
-      // Strategy 1: Try parsing the last line directly
-      if (lastLine && lastLine !== "undefined" && lastLine.startsWith("{")) {
-        try {
-          data = JSON.parse(lastLine);
-        } catch {
-          // Continue to fallback
-        }
-      }
-
-      // Strategy 2: Handle markdown-wrapped JSON (```json...```)
-      if (!data) {
-        const jsonMatch = responseText.match(/```(?:json)?\n?([\s\S]+?)\n?```/);
-        if (jsonMatch) {
-          try {
-            data = JSON.parse(jsonMatch[1].trim());
-          } catch {
-            // Continue to next strategy
-          }
-        }
-      }
-
-      // Strategy 3: Find the last complete JSON object
-      if (!data) {
-        const jsonStart = responseText.lastIndexOf("\n{");
-        if (jsonStart !== -1) {
-          const jsonCandidate = responseText.slice(jsonStart + 1).trim();
-          try {
-            data = JSON.parse(jsonCandidate);
-          } catch {
-            // Continue
-          }
-        }
-      }
-
-      // Strategy 4: Find JSON with "message" field
-      if (!data) {
-        const msgIndex = responseText.lastIndexOf('{"message"');
-        if (msgIndex !== -1) {
-          const jsonCandidate = responseText.slice(msgIndex);
-          try {
-            data = JSON.parse(jsonCandidate);
-          } catch {
-            let depth = 0;
-            let endIndex = -1;
-            for (let i = 0; i < jsonCandidate.length; i++) {
-              if (jsonCandidate[i] === "{") depth++;
-              else if (jsonCandidate[i] === "}") {
-                depth--;
-                if (depth === 0) { endIndex = i + 1; break; }
-              }
-            }
-            if (endIndex > 0) {
-              try { data = JSON.parse(jsonCandidate.slice(0, endIndex)); } catch { /* continue */ }
-            }
-          }
-        }
-      }
-
-      // Strategy 5: Extract any JSON object from the response
-      if (!data) {
-        const objMatch = responseText.match(/\{[\s\S]*\}/);
-        if (objMatch) {
-          try {
-            data = JSON.parse(objMatch[0]);
-          } catch {
-            // Continue to fallback
-          }
-        }
-      }
-
-      // Strategy 6: Use raw text as message if available, else show error
-      if (!data) {
-        console.error("Failed to parse response:", responseText.slice(0, 500));
-        const rawText = responseText.trim();
-        data = { message: rawText || "Let me try that again..." };
-      }
-
-      if (data.error) {
-        throw new Error(data.error);
-      }
+      const data = await fetchAndParseChat(response);
 
       const aiMessage: Message = {
         id: (Date.now() + 1).toString(),
@@ -1015,7 +923,7 @@ function HomePageContent() {
         setIsGenerating(false);
       }
     }
-  }, [uploadedImages, hasStarted, currentPreview, previewScreenshot, replaceImagePlaceholders]);
+  }, [uploadedImages, hasStarted, currentPreview, previewScreenshot, outputFormat, projectContext, replaceImagePlaceholders]);
 
   const handleCallComplete = useCallback((visibleSummary: string, privateData: string) => {
     setIsOnCall(false);

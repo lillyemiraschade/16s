@@ -1,6 +1,7 @@
 import { anthropic } from "@/lib/ai/anthropic";
 import { MessageParam, ImageBlockParam, TextBlockParam } from "@anthropic-ai/sdk/resources/messages";
 import { z } from "zod";
+import { createClient } from "@/lib/supabase/server";
 
 export const runtime = "nodejs";
 export const maxDuration = 300; // 5 minutes max for Pro plans
@@ -65,6 +66,9 @@ interface ChatResponse {
 }
 
 // Simple in-memory rate limiter (per IP, 20 requests per minute)
+// NOTE: This is in-memory and resets on each serverless cold start.
+// For production at scale, consider Redis or Upstash for distributed rate limiting.
+// Current approach works for moderate traffic where occasional resets are acceptable.
 const rateLimitMap = new Map<string, { count: number; resetAt: number }>();
 const RATE_LIMIT = 20;
 const RATE_WINDOW_MS = 60_000;
@@ -91,6 +95,56 @@ if (typeof globalThis !== "undefined") {
   };
   const timer = setInterval(cleanup, RATE_WINDOW_MS);
   if (typeof timer === "object" && "unref" in timer) timer.unref();
+}
+
+// Credit management for authenticated users
+async function checkAndDeductCredits(userId: string, creditsToDeduct: number = 1): Promise<{ success: boolean; remaining?: number; error?: string }> {
+  try {
+    const supabase = await createClient();
+
+    // Get current subscription
+    const { data: subscription, error: fetchError } = await supabase
+      .from("subscriptions")
+      .select("credits_remaining")
+      .eq("user_id", userId)
+      .single();
+
+    if (fetchError || !subscription) {
+      // No subscription found - allow request but don't track (free tier behavior)
+      console.log("[Credits] No subscription found for user, allowing request");
+      return { success: true };
+    }
+
+    if (subscription.credits_remaining < creditsToDeduct) {
+      return { success: false, remaining: subscription.credits_remaining, error: "Insufficient credits" };
+    }
+
+    // Deduct credits
+    const { error: updateError } = await supabase
+      .from("subscriptions")
+      .update({ credits_remaining: subscription.credits_remaining - creditsToDeduct })
+      .eq("user_id", userId);
+
+    if (updateError) {
+      console.error("[Credits] Failed to deduct credits:", updateError);
+      // Still allow request if deduction fails - don't block users
+      return { success: true, remaining: subscription.credits_remaining };
+    }
+
+    // Log usage
+    await supabase.from("usage").insert({
+      user_id: userId,
+      action: "chat_message",
+      credits_used: creditsToDeduct,
+      metadata: { timestamp: new Date().toISOString() },
+    });
+
+    return { success: true, remaining: subscription.credits_remaining - creditsToDeduct };
+  } catch (err) {
+    console.error("[Credits] Error checking credits:", err);
+    // Allow request on error - don't block users due to credit check failures
+    return { success: true };
+  }
 }
 
 const SYSTEM_PROMPT = `You are 16s, an AI web designer. You build beautiful websites through conversation.
@@ -1972,6 +2026,27 @@ export async function POST(req: Request) {
     }
     const { messages, uploadedImages, inspoImages, currentPreview, previewScreenshot, outputFormat, context } = parsed.data;
 
+    // Check and deduct credits for authenticated users
+    try {
+      const supabase = await createClient();
+      const { data: { user } } = await supabase.auth.getUser();
+      if (user) {
+        const creditResult = await checkAndDeductCredits(user.id);
+        if (!creditResult.success) {
+          return new Response(
+            JSON.stringify({
+              message: `You've used all your credits for this period. Upgrade your plan for more.`,
+              error: "insufficient_credits"
+            }),
+            { status: 402, headers: { "Content-Type": "application/json" } }
+          );
+        }
+      }
+    } catch (creditError) {
+      // Log but don't block - credit check is non-critical
+      console.error("[Credits] Credit check failed, allowing request:", creditError);
+    }
+
     // Normalize images: combine new typed format with legacy format
     type UploadedImage = { data: string; url?: string; type: "inspo" | "content"; label?: string };
     const allImages: UploadedImage[] = [
@@ -2107,20 +2182,28 @@ export async function POST(req: Request) {
     const isFirstGeneration = !currentPreview;
 
     // Simple iterations: color changes, text tweaks, small adjustments
+    // Patterns that indicate a simple styling change (not structural)
     const simplePatterns = [
-      /^(change|make|set|update|switch|use)\s+(the\s+)?(color|colour|background|font|text|size|padding|margin|spacing)/i,
-      /^(make\s+it|change\s+it\s+to)\s+(bigger|smaller|larger|darker|lighter|bolder)/i,
-      /^(add|remove|delete|hide|show)\s+(the\s+)?(button|link|image|section|text|border|shadow)/i,
-      /^(move|align|center|left|right)\s+(the\s+)?/i,
-      /^(change|update|edit|fix)\s+(the\s+)?(title|heading|subtitle|paragraph|caption|label)/i,
-      /\b(color|colour|#[0-9a-f]{3,6}|rgb|hsl)\b/i,
+      /^(change|make|set|update|switch|use)\s+(the\s+)?(color|colour|background|font|text|size|padding|margin|spacing)\b/i,
+      /^(make\s+it|change\s+it\s+to)\s+(bigger|smaller|larger|darker|lighter|bolder)\b/i,
+      /^(change|update|edit|fix)\s+(the\s+)?(title|heading|subtitle|paragraph|caption|label)\s+(text|to\s|")/i,
+    ];
+
+    // Patterns that indicate complex changes (should use Sonnet)
+    const complexPatterns = [
+      /\b(add|create|build|implement|design|new)\b/i,  // New features/sections
+      /\b(remove|delete)\s+(the\s+)?(section|component|page|feature)/i,  // Structural removals
+      /\b(reorganize|restructure|refactor|redesign|rethink)\b/i,  // Major changes
+      /\b(and|also|then|plus)\b/i,  // Multiple changes
+      /\?$/,  // Questions need Sonnet
     ];
 
     const isSimpleIteration = currentPreview &&
       !hasImages &&
       !isFirstGeneration &&
-      lastUserMessage.length < 200 &&
-      simplePatterns.some(pattern => pattern.test(lastUserMessage));
+      lastUserMessage.length < 100 &&  // Stricter length limit
+      simplePatterns.some(pattern => pattern.test(lastUserMessage)) &&
+      !complexPatterns.some(pattern => pattern.test(lastUserMessage));
 
     // Select model and tokens based on complexity
     const model = isSimpleIteration ? "claude-3-haiku-20240307" : "claude-sonnet-4-20250514";

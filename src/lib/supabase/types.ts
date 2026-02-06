@@ -19,6 +19,7 @@ export interface Database {
           preview_history: Json;
           bookmarks: Json;
           settings: Json;
+          context: Json | null;
           created_at: string;
           updated_at: string;
         };
@@ -31,6 +32,7 @@ export interface Database {
           preview_history?: Json;
           bookmarks?: Json;
           settings?: Json;
+          context?: Json | null;
           created_at?: string;
           updated_at?: string;
         };
@@ -43,6 +45,7 @@ export interface Database {
           preview_history?: Json;
           bookmarks?: Json;
           settings?: Json;
+          context?: Json | null;
           created_at?: string;
           updated_at?: string;
         };
@@ -92,6 +95,7 @@ export interface Database {
           status: string;
           credits_remaining: number;
           credits_reset_at: string | null;
+          current_period_end: string | null;
           created_at: string;
           updated_at: string;
         };
@@ -104,6 +108,7 @@ export interface Database {
           status?: string;
           credits_remaining?: number;
           credits_reset_at?: string | null;
+          current_period_end?: string | null;
           created_at?: string;
           updated_at?: string;
         };
@@ -116,6 +121,7 @@ export interface Database {
           status?: string;
           credits_remaining?: number;
           credits_reset_at?: string | null;
+          current_period_end?: string | null;
           created_at?: string;
           updated_at?: string;
         };

@@ -356,6 +356,7 @@ export function PreviewPanel({
             disabled={!canGoBack}
             className="p-2 rounded-lg text-zinc-500 hover:text-zinc-300 hover:bg-white/[0.04] disabled:text-zinc-700 disabled:cursor-not-allowed transition-all duration-150"
             title="Undo (Cmd+Z)"
+            aria-label="Undo"
           >
             <ChevronLeft className="w-4 h-4" />
           </button>
@@ -364,6 +365,7 @@ export function PreviewPanel({
             disabled={!canRedo}
             className="p-2 rounded-lg text-zinc-500 hover:text-zinc-300 hover:bg-white/[0.04] disabled:text-zinc-700 disabled:cursor-not-allowed transition-all duration-150"
             title="Redo (Cmd+Shift+Z)"
+            aria-label="Redo"
           >
             <RotateCw className="w-3.5 h-3.5" />
           </button>
@@ -372,6 +374,7 @@ export function PreviewPanel({
             disabled={!html}
             className="p-2 rounded-lg text-zinc-500 hover:text-zinc-300 hover:bg-white/[0.04] disabled:text-zinc-700 disabled:cursor-not-allowed transition-all duration-150"
             title="Reload"
+            aria-label="Reload preview"
           >
             <RotateCcw className="w-3.5 h-3.5" />
           </button>
@@ -385,6 +388,7 @@ export function PreviewPanel({
               "text-zinc-700 cursor-not-allowed"
             }`}
             title={totalVersions > 1 ? "Version history" : "Version history (make changes to build history)"}
+            aria-label="Version history"
           >
             <Clock className="w-3.5 h-3.5" />
           </button>
@@ -395,6 +399,7 @@ export function PreviewPanel({
                 selectMode ? "text-green-400 bg-green-500/10" : "text-zinc-500 hover:text-zinc-300 hover:bg-white/[0.04]"
               }`}
               title="Select element"
+              aria-label="Select element"
             >
               <MousePointer2 className="w-3.5 h-3.5" />
             </button>
@@ -404,6 +409,7 @@ export function PreviewPanel({
               onClick={() => setShowBookmarkInput(true)}
               className="p-2 rounded-lg text-zinc-500 hover:text-zinc-300 hover:bg-white/[0.04] transition-all duration-150"
               title="Bookmark"
+              aria-label="Bookmark this version"
             >
               <Bookmark className="w-3.5 h-3.5" />
             </button>

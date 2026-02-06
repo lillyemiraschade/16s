@@ -16,9 +16,13 @@ CREATE TABLE IF NOT EXISTS projects (
   preview_history JSONB DEFAULT '[]',
   bookmarks JSONB DEFAULT '[]',
   settings JSONB DEFAULT '{}',
+  context JSONB DEFAULT NULL,
   created_at TIMESTAMPTZ DEFAULT NOW(),
   updated_at TIMESTAMPTZ DEFAULT NOW()
 );
+
+-- Migration for existing deployments
+ALTER TABLE projects ADD COLUMN IF NOT EXISTS context JSONB DEFAULT NULL;
 
 -- Index for faster user queries
 CREATE INDEX IF NOT EXISTS idx_projects_user_id ON projects(user_id);
@@ -52,12 +56,16 @@ CREATE TABLE IF NOT EXISTS subscriptions (
   stripe_subscription_id TEXT,
   plan TEXT DEFAULT 'free',
   status TEXT DEFAULT 'active',
-  credits_remaining INTEGER DEFAULT 100,
+  credits_remaining INTEGER DEFAULT 50,
   credits_reset_at TIMESTAMPTZ,
+  current_period_end TIMESTAMPTZ,
   created_at TIMESTAMPTZ DEFAULT NOW(),
   updated_at TIMESTAMPTZ DEFAULT NOW(),
   UNIQUE(user_id)
 );
+
+-- Migration for existing deployments
+ALTER TABLE subscriptions ADD COLUMN IF NOT EXISTS current_period_end TIMESTAMPTZ;
 
 CREATE INDEX IF NOT EXISTS idx_subscriptions_user_id ON subscriptions(user_id);
 CREATE INDEX IF NOT EXISTS idx_subscriptions_stripe_customer_id ON subscriptions(stripe_customer_id);
@@ -97,9 +105,13 @@ CREATE POLICY "Users can CRUD own deployments" ON deployments
   FOR ALL USING (auth.uid() = user_id)
   WITH CHECK (auth.uid() = user_id);
 
--- Subscriptions: Users can only view their own subscription
+-- Subscriptions: Users can view and update their own subscription
 CREATE POLICY "Users can view own subscription" ON subscriptions
   FOR SELECT USING (auth.uid() = user_id);
+
+CREATE POLICY "Users can update own subscription" ON subscriptions
+  FOR UPDATE USING (auth.uid() = user_id)
+  WITH CHECK (auth.uid() = user_id);
 
 -- Usage: Users can only view their own usage (insert via service role)
 CREATE POLICY "Users can view own usage" ON usage
