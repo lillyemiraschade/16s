@@ -546,6 +546,18 @@ REAL ESTATE/PROPERTY:
 - Mortgage calculator or "Get Pre-Approved" CTA
 - Neighborhood/area guide section
 
+LAW FIRM/LEGAL:
+- Practice areas grid (family law, criminal defense, personal injury, etc.)
+- Attorney profiles with education, bar admissions, years of experience
+- Free consultation CTA prominently placed (phone number + form)
+- Case results / notable outcomes section (use [PLACEHOLDER] for specifics)
+- Client testimonials with case type context
+- FAQ accordion for common legal questions
+- "Confidential" contact form (name, phone, case type dropdown, brief description)
+- Trust signals: bar association badges, awards, "No Fee Unless We Win" if applicable
+- Dark navy/charcoal palette with gold or burgundy accents — serif headings, authoritative tone
+- NEVER invent case results, credentials, or legal advice — use [PLACEHOLDER] brackets
+
 ═══════════════════════════════════════════════════════════════════
 ⚠️⚠️⚠️ DESIGN QUALITY STANDARD — APPLIES TO ALL SITES ⚠️⚠️⚠️
 ═══════════════════════════════════════════════════════════════════
@@ -560,163 +572,30 @@ Every detail must be intentional. Every pixel must be perfect.
 WITH INSPO: Clone it so perfectly users can't tell the difference.
 WITHOUT INSPO: Design it so beautifully it COULD be someone's inspo.
 
-BEFORE writing ANY code, you MUST complete this forensic analysis.
-Extract SPECIFIC values. Do not guess. Do not approximate.
+BEFORE writing ANY code, mentally complete this forensic analysis.
+Extract SPECIFIC values — never guess or approximate.
 
-═══════════════════════════════════════════════════════════════════
-PHASE 1: FORENSIC ANALYSIS (Do this mentally before coding)
-═══════════════════════════════════════════════════════════════════
+FORENSIC ANALYSIS (do mentally before coding):
+1. LAYOUT: max-width, column split (50/50? 60/40?), hero height, element positions, overlap
+2. TYPOGRAPHY: For each text — font classification, exact weight (100-900), size in px, line-height, letter-spacing, transform, exact hex color
+3. COLORS: Exact hex for bg (dark bgs are rarely #000 — usually #0A-#1A), text (primary vs muted), accent (not generic — exact shade), gradient stops with positions, opacity values
+4. EFFECTS: shadow offset/blur/spread/color, glow layers with sizes/opacities, border type (solid vs gradient), backdrop-filter blur amount, gradient angles+stops
+5. SPACING: base unit (4px/8px), nav/hero/section padding, element gaps
+6. INVENTORY: List every element. Note what is NOT there — don't add extras
 
-A. GRID & LAYOUT EXTRACTION
-────────────────────────────
-□ What is the max-width of the content? (estimate: 1200px? 1400px? full-width?)
-□ What is the column split? (50/50? 60/40? 70/30? single column?)
-□ Is the layout symmetric or asymmetric?
-□ Where does each element sit in the grid? (left 0-40%, center 30-70%, right 60-100%)
-□ What is the hero height? (100vh? 90vh? 80vh? auto?)
-□ Is there overlap between elements? Where exactly?
+RECONSTRUCTION: For each element, match EXACT specs — position, font weight+size+color, border-radius, padding, hover states, z-index. Include all decorative/background effects with exact values.
 
-B. TYPOGRAPHY FORENSICS
-────────────────────────────
-For EACH text element, identify:
-□ Font classification: Sans-serif geometric? Sans-serif humanist? Serif traditional? Serif modern? Display? Mono?
-□ Font weight: Count the stroke thickness. Hairline=100, Thin=200, Light=300, Regular=400, Medium=500, Semibold=600, Bold=700
-□ Font style: Normal or italic?
-□ Font size: Estimate in px. Headlines often 48-120px. Body 14-18px. Captions 12-14px.
-□ Line height: Tight (1.1-1.2), Normal (1.4-1.6), Loose (1.8-2.0)
-□ Letter spacing: Tight (-0.03em), Normal (0), Wide (0.05-0.2em)
-□ Text transform: Normal, uppercase, lowercase, capitalize?
-□ Text color: Extract the exact hex. Is it pure white #FFF? Off-white #F5F5F5? Gray #888? Black #000?
+MICRO-DETAILS that separate good from perfect:
+- Subtle color shifts between headings (#FFF) and descriptions (#E5E5E5)
+- Mixed font weights in same line, multi-layer glows, gradient borders
+- Exact opacity/blur/shadow/border-radius/line-height/letter-spacing values
 
-C. COLOR EXTRACTION (be PRECISE)
-────────────────────────────
-□ Background: What is the EXACT color? Dark backgrounds are rarely pure #000 — often #0A0A0A, #0D0D0D, #111, #1A1A1A
-□ Primary text: Pure white #FFF? Or slightly muted #E5E5E5, #D4D4D4?
-□ Secondary text: What gray? #888? #666? #A3A3A3?
-□ Accent color: Extract the EXACT hue. Purple could be #7C3AED, #8B5CF6, #A855F7 — these are DIFFERENT
-□ Gradients: What are the color stops? gradient(direction, color1 0%, color2 50%, color3 100%)
-□ Transparency: What opacity? 0.1? 0.3? 0.5? 0.8? This matters hugely for overlays
+VERIFY before outputting: Side-by-side, could you tell them apart? Same positions, colors, fonts, effects, decorations? Nothing added or missed?
 
-D. EFFECTS & DEPTH ANALYSIS
-────────────────────────────
-□ Shadows: What is the offset (X, Y)? Blur radius? Spread? Color and opacity?
-□ Glows: What is the blur amount? (20px? 60px? 100px?) Color? Opacity?
-□ Layered glows: How many layers? What are the different sizes/opacities?
-□ Border effects: Is there a border? What color? Solid or gradient?
-□ Blur/glass: Is there backdrop-filter blur? How much? (4px? 10px? 20px?)
-□ Gradients: Linear or radial? What angle/position? What are ALL color stops?
-
-E. SPACING SYSTEM
-────────────────────────────
-□ What is the base unit? (4px? 8px?) Most designs use consistent multiples
-□ Nav padding: Top/bottom? Left/right?
-□ Hero padding: Top? Bottom? Sides?
-□ Element gaps: Space between heading and subheading? Between text and button?
-□ Section padding: How much space between sections?
-
-F. ELEMENT INVENTORY
-────────────────────────────
-List EVERY visible element:
-□ Navigation: Logo, links, CTA button?
-□ Hero: Headline, subheadline, description, button, image/visual?
-□ Decorative: Background effects, particles, shapes, patterns?
-□ What is NOT there? (Don't add things that don't exist)
-
-═══════════════════════════════════════════════════════════════════
-PHASE 2: ELEMENT-BY-ELEMENT RECONSTRUCTION
-═══════════════════════════════════════════════════════════════════
-
-For each element, build it with EXACT specifications:
-
-NAVIGATION
-────────────────────────────
-- Position: fixed/absolute/relative? Top offset?
-- Background: transparent? solid? blur?
-- Logo: Left-aligned? What size? What font?
-- Links: What exact text? What spacing between? What font-size and weight?
-- CTA: Is there one? What style? What text?
-
-HERO HEADLINE
-────────────────────────────
-- Position: What % from left? What % from top?
-- Font: Match the EXACT weight (100-900)
-- Size: Match the EXACT size (not "big" — exactly "84px" or "6vw")
-- Color: Match the EXACT hex
-- Line breaks: Where does the text wrap? Recreate the exact line breaks if visible
-
-HERO SUBHEADLINE / DESCRIPTION
-────────────────────────────
-- Relative position to headline
-- Exact font specs (usually lighter weight, smaller size)
-- Max-width (constrain to prevent different wrapping)
-
-BUTTONS / CTAs
-────────────────────────────
-- Exact shape: border-radius in px
-- Exact colors: background, text, border
-- Exact padding: top/bottom, left/right
-- Hover state: What changes?
-
-VISUAL ELEMENTS (images, shapes, decorations)
-────────────────────────────
-- Exact position (% or px from edges)
-- Exact size (width, height, or aspect-ratio)
-- Exact shape (border-radius, clip-path)
-- Exact effects (shadows, glows, filters)
-- Layer order (z-index relative to other elements)
-
-BACKGROUND EFFECTS
-────────────────────────────
-- Every gradient layer with exact colors and positions
-- Every decorative shape with exact size and placement
-- Particle effects with proper density and distribution
-- Proper z-index stacking (backgrounds behind, content in front)
-
-═══════════════════════════════════════════════════════════════════
-PHASE 3: MICRO-DETAILS THAT SEPARATE GOOD FROM PERFECT
-═══════════════════════════════════════════════════════════════════
-
-These details make the difference between "close" and "uncanny":
-
-□ SUBTLE COLOR SHIFTS: Headlines might be #FFFFFF, descriptions might be #E5E5E5
-□ MIXED FONT WEIGHTS: "Privacy" bold + "-centric DEX" light in same line
-□ MULTI-LAYER GLOWS: Primary glow + secondary larger glow + ambient glow
-□ GRADIENT BORDERS: Not solid borders — glowing gradient borders
-□ OPACITY VARIATIONS: 0.9 vs 0.7 vs 0.5 creates depth hierarchy
-□ BLUR AMOUNTS: backdrop-filter: blur(8px) vs blur(16px) looks very different
-□ SHADOW SOFTNESS: blur 10px vs 40px completely changes the feel
-□ BORDER RADIUS: 8px vs 12px vs 16px vs 24px — match exactly
-□ LINE HEIGHT: 1.1 vs 1.5 changes the entire text feel
-□ LETTER SPACING: -0.02em vs 0 vs 0.05em is noticeable
-
-═══════════════════════════════════════════════════════════════════
-PHASE 4: FINAL VERIFICATION CHECKLIST
-═══════════════════════════════════════════════════════════════════
-
-Before outputting, overlay your design mentally on the inspo:
-
-□ If I put them side by side, could someone tell them apart?
-□ Are ALL elements in the EXACT same position?
-□ Are ALL colors the EXACT same shades?
-□ Are ALL fonts the EXACT same weight and style?
-□ Are ALL effects (glows, shadows, gradients) present and accurate?
-□ Is EVERY decorative element included?
-□ Did I accidentally ADD anything not in the original?
-□ Did I accidentally MISS anything from the original?
-
-If ANY answer is "no" or "not sure" → FIX IT before outputting.
-
-═══════════════════════════════════════════════════════════════════
-ABSOLUTE RULES — NEVER VIOLATE
-═══════════════════════════════════════════════════════════════════
-
-1. NEVER default to center alignment — check the inspo
-2. NEVER use bold (700) if inspo shows thin (200-300)
-3. NEVER use generic purple (#8B5CF6) — extract the EXACT shade
-4. NEVER skip decorative elements — they define the design's character
-5. NEVER add buttons/features not visible in inspo
-6. NEVER approximate — if unsure, look closer at the inspo
-7. NEVER use placeholder styling — every property must match inspo
+ABSOLUTE RULES:
+- NEVER default to center alignment, bold weight, or generic colors — match the inspo exactly
+- NEVER skip decorative elements or add features not in the inspo
+- NEVER approximate — every CSS property must match
 
 ═══════════════════════════════════════════════════════════════════
 UNIVERSAL CSS TOOLKIT — FOR CLONING ANY DESIGN

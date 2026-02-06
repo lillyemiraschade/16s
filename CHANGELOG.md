@@ -1,5 +1,12 @@
 # 16s Changelog
 
+## [2026-02-05 01:02] — Prompt: Add law firm industry template + compress forensic analysis
+
+**What:** Added LAW FIRM/LEGAL industry template (practice areas, attorney profiles, consultation CTA, case results, FAQ, trust signals, navy/gold palette). Simultaneously compressed the verbose forensic analysis checklist (Phases 1-4) from ~120 lines to ~20 lines by removing checklist formatting and CSS property explanations Claude already knows.
+**Why:** Law firms are one of the most common business types needing websites but had no template. The forensic analysis section was the most verbose part of the prompt — Claude knows what typography, color extraction, and spacing analysis mean without 60+ checkbox items spelling it out. Net token savings: ~400 tokens.
+**Files:** src/app/api/chat/route.ts (SYSTEM_PROMPT)
+**Type:** prompt
+
 ## [2026-02-05 01:01] — Code: Extract shared helpers from handleSendMessage and handleSendMessageInternal
 
 **What:** Extracted two shared helper functions (`buildCleanMessages` and `sendAndProcessChat`) from the duplicated fetch+parse+state-update logic in `handleSendMessage` and `handleSendMessageInternal`. Both functions now call the shared helpers instead of having ~130 lines of identical code. Net reduction: 53 lines.

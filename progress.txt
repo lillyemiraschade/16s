@@ -20,6 +20,7 @@
 
 ## Round 2 Completed
 - R2-1 [CODE] Extract shared helpers from handleSendMessage/Internal (-53 lines)
+- R2-2 [PROMPT] Add law firm template + compress forensic analysis (~400 tokens saved)
 
 ## Still Open (Round 2 targets)
 - Stripe API version pinned to future date (2026-01-28.clover)
