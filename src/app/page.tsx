@@ -1535,9 +1535,35 @@ function HomePageContent() {
   );
 }
 
+function LoadingSkeleton() {
+  return (
+    <div className="h-screen welcome-bg flex flex-col">
+      <header className="h-14 md:h-[60px] flex items-center justify-between px-4 md:px-6">
+        <div className="flex items-center gap-4">
+          <div className="w-7 h-7 rounded-lg bg-white/[0.06] animate-pulse" />
+          <div className="w-16 h-7 rounded-lg bg-white/[0.06] animate-pulse" />
+        </div>
+        <div className="w-16 h-8 rounded-lg bg-white/[0.06] animate-pulse" />
+      </header>
+      <div className="flex-1 flex flex-col items-center justify-center -mt-16 gap-8">
+        <div className="flex flex-col items-center gap-4">
+          <div className="w-12 h-12 rounded-xl bg-white/[0.06] animate-pulse" />
+          <div className="w-72 h-10 rounded-lg bg-white/[0.06] animate-pulse" />
+        </div>
+        <div className="w-full max-w-[640px] h-16 rounded-2xl bg-white/[0.04] animate-pulse mx-6" />
+        <div className="flex gap-4">
+          <div className="w-48 h-9 rounded-xl bg-white/[0.04] animate-pulse" />
+          <div className="w-56 h-9 rounded-xl bg-white/[0.04] animate-pulse" />
+          <div className="w-44 h-9 rounded-xl bg-white/[0.04] animate-pulse" />
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default function HomePage() {
   return (
-    <Suspense fallback={<div className="h-screen welcome-bg" />}>
+    <Suspense fallback={<LoadingSkeleton />}>
       <HomePageContent />
     </Suspense>
   );
