@@ -1,5 +1,12 @@
 # 16s Changelog
 
+## [2026-02-05 01:47] — Prompt: Remove duplicate VISUAL SELF-REVIEW section (~170 tokens saved)
+
+**What:** Removed the 15-line VISUAL SELF-REVIEW section (lines 337-354) which was a duplicate of the PHASE 3 visual verification section (lines 232-259). Both said the same things: look at the screenshot, verify work, don't trust HTML alone, point out issues even if user says "looks great."
+**Why:** Pure duplication. The PHASE 3 section already covers visual verification in detail. Prompt now ~11,316 tokens.
+**Files:** src/app/api/chat/route.ts (SYSTEM_PROMPT)
+**Type:** prompt
+
 ## [2026-02-05 01:45] — Code: Upgrade AI models to Sonnet 4.5 + Haiku 4.5
 
 **What:** Upgraded both AI models: Sonnet from `claude-sonnet-4-20250514` to `claude-sonnet-4-5-20250929` (chat + voice routes) and Haiku from `claude-3-5-haiku-20241022` to `claude-haiku-4-5-20251001` (simple iterations). These are the latest available model versions.

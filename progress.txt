@@ -46,6 +46,7 @@
 - R2-25 [PROMPT] Compress form example + quality requirements + bg removal (~430 tokens saved, now ~11.5K)
 - R2-26 [FEATURE] Add Escape key handlers to edit mode + call disclaimer modal
 - R2-27 [CODE] Upgrade AI models to Sonnet 4.5 + Haiku 4.5
+- R2-28 [PROMPT] Remove duplicate VISUAL SELF-REVIEW section (~170 tokens saved, now ~11.3K)
 
 ## Still Open (Round 2 targets)
 - Stripe API version: verified correct for stripe@20.3.0 (not a bug)
