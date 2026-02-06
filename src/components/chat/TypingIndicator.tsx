@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 
-export function TypingIndicator() {
+export function TypingIndicator({ label = "Working on it..." }: { label?: string }) {
   return (
     <div className="flex items-center gap-2.5 py-1">
       <div className="flex items-center gap-1">
@@ -29,7 +29,7 @@ export function TypingIndicator() {
         animate={{ opacity: [0.5, 1, 0.5] }}
         transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
       >
-        Working on it...
+        {label}
       </motion.span>
     </div>
   );

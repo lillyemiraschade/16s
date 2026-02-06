@@ -1,5 +1,12 @@
 # 16s Changelog
 
+## [2026-02-06 14:12] — Feature: Context-aware typing indicator messages
+
+**What:** TypingIndicator now accepts a `label` prop (default "Working on it..."). ChatPanel passes context-aware labels: "Designing your site..." when no preview exists, "Making changes..." when iterating on an existing design.
+**Why:** "Working on it..." was generic. Context-aware messages feel more intelligent and give users better feedback about what the AI is doing.
+**Files:** src/components/chat/TypingIndicator.tsx, src/components/chat/ChatPanel.tsx
+**Type:** feature
+
 ## [2026-02-06 14:07] — Prompt: Compress SUBJECTIVE FEEDBACK section (~80 tokens saved)
 
 **What:** Compressed the 9-line SUBJECTIVE FEEDBACK section to 4 lines by combining similar feedback types on single lines with pipe separators. All 8 feedback→action mappings preserved.

@@ -592,7 +592,7 @@ export const ChatPanel = memo(function ChatPanel({
             className="flex items-end gap-2 mt-4"
           >
             <div className="glass-bubble bubble-tail-left px-4 py-3">
-              <TypingIndicator />
+              <TypingIndicator label={hasPreview ? "Making changes..." : "Designing your site..."} />
             </div>
             <button
               onClick={onStop}
