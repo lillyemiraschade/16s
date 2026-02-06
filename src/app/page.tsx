@@ -810,7 +810,7 @@ function HomePageContent() {
     sendMessageRef.current = handleSendMessage;
   }, [handleSendMessage]);
 
-  const handlePillClick = (pill: string) => {
+  const handlePillClick = useCallback((pill: string) => {
     if (isGenerating) return;
     const lowerPill = pill.toLowerCase();
     // Detect any call-related pill
@@ -819,7 +819,7 @@ function HomePageContent() {
       return;
     }
     handleSendMessage(pill);
-  };
+  }, [isGenerating, handleSendMessage]);
 
   // Internal send that allows custom visible text vs actual API text
   const handleSendMessageInternal = useCallback(async (
@@ -954,9 +954,9 @@ function HomePageContent() {
     }
   };
 
-  const handleImageRemove = (index: number) => {
+  const handleImageRemove = useCallback((index: number) => {
     setUploadedImages((prev) => prev.filter((_, i) => i !== index));
-  };
+  }, []);
 
   const handleImageTypeToggle = async (index: number) => {
     const img = uploadedImages[index];
@@ -999,13 +999,22 @@ function HomePageContent() {
     }
   };
 
-  const handleImageUpdate = (index: number, newData: string) => {
+  const handleImageUpdate = useCallback((index: number, newData: string) => {
     setUploadedImages((prev) =>
       prev.map((img, i) =>
         i === index ? { ...img, data: newData } : img
       )
     );
-  };
+  }, []);
+
+  const handleStartCall = useCallback(() => {
+    setIsOnCall(true);
+  }, []);
+
+  const handleClearSelection = useCallback(() => {
+    setSelectedElement(null);
+    setSelectMode(false);
+  }, []);
 
   const handleUndo = useCallback(() => {
     if (previewHistory.length > 0 && currentPreview) {
@@ -1484,10 +1493,10 @@ function HomePageContent() {
             uploadedImages={uploadedImages}
             onNewProject={handleNewProject}
             isOnCall={isOnCall}
-            onStartCall={() => setIsOnCall(true)}
+            onStartCall={handleStartCall}
             hasPreview={!!currentPreview}
             selectedElement={selectedElement}
-            onClearSelection={() => { setSelectedElement(null); setSelectMode(false); }}
+            onClearSelection={handleClearSelection}
             onEditMessage={handleEditMessage}
           />
         </nav>

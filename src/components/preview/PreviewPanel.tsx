@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState, useCallback, useEffect } from "react";
+import { useRef, useState, useCallback, useEffect, memo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Monitor,
@@ -237,7 +237,7 @@ const SELECT_MODE_SCRIPT = `
 })();
 </script>`;
 
-export function PreviewPanel({
+export const PreviewPanel = memo(function PreviewPanel({
   html,
   viewport,
   onViewportChange,
@@ -909,4 +909,4 @@ export function PreviewPanel({
       </AnimatePresence>
     </div>
   );
-}
+});

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState, useCallback } from "react";
+import { useEffect, useRef, useState, useCallback, memo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Paperclip, ArrowUp, X, ImagePlus, Plus, Phone, Info, Pencil, Sparkles, Loader2, Mic, CheckCircle, AlertCircle, FileText } from "lucide-react";
 import Image from "next/image";
@@ -28,7 +28,7 @@ interface ChatPanelProps {
   onEditMessage: (messageId: string, newContent: string) => void;
 }
 
-export function ChatPanel({
+export const ChatPanel = memo(function ChatPanel({
   messages,
   onSend,
   onPillClick,
@@ -752,4 +752,4 @@ export function ChatPanel({
       </AnimatePresence>
     </div>
   );
-}
+});
