@@ -27,6 +27,9 @@ what kind of photos to give, and the AI doesn't guide them through it.
 - R5-7: CODE — Smart default upload type based on conversation stage
 - R5-8: PROMPT — Add placeholder transparency to DESIGN step
 - R5-9: CODE — Strengthen voice-to-chat handoff with inspo signal
+- R5-10: PROMPT — Compress VOICE CALLS + REQUEST TYPES + SUBJECTIVE FEEDBACK (~150 tokens saved)
 
-## In Progress
-(next: reviewing for additional improvements)
+## Summary
+Round 5 complete. 10 changes across prompt and code:
+- 5 prompt changes: guided journey, voice arc, social links, placeholders, compression
+- 5 code changes: fallback pills, max_tokens, bg removal UX, smart upload default, voice handoff

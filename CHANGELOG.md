@@ -1,5 +1,13 @@
 # 16s Changelog
 
+## [2026-02-06 19:30] — Prompt: Compress VOICE CALLS + REQUEST TYPES + SUBJECTIVE FEEDBACK (~150 tokens saved)
+
+**What:** Compressed VOICE CALLS from 3 lines to 1 (removed redundant "you DO NOT need phone numbers" when "NO phone numbers needed" says the same). Compressed RECOGNIZE REQUEST TYPE from 3 lines to 1 with pipe-separated format. Compressed SUBJECTIVE FEEDBACK by combining similar entries. Offsets tokens added by the guided journey.
+
+**Files:** `src/app/api/chat/route.ts` (SYSTEM_PROMPT)
+**Type:** Prompt compression
+**Ref:** R5-10
+
 ## [2026-02-06 19:20] — Code: Strengthen voice-to-chat handoff with inspo signal
 
 **What:** Updated the voice call transcript handoff in `compileCallData()` to explicitly signal that inspo images are still needed as the next step. Changed from soft "ask for inspo if not mentioned" to strong "IMPORTANT — NEXT STEP: Ask for inspo before generating." References the GUIDED FLOW step 1, ensuring the main chat AI follows the inspo-first flow even after a voice call.
