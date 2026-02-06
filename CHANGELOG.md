@@ -1,5 +1,13 @@
 # 16s Changelog
 
+## [2026-02-06 19:00] — Code: Smart default upload type based on conversation stage
+
+**What:** When user clicks the paperclip upload button, the upload type now defaults based on conversation stage: "inspo" before first generation (no preview), "content" after a preview exists. This reduces one decision point for users — they no longer need to manually toggle the image type for the most common case. Tooltip also updates contextually. The showUpload button from AI messages still overrides with specific detection.
+
+**Files:** `src/components/chat/ChatPanel.tsx`
+**Type:** Code (UX)
+**Ref:** R5-7
+
 ## [2026-02-06 18:50] — Code: Increase max_tokens for complex generations (16K → 18K)
 
 **What:** Increased max_tokens from 16000 to 18000 for complex (Sonnet) generations. This provides more room for the AI to output the full JSON response including pills, qaReport, and context fields at the end, reducing truncation that could cause pills to be lost.

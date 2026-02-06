@@ -730,10 +730,16 @@ export const ChatPanel = memo(function ChatPanel({
         <div className="glass-input-glow rounded-2xl">
           <div className="flex items-end gap-2 px-4 py-3">
             <button
-              onClick={() => fileInputRef.current?.click()}
+              onClick={() => {
+                // Default upload type based on stage: inspo before first generation, content after
+                if (!uploadContext.label) {
+                  setUploadContext({ type: hasPreview ? "content" : "inspo" });
+                }
+                fileInputRef.current?.click();
+              }}
               className="p-1.5 mb-0.5 hover:bg-white/[0.06] rounded-lg transition-colors flex-shrink-0"
-              title="Upload images"
-              aria-label="Upload images"
+              title={hasPreview ? "Upload content images (logo, photos)" : "Upload inspiration images"}
+              aria-label={hasPreview ? "Upload content images" : "Upload inspiration images"}
             >
               <Paperclip className="w-4 h-4 text-zinc-500" />
             </button>
