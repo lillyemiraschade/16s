@@ -75,6 +75,7 @@
 - R3-35 [PROMPT] Compress FORENSIC ANALYSIS + ABSOLUTE RULES (~60 tokens saved)
 - R3-36 [FEATURE] Drag-and-drop image upload on welcome screen
 - R3-37 [CODE] Remove dead legacy exports from projects.ts (-19 lines)
+- R3-38 [PROMPT] Compress CONTEXT LEARNING + uppercase typography rule
 
 ## In Progress
 (continuing Round 3)

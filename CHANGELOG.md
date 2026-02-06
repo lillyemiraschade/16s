@@ -1,5 +1,12 @@
 # 16s Changelog
 
+## [2026-02-06 14:50] — Prompt: Compress CONTEXT LEARNING + uppercase typography rule
+
+**What:** Compressed CONTEXT LEARNING from 7 to 4 lines (removed redundant "When you learn..." and "Context persists..." sentences). Added uppercase rule to TYPOGRAPHY PERSONALITY: uppercase only for small labels/nav/tags, never for main headings or body text.
+**Why:** AI sites often overuse ALL CAPS for headings, making them look generic. The uppercase rule gives specific guidance. CONTEXT LEARNING compression offsets the added tokens.
+**Files:** src/app/api/chat/route.ts (SYSTEM_PROMPT)
+**Type:** prompt
+
 ## [2026-02-06 14:45] — Code: Remove dead legacy exports from projects.ts (-19 lines)
 
 **What:** Removed 4 unused legacy wrapper functions (saveProject, loadProject, listProjects, deleteProject) from projects.ts. These were labeled "for backward compatibility during migration" but are not imported anywhere — all consumers use the `useProjects` hook instead.
