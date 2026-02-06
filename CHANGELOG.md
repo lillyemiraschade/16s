@@ -1,5 +1,12 @@
 # 16s Changelog
 
+## [2026-02-05 01:10] — Code: Remove dead code and excessive console.logs
+
+**What:** Removed dead code in route.ts (lines 2080-2082: `systemPromptText` built but never used). Removed ~25 console.log/warn statements from page.tsx (image replacement, blob upload, autosave), route.ts (request debug, response preview, retry), and projects.ts (save/list/migration). Kept console.error statements for actual errors. Simplified catch blocks where error variable was only used for logging.
+**Why:** Production code was logging detailed debug info on every request (raw request keys, message counts, response previews, image replacement progress, blob upload confirmations). This clutters server logs, leaks information, and wastes processing time. Error-level logging is retained for actual failures.
+**Files:** src/app/page.tsx, src/app/api/chat/route.ts, src/lib/projects.ts
+**Type:** code
+
 ## [2026-02-05 01:09] — Feature: Strengthen QA report checklist with specific technical checks
 
 **What:** Replaced vague QA checklist items with specific, verifiable checks: form inputs must have labels (not just placeholders), touch targets >= 44px on mobile, all images need explicit width/height (CLS prevention), external links need target="_blank" rel="noopener". Added anti-rubber-stamp instruction: "Do NOT just say all_good — actually check. Report minor_notes with what you fixed."

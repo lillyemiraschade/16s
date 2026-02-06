@@ -28,6 +28,7 @@
 - R2-7 [CODE] Aria-label on image type toggle button
 - R2-8 [PROMPT] Church/nonprofit + salon/spa templates, compress pixel-perfect checklist
 - R2-9 [FEATURE] Strengthen QA checklist (touch targets, form labels, CLS, external links)
+- R2-10 [CODE] Remove dead code + ~25 console.logs from page.tsx, route.ts, projects.ts
 
 ## Still Open (Round 2 targets)
 - Stripe API version: verified correct for stripe@20.3.0 (not a bug)

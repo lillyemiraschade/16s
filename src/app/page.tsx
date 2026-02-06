@@ -383,8 +383,6 @@ function HomePageContent() {
         }
         if (name !== projectName) setProjectName(name);
 
-        console.log("[AutoSave] Saving project:", { id, name, messageCount: messages.length, isCloud });
-
         await saveProject({
           id,
           name,
@@ -395,8 +393,6 @@ function HomePageContent() {
           context: projectContext,
           updatedAt: Date.now(),
         });
-
-        console.log("[AutoSave] Save successful");
         const updatedList = await listProjects();
         setSavedProjects(updatedList);
         pendingSaveRef.current = null;
@@ -539,26 +535,18 @@ function HomePageContent() {
     // but actually wants it embedded in the website
     const imagesToUse = allContentImages.length > 0 ? allContentImages : allInspoImages;
 
-    console.log(`[Image Replacement] Found ${allContentImages.length} content images, ${allInspoImages.length} inspo images, using ${imagesToUse.length} total`);
-
     let result = html;
 
     // Step 1: Replace {{CONTENT_IMAGE_N}} placeholders with image data
     const placeholderRegex = /\{\{\s*CONTENT_IMAGE_(\d+)\s*\}\}/g;
-    const foundPlaceholders = Array.from(html.matchAll(placeholderRegex));
-    console.log(`[Image Replacement] Found ${foundPlaceholders.length} placeholders in HTML:`, foundPlaceholders.map(m => m[0]));
 
-    result = result.replace(placeholderRegex, (match, indexStr) => {
+    result = result.replace(placeholderRegex, (_match, indexStr) => {
       const index = parseInt(indexStr, 10);
       if (imagesToUse[index]) {
-        console.log(`[Image Replacement] Replacing ${match} with image`);
         return imagesToUse[index].url || imagesToUse[index].data;
       } else if (imagesToUse.length > 0) {
-        // Use first available image as fallback
-        console.log(`[Image Replacement] Index ${index} not found, using first image`);
         return imagesToUse[0].url || imagesToUse[0].data;
       } else {
-        console.warn(`[Image Replacement] No images available for ${match}`);
         return "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7";
       }
     });
@@ -568,11 +556,7 @@ function HomePageContent() {
     const validUrls = imagesToUse.map(img => img.url).filter(Boolean);
 
     result = result.replace(blobUrlRegex, (match, url) => {
-      if (validUrls.includes(url)) {
-        console.log(`[Image Replacement] Blob URL validated`);
-        return match;
-      }
-      console.warn(`[Image Replacement] Unrecognized blob URL, replacing`);
+      if (validUrls.includes(url)) return match;
       if (imagesToUse.length > 0) {
         return `src="${imagesToUse[0].url || imagesToUse[0].data}"`;
       }
@@ -580,16 +564,12 @@ function HomePageContent() {
     });
 
     // Step 3: Replace AI-generated base64 (gibberish) with real images
-    // AI cannot generate valid base64 - detect and replace
     if (imagesToUse.length > 0) {
       const aiBase64Regex = /src="(data:image\/[^;]+;base64,[A-Za-z0-9+/=]{100,})"/g;
       const validBase64s = imagesToUse.map(img => img.data);
 
       result = result.replace(aiBase64Regex, (match, base64) => {
-        if (validBase64s.includes(base64)) {
-          return match;
-        }
-        console.warn(`[Image Replacement] Replacing AI-generated base64 with real image`);
+        if (validBase64s.includes(base64)) return match;
         return `src="${imagesToUse[0].url || imagesToUse[0].data}"`;
       });
     }
@@ -691,7 +671,6 @@ function HomePageContent() {
     // Ensure all content images have blob URLs before sending
     const contentImagesNeedingUpload = imagesToSend.filter(img => img.type === "content" && !img.url);
     if (contentImagesNeedingUpload.length > 0) {
-      console.log(`[Blob Upload] Uploading ${contentImagesNeedingUpload.length} content images before sending...`);
       const uploadPromises = contentImagesNeedingUpload.map(async (img) => {
         try {
           const url = await uploadToBlob(img.data, img.label);
@@ -753,7 +732,6 @@ function HomePageContent() {
 
       // Upload history images if needed
       if (historyImagesNeedingUpload.length > 0) {
-        console.log(`[Blob Upload] Uploading ${historyImagesNeedingUpload.length} history images...`);
         const uploadPromises = historyImagesNeedingUpload.map(async ({ img }) => {
           try {
             const url = await uploadToBlob(img.data, img.label);
@@ -943,9 +921,7 @@ function HomePageContent() {
             img.data === base64 && img.type === "content" ? { ...img, url } : img
           )
         );
-        console.log(`[Blob Upload] Uploaded content image: ${url}`);
-      } catch (error) {
-        console.error("[Blob Upload] Failed to upload:", error);
+      } catch {
         // Image still works with base64 fallback
       }
     }
@@ -978,9 +954,7 @@ function HomePageContent() {
             i === index ? { ...img, url } : img
           )
         );
-        console.log(`[Blob Upload] Uploaded toggled image: ${url}`);
-      } catch (error) {
-        console.error("[Blob Upload] Failed:", error);
+      } catch {
         // Fallback: just change type without re-compressing
         setUploadedImages((prev) =>
           prev.map((img, i) =>

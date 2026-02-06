@@ -105,7 +105,6 @@ function getSupabase() {
 async function saveCloudProject(project: SavedProject, userId: string): Promise<void> {
   const supabase = getSupabase();
 
-  console.log("[Projects] Saving to cloud:", { id: project.id, name: project.name, userId });
 
   const { data, error } = await supabase
     .from("projects")
@@ -124,11 +123,9 @@ async function saveCloudProject(project: SavedProject, userId: string): Promise<
 
   if (error) {
     console.error("[Projects] Cloud save error:", error);
-    console.error("[Projects] Error details:", { code: error.code, message: error.message, details: error.details });
     throw error;
   }
 
-  console.log("[Projects] Save successful:", data);
 }
 
 async function loadCloudProject(id: string, userId: string): Promise<SavedProject | null> {
@@ -162,7 +159,6 @@ async function loadCloudProject(id: string, userId: string): Promise<SavedProjec
 async function listCloudProjects(userId: string): Promise<SavedProjectMeta[]> {
   const supabase = getSupabase();
 
-  console.log("[Projects] Listing cloud projects for user:", userId);
 
   const { data, error } = await supabase
     .from("projects")
@@ -172,11 +168,9 @@ async function listCloudProjects(userId: string): Promise<SavedProjectMeta[]> {
 
   if (error) {
     console.error("[Projects] Cloud list error:", error);
-    console.error("[Projects] Error details:", { code: error.code, message: error.message, details: error.details });
     return [];
   }
 
-  console.log("[Projects] Found projects:", data?.length || 0, data);
 
   return (data || []).map((p: { id: string; name: string; updated_at: string }) => ({
     id: p.id,
@@ -238,7 +232,6 @@ export async function migrateLocalToCloud(userId: string): Promise<number> {
         id: isValidUUID(project.id) ? project.id : generateUUID(),
       };
 
-      console.log("[Migration] Migrating project:", project.id, "->", migratedProject.id);
       await saveCloudProject(migratedProject, userId);
       migratedIds.add(project.id);
       migrated++;

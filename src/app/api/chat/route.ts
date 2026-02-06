@@ -1786,13 +1786,6 @@ export async function POST(req: Request) {
       );
     }
 
-    // DEBUG: Log the raw request
-    console.log("[Chat API] Raw request keys:", Object.keys(raw));
-    console.log("[Chat API] Messages count:", raw.messages?.length ?? "NO MESSAGES");
-    if (raw.messages?.[0]) {
-      console.log("[Chat API] First message:", JSON.stringify(raw.messages[0]).slice(0, 200));
-    }
-
     // Pre-sanitize messages to fix common issues before validation
     if (raw.messages && Array.isArray(raw.messages)) {
       raw.messages = raw.messages
@@ -1802,7 +1795,6 @@ export async function POST(req: Request) {
           id: m.id || `msg-${Date.now()}-${i}`,
           content: typeof m.content === "string" && m.content ? m.content : "[No content]",
         }));
-      console.log("[Chat API] After sanitize, messages count:", raw.messages.length);
     }
 
     const parsed = ChatRequestSchema.safeParse(raw);
@@ -2076,11 +2068,6 @@ Use this context to inform your designs. Don't ask about things you already know
       }
     }
 
-    // Build system prompt based on output format and context
-    let systemPromptText = SYSTEM_PROMPT;
-    if (contextInjection) systemPromptText += contextInjection;
-    if (outputFormat === "react") systemPromptText += "\n\n" + REACT_ADDENDUM;
-
     // Use prompt caching for the system prompt (90% cost reduction on cache hits)
     // The base SYSTEM_PROMPT is static and cacheable
     // Context injection and React addendum are dynamic but small
@@ -2098,7 +2085,6 @@ Use this context to inform your designs. Don't ask about things you already know
     // Use streaming to avoid Vercel function timeout - with retry logic
     const makeRequest = async (retryCount = 0): Promise<string> => {
       try {
-        console.log(`[Chat API] Making request (attempt ${retryCount + 1}), model: ${model}, cached: true`);
         const stream = anthropic.messages.stream({
           model,
           max_tokens: maxTokens,
@@ -2127,7 +2113,6 @@ Use this context to inform your designs. Don't ask about things you already know
 
         if (isRetryable && retryCount < 2) {
           const delay = (retryCount + 1) * 2000; // 2s, 4s backoff
-          console.log(`[Chat API] Retrying in ${delay}ms...`);
           await new Promise(resolve => setTimeout(resolve, delay));
           return makeRequest(retryCount + 1);
         }
@@ -2140,10 +2125,6 @@ Use this context to inform your designs. Don't ask about things you already know
       async start(controller) {
         try {
           const fullText = await makeRequest();
-
-          // Parse the complete response
-          console.log("[Chat API] Full response length:", fullText.length);
-          console.log("[Chat API] Full response preview:", fullText.slice(0, 500));
 
           let parsedResponse: ChatResponse;
           try {
