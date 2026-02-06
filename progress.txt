@@ -39,6 +39,7 @@
 - R2-18 [CODE] Replace decorative separators + fix last console.logs (~600 tokens saved, now <13K)
 - R2-19 [PROMPT] Compress ─── separators + amateur bans section (~700 tokens saved, now ~12.5K)
 - R2-20 [FEATURE] Fix React output dark-mode bias + verify context persistence E2E
+- R2-21 [CODE] Fix rate limit memory leak in deploy, upload, voice, remove-bg routes
 
 ## Still Open (Round 2 targets)
 - Stripe API version: verified correct for stripe@20.3.0 (not a bug)

@@ -1,5 +1,12 @@
 # 16s Changelog
 
+## [2026-02-05 01:30] — Code: Fix rate limit memory leak in 4 API routes
+
+**What:** Added expired-entry cleanup to `checkRateLimit()` in deploy, upload, voice, and remove-bg routes. When map exceeds 500 entries, sweeps all expired ones. The main chat route already had interval-based cleanup.
+**Why:** The `rateLimitMap` in these 4 routes grew unbounded — entries were created for every unique IP but never deleted. In production with many unique visitors, this is a slow memory leak. The cleanup triggers only when the map gets large (>500 entries), so it has zero cost for normal traffic.
+**Files:** src/app/api/deploy/route.ts, src/app/api/upload/route.ts, src/app/api/chat/voice/route.ts, src/app/api/remove-bg/route.ts
+**Type:** code
+
 ## [2026-02-05 01:28] — Feature: Fix React output dark-mode bias + verify context persistence
 
 **What:** Fixed React output mode section — component structure example and Tailwind patterns were hardcoded to dark mode (bg-zinc-950, text-zinc-50, border-white/5). Now says "adapt colors to match site palette." Also verified context persistence flow end-to-end: context is correctly defined → saved → sent to API → injected → instructed → returned → merged → loaded. Updated progress.txt to mark all original Round 2 targets as DONE.
