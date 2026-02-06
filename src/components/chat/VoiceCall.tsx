@@ -68,7 +68,7 @@ ${allUserInfo.join("\n")}
 
 [END TRANSCRIPT]
 
-Based on this call, please design and build the website. Ask for inspiration images before generating if the user didn't mention them already.`
+IMPORTANT — NEXT STEP: Ask the user to drop inspiration images before generating anything. The voice call gathered project details but inspo images are still needed to establish the design direction. Follow GUIDED FLOW step 1: ask for inspo, offer style directions if they don't have any.`
     : `[VOICE CALL TRANSCRIPT - The call ended but limited information was gathered]
 
 CONVERSATION:

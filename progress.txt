@@ -26,6 +26,7 @@ what kind of photos to give, and the AI doesn't guide them through it.
 - R5-6: CODE — Increase max_tokens for complex generations (16K → 18K)
 - R5-7: CODE — Smart default upload type based on conversation stage
 - R5-8: PROMPT — Add placeholder transparency to DESIGN step
+- R5-9: CODE — Strengthen voice-to-chat handoff with inspo signal
 
 ## In Progress
-(next: CODE — voice-to-chat handoff structure)
+(next: reviewing for additional improvements)

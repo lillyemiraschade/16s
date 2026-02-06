@@ -1,5 +1,13 @@
 # 16s Changelog
 
+## [2026-02-06 19:20] — Code: Strengthen voice-to-chat handoff with inspo signal
+
+**What:** Updated the voice call transcript handoff in `compileCallData()` to explicitly signal that inspo images are still needed as the next step. Changed from soft "ask for inspo if not mentioned" to strong "IMPORTANT — NEXT STEP: Ask for inspo before generating." References the GUIDED FLOW step 1, ensuring the main chat AI follows the inspo-first flow even after a voice call.
+
+**Files:** `src/components/chat/VoiceCall.tsx`
+**Type:** Code (UX flow)
+**Ref:** R5-9
+
 ## [2026-02-06 19:10] — Prompt: Add placeholder transparency to DESIGN step
 
 **What:** Added instruction in guided journey step 2 (DESIGN) for the AI to explicitly tell users about bracket placeholders: "I used placeholders for info I don't have yet — just send me the details whenever you're ready." This makes the placeholder system transparent so users know they can fill them in at any time.
