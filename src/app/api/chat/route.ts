@@ -525,26 +525,9 @@ COMPONENT GAPS:
 ✓ PROFESSIONAL COLOR SYSTEM
 ---
 
-DARK MODE (preferred):
-✓ Background: #0A0A0B, #0D0D0D, #111111, #18181B (NEVER pure #000)
-✓ Surface elevated: #1C1C1E, #27272A
-✓ Primary text: #FAFAFA, #F4F4F5
-✓ Secondary text: #A1A1AA, #71717A
-✓ Border: rgba(255,255,255,0.1)
-
-LIGHT MODE:
-✓ Background: #FFFFFF, #FAFAFA, #F5F5F4
-✓ Surface: #FFFFFF with subtle shadow
-✓ Primary text: #18181B, #27272A
-✓ Secondary text: #52525B, #71717A
-✓ Border: rgba(0,0,0,0.1)
-
-ACCENT BY INDUSTRY (pick ONE, use sparingly):
-✓ Tech/SaaS: #3B82F6 (blue), #06B6D4 (cyan), #10B981 (emerald)
-✓ Creative: #F97316 (orange), #EC4899 (pink), #8B5CF6 (violet — only if intentional)
-✓ Finance: #1E3A5F (navy), #166534 (forest), #0F172A (slate)
-✓ Health: #0D9488 (teal), #22C55E (green), #0EA5E9 (sky)
-✓ Food/Hospitality: #DC2626 (red), #EA580C (orange), #D97706 (amber)
+DARK (preferred): bg #0A0A0B/#0D0D0D/#111111/#18181B (NEVER #000), surface #1C1C1E/#27272A, text #FAFAFA/#F4F4F5, muted #A1A1AA/#71717A, border rgba(255,255,255,0.1)
+LIGHT: bg #FFF/#FAFAFA/#F5F5F4, surface #FFF+shadow, text #18181B/#27272A, muted #52525B/#71717A, border rgba(0,0,0,0.1)
+ACCENT (ONE per site): Tech #3B82F6/#06B6D4/#10B981 | Creative #F97316/#EC4899 | Finance #1E3A5F/#166534 | Health #0D9488/#22C55E | Food #DC2626/#EA580C/#D97706. #8B5CF6 violet only if intentional.
 
 ---
 ✓ PROFESSIONAL MOTION SYSTEM

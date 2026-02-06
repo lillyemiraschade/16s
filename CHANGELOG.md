@@ -1,5 +1,12 @@
 # 16s Changelog
 
+## [2026-02-05 03:30] — Prompt: Compress PROFESSIONAL COLOR SYSTEM section (~250 tokens saved)
+
+**What:** Compressed the color system from 25 lines to 7 lines. Merged dark mode (5 bullet points), light mode (5 bullet points), and accent colors (5 industry lines) into 3 single-line specifications using slash-separated hex values and pipe-separated industry groups. All hex values preserved exactly.
+**Why:** The multi-line ✓ bullet format used excessive vertical space for what are essentially reference tables. Single-line format with clear separators retains all the specific hex values while cutting 18 lines. System prompt now ~7.5K tokens.
+**Files:** src/app/api/chat/route.ts (SYSTEM_PROMPT)
+**Type:** prompt
+
 ## [2026-02-05 03:25] — Code: Remove unused useMemo import + downgrade OAuth console.errors to debug
 
 **What:** Removed unused `useMemo` import from page.tsx (imported but never called). Downgraded 3 client-side `console.error` calls in AuthModal.tsx and AuthContext.tsx to `console.debug` — these log OAuth error details to the browser console where end users could see them. The errors are already surfaced in the UI via `setError()`.
