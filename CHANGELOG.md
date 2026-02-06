@@ -1,5 +1,12 @@
 # 16s Changelog
 
+## [2026-02-05 01:03] — Feature: Improve plan card consistency + first-message intelligence
+
+**What:** Strengthened plan generation instructions: (1) Always show plan for new sites, even simple-sounding ones. (2) Added "FIRST-MESSAGE INTELLIGENCE" rule — when the user's first message includes a clear business type AND name, skip clarifying questions and generate a plan immediately using the matching industry template. (3) Compressed the "when to plan vs skip" section.
+**Why:** Users often gave clear requests like "Build a website for Joe's Pizza" and the AI would ask "What kind of website do you want?" instead of detecting the industry and showing a plan. This added unnecessary friction to the most common flow.
+**Files:** src/app/api/chat/route.ts (SYSTEM_PROMPT)
+**Type:** feature
+
 ## [2026-02-05 01:02] — Prompt: Add law firm industry template + compress forensic analysis
 
 **What:** Added LAW FIRM/LEGAL industry template (practice areas, attorney profiles, consultation CTA, case results, FAQ, trust signals, navy/gold palette). Simultaneously compressed the verbose forensic analysis checklist (Phases 1-4) from ~120 lines to ~20 lines by removing checklist formatting and CSS property explanations Claude already knows.
