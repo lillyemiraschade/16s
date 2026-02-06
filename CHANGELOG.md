@@ -1,5 +1,152 @@
 # 16s Changelog
 
+## [2026-02-06 13:25] — Feature: Cmd+K shortcut to focus chat input
+
+**What:** Added Cmd+K keyboard shortcut that focuses the chat input textarea. Dispatches a custom "focus-chat-input" event from page.tsx, listened by ChatPanel. Added entry to the keyboard shortcuts overlay.
+**Why:** Standard web-app convention (Slack, VS Code, GitHub). Lets power users jump to the chat input without reaching for the mouse.
+**Files:** src/app/page.tsx, src/components/chat/ChatPanel.tsx
+**Type:** feature
+
+## [2026-02-06 13:10] — Prompt: Compress PLANNING + BUILDING phases (~200 tokens saved)
+
+**What:** Compressed INTERNAL PLANNING checklist from 6 items to 1 line. Compressed PHASE 2 BUILDING section from 3 lines to 1 line. PHASE 2 duplicated the later SKIP TO BUILDING section.
+**Why:** Offset token growth from anti-template rules. The model doesn't need an explicit 6-item internal checklist — it already knows how to assess project type, audience, and style.
+**Files:** src/app/api/chat/route.ts (SYSTEM_PROMPT)
+**Type:** prompt
+
+## [2026-02-06 13:00] — Code: Compress INTERACTIVE APPS section (~400 tokens saved)
+
+**What:** Compressed the INTERACTIVE APPS & TOOLS section from 30 lines to 7 lines. Removed duplicate numbered list (identical to the APPROACH summary line), verbose intro section, and expanded APP UI PATTERNS (merged into single compressed line). All specifics preserved.
+**Why:** Offsets token growth from anti-template rules. The numbered list and APPROACH line said the exact same thing. The section was verbose for what it teaches — the model already knows these patterns.
+**Files:** src/app/api/chat/route.ts (SYSTEM_PROMPT)
+**Type:** code
+
+## [2026-02-06 12:50] — Feature: Add contextual pill suggestions for 6 more industries
+
+**What:** Added industry-specific pill suggestions for church/nonprofit, salon/spa, automotive, education, SaaS, and medical. All 12 industry templates now have matching contextual pill suggestions.
+**Why:** Previously only 5 industries had contextual pills. The 6 new industries from the aesthetic direction (R3-2) and the 2 existing (medical, SaaS) didn't have pill suggestions, causing generic fallback pills after generating sites for those industries.
+**Files:** src/app/api/chat/route.ts (SYSTEM_PROMPT)
+**Type:** feature
+
+## [2026-02-06 12:40] — Prompt: Add copy quality rules — ban generic AI headings
+
+**What:** Added COPY QUALITY directive banning generic AI headings ("Empowering Your Journey", "Elevate Your Experience", "Where Innovation Meets [X]"). Hero headlines must be 2-6 words max. Subheadings must describe what the business does, not abstract benefits. Section headings must use actual service/feature names ("Our Pastries") not marketing fluff ("Discover Our Offerings").
+**Why:** AI-generated copy is one of the biggest "tells" of AI-made sites. Generic headings scream template. Specific, punchy copy makes sites feel human-written.
+**Files:** src/app/api/chat/route.ts (SYSTEM_PROMPT)
+**Type:** prompt
+
+## [2026-02-06 12:30] — Code: Add null-guard instructions to JS patterns 7, 8, 10
+
+**What:** Added missing null-guard instructions to three JS patterns: lightbox (null-guard img.src before creating overlay), filter/search (null-guard querySelectorAll results), pricing toggle (null-guard checkbox and price elements). All 10 JS patterns now have explicit null-guard instructions.
+**Why:** Closes the known issue "JS patterns 6-10 not audited for null safety." Pattern 6 (accordion) and 9 (cart) already had null-guards. Patterns 7, 8, 10 were missing them, risking runtime errors in generated sites.
+**Files:** src/app/api/chat/route.ts (SYSTEM_PROMPT)
+**Type:** code
+
+## [2026-02-06 12:20] — Feature: Ensure complex requests always trigger plan phase
+
+**What:** Added explicit planning phase trigger for complex requests: e-commerce, multi-page sites, apps with auth/payments, dashboards, and marketplaces. These must always show a plan card before building.
+**Why:** Complex requests like "build me a full e-commerce site" need a plan to set expectations. Without an explicit trigger, the model might skip planning and jump to building a partial implementation.
+**Files:** src/app/api/chat/route.ts (SYSTEM_PROMPT)
+**Type:** feature
+
+## [2026-02-06 12:10] — Prompt: Fix component style guide dark-mode bias — add light/dark variants
+
+**What:** Updated MODERN COMPONENT STYLE GUIDE to include light-mode variants: buttons (solid bg + dark text vs gradient bg), cards (white bg + shadow-md vs semi-transparent + backdrop-blur), and nav borders (rgba black vs rgba white). Components now adapt to the industry-aware light/dark mode choice.
+**Why:** The component style guide only had dark-mode examples (rgba white borders, gradient buttons, semi-transparent cards). Light-mode sites like bakeries and medical practices were getting dark-mode components, creating a visual mismatch.
+**Files:** src/app/api/chat/route.ts (SYSTEM_PROMPT)
+**Type:** prompt
+
+## [2026-02-06 12:00] — Code: Deduplicate blob upload in handleSendMessageInternal (-18 lines)
+
+**What:** Replaced 20-line blob upload block in `handleSendMessageInternal` with single `ensureBlobUrls()` call. This was the third copy of the same pattern — now all three blob upload paths (current images, history images, internal send) use the shared helper.
+**Why:** Continues the deduplication from R3-10. The blob upload pattern was still duplicated in handleSendMessageInternal. DRY cleanup.
+**Files:** src/app/page.tsx
+**Type:** code
+
+## [2026-02-06 11:50] — Feature: Add keyboard shortcut help overlay (Cmd+?)
+
+**What:** Added a modal overlay showing all available keyboard shortcuts, triggered by Cmd+? (Shift+/). Lists 7 shortcuts with descriptions and styled kbd labels. Closes on Escape, click outside, or Cmd+? toggle. Clean dark UI matching the app's aesthetic.
+**Why:** Users had no way to discover available keyboard shortcuts. The overlay provides discoverability without cluttering the UI.
+**Files:** src/app/page.tsx
+**Type:** feature
+
+## [2026-02-06 11:40] — Prompt: Fix dark-mode bias + add section background variety rule
+
+**What:** Replaced "DARK (preferred)" with industry-aware light/dark guidance: tech/creative/nightlife → dark, medical/bakery/education/wedding → light, law/finance → either. Added SECTION BG VARIETY rule requiring 3+ different background treatments per site (alternating white → subtle tint → dark panel → accent-tinted).
+**Why:** Known issue: all generated sites defaulted to dark mode regardless of industry. A bakery shouldn't be dark-themed. Section bg variety prevents the monotonous "same white background for 8 sections" problem.
+**Files:** src/app/api/chat/route.ts (SYSTEM_PROMPT)
+**Type:** prompt
+
+## [2026-02-06 11:30] — Code: Extract ensureBlobUrls helper from handleSendMessage (-40 lines)
+
+**What:** Extracted duplicate blob upload logic (upload content images without URLs, update array with results) into a shared `ensureBlobUrls()` helper function at module scope. Both the current-message upload and history-message upload paths now use this helper. Reduces `handleSendMessage` from 152 to 112 lines.
+**Why:** The same blob upload + fallback + mapping pattern was duplicated in two places within handleSendMessage. Extraction removes duplication and makes the main function easier to read.
+**Files:** src/app/page.tsx
+**Type:** code
+
+## [2026-02-06 11:20] — Feature: Add cleanup guards to async useEffect operations
+
+**What:** Added `cancelled` flag cleanup to `loadProjectsList` and `restoreProject` async effects to prevent state updates on unmounted components. Added `clearTimeout` cleanup to the pending prompt `setTimeout` effect.
+**Why:** Async operations completing after component unmount cause React warnings and potential memory leaks. Cleanup guards ensure state updates are skipped when the effect has been superseded or the component unmounted.
+**Files:** src/app/page.tsx
+**Type:** feature
+
+## [2026-02-06 11:10] — Prompt: Strengthen QA report with layout diversity check + anti-rubber-stamp rules
+
+**What:** Added LAYOUT DIVERSITY check to QA checklist — verifies the generated site doesn't use the banned AI layout pattern (hero+3cards+CTA) and has varied section structures/column counts/padding. Added REPORT QUALITY directive requiring specific, actionable notes with real element references ("Nav overlaps logo below 400px — added flex-wrap") instead of generic praise ("looks good").
+**Why:** QA reports were sometimes rubber-stamped with vague notes. Specific requirements for note quality and the layout diversity checkpoint ensure reports are meaningful and enforce the anti-template rules at verification time.
+**Files:** src/app/api/chat/route.ts (SYSTEM_PROMPT)
+**Type:** prompt
+
+## [2026-02-06 11:00] — Code: Add loading skeleton for initial app hydration
+
+**What:** Replaced the blank dark div Suspense fallback with a shimmer skeleton that matches the welcome screen layout shape: header with logo/nav placeholders, centered logo + headline placeholder, input bar placeholder, and 3 pill suggestion placeholders. Uses Tailwind's `animate-pulse` for subtle shimmer during hydration.
+**Why:** During Next.js hydration, users saw a blank dark screen. The skeleton provides visual continuity — users see the page "shape" immediately, reducing perceived load time.
+**Files:** src/app/page.tsx
+**Type:** code
+
+## [2026-02-06 10:50] — Feature: Replace generic IDEA_POOL with evocative, design-hinting examples
+
+**What:** Replaced 50 generic idea suggestions (e.g., "A coffee shop website with menu") with 30 curated examples that hint at design quality and diversity. Each names a specific business with aesthetic personality ("A Tokyo ramen shop with a moody, editorial menu layout", "A brutalist architect's portfolio with raw concrete vibes", "A luxury day spa called Sage & Stone").
+**Why:** The welcome screen is the first thing users see. Generic ideas set low expectations. Evocative examples inspire users and signal that 16s produces premium, design-forward output — not generic templates.
+**Files:** src/app/page.tsx
+**Type:** feature
+
+## [2026-02-06 10:40] — Prompt: Add designer voice personality + noise/grain + clip-path techniques
+
+**What:** Added DESIGNER VOICE directive to personality section — AI should present work confidently with design reasoning ("I went with an asymmetric layout to give the hero more visual weight") not subserviently ("I have made the requested changes"). Added noise/grain SVG texture technique (feTurbulence + feColorMatrix) and clip-path polygon() for angled section breaks to modern CSS patterns.
+**Why:** Output quality depends not just on the HTML but on how the AI presents its work. Designer voice builds user confidence. Noise textures and clip-path add visual richness that differentiates from generic AI output.
+**Files:** src/app/api/chat/route.ts (SYSTEM_PROMPT)
+**Type:** prompt
+
+## [2026-02-06 10:30] — Code: Wrap handleImageUpload + handleImageTypeToggle in useCallback
+
+**What:** Converted the last 2 plain handler functions to useCallback: `handleImageUpload` (empty deps — only uses setters and imports) and `handleImageTypeToggle` (depends on `uploadedImages`). Audited all useCallback dependency arrays — no stale closure bugs found.
+**Why:** Completes the callback stabilization for page.tsx — all handler props passed to memoized ChatPanel/PreviewPanel are now useCallback-wrapped, ensuring React.memo can effectively skip re-renders.
+**Files:** src/app/page.tsx
+**Type:** code
+
+## [2026-02-06 10:20] — Feature: Add error boundaries wrapping ChatPanel and PreviewPanel
+
+**What:** Created a reusable ErrorBoundary class component with friendly fallback UI (error message + "Try again" button). Wrapped both ChatPanel and PreviewPanel in page.tsx with ErrorBoundary so crashes show a recoverable error state instead of a white screen.
+**Why:** Any unhandled error in either panel previously caused the entire app to crash with a blank white screen. Error boundaries catch render errors and show a minimal fallback with a retry button, improving resilience.
+**Files:** src/components/ErrorBoundary.tsx (new), src/app/page.tsx
+**Type:** feature
+
+## [2026-02-06 10:10] — Prompt: Add anti-template design rules + industry-specific design personalities (~300 tokens added)
+
+**What:** Replaced generic "ABSOLUTE BANS" with comprehensive anti-template rules: explicitly banned the default AI layout (hero+3cards+CTA), added required layout variety (asymmetric heroes, mixed columns, varied section rhythm/padding/backgrounds), visual hierarchy rules (contrast, strategic accent color use), typography personality directives, and micro-interaction specifics. Added 6 new industry design personalities to AESTHETIC DIRECTION (law firm, fitness, church, salon, automotive, education). Updated PRE-OUTPUT QUALITY CHECK to enforce anti-template validation with the "Twitter screenshot test."
+**Why:** Output quality is the #1 priority for Round 3. Generated sites looked too samey — always the same hero+cards+CTA pattern. These rules force the model to produce unique, industry-appropriate layouts that look human-designed.
+**Files:** src/app/api/chat/route.ts (SYSTEM_PROMPT)
+**Type:** prompt
+
+## [2026-02-06 10:00] — Code: Add React.memo to ChatPanel and PreviewPanel + stabilize callback props
+
+**What:** Wrapped ChatPanel and PreviewPanel with React.memo to prevent unnecessary re-renders. Extracted 2 inline arrow functions (`onStartCall`, `onClearSelection`) into useCallback hooks. Converted 3 plain handler functions (`handlePillClick`, `handleImageRemove`, `handleImageUpdate`) to useCallback for stable references.
+**Why:** Both panels re-rendered on every keystroke in the chat input because the parent page.tsx re-renders on state changes. React.memo with stable props skips these unnecessary renders.
+**Files:** src/app/page.tsx, src/components/chat/ChatPanel.tsx, src/components/preview/PreviewPanel.tsx
+**Type:** code
+
 ## [2026-02-05 04:45] — Prompt: Remove duplicate TECHNICAL/FONTS sections + compress ACCESSIBILITY (~350 tokens saved)
 
 **What:** Removed the TECHNICAL section (6 lines) from HTML GENERATION RULES — all items (semantic HTML, WCAG, touch targets, lazy loading, preconnect) were already in ACCESSIBILITY REQUIREMENTS. Removed the FONTS section (4 lines) — font lists were already in TYPOGRAPHY SYSTEM. Compressed ACCESSIBILITY REQUIREMENTS from 12 lines (header + 7 ✓ bullets) to 2 lines, merging the unique items from TECHNICAL (lazy-load, preconnect, mobile-first). Renamed to "ACCESSIBILITY + TECHNICAL REQUIREMENTS".

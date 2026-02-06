@@ -1192,6 +1192,9 @@ function HomePageContent() {
       } else if (e.key === "/" && !e.shiftKey) {
         e.preventDefault();
         window.dispatchEvent(new CustomEvent("toggle-code-view"));
+      } else if (e.code === "KeyK") {
+        e.preventDefault();
+        window.dispatchEvent(new CustomEvent("focus-chat-input"));
       } else if (e.key === "?" || (e.key === "/" && e.shiftKey)) {
         e.preventDefault();
         setShowShortcuts(prev => !prev);
@@ -1545,6 +1548,7 @@ function HomePageContent() {
                 ["Cmd+Z", "Undo"],
                 ["Cmd+Shift+Z", "Redo"],
                 ["Cmd+/", "Toggle code view"],
+                ["Cmd+K", "Focus chat input"],
                 ["Cmd+?", "This help"],
               ].map(([key, desc]) => (
                 <div key={key} className="flex items-center justify-between">

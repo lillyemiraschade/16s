@@ -115,6 +115,13 @@ export const ChatPanel = memo(function ChatPanel({
     }
   }, [isGenerating]);
 
+  // Focus textarea on Cmd+K custom event
+  useEffect(() => {
+    const handler = () => textareaRef.current?.focus();
+    window.addEventListener("focus-chat-input", handler);
+    return () => window.removeEventListener("focus-chat-input", handler);
+  }, []);
+
   const handleSend = () => {
     if ((!input.trim() && uploadedImages.length === 0) || isGenerating) return;
     onSend(input.trim() || "Here are my images.");
