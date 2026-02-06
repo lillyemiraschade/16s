@@ -57,6 +57,7 @@
 - R2-36 [CODE] Compress design quality intro + forensic analysis (~350 tokens saved, now ~10K)
 - R2-37 [PROMPT] Compress aesthetic direction section (~500 tokens saved, now ~9.5K)
 - R2-38 [FEATURE] Compress MANDATORY QUALITY CHECK — remove overlap with QA/design system (~400 tokens saved, now ~9.1K)
+- R2-39 [CODE] Remove unused errStack variable + unused isReactCode import (dead code cleanup)
 
 ## Still Open (Round 2 targets)
 - Stripe API version: verified correct for stripe@20.3.0 (not a bug)

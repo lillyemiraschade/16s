@@ -28,7 +28,7 @@ import {
 import type { Viewport, SelectedElement, VersionBookmark, CodeMode } from "@/lib/types";
 import Image from "next/image";
 import { CodeEditor } from "./CodeEditor";
-import { isReactCode, createReactPreviewHtml } from "@/lib/react-preview";
+import { createReactPreviewHtml } from "@/lib/react-preview";
 
 interface PreviewPanelProps {
   html: string | null;

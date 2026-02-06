@@ -1,5 +1,12 @@
 # 16s Changelog
 
+## [2026-02-05 02:30] — Code: Remove unused errStack variable + unused isReactCode import
+
+**What:** Removed unused `errStack` variable in route.ts outer error handler (leftover from R2-33 stack trace removal) and unused `isReactCode` import in PreviewPanel.tsx.
+**Why:** Dead code cleanup — `errStack` was declared but never referenced after R2-33 removed the stack trace logging, and `isReactCode` was imported but never called (only `createReactPreviewHtml` is used).
+**Files:** src/app/api/chat/route.ts, src/components/preview/PreviewPanel.tsx
+**Type:** code
+
 ## [2026-02-05 02:20] — Feature: Compress MANDATORY QUALITY CHECK (~400 tokens saved)
 
 **What:** Compressed the 65-line MANDATORY QUALITY CHECK section to 4 lines. The checklist was heavily redundant with PHASE 3 QA (which already checks accessibility, mobile, forms, links, CLS), the design system (which already mandates 8pt grid, clamp(), font pairing), and the forensic analysis (which already checks layout/color/typography fidelity). Prompt now ~9.1K tokens.

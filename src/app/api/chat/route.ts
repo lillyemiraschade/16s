@@ -1439,7 +1439,6 @@ Use this context to inform your designs. Don't ask about things you already know
     });
   } catch (error) {
     const errMsg = error instanceof Error ? error.message : String(error);
-    const errStack = error instanceof Error ? error.stack : "";
     console.error("[Chat API] Outer error:", errMsg);
 
     // Provide more specific error messages
