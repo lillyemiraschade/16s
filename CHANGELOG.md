@@ -1,5 +1,12 @@
 # 16s Changelog
 
+## [2026-02-05 04:40] — Code: Remove dead isReactCode + htmlToReactComponent exports from react-preview.ts
+
+**What:** Removed two unused exported functions from `src/lib/react-preview.ts`: `isReactCode()` (React pattern detection, 12 lines) and `htmlToReactComponent()` (HTML-to-React converter, 38 lines). Neither is imported anywhere in the codebase. Only `createReactPreviewHtml()` is used.
+**Why:** `isReactCode` was previously imported in PreviewPanel but removed in R2-39. `htmlToReactComponent` was never imported. Dead code wastes bytes, adds maintenance surface, and misleads readers.
+**Files:** src/lib/react-preview.ts
+**Type:** code
+
 ## [2026-02-05 04:35] — Feature: Add aria-live to toast notifications for screen reader announcements
 
 **What:** Added `role="status"` + `aria-live="polite"` to the "Copied to clipboard" toast in PreviewPanel. Added `role="alert"` to the welcome screen error toast in page.tsx. Both notifications were previously invisible to screen readers.
