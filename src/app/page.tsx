@@ -17,6 +17,7 @@ import { MigrationBanner } from "@/components/auth/MigrationBanner";
 import { UserMenu } from "@/components/auth/UserMenu";
 import { AuthModal } from "@/components/auth/AuthModal";
 import { useAuth } from "@/lib/auth/AuthContext";
+import { ErrorBoundary } from "@/components/ErrorBoundary";
 import type { Message, Viewport, SavedProjectMeta, SelectedElement, VersionBookmark, UploadedImage, CodeMode, ProjectContext, BMadPlan, BMadQAReport } from "@/lib/types";
 
 const HEADLINES = [
@@ -1481,6 +1482,7 @@ function HomePageContent() {
           transition={{ duration: 0.3 }}
         >
           <nav className="w-1/3 min-w-[360px] max-w-[480px]" aria-label="Chat">
+          <ErrorBoundary fallbackLabel="Chat panel crashed">
           <ChatPanel
             messages={messages}
             onSend={handleSendMessage}
@@ -1499,8 +1501,10 @@ function HomePageContent() {
             onClearSelection={handleClearSelection}
             onEditMessage={handleEditMessage}
           />
+          </ErrorBoundary>
         </nav>
         <main className="flex-1 relative" aria-label="Preview">
+          <ErrorBoundary fallbackLabel="Preview panel crashed">
           <PreviewPanel
             html={currentPreview}
             viewport={viewport}
@@ -1531,6 +1535,7 @@ function HomePageContent() {
             codeMode={codeMode}
             onCodeModeChange={setCodeMode}
           />
+          </ErrorBoundary>
           {/* Voice call widget — top-right of preview area */}
           <AnimatePresence>
             {isOnCall && (
