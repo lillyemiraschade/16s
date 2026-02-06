@@ -1380,6 +1380,7 @@ function HomePageContent() {
                   placeholder="Describe what you want to build..."
                   disabled={isGenerating}
                   aria-label="Message input"
+                  autoFocus
                   autoComplete="off"
                   rows={1}
                   className="flex-1 bg-transparent text-[16px] text-zinc-100 placeholder:text-zinc-600 focus:outline-none disabled:opacity-40 resize-none overflow-y-auto leading-relaxed"

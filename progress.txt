@@ -76,6 +76,7 @@
 - R3-36 [FEATURE] Drag-and-drop image upload on welcome screen
 - R3-37 [CODE] Remove dead legacy exports from projects.ts (-19 lines)
 - R3-38 [PROMPT] Compress CONTEXT LEARNING + uppercase typography rule
+- R3-39 [FEATURE] Auto-focus welcome textarea on page load
 
 ## In Progress
 (continuing Round 3)

@@ -1,5 +1,12 @@
 # 16s Changelog
 
+## [2026-02-06 14:55] — Feature: Auto-focus welcome textarea on page load
+
+**What:** Added `autoFocus` to the welcome screen textarea. Users can start typing immediately on page load without clicking into the input.
+**Why:** Reduces friction on first interaction. Standard pattern for primary input fields on landing screens.
+**Files:** src/app/page.tsx
+**Type:** feature
+
 ## [2026-02-06 14:50] — Prompt: Compress CONTEXT LEARNING + uppercase typography rule
 
 **What:** Compressed CONTEXT LEARNING from 7 to 4 lines (removed redundant "When you learn..." and "Context persists..." sentences). Added uppercase rule to TYPOGRAPHY PERSONALITY: uppercase only for small labels/nav/tags, never for main headings or body text.
