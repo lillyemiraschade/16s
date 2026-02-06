@@ -1,5 +1,13 @@
 # 16s Changelog
 
+## [2026-02-06 16:20] — Feature: Focus trap + focus restore in image lightbox
+
+**What:** Added accessibility focus management to the image lightbox dialog. Close button auto-focuses when lightbox opens. Tab key is trapped within the dialog (only the close button is focusable). Focus restores to the thumbnail that triggered the lightbox when closing. All 3 lightbox-opening click handlers updated to store trigger element.
+
+**Files:** `src/components/chat/ChatPanel.tsx`
+**Type:** Accessibility
+**Ref:** R4-6
+
 ## [2026-02-06 16:10] — Prompt: Compress CONTEXTUAL PILL SUGGESTIONS (~180 tokens saved)
 
 **What:** Compressed 12-industry pill listing into a general rule referencing INDUSTRY-SPECIFIC FUNCTIONALITY section + 3 examples + generic fallback. 15 lines → 4 lines. The AI can infer appropriate pills from the industry features list rather than needing explicit pills for each industry.

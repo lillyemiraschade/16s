@@ -60,8 +60,15 @@ export const ChatPanel = memo(function ChatPanel({
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const lightboxCloseRef = useRef<HTMLButtonElement>(null);
+  const lightboxTriggerRef = useRef<HTMLElement | null>(null);
 
-  const closeLightbox = useCallback(() => setLightboxImage(null), []);
+  const closeLightbox = useCallback(() => {
+    setLightboxImage(null);
+    // Restore focus to the element that opened the lightbox
+    lightboxTriggerRef.current?.focus();
+    lightboxTriggerRef.current = null;
+  }, []);
 
   const handleImageError = useCallback((msg: string) => {
     setUploadError(msg);
@@ -85,8 +92,15 @@ export const ChatPanel = memo(function ChatPanel({
 
   useEffect(() => {
     if (!lightboxImage) return;
+    // Auto-focus close button when lightbox opens
+    requestAnimationFrame(() => lightboxCloseRef.current?.focus());
     const handler = (e: KeyboardEvent) => {
       if (e.key === "Escape") closeLightbox();
+      // Trap focus — only the close button is focusable
+      if (e.key === "Tab") {
+        e.preventDefault();
+        lightboxCloseRef.current?.focus();
+      }
     };
     window.addEventListener("keydown", handler);
     return () => window.removeEventListener("keydown", handler);
@@ -394,7 +408,7 @@ export const ChatPanel = memo(function ChatPanel({
                       {message.uploadedImages.map((img, idx) => (
                         <div key={idx} className="relative">
                           <button
-                            onClick={() => setLightboxImage(img.data)}
+                            onClick={(e) => { lightboxTriggerRef.current = e.currentTarget; setLightboxImage(img.data); }}
                             className="rounded-lg overflow-hidden hover:ring-2 hover:ring-green-500/50 transition-all duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-green-500"
                           >
                             {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -419,7 +433,7 @@ export const ChatPanel = memo(function ChatPanel({
                       {message.images.map((img, idx) => (
                         <button
                           key={idx}
-                          onClick={() => setLightboxImage(img)}
+                          onClick={(e) => { lightboxTriggerRef.current = e.currentTarget; setLightboxImage(img); }}
                           className="rounded-lg overflow-hidden hover:ring-2 hover:ring-green-500/50 transition-all duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-green-500"
                         >
                           {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -641,7 +655,7 @@ export const ChatPanel = memo(function ChatPanel({
             {uploadedImages.map((img, idx) => (
               <div key={idx} className="relative group">
                 <button
-                  onClick={() => setLightboxImage(img.data)}
+                  onClick={(e) => { lightboxTriggerRef.current = e.currentTarget; setLightboxImage(img.data); }}
                   className="rounded-lg overflow-hidden focus:outline-none focus-visible:ring-2 focus-visible:ring-green-500"
                 >
                   {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -764,6 +778,7 @@ export const ChatPanel = memo(function ChatPanel({
             aria-modal="true"
           >
             <button
+              ref={lightboxCloseRef}
               onClick={closeLightbox}
               className="absolute top-4 right-4 p-2 rounded-lg glass glass-hover transition-colors"
               aria-label="Close preview"
