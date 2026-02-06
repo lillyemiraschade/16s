@@ -65,6 +65,7 @@
 - R3-25 [CODE] Clean up orphaned user message on stop + project name in export filename
 - R3-26 [PROMPT] Compress HTML GENERATION RULES — remove duplicated placeholder list (~150 tokens)
 - R3-27 [FEATURE] Support pasting images from clipboard (Cmd+V)
+- R3-28 [CODE] Downgrade 5 console.error → console.debug in projects.ts (completes R2 cleanup)
 
 ## In Progress
 (continuing Round 3)

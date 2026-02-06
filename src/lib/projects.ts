@@ -122,7 +122,7 @@ async function saveCloudProject(project: SavedProject, userId: string): Promise<
     .select();
 
   if (error) {
-    console.error("[Projects] Cloud save error:", error);
+    console.debug("[Projects] Cloud save error:", error);
     throw error;
   }
 
@@ -140,7 +140,7 @@ async function loadCloudProject(id: string, userId: string): Promise<SavedProjec
 
   if (error) {
     if (error.code === "PGRST116") return null; // Not found
-    console.error("[Projects] Cloud load error:", error);
+    console.debug("[Projects] Cloud load error:", error);
     return null;
   }
 
@@ -167,7 +167,7 @@ async function listCloudProjects(userId: string): Promise<SavedProjectMeta[]> {
     .order("updated_at", { ascending: false });
 
   if (error) {
-    console.error("[Projects] Cloud list error:", error);
+    console.debug("[Projects] Cloud list error:", error);
     return [];
   }
 
@@ -189,7 +189,7 @@ async function deleteCloudProject(id: string, userId: string): Promise<void> {
     .eq("user_id", userId);
 
   if (error) {
-    console.error("[Projects] Cloud delete error:", error);
+    console.debug("[Projects] Cloud delete error:", error);
     throw error;
   }
 }
@@ -236,7 +236,7 @@ export async function migrateLocalToCloud(userId: string): Promise<number> {
       migratedIds.add(project.id);
       migrated++;
     } catch (e) {
-      console.error("[Migration] Failed to migrate project:", project.id, e);
+      console.debug("[Migration] Failed to migrate project:", project.id, e);
     }
   }
 

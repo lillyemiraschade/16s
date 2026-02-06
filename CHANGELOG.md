@@ -1,5 +1,12 @@
 # 16s Changelog
 
+## [2026-02-06 14:02] — Code: Downgrade 5 console.error to console.debug in projects.ts
+
+**What:** Downgraded 5 remaining `console.error` calls to `console.debug` in src/lib/projects.ts (cloud save, load, list, delete, migration). These are non-critical client-side operations that shouldn't pollute the browser console.
+**Why:** Completes the R2 console cleanup that covered page.tsx. Projects.ts was missed.
+**Files:** src/lib/projects.ts
+**Type:** code
+
 ## [2026-02-06 13:57] — Feature: Support pasting images from clipboard (Cmd+V)
 
 **What:** Added an `onPaste` handler on the chat textarea that detects image data in the clipboard and processes it through the existing `processImageFiles` pipeline. Users can now screenshot + paste (Cmd+V) directly into the chat input.
