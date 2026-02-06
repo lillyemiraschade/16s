@@ -54,6 +54,7 @@
 - R2-33 [CODE] Remove stack trace logging + downgrade diagnostic console.logs to debug
 - R2-34 [PROMPT] Compress 8 industry templates to match concise style (~450 tokens saved, now ~10.3K)
 - R2-35 [FEATURE] Add blob upload to handleSendMessageInternal (fixes voice call image bug)
+- R2-36 [CODE] Compress design quality intro + forensic analysis (~350 tokens saved, now ~10K)
 
 ## Still Open (Round 2 targets)
 - Stripe API version: verified correct for stripe@20.3.0 (not a bug)

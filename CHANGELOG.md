@@ -1,5 +1,12 @@
 # 16s Changelog
 
+## [2026-02-05 02:14] — Code: Compress design quality intro + forensic analysis (~350 tokens saved)
+
+**What:** Compressed the DESIGN QUALITY STANDARD intro from 13 lines of motivational text to 1 line ("WITH INSPO: Clone pixel-perfectly. WITHOUT INSPO: Design something worthy of being inspo."). Compressed the forensic analysis from 19 lines to 8 (removed the MICRO-DETAILS and VERIFY subsections, folded their key points into the analysis list). Prompt now ~10K tokens.
+**Why:** The motivational preamble ("This is NOT optional", "Holy shit") added no actionable instructions. The micro-details and verify sections repeated points already made in the forensic analysis and the quality gates section later. The core analysis checklist (layout, typography, colors, effects, spacing, inventory) is preserved.
+**Files:** src/app/api/chat/route.ts (SYSTEM_PROMPT)
+**Type:** code
+
 ## [2026-02-05 02:12] — Feature: Add blob upload to handleSendMessageInternal for voice call images
 
 **What:** Added content image blob upload logic to `handleSendMessageInternal` (matching the existing logic in `handleSendMessage`). Content images without blob URLs are now uploaded before sending to the API, ensuring the AI receives proper `https://` URLs instead of falling back to `{{CONTENT_IMAGE_N}}` placeholders.
