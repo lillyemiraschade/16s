@@ -1,5 +1,12 @@
 # 16s Changelog
 
+## [2026-02-06 14:40] — Feature: Drag-and-drop image upload on welcome screen
+
+**What:** Added `onDrop` and `onDragOver` handlers to the welcome screen container. Users can now drag images directly onto the welcome screen to upload them, matching the ChatPanel behavior.
+**Why:** Consistency — ChatPanel supported drag-and-drop and paste, but the welcome screen only had file picker and paste (added in R3-33). All three upload methods now work on both screens.
+**Files:** src/app/page.tsx
+**Type:** feature
+
 ## [2026-02-06 14:35] — Prompt: Compress FORENSIC ANALYSIS + ABSOLUTE RULES (~60 tokens saved)
 
 **What:** Merged ABSOLUTE RULES (3 lines) into RECONSTRUCTION as a single line — both said "match exactly." Shortened FORENSIC ANALYSIS items slightly. 11 lines → 8 lines. All rules preserved.

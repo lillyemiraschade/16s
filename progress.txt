@@ -73,6 +73,7 @@
 - R3-33 [FEATURE] Clipboard image paste on welcome screen textarea
 - R3-34 [CODE] Un-export internal-only functions in images.ts (readFileAsDataURL, compressImage)
 - R3-35 [PROMPT] Compress FORENSIC ANALYSIS + ABSOLUTE RULES (~60 tokens saved)
+- R3-36 [FEATURE] Drag-and-drop image upload on welcome screen
 
 ## In Progress
 (continuing Round 3)
