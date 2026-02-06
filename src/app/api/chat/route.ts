@@ -96,6 +96,25 @@ function checkRateLimit(ip: string): boolean {
   return true;
 }
 
+// Map API/stream errors to user-friendly messages with HTTP status codes
+function getUserFriendlyError(errMsg: string): { message: string; statusCode: number } {
+  if (errMsg.includes("body") || errMsg.includes("size") || errMsg.includes("large"))
+    return { message: "Request too large. Try with fewer or smaller images.", statusCode: 413 };
+  if (errMsg.includes("credit balance") || errMsg.includes("insufficient"))
+    return { message: "The AI service is temporarily unavailable. Please try again shortly.", statusCode: 402 };
+  if (errMsg.includes("overloaded") || errMsg.includes("529"))
+    return { message: "The AI is busy right now. Give me a moment and try again.", statusCode: 503 };
+  if (errMsg.includes("rate") || errMsg.includes("429"))
+    return { message: "Too many requests. Please wait a few seconds and try again.", statusCode: 429 };
+  if (errMsg.includes("timeout") || errMsg.includes("ETIMEDOUT"))
+    return { message: "The request timed out. Please try again.", statusCode: 504 };
+  if (errMsg.includes("invalid") || errMsg.includes("400"))
+    return { message: "I had trouble understanding that. Could you rephrase your request?", statusCode: 400 };
+  if (errMsg.includes("Supabase") || errMsg.includes("not configured"))
+    return { message: "Service configuration error. Please try again.", statusCode: 500 };
+  return { message: "Let me try that again...", statusCode: 500 };
+}
+
 // Clean stale entries periodically
 if (typeof globalThis !== "undefined") {
   const cleanup = () => {
@@ -1307,20 +1326,7 @@ Use this context to inform your designs. Don't ask about things you already know
 
           console.error("[Chat API] Stream error:", errMsg);
 
-          // Determine specific error type for better user messaging
-          let userMessage = "Let me try that again...";
-          if (errMsg.includes("credit balance") || errMsg.includes("insufficient")) {
-            userMessage = "The AI service is temporarily unavailable. Please try again shortly.";
-          } else if (errMsg.includes("overloaded") || errMsg.includes("529")) {
-            userMessage = "The AI is busy right now. Give me a moment and try again.";
-          } else if (errMsg.includes("rate") || errMsg.includes("429")) {
-            userMessage = "Too many requests. Please wait a few seconds and try again.";
-          } else if (errMsg.includes("timeout") || errMsg.includes("ETIMEDOUT")) {
-            userMessage = "The request timed out. Please try again.";
-          } else if (errMsg.includes("invalid") || errMsg.includes("400")) {
-            userMessage = "I had trouble understanding that. Could you rephrase your request?";
-          }
-
+          const { message: userMessage } = getUserFriendlyError(errMsg);
           controller.enqueue(
             encoder.encode("\n" + JSON.stringify({ message: userMessage }))
           );
@@ -1340,26 +1346,7 @@ Use this context to inform your designs. Don't ask about things you already know
     const errMsg = error instanceof Error ? error.message : String(error);
     console.error("[Chat API] Outer error:", errMsg);
 
-    // Provide more specific error messages
-    let userMessage = "Let me try that again...";
-    let statusCode = 500;
-
-    if (errMsg.includes("body") || errMsg.includes("size") || errMsg.includes("large")) {
-      userMessage = "Request too large. Try with fewer or smaller images.";
-      statusCode = 413;
-    } else if (errMsg.includes("timeout") || errMsg.includes("ETIMEDOUT")) {
-      userMessage = "Request timed out. Please try again.";
-      statusCode = 504;
-    } else if (errMsg.includes("overloaded") || errMsg.includes("529")) {
-      userMessage = "The AI is busy right now. Please try again in a moment.";
-      statusCode = 503;
-    } else if (errMsg.includes("rate") || errMsg.includes("429")) {
-      userMessage = "Too many requests. Please wait a few seconds.";
-      statusCode = 429;
-    } else if (errMsg.includes("Supabase") || errMsg.includes("not configured")) {
-      userMessage = "Service configuration error. Please try again.";
-    }
-
+    const { message: userMessage, statusCode } = getUserFriendlyError(errMsg);
     return new Response(
       JSON.stringify({ message: userMessage }),
       {

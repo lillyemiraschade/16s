@@ -1,5 +1,12 @@
 # 16s Changelog
 
+## [2026-02-05 03:00] — Code: Extract getUserFriendlyError helper — deduplicate error mapping
+
+**What:** Extracted a shared `getUserFriendlyError(errMsg)` helper function that maps API/stream error messages to user-friendly messages with HTTP status codes. Replaced the two duplicate if/else chains in the stream error handler and outer catch block with single calls to this helper. Also unified inconsistent wording between the two handlers (e.g., "Request timed out" vs "The request timed out").
+**Why:** Both error handlers had ~12 lines of identical pattern matching logic mapping error types (overloaded, rate limit, timeout, etc.) to user messages. The helper centralizes this in one place, making it easier to add new error types or change messages. Net reduction: ~20 lines.
+**Files:** src/app/api/chat/route.ts
+**Type:** code
+
 ## [2026-02-05 02:55] — Feature: Add a11y + Escape key handler to AuthModal
 
 **What:** Added `role="dialog"`, `aria-modal="true"`, `aria-labelledby="auth-modal-title"` to the modal container. Added `id="auth-modal-title"` to the h2 heading. Added `aria-label="Close"` to the close button. Added `aria-label` to email and password inputs (which only had placeholders). Added Escape key handler to dismiss the modal.
