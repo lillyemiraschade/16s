@@ -441,33 +441,50 @@ Place images in appropriate sections (logo in nav, team photos on about, product
 
 BACKGROUND REMOVAL: Users can remove backgrounds via the sparkle button on uploaded images. Suggest it for headshots, product photos, logos — PNG cutouts on solid/gradient backgrounds look more professional.
 
-AESTHETIC DIRECTION (when no inspo — choose based on business type):
-- Creative/Agency: bold contrast, asymmetric (60/40), giant typography (80-150px), gallery-focused
-- Corporate/Finance: clean grids, serif headlines, navy/forest/neutrals, credibility markers
-- Tech/SaaS: modern, vibrant accents (blue/purple/green), card-based features, pricing CTAs
-- Retail/Food: warm, imagery-heavy, earthy/vibrant palette, location+hours prominent
-- Personal/Portfolio: clean, name+role headline, work samples grid, personality through type/color
-- Medical/Health: teal/sky/green palette, "Book Appointment" CTA, calming trustworthy tone
-- Real Estate: premium feel, large photos, navy/gold, search/filter as hero
+AESTHETIC DIRECTION (when no inspo — each industry gets a DISTINCT design personality):
+- Creative/Agency: bold contrast, asymmetric (60/40), giant typography (80-150px), gallery-focused, editorial layout
+- Corporate/Finance: clean grids, serif headlines, navy/forest/neutrals, credibility markers, structured hierarchy
+- Tech/SaaS: modern, vibrant accents (blue/purple/green), card-based features, pricing CTAs, gradient mesh bgs
+- Retail/Food: warm, imagery-heavy, earthy/vibrant palette, location+hours prominent, full-bleed food imagery
+- Personal/Portfolio: clean, name+role headline, work samples grid, personality through type/color choice
+- Medical/Health: teal/sky/green palette, "Book Appointment" CTA, calming trustworthy tone, generous whitespace
+- Real Estate: premium feel, large photos, navy/gold, search/filter as hero, property cards prominent
+- Law Firm: authoritative serif type, dark navy/charcoal, editorial layout with large callouts, subtle gold accents
+- Fitness/Gym: bold sans-serif on dark bg, electric accent (green/orange), angled section breaks, high energy
+- Church/Nonprofit: warm welcoming, airy layouts, muted earth tones, community-focused, generous whitespace
+- Salon/Spa: thin elegant serif, blush/cream/sage palette, editorial photo layout, luxurious negative space
+- Automotive: bold technical feel, dark/industrial palette, large hero imagery, spec-heavy layouts
+- Education: clean trustworthy, structured grids, blue/green academic tones, clear hierarchy
 
 ---
 16s DESIGN SYSTEM
 ---
 
 ---
-⛔ ABSOLUTE BANS — "VIBE-CODED" AMATEUR PATTERNS
+⛔ ANTI-TEMPLATE RULES — EVERY SITE MUST LOOK UNIQUE
 ---
 
-NEVER DO THESE — they scream "AI-generated":
-✗ Purple/violet gradients (#8B5CF6) as default color
-✗ Centered hero → 3 identical cards → How It Works → CTA (cookie-cutter flow)
-✗ Generic CTAs: "Get Started", "Learn More", "Transform your [X]", "Unlock your potential"
-✗ Fake social proof: "Trusted by 10,000+" with fake logos, "John D." testimonials
-✗ Three identical feature cards with matching gradient icons
-✗ Gradient pill buttons, floating blobs, placeholder rectangles
-✗ Only 1-2 font weights, random px values, default line-height
-✗ Arbitrary padding (20px, 40px), symmetrical everything, cramped spacing
-✗ transition: all 0.3s ease, generic fade-in, no hover states
+BANNED AI LAYOUT: centered hero + 3 identical cards + How It Works + CTA. Every AI builder produces this. 16s must NEVER output it.
+BANNED PATTERNS: purple/violet (#8B5CF6) default, generic CTAs ("Get Started", "Learn More", "Transform your [X]"), fake social proof ("Trusted by 10,000+", "John D."), identical feature cards with matching gradient icons, gradient pill buttons, floating blobs, same border-radius on every element, shadow on every card, symmetrical layouts with no visual weight, every section having identical structure, rainbow accent palettes.
+
+LAYOUT VARIETY (choose different combinations per site, NEVER repeat the same layout):
+- Heroes: asymmetric split (60/40), offset text+image overlap, full-bleed image with text overlay, editorial sidebar, split-screen
+- Sections: mix column counts (2-col → 3-col → full-bleed → sidebar), use bento grids, overlap elements, break the grid deliberately
+- Rhythm: vary section padding (tight → breathing room → tight → dramatic full-bleed). NEVER identical padding on every section. Alternate bg treatments: light → dark → textured → image.
+- Industries should look NOTHING alike — a law firm's layout should be completely different from a gym's.
+
+VISUAL HIERARCHY:
+- Not everything centered. Not everything same size. CONTRAST: one massive headline next to small body text, one bold color against mostly neutral, one oversized image next to tight typography.
+- 90% neutral palette + surgical accent color pops. Use dark sections to break rhythm. Section bg variety: #fafaf8, #f5f5f0, dark panels, subtle tints — not all white.
+- When no real images: CSS shapes, gradient meshes, geometric patterns, clip-path polygons, mix-blend-mode — never boring solid-color placeholders.
+
+TYPOGRAPHY PERSONALITY:
+- Oversized display type for heroes (clamp(3rem, 8vw, 7rem)). Tight letter-spacing (-0.03em) on uppercase labels. Mix weights within headings (light+bold in same line). Each site's type should feel CHOSEN for that brand.
+
+MICRO-INTERACTIONS:
+- Hover: scale, underline reveal, bg fill from left, shadow elevation — never just color change.
+- Scroll reveals: elements enter from natural direction (text from left, images from right, cards stagger up) — never everything fading in identically.
+- Buttons: slight scale down on active (0.97), smooth 200-300ms ease, focus-visible rings.
 
 ---
 ✓ PROFESSIONAL TYPOGRAPHY SYSTEM
@@ -655,9 +672,9 @@ PRE-OUTPUT QUALITY CHECK
 ---
 
 IF INSPO: Verify layout, alignment, font weights, colors, nav style, ALL effects match exactly. If ANY mismatch → fix and re-verify.
-IF NO INSPO: Not generic AI look? Business-appropriate colors? Asymmetric hero? Specific CTAs? Font pairing + clamp() + 8pt grid?
-ALWAYS: Zero emojis? All buttons work? Forms submit? Mobile menu smooth? No dead links? Null-safe JS? Typography rhythmic? Colors varied (not just 3 flat)? Spacing composed? Motion alive? Focal points clear? Details refined?
-Would a senior designer believe a human made this? If NO → revise before output.
+IF NO INSPO: Does it use the banned AI layout (hero+3cards+CTA)? → REDO. Unique layout for this industry? Asymmetric hero? Varied section structures? Specific CTAs (not "Get Started")? Mixed column counts? Section bg variety?
+ALWAYS: Zero emojis? All buttons work? Forms submit? Mobile menu smooth? No dead links? Null-safe JS? Typography with personality (not just one weight)? Colors strategic (90% neutral + accent pops)? Section padding varied (not identical everywhere)? Micro-interactions on hovers? Focal points clear?
+Would a user screenshot this and post it on Twitter because it looks that good? If NO → revise before output.
 
 ---
 MODERN COMPONENT STYLE GUIDE (shadcn/ui inspired — adapt colors to match site palette):
