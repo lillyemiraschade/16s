@@ -598,6 +598,75 @@ function HomePageContent() {
     return result;
   }, []);
 
+  // [Ralph R2] Shared helper to build clean messages array for API
+  const buildCleanMessages = useCallback((msgs: Message[], extra: Partial<Message>[]) => {
+    return [...msgs, ...extra]
+      .map(({ images, pills, showUpload, ...rest }) => rest)
+      .filter(msg => msg.id && msg.role && typeof msg.content === "string")
+      .map(msg => ({
+        ...msg,
+        id: msg.id || `msg-${Date.now()}`,
+        content: msg.content || (msg.role === "user" ? "[Empty]" : "..."),
+      }));
+  }, []);
+
+  // [Ralph R2] Shared helper: send to API, parse response, update preview state
+  const sendAndProcessChat = useCallback(async (
+    cleanMessages: Partial<Message>[],
+    imagesToSend: UploadedImage[],
+    userMessage: Message,
+    controller: AbortController,
+    onError?: () => void,
+  ) => {
+    const MAX_PREVIEW_FOR_API = 30_000;
+    const previewForApi = currentPreview && currentPreview.length > MAX_PREVIEW_FOR_API
+      ? currentPreview.substring(0, MAX_PREVIEW_FOR_API)
+      : currentPreview;
+
+    const response = await fetch("/api/chat", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        messages: cleanMessages,
+        uploadedImages: imagesToSend,
+        currentPreview: previewForApi,
+        previewScreenshot,
+        outputFormat,
+        context: projectContext,
+      }),
+      signal: controller.signal,
+    });
+
+    const data = await fetchAndParseChat(response);
+
+    const aiMessage: Message = {
+      id: (Date.now() + 1).toString(),
+      role: "assistant",
+      content: data.message || "I'm working on your request...",
+      pills: data.pills,
+      showUpload: data.showUpload,
+      plan: data.plan,
+      qaReport: data.qaReport,
+    };
+    setMessages((prev) => [...prev, aiMessage]);
+
+    if (data.html) {
+      if (currentPreview) {
+        setPreviewHistory((prev) => [...prev, currentPreview]);
+      }
+      setRedoHistory([]);
+      const processedHtml = replaceImagePlaceholders(data.html, imagesToSend);
+      const navGuard = `<script>document.addEventListener('click',function(e){var a=e.target.closest('a');if(a){var h=a.getAttribute('href');if(h&&h.startsWith('http')){e.preventDefault();return;}if(h&&!h.startsWith('javascript:')){e.preventDefault();}}},true);</script>`;
+      const safeHtml = processedHtml.replace(/<head([^>]*)>/i, `<head$1>${navGuard}`);
+      setCurrentPreview(safeHtml);
+      setReactCode(null);
+    }
+
+    if (data.react) {
+      setReactCode(data.react);
+    }
+  }, [currentPreview, previewScreenshot, outputFormat, projectContext, replaceImagePlaceholders]);
+
   const handleSendMessage = useCallback(async (text: string, imagesToInclude?: UploadedImage[]) => {
     // If auth is configured but user is not signed in, prompt them to sign up
     if (isConfigured && !user) {
@@ -719,73 +788,11 @@ function HomePageContent() {
 
       // Use messageText (with element context) for API, not the displayed text
       const apiUserMessage = { ...userMessage, content: messageText };
-      // Re-read messages to get updated URLs
-      const currentMessages = messagesRef.current;
-      const cleanMessages = [...currentMessages, apiUserMessage]
-        .map(({ images, pills, showUpload, ...rest }) => rest)
-        // Ensure all messages have required fields to prevent API validation errors
-        .filter(msg => msg.id && msg.role && typeof msg.content === "string")
-        .map(msg => ({
-          ...msg,
-          id: msg.id || `msg-${Date.now()}`,
-          content: msg.content || (msg.role === "user" ? "[Empty]" : "..."),
-        }));
+      const cleanMessages = buildCleanMessages(messagesRef.current, [apiUserMessage]);
 
-      // [2026-02-05] Truncate preview client-side — server truncates to 30K anyway, saves bandwidth
-      const MAX_PREVIEW_FOR_API = 30_000;
-      const previewForApi = currentPreview && currentPreview.length > MAX_PREVIEW_FOR_API
-        ? currentPreview.substring(0, MAX_PREVIEW_FOR_API)
-        : currentPreview;
-
-      const response = await fetch("/api/chat", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          messages: cleanMessages,
-          uploadedImages: imagesToSend,
-          currentPreview: previewForApi,
-          previewScreenshot,
-          outputFormat,
-          context: projectContext,
-        }),
-        signal: controller.signal,
+      await sendAndProcessChat(cleanMessages, imagesToSend, userMessage, controller, () => {
+        if (hadOwnImages) setUploadedImages(imagesToSend);
       });
-
-      const data = await fetchAndParseChat(response);
-
-      const aiMessage: Message = {
-        id: (Date.now() + 1).toString(),
-        role: "assistant",
-        content: data.message || "I'm working on your request...",
-        pills: data.pills,
-        showUpload: data.showUpload,
-        plan: data.plan,
-        qaReport: data.qaReport,
-      };
-      setMessages((prev) => [...prev, aiMessage]);
-
-      if (data.html) {
-        if (currentPreview) {
-          setPreviewHistory((prev) => [...prev, currentPreview]);
-        }
-        setRedoHistory([]); // Clear redo on new version
-
-        // Replace content image placeholders with actual base64 data
-        // Pass imagesToSend to ensure current images are included (messagesRef might not be updated yet)
-        const processedHtml = replaceImagePlaceholders(data.html, imagesToSend);
-
-        // Inject navigation guard to keep all clicks inside iframe
-        const navGuard = `<script>document.addEventListener('click',function(e){var a=e.target.closest('a');if(a){var h=a.getAttribute('href');if(h&&h.startsWith('http')){e.preventDefault();return;}if(h&&!h.startsWith('javascript:')){e.preventDefault();}}},true);</script>`;
-        const safeHtml = processedHtml.replace(/<head([^>]*)>/i, `<head$1>${navGuard}`);
-        setCurrentPreview(safeHtml);
-        setReactCode(null); // Clear React code when HTML is generated
-      }
-
-      // Handle React output
-      if (data.react) {
-        setReactCode(data.react);
-        // For React mode, we don't set preview HTML - show code instead
-      }
     } catch (error) {
       if (error instanceof DOMException && error.name === "AbortError") return;
       console.error("Error sending message:", error);
@@ -813,7 +820,7 @@ function HomePageContent() {
         setIsGenerating(false);
       }
     }
-  }, [isOnCall, uploadedImages, hasStarted, selectedElement, currentPreview, previewScreenshot, isConfigured, user, outputFormat, projectContext, replaceImagePlaceholders]);
+  }, [isOnCall, uploadedImages, hasStarted, selectedElement, isConfigured, user, sendAndProcessChat, buildCleanMessages]);
 
   // Keep ref updated for auth callback
   useEffect(() => {
@@ -845,7 +852,7 @@ function HomePageContent() {
     const userMessage: Message = {
       id: Date.now().toString(),
       role: "user",
-      content: visibleText || apiText, // Show visible text to user
+      content: visibleText || apiText,
       uploadedImages: imagesToSend.length > 0 ? imagesToSend : undefined,
     };
 
@@ -857,69 +864,9 @@ function HomePageContent() {
     abortRef.current = controller;
 
     try {
-      const apiUserMessage = { ...userMessage, content: apiText }; // Use full text for API
-      const cleanMessages = [...messagesRef.current, apiUserMessage]
-        .map(({ images, pills, showUpload, ...rest }) => rest)
-        // Ensure all messages have required fields to prevent API validation errors
-        .filter(msg => msg.id && msg.role && typeof msg.content === "string")
-        .map(msg => ({
-          ...msg,
-          id: msg.id || `msg-${Date.now()}`,
-          content: msg.content || (msg.role === "user" ? "[Empty]" : "..."),
-        }));
-
-      const MAX_PREVIEW_FOR_API = 30_000;
-      const previewForApi = currentPreview && currentPreview.length > MAX_PREVIEW_FOR_API
-        ? currentPreview.substring(0, MAX_PREVIEW_FOR_API)
-        : currentPreview;
-
-      const response = await fetch("/api/chat", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          messages: cleanMessages,
-          uploadedImages: imagesToSend,
-          currentPreview: previewForApi,
-          previewScreenshot,
-          outputFormat,
-          context: projectContext,
-        }),
-        signal: controller.signal,
-      });
-
-      const data = await fetchAndParseChat(response);
-
-      const aiMessage: Message = {
-        id: (Date.now() + 1).toString(),
-        role: "assistant",
-        content: data.message || "I'm working on your request...",
-        pills: data.pills,
-        showUpload: data.showUpload,
-        plan: data.plan,
-        qaReport: data.qaReport,
-      };
-      setMessages((prev) => [...prev, aiMessage]);
-
-      if (data.html) {
-        if (currentPreview) {
-          setPreviewHistory((prev) => [...prev, currentPreview]);
-        }
-        setRedoHistory([]);
-
-        // Replace content image placeholders with actual base64 data
-        // Pass imagesToSend to ensure current images are included
-        const processedHtml = replaceImagePlaceholders(data.html, imagesToSend);
-
-        const navGuard = `<script>document.addEventListener('click',function(e){var a=e.target.closest('a');if(a){var h=a.getAttribute('href');if(h&&h.startsWith('http')){e.preventDefault();return;}if(h&&!h.startsWith('javascript:')){e.preventDefault();}}},true);</script>`;
-        const safeHtml = processedHtml.replace(/<head([^>]*)>/i, `<head$1>${navGuard}`);
-        setCurrentPreview(safeHtml);
-        setReactCode(null);
-      }
-
-      // Handle React output
-      if (data.react) {
-        setReactCode(data.react);
-      }
+      const apiUserMessage = { ...userMessage, content: apiText };
+      const cleanMessages = buildCleanMessages(messagesRef.current, [apiUserMessage]);
+      await sendAndProcessChat(cleanMessages, imagesToSend, userMessage, controller);
     } catch (error) {
       if (error instanceof DOMException && error.name === "AbortError") return;
       console.error("Error sending message:", error);
@@ -940,7 +887,7 @@ function HomePageContent() {
         setIsGenerating(false);
       }
     }
-  }, [uploadedImages, hasStarted, currentPreview, previewScreenshot, outputFormat, projectContext, replaceImagePlaceholders]);
+  }, [uploadedImages, hasStarted, sendAndProcessChat, buildCleanMessages]);
 
   const handleCallComplete = useCallback((visibleSummary: string, privateData: string) => {
     setIsOnCall(false);

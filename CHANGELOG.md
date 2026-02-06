@@ -1,5 +1,12 @@
 # 16s Changelog
 
+## [2026-02-05 01:01] — Code: Extract shared helpers from handleSendMessage and handleSendMessageInternal
+
+**What:** Extracted two shared helper functions (`buildCleanMessages` and `sendAndProcessChat`) from the duplicated fetch+parse+state-update logic in `handleSendMessage` and `handleSendMessageInternal`. Both functions now call the shared helpers instead of having ~130 lines of identical code. Net reduction: 53 lines.
+**Why:** The two message-sending functions had nearly identical fetch, parse, and preview-update logic copied between them. Any bug fix or feature change had to be applied in two places, risking drift. The shared helpers make the code DRY and easier to maintain.
+**Files:** src/app/page.tsx
+**Type:** code
+
 ## [2026-02-05 00:20] — Prompt: Fix null-unsafe Cart and Copy-to-Clipboard JavaScript patterns
 
 **What:** Added null guards to Cart pattern (`document.querySelector('.cart-count')` and `.cart-total` now checked before access, `parseFloat` fallback to 0) and Copy-to-Clipboard pattern (`btn.previousElementSibling?.textContent` with optional chaining, early return if empty).

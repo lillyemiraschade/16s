@@ -1,0 +1,37 @@
+# 16s Improvement Progress
+
+## Round 1 Summary (20 changes completed)
+- All 3 critical DB schema bugs fixed (context column, current_period_end, subscriptions UPDATE RLS)
+- credits_remaining default fixed to 50
+- Rate limiting added to upload, voice, deploy routes
+- Payload size validation on upload + remove-bg
+- Credit deduction race condition fixed
+- Haiku upgraded to 3.5 for simple iterations
+- isSimpleIteration regex patterns tightened
+- Cmd+Z no longer hijacks text input undo
+- Images restored on request failure
+- System prompt: medical/dental + real estate templates added
+- System prompt: subjective feedback guide added
+- System prompt: null-safe JS patterns across all 10 templates
+- System prompt: Google Fonts-only font recommendations
+- System prompt: image handling consolidated, CSS compressed, emoji ban deduplicated, spacing deduplicated
+- Migration data loss bug fixed in projects.ts
+- Client-side preview HTML truncation for bandwidth savings
+
+## Round 2 Completed
+- R2-1 [CODE] Extract shared helpers from handleSendMessage/Internal (-53 lines)
+
+## Still Open (Round 2 targets)
+- Stripe API version pinned to future date (2026-01-28.clover)
+- html2canvas CORS handling needs graceful degradation
+- beforeunload save doesn't include context for cloud users
+- Missing aria-labels on image toggle buttons
+- Industry templates needed: law firms, fitness, churches, salons, automotive, education
+- Conversation flow: first-message intelligence, iteration memory, multi-request handling
+- Design system: modern CSS patterns, bento grids, glassmorphism
+- QA system: touch targets, form labels, CLS prevention, external link attributes
+- Prompt efficiency: target <13K tokens (currently ~14K)
+- SMARTER_16S features: plan card consistency, QA report quality, context persistence verification, pill suggestion quality
+
+## In Progress
+(none)
