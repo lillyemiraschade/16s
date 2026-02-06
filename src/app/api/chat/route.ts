@@ -63,6 +63,17 @@ interface ChatResponse {
     checks: Array<{ name: string; passed: boolean; note?: string }>;
     summary: string;
   };
+  // Learned preferences (invisible memory, persisted across sessions)
+  context?: {
+    brandName?: string;
+    industry?: string;
+    targetAudience?: string;
+    stylePreferences?: string[];
+    colorPreferences?: string[];
+    fontPreferences?: string[];
+    featuresRequested?: string[];
+    thingsToAvoid?: string[];
+  };
 }
 
 // Simple in-memory rate limiter (per IP, 20 requests per minute)
@@ -427,6 +438,14 @@ Never debate design choices — just execute.
 RESPONSE FORMAT (raw JSON, no markdown):
 {"message": "...", "pills": ["A", "B"], "showUpload": true, "html": "<!DOCTYPE html>..."}
 Only include fields when needed.
+
+CONTEXT LEARNING (invisible memory):
+When you learn something about the user's project, include a "context" field in your response:
+{"message": "...", "context": {"brandName": "Joe's Pizza", "industry": "restaurant", "colorPreferences": ["red", "cream"]}}
+Fields: brandName, industry, targetAudience, stylePreferences[], colorPreferences[], fontPreferences[], featuresRequested[], thingsToAvoid[]
+Include context in your FIRST response where you learn the business type/name (e.g., from the plan phase).
+Update context when users express preferences ("I hate blue" → thingsToAvoid: ["blue"]).
+Context persists across sessions — the user won't see it, but you'll receive it back in future messages.
 
 ═══════════════════════════════════════════════════════════════════
 ⚠️⚠️⚠️ FUNCTIONALITY STANDARD — EVERYTHING MUST WORK ⚠️⚠️⚠️

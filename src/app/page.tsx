@@ -111,6 +111,7 @@ interface ChatAPIResponse {
   react?: string;
   plan?: BMadPlan;
   qaReport?: BMadQAReport;
+  context?: ProjectContext;
   error?: string;
 }
 
@@ -643,6 +644,11 @@ function HomePageContent() {
 
     if (data.react) {
       setReactCode(data.react);
+    }
+
+    // Save learned context (invisible memory) if AI returned it
+    if (data.context) {
+      setProjectContext((prev) => prev ? { ...prev, ...data.context } : data.context);
     }
   }, [currentPreview, previewScreenshot, outputFormat, projectContext, replaceImagePlaceholders]);
 

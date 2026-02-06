@@ -30,6 +30,7 @@
 - R2-9 [FEATURE] Strengthen QA checklist (touch targets, form labels, CLS, external links)
 - R2-10 [CODE] Remove dead code + ~25 console.logs from page.tsx, route.ts, projects.ts
 - R2-11 [PROMPT] Add automotive + education templates (completes all 6 industry templates)
+- R2-12 [FEATURE] Complete context persistence — AI learns+returns preferences
 
 ## Still Open (Round 2 targets)
 - Stripe API version: verified correct for stripe@20.3.0 (not a bug)

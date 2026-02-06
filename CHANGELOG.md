@@ -1,5 +1,12 @@
 # 16s Changelog
 
+## [2026-02-05 01:12] — Feature: Complete context persistence — AI can now learn and return preferences
+
+**What:** Added `context` field to ChatResponse (route.ts) so the AI can return learned preferences. Added "CONTEXT LEARNING" instructions to the system prompt telling AI when to include context (first plan response, preference changes). Updated client (page.tsx) to merge returned context into `projectContext` state, which auto-saves with the project and gets injected back into future messages.
+**Why:** The context flow was incomplete — the API could *receive* and *inject* context, but the AI had no way to *set* it. Context was only populated from loaded projects, meaning a brand-new conversation would never build up learned preferences. Now the AI returns context when it learns the brand name, industry, colors, etc.
+**Files:** src/app/api/chat/route.ts, src/app/page.tsx
+**Type:** feature
+
 ## [2026-02-05 01:11] — Prompt: Add automotive + education industry templates
 
 **What:** Added AUTOMOTIVE/DEALER/MECHANIC template (vehicle inventory, filtering, test drive CTA, service department, financing, bold palette) and EDUCATION/TUTORING/COURSES template (course catalog, instructor profiles, enrollment CTA, schedule, testimonials, approachable palette). Completes all 6 planned industry templates for Round 2.
