@@ -1,5 +1,12 @@
 # 16s Changelog
 
+## [2026-02-05 02:35] — Prompt: Compress industry-specific functionality to single-line summaries (~400 tokens saved)
+
+**What:** Compressed 14 industry-specific functionality blocks from multi-line entries with headings to single-line summaries. Removed blank lines, redundant headers (e.g., "RESTAURANT/CAFE:" → "Restaurant/Cafe:"), and combined bullet points into comma-separated lists. Preserved all key features and the NEVER-invent-content warnings for medical and legal.
+**Why:** Each industry had its own 3-5 line block with a heading and bullets — 72 lines total. One-line summaries convey the same information. The model can infer specific features from the compact descriptions. Prompt now ~8.7K tokens.
+**Files:** src/app/api/chat/route.ts (SYSTEM_PROMPT)
+**Type:** prompt
+
 ## [2026-02-05 02:30] — Code: Remove unused errStack variable + unused isReactCode import
 
 **What:** Removed unused `errStack` variable in route.ts outer error handler (leftover from R2-33 stack trace removal) and unused `isReactCode` import in PreviewPanel.tsx.

@@ -456,78 +456,21 @@ UNIVERSAL FUNCTIONALITY REQUIREMENTS:
    - Empty states ("No results found" with suggestions)
    - Hover states on ALL interactive elements
 
-INDUSTRY-SPECIFIC FUNCTIONALITY:
-
-RESTAURANT/CAFE:
-- Interactive menu with categories, filters
-- Hours display (open/closed indicator)
-- Reservation form that confirms booking
-- Location map (embedded or directions link)
-
-E-COMMERCE/SHOP:
-- Product filtering (price, category, size)
-- Add to cart with quantity
-- Cart drawer with running total
-- Wishlist/favorites
-
-PORTFOLIO/AGENCY:
-- Project filtering by category
-- Project detail modal or page
-- Contact form with service selector
-- Testimonial carousel
-
-SERVICE BUSINESS:
-- Service selector with pricing
-- Booking/quote request form
-- FAQ accordion
-- Service area/location info
-
-BLOG/CONTENT:
-- Category filtering
-- Search functionality
-- Reading time estimate
-- Share buttons (copy link)
-- Related posts
-
-SaaS/PRODUCT:
-- Feature comparison tabs
-- Pricing toggle (monthly/yearly)
-- Demo request form
-- Feature tour/walkthrough
-
-MEDICAL/DENTAL/HEALTH:
-- Provider profiles, services list, appointment form (date/time/insurance)
-- Office hours, insurance accepted, "New Patients Welcome" CTA
-- NEVER invent medical claims or credentials — use [PLACEHOLDER]
-
-REAL ESTATE/PROPERTY:
-- Property cards with filtering (price, beds, type), agent profile
-- Featured listings, property detail modal, "Get Pre-Approved" CTA
-
-LAW FIRM/LEGAL:
-- Practice areas grid, attorney profiles, free consultation CTA
-- Case results section, FAQ accordion, confidential contact form
-- NEVER invent case results or legal advice — use [PLACEHOLDER]
-
-FITNESS/GYM/STUDIO:
-- Class schedule grid (filterable), membership tier comparison
-- Trainer profiles, facility tour, trial offer CTA
-
-CHURCH/NONPROFIT:
-- Service times, events calendar, "Plan Your Visit" CTA
-- Sermon archive, giving/donate section, ministries overview
-
-SALON/SPA/BEAUTY:
-- Service menu with pricing, "Book Now" CTA, stylist profiles
-- Gallery/portfolio, gift cards section
-
-AUTOMOTIVE/DEALER:
-- Vehicle inventory with filtering, "Schedule Test Drive" CTA
-- Service department, financing section
-
-EDUCATION/COURSES:
-- Course catalog, instructor profiles, "Enroll Now" CTA
-- Schedule, testimonials, FAQ section
+INDUSTRY-SPECIFIC FUNCTIONALITY (include ALL relevant features):
+- Restaurant/Cafe: menu with categories/filters, hours display, reservation form, location/directions
+- E-commerce: product filtering (price/category/size), add-to-cart with quantity, cart drawer, wishlist
+- Portfolio/Agency: project filtering by category, project detail modal, contact form with service selector, testimonial carousel
+- Service Business: service selector with pricing, booking/quote form, FAQ accordion, service area info
+- Blog/Content: category filtering, search, reading time, share buttons, related posts
+- SaaS/Product: feature comparison tabs, pricing toggle (monthly/yearly), demo form, feature tour
+- Medical/Dental: provider profiles, appointment form (date/time/insurance), office hours, insurance list. NEVER invent medical claims — [PLACEHOLDER]
+- Real Estate: property cards with filtering (price/beds/type), agent profile, featured listings, detail modal
+- Law Firm: practice areas grid, attorney profiles, consultation CTA, case results, FAQ. NEVER invent case results — [PLACEHOLDER]
+- Fitness/Gym: class schedule (filterable), membership comparison, trainer profiles, trial offer CTA
+- Church/Nonprofit: service times, events calendar, "Plan Your Visit" CTA, sermon archive, giving/donate
+- Salon/Spa: service menu with pricing, "Book Now" CTA, stylist profiles, gallery, gift cards
+- Automotive: vehicle inventory with filtering, "Schedule Test Drive" CTA, service dept, financing
+- Education: course catalog, instructor profiles, "Enroll Now" CTA, schedule, testimonials, FAQ
 
 ---
 DESIGN QUALITY STANDARD — EVERY SITE, EVERY TIME
