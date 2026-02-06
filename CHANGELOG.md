@@ -1,5 +1,13 @@
 # 16s Changelog
 
+## [2026-02-06 17:00] — Code: Remove unused data destructure + blank lines in projects.ts
+
+**What:** Removed unused `data` from `saveCloudProject` upsert (also removed unnecessary `.select()` since return value isn't needed). Cleaned up 3 stray double-blank lines. Net: -5 lines.
+
+**Files:** `src/lib/projects.ts`
+**Type:** Code cleanup
+**Ref:** R4-10
+
 ## [2026-02-06 16:50] — Feature: Focus trap + auto-focus in call disclaimer modal
 
 **What:** Added focus management to the call disclaimer dialog. "Start Call" button auto-focuses when modal opens. Tab/Shift+Tab cycles between Cancel and Start Call buttons with wrapping. Escape already handled. Matches the lightbox focus trap pattern.

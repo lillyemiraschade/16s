@@ -105,8 +105,7 @@ function getSupabase() {
 async function saveCloudProject(project: SavedProject, userId: string): Promise<void> {
   const supabase = getSupabase();
 
-
-  const { data, error } = await supabase
+  const { error } = await supabase
     .from("projects")
     .upsert({
       id: project.id,
@@ -118,14 +117,12 @@ async function saveCloudProject(project: SavedProject, userId: string): Promise<
       bookmarks: project.bookmarks,
       context: project.context || null,
       updated_at: new Date().toISOString(),
-    }, { onConflict: "id" })
-    .select();
+    }, { onConflict: "id" });
 
   if (error) {
     console.debug("[Projects] Cloud save error:", error);
     throw error;
   }
-
 }
 
 async function loadCloudProject(id: string, userId: string): Promise<SavedProject | null> {
@@ -159,7 +156,6 @@ async function loadCloudProject(id: string, userId: string): Promise<SavedProjec
 async function listCloudProjects(userId: string): Promise<SavedProjectMeta[]> {
   const supabase = getSupabase();
 
-
   const { data, error } = await supabase
     .from("projects")
     .select("id, name, updated_at")
@@ -170,7 +166,6 @@ async function listCloudProjects(userId: string): Promise<SavedProjectMeta[]> {
     console.debug("[Projects] Cloud list error:", error);
     return [];
   }
-
 
   return (data || []).map((p: { id: string; name: string; updated_at: string }) => ({
     id: p.id,
