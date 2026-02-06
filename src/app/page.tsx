@@ -266,9 +266,10 @@ function HomePageContent() {
       setPendingPrompt(null);
       setShowAuthModal(false);
       // Small delay to ensure auth state is fully propagated
-      setTimeout(() => {
+      const timer = setTimeout(() => {
         sendMessageRef.current?.(text, images);
       }, 100);
+      return () => clearTimeout(timer);
     }
   }, [user]);
 
@@ -284,22 +285,26 @@ function HomePageContent() {
   // Load saved projects list on mount and when auth changes
   useEffect(() => {
     if (isAuthLoading) return;
+    let cancelled = false;
     const loadProjectsList = async () => {
       const projects = await listProjects();
-      setSavedProjects(projects);
+      if (!cancelled) setSavedProjects(projects);
     };
     loadProjectsList();
+    return () => { cancelled = true; };
   }, [isAuthLoading, listProjects, isCloud]);
 
   // Auto-restore last project on mount or load from URL param
   useEffect(() => {
     if (isAuthLoading) return;
+    let cancelled = false;
     const projectIdFromUrl = searchParams.get("project");
 
     const restoreProject = async () => {
       // If URL has project param, load that specific project
       if (projectIdFromUrl) {
         const proj = await loadProject(projectIdFromUrl);
+        if (cancelled) return;
         if (proj) {
           setCurrentProjectId(proj.id);
           setProjectName(proj.name);
@@ -317,8 +322,10 @@ function HomePageContent() {
 
       // Otherwise, restore last project
       const projects = await listProjects();
+      if (cancelled) return;
       if (projects.length > 0) {
         const last = await loadProject(projects[0].id);
+        if (cancelled) return;
         if (last && last.messages.length > 0) {
           setCurrentProjectId(last.id);
           setProjectName(last.name);
@@ -332,6 +339,7 @@ function HomePageContent() {
       }
     };
     restoreProject();
+    return () => { cancelled = true; };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isAuthLoading, searchParams]);
 
