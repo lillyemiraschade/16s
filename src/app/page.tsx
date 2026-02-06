@@ -725,13 +725,6 @@ function HomePageContent() {
         msg.uploadedImages?.some(img => img.type === "content" && !img.url)
       );
       if (hasHistoryUploads) {
-        setMessages((prev) =>
-          prev.map((msg) => {
-            if (!msg.uploadedImages?.some(img => img.type === "content" && !img.url)) return msg;
-            // Mark for async upload — ensureBlobUrls handles the actual upload
-            return msg;
-          })
-        );
         // Upload history images in background (fire-and-forget, updates state when done)
         Promise.all(
           messagesRef.current

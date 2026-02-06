@@ -1,5 +1,12 @@
 # 16s Changelog
 
+## [2026-02-06 13:30] — Code: Remove dead no-op setMessages in history upload
+
+**What:** Removed a no-op `setMessages` call in `handleSendMessage` that mapped all messages but returned each one unchanged. The "mark for async upload" comment was misleading — nothing was marked. The actual upload work was already handled by the `Promise.all` block below it.
+**Why:** Dead code and misleading comments reduce maintainability. -7 lines.
+**Files:** src/app/page.tsx
+**Type:** code
+
 ## [2026-02-06 13:25] — Feature: Cmd+K shortcut to focus chat input
 
 **What:** Added Cmd+K keyboard shortcut that focuses the chat input textarea. Dispatches a custom "focus-chat-input" event from page.tsx, listened by ChatPanel. Added entry to the keyboard shortcuts overlay.
