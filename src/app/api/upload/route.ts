@@ -87,7 +87,7 @@ export async function POST(req: NextRequest) {
     const ext = mimeType.split("/")[1] || "png";
     const uniqueFilename = `images/${filename || Date.now()}-${Math.random().toString(36).slice(2, 8)}.${ext}`;
 
-    console.log(`[Blob] Uploading ${uniqueFilename} (${imageBuffer.length} bytes)...`);
+    console.debug(`[Blob] Uploading ${uniqueFilename} (${imageBuffer.length} bytes)`);
 
     // Upload to Vercel Blob
     const { url } = await put(uniqueFilename, imageBuffer, {
@@ -95,7 +95,7 @@ export async function POST(req: NextRequest) {
       contentType: mimeType,
     });
 
-    console.log(`[Blob] Upload success: ${url}`);
+    console.debug(`[Blob] Upload success: ${url}`);
 
     return new Response(
       JSON.stringify({ url }),

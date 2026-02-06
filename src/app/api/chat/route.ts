@@ -1584,9 +1584,8 @@ Use this context to inform your designs. Don't ask about things you already know
           controller.close();
         } catch (error) {
           const errMsg = error instanceof Error ? error.message : String(error);
-          const errStack = error instanceof Error ? error.stack : "";
+
           console.error("[Chat API] Stream error:", errMsg);
-          console.error("[Chat API] Stream error stack:", errStack);
 
           // Determine specific error type for better user messaging
           let userMessage = "Let me try that again...";
@@ -1621,7 +1620,6 @@ Use this context to inform your designs. Don't ask about things you already know
     const errMsg = error instanceof Error ? error.message : String(error);
     const errStack = error instanceof Error ? error.stack : "";
     console.error("[Chat API] Outer error:", errMsg);
-    console.error("[Chat API] Outer error stack:", errStack);
 
     // Provide more specific error messages
     let userMessage = "Let me try that again...";

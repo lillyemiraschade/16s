@@ -79,7 +79,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
 
     const redirectTo = `${window.location.origin}/auth/callback`;
-    console.log("[Auth] Starting OAuth with", provider, "redirect:", redirectTo);
+    console.debug("[Auth] Starting OAuth with", provider);
 
     const { data, error } = await supabase.auth.signInWithOAuth({
       provider,
@@ -91,7 +91,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     if (error) {
       console.error("[Auth] OAuth error:", error.message);
     } else {
-      console.log("[Auth] OAuth initiated, redirect URL:", data?.url);
+      console.debug("[Auth] OAuth initiated");
     }
 
     return { error: error as Error | null };

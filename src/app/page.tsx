@@ -201,7 +201,7 @@ async function fetchAndParseChat(response: Response): Promise<ChatAPIResponse> {
 
   // Strategy 6: Use raw text as message if available, else show error
   if (!data) {
-    console.error("Failed to parse response:", responseText.slice(0, 500));
+    console.error("Failed to parse API response");
     const rawText = responseText.trim();
     data = { message: rawText || "Let me try that again..." };
   }

@@ -1,5 +1,12 @@
 # 16s Changelog
 
+## [2026-02-05 02:08] — Code: Remove stack trace logging + downgrade diagnostic console.logs to debug
+
+**What:** (1) Removed `errStack` variables and stack trace logging from route.ts stream/outer error handlers — only error messages are now logged. (2) Removed AI response text from client-side parse failure log in page.tsx (PII risk). (3) Changed `console.log` → `console.debug` for OAuth flow (AuthContext.tsx), blob upload progress (upload/route.ts), and auth callback success (callback/route.ts). These are diagnostic, not errors.
+**Why:** Stack traces in production logs leak internal file paths. AI response text and redirect URLs in logs are unnecessary data exposure. `console.debug` is filtered out in most production log aggregators, reducing noise while keeping the info available for local debugging.
+**Files:** src/app/api/chat/route.ts, src/app/page.tsx, src/lib/auth/AuthContext.tsx, src/app/api/upload/route.ts, src/app/auth/callback/route.ts
+**Type:** code
+
 ## [2026-02-05 02:06] — Feature: Add aria-labels to PreviewPanel toolbar buttons
 
 **What:** Added descriptive `aria-label` to three groups of icon-only buttons in the PreviewPanel toolbar: viewport toggle buttons (Desktop/Tablet/Mobile with active state), code view toggle ("Show/Hide code view"), and code mode toggle ("Switch to React/HTML mode"). These buttons previously only had `title` tooltips.

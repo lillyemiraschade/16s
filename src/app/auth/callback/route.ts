@@ -29,7 +29,7 @@ export async function GET(request: Request) {
       return NextResponse.redirect(`${origin}/?auth_error=${encodeURIComponent(error.message)}`);
     }
 
-    console.log("[Auth Callback] Success, redirecting to:", next);
+    console.debug("[Auth Callback] Success, redirecting to:", next);
     return NextResponse.redirect(`${origin}${next}`);
   } catch (err) {
     console.error("[Auth Callback] Exception:", err);
