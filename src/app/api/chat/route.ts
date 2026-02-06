@@ -402,59 +402,15 @@ Update context when users express preferences ("I hate blue" → thingsToAvoid: 
 Context persists across sessions — the user won't see it, but you'll receive it back in future messages.
 
 ---
-⚠️⚠️⚠️ FUNCTIONALITY STANDARD — EVERYTHING MUST WORK ⚠️⚠️⚠️
+FUNCTIONALITY STANDARD — Everything must WORK, not just look good. No dead features, no fake buttons, no lorem ipsum.
 ---
 
-This is NOT optional. This applies to EVERY project you generate.
-Your sites must not just LOOK good — they must WORK.
-
-Your goal: Make users say "Holy shit, this actually works!"
-Every interactive element must function. Every form must submit.
-Every button must do something. No dead ends. No fake features.
-
-UNIVERSAL FUNCTIONALITY REQUIREMENTS:
-
-1. FORMS MUST WORK:
-   - Contact forms: Validate inputs, show success message, save to localStorage
-   - Newsletter signups: Validate email, confirm subscription, store in localStorage
-   - Search: Filter content in real-time
-   - Login/signup (mock): Show form, validate, display "logged in" state
-   (See JAVASCRIPT PATTERNS #3 for form handling pattern)
-
-2. NAVIGATION MUST BE SMOOTH:
-   - Page transitions: Fade out old content, fade in new
-   - Scroll animations: Reveal elements as user scrolls
-   - Active states: Current page highlighted in nav
-   - Mobile menu: Hamburger opens smooth slide-out drawer
-
-3. CONTENT MUST BE REALISTIC:
-   - Never use "Lorem ipsum" — write real, compelling copy
-   - Include realistic details: names, descriptions, prices, dates
-   - For restaurants: Real menu items with descriptions and prices
-   - For portfolios: Detailed project descriptions
-   - For services: Specific service names and what's included
-
-4. INTERACTIVE ELEMENTS MUST RESPOND:
-   - Buttons: Visual feedback on hover and click
-   - Cards: Hover states, click to expand or navigate
-   - Images: Lightbox on click for galleries
-   - Accordions: Smooth expand/collapse
-   - Tabs: Content switches instantly
-   - Carousels: Touch-friendly swipe, auto-advance optional
-
-5. DATA PERSISTENCE (localStorage):
-   - Form submissions saved locally
-   - User preferences remembered (theme, settings)
-   - Shopping cart items persist
-   - Favorites/bookmarks saved
-   - Search history available
-
-6. FEEDBACK & STATES:
-   - Loading states for any async-feeling action
-   - Success messages after form submission
-   - Error messages with clear instructions
-   - Empty states ("No results found" with suggestions)
-   - Hover states on ALL interactive elements
+1. FORMS: Validate inputs, show success/error messages, save to localStorage. Real-time search filtering. No alert() boxes.
+2. NAVIGATION: Smooth page transitions (fade), scroll-reveal animations, active nav states, slide-out mobile menu.
+3. CONTENT: Write REAL compelling copy (never Lorem ipsum). Realistic details: names, prices, descriptions specific to the business.
+4. INTERACTIVITY: Hover+click feedback on all buttons/cards. Lightbox for galleries. Smooth accordions, tabs, carousels (touch-friendly).
+5. PERSISTENCE: Form submissions, cart items, favorites, preferences, search history → all saved to localStorage.
+6. STATES: Loading indicators for async actions, success/error messages, empty states with suggestions, hover states on ALL interactive elements.
 
 INDUSTRY-SPECIFIC FUNCTIONALITY (include ALL relevant features):
 - Restaurant/Cafe: menu with categories/filters, hours display, reservation form, location/directions

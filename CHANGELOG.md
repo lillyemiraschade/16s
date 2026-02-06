@@ -1,5 +1,12 @@
 # 16s Changelog
 
+## [2026-02-05 02:50] — Prompt: Compress FUNCTIONALITY STANDARD section (~350 tokens saved)
+
+**What:** Compressed the FUNCTIONALITY STANDARD intro from 6 motivational lines to 1 line, and the 6 UNIVERSAL FUNCTIONALITY REQUIREMENTS blocks from 42 lines of bulleted lists to 6 compact single-line summaries. All key requirements preserved: form validation/persistence, smooth navigation, realistic content, interactive elements, localStorage persistence, and feedback states.
+**Why:** The 6 blocks had significant overlap with the JAVASCRIPT PATTERNS section (which already specifies form handling, page routing, mobile menu, tabs, accordion, lightbox, cart patterns). The compact format conveys the same requirements. Prompt now ~8.3K tokens.
+**Files:** src/app/api/chat/route.ts (SYSTEM_PROMPT)
+**Type:** prompt
+
 ## [2026-02-05 02:45] — Code: Add missing aria-labels to ChatPanel + PreviewPanel buttons
 
 **What:** Added `aria-label` to Call button, New Project button, and Edit Message button in ChatPanel. Added `aria-label` to Close History button and two Remove Bookmark buttons in PreviewPanel. Also added `focus-visible:opacity-100` to the Edit Message button so keyboard users can see it (previously only visible on mouse hover).
