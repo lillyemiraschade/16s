@@ -1,8 +1,24 @@
-# 16s Testing Progress
+# 16s Improvement Progress
 
-## Rounds 1-4 Summary (113 code/prompt changes)
-All code-level improvements complete. Zero issues found in final audit.
-Now testing whether the app actually WORKS end-to-end.
+## Rounds 1-4 Summary (113 changes)
+All code-level improvements complete. System prompt compressed from 14K to 5.9K tokens.
+Full ARIA coverage, clean console, dead code removed, all critical bugs fixed.
 
-## Testing Status
-(none — starting testing loop)
+## Round 5 Focus: CONVERSATION FLOW & IMAGE INTELLIGENCE
+The AI conversation is clunky. Users have to figure out how to give info, when to upload photos,
+what kind of photos to give, and the AI doesn't guide them through it.
+
+### Known Issues:
+- Pill buttons sometimes don't render (message gets cut off mid-generation)
+- AI asks for photos but doesn't specify WHAT KIND (inspo vs content)
+- No structured flow for gathering user info (contact, socials, business details)
+- AI doesn't know when to remove backgrounds vs use photos as-is
+- Inspo images should be requested FIRST before any generation happens
+- Photo placement is random — AI doesn't ask WHERE user wants photos
+- User has to know the system to use it well — should be guided naturally
+
+## Completed
+- R5-1: PROMPT — Rewrite CONVERSATION FLOW to guided 6-step journey (inspo-first, smart photo placement, structured info gathering)
+
+## In Progress
+(next: CODE — fallback pill generation)

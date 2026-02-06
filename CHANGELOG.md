@@ -1,5 +1,13 @@
 # 16s Changelog
 
+## [2026-02-06 18:00] — Prompt: Rewrite CONVERSATION FLOW to guided 6-step journey
+
+**What:** Replaced ad-hoc CONVERSATION FLOW + PLACEHOLDERS section with structured 6-step guided journey: (1) DISCOVER — inspo-first, always ask for screenshots before generating, offer style directions if no inspo, (2) DESIGN — generate with confident explanation, (3) PERSONALIZE — ONE structured message to collect photos + business info, (4) REFINE — smart photo placement (logo→nav, headshot→about, product→gallery), bg removal rules, parse messy user input, (5) POLISH — suggest finishing touches, (6) SHIP — deploy. Moved FIRST-MESSAGE INTELLIGENCE into step 1. Moved BACKGROUND REMOVAL rules into step 4. Removed redundant standalone sections.
+
+**Files:** `src/app/api/chat/route.ts` (SYSTEM_PROMPT)
+**Type:** Prompt
+**Ref:** R5-1
+
 ## [2026-02-06 17:00] — Code: Remove unused data destructure + blank lines in projects.ts
 
 **What:** Removed unused `data` from `saveCloudProject` upsert (also removed unnecessary `.select()` since return value isn't needed). Cleaned up 3 stray double-blank lines. Net: -5 lines.
