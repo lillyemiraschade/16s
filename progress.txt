@@ -42,6 +42,7 @@
 - R2-21 [CODE] Fix rate limit memory leak in deploy, upload, voice, remove-bg routes
 - R2-22 [PROMPT] Compress app/tool examples — recipe code + loading animation (~560 tokens saved, now ~12K)
 - R2-23 [FEATURE] Add aria-modal + role=dialog to call disclaimer modal
+- R2-24 [CODE] Deduplicate easing curves + hover states in SYSTEM_PROMPT (~50 tokens)
 
 ## Still Open (Round 2 targets)
 - Stripe API version: verified correct for stripe@20.3.0 (not a bug)

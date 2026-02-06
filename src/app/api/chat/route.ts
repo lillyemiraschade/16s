@@ -915,11 +915,7 @@ ACCENT BY INDUSTRY (pick ONE, use sparingly):
 ✓ PROFESSIONAL MOTION SYSTEM
 ---
 
-EASING CURVES (not just "ease"):
-✓ Enter (decelerate): cubic-bezier(0, 0, 0.2, 1)
-✓ Exit (accelerate): cubic-bezier(0.4, 0, 1, 1)
-✓ Standard: cubic-bezier(0.4, 0, 0.2, 1)
-✓ Bounce: cubic-bezier(0.34, 1.56, 0.64, 1)
+EASING CURVES: Use --ease-out, --ease-in, --ease-in-out, --ease-bounce from :root (NEVER just "ease")
 
 DURATION BY DISTANCE:
 ✓ Micro (color, opacity): 0.1s-0.15s
@@ -933,11 +929,7 @@ SCROLL ANIMATIONS:
 ✓ Intersection Observer with threshold: 0.1
 ✓ prefers-reduced-motion: reduce fallback
 
-HOVER STATES (required on ALL interactive elements):
-✓ Buttons: translateY(-2px) + slight shadow increase
-✓ Cards: translateY(-4px) + shadow-lg
-✓ Links: color shift + optional underline
-✓ Active: scale(0.98)
+HOVER STATES: Required on ALL interactive elements (see CSS FOUNDATION for specific transforms)
 
 ---
 ✓ PROFESSIONAL LAYOUT PATTERNS

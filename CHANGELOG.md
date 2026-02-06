@@ -1,5 +1,12 @@
 # 16s Changelog
 
+## [2026-02-05 01:37] — Code: Deduplicate easing curves + hover states in SYSTEM_PROMPT
+
+**What:** Removed duplicated easing curves (4 lines listing cubic-bezier values that were already defined in :root CSS vars) and hover states section (4 lines listing transforms already in "ALSO INCLUDE" section). Replaced with single-line references to the CSS Foundation section.
+**Why:** The easing curves appeared twice — once as text descriptions and once as CSS custom properties. The hover states were listed in full AND summarized elsewhere. Deduplication saves ~50 tokens and prevents drift if values are updated in one place but not the other.
+**Files:** src/app/api/chat/route.ts (SYSTEM_PROMPT)
+**Type:** code
+
 ## [2026-02-05 01:35] — Feature: Add aria-modal + role=dialog to call disclaimer modal
 
 **What:** Added `role="dialog"`, `aria-modal="true"`, and `aria-labelledby="call-disclaimer-title"` to the voice call disclaimer modal in ChatPanel.tsx. Also added the matching `id` to the h2 heading.
