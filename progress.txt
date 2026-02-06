@@ -90,8 +90,32 @@
 - JS SAFETY: Null-guard instructions completed for all 10 JS patterns
 - REMAINING: Virtualized message list deferred (not needed until very long conversations)
 
-## Still Open (Round 4 targets)
-- Virtualized message list for 50+ message conversations
-- Welcome state extraction to reduce parent re-renders
-- AbortController on image upload/deploy utility functions
-- Further prompt quality tuning based on user feedback
+## Round 4 Progress
+- R4-1 [CODE] Remove dead reactCode + outputFormat state (-8 lines)
+- R4-2 [PROMPT] Merge component style guide into component patterns (~250 tokens saved)
+- R4-3 [FEATURE] Keyboard navigation in export dropdown menu (ArrowUp/Down + auto-focus)
+- R4-4 [CODE] Downgrade all server-side console.error → console.debug (8 route files, 20 calls)
+- R4-5 [PROMPT] Compress contextual pill suggestions (~180 tokens saved)
+- R4-6 [FEATURE] Focus trap + focus restore in image lightbox
+- R4-7 [CODE] Downgrade remaining console.warn → console.debug (completes console cleanup)
+- R4-8 [PROMPT] Compress WHEN TO USE EACH PHASE section (~200 tokens saved)
+- R4-9 [FEATURE] Focus trap + auto-focus in call disclaimer modal
+- R4-10 [CODE] Remove unused data destructure + blank lines in projects.ts
+
+## Round 4 Summary (10 changes)
+- CODE HEALTH: Dead state removal (reactCode + outputFormat), console cleanup complete (zero console.error/warn/log outside Stripe webhook), unused destructure removed
+- PROMPT: ~630 tokens saved through 3 compression passes (component style guide merge, pill suggestions, phase routing)
+- ACCESSIBILITY: Keyboard navigation in export menu, focus traps in lightbox + call disclaimer, focus restore on lightbox close
+- AUDIT: Final comprehensive audit found zero actionable issues remaining
+
+## Cumulative Totals (Rounds 1-4)
+- Round 1: 20 changes (DB fixes, rate limiting, credit enforcement, system prompt templates, JS safety, UX)
+- Round 2: 44 changes (code dedup, a11y labels, dead code, prompt compression 14K→5.9K)
+- Round 3: 39 changes (React.memo, anti-template rules, 6 industries, modern CSS, UX features, prompt quality)
+- Round 4: 10 changes (final cleanup, console audit, a11y focus traps, prompt compression)
+- TOTAL: 113 changes across 4 rounds
+
+## Still Open (deferred — diminishing returns)
+- Virtualized message list for 50+ message conversations (complex, low priority)
+- True response streaming (currently collected fully, sent as one chunk)
+- AbortController on image upload/deploy utility functions (marginal benefit)
