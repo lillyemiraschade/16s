@@ -1,5 +1,13 @@
 # 16s Changelog
 
+## [2026-02-06 15:50] — Feature: Keyboard navigation in export dropdown menu
+
+**What:** Added Arrow Up/Down key navigation to the export dropdown menu. Menu items cycle with wrapping. First item auto-focuses when menu opens via keyboard. Escape already closes it. This completes ARIA `role="menu"` / `role="menuitem"` pattern with proper keyboard interaction.
+
+**Files:** `src/components/preview/PreviewPanel.tsx`
+**Type:** Accessibility
+**Ref:** R4-3
+
 ## [2026-02-06 15:40] — Prompt: Merge component style guide into component patterns (~250 tokens saved)
 
 **What:** Merged MODERN COMPONENT STYLE GUIDE section into PROFESSIONAL COMPONENT PATTERNS, eliminating duplicate button/card/nav descriptions. Added dark/light mode variants, badges, hero, tables, modals, and bg effects directly into the consolidated section. Removed duplicate Google Font loading instruction from CSS CLONING REMINDERS (already in FONTS section). Net: removed 14 lines from two sections, added 4 richer lines = ~250 tokens saved.

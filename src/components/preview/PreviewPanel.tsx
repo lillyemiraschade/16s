@@ -326,9 +326,24 @@ export const PreviewPanel = memo(function PreviewPanel({
     };
     const handleKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") setShowExportMenu(false);
+      if (e.key === "ArrowDown" || e.key === "ArrowUp") {
+        e.preventDefault();
+        const items = exportRef.current?.querySelectorAll<HTMLElement>('[role="menuitem"]:not([disabled])');
+        if (!items?.length) return;
+        const active = document.activeElement;
+        const idx = Array.from(items).indexOf(active as HTMLElement);
+        const next = e.key === "ArrowDown"
+          ? (idx + 1) % items.length
+          : (idx - 1 + items.length) % items.length;
+        items[next].focus();
+      }
     };
     document.addEventListener("mousedown", handleClick);
     document.addEventListener("keydown", handleKey);
+    // Auto-focus first menu item when opened via keyboard
+    requestAnimationFrame(() => {
+      exportRef.current?.querySelector<HTMLElement>('[role="menuitem"]')?.focus();
+    });
     return () => {
       document.removeEventListener("mousedown", handleClick);
       document.removeEventListener("keydown", handleKey);
