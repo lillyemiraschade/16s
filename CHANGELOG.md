@@ -1,5 +1,13 @@
 # 16s Changelog
 
+## [2026-02-06 16:40] — Prompt: Compress WHEN TO USE EACH PHASE section (~200 tokens saved)
+
+**What:** Compressed 6 subsections (USE PLANNING, FIRST-MESSAGE INTELLIGENCE, SKIP TO BUILDING, QA REPORT, MULTI-REQUEST, UNDO) from 20 lines to 6 lines. Preserved all behavioral rules while eliminating verbose explanations and examples. ~200 tokens saved.
+
+**Files:** `src/app/api/chat/route.ts`
+**Type:** Prompt compression
+**Ref:** R4-8
+
 ## [2026-02-06 16:30] — Code: Downgrade remaining console.warn → console.debug (completes console cleanup)
 
 **What:** Downgraded last 3 `console.warn` calls to `console.debug`: credits concurrency warning, voice API empty message, Supabase server cookie error. Only Stripe webhook retains `console.error` (CLAUDE.md restriction). Entire codebase now uses `console.debug` for all logging outside webhooks.
