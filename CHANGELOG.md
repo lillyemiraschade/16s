@@ -1,5 +1,12 @@
 # 16s Changelog
 
+## [2026-02-06 13:35] — Prompt: Compress JS PATTERNS + CSS :root block (~200 tokens saved)
+
+**What:** Removed redundant per-pattern null-guard mentions from all 12 JS PATTERNS (line 629 already states the general rule). Compressed :root shadow/radius/easing vars from 10 lines to 3 lines. All values preserved.
+**Why:** Line 629 says "All must null-guard DOM queries" making per-pattern mentions redundant. CSS var values need to be exact but don't need vertical whitespace.
+**Files:** src/app/api/chat/route.ts (SYSTEM_PROMPT)
+**Type:** prompt
+
 ## [2026-02-06 13:30] — Code: Remove dead no-op setMessages in history upload
 
 **What:** Removed a no-op `setMessages` call in `handleSendMessage` that mapped all messages but returned each one unchanged. The "mark for async upload" comment was misleading — nothing was marked. The actual upload work was already handled by the `Promise.all` block below it.

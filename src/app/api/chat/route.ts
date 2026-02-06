@@ -563,20 +563,11 @@ CSS FOUNDATION (include in every site)
   --text-4xl: clamp(2.25rem, 1.5rem + 3.5vw, 3.5rem);
   --text-5xl: clamp(3rem, 2rem + 5vw, 5rem);
 
-  /* Shadows */
-  --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
-  --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -2px rgba(0,0,0,0.1);
-  --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -4px rgba(0,0,0,0.1);
-  --shadow-xl: 0 20px 25px -5px rgba(0,0,0,0.1), 0 8px 10px -6px rgba(0,0,0,0.1);
-
-  /* Radius */
+  /* Shadows (sm→xl: subtle to dramatic, layered) */
+  --shadow-sm: 0 1px 2px rgba(0,0,0,0.05); --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -2px rgba(0,0,0,0.1);
+  --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -4px rgba(0,0,0,0.1); --shadow-xl: 0 20px 25px -5px rgba(0,0,0,0.1), 0 8px 10px -6px rgba(0,0,0,0.1);
   --radius-sm: 6px; --radius-md: 8px; --radius-lg: 12px; --radius-xl: 16px;
-
-  /* Easing */
-  --ease-out: cubic-bezier(0, 0, 0.2, 1);
-  --ease-in: cubic-bezier(0.4, 0, 1, 1);
-  --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
-  --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-out: cubic-bezier(0,0,0.2,1); --ease-in: cubic-bezier(0.4,0,1,1); --ease-in-out: cubic-bezier(0.4,0,0.2,1); --ease-bounce: cubic-bezier(0.34,1.56,0.64,1);
 }
 
 ALSO INCLUDE IN EVERY SITE (use the :root variables above):
@@ -628,18 +619,18 @@ CONTENT:
 JAVASCRIPT PATTERNS — INCLUDE IN EVERY PROJECT:
 Include these as needed. All must null-guard DOM queries (check element exists before using).
 
-1. PAGE ROUTING: showPage(id) function — fade out all .page elements, fade in target by id, update nav a.active. Null-guard getElementById.
-2. MOBILE MENU: .menu-toggle click → toggle .mobile-menu.open + body overflow:hidden. Close on link click. Null-guard both elements.
-3. FORM HANDLING: All forms get submit handler → e.preventDefault(), disable button, show loading dots animation, save to localStorage, replace form with success message. Null-guard submit button.
-4. SMOOTH SCROLL: a[href^="#"] click → scrollIntoView smooth. Null-guard target.
-5. TABS: .tab-btn click → toggle active class in .tabs group, show matching .tab-content by data-tab. Null-guard closest('.tabs').
-6. ACCORDION: .accordion-header click → toggle .open, animate maxHeight. Close others in same .accordion. Null-guard parentElement.
-7. LIGHTBOX: Gallery img click → create overlay div with full-size image + close button, click outside to dismiss. Include lightbox CSS (fixed overlay, rgba(0,0,0,0.9), z-index 9999). Null-guard img.src before creating overlay.
-8. FILTER/SEARCH: .search-input filters .filterable-item by textContent. .filter-btn filters by data-category. Null-guard querySelectorAll results.
-9. CART: localStorage-backed cart with updateCart(), .add-to-cart buttons with data-id/name/price, count+total display. Null-guard .cart-count/.cart-total.
-10. PRICING TOGGLE: Checkbox toggles .price textContent between data-monthly/data-yearly. Null-guard checkbox and price elements.
-11. COPY TO CLIPBOARD: .copy-btn → navigator.clipboard.writeText, show "Copied!" feedback.
-12. LOADING DOTS CSS: .loading-dots span with staggered blink animation (0.2s delay each).
+1. PAGE ROUTING: showPage(id) — fade out .page elements, fade in target, update nav a.active
+2. MOBILE MENU: .menu-toggle → toggle .mobile-menu.open + body overflow:hidden, close on link click
+3. FORM HANDLING: submit → e.preventDefault(), disable button, loading dots, save localStorage, success message
+4. SMOOTH SCROLL: a[href^="#"] → scrollIntoView smooth
+5. TABS: .tab-btn → toggle active in .tabs group, show matching .tab-content by data-tab
+6. ACCORDION: .accordion-header → toggle .open, animate maxHeight, close others in same .accordion
+7. LIGHTBOX: Gallery img → overlay with full-size image + close btn, click outside dismisses. CSS: fixed, rgba(0,0,0,0.9), z-9999
+8. FILTER/SEARCH: .search-input filters .filterable-item by textContent, .filter-btn by data-category
+9. CART: localStorage-backed, updateCart(), .add-to-cart with data-id/name/price, count+total display
+10. PRICING TOGGLE: Checkbox toggles .price textContent between data-monthly/data-yearly
+11. COPY TO CLIPBOARD: .copy-btn → navigator.clipboard.writeText, "Copied!" feedback
+12. LOADING DOTS: .loading-dots span with staggered blink animation (0.2s delay each)
 
 ---
 PRE-OUTPUT QUALITY CHECK
