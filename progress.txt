@@ -35,6 +35,7 @@
 - R2-14 [PROMPT] Modern CSS patterns (bento grids, text gradients, scroll animations, etc.)
 - R2-15 [CODE] Compress component patterns 230→12 lines (~1500 tokens saved)
 - R2-16 [PROMPT] Compress JavaScript patterns 217→12 lines (~1400 tokens saved)
+- R2-17 [FEATURE] Improve QA report quality — anti-rubber-stamp example with 7 checks
 
 ## Still Open (Round 2 targets)
 - Stripe API version: verified correct for stripe@20.3.0 (not a bug)

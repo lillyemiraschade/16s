@@ -1,5 +1,12 @@
 # 16s Changelog
 
+## [2026-02-05 01:19] — Feature: Improve QA report quality — anti-rubber-stamp example
+
+**What:** Replaced the 4-check "all_good" QA report example with a 7-check "minor_notes" example showing realistic checks (visual match, touch targets, form labels, mobile layout, image dimensions, interactive elements). Changed default status guidance so "minor_notes" is most common and "all_good" is rare. Updated example pills from generic ("Try it out!", "Make changes") to contextual ("Add online ordering", "Add customer reviews"). Added instruction to include 6+ checks covering visual, accessibility, functionality, and mobile.
+**Why:** The AI was rubber-stamping "all_good" with only 4 shallow checks because the example trained it to do exactly that. By showing a realistic "minor_notes" example with 7 specific checks, the AI will produce more thorough QA reports that actually catch issues.
+**Files:** src/app/api/chat/route.ts (SYSTEM_PROMPT)
+**Type:** feature
+
 ## [2026-02-05 01:17] — Prompt: Compress JavaScript patterns from 217 lines to 12
 
 **What:** Replaced the JAVASCRIPT PATTERNS section (217 lines of full JavaScript code blocks for page routing, mobile menu, form handling, smooth scroll, tabs/accordion, lightbox, filter/search, cart, pricing toggle, clipboard, loading dots, and lightbox CSS) with 12 concise one-line descriptions. Each description preserves the key specification (class names, null guards, specific behaviors) without the full implementation.
