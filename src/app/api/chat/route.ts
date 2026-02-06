@@ -1482,7 +1482,7 @@ export async function POST(req: Request) {
 
     // Select model and tokens based on complexity
     // [2026-02-05] Upgraded simple iterations from Claude 3 Haiku to 3.5 Haiku for better JSON format adherence and HTML quality
-    const model = isSimpleIteration ? "claude-3-5-haiku-20241022" : "claude-sonnet-4-20250514";
+    const model = isSimpleIteration ? "claude-haiku-4-5-20251001" : "claude-sonnet-4-5-20250929";
     const maxTokens = isSimpleIteration ? 8000 : 16000;
 
     // Inject current preview context - use smaller context for simple iterations

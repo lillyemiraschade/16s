@@ -154,7 +154,7 @@ export async function POST(req: NextRequest) {
     }
 
     const response = await anthropic.messages.create({
-      model: "claude-sonnet-4-20250514",
+      model: "claude-sonnet-4-5-20250929",
       max_tokens: 800, // Increased from 500 for longer conversations
       system: VOICE_SYSTEM_PROMPT,
       messages: claudeMessages,

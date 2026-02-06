@@ -1,5 +1,12 @@
 # 16s Changelog
 
+## [2026-02-05 01:45] — Code: Upgrade AI models to Sonnet 4.5 + Haiku 4.5
+
+**What:** Upgraded both AI models: Sonnet from `claude-sonnet-4-20250514` to `claude-sonnet-4-5-20250929` (chat + voice routes) and Haiku from `claude-3-5-haiku-20241022` to `claude-haiku-4-5-20251001` (simple iterations). These are the latest available model versions.
+**Why:** Sonnet 4.5 and Haiku 4.5 offer improved code generation, better instruction following, and higher quality HTML/CSS output. The previous models were 6+ months old.
+**Files:** src/app/api/chat/route.ts, src/app/api/chat/voice/route.ts
+**Type:** code
+
 ## [2026-02-05 01:42] — Feature: Add Escape key handlers to edit mode + call disclaimer modal
 
 **What:** Added `onKeyDown` Escape handler to the message edit textarea (cancels editing). Added `useEffect` Escape handler for the call disclaimer modal (dismisses modal). Both follow the same pattern already used for the lightbox image modal.
