@@ -1,5 +1,12 @@
 # 16s Changelog
 
+## [2026-02-05 01:15] — Prompt: Compress component patterns from 230 lines to 12
+
+**What:** Replaced the MODERN COMPONENT PATTERNS section (230 lines of full CSS code blocks for buttons, cards, inputs, badges, nav, hero, animations, gradients, tables, modals) with a 12-line style guide summary. Also fixed dark-mode bias — patterns now say "adapt colors to match site palette" instead of hardcoding zinc values.
+**Why:** The full CSS code blocks were the single largest token waste remaining (~1500 tokens). Claude knows how to write CSS for these basic components. The compressed version gives the key design decisions (border-radius values, shadow layering, transition speeds, z-index patterns) without spelling out every CSS property.
+**Files:** src/app/api/chat/route.ts (SYSTEM_PROMPT)
+**Type:** prompt
+
 ## [2026-02-05 01:14] — Prompt: Add modern CSS patterns to design system
 
 **What:** Added MODERN CSS PATTERNS section with 7 contemporary techniques: bento grids (varied span sizes), text gradients (background-clip), gradient mesh backgrounds (layered radial-gradient), scroll-driven reveals (IntersectionObserver/animation-timeline), container queries (@container), color-mix() for dynamic opacity, and :has() selector for parent selection.
