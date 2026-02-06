@@ -1189,14 +1189,20 @@ function HomePageContent() {
   }, [currentPreview, currentProjectId, projectName, deploy]);
 
   const handleRestoreVersion = useCallback((index: number) => {
-    if (currentPreview) {
-      // Push current and all history after index into redo
-      const historyAfter = previewHistory.slice(index + 1);
-      setRedoHistory((r) => [...r, ...historyAfter, currentPreview]);
-      setCurrentPreview(previewHistory[index]);
-      setPreviewHistory(previewHistory.slice(0, index));
-      // Invalidate bookmarks that point to versions no longer in history
-      setBookmarks((prev) => prev.filter((b) => b.versionIndex <= index));
+    if (currentPreview && previewHistory[index]) {
+      // NON-DESTRUCTIVE restore: save current to history, then switch to selected version
+      // This preserves ALL versions - nothing is ever deleted
+      const selectedVersion = previewHistory[index];
+
+      // Add current preview to history (it becomes a new version)
+      // Keep all existing history intact
+      setPreviewHistory((prev) => [...prev, currentPreview]);
+
+      // Switch to the selected version
+      setCurrentPreview(selectedVersion);
+
+      // Clear redo since we're branching from a historical point
+      setRedoHistory([]);
     }
   }, [currentPreview, previewHistory]);
 
