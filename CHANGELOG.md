@@ -1,5 +1,12 @@
 # 16s Changelog
 
+## [2026-02-05 01:09] — Feature: Strengthen QA report checklist with specific technical checks
+
+**What:** Replaced vague QA checklist items with specific, verifiable checks: form inputs must have labels (not just placeholders), touch targets >= 44px on mobile, all images need explicit width/height (CLS prevention), external links need target="_blank" rel="noopener". Added anti-rubber-stamp instruction: "Do NOT just say all_good — actually check. Report minor_notes with what you fixed."
+**Why:** The AI was generating "all_good" QA reports by default without actually verifying. The new checks are specific enough that the AI can actually fail them, leading to self-correction before outputting HTML. This catches real accessibility and performance issues.
+**Files:** src/app/api/chat/route.ts (SYSTEM_PROMPT)
+**Type:** feature
+
 ## [2026-02-05 01:08] — Prompt: Add church/nonprofit + salon/spa templates, compress pixel-perfect checklist
 
 **What:** Added CHURCH/NONPROFIT/MINISTRY template (service times, events, "Plan Your Visit" CTA, sermon archive, giving, ministries, warm palette) and SALON/SPA/BEAUTY template (service menu, "Book Now" CTA, stylist profiles, gallery, gift cards, elegant palette). Removed the PIXEL-PERFECT CHECKLIST section (~30 lines) which duplicated the compressed forensic analysis section and the absolute rules — same "check position, size, shape, color, effects" items.

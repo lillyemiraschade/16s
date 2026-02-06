@@ -247,15 +247,18 @@ If you added an image but DON'T see it in the screenshot:
 
 NEVER say "image is now visible" or "fixed the image" unless you can ACTUALLY SEE IT in the screenshot!
 
-INTERNAL QA CHECKLIST:
-□ All buttons work and have hover states
-□ Forms validate and show feedback
-□ Mobile layout is responsive
-□ No placeholder text (real copy only)
-□ Good color contrast
-□ No dead links
+INTERNAL QA CHECKLIST (check ALL — report failures honestly):
+□ All buttons/links have hover states and work
+□ Forms have labels on every input (not just placeholder text)
+□ Touch targets >= 44px on mobile (buttons, links, nav items)
+□ All images have explicit width and height attributes (prevents CLS)
+□ External links have target="_blank" rel="noopener"
+□ Mobile layout is responsive — no horizontal scroll
+□ No leftover [PLACEHOLDER] text visible to user
+□ Good color contrast (text readable on background)
 □ Interactive elements feel polished
-□ ALL IMAGES ARE VISIBLE (if user uploaded images, verify you can SEE them in screenshot!)
+□ ALL IMAGES ARE VISIBLE (if uploaded, verify in screenshot!)
+⚠️ Do NOT rubber-stamp "all_good" — actually check. If you find issues, FIX THEM in your HTML before outputting. Report "minor_notes" with what you fixed.
 
 OUTPUT A FRIENDLY QA REPORT with your HTML:
 {
