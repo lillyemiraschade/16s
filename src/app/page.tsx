@@ -96,6 +96,30 @@ interface ChatAPIResponse {
   error?: string;
 }
 
+/** Upload content images that don't have blob URLs yet. Returns updated array. */
+async function ensureBlobUrls(images: UploadedImage[]): Promise<UploadedImage[]> {
+  const needUpload = images.filter(img => img.type === "content" && !img.url);
+  if (needUpload.length === 0) return images;
+
+  const uploaded = await Promise.all(
+    needUpload.map(async (img) => {
+      try {
+        const url = await uploadToBlob(img.data, img.label);
+        return { ...img, url };
+      } catch {
+        return img; // Keep original as fallback
+      }
+    })
+  );
+
+  return images.map(img => {
+    if (img.type === "content" && !img.url) {
+      return uploaded.find(u => u.data === img.data) || img;
+    }
+    return img;
+  });
+}
+
 async function fetchAndParseChat(response: Response): Promise<ChatAPIResponse> {
   if (!response.ok) {
     let errorMsg = "Let me try that again...";
@@ -664,27 +688,7 @@ function HomePageContent() {
     if (!imagesToInclude) setUploadedImages([]);
 
     // Ensure all content images have blob URLs before sending
-    const contentImagesNeedingUpload = imagesToSend.filter(img => img.type === "content" && !img.url);
-    if (contentImagesNeedingUpload.length > 0) {
-      const uploadPromises = contentImagesNeedingUpload.map(async (img) => {
-        try {
-          const url = await uploadToBlob(img.data, img.label);
-          return { ...img, url };
-        } catch (error) {
-          console.debug("[Blob Upload] Failed:", error);
-          return img; // Keep original without URL as fallback
-        }
-      });
-      const uploadedResults = await Promise.all(uploadPromises);
-      // Update imagesToSend with the uploaded URLs
-      imagesToSend = imagesToSend.map(img => {
-        if (img.type === "content" && !img.url) {
-          const uploaded = uploadedResults.find(u => u.data === img.data);
-          return uploaded || img;
-        }
-        return img;
-      });
-    }
+    imagesToSend = await ensureBlobUrls(imagesToSend);
 
     if (!hasStarted) setHasStarted(true);
 
@@ -715,46 +719,27 @@ function HomePageContent() {
     abortRef.current = controller;
 
     try {
-      // Collect all content images from history that need URLs
-      const historyImagesNeedingUpload: { msgIndex: number; imgIndex: number; img: UploadedImage }[] = [];
-      messagesRef.current.forEach((msg, msgIndex) => {
-        msg.uploadedImages?.forEach((img, imgIndex) => {
-          if (img.type === "content" && !img.url) {
-            historyImagesNeedingUpload.push({ msgIndex, imgIndex, img });
-          }
-        });
-      });
-
-      // Upload history images if needed
-      if (historyImagesNeedingUpload.length > 0) {
-        const uploadPromises = historyImagesNeedingUpload.map(async ({ img }) => {
-          try {
-            const url = await uploadToBlob(img.data, img.label);
-            return { ...img, url };
-          } catch (error) {
-            console.debug("[Blob Upload] History upload failed:", error);
-            return img;
-          }
-        });
-        const uploadedHistoryImages = await Promise.all(uploadPromises);
-
-        // Update messages with uploaded URLs
+      // Upload any history content images missing blob URLs
+      const hasHistoryUploads = messagesRef.current.some(msg =>
+        msg.uploadedImages?.some(img => img.type === "content" && !img.url)
+      );
+      if (hasHistoryUploads) {
         setMessages((prev) =>
-          prev.map((msg, msgIndex) => {
-            const updates = historyImagesNeedingUpload.filter(h => h.msgIndex === msgIndex);
-            if (updates.length === 0 || !msg.uploadedImages) return msg;
-            return {
-              ...msg,
-              uploadedImages: msg.uploadedImages.map((img, imgIndex) => {
-                const update = updates.find(u => u.imgIndex === imgIndex);
-                if (update) {
-                  const uploaded = uploadedHistoryImages.find(u => u.data === img.data);
-                  return uploaded || img;
-                }
-                return img;
-              }),
-            };
+          prev.map((msg) => {
+            if (!msg.uploadedImages?.some(img => img.type === "content" && !img.url)) return msg;
+            // Mark for async upload — ensureBlobUrls handles the actual upload
+            return msg;
           })
+        );
+        // Upload history images in background (fire-and-forget, updates state when done)
+        Promise.all(
+          messagesRef.current
+            .filter(msg => msg.uploadedImages?.some(img => img.type === "content" && !img.url))
+            .map(async (msg) => {
+              if (!msg.uploadedImages) return;
+              const updated = await ensureBlobUrls(msg.uploadedImages);
+              setMessages(prev => prev.map(m => m.id === msg.id ? { ...m, uploadedImages: updated } : m));
+            })
         );
       }
 
