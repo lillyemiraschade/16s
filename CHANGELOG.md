@@ -1,5 +1,12 @@
 # 16s Changelog
 
+## [2026-02-05 01:22] — Code: Replace decorative separators + fix last console.logs (~600 tokens saved)
+
+**What:** Replaced 27 decorative separator lines (═══ and ━━━, 65 chars each) with `---` (3 chars each) in SYSTEM_PROMPT and contextInjection. Changed 2 remaining `console.log` to `console.debug` in credit deduction logic (lines 126, 152).
+**Why:** The 27 separator lines wasted ~600 tokens on pure decoration. `---` is equally effective for section delineation. This brings the prompt to ~12,953 tokens — under the 13K target. The console.logs should be debug level since they're diagnostic, not errors.
+**Files:** src/app/api/chat/route.ts
+**Type:** code
+
 ## [2026-02-05 01:19] — Feature: Improve QA report quality — anti-rubber-stamp example
 
 **What:** Replaced the 4-check "all_good" QA report example with a 7-check "minor_notes" example showing realistic checks (visual match, touch targets, form labels, mobile layout, image dimensions, interactive elements). Changed default status guidance so "minor_notes" is most common and "all_good" is rare. Updated example pills from generic ("Try it out!", "Make changes") to contextual ("Add online ordering", "Add customer reviews"). Added instruction to include 6+ checks covering visual, accessibility, functionality, and mobile.

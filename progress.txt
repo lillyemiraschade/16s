@@ -36,6 +36,7 @@
 - R2-15 [CODE] Compress component patterns 230→12 lines (~1500 tokens saved)
 - R2-16 [PROMPT] Compress JavaScript patterns 217→12 lines (~1400 tokens saved)
 - R2-17 [FEATURE] Improve QA report quality — anti-rubber-stamp example with 7 checks
+- R2-18 [CODE] Replace decorative separators + fix last console.logs (~600 tokens saved, now <13K)
 
 ## Still Open (Round 2 targets)
 - Stripe API version: verified correct for stripe@20.3.0 (not a bug)
@@ -46,7 +47,7 @@
 - ~~Conversation flow: first-message intelligence, iteration memory, multi-request handling~~ DONE
 - ~~Design system: modern CSS patterns, bento grids, glassmorphism~~ DONE
 - QA system: touch targets, form labels, CLS prevention, external link attributes
-- Prompt efficiency: target <13K tokens (currently ~14K)
+- ~~Prompt efficiency: target <13K tokens~~ DONE (~12,953 tokens)
 - SMARTER_16S features: plan card consistency, QA report quality, context persistence verification, pill suggestion quality
 
 ## In Progress
