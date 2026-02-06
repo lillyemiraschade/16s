@@ -1,5 +1,13 @@
 # 16s Changelog
 
+## [2026-02-06 16:50] — Feature: Focus trap + auto-focus in call disclaimer modal
+
+**What:** Added focus management to the call disclaimer dialog. "Start Call" button auto-focuses when modal opens. Tab/Shift+Tab cycles between Cancel and Start Call buttons with wrapping. Escape already handled. Matches the lightbox focus trap pattern.
+
+**Files:** `src/components/chat/ChatPanel.tsx`
+**Type:** Accessibility
+**Ref:** R4-9
+
 ## [2026-02-06 16:40] — Prompt: Compress WHEN TO USE EACH PHASE section (~200 tokens saved)
 
 **What:** Compressed 6 subsections (USE PLANNING, FIRST-MESSAGE INTELLIGENCE, SKIP TO BUILDING, QA REPORT, MULTI-REQUEST, UNDO) from 20 lines to 6 lines. Preserved all behavioral rules while eliminating verbose explanations and examples. ~200 tokens saved.

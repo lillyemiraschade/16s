@@ -106,11 +106,25 @@ export const ChatPanel = memo(function ChatPanel({
     return () => window.removeEventListener("keydown", handler);
   }, [lightboxImage, closeLightbox]);
 
-  // Escape key closes call disclaimer modal
+  // Escape key + focus trap for call disclaimer modal
   useEffect(() => {
     if (!showCallDisclaimer) return;
+    // Auto-focus the "Start Call" button (primary action)
+    requestAnimationFrame(() => {
+      const dialog = document.querySelector<HTMLElement>('[aria-labelledby="call-disclaimer-title"]');
+      dialog?.querySelector<HTMLElement>('button:last-of-type')?.focus();
+    });
     const handler = (e: KeyboardEvent) => {
       if (e.key === "Escape") setShowCallDisclaimer(false);
+      if (e.key === "Tab") {
+        const dialog = document.querySelector<HTMLElement>('[aria-labelledby="call-disclaimer-title"]');
+        const focusable = dialog?.querySelectorAll<HTMLElement>('button');
+        if (!focusable?.length) return;
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+        if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+        else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+      }
     };
     window.addEventListener("keydown", handler);
     return () => window.removeEventListener("keydown", handler);
