@@ -1,5 +1,12 @@
 # 16s Changelog
 
+## [2026-02-05 01:42] — Feature: Add Escape key handlers to edit mode + call disclaimer modal
+
+**What:** Added `onKeyDown` Escape handler to the message edit textarea (cancels editing). Added `useEffect` Escape handler for the call disclaimer modal (dismisses modal). Both follow the same pattern already used for the lightbox image modal.
+**Why:** Users expect Escape to close modals and cancel editing. The lightbox already supported Escape, but the edit textarea and call disclaimer didn't. Keyboard-only users had to tab to buttons instead.
+**Files:** src/components/chat/ChatPanel.tsx
+**Type:** feature
+
 ## [2026-02-05 01:40] — Prompt: Compress form example, quality requirements, bg removal (~430 tokens saved)
 
 **What:** (1) Replaced 17-line contact form JavaScript example with reference to JAVASCRIPT PATTERNS #3. (2) Replaced 25-line "Quality Requirements (same as inspo cloning)" section with 1-line reference to DESIGN SYSTEM section — all the same guidance was duplicated there. (3) Compressed background removal from 3 sentences to 1. Prompt now ~11,488 tokens.

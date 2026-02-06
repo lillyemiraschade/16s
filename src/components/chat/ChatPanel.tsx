@@ -90,6 +90,16 @@ export function ChatPanel({
     return () => window.removeEventListener("keydown", handler);
   }, [lightboxImage, closeLightbox]);
 
+  // Escape key closes call disclaimer modal
+  useEffect(() => {
+    if (!showCallDisclaimer) return;
+    const handler = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setShowCallDisclaimer(false);
+    };
+    window.addEventListener("keydown", handler);
+    return () => window.removeEventListener("keydown", handler);
+  }, [showCallDisclaimer]);
+
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
@@ -399,6 +409,12 @@ export function ChatPanel({
                       <textarea
                         value={editingContent}
                         onChange={(e) => setEditingContent(e.target.value)}
+                        onKeyDown={(e) => {
+                          if (e.key === "Escape") {
+                            setEditingMessageId(null);
+                            setEditingContent("");
+                          }
+                        }}
                         className="w-full bg-black/20 text-[15px] text-zinc-100 rounded-lg px-3 py-2 focus:outline-none focus:ring-1 focus:ring-green-500/50 resize-none"
                         rows={3}
                         autoFocus

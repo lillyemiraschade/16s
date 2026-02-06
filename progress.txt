@@ -44,6 +44,7 @@
 - R2-23 [FEATURE] Add aria-modal + role=dialog to call disclaimer modal
 - R2-24 [CODE] Deduplicate easing curves + hover states in SYSTEM_PROMPT (~50 tokens)
 - R2-25 [PROMPT] Compress form example + quality requirements + bg removal (~430 tokens saved, now ~11.5K)
+- R2-26 [FEATURE] Add Escape key handlers to edit mode + call disclaimer modal
 
 ## Still Open (Round 2 targets)
 - Stripe API version: verified correct for stripe@20.3.0 (not a bug)
