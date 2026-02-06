@@ -1,5 +1,12 @@
 # 16s Changelog
 
+## [2026-02-05 03:40] — Code: Downgrade remaining client-side console.error/warn to debug
+
+**What:** Downgraded 8 client-side `console.error`/`console.warn` statements to `console.debug` across VoiceCall.tsx (7) and ChatPanel.tsx (1). All errors are already handled via UI state — `setErrorMessage()`, `speak()` fallback, `handleImageError()`. The debug-level logs remain available in DevTools for developers but won't clutter the browser console for end users.
+**Why:** Consistent with R2-33 (route.ts) and R2-48 (AuthModal/AuthContext). Client-side console.error/warn for voice recognition, speech synthesis, and background removal are diagnostic details that duplicate the user-facing error handling already in place.
+**Files:** src/components/chat/VoiceCall.tsx, src/components/chat/ChatPanel.tsx
+**Type:** code
+
 ## [2026-02-05 03:35] — Feature: Disable viewport buttons when no preview exists
 
 **What:** Added `disabled={!html}` to the viewport toggle buttons (desktop/tablet/mobile) in PreviewPanel. When no preview HTML exists yet, buttons show at 50% opacity with `cursor-not-allowed` and tooltip says "Generate a website first". ARIA labels include "(disabled)" state.

@@ -74,7 +74,7 @@ export function ChatPanel({
       const result = await removeBackground(img.data);
       onImageUpdate(index, result);
     } catch (err) {
-      console.error("Failed to remove background:", err);
+      console.debug("Failed to remove background:", err);
       handleImageError("Failed to remove background. Please try again.");
     } finally {
       setRemovingBgIndex(null);

@@ -199,7 +199,7 @@ export const VoiceCall = forwardRef<VoiceCallHandle, VoiceCallProps>(
       };
 
       recognition.onerror = (event: SpeechRecognitionErrorEvent) => {
-        console.error("Speech recognition error:", event.error);
+        console.debug("Speech recognition error:", event.error);
         if (!mountedRef.current) return;
 
         if (event.error === "not-allowed" || event.error === "service-not-allowed") {
@@ -221,7 +221,7 @@ export const VoiceCall = forwardRef<VoiceCallHandle, VoiceCallProps>(
       recognition.onend = () => {
         if (mountedRef.current && stateRef.current === "listening") {
           try { recognition.start(); } catch {
-            console.error("Failed to restart recognition");
+            console.debug("Failed to restart recognition");
             recognitionRef.current = null;
           }
         }
@@ -232,7 +232,7 @@ export const VoiceCall = forwardRef<VoiceCallHandle, VoiceCallProps>(
         recognition.start();
         setState("listening");
       } catch (e) {
-        console.error("Failed to start recognition:", e);
+        console.debug("Failed to start recognition:", e);
         setErrorMessage("Could not start voice recognition.");
         setState("error");
       }
@@ -249,7 +249,7 @@ export const VoiceCall = forwardRef<VoiceCallHandle, VoiceCallProps>(
       // Timeout to prevent speech synthesis from hanging
       const maxDuration = Math.max(10000, text.length * 100); // At least 10s, or ~100ms per character
       const timeoutId = setTimeout(() => {
-        console.warn("Speech synthesis timeout, forcing end");
+        console.debug("Speech synthesis timeout, forcing end");
         speechSynthesis.cancel();
         if (mountedRef.current) {
           if (onEnd) onEnd();
@@ -266,7 +266,7 @@ export const VoiceCall = forwardRef<VoiceCallHandle, VoiceCallProps>(
       };
       utterance.onerror = (event) => {
         clearTimeout(timeoutId);
-        console.error("Speech synthesis error:", event);
+        console.debug("Speech synthesis error:", event);
         if (mountedRef.current) {
           if (onEnd) onEnd();
           else startListening();
@@ -304,7 +304,7 @@ export const VoiceCall = forwardRef<VoiceCallHandle, VoiceCallProps>(
 
         // Don't claim to have received info if the message is empty
         if (!data.message || data.message.trim() === "") {
-          console.warn("[VoiceCall] Empty response from API");
+          console.debug("[VoiceCall] Empty response from API");
           speak("I didn't catch that. Could you repeat what you said?");
           return;
         }
@@ -327,7 +327,7 @@ export const VoiceCall = forwardRef<VoiceCallHandle, VoiceCallProps>(
         });
       } catch (error) {
         clearTimeout(timeoutId);
-        console.error("Voice API error:", error);
+        console.debug("Voice API error:", error);
         if (!mountedRef.current) return;
 
         if (error instanceof Error && error.name === "AbortError") {
