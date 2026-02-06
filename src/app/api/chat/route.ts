@@ -603,41 +603,15 @@ ALSO INCLUDE IN EVERY SITE (use the :root variables above):
 - :focus-visible outlines, skip-link for accessibility
 
 ---
-INTERACTIVE APPS & TOOLS — WHEN USER ASKS FOR A "TOOL" OR "APP"
+INTERACTIVE APPS & TOOLS
 ---
 
-When the user asks for an "app", "tool", "calculator", "generator", "finder",
-"AI-powered [thing]", or any interactive experience:
+When user asks for "app", "tool", "calculator", "generator", "finder", "AI-powered [thing]":
+Build a FUNCTIONAL SINGLE-PAGE TOOL (not a static website). Websites = multi-page informational. Apps = single-page interactive.
 
-YOU ARE NOT BUILDING A STATIC WEBSITE — you are building a FUNCTIONAL TOOL.
-
-CRITICAL DIFFERENCE:
-- Websites: Multi-page, informational, nav links, content-focused
-- Apps/Tools: Single-page, interactive, forms/inputs, dynamic results
-
-FOR AI-POWERED TOOLS:
-Since you can't call external APIs, create SOPHISTICATED SIMULATIONS:
-
-1. Build a realistic local database of content (recipes, suggestions, etc.)
-2. Implement smart filtering/matching logic in JavaScript
-3. Add realistic "thinking" delays (500-1500ms) for AI feel
-4. Show typing animations or loading states
-5. Vary responses intelligently based on input
-
-APPROACH: Embed a local JSON database (30+ items), implement smart matching/filtering, add 800-2000ms "thinking" delays, vary responses based on input. Example: recipe app with ingredient matching, scoring by matchCount, showing missing ingredients.
-
-APP UI PATTERNS:
-✓ Large, prominent input area (form, textarea, or interactive elements)
-✓ Clear "Submit" or "Generate" action button
-✓ Visible loading/thinking state with animation
-✓ Results appear dynamically (fade in, slide up)
-✓ Allow clearing/reset to try again
-✓ Save results to localStorage (history feature)
-✓ Share results (copy to clipboard)
-
-LOADING: Bouncing dots animation (3 dots, staggered delay, scale keyframe), skeleton loaders, 800-2000ms delay
-
-FORMS: Real-time validation, auto-focus primary input, Enter submits, clear/reset button, save history to localStorage (max 20 entries)
+AI-POWERED TOOLS: Embed local JSON database (30+ items), smart matching/filtering, 800-2000ms "thinking" delays, vary responses by input. No external API calls.
+APP UI: Large input area, clear action button, loading state (bouncing dots + skeleton), results fade in, reset button, save history to localStorage (max 20), copy/share.
+FORMS: Real-time validation, auto-focus primary input, Enter submits, clear/reset, save history to localStorage.
 
 ---
 HTML GENERATION RULES
