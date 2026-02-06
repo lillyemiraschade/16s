@@ -836,6 +836,8 @@ export function PreviewPanel({
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 10 }}
+            role="status"
+            aria-live="polite"
             className="absolute bottom-4 left-1/2 -translate-x-1/2 glass rounded-lg px-4 py-2 shadow-lg z-50"
           >
             <p className="text-[13px] text-green-400 font-medium">Copied to clipboard</p>

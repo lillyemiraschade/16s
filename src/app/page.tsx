@@ -1313,6 +1313,7 @@ function HomePageContent() {
                   initial={{ opacity: 0, y: -10 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -10 }}
+                  role="alert"
                   className="w-full glass rounded-xl px-4 py-3 border border-red-500/20"
                 >
                   <p className="text-[13px] text-red-400 text-center">{welcomeError}</p>

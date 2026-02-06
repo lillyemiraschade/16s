@@ -1,5 +1,12 @@
 # 16s Changelog
 
+## [2026-02-05 04:35] — Feature: Add aria-live to toast notifications for screen reader announcements
+
+**What:** Added `role="status"` + `aria-live="polite"` to the "Copied to clipboard" toast in PreviewPanel. Added `role="alert"` to the welcome screen error toast in page.tsx. Both notifications were previously invisible to screen readers.
+**Why:** Dynamic status messages (copy confirmations, error alerts) need ARIA live regions to be announced by screen readers. `role="alert"` for errors (immediate announcement), `role="status"` + `aria-live="polite"` for non-urgent confirmations (announced after current speech).
+**Files:** src/components/preview/PreviewPanel.tsx, src/app/page.tsx
+**Type:** feature
+
 ## [2026-02-05 04:30] — Prompt: Compress LAYOUT + COMPONENT PATTERNS (~450 tokens saved)
 
 **What:** Compressed LAYOUT PATTERNS from 27 lines (4 sub-sections with ✓ bullets) to 4 single-line specifications. Compressed COMPONENT PATTERNS from 28 lines (4 sub-sections with ✓ bullets) to 4 single-line specifications. All specific values (grid column counts, shadow values, padding specs, radius options) preserved exactly.
