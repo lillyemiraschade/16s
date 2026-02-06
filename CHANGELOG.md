@@ -1,5 +1,12 @@
 # 16s Changelog
 
+## [2026-02-06 14:07] — Prompt: Compress SUBJECTIVE FEEDBACK section (~80 tokens saved)
+
+**What:** Compressed the 9-line SUBJECTIVE FEEDBACK section to 4 lines by combining similar feedback types on single lines with pipe separators. All 8 feedback→action mappings preserved.
+**Why:** Continuing to tighten the system prompt. Each mapping was one full line; grouping related ones is more token-efficient.
+**Files:** src/app/api/chat/route.ts (SYSTEM_PROMPT)
+**Type:** prompt
+
 ## [2026-02-06 14:02] — Code: Downgrade 5 console.error to console.debug in projects.ts
 
 **What:** Downgraded 5 remaining `console.error` calls to `console.debug` in src/lib/projects.ts (cloud save, load, list, delete, migration). These are non-critical client-side operations that shouldn't pollute the browser console.
