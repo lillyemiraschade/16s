@@ -1,5 +1,12 @@
 # 16s Changelog
 
+## [2026-02-05 02:20] — Feature: Compress MANDATORY QUALITY CHECK (~400 tokens saved)
+
+**What:** Compressed the 65-line MANDATORY QUALITY CHECK section to 4 lines. The checklist was heavily redundant with PHASE 3 QA (which already checks accessibility, mobile, forms, links, CLS), the design system (which already mandates 8pt grid, clamp(), font pairing), and the forensic analysis (which already checks layout/color/typography fidelity). Prompt now ~9.1K tokens.
+**Why:** Three separate sections were independently checking the same things: emoji ban (already in output rules), button/form/mobile functionality (already in QA phase), font/spacing/color quality (already in design system + forensic analysis). The compressed version retains the key checks without duplicating what other sections enforce.
+**Files:** src/app/api/chat/route.ts (SYSTEM_PROMPT)
+**Type:** feature
+
 ## [2026-02-05 02:16] — Prompt: Compress aesthetic direction section (~500 tokens saved)
 
 **What:** Compressed the "NO INSPO?" intro (7 lines of motivational text already covered by the design quality standard), 7 industry aesthetic direction blocks (35 lines × 5 bullet points each) into 7 single-line summaries, and the design system intro (5 lines) into 1 line. Prompt now ~9.5K tokens.

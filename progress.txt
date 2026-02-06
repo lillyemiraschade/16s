@@ -56,6 +56,7 @@
 - R2-35 [FEATURE] Add blob upload to handleSendMessageInternal (fixes voice call image bug)
 - R2-36 [CODE] Compress design quality intro + forensic analysis (~350 tokens saved, now ~10K)
 - R2-37 [PROMPT] Compress aesthetic direction section (~500 tokens saved, now ~9.5K)
+- R2-38 [FEATURE] Compress MANDATORY QUALITY CHECK — remove overlap with QA/design system (~400 tokens saved, now ~9.1K)
 
 ## Still Open (Round 2 targets)
 - Stripe API version: verified correct for stripe@20.3.0 (not a bug)

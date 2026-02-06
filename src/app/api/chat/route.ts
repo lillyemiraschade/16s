@@ -928,71 +928,13 @@ Include these as needed. All must null-guard DOM queries (check element exists b
 12. LOADING DOTS CSS: .loading-dots span with staggered blink animation (0.2s delay each).
 
 ---
-⚠️ MANDATORY QUALITY CHECK — VERIFY BEFORE OUTPUTTING
+PRE-OUTPUT QUALITY CHECK
 ---
 
-IF INSPO PROVIDED — ALL MUST BE TRUE OR REDO:
-□ LAYOUT: Text alignment MATCHES inspo exactly? (left/center/right)
-□ LAYOUT: Column structure MATCHES? (centered vs asymmetric)
-□ TYPOGRAPHY: Font weight MATCHES? (thin 300 vs bold 600+)
-□ TYPOGRAPHY: Style MATCHES? (italic vs normal)
-□ EFFECTS: ALL visual effects recreated? (glows, stars, waves, gradients)
-□ NAV: Navigation position and style MATCHES?
-□ COLORS: Using same color palette as inspo?
-⚠️ If ANY item fails → DO NOT OUTPUT → fix and re-verify
-
-IF NO INSPO — PROFESSIONAL STANDARDS:
-□ NOT using generic AI look (purple gradients + centered hero + three cards)?
-□ Using business-appropriate accent color (not default purple)?
-□ Hero has asymmetric or left-aligned layout?
-□ Buttons have specific CTA text (not "Get Started")?
-□ Using font pairing (display + text fonts)?
-□ Using fluid typography with clamp()?
-□ Using 8pt spacing grid?
-
-TYPOGRAPHY CHECK:
-□ 2-3 font weights with clear purpose?
-□ Letter-spacing: tight on headlines (-0.02em), normal on body?
-□ Line-height: 1.1 on headlines, 1.5+ on body?
-□ Fluid sizing with clamp() for responsive?
-
-SPACING CHECK:
-□ Using 8pt grid values? (8, 16, 24, 32, 48, 64, 96, 128)
-□ Section padding: 96px+ desktop, 64px+ mobile?
-□ Generous whitespace (when in doubt, add more)?
-
-MOTION CHECK:
-□ Professional easing curves (not just "ease")?
-□ Hover states on ALL interactive elements?
-□ Staggered reveal animations?
-□ prefers-reduced-motion support?
-
-ACCESSIBILITY CHECK:
-□ Semantic HTML (nav, main, section, footer)?
-□ 44px minimum touch targets?
-□ Focus-visible states?
-□ Skip link included?
-□ WCAG AA contrast (4.5:1)?
-
-FUNCTIONALITY CHECK — CRITICAL:
-□ All forms submit and show success message?
-□ Mobile menu opens/closes smoothly?
-□ Page navigation works (no dead links)?
-□ Search/filter actually filters content?
-□ Tabs/accordions toggle correctly?
-□ Gallery has lightbox on click?
-□ Contact form saves to localStorage?
-□ Cart (if applicable) adds items and shows total?
-□ Pricing toggle (if applicable) switches prices?
-□ ALL buttons do something (no dead buttons)?
-□ Loading states shown for async actions?
-
-FINAL QUALITY GATES:
-□ ⛔ ZERO EMOJIS anywhere? (scan entire output)
-□ No banned AI patterns? (identical cards, generic CTAs, purple gradients)
-□ Would this get featured on Awwwards?
-□ Could this be mistaken for a $50k agency site?
-□ Would a senior designer believe a human made this?
+IF INSPO: Verify layout, alignment, font weights, colors, nav style, ALL effects match exactly. If ANY mismatch → fix and re-verify.
+IF NO INSPO: Not generic AI look? Business-appropriate colors? Asymmetric hero? Specific CTAs? Font pairing + clamp() + 8pt grid?
+ALWAYS: Zero emojis? All buttons work? Forms submit? Mobile menu smooth? No dead links? All JS patterns from above are null-safe and functional?
+Would a senior designer believe a human made this?
 
 ---
 MODERN COMPONENT STYLE GUIDE (shadcn/ui inspired — adapt colors to match site palette):
