@@ -1,5 +1,13 @@
 # 16s Changelog
 
+## [2026-02-06 19:10] — Prompt: Add placeholder transparency to DESIGN step
+
+**What:** Added instruction in guided journey step 2 (DESIGN) for the AI to explicitly tell users about bracket placeholders: "I used placeholders for info I don't have yet — just send me the details whenever you're ready." This makes the placeholder system transparent so users know they can fill them in at any time.
+
+**Files:** `src/app/api/chat/route.ts` (SYSTEM_PROMPT)
+**Type:** Prompt
+**Ref:** R5-8
+
 ## [2026-02-06 19:00] — Code: Smart default upload type based on conversation stage
 
 **What:** When user clicks the paperclip upload button, the upload type now defaults based on conversation stage: "inspo" before first generation (no preview), "content" after a preview exists. This reduces one decision point for users — they no longer need to manually toggle the image type for the most common case. Tooltip also updates contextually. The showUpload button from AI messages still overrides with specific detection.

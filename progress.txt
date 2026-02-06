@@ -25,6 +25,7 @@ what kind of photos to give, and the AI doesn't guide them through it.
 - R5-5: PROMPT — Add social link placement rules + showUpload hint for content photos
 - R5-6: CODE — Increase max_tokens for complex generations (16K → 18K)
 - R5-7: CODE — Smart default upload type based on conversation stage
+- R5-8: PROMPT — Add placeholder transparency to DESIGN step
 
 ## In Progress
-(next: reviewing + additional improvements)
+(next: CODE — voice-to-chat handoff structure)
