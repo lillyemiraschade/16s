@@ -6,7 +6,7 @@ import { Paperclip, ArrowUp, X, ImagePlus, Plus, Phone, Info, Pencil, Sparkles, 
 import Image from "next/image";
 import { TypingIndicator } from "./TypingIndicator";
 import { UserMenu } from "@/components/auth/UserMenu";
-import { processImageFiles, removeBackground, compressForContent } from "@/lib/images";
+import { processImageFiles, removeBackground } from "@/lib/images";
 import type { Message, SelectedElement, UploadedImage } from "@/lib/types";
 
 interface ChatPanelProps {

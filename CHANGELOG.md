@@ -1,5 +1,12 @@
 # 16s Changelog
 
+## [2026-02-05 04:25] — Code: Remove unused compressForContent import from ChatPanel
+
+**What:** Removed unused `compressForContent` import from ChatPanel.tsx. The function is imported from `@/lib/images` but never called in this component (only used in page.tsx).
+**Why:** Dead imports waste bytes, mislead readers, and can trigger linter warnings. Continuing the dead import cleanup from R2-48 (useMemo) and R2-39 (isReactCode).
+**Files:** src/components/chat/ChatPanel.tsx
+**Type:** code
+
 ## [2026-02-05 04:20] — Feature: Add "Copy URL" button to deployed site link in export menu
 
 **What:** Added a Copy icon button next to the deployed site URL in the export dropdown. Clicking it copies the full deploy URL to clipboard and shows the existing "Copied!" toast. The deployed link now lives in a flex row with the copy button alongside it.

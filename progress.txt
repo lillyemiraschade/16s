@@ -78,6 +78,7 @@
 - R2-57 [CODE] Downgrade last 4 client-side lib console.error to debug (completes ALL client cleanup)
 - R2-58 [PROMPT] Compress SPACING + MOTION systems to single-line refs (~350 tokens saved, now ~6.7K)
 - R2-59 [FEATURE] Add "Copy URL" button to deployed site link in export menu
+- R2-60 [CODE] Remove unused compressForContent import from ChatPanel
 
 ## Still Open (Round 2 targets)
 - Stripe API version: verified correct for stripe@20.3.0 (not a bug)
