@@ -1,5 +1,12 @@
 # 16s Changelog
 
+## [2026-02-05 01:17] — Prompt: Compress JavaScript patterns from 217 lines to 12
+
+**What:** Replaced the JAVASCRIPT PATTERNS section (217 lines of full JavaScript code blocks for page routing, mobile menu, form handling, smooth scroll, tabs/accordion, lightbox, filter/search, cart, pricing toggle, clipboard, loading dots, and lightbox CSS) with 12 concise one-line descriptions. Each description preserves the key specification (class names, null guards, specific behaviors) without the full implementation.
+**Why:** Claude can write these standard JavaScript patterns without seeing full code templates. The 217 lines were ~1400 tokens of unnecessary weight. The compressed version captures the critical details (e.g., "showPage(id) function — fade out all .page elements, show matching one") that ensure consistency without spelling out every line.
+**Files:** src/app/api/chat/route.ts (SYSTEM_PROMPT)
+**Type:** prompt
+
 ## [2026-02-05 01:15] — Prompt: Compress component patterns from 230 lines to 12
 
 **What:** Replaced the MODERN COMPONENT PATTERNS section (230 lines of full CSS code blocks for buttons, cards, inputs, badges, nav, hero, animations, gradients, tables, modals) with a 12-line style guide summary. Also fixed dark-mode bias — patterns now say "adapt colors to match site palette" instead of hardcoding zinc values.
