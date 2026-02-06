@@ -1,5 +1,12 @@
 # 16s Changelog
 
+## [2026-02-05 01:40] — Prompt: Compress form example, quality requirements, bg removal (~430 tokens saved)
+
+**What:** (1) Replaced 17-line contact form JavaScript example with reference to JAVASCRIPT PATTERNS #3. (2) Replaced 25-line "Quality Requirements (same as inspo cloning)" section with 1-line reference to DESIGN SYSTEM section — all the same guidance was duplicated there. (3) Compressed background removal from 3 sentences to 1. Prompt now ~11,488 tokens.
+**Why:** The contact form code was already described in the compressed JS patterns section. The quality requirements section was a near-perfect duplicate of the Design System section that follows. Removing these saves ~430 tokens and eliminates maintenance drift.
+**Files:** src/app/api/chat/route.ts (SYSTEM_PROMPT)
+**Type:** prompt
+
 ## [2026-02-05 01:37] — Code: Deduplicate easing curves + hover states in SYSTEM_PROMPT
 
 **What:** Removed duplicated easing curves (4 lines listing cubic-bezier values that were already defined in :root CSS vars) and hover states section (4 lines listing transforms already in "ALSO INCLUDE" section). Replaced with single-line references to the CSS Foundation section.
