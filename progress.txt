@@ -82,6 +82,7 @@
 - R2-61 [PROMPT] Compress LAYOUT + COMPONENT PATTERNS to single-line refs (~450 tokens saved, now ~6.3K)
 - R2-62 [FEATURE] Add aria-live to copy toast + role=alert to welcome error toast
 - R2-63 [CODE] Remove dead isReactCode + htmlToReactComponent from react-preview.ts (-50 lines)
+- R2-64 [PROMPT] Remove duplicate TECHNICAL/FONTS + compress ACCESSIBILITY (~350 tokens saved, now ~5.9K)
 
 ## Still Open (Round 2 targets)
 - Stripe API version: verified correct for stripe@20.3.0 (not a bug)

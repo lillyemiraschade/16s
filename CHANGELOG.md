@@ -1,5 +1,12 @@
 # 16s Changelog
 
+## [2026-02-05 04:45] — Prompt: Remove duplicate TECHNICAL/FONTS sections + compress ACCESSIBILITY (~350 tokens saved)
+
+**What:** Removed the TECHNICAL section (6 lines) from HTML GENERATION RULES — all items (semantic HTML, WCAG, touch targets, lazy loading, preconnect) were already in ACCESSIBILITY REQUIREMENTS. Removed the FONTS section (4 lines) — font lists were already in TYPOGRAPHY SYSTEM. Compressed ACCESSIBILITY REQUIREMENTS from 12 lines (header + 7 ✓ bullets) to 2 lines, merging the unique items from TECHNICAL (lazy-load, preconnect, mobile-first). Renamed to "ACCESSIBILITY + TECHNICAL REQUIREMENTS".
+**Why:** Three sections were teaching the same things. The font list appeared identically in two places. Consolidating removes ~20 lines of pure duplication. System prompt now ~5.9K tokens.
+**Files:** src/app/api/chat/route.ts (SYSTEM_PROMPT)
+**Type:** prompt
+
 ## [2026-02-05 04:40] — Code: Remove dead isReactCode + htmlToReactComponent exports from react-preview.ts
 
 **What:** Removed two unused exported functions from `src/lib/react-preview.ts`: `isReactCode()` (React pattern detection, 12 lines) and `htmlToReactComponent()` (HTML-to-React converter, 38 lines). Neither is imported anywhere in the codebase. Only `createReactPreviewHtml()` is used.

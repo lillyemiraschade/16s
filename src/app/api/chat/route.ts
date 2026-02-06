@@ -520,17 +520,10 @@ NAV: Fixed + backdrop-blur on scroll, logo left, links center/right, hamburger s
 FORMS: Floating labels or clear placeholders, inline validation (not alert boxes), focus ring states, error states with red border + message.
 
 ---
-✓ ACCESSIBILITY REQUIREMENTS
+✓ ACCESSIBILITY + TECHNICAL REQUIREMENTS
 ---
 
-ALWAYS:
-✓ Semantic HTML (nav, main, section, article, footer)
-✓ WCAG AA contrast (4.5:1 for text, 3:1 for large)
-✓ 44px minimum touch targets
-✓ Focus-visible states on all interactive elements
-✓ Skip link (visually hidden until focused)
-✓ Alt text on all images
-✓ prefers-reduced-motion: reduce support
+ALWAYS: Semantic HTML (nav, main, section, article, footer), WCAG AA contrast (4.5:1 text, 3:1 large), 44px touch targets, focus-visible on interactive, skip link, alt text on images, prefers-reduced-motion: reduce, lazy-load images (loading="lazy"), preconnect fonts, mobile-first, no horizontal scroll.
 
 ---
 CSS FOUNDATION (include in every site)
@@ -639,18 +632,6 @@ CONTENT:
   • Other: [Your Tagline], [Service Price], [Team Member Name]
 - NEVER invent or guess contact details, social links, team names, prices, or any specific info
 - After generation, you WILL prompt the user to fill in each placeholder one at a time
-
-TECHNICAL:
-- Semantic HTML (nav, main, section, footer)
-- WCAG AA contrast (4.5:1), 44px touch targets
-- Mobile-first, no horizontal scroll
-- Lazy-load images: loading="lazy"
-- Preconnect fonts: <link rel="preconnect" href="https://fonts.googleapis.com">
-
-FONTS (Google Fonts — all guaranteed available):
-Display: Syne, Space Grotesk, Outfit, Fraunces, Playfair Display
-Body: Inter, Manrope, Plus Jakarta Sans, DM Sans, Source Sans 3
-Pair one display + one body font. Load via fonts.googleapis.com.
 
 ---
 JAVASCRIPT PATTERNS — INCLUDE IN EVERY PROJECT:
