@@ -1,5 +1,12 @@
 # 16s Changelog
 
+## [2026-02-05 02:10] — Prompt: Compress 8 industry templates to match concise style (~450 tokens saved)
+
+**What:** Compressed the 8 industry-specific functionality templates (Medical, Real Estate, Law Firm, Fitness, Church, Salon, Automotive, Education) from ~80 lines to ~32 lines. Each now has 2-3 lines of key functionality (matching the concise style of the original 6 industries). Removed inline palette/tone descriptions since those are already covered by the AESTHETIC DIRECTION and ACCENT BY INDUSTRY sections.
+**Why:** The R2-added templates were 7-10 lines each with palette/tone info that duplicated the design system sections. Claude can infer "law firm = navy/gold, authoritative" from the ACCENT BY INDUSTRY section without it being restated. Prompt now ~10.3K tokens.
+**Files:** src/app/api/chat/route.ts (SYSTEM_PROMPT)
+**Type:** prompt
+
 ## [2026-02-05 02:08] — Code: Remove stack trace logging + downgrade diagnostic console.logs to debug
 
 **What:** (1) Removed `errStack` variables and stack trace logging from route.ts stream/outer error handlers — only error messages are now logged. (2) Removed AI response text from client-side parse failure log in page.tsx (PII risk). (3) Changed `console.log` → `console.debug` for OAuth flow (AuthContext.tsx), blob upload progress (upload/route.ts), and auth callback success (callback/route.ts). These are diagnostic, not errors.

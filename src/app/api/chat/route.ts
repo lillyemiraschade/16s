@@ -495,86 +495,39 @@ SaaS/PRODUCT:
 - Demo request form
 - Feature tour/walkthrough
 
-MEDICAL/DENTAL/HEALTH CLINIC:
-- Services list with descriptions (cleanings, exams, specialties)
-- Provider/doctor profiles with credentials and specialties
-- Appointment request form (date/time preference, reason for visit, insurance info)
-- Office hours display with open/closed indicator
-- Insurance accepted section (list of providers)
-- Patient forms/resources section (new patient info)
-- Location with directions link, parking info
-- "New Patients Welcome" CTA prominently placed
-- Professional, trustworthy tone — use teal/blue/green palette, clean sans-serif fonts
-- NEVER invent medical claims or credentials — use [PLACEHOLDER] brackets
+MEDICAL/DENTAL/HEALTH:
+- Provider profiles, services list, appointment form (date/time/insurance)
+- Office hours, insurance accepted, "New Patients Welcome" CTA
+- NEVER invent medical claims or credentials — use [PLACEHOLDER]
 
 REAL ESTATE/PROPERTY:
-- Property listing cards with price, beds/baths, sqft, location
-- Property filtering (price range, beds, type, location)
-- Featured/spotlight listing section
-- Agent profile with contact info and credentials
-- Property detail modal with photo gallery
-- Mortgage calculator or "Get Pre-Approved" CTA
-- Neighborhood/area guide section
+- Property cards with filtering (price, beds, type), agent profile
+- Featured listings, property detail modal, "Get Pre-Approved" CTA
 
 LAW FIRM/LEGAL:
-- Practice areas grid (family law, criminal defense, personal injury, etc.)
-- Attorney profiles with education, bar admissions, years of experience
-- Free consultation CTA prominently placed (phone number + form)
-- Case results / notable outcomes section (use [PLACEHOLDER] for specifics)
-- Client testimonials with case type context
-- FAQ accordion for common legal questions
-- "Confidential" contact form (name, phone, case type dropdown, brief description)
-- Trust signals: bar association badges, awards, "No Fee Unless We Win" if applicable
-- Dark navy/charcoal palette with gold or burgundy accents — serif headings, authoritative tone
-- NEVER invent case results, credentials, or legal advice — use [PLACEHOLDER] brackets
+- Practice areas grid, attorney profiles, free consultation CTA
+- Case results section, FAQ accordion, confidential contact form
+- NEVER invent case results or legal advice — use [PLACEHOLDER]
 
 FITNESS/GYM/STUDIO:
-- Class schedule grid (day × time, filterable by type: yoga, HIIT, spin, etc.)
-- Membership tiers with comparison (basic, premium, unlimited) and "Join Now" CTA
-- Trainer/instructor profiles with specialties and certifications
-- Facility tour section (gallery or feature cards: equipment, pool, sauna, etc.)
-- Trial offer / first-class-free CTA prominently placed
-- Location + hours with parking info
-- Bold, energetic palette — dark bg with vibrant accent (neon green, orange, electric blue), strong sans-serif typography
-- Progress/transformation section (before/after, stats) — use [PLACEHOLDER] for specifics
+- Class schedule grid (filterable), membership tier comparison
+- Trainer profiles, facility tour, trial offer CTA
 
-CHURCH/NONPROFIT/MINISTRY:
-- Service times with location (multiple campuses if applicable)
-- Upcoming events calendar or cards (services, small groups, volunteer days)
-- "I'm New" / "Plan Your Visit" welcoming CTA prominently placed
-- Sermon/media archive section (series cards with titles)
-- Giving/donate section with clear CTA (no payment processing — link to external platform)
-- Ministries/groups overview (youth, worship, outreach, etc.)
-- Staff/leadership team profiles
-- Warm, welcoming tone — light/airy palette (soft whites, warm grays, nature accents), approachable serif or rounded sans-serif
-- Community focus: testimonials, mission statement, values section
+CHURCH/NONPROFIT:
+- Service times, events calendar, "Plan Your Visit" CTA
+- Sermon archive, giving/donate section, ministries overview
 
 SALON/SPA/BEAUTY:
-- Service menu with categories (hair, nails, skin, massage) and pricing
-- "Book Now" CTA prominently placed (links to external booking system)
-- Stylist/therapist profiles with specialties and portfolio photos
-- Gallery/portfolio section showing work (before/after or style showcase)
-- Location, hours, and parking info
-- Gift cards / packages section
-- Elegant, luxurious palette — soft neutrals (blush, cream, mauve) or dark moody (black/gold), script or refined serif headings
+- Service menu with pricing, "Book Now" CTA, stylist profiles
+- Gallery/portfolio, gift cards section
 
-AUTOMOTIVE/DEALER/MECHANIC:
-- Vehicle inventory cards (year, make, model, price, mileage, photo)
-- Vehicle filtering (make, type, price range, year)
-- "Schedule Test Drive" or "Get a Quote" CTA
-- Service department section (oil change, tires, diagnostics, pricing)
-- Financing / "Apply for Credit" section
-- Location, hours, service appointment form
-- Bold, clean palette — dark charcoal or navy with red/orange accent, strong typography
+AUTOMOTIVE/DEALER:
+- Vehicle inventory with filtering, "Schedule Test Drive" CTA
+- Service department, financing section
 
-EDUCATION/TUTORING/COURSES:
-- Course/program catalog cards with descriptions and pricing
-- Instructor profiles with qualifications
-- Enrollment/registration form or "Enroll Now" CTA
-- Schedule/calendar view of upcoming classes
-- Student testimonials / success stories
-- FAQ section about enrollment, pricing, materials
-- Approachable, trustworthy palette — blues/greens with warm accents, clean modern sans-serif
+EDUCATION/COURSES:
+- Course catalog, instructor profiles, "Enroll Now" CTA
+- Schedule, testimonials, FAQ section
 
 ---
 ⚠️⚠️⚠️ DESIGN QUALITY STANDARD — APPLIES TO ALL SITES ⚠️⚠️⚠️

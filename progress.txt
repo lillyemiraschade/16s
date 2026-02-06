@@ -52,6 +52,7 @@
 - R2-31 [PROMPT] Compress conversation flow + placeholder sections (~500 tokens saved, now ~10.8K)
 - R2-32 [FEATURE] Add aria-labels to PreviewPanel toolbar buttons (viewport, code view, code mode)
 - R2-33 [CODE] Remove stack trace logging + downgrade diagnostic console.logs to debug
+- R2-34 [PROMPT] Compress 8 industry templates to match concise style (~450 tokens saved, now ~10.3K)
 
 ## Still Open (Round 2 targets)
 - Stripe API version: verified correct for stripe@20.3.0 (not a bug)
