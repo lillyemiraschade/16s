@@ -89,7 +89,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     });
 
     if (error) {
-      console.error("[Auth] OAuth error:", error.message);
+      console.debug("[Auth] OAuth error:", error.message);
     } else {
       console.debug("[Auth] OAuth initiated");
     }

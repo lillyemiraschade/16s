@@ -66,6 +66,7 @@
 - R2-45 [CODE] Extract getUserFriendlyError helper — deduplicate error mapping in stream + outer catch (-20 lines)
 - R2-46 [PROMPT] Compress PHASE 3 QUALITY CHECK — visual/image verification + QA report example (~550 tokens saved, now ~7.8K)
 - R2-47 [FEATURE] Add aria-label to VoiceCall hangup button + role=menu/menuitem to UserMenu dropdown
+- R2-48 [CODE] Remove unused useMemo import + downgrade OAuth console.errors to debug
 
 ## Still Open (Round 2 targets)
 - Stripe API version: verified correct for stripe@20.3.0 (not a bug)

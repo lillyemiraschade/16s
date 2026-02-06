@@ -1,5 +1,12 @@
 # 16s Changelog
 
+## [2026-02-05 03:25] — Code: Remove unused useMemo import + downgrade OAuth console.errors to debug
+
+**What:** Removed unused `useMemo` import from page.tsx (imported but never called). Downgraded 3 client-side `console.error` calls in AuthModal.tsx and AuthContext.tsx to `console.debug` — these log OAuth error details to the browser console where end users could see them. The errors are already surfaced in the UI via `setError()`.
+**Why:** Dead imports waste bytes and mislead readers. Client-side console.error for OAuth flows leaks error details that are already shown in the UI. Consistent with R2-33 which downgraded diagnostic console.logs in route.ts.
+**Files:** src/app/page.tsx, src/components/auth/AuthModal.tsx, src/lib/auth/AuthContext.tsx
+**Type:** code
+
 ## [2026-02-05 03:15] — Feature: Add a11y to VoiceCall hangup button + UserMenu dropdown roles
 
 **What:** Added `aria-label="End call"` to the VoiceCall hangup button (had `title` but no `aria-label`). Added `role="menu"` to the UserMenu dropdown container and `role="menuitem"` to the sign out button, completing the ARIA menu pattern alongside the existing `aria-haspopup="true"` on the trigger.

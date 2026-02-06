@@ -62,7 +62,7 @@ export function AuthModal({ isOpen, onClose, title, subtitle }: AuthModalProps) 
     try {
       const { error } = await signInWithOAuth(provider);
       if (error) {
-        console.error("[OAuth] Error:", error.message);
+        console.debug("[OAuth] Error:", error.message);
         setError(error.message);
         setLoading(false);
         return;
@@ -75,7 +75,7 @@ export function AuthModal({ isOpen, onClose, title, subtitle }: AuthModalProps) 
         setError("Sign in failed to start. Please check that popups are allowed and try again.");
       }, 3000);
     } catch (err) {
-      console.error("[OAuth] Exception:", err);
+      console.debug("[OAuth] Exception:", err);
       setError(err instanceof Error ? err.message : "An unexpected error occurred");
       setLoading(false);
     }

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useCallback, useMemo, useEffect, Suspense } from "react";
+import { useState, useRef, useCallback, useEffect, Suspense } from "react";
 import html2canvas from "html2canvas";
 import { motion, AnimatePresence } from "framer-motion";
 import { Paperclip, ArrowUp, ImagePlus, X, FolderOpen } from "lucide-react";
