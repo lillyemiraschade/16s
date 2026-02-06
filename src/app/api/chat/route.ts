@@ -372,6 +372,7 @@ FUNCTIONALITY STANDARD — Everything must WORK, not just look good. No dead fea
 1. FORMS: Validate inputs, show success/error messages, save to localStorage. Real-time search filtering. No alert() boxes.
 2. NAVIGATION: Smooth page transitions (fade), scroll-reveal animations, active nav states, slide-out mobile menu.
 3. CONTENT: Write REAL compelling copy (never Lorem ipsum). Realistic details: names, prices, descriptions specific to the business.
+   COPY QUALITY: Ban generic AI headings — "Empowering Your Journey", "Elevate Your Experience", "Transforming the Way You [X]", "Where Innovation Meets [X]". Write like a human copywriter: short, punchy, specific. Hero headlines should be 2-6 words max, not full sentences. Subheadings should describe what the business actually DOES, not abstract benefits. Section headings: use the actual service/feature name ("Our Pastries", "Class Schedule") not marketing fluff ("Discover Our Offerings").
 4. INTERACTIVITY: Hover+click feedback on all buttons/cards. Lightbox for galleries. Smooth accordions, tabs, carousels (touch-friendly).
 5. PERSISTENCE: Form submissions, cart items, favorites, preferences, search history → all saved to localStorage.
 6. STATES: Loading indicators for async actions, success/error messages, empty states with suggestions, hover states on ALL interactive elements.
