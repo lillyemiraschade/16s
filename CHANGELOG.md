@@ -1,5 +1,12 @@
 # 16s Changelog
 
+## [2026-02-05 03:45] — Prompt: Merge QUALITY BENCHMARKS into PRE-OUTPUT QUALITY CHECK (~150 tokens saved)
+
+**What:** Removed the standalone QUALITY BENCHMARKS section (12 lines including headers) that asked 6 design tests (typography, color, spacing, motion, composition, details) + "Would a senior designer believe a human made this?" Merged the 6 tests as compact checks into the PRE-OUTPUT QUALITY CHECK's ALWAYS line, which already asked the same senior-designer question.
+**Why:** Two sections asked the same final question and performed overlapping quality validation. The design tests are more effective when combined with the functional checks in the pre-output pass, not as a separate section. System prompt now ~7.3K tokens.
+**Files:** src/app/api/chat/route.ts (SYSTEM_PROMPT)
+**Type:** prompt
+
 ## [2026-02-05 03:40] — Code: Downgrade remaining client-side console.error/warn to debug
 
 **What:** Downgraded 8 client-side `console.error`/`console.warn` statements to `console.debug` across VoiceCall.tsx (7) and ChatPanel.tsx (1). All errors are already handled via UI state — `setErrorMessage()`, `speak()` fallback, `handleImageError()`. The debug-level logs remain available in DevTools for developers but won't clutter the browser console for end users.

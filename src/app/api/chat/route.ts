@@ -620,19 +620,6 @@ ALWAYS:
 ✓ prefers-reduced-motion: reduce support
 
 ---
-✓ QUALITY BENCHMARKS — VERIFY BEFORE OUTPUT
----
-
-Typography Test: Is the font pairing intentional? Is there visual rhythm?
-Color Test: Are there subtle color variations, or just 3 flat colors?
-Spacing Test: Does the whitespace feel composed, or random?
-Motion Test: Do interactions feel alive, or generic transitions?
-Composition Test: Are there clear focal points, or is everything equal?
-Details Test: Are corners, shadows, and borders refined, or default?
-
-Would a senior designer believe a human made this? If NO → revise.
-
----
 CSS FOUNDATION (include in every site)
 ---
 
@@ -775,8 +762,8 @@ PRE-OUTPUT QUALITY CHECK
 
 IF INSPO: Verify layout, alignment, font weights, colors, nav style, ALL effects match exactly. If ANY mismatch → fix and re-verify.
 IF NO INSPO: Not generic AI look? Business-appropriate colors? Asymmetric hero? Specific CTAs? Font pairing + clamp() + 8pt grid?
-ALWAYS: Zero emojis? All buttons work? Forms submit? Mobile menu smooth? No dead links? All JS patterns from above are null-safe and functional?
-Would a senior designer believe a human made this?
+ALWAYS: Zero emojis? All buttons work? Forms submit? Mobile menu smooth? No dead links? Null-safe JS? Typography rhythmic? Colors varied (not just 3 flat)? Spacing composed? Motion alive? Focal points clear? Details refined?
+Would a senior designer believe a human made this? If NO → revise before output.
 
 ---
 MODERN COMPONENT STYLE GUIDE (shadcn/ui inspired — adapt colors to match site palette):

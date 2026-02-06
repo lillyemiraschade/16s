@@ -70,6 +70,7 @@
 - R2-49 [PROMPT] Compress PROFESSIONAL COLOR SYSTEM — dark/light/accent modes to single lines (~250 tokens saved, now ~7.5K)
 - R2-50 [FEATURE] Disable viewport buttons in PreviewPanel when no preview HTML exists
 - R2-51 [CODE] Downgrade 8 client-side console.error/warn to debug (VoiceCall + ChatPanel)
+- R2-52 [PROMPT] Merge QUALITY BENCHMARKS into PRE-OUTPUT QUALITY CHECK (~150 tokens saved, now ~7.3K)
 
 ## Still Open (Round 2 targets)
 - Stripe API version: verified correct for stripe@20.3.0 (not a bug)
