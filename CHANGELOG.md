@@ -1,5 +1,12 @@
 # 16s Changelog
 
+## [2026-02-05 04:30] — Prompt: Compress LAYOUT + COMPONENT PATTERNS (~450 tokens saved)
+
+**What:** Compressed LAYOUT PATTERNS from 27 lines (4 sub-sections with ✓ bullets) to 4 single-line specifications. Compressed COMPONENT PATTERNS from 28 lines (4 sub-sections with ✓ bullets) to 4 single-line specifications. All specific values (grid column counts, shadow values, padding specs, radius options) preserved exactly.
+**Why:** These sections used multi-line ✓ bullet format for simple CSS reference values. Single-line format retains all specifics while cutting ~40 lines. System prompt now ~6.3K tokens.
+**Files:** src/app/api/chat/route.ts (SYSTEM_PROMPT)
+**Type:** prompt
+
 ## [2026-02-05 04:25] — Code: Remove unused compressForContent import from ChatPanel
 
 **What:** Removed unused `compressForContent` import from ChatPanel.tsx. The function is imported from `@/lib/images` but never called in this component (only used in page.tsx).

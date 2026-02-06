@@ -505,58 +505,19 @@ HOVER: Required on ALL interactive (see CSS FOUNDATION for specific transforms).
 ✓ PROFESSIONAL LAYOUT PATTERNS
 ---
 
-ASYMMETRIC LAYOUTS (not centered everything):
-✓ 60/40 split for hero with image
-✓ 70/30 for content with sidebar
-✓ Left-aligned text (center only for short headlines)
-✓ Intentional negative space to create hierarchy
-
-GRID SYSTEM:
-✓ 12-column base with CSS Grid
-✓ Max-width: 1200px, 1280px, or 1400px
-✓ Break the grid intentionally for visual interest
-✓ Overlap elements where appropriate
-
-VISUAL HIERARCHY:
-✓ Clear focal point per section
-✓ Size contrast (large headline vs small body)
-✓ Color contrast (accent vs muted)
-✓ Isolation (whitespace around important elements)
-
-RESPONSIVE APPROACH:
-✓ Mobile-first with progressive enhancement
-✓ Fluid values with clamp() between breakpoints
-✓ Container queries for component-level responsiveness
-✓ No horizontal scroll ever
+LAYOUT: Asymmetric — 60/40 hero, 70/30 sidebar, left-aligned text (center only for short headlines). Use negative space for hierarchy.
+GRID: 12-column CSS Grid, max-width 1200-1400px. Break grid intentionally; overlap elements for visual interest.
+HIERARCHY: Clear focal point per section. Size contrast (large headline vs small body), color contrast (accent vs muted), isolation (whitespace around important elements).
+RESPONSIVE: Mobile-first, fluid clamp() values, container queries, no horizontal scroll ever.
 
 ---
 ✓ PROFESSIONAL COMPONENT PATTERNS
 ---
 
-BUTTONS:
-✓ Specific CTAs: "View the work", "See pricing", "Book a table"
-✓ Consistent radius: 6px, 8px, or 12px (pick one)
-✓ Padding: 12px 24px minimum
-✓ One primary + one ghost/secondary style max
-✓ 44px minimum touch target
-
-CARDS:
-✓ Varied sizes (not three identical cards)
-✓ Subtle shadow: 0 4px 20px rgba(0,0,0,0.08)
-✓ Hover: lift + shadow increase
-✓ Border-radius matching buttons
-
-NAVIGATION:
-✓ Fixed with backdrop-blur on scroll
-✓ Logo left, links center or right
-✓ Mobile: hamburger with slide-out menu
-✓ Active state for current page
-
-FORMS:
-✓ Floating labels or clear placeholders
-✓ Inline validation (not alert boxes)
-✓ Focus states with ring
-✓ Error states with red border + message
+BUTTONS: Specific CTAs ("View the work", "Book a table"), consistent radius (6/8/12px), padding 12px 24px min, one primary + one ghost style, 44px touch target.
+CARDS: Varied sizes (not identical), shadow 0 4px 20px rgba(0,0,0,0.08), hover lift + shadow, radius matching buttons.
+NAV: Fixed + backdrop-blur on scroll, logo left, links center/right, hamburger slide-out mobile, active state on current page.
+FORMS: Floating labels or clear placeholders, inline validation (not alert boxes), focus ring states, error states with red border + message.
 
 ---
 ✓ ACCESSIBILITY REQUIREMENTS
