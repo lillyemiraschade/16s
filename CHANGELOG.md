@@ -1,5 +1,12 @@
 # 16s Changelog
 
+## [2026-02-05 01:08] — Prompt: Add church/nonprofit + salon/spa templates, compress pixel-perfect checklist
+
+**What:** Added CHURCH/NONPROFIT/MINISTRY template (service times, events, "Plan Your Visit" CTA, sermon archive, giving, ministries, warm palette) and SALON/SPA/BEAUTY template (service menu, "Book Now" CTA, stylist profiles, gallery, gift cards, elegant palette). Removed the PIXEL-PERFECT CHECKLIST section (~30 lines) which duplicated the compressed forensic analysis section and the absolute rules — same "check position, size, shape, color, effects" items.
+**Why:** Churches/nonprofits and salons/spas are among the most-requested business types. The pixel-perfect checklist was redundant with the forensic analysis section already covering identical checks. Net token change: roughly neutral (two templates added, redundant checklist removed).
+**Files:** src/app/api/chat/route.ts (SYSTEM_PROMPT)
+**Type:** prompt
+
 ## [2026-02-05 01:07] — Code: Add aria-label to image type toggle button
 
 **What:** Added descriptive `aria-label` to the inspo/content image toggle button in ChatPanel.tsx, including the current state (e.g., "Toggle image 1 type: currently content"). Also confirmed beforeunload save already includes context (line 438 of page.tsx).

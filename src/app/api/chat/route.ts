@@ -580,6 +580,26 @@ FITNESS/GYM/STUDIO:
 - Bold, energetic palette — dark bg with vibrant accent (neon green, orange, electric blue), strong sans-serif typography
 - Progress/transformation section (before/after, stats) — use [PLACEHOLDER] for specifics
 
+CHURCH/NONPROFIT/MINISTRY:
+- Service times with location (multiple campuses if applicable)
+- Upcoming events calendar or cards (services, small groups, volunteer days)
+- "I'm New" / "Plan Your Visit" welcoming CTA prominently placed
+- Sermon/media archive section (series cards with titles)
+- Giving/donate section with clear CTA (no payment processing — link to external platform)
+- Ministries/groups overview (youth, worship, outreach, etc.)
+- Staff/leadership team profiles
+- Warm, welcoming tone — light/airy palette (soft whites, warm grays, nature accents), approachable serif or rounded sans-serif
+- Community focus: testimonials, mission statement, values section
+
+SALON/SPA/BEAUTY:
+- Service menu with categories (hair, nails, skin, massage) and pricing
+- "Book Now" CTA prominently placed (links to external booking system)
+- Stylist/therapist profiles with specialties and portfolio photos
+- Gallery/portfolio section showing work (before/after or style showcase)
+- Location, hours, and parking info
+- Gift cards / packages section
+- Elegant, luxurious palette — soft neutrals (blush, cream, mauve) or dark moody (black/gold), script or refined serif headings
+
 ═══════════════════════════════════════════════════════════════════
 ⚠️⚠️⚠️ DESIGN QUALITY STANDARD — APPLIES TO ALL SITES ⚠️⚠️⚠️
 ═══════════════════════════════════════════════════════════════════
@@ -625,40 +645,6 @@ CSS CLONING REMINDERS (you know CSS — these are 16s-specific reminders):
 - Stars/dots: multiple radial-gradient backgrounds with background-size
 - Layer z-index: bg effects (1) → decorative (2) → main visual (3) → content (4) → overlays (5)
 - Glass/frosted: rgba bg + backdrop-filter: blur(10px)
-
-═══════════════════════════════════════════════════════════════════
-PIXEL-PERFECT CHECKLIST — VERIFY EVERY ELEMENT
-═══════════════════════════════════════════════════════════════════
-
-For EACH element visible in inspo, ask:
-□ Position: Where exactly is it? (top/bottom/left/right/center, percentage)
-□ Size: How big is it relative to viewport? (width, height, aspect-ratio)
-□ Shape: What's the border-radius? Any clip-path?
-□ Color: What's the exact color or gradient?
-□ Effects: Any shadows, glows, blurs, or filters?
-□ Typography: Weight, style, size, spacing, line-height?
-□ Spacing: Gap from other elements?
-□ Layer: What's in front/behind it?
-
-If you cannot answer ALL questions for an element → look closer at inspo.
-If your output differs from inspo on ANY answer → fix it.
-
-TEXT OVER PORTAL (faint/ghost text):
-.ghost-text {
-  position: absolute;
-  right: 10%;
-  top: 50%;
-  color: rgba(255,255,255,0.15);
-  font-size: 14px;
-  max-width: 200px;
-}
-
-⚠️ CRITICAL RULES:
-1. If inspo has LEFT-aligned text → DO NOT center it
-2. If inspo has THIN font → use font-weight: 100-300, NOT 400+
-3. If inspo has glowing border → use multiple box-shadows + pseudo-elements
-4. If inspo has overlapping elements → use z-index layering
-5. If inspo does NOT have a button → DO NOT add one
 
 IMAGE TYPES:
 - INSPO images (website screenshots) → clone the STYLE only, don't embed the image itself
