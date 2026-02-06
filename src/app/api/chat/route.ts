@@ -819,46 +819,24 @@ QUALITY REQUIREMENTS (same as inspo cloning):
 This separates a $500 Fiverr site from a $50,000 agency site.
 Every site you generate MUST meet these standards.
 
-─────────────────────────────────────────────────────────────────
+---
 ⛔ ABSOLUTE BANS — "VIBE-CODED" AMATEUR PATTERNS
-─────────────────────────────────────────────────────────────────
+---
 
-GENERIC AI PATTERNS (these scream "AI-generated"):
-✗ Purple/violet gradients (#8B5CF6, #7C3AED) — the default AI color
-✗ Centered hero with generic headline and three identical cards below
-✗ Cookie-cutter flow: Hero → Features → How It Works → CTA → Footer
-✗ "Get Started", "Learn More", "Book a Call", "Contact Us" CTAs
-✗ "Transform your [X]", "Take it to the next level", "Unlock your potential"
-✗ "Trusted by 10,000+ customers" with fake logos
-✗ Generic testimonials ("John D.", "Sarah M." with stock headshots)
+NEVER DO THESE — they scream "AI-generated":
+✗ Purple/violet gradients (#8B5CF6) as default color
+✗ Centered hero → 3 identical cards → How It Works → CTA (cookie-cutter flow)
+✗ Generic CTAs: "Get Started", "Learn More", "Transform your [X]", "Unlock your potential"
+✗ Fake social proof: "Trusted by 10,000+" with fake logos, "John D." testimonials
 ✗ Three identical feature cards with matching gradient icons
-✗ Gradient-filled pill buttons with shadow
-✗ Floating abstract blobs/shapes with no purpose
-✗ "Hero image" placeholder rectangles
+✗ Gradient pill buttons, floating blobs, placeholder rectangles
+✗ Only 1-2 font weights, random px values, default line-height
+✗ Arbitrary padding (20px, 40px), symmetrical everything, cramped spacing
+✗ transition: all 0.3s ease, generic fade-in, no hover states
 
-AMATEUR TYPOGRAPHY:
-✗ 1-2 fonts with only regular/bold weights
-✗ Predictable sizing (just H1 > H2 > H3)
-✗ Default line-height and letter-spacing
-✗ All-caps body text or long headings
-✗ Random px values (17px, 23px, 41px)
-✗ System fonts without fallback chain
-
-AMATEUR SPACING:
-✗ Arbitrary padding (20px, 40px, 60px)
-✗ Inconsistent rhythm between sections
-✗ Symmetrical everything
-✗ Cramped components
-
-AMATEUR MOTION:
-✗ transition: all 0.3s ease (the lazy default)
-✗ Generic fade-in on scroll
-✗ No hover states
-✗ No choreography or staggering
-
-─────────────────────────────────────────────────────────────────
+---
 ✓ PROFESSIONAL TYPOGRAPHY SYSTEM
-─────────────────────────────────────────────────────────────────
+---
 
 FONT PAIRING (display + text):
 ✓ Display fonts for headlines: Syne, Space Grotesk, Outfit, Fraunces, Playfair Display
@@ -892,9 +870,9 @@ FONT WEIGHT USAGE:
 ✓ Semibold (600) for headings
 ✓ Never use bold (700) unless intentional contrast
 
-─────────────────────────────────────────────────────────────────
+---
 ✓ PROFESSIONAL SPACING SYSTEM (8pt Grid)
-─────────────────────────────────────────────────────────────────
+---
 
 Use the --space-N CSS variables defined in :root (CSS FOUNDATION section).
 
@@ -908,9 +886,9 @@ COMPONENT GAPS:
 ✓ Normal: 24px-32px (between related elements)
 ✓ Generous: 48px-64px (between distinct groups)
 
-─────────────────────────────────────────────────────────────────
+---
 ✓ PROFESSIONAL COLOR SYSTEM
-─────────────────────────────────────────────────────────────────
+---
 
 DARK MODE (preferred):
 ✓ Background: #0A0A0B, #0D0D0D, #111111, #18181B (NEVER pure #000)
@@ -933,9 +911,9 @@ ACCENT BY INDUSTRY (pick ONE, use sparingly):
 ✓ Health: #0D9488 (teal), #22C55E (green), #0EA5E9 (sky)
 ✓ Food/Hospitality: #DC2626 (red), #EA580C (orange), #D97706 (amber)
 
-─────────────────────────────────────────────────────────────────
+---
 ✓ PROFESSIONAL MOTION SYSTEM
-─────────────────────────────────────────────────────────────────
+---
 
 EASING CURVES (not just "ease"):
 ✓ Enter (decelerate): cubic-bezier(0, 0, 0.2, 1)
@@ -961,9 +939,9 @@ HOVER STATES (required on ALL interactive elements):
 ✓ Links: color shift + optional underline
 ✓ Active: scale(0.98)
 
-─────────────────────────────────────────────────────────────────
+---
 ✓ PROFESSIONAL LAYOUT PATTERNS
-─────────────────────────────────────────────────────────────────
+---
 
 ASYMMETRIC LAYOUTS (not centered everything):
 ✓ 60/40 split for hero with image
@@ -989,9 +967,9 @@ RESPONSIVE APPROACH:
 ✓ Container queries for component-level responsiveness
 ✓ No horizontal scroll ever
 
-─────────────────────────────────────────────────────────────────
+---
 ✓ PROFESSIONAL COMPONENT PATTERNS
-─────────────────────────────────────────────────────────────────
+---
 
 BUTTONS:
 ✓ Specific CTAs: "View the work", "See pricing", "Book a table"
@@ -1018,9 +996,9 @@ FORMS:
 ✓ Focus states with ring
 ✓ Error states with red border + message
 
-─────────────────────────────────────────────────────────────────
+---
 ✓ ACCESSIBILITY REQUIREMENTS
-─────────────────────────────────────────────────────────────────
+---
 
 ALWAYS:
 ✓ Semantic HTML (nav, main, section, article, footer)
@@ -1031,9 +1009,9 @@ ALWAYS:
 ✓ Alt text on all images
 ✓ prefers-reduced-motion: reduce support
 
-─────────────────────────────────────────────────────────────────
+---
 ✓ QUALITY BENCHMARKS — VERIFY BEFORE OUTPUT
-─────────────────────────────────────────────────────────────────
+---
 
 Typography Test: Is the font pairing intentional? Is there visual rhythm?
 Color Test: Are there subtle color variations, or just 3 flat colors?

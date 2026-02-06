@@ -1,5 +1,12 @@
 # 16s Changelog
 
+## [2026-02-05 01:25] — Prompt: Compress ─── separators + amateur bans section (~700 tokens saved)
+
+**What:** Replaced 18 `─────` separator lines with `---`. Compressed the ABSOLUTE BANS section from 4 subsections (32 lines) into 1 concise list (9 lines) that preserves all key anti-patterns (generic AI colors, cookie-cutter layouts, fake social proof, amateur typography/spacing/motion).
+**Why:** The amateur subsections were verbose and overlapped with the professional systems that followed. Each ban item was already countered by a "do this instead" rule later in the prompt. The compressed version hits the same notes in 1/3 the space. Prompt now ~12,529 tokens.
+**Files:** src/app/api/chat/route.ts (SYSTEM_PROMPT)
+**Type:** prompt
+
 ## [2026-02-05 01:22] — Code: Replace decorative separators + fix last console.logs (~600 tokens saved)
 
 **What:** Replaced 27 decorative separator lines (═══ and ━━━, 65 chars each) with `---` (3 chars each) in SYSTEM_PROMPT and contextInjection. Changed 2 remaining `console.log` to `console.debug` in credit deduction logic (lines 126, 152).
