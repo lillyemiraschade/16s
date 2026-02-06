@@ -746,8 +746,11 @@ export function PreviewPanel({
               exit={{ opacity: 0, scale: 0.95 }}
               className="glass rounded-xl p-6 w-[320px] shadow-xl shadow-black/40"
               onClick={(e) => e.stopPropagation()}
+              role="dialog"
+              aria-modal="true"
+              aria-labelledby="bookmark-dialog-title"
             >
-              <h3 className="text-[15px] font-medium text-zinc-200 mb-4">
+              <h3 id="bookmark-dialog-title" className="text-[15px] font-medium text-zinc-200 mb-4">
                 Bookmark this version
               </h3>
               <input

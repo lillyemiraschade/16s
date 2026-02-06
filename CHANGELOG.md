@@ -1,5 +1,12 @@
 # 16s Changelog
 
+## [2026-02-05 02:00] — Feature: Add a11y to bookmark dialog + welcome screen image toggle
+
+**What:** Added `role="dialog"`, `aria-modal="true"`, and `aria-labelledby="bookmark-dialog-title"` to the bookmark dialog in PreviewPanel.tsx. Added `aria-label` to the image type toggle buttons on the welcome screen in page.tsx (matching the pattern from the ChatPanel fix in R2-7).
+**Why:** The bookmark dialog was missing ARIA attributes, meaning screen readers could interact with content behind it. The welcome screen image toggle buttons only had a `title` tooltip but no aria-label — the ChatPanel ones were fixed in R2-7 but the welcome screen instance was missed.
+**Files:** src/components/preview/PreviewPanel.tsx, src/app/page.tsx
+**Type:** feature
+
 ## [2026-02-05 01:47] — Prompt: Remove duplicate VISUAL SELF-REVIEW section (~170 tokens saved)
 
 **What:** Removed the 15-line VISUAL SELF-REVIEW section (lines 337-354) which was a duplicate of the PHASE 3 visual verification section (lines 232-259). Both said the same things: look at the screenshot, verify work, don't trust HTML alone, point out issues even if user says "looks great."
