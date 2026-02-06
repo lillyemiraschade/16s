@@ -61,6 +61,7 @@
 - R3-21 [FEATURE] Cmd+K shortcut to focus chat input + overlay entry
 - R3-22 [CODE] Remove dead no-op setMessages in handleSendMessage history upload (-7 lines)
 - R3-23 [PROMPT] Compress JS PATTERNS + CSS :root block (~200 tokens saved)
+- R3-24 [FEATURE] Stop generating button + Escape to cancel in-flight request
 
 ## In Progress
 (continuing Round 3)

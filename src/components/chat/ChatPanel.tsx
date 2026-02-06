@@ -18,6 +18,7 @@ interface ChatPanelProps {
   onImageTypeToggle: (index: number) => void;
   onImageUpdate: (index: number, newData: string) => void;
   isGenerating: boolean;
+  onStop: () => void;
   uploadedImages: UploadedImage[];
   onNewProject: () => void;
   isOnCall: boolean;
@@ -37,6 +38,7 @@ export const ChatPanel = memo(function ChatPanel({
   onImageTypeToggle,
   onImageUpdate,
   isGenerating,
+  onStop,
   uploadedImages,
   onNewProject,
   isOnCall,
@@ -569,11 +571,17 @@ export const ChatPanel = memo(function ChatPanel({
             initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.2 }}
-            className="flex justify-start mt-4"
+            className="flex items-end gap-2 mt-4"
           >
             <div className="glass-bubble bubble-tail-left px-4 py-3">
               <TypingIndicator />
             </div>
+            <button
+              onClick={onStop}
+              className="px-3 py-1.5 text-[11px] font-medium text-zinc-400 hover:text-zinc-200 bg-white/[0.04] hover:bg-white/[0.08] border border-white/[0.06] rounded-lg transition-colors"
+            >
+              Stop
+            </button>
           </motion.div>
         )}
 

@@ -961,6 +961,11 @@ function HomePageContent() {
     setIsOnCall(true);
   }, []);
 
+  const handleStop = useCallback(() => {
+    abortRef.current?.abort();
+    setIsGenerating(false);
+  }, []);
+
   const handleClearSelection = useCallback(() => {
     setSelectedElement(null);
     setSelectMode(false);
@@ -1153,8 +1158,11 @@ function HomePageContent() {
   useEffect(() => {
     if (!hasStarted) return;
     const handler = (e: KeyboardEvent) => {
-      // Escape closes overlays
+      // Escape closes overlays or stops generation
       if (e.key === "Escape") {
+        if (isGenerating) {
+          handleStop();
+        }
         setShowShortcuts(false);
         return;
       }
@@ -1195,7 +1203,7 @@ function HomePageContent() {
     };
     window.addEventListener("keydown", handler);
     return () => window.removeEventListener("keydown", handler);
-  }, [hasStarted, handleNewProject, handleExport, handleCopyToClipboard, handleUndo, handleRedo]);
+  }, [hasStarted, isGenerating, handleNewProject, handleExport, handleCopyToClipboard, handleUndo, handleRedo, handleStop]);
 
   const handleWelcomeSend = () => {
     if ((!welcomeInput.trim() && uploadedImages.length === 0) || isGenerating) return;
@@ -1453,6 +1461,7 @@ function HomePageContent() {
             onImageTypeToggle={handleImageTypeToggle}
             onImageUpdate={handleImageUpdate}
             isGenerating={isGenerating}
+            onStop={handleStop}
             uploadedImages={uploadedImages}
             onNewProject={handleNewProject}
             isOnCall={isOnCall}
@@ -1542,6 +1551,7 @@ function HomePageContent() {
                 ["Cmd+Shift+Z", "Redo"],
                 ["Cmd+/", "Toggle code view"],
                 ["Cmd+K", "Focus chat input"],
+                ["Esc", "Stop generating"],
                 ["Cmd+?", "This help"],
               ].map(([key, desc]) => (
                 <div key={key} className="flex items-center justify-between">

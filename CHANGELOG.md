@@ -1,5 +1,12 @@
 # 16s Changelog
 
+## [2026-02-06 13:42] — Feature: Stop generating button + Escape to cancel
+
+**What:** Added a "Stop" button next to the typing indicator during AI generation. Also wired Escape key to abort in-flight requests. Both call `abortRef.current?.abort()` + `setIsGenerating(false)`. Added Escape to the keyboard shortcuts overlay.
+**Why:** Users had no way to cancel a generation in progress. This is a standard UX pattern (ChatGPT, Claude.ai all have it).
+**Files:** src/app/page.tsx, src/components/chat/ChatPanel.tsx
+**Type:** feature
+
 ## [2026-02-06 13:35] — Prompt: Compress JS PATTERNS + CSS :root block (~200 tokens saved)
 
 **What:** Removed redundant per-pattern null-guard mentions from all 12 JS PATTERNS (line 629 already states the general rule). Compressed :root shadow/radius/easing vars from 10 lines to 3 lines. All values preserved.
