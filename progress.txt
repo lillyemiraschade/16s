@@ -76,6 +76,7 @@
 - R2-55 [PROMPT] Compress PROFESSIONAL TYPOGRAPHY SYSTEM — remove fluid type duplication (~350 tokens saved, now ~7.0K)
 - R2-56 [FEATURE] Add ARIA menu pattern to export dropdown (aria-haspopup, role=menu, role=menuitem)
 - R2-57 [CODE] Downgrade last 4 client-side lib console.error to debug (completes ALL client cleanup)
+- R2-58 [PROMPT] Compress SPACING + MOTION systems to single-line refs (~350 tokens saved, now ~6.7K)
 
 ## Still Open (Round 2 targets)
 - Stripe API version: verified correct for stripe@20.3.0 (not a bug)

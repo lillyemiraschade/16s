@@ -1,5 +1,12 @@
 # 16s Changelog
 
+## [2026-02-05 04:15] — Prompt: Compress SPACING + MOTION systems (~350 tokens saved)
+
+**What:** Compressed SPACING SYSTEM from 16 lines (2 sub-sections with ✓ bullets + reference line) to 1 line. Compressed MOTION SYSTEM from 18 lines (3 sub-sections with ✓ bullets) to 3 lines. Both sections used verbose multi-line formatting for simple reference values that fit naturally on single lines.
+**Why:** These reference tables (padding ranges, gap sizes, duration ranges, scroll animation values) are lookup values, not instructional content. Single-line format is equally effective for the model. System prompt now ~6.7K tokens.
+**Files:** src/app/api/chat/route.ts (SYSTEM_PROMPT)
+**Type:** prompt
+
 ## [2026-02-05 04:10] — Code: Downgrade last 4 client-side lib console.error to debug
 
 **What:** Downgraded 4 remaining client-side `console.error` calls to `console.debug` in lib hooks and utilities: useProjects.ts (2: migration + project list), useDeployment.ts (1: fetch deployments), images.ts (1: image processing). All errors are handled via UI callbacks (`onError`, `setLoading`).

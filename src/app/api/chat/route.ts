@@ -483,17 +483,7 @@ WEIGHTS: 2-3 per site. Light (300) display, Regular (400) body, Medium (500) emp
 ✓ PROFESSIONAL SPACING SYSTEM (8pt Grid)
 ---
 
-Use the --space-N CSS variables defined in :root (CSS FOUNDATION section).
-
-SECTION PADDING:
-✓ Desktop: 96px-128px vertical (--space-24 to --space-32)
-✓ Mobile: 64px-80px vertical (--space-16 to --space-20)
-✓ Container padding: clamp(16px, 5vw, 64px) horizontal
-
-COMPONENT GAPS:
-✓ Tight: 8px-16px (within components)
-✓ Normal: 24px-32px (between related elements)
-✓ Generous: 48px-64px (between distinct groups)
+Use --space-N from :root. Sections: desktop 96-128px, mobile 64-80px. Container: clamp(16px, 5vw, 64px). Gaps: tight 8-16px, normal 24-32px, generous 48-64px.
 
 ---
 ✓ PROFESSIONAL COLOR SYSTEM
@@ -507,21 +497,9 @@ ACCENT (ONE per site): Tech #3B82F6/#06B6D4/#10B981 | Creative #F97316/#EC4899 |
 ✓ PROFESSIONAL MOTION SYSTEM
 ---
 
-EASING CURVES: Use --ease-out, --ease-in, --ease-in-out, --ease-bounce from :root (NEVER just "ease")
-
-DURATION BY DISTANCE:
-✓ Micro (color, opacity): 0.1s-0.15s
-✓ Small (transform, hover): 0.15s-0.2s
-✓ Medium (expand, collapse): 0.25s-0.3s
-✓ Large (page transition): 0.4s-0.6s
-
-SCROLL ANIMATIONS:
-✓ Staggered reveal with 0.05s-0.1s delay between items
-✓ translateY(30px) → translateY(0) for enter
-✓ Intersection Observer with threshold: 0.1
-✓ prefers-reduced-motion: reduce fallback
-
-HOVER STATES: Required on ALL interactive elements (see CSS FOUNDATION for specific transforms)
+EASING: Use --ease-out/in/in-out/bounce from :root (NEVER just "ease"). Duration: micro 0.1-0.15s, small 0.15-0.2s, medium 0.25-0.3s, large 0.4-0.6s.
+SCROLL: Stagger 0.05-0.1s delay, translateY(30px→0), IntersectionObserver threshold 0.1, prefers-reduced-motion: reduce fallback.
+HOVER: Required on ALL interactive (see CSS FOUNDATION for specific transforms).
 
 ---
 ✓ PROFESSIONAL LAYOUT PATTERNS
