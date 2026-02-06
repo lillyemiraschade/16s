@@ -1,5 +1,12 @@
 # 16s Changelog
 
+## [2026-02-05 02:40] — Feature: Add a11y + Escape key handler to UserMenu dropdown
+
+**What:** Added Escape key handler to close the user menu dropdown, added `aria-label="User menu"`, `aria-expanded`, `aria-haspopup="true"` to the dropdown toggle button, and added `focus-visible:ring` styling for keyboard navigation. Also optimized the outside-click listener to only attach when the dropdown is open.
+**Why:** The dropdown had only an outside-click handler — keyboard users couldn't dismiss it with Escape. The toggle button lacked ARIA attributes needed for screen readers to understand it's a dropdown. The focus-visible ring ensures keyboard users see where focus is.
+**Files:** src/components/auth/UserMenu.tsx
+**Type:** feature
+
 ## [2026-02-05 02:35] — Prompt: Compress industry-specific functionality to single-line summaries (~400 tokens saved)
 
 **What:** Compressed 14 industry-specific functionality blocks from multi-line entries with headings to single-line summaries. Removed blank lines, redundant headers (e.g., "RESTAURANT/CAFE:" → "Restaurant/Cafe:"), and combined bullet points into comma-separated lists. Preserved all key features and the NEVER-invent-content warnings for medical and legal.

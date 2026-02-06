@@ -12,16 +12,24 @@ export function UserMenu() {
   const [showDropdown, setShowDropdown] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
-  // Close dropdown on outside click
+  // Close dropdown on outside click or Escape key
   useEffect(() => {
+    if (!showDropdown) return;
     const handleClickOutside = (e: MouseEvent) => {
       if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
         setShowDropdown(false);
       }
     };
+    const handleKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setShowDropdown(false);
+    };
     document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
+    document.addEventListener("keydown", handleKey);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("keydown", handleKey);
+    };
+  }, [showDropdown]);
 
   if (loading) {
     return (
@@ -61,7 +69,10 @@ export function UserMenu() {
     <div className="relative" ref={dropdownRef}>
       <button
         onClick={() => setShowDropdown(!showDropdown)}
-        className="flex items-center gap-2 px-1.5 md:px-2 py-1 rounded-lg hover:bg-white/[0.04] transition-all duration-150"
+        aria-label="User menu"
+        aria-expanded={showDropdown}
+        aria-haspopup="true"
+        className="flex items-center gap-2 px-1.5 md:px-2 py-1 rounded-lg hover:bg-white/[0.04] focus-visible:ring-2 focus-visible:ring-green-500/50 transition-all duration-150"
       >
         {avatarUrl ? (
           <img

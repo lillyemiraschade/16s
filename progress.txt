@@ -59,6 +59,7 @@
 - R2-38 [FEATURE] Compress MANDATORY QUALITY CHECK — remove overlap with QA/design system (~400 tokens saved, now ~9.1K)
 - R2-39 [CODE] Remove unused errStack variable + unused isReactCode import (dead code cleanup)
 - R2-40 [PROMPT] Compress industry-specific functionality blocks to single-line summaries (~400 tokens saved, now ~8.7K)
+- R2-41 [FEATURE] Add a11y + Escape key handler to UserMenu dropdown (aria-label, aria-expanded, focus-visible)
 
 ## Still Open (Round 2 targets)
 - Stripe API version: verified correct for stripe@20.3.0 (not a bug)
