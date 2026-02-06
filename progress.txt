@@ -69,6 +69,7 @@
 - R3-29 [PROMPT] Compress SUBJECTIVE FEEDBACK section (~80 tokens saved)
 - R3-30 [FEATURE] Context-aware typing indicator ("Designing..." vs "Making changes...")
 - R3-31 [CODE] Memoize AuthContext value + downgrade last console.error
+- R3-32 [PROMPT] Compress CONVERSATION FLOW + PLACEHOLDERS (~120 tokens saved)
 
 ## In Progress
 (continuing Round 3)

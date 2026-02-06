@@ -1,5 +1,12 @@
 # 16s Changelog
 
+## [2026-02-06 14:20] — Prompt: Compress CONVERSATION FLOW + PLACEHOLDERS (~120 tokens saved)
+
+**What:** Compressed CONVERSATION FLOW from 7 lines to 4, and merged GENERATE WITH PLACEHOLDERS + AFTER GENERATION into a single line. All flows preserved: website with call option, apps/tools inspo request, style mentions, inspo upload, text paste.
+**Why:** GENERATE WITH PLACEHOLDERS and AFTER GENERATION were separate headed sections for what's essentially one rule. Conversation flow had redundant structure between APPS and STYLE entries.
+**Files:** src/app/api/chat/route.ts (SYSTEM_PROMPT)
+**Type:** prompt
+
 ## [2026-02-06 14:16] — Code: Memoize AuthContext value + downgrade console.error
 
 **What:** Wrapped the AuthContext.Provider `value` object with `useMemo` to prevent all `useAuth()` consumers from re-rendering on every AuthProvider render. Also downgraded one remaining `console.error` to `console.debug`.
