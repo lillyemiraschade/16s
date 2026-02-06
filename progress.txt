@@ -64,6 +64,7 @@
 - R2-43 [PROMPT] Compress FUNCTIONALITY STANDARD section — 6 blocks to 6 compact lines (~350 tokens saved, now ~8.3K)
 - R2-44 [FEATURE] Add a11y + Escape key to AuthModal (role=dialog, aria-modal, aria-labelledby, input labels)
 - R2-45 [CODE] Extract getUserFriendlyError helper — deduplicate error mapping in stream + outer catch (-20 lines)
+- R2-46 [PROMPT] Compress PHASE 3 QUALITY CHECK — visual/image verification + QA report example (~550 tokens saved, now ~7.8K)
 
 ## Still Open (Round 2 targets)
 - Stripe API version: verified correct for stripe@20.3.0 (not a bug)

@@ -1,5 +1,12 @@
 # 16s Changelog
 
+## [2026-02-05 03:05] — Prompt: Compress PHASE 3 QUALITY CHECK section (~550 tokens saved)
+
+**What:** Compressed the PHASE 3 QUALITY CHECK from ~85 lines to ~15 lines. Combined VISUAL VERIFICATION (8 lines) and IMAGE VERIFICATION (19 lines) into a single 4-line block. Compressed the INTERNAL QA CHECKLIST from checkbox-per-line to a single line with □ separators. Replaced the 18-line QA report JSON example with a compact 1-line schema reference. Merged the QA STATUS definitions and important notes into 1 line.
+**Why:** The full JSON example was teaching the format that the model already knows from the response schema. The image debugging CSS issues list (6 bullets) was useful but overly verbose — a single line listing common causes is sufficient for the model to check. The visual verification questions (5 lines) overlapped with the QA checklist items. Prompt now ~7.8K tokens.
+**Files:** src/app/api/chat/route.ts (SYSTEM_PROMPT)
+**Type:** prompt
+
 ## [2026-02-05 03:00] — Code: Extract getUserFriendlyError helper — deduplicate error mapping
 
 **What:** Extracted a shared `getUserFriendlyError(errMsg)` helper function that maps API/stream error messages to user-friendly messages with HTTP status codes. Replaced the two duplicate if/else chains in the stream error handler and outer catch block with single calls to this helper. Also unified inconsistent wording between the two handlers (e.g., "Request timed out" vs "The request timed out").
