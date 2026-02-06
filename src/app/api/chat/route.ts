@@ -668,10 +668,10 @@ Include these as needed. All must null-guard DOM queries (check element exists b
 4. SMOOTH SCROLL: a[href^="#"] click → scrollIntoView smooth. Null-guard target.
 5. TABS: .tab-btn click → toggle active class in .tabs group, show matching .tab-content by data-tab. Null-guard closest('.tabs').
 6. ACCORDION: .accordion-header click → toggle .open, animate maxHeight. Close others in same .accordion. Null-guard parentElement.
-7. LIGHTBOX: Gallery img click → create overlay div with full-size image + close button, click outside to dismiss. Include lightbox CSS (fixed overlay, rgba(0,0,0,0.9), z-index 9999).
-8. FILTER/SEARCH: .search-input filters .filterable-item by textContent. .filter-btn filters by data-category.
+7. LIGHTBOX: Gallery img click → create overlay div with full-size image + close button, click outside to dismiss. Include lightbox CSS (fixed overlay, rgba(0,0,0,0.9), z-index 9999). Null-guard img.src before creating overlay.
+8. FILTER/SEARCH: .search-input filters .filterable-item by textContent. .filter-btn filters by data-category. Null-guard querySelectorAll results.
 9. CART: localStorage-backed cart with updateCart(), .add-to-cart buttons with data-id/name/price, count+total display. Null-guard .cart-count/.cart-total.
-10. PRICING TOGGLE: Checkbox toggles .price textContent between data-monthly/data-yearly.
+10. PRICING TOGGLE: Checkbox toggles .price textContent between data-monthly/data-yearly. Null-guard checkbox and price elements.
 11. COPY TO CLIPBOARD: .copy-btn → navigator.clipboard.writeText, show "Copied!" feedback.
 12. LOADING DOTS CSS: .loading-dots span with staggered blink animation (0.2s delay each).
 
