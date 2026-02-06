@@ -1067,6 +1067,16 @@ function HomePageContent() {
     setProjectContext(undefined);
   }, []);
 
+  // Reset to welcome screen when user signs out while viewing a project
+  const prevUserRef = useRef(user);
+  useEffect(() => {
+    if (prevUserRef.current && !user && hasStarted) {
+      handleNewProject();
+      window.history.replaceState({}, "", "/");
+    }
+    prevUserRef.current = user;
+  }, [user, hasStarted, handleNewProject]);
+
   const handleLoadProject = useCallback(async (id: string) => {
     const proj = await loadProject(id);
     if (!proj) return;
