@@ -66,7 +66,7 @@ export function useDeployment() {
         setDeployments(data.deployments);
       }
     } catch (error) {
-      console.error("Failed to fetch deployments:", error);
+      console.debug("Failed to fetch deployments:", error);
     }
   }, []);
 

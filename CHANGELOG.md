@@ -1,5 +1,12 @@
 # 16s Changelog
 
+## [2026-02-05 04:10] — Code: Downgrade last 4 client-side lib console.error to debug
+
+**What:** Downgraded 4 remaining client-side `console.error` calls to `console.debug` in lib hooks and utilities: useProjects.ts (2: migration + project list), useDeployment.ts (1: fetch deployments), images.ts (1: image processing). All errors are handled via UI callbacks (`onError`, `setLoading`).
+**Why:** Completes client-side console cleanup across ALL client-facing code. Only server-side API routes retain `console.error` (appropriate for server logging). Browser console is now clean for end users.
+**Files:** src/lib/hooks/useProjects.ts, src/lib/hooks/useDeployment.ts, src/lib/images.ts
+**Type:** code
+
 ## [2026-02-05 04:05] — Feature: Add ARIA menu pattern to export dropdown in PreviewPanel
 
 **What:** Added `aria-label="Export options"`, `aria-haspopup="true"`, and `aria-expanded` to the export dropdown trigger button. Added `role="menu"` to the dropdown container. Added `role="menuitem"` to all 4 menu items (Download HTML, Copy to Clipboard, Open in New Tab, Deploy to Web).

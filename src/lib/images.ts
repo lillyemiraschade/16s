@@ -144,7 +144,7 @@ export async function processImageFiles(
       onUpload(compressed);
       count++;
     } catch (err) {
-      console.error("Failed to process image:", err);
+      console.debug("Failed to process image:", err);
       onError?.(`Failed to process ${file.name}`);
     }
   }

@@ -75,6 +75,7 @@
 - R2-54 [CODE] Downgrade 8 page.tsx console.error to debug (completes client-side console cleanup)
 - R2-55 [PROMPT] Compress PROFESSIONAL TYPOGRAPHY SYSTEM — remove fluid type duplication (~350 tokens saved, now ~7.0K)
 - R2-56 [FEATURE] Add ARIA menu pattern to export dropdown (aria-haspopup, role=menu, role=menuitem)
+- R2-57 [CODE] Downgrade last 4 client-side lib console.error to debug (completes ALL client cleanup)
 
 ## Still Open (Round 2 targets)
 - Stripe API version: verified correct for stripe@20.3.0 (not a bug)

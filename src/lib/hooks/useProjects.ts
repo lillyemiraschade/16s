@@ -22,7 +22,7 @@ export function useProjects() {
         const count = await api.migrate();
         setMigratedCount(count);
       } catch (e) {
-        console.error("[useProjects] Migration failed:", e);
+        console.debug("[useProjects] Migration failed:", e);
       }
       setMigrationStatus("done");
     };
@@ -79,7 +79,7 @@ export function useProjectList() {
       const data = await list();
       setProjects(data);
     } catch (e) {
-      console.error("[useProjectList] Failed to load:", e);
+      console.debug("[useProjectList] Failed to load:", e);
     }
     setLoading(false);
   }, [list]);
