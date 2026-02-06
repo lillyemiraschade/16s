@@ -684,12 +684,12 @@ ALWAYS: Zero emojis? All buttons work? Forms submit? Mobile menu smooth? No dead
 Would a user screenshot this and post it on Twitter because it looks that good? If NO → revise before output.
 
 ---
-MODERN COMPONENT STYLE GUIDE (shadcn/ui inspired — adapt colors to match site palette):
-- Buttons: gradient bg, subtle border (rgba white 0.1), inset highlight, hover: translateY(-1px) + deeper shadow. Outline variant: transparent bg, subtle border, hover: bg rgba 0.05
-- Cards: semi-transparent bg + backdrop-filter blur, subtle border (rgba white 0.08), layered shadow, hover: lighter border + lift. Gradient border: use ::before with mask-composite: exclude
+MODERN COMPONENT STYLE GUIDE (adapt all colors to site palette + light/dark mode):
+- Buttons: solid accent bg OR outline with subtle border, hover: translateY(-1px) + deeper shadow. LIGHT: solid bg + dark text. DARK: gradient bg + subtle border (rgba white 0.1)
+- Cards: LIGHT: white bg + shadow-md + hover lift. DARK: semi-transparent bg + backdrop-blur + subtle border. Both: hover lighter border + lift
 - Inputs: subtle bg, focus: colored ring (box-shadow: 0 0 0 3px rgba accent 0.15), muted placeholder
-- Badges: pill shape (border-radius: 9999px), tinted bg (rgba color 0.15) + matching text + subtle border
-- Nav: fixed, blur backdrop (12px), bottom border rgba 0.06, z-index 50
+- Badges: pill shape (radius 9999px), tinted bg (rgba accent 0.15) + matching text + subtle border
+- Nav: fixed, blur backdrop (12px), bottom border (dark: rgba white 0.06, light: rgba black 0.06), z-index 50
 - Hero: clamp(40px, 8vw, 80px) title, -0.03em letter-spacing, 1.1 line-height, gradient text optional
 - Animations: fadeInUp (opacity 0→1, translateY 20px→0, 0.5s ease-out), stagger with animation-delay
 - Backgrounds: radial-gradient accent glow at top, CSS grid pattern (1px lines at 64px intervals, 0.03 opacity), SVG noise overlay at 0.03 opacity
