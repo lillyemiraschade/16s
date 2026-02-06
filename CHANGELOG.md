@@ -1,5 +1,12 @@
 # 16s Changelog
 
+## [2026-02-05 03:50] — Feature: Add password visibility toggle to AuthModal
+
+**What:** Added Eye/EyeOff toggle button to the password input in AuthModal. Toggles between `type="password"` and `type="text"`. Button has `aria-label` ("Show password"/"Hide password"), `tabIndex={-1}` to skip in tab order, and resets when switching between sign-in/sign-up modes.
+**Why:** Users can't verify their password is typed correctly without trial-and-error. The eye toggle is a standard UX pattern for auth forms that reduces friction and login failures.
+**Files:** src/components/auth/AuthModal.tsx
+**Type:** feature
+
 ## [2026-02-05 03:45] — Prompt: Merge QUALITY BENCHMARKS into PRE-OUTPUT QUALITY CHECK (~150 tokens saved)
 
 **What:** Removed the standalone QUALITY BENCHMARKS section (12 lines including headers) that asked 6 design tests (typography, color, spacing, motion, composition, details) + "Would a senior designer believe a human made this?" Merged the 6 tests as compact checks into the PRE-OUTPUT QUALITY CHECK's ALWAYS line, which already asked the same senior-designer question.
