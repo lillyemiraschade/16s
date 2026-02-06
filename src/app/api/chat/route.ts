@@ -1343,24 +1343,19 @@ import React, { useState, useEffect } from 'react';
 export default function ComponentName() {
   const [state, setState] = useState(initialValue);
   return (
-    <div className="min-h-screen bg-zinc-950 text-zinc-50">
-      <nav className="fixed top-0 w-full px-6 py-4 bg-zinc-950/80 backdrop-blur-lg border-b border-white/5 z-50">...</nav>
+    <div className="min-h-screen">
+      <nav className="fixed top-0 w-full px-6 py-4 backdrop-blur-lg border-b z-50">...</nav>
       <section className="pt-32 pb-20 px-6">...</section>
       <section className="py-20 px-6">...</section>
-      <footer className="py-12 px-6 border-t border-white/5">...</footer>
+      <footer className="py-12 px-6 border-t">...</footer>
     </div>
   );
 }
 
-TAILWIND PATTERNS TO USE:
-- Backgrounds: bg-zinc-950, bg-zinc-900, bg-zinc-900/80
-- Text: text-zinc-50, text-zinc-400, text-zinc-500
-- Borders: border-white/5, border-white/10, border-zinc-800
-- Spacing: space-y-4, gap-6, px-6, py-4
-- Flex/Grid: flex, items-center, justify-between, grid, grid-cols-3
-- Responsive: sm:, md:, lg:, xl: prefixes
-- Hover: hover:bg-white/5, hover:text-white
-- Transitions: transition-all, duration-200
+TAILWIND PATTERNS TO USE (adapt colors to match site palette — NOT always dark mode):
+- Layout: flex, items-center, justify-between, grid, grid-cols-3, gap-6, space-y-4
+- Responsive: sm:, md:, lg:, xl: prefixes (mobile-first)
+- Hover: hover:bg-{color}/5, hover:text-{color}, transition-all duration-200
 - Rounded: rounded-lg, rounded-xl, rounded-full
 - Shadows: shadow-lg, shadow-xl
 

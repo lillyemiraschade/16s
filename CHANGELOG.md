@@ -1,5 +1,12 @@
 # 16s Changelog
 
+## [2026-02-05 01:28] — Feature: Fix React output dark-mode bias + verify context persistence
+
+**What:** Fixed React output mode section — component structure example and Tailwind patterns were hardcoded to dark mode (bg-zinc-950, text-zinc-50, border-white/5). Now says "adapt colors to match site palette." Also verified context persistence flow end-to-end: context is correctly defined → saved → sent to API → injected → instructed → returned → merged → loaded. Updated progress.txt to mark all original Round 2 targets as DONE.
+**Why:** React output was always generating dark-mode sites regardless of what the user wanted, because the example and patterns section only showed zinc/dark values. Context persistence was listed as needing verification — flow confirmed complete with no gaps.
+**Files:** src/app/api/chat/route.ts (SYSTEM_PROMPT), progress.txt
+**Type:** feature
+
 ## [2026-02-05 01:25] — Prompt: Compress ─── separators + amateur bans section (~700 tokens saved)
 
 **What:** Replaced 18 `─────` separator lines with `---`. Compressed the ABSOLUTE BANS section from 4 subsections (32 lines) into 1 concise list (9 lines) that preserves all key anti-patterns (generic AI colors, cookie-cutter layouts, fake social proof, amateur typography/spacing/motion).

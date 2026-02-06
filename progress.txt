@@ -38,6 +38,7 @@
 - R2-17 [FEATURE] Improve QA report quality — anti-rubber-stamp example with 7 checks
 - R2-18 [CODE] Replace decorative separators + fix last console.logs (~600 tokens saved, now <13K)
 - R2-19 [PROMPT] Compress ─── separators + amateur bans section (~700 tokens saved, now ~12.5K)
+- R2-20 [FEATURE] Fix React output dark-mode bias + verify context persistence E2E
 
 ## Still Open (Round 2 targets)
 - Stripe API version: verified correct for stripe@20.3.0 (not a bug)
@@ -47,9 +48,9 @@
 - ~~Industry templates needed: law firms, fitness, churches, salons, automotive, education~~ ALL DONE
 - ~~Conversation flow: first-message intelligence, iteration memory, multi-request handling~~ DONE
 - ~~Design system: modern CSS patterns, bento grids, glassmorphism~~ DONE
-- QA system: touch targets, form labels, CLS prevention, external link attributes
-- ~~Prompt efficiency: target <13K tokens~~ DONE (~12,953 tokens)
-- SMARTER_16S features: plan card consistency, QA report quality, context persistence verification, pill suggestion quality
+- ~~QA system: touch targets, form labels, CLS prevention, external link attributes~~ DONE (R2-9 checklist + R2-17 report)
+- ~~Prompt efficiency: target <13K tokens~~ DONE (~12,529 tokens)
+- SMARTER_16S features: ~~plan card consistency~~ DONE (R2-3), ~~QA report quality~~ DONE (R2-17), ~~context persistence~~ verified (R2-20), ~~pill suggestion quality~~ DONE (R2-6)
 
 ## In Progress
 (none)
