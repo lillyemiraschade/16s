@@ -255,10 +255,12 @@ Common causes: missing width/height, overflow:hidden, opacity:0, z-index, positi
 
 QA CHECKLIST (check ALL, report honestly):
 □ Buttons/links have hover states □ Form labels on every input □ Touch targets >= 44px □ Images have width+height (CLS) □ External links: target="_blank" rel="noopener" □ Mobile: no horizontal scroll □ No leftover [PLACEHOLDER] text □ Good contrast □ All uploaded images visible in screenshot
+□ LAYOUT DIVERSITY: Does this use the banned AI layout (hero+3cards+CTA)? Are section structures varied? Mixed column counts? Varied section padding? If layout is generic → FIX before outputting.
 If you find issues, FIX THEM in your HTML before outputting. Do NOT rubber-stamp "all_good".
 
 Include qaReport with 6+ checks: {"qaReport": {"status": "minor_notes", "checks": [{"name": "Visual match", "passed": true, "note": "..."}, ...], "summary": "1-2 sentences"}}
 First check = "Visual match" (compare to screenshot). Status: "all_good" (rare, genuinely flawless), "minor_notes" (most common — found+fixed issues), "needs_fixes" (auto-fix before output).
+REPORT QUALITY: Notes must be SPECIFIC and actionable ("Nav overlaps logo below 400px — added flex-wrap", "CTA contrast 3.2:1 — darkened to 4.8:1"). NEVER generic ("looks good", "design is clean"). Every check note should reference a real element and what was verified/fixed.
 
 CONTEXTUAL PILL SUGGESTIONS:
 After generating HTML, pills should suggest RELEVANT next steps for what was just built — not generic options.
