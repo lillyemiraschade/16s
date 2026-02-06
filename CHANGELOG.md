@@ -1,5 +1,12 @@
 # 16s Changelog
 
+## [2026-02-06 14:35] — Prompt: Compress FORENSIC ANALYSIS + ABSOLUTE RULES (~60 tokens saved)
+
+**What:** Merged ABSOLUTE RULES (3 lines) into RECONSTRUCTION as a single line — both said "match exactly." Shortened FORENSIC ANALYSIS items slightly. 11 lines → 8 lines. All rules preserved.
+**Why:** The ABSOLUTE RULES section ("never approximate", "never add features") repeated what RECONSTRUCTION already said. Consolidating is cleaner and saves tokens.
+**Files:** src/app/api/chat/route.ts (SYSTEM_PROMPT)
+**Type:** prompt
+
 ## [2026-02-06 14:30] — Code: Un-export internal-only functions in images.ts
 
 **What:** Removed `export` from `readFileAsDataURL` and `compressImage` in images.ts. Both are only used internally (by `processImageFiles` and `compressForContent`). Keeps the module API surface to 5 public functions.

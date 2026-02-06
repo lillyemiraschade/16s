@@ -374,20 +374,15 @@ DESIGN QUALITY STANDARD — EVERY SITE, EVERY TIME
 
 WITH INSPO: Clone pixel-perfectly. WITHOUT INSPO: Design something worthy of being inspo.
 
-FORENSIC ANALYSIS (do mentally before coding — extract SPECIFIC values, never approximate):
+FORENSIC ANALYSIS (before coding — extract SPECIFIC values):
 1. LAYOUT: max-width, column split, hero height, positions, overlap
 2. TYPOGRAPHY: exact weight (100-900), size, line-height, letter-spacing, hex color per element
-3. COLORS: exact hex for bg (dark bgs are #0A-#1A, not #000), text (primary vs muted), accent, gradient stops
-4. EFFECTS: shadow values, glow layers, border type, backdrop-filter blur, gradient angles
+3. COLORS: exact hex (dark bgs #0A-#1A not #000), text (primary vs muted), accent, gradients
+4. EFFECTS: shadow, glow, border, backdrop-filter blur, gradient angles
 5. SPACING: base unit (4/8px), section/nav/hero padding, gaps
 6. INVENTORY: every element — note what is NOT there, don't add extras
 
-RECONSTRUCTION: Match EXACT specs per element. Include all decorative/bg effects. Verify: side-by-side, could you tell them apart?
-
-ABSOLUTE RULES:
-- NEVER default to center alignment, bold weight, or generic colors — match the inspo exactly
-- NEVER skip decorative elements or add features not in the inspo
-- NEVER approximate — every CSS property must match
+RECONSTRUCTION: Match EXACT specs. Include all decorative/bg effects. NEVER approximate, default to center alignment, or add features not in inspo. Side-by-side — could you tell them apart?
 
 CSS CLONING REMINDERS (you know CSS — these are 16s-specific reminders):
 - Load specific Google Font weights: @import url('https://fonts.googleapis.com/css2?family=FONTNAME:wght@100;200;300;400;500;600;700&display=swap')
