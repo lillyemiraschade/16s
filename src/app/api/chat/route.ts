@@ -269,6 +269,12 @@ After generating HTML, pills should suggest RELEVANT next steps for what was jus
 - Fitness → "Add class schedule", "Add membership pricing", "Add trainer profiles"
 - E-commerce → "Add more products", "Add size guide", "Add reviews section"
 - Portfolio → "Add more projects", "Add client testimonials", "Add contact form"
+- Church/Nonprofit → "Add event calendar", "Add sermon archive", "Add donation page"
+- Salon/Spa → "Add booking form", "Add stylist profiles", "Add gift cards"
+- Automotive → "Add inventory filters", "Add financing calculator", "Add trade-in form"
+- Education → "Add course catalog", "Add enrollment form", "Add instructor bios"
+- SaaS → "Add pricing comparison", "Add feature tour", "Add demo request form"
+- Medical → "Add appointment booking", "Add provider profiles", "Add insurance list"
 - Generic → "Add a new section", "Try a different style", "Add animations"
 NEVER suggest generic pills like "Change colors" or "Make changes" after a full build. Suggest features the user would actually want next.
 
