@@ -172,7 +172,7 @@ async function checkAndDeductCredits(userId: string, creditsToDeduct: number = 1
         return checkAndDeductCredits(userId, creditsToDeduct, retryCount + 1);
       }
       // After retry, allow the request but log the issue
-      console.warn("[Credits] Concurrent modification persisted after retry, allowing request");
+      console.debug("[Credits] Concurrent modification persisted after retry, allowing request");
       return { success: true };
     }
 

@@ -1,5 +1,13 @@
 # 16s Changelog
 
+## [2026-02-06 16:30] — Code: Downgrade remaining console.warn → console.debug (completes console cleanup)
+
+**What:** Downgraded last 3 `console.warn` calls to `console.debug`: credits concurrency warning, voice API empty message, Supabase server cookie error. Only Stripe webhook retains `console.error` (CLAUDE.md restriction). Entire codebase now uses `console.debug` for all logging outside webhooks.
+
+**Files:** `src/app/api/chat/route.ts`, `src/app/api/chat/voice/route.ts`, `src/lib/supabase/server.ts`
+**Type:** Code cleanup
+**Ref:** R4-7
+
 ## [2026-02-06 16:20] — Feature: Focus trap + focus restore in image lightbox
 
 **What:** Added accessibility focus management to the image lightbox dialog. Close button auto-focuses when lightbox opens. Tab key is trapped within the dialog (only the close button is focusable). Focus restores to the thumbnail that triggered the lightbox when closing. All 3 lightbox-opening click handlers updated to store trigger element.

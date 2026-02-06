@@ -24,7 +24,7 @@ export async function createClient() {
         } catch (err) {
           // The `setAll` method was called from a Server Component.
           // This can be ignored if you have middleware refreshing sessions.
-          console.warn("[Supabase Server] Cookie set failed (expected in Server Components):", err);
+          console.debug("[Supabase Server] Cookie set failed (expected in Server Components):", err);
         }
       },
     },

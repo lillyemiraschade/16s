@@ -192,7 +192,7 @@ export async function POST(req: NextRequest) {
 
     // Ensure response has required fields - be honest if message is missing
     if (!parsedResponse.message || parsedResponse.message.trim() === "") {
-      console.warn("[Voice API] Empty message in response");
+      console.debug("[Voice API] Empty message in response");
       parsedResponse.message = "I didn't catch that. What were you saying?";
     }
     if (typeof parsedResponse.complete !== "boolean") {
