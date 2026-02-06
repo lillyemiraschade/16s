@@ -37,7 +37,7 @@ export async function removeBackground(imageData: string): Promise<string> {
   return data.imageData;
 }
 
-export function readFileAsDataURL(file: File): Promise<string> {
+function readFileAsDataURL(file: File): Promise<string> {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
     reader.onloadend = () => resolve(reader.result as string);
@@ -46,7 +46,7 @@ export function readFileAsDataURL(file: File): Promise<string> {
   });
 }
 
-export function compressImage(dataUrl: string, forContent = false): Promise<string> {
+function compressImage(dataUrl: string, forContent = false): Promise<string> {
   return new Promise((resolve) => {
     const img = document.createElement("img");
     img.onload = () => {

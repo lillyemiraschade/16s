@@ -71,6 +71,7 @@
 - R3-31 [CODE] Memoize AuthContext value + downgrade last console.error
 - R3-32 [PROMPT] Compress CONVERSATION FLOW + PLACEHOLDERS (~120 tokens saved)
 - R3-33 [FEATURE] Clipboard image paste on welcome screen textarea
+- R3-34 [CODE] Un-export internal-only functions in images.ts (readFileAsDataURL, compressImage)
 
 ## In Progress
 (continuing Round 3)

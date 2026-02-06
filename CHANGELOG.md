@@ -1,5 +1,12 @@
 # 16s Changelog
 
+## [2026-02-06 14:30] — Code: Un-export internal-only functions in images.ts
+
+**What:** Removed `export` from `readFileAsDataURL` and `compressImage` in images.ts. Both are only used internally (by `processImageFiles` and `compressForContent`). Keeps the module API surface to 5 public functions.
+**Why:** Exporting functions that are only used within the same module is unnecessary and misleads other developers about what's part of the public API.
+**Files:** src/lib/images.ts
+**Type:** code
+
 ## [2026-02-06 14:25] — Feature: Clipboard image paste on welcome screen
 
 **What:** Added `handleWelcomePaste` handler and `onPaste` to the welcome screen textarea. Users can now paste screenshots/images directly on the initial welcome screen, not just in the chat panel.
