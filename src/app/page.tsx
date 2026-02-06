@@ -827,8 +827,29 @@ function HomePageContent() {
     imagesToInclude?: UploadedImage[],
     visibleText?: string
   ) => {
-    const imagesToSend = imagesToInclude || [...uploadedImages];
+    let imagesToSend = imagesToInclude || [...uploadedImages];
     if (!imagesToInclude) setUploadedImages([]);
+
+    // Upload content images that don't have blob URLs yet
+    const contentImagesNeedingUpload = imagesToSend.filter(img => img.type === "content" && !img.url);
+    if (contentImagesNeedingUpload.length > 0) {
+      const uploadPromises = contentImagesNeedingUpload.map(async (img) => {
+        try {
+          const url = await uploadToBlob(img.data, img.label);
+          return { ...img, url };
+        } catch {
+          return img;
+        }
+      });
+      const uploadedResults = await Promise.all(uploadPromises);
+      imagesToSend = imagesToSend.map(img => {
+        if (img.type === "content" && !img.url) {
+          const uploaded = uploadedResults.find(u => u.data === img.data);
+          return uploaded || img;
+        }
+        return img;
+      });
+    }
 
     if (!hasStarted) setHasStarted(true);
 

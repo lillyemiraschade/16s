@@ -1,5 +1,12 @@
 # 16s Changelog
 
+## [2026-02-05 02:12] — Feature: Add blob upload to handleSendMessageInternal for voice call images
+
+**What:** Added content image blob upload logic to `handleSendMessageInternal` (matching the existing logic in `handleSendMessage`). Content images without blob URLs are now uploaded before sending to the API, ensuring the AI receives proper `https://` URLs instead of falling back to `{{CONTENT_IMAGE_N}}` placeholders.
+**Why:** `handleSendMessageInternal` is used by the voice call flow (`handleCallComplete`). If a user uploaded content images before starting a call, those images were sent without blob URLs, causing the AI to use placeholder references that needed client-side replacement instead of embedding the URLs directly. This was a known open issue from Round 1.
+**Files:** src/app/page.tsx
+**Type:** feature
+
 ## [2026-02-05 02:10] — Prompt: Compress 8 industry templates to match concise style (~450 tokens saved)
 
 **What:** Compressed the 8 industry-specific functionality templates (Medical, Real Estate, Law Firm, Fitness, Church, Salon, Automotive, Education) from ~80 lines to ~32 lines. Each now has 2-3 lines of key functionality (matching the concise style of the original 6 industries). Removed inline palette/tone descriptions since those are already covered by the AESTHETIC DIRECTION and ACCENT BY INDUSTRY sections.
