@@ -150,6 +150,24 @@ export const ChatPanel = memo(function ChatPanel({
     e.target.value = "";
   };
 
+  const handlePaste = useCallback((e: React.ClipboardEvent) => {
+    const items = e.clipboardData?.items;
+    if (!items) return;
+    const imageFiles: File[] = [];
+    for (let i = 0; i < items.length; i++) {
+      if (items[i].type.startsWith("image/")) {
+        const file = items[i].getAsFile();
+        if (file) imageFiles.push(file);
+      }
+    }
+    if (imageFiles.length === 0) return;
+    e.preventDefault();
+    const uploadWithType = (base64: string) => {
+      onImageUpload(base64, uploadContext.type, uploadContext.label);
+    };
+    processImageFiles(imageFiles, uploadWithType, handleImageError, uploadContext.type === "content");
+  }, [onImageUpload, uploadContext, handleImageError]);
+
   const handleDrop = (e: React.DragEvent) => {
     e.preventDefault();
     setIsDragging(false);
@@ -710,6 +728,7 @@ export const ChatPanel = memo(function ChatPanel({
                 }
               }}
               onKeyDown={handleKeyDown}
+              onPaste={handlePaste}
               placeholder={placeholder}
               disabled={isGenerating}
               aria-label="Message input"

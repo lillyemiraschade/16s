@@ -64,6 +64,7 @@
 - R3-24 [FEATURE] Stop generating button + Escape to cancel in-flight request
 - R3-25 [CODE] Clean up orphaned user message on stop + project name in export filename
 - R3-26 [PROMPT] Compress HTML GENERATION RULES — remove duplicated placeholder list (~150 tokens)
+- R3-27 [FEATURE] Support pasting images from clipboard (Cmd+V)
 
 ## In Progress
 (continuing Round 3)

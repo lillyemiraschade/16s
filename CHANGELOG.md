@@ -1,5 +1,12 @@
 # 16s Changelog
 
+## [2026-02-06 13:57] — Feature: Support pasting images from clipboard (Cmd+V)
+
+**What:** Added an `onPaste` handler on the chat textarea that detects image data in the clipboard and processes it through the existing `processImageFiles` pipeline. Users can now screenshot + paste (Cmd+V) directly into the chat input.
+**Why:** Users often want to paste screenshots or copied images. Previously they had to save to disk first, then use the file picker. Direct paste is faster and more natural.
+**Files:** src/components/chat/ChatPanel.tsx
+**Type:** feature
+
 ## [2026-02-06 13:52] — Prompt: Compress HTML GENERATION RULES (~150 tokens saved)
 
 **What:** Compressed HTML GENERATION RULES from 16 lines to 3 lines. Removed duplicated placeholder types list (already specified in GENERATE WITH PLACEHOLDERS section). All rules preserved: multi-page routing, page minimum, nav, single-page for apps, compelling copy, bracket placeholders.
