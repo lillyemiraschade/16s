@@ -184,6 +184,9 @@ export function ChatPanel({
             className="absolute inset-0 z-40 bg-black/80 backdrop-blur-md flex items-center justify-center p-6"
           >
             <motion.div
+              role="dialog"
+              aria-modal="true"
+              aria-labelledby="call-disclaimer-title"
               initial={{ scale: 0.9, opacity: 0, y: 20 }}
               animate={{ scale: 1, opacity: 1, y: 0 }}
               exit={{ scale: 0.9, opacity: 0, y: 20 }}
@@ -204,7 +207,7 @@ export function ChatPanel({
                 </div>
               </div>
 
-              <h2 className="text-zinc-100 text-[18px] font-semibold text-center mb-2">
+              <h2 id="call-disclaimer-title" className="text-zinc-100 text-[18px] font-semibold text-center mb-2">
                 Start AI Voice Call
               </h2>
               <p className="text-zinc-400 text-[14px] leading-relaxed text-center mb-6">

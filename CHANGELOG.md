@@ -1,5 +1,12 @@
 # 16s Changelog
 
+## [2026-02-05 01:35] — Feature: Add aria-modal + role=dialog to call disclaimer modal
+
+**What:** Added `role="dialog"`, `aria-modal="true"`, and `aria-labelledby="call-disclaimer-title"` to the voice call disclaimer modal in ChatPanel.tsx. Also added the matching `id` to the h2 heading.
+**Why:** The lightbox modal already had `aria-modal="true"` but the call disclaimer modal was missing it, which means screen readers and keyboard users could interact with hidden content behind the modal.
+**Files:** src/components/chat/ChatPanel.tsx
+**Type:** feature
+
 ## [2026-02-05 01:33] — Prompt: Compress app/tool examples — recipe code + loading animation (~560 tokens saved)
 
 **What:** Replaced the 35-line recipe recommender JavaScript example, 14-line loading animation HTML/CSS, 6-line form interactions checklist, and 5-line data persistence example with 3 lines of concise descriptions. Preserved key specs (30+ item database, matching algorithm, bounce dots with stagger, localStorage with max 20 entries).

@@ -41,6 +41,7 @@
 - R2-20 [FEATURE] Fix React output dark-mode bias + verify context persistence E2E
 - R2-21 [CODE] Fix rate limit memory leak in deploy, upload, voice, remove-bg routes
 - R2-22 [PROMPT] Compress app/tool examples — recipe code + loading animation (~560 tokens saved, now ~12K)
+- R2-23 [FEATURE] Add aria-modal + role=dialog to call disclaimer modal
 
 ## Still Open (Round 2 targets)
 - Stripe API version: verified correct for stripe@20.3.0 (not a bug)
