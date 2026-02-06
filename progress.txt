@@ -25,12 +25,13 @@
 - R2-4 [CODE] html2canvas CORS fallback with allowTaint retry
 - R2-5 [PROMPT] Add fitness/gym template + compress CSS toolkit (~800 tokens saved)
 - R2-6 [FEATURE] Contextual pill suggestions by industry
+- R2-7 [CODE] Aria-label on image type toggle button
 
 ## Still Open (Round 2 targets)
 - Stripe API version: verified correct for stripe@20.3.0 (not a bug)
 - ~~html2canvas CORS handling needs graceful degradation~~ DONE
-- beforeunload save doesn't include context for cloud users
-- Missing aria-labels on image toggle buttons
+- ~~beforeunload save doesn't include context for cloud users~~ Already fixed (line 438)
+- ~~Missing aria-labels on image toggle buttons~~ DONE
 - Industry templates needed: law firms, fitness, churches, salons, automotive, education
 - Conversation flow: first-message intelligence, iteration memory, multi-request handling
 - Design system: modern CSS patterns, bento grids, glassmorphism

@@ -1,5 +1,12 @@
 # 16s Changelog
 
+## [2026-02-05 01:07] — Code: Add aria-label to image type toggle button
+
+**What:** Added descriptive `aria-label` to the inspo/content image toggle button in ChatPanel.tsx, including the current state (e.g., "Toggle image 1 type: currently content"). Also confirmed beforeunload save already includes context (line 438 of page.tsx).
+**Why:** The toggle button had a visual `title` tooltip but no aria-label for screen readers. This was the last identified missing aria-label on interactive elements in the chat panel.
+**Files:** src/components/chat/ChatPanel.tsx
+**Type:** code
+
 ## [2026-02-05 01:06] — Feature: Add contextual pill suggestions by industry
 
 **What:** Added "CONTEXTUAL PILL SUGGESTIONS" section to the BMAD system instructions that maps industry types to relevant next-step pills (e.g., restaurant → "Add online ordering", law firm → "Add case results", fitness → "Add class schedule"). Includes explicit instruction to never suggest generic pills like "Change colors" after a full build.

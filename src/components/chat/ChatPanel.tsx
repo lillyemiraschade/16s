@@ -618,6 +618,7 @@ export function ChatPanel({
                     img.type === "content" ? "bg-green-500/80 text-white" : "bg-zinc-700 text-zinc-300"
                   }`}
                   title="Click to toggle: inspo (design reference) / content (use in website)"
+                  aria-label={`Toggle image ${idx + 1} type: currently ${img.type === "content" ? "content" : "inspiration"}`}
                 >
                   {img.type === "content" ? (img.label || "content") : "inspo"}
                 </button>
