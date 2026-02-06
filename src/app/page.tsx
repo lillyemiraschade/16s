@@ -234,6 +234,7 @@ function HomePageContent() {
   const [bookmarks, setBookmarks] = useState<VersionBookmark[]>([]);
   const [codeMode, setCodeMode] = useState<CodeMode>("html");
   const [outputFormat, setOutputFormat] = useState<"html" | "react">("html");
+  const [showShortcuts, setShowShortcuts] = useState(false);
   const [reactCode, setReactCode] = useState<string | null>(null);
 
   // Project state
@@ -1177,6 +1178,12 @@ function HomePageContent() {
   useEffect(() => {
     if (!hasStarted) return;
     const handler = (e: KeyboardEvent) => {
+      // Escape closes overlays
+      if (e.key === "Escape") {
+        setShowShortcuts(false);
+        return;
+      }
+
       const mod = e.metaKey || e.ctrlKey;
       if (!mod) return;
 
@@ -1200,9 +1207,12 @@ function HomePageContent() {
         if (tag === "input" || tag === "textarea") return;
         e.preventDefault();
         handleRedo();
-      } else if (e.key === "/") {
+      } else if (e.key === "/" && !e.shiftKey) {
         e.preventDefault();
         window.dispatchEvent(new CustomEvent("toggle-code-view"));
+      } else if (e.key === "?" || (e.key === "/" && e.shiftKey)) {
+        e.preventDefault();
+        setShowShortcuts(prev => !prev);
       }
     };
     window.addEventListener("keydown", handler);
@@ -1523,6 +1533,50 @@ function HomePageContent() {
           </AnimatePresence>
         </main>
       </motion.div>
+    </AnimatePresence>
+
+    {/* Keyboard shortcuts overlay */}
+    <AnimatePresence>
+      {showShortcuts && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.15 }}
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm"
+          onClick={() => setShowShortcuts(false)}
+        >
+          <motion.div
+            initial={{ scale: 0.95, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            exit={{ scale: 0.95, opacity: 0 }}
+            transition={{ duration: 0.15 }}
+            className="bg-zinc-900 border border-white/[0.08] rounded-xl p-6 w-80 shadow-2xl"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <h2 className="text-sm font-semibold text-zinc-200 mb-4">Keyboard Shortcuts</h2>
+            <div className="space-y-2.5 text-[13px]">
+              {[
+                ["Cmd+N", "New project"],
+                ["Cmd+E", "Export HTML"],
+                ["Cmd+Shift+C", "Copy to clipboard"],
+                ["Cmd+Z", "Undo"],
+                ["Cmd+Shift+Z", "Redo"],
+                ["Cmd+/", "Toggle code view"],
+                ["Cmd+?", "This help"],
+              ].map(([key, desc]) => (
+                <div key={key} className="flex items-center justify-between">
+                  <span className="text-zinc-400">{desc}</span>
+                  <kbd className="px-2 py-0.5 text-[11px] font-mono bg-white/[0.06] border border-white/[0.08] rounded text-zinc-300">
+                    {key}
+                  </kbd>
+                </div>
+              ))}
+            </div>
+            <p className="text-[11px] text-zinc-600 mt-4 text-center">Press Esc or click outside to close</p>
+          </motion.div>
+        </motion.div>
+      )}
     </AnimatePresence>
     </>
   );
