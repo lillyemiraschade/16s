@@ -934,7 +934,7 @@ function HomePageContent() {
     handleSendMessage(newContent, originalMessage.uploadedImages);
   }, [messages, previewHistory, handleSendMessage]);
 
-  const handleImageUpload = async (base64: string, type: "inspo" | "content" = "content", label?: string) => {
+  const handleImageUpload = useCallback(async (base64: string, type: "inspo" | "content" = "content", label?: string) => {
     // Add image immediately with base64 for preview
     const newImage: UploadedImage = { data: base64, type, label };
     setUploadedImages((prev) => [...prev, newImage]);
@@ -953,13 +953,13 @@ function HomePageContent() {
         // Image still works with base64 fallback
       }
     }
-  };
+  }, []);
 
   const handleImageRemove = useCallback((index: number) => {
     setUploadedImages((prev) => prev.filter((_, i) => i !== index));
   }, []);
 
-  const handleImageTypeToggle = async (index: number) => {
+  const handleImageTypeToggle = useCallback(async (index: number) => {
     const img = uploadedImages[index];
     if (!img) return;
 
@@ -998,7 +998,7 @@ function HomePageContent() {
         )
       );
     }
-  };
+  }, [uploadedImages]);
 
   const handleImageUpdate = useCallback((index: number, newData: string) => {
     setUploadedImages((prev) =>
