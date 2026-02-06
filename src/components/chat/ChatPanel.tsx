@@ -278,10 +278,10 @@ export function ChatPanel({
                 ? "text-green-400 bg-green-500/15"
                 : "text-zinc-400 hover:text-zinc-200 hover:bg-white/[0.04]"
             } disabled:cursor-not-allowed`}
-            title="Voice call with AI"
+            title={isOnCall ? "Call in progress..." : "Voice call with AI"}
           >
             <Phone className="w-3.5 h-3.5" />
-            <span>Call</span>
+            <span>{isOnCall ? "On Call" : "Call"}</span>
           </button>
           <button
             onClick={onNewProject}
@@ -643,7 +643,7 @@ export function ChatPanel({
                 </button>
                 <button
                   onClick={() => onImageRemove(idx)}
-                  className="absolute -top-1.5 -right-1.5 w-5 h-5 bg-zinc-800 hover:bg-red-500 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-150 ring-1 ring-white/[0.06]"
+                  className="absolute -top-1.5 -right-1.5 w-5 h-5 bg-zinc-800 hover:bg-red-500 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 focus:opacity-100 transition-all duration-150 ring-1 ring-white/[0.06]"
                   aria-label={`Remove image ${idx + 1}`}
                 >
                   <X className="w-3 h-3 text-zinc-300" />
