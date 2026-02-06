@@ -1,5 +1,12 @@
 # 16s Changelog
 
+## [2026-02-05 02:04] — Prompt: Compress conversation flow + placeholder sections (~500 tokens saved)
+
+**What:** Compressed the FLOW FOR WEBSITES (5-step numbered list + example dialogue), FLOW FOR APPS (5 steps), ALWAYS ASK FOR INSPO (6 lines), GENERATE WITH PLACEHOLDERS (11 placeholder examples), and AFTER GENERATION (5 example prompts + 4 IMPORTANT rules) into a single concise CONVERSATION FLOW section plus 2 short paragraphs. All behaviors preserved: call offer, inspo requests, placeholder usage, one-at-a-time content collection. Prompt now ~10.8K tokens.
+**Why:** The old sections had verbose example dialogue and duplicated instructions. Claude can follow "ask for ONE piece of content at a time, use pills to skip" without seeing 5 example conversation turns. The 11-item placeholder list was redundant — "[Your Email], [Your Phone], [Image: Hero photo], etc." conveys the same pattern in one line.
+**Files:** src/app/api/chat/route.ts (SYSTEM_PROMPT)
+**Type:** prompt
+
 ## [2026-02-05 02:02] — Code: Fix variable shadowing + sanitize PII from error logs
 
 **What:** (1) Renamed `uploadedImages` → `uploadedResults` in handleSendMessage's blob upload section to avoid shadowing the state variable of the same name. (2) Removed `console.error` calls that logged raw user messages and AI response text on validation/parse failures in route.ts — replaced with concise error-only messages.
