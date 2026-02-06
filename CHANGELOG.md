@@ -1,5 +1,13 @@
 # 16s Changelog
 
+## [2026-02-06 16:10] — Prompt: Compress CONTEXTUAL PILL SUGGESTIONS (~180 tokens saved)
+
+**What:** Compressed 12-industry pill listing into a general rule referencing INDUSTRY-SPECIFIC FUNCTIONALITY section + 3 examples + generic fallback. 15 lines → 4 lines. The AI can infer appropriate pills from the industry features list rather than needing explicit pills for each industry.
+
+**Files:** `src/app/api/chat/route.ts`
+**Type:** Prompt compression
+**Ref:** R4-5
+
 ## [2026-02-06 16:00] — Code: Downgrade all server-side console.error → console.debug
 
 **What:** Downgraded all `console.error` calls across API routes to `console.debug` for clean production logs. Routes updated: deploy (5), remove-bg (2), upload (2), chat/route (4), chat/voice (1), stripe/checkout (1), stripe/portal (1), auth/callback (4). Only Stripe webhook `console.error` calls remain (CLAUDE.md restriction). Zero `console.error` in non-webhook code.
