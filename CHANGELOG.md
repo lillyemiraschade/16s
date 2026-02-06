@@ -1,5 +1,13 @@
 # 16s Changelog
 
+## [2026-02-06 18:40] — Prompt: Add social link placement rules + showUpload hint for content photos
+
+**What:** Enhanced guided journey step 3 (PERSONALIZE) with `showUpload` hint to trigger content upload UI with descriptive label. Enhanced step 4 (REFINE) with intelligent social link placement rules: Instagram/TikTok → visual feed/grid section, LinkedIn/Twitter → footer, YouTube → embedded video. Added "don't just dump all socials in a row of icons" rule. Improved info parsing confirmation to list what was extracted.
+
+**Files:** `src/app/api/chat/route.ts` (SYSTEM_PROMPT)
+**Type:** Prompt
+**Ref:** R5-5
+
 ## [2026-02-06 18:30] — Code: Improve bg removal + image type toggle discoverability
 
 **What:** Made the background removal (sparkle) button always visible at 50% opacity instead of hidden behind hover (opacity-0 → opacity-50). Updated tooltip to explain when to use it: "great for headshots, logos, product photos." Improved inspo/content toggle tooltips to explain what each mode does: content = "placed in your website", inspo = "AI will clone this design style."

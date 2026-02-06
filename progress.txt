@@ -22,6 +22,7 @@ what kind of photos to give, and the AI doesn't guide them through it.
 - R5-2: CODE — Add fallback pill generation when pills missing from AI response
 - R5-3: PROMPT — Update voice call flow with conversation arc + inspo handoff
 - R5-4: CODE — Improve bg removal + image type toggle discoverability
+- R5-5: PROMPT — Add social link placement rules + showUpload hint for content photos
 
 ## In Progress
-(next: PROMPT — add social link placement + info parsing rules)
+(next: CODE — increase max_tokens + JSON parse resilience)
