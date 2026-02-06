@@ -96,6 +96,27 @@ interface ChatAPIResponse {
   error?: string;
 }
 
+/** Generate contextual fallback pills when the AI response is missing them */
+function getContextualFallbackPills(
+  hasPreview: boolean,
+  hasNewHtml: boolean,
+  hasPlan: boolean,
+  messageCount: number,
+): string[] {
+  // Plan was just shown → approval pills
+  if (hasPlan) return ["Looks good, build it!", "Let's adjust the plan"];
+  // First generation just happened → personalize pills
+  if (hasNewHtml && !hasPreview) return ["Love it, keep going", "Different direction", "Send me my photos"];
+  // Iterating on existing preview → refinement pills
+  if (hasNewHtml && hasPreview) return ["Looks great", "Make more changes", "Let's deploy"];
+  // Deep in conversation with preview → polish/deploy pills
+  if (hasPreview && messageCount > 6) return ["Add animations", "Add contact form", "Let's deploy"];
+  // Has preview, early iterations → refinement
+  if (hasPreview) return ["Make changes", "Send me photos", "Different direction"];
+  // No preview yet → discovery pills
+  return ["I'll drop some inspo", "Surprise me with a style", "Hop on a call"];
+}
+
 /** Upload content images that don't have blob URLs yet. Returns updated array. */
 async function ensureBlobUrls(images: UploadedImage[]): Promise<UploadedImage[]> {
   const needUpload = images.filter(img => img.type === "content" && !img.url);
@@ -631,11 +652,16 @@ function HomePageContent() {
 
     const data = await fetchAndParseChat(response);
 
+    // Fallback pills when AI response truncated or missing pills
+    const pills = (data.pills && data.pills.length > 0)
+      ? data.pills
+      : getContextualFallbackPills(!!currentPreview, !!data.html, !!data.plan, cleanMessages.length);
+
     const aiMessage: Message = {
       id: (Date.now() + 1).toString(),
       role: "assistant",
       content: data.message || "I'm working on your request...",
-      pills: data.pills,
+      pills,
       showUpload: data.showUpload,
       plan: data.plan,
       qaReport: data.qaReport,
