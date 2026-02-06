@@ -1273,8 +1273,7 @@ export async function POST(req: Request) {
     if (!parsed.success) {
       const issue = parsed.error.issues[0];
       const errorDetail = issue ? `${issue.path.join(".")}: ${issue.message}` : "Invalid format";
-      console.error("[Chat API] Validation FAILED:", JSON.stringify(parsed.error.issues, null, 2));
-      console.error("[Chat API] Raw messages were:", JSON.stringify(raw.messages)?.slice(0, 500));
+      console.error("[Chat API] Validation failed:", errorDetail);
       return new Response(
         JSON.stringify({ error: `Invalid request: ${errorDetail}` }),
         { status: 400, headers: { "Content-Type": "application/json" } }
@@ -1602,8 +1601,7 @@ Use this context to inform your designs. Don't ask about things you already know
           try {
             parsedResponse = JSON.parse(fullText.trim());
           } catch (parseError) {
-            console.error("[Chat API] JSON parse failed:", parseError);
-            console.error("[Chat API] Raw response was:", fullText.slice(0, 1000));
+            console.error("[Chat API] JSON parse failed, attempting fallback extraction");
             try {
               const jsonMatch = fullText.match(/```(?:json)?\n?([\s\S]+?)\n?```/);
               if (jsonMatch) {

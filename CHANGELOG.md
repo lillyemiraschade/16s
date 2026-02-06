@@ -1,5 +1,12 @@
 # 16s Changelog
 
+## [2026-02-05 02:02] — Code: Fix variable shadowing + sanitize PII from error logs
+
+**What:** (1) Renamed `uploadedImages` → `uploadedResults` in handleSendMessage's blob upload section to avoid shadowing the state variable of the same name. (2) Removed `console.error` calls that logged raw user messages and AI response text on validation/parse failures in route.ts — replaced with concise error-only messages.
+**Why:** The variable shadowing could cause subtle bugs if future code references the wrong `uploadedImages`. The error logging was dumping raw user content and AI responses to server logs, which is a PII risk in production. Error detail (the specific Zod issue) is still logged; raw payloads are not.
+**Files:** src/app/page.tsx, src/app/api/chat/route.ts
+**Type:** code
+
 ## [2026-02-05 02:00] — Feature: Add a11y to bookmark dialog + welcome screen image toggle
 
 **What:** Added `role="dialog"`, `aria-modal="true"`, and `aria-labelledby="bookmark-dialog-title"` to the bookmark dialog in PreviewPanel.tsx. Added `aria-label` to the image type toggle buttons on the welcome screen in page.tsx (matching the pattern from the ChatPanel fix in R2-7).

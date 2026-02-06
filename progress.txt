@@ -48,6 +48,7 @@
 - R2-27 [CODE] Upgrade AI models to Sonnet 4.5 + Haiku 4.5
 - R2-28 [PROMPT] Remove duplicate VISUAL SELF-REVIEW section (~170 tokens saved, now ~11.3K)
 - R2-29 [FEATURE] Add a11y to bookmark dialog + welcome screen image toggle aria-labels
+- R2-30 [CODE] Fix variable shadowing bug + sanitize PII from error logs
 
 ## Still Open (Round 2 targets)
 - Stripe API version: verified correct for stripe@20.3.0 (not a bug)

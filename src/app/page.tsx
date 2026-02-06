@@ -686,11 +686,11 @@ function HomePageContent() {
           return img; // Keep original without URL as fallback
         }
       });
-      const uploadedImages = await Promise.all(uploadPromises);
+      const uploadedResults = await Promise.all(uploadPromises);
       // Update imagesToSend with the uploaded URLs
       imagesToSend = imagesToSend.map(img => {
         if (img.type === "content" && !img.url) {
-          const uploaded = uploadedImages.find(u => u.data === img.data);
+          const uploaded = uploadedResults.find(u => u.data === img.data);
           return uploaded || img;
         }
         return img;
