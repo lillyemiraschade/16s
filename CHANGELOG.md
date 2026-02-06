@@ -1,5 +1,12 @@
 # 16s Changelog
 
+## [2026-02-05 01:33] — Prompt: Compress app/tool examples — recipe code + loading animation (~560 tokens saved)
+
+**What:** Replaced the 35-line recipe recommender JavaScript example, 14-line loading animation HTML/CSS, 6-line form interactions checklist, and 5-line data persistence example with 3 lines of concise descriptions. Preserved key specs (30+ item database, matching algorithm, bounce dots with stagger, localStorage with max 20 entries).
+**Why:** Claude can write a recipe matching algorithm and bouncing dots animation without seeing full code. These examples were the last remaining full code blocks in the prompt. Prompt now ~11,971 tokens — well under the 13K target.
+**Files:** src/app/api/chat/route.ts (SYSTEM_PROMPT)
+**Type:** prompt
+
 ## [2026-02-05 01:30] — Code: Fix rate limit memory leak in 4 API routes
 
 **What:** Added expired-entry cleanup to `checkRateLimit()` in deploy, upload, voice, and remove-bg routes. When map exceeds 500 entries, sweeps all expired ones. The main chat route already had interval-based cleanup.

@@ -1089,42 +1089,7 @@ Since you can't call external APIs, create SOPHISTICATED SIMULATIONS:
 4. Show typing animations or loading states
 5. Vary responses intelligently based on input
 
-EXAMPLE — RECIPE RECOMMENDER:
-\`\`\`javascript
-// Embedded recipe database (30+ real recipes with ingredients)
-const recipes = [
-  { name: "Pasta Carbonara", ingredients: ["pasta", "eggs", "bacon", "parmesan", "garlic"], time: 20, difficulty: "easy", cuisine: "Italian" },
-  { name: "Chicken Stir Fry", ingredients: ["chicken", "vegetables", "soy sauce", "garlic", "ginger"], time: 15, difficulty: "easy", cuisine: "Asian" },
-  // ... 30+ more recipes
-];
-
-// Smart matching algorithm
-function findRecipes(userIngredients) {
-  return recipes
-    .map(recipe => ({
-      ...recipe,
-      matchCount: recipe.ingredients.filter(i =>
-        userIngredients.some(ui => i.includes(ui.toLowerCase()) || ui.toLowerCase().includes(i))
-      ).length,
-      missingIngredients: recipe.ingredients.filter(i =>
-        !userIngredients.some(ui => i.includes(ui.toLowerCase()))
-      )
-    }))
-    .filter(r => r.matchCount >= 2)
-    .sort((a, b) => b.matchCount - a.matchCount);
-}
-
-// Simulate AI response with personality
-function generateResponse(matches, userIngredients) {
-  if (matches.length === 0) {
-    return "Hmm, I couldn't find a great match. Try adding more staples like eggs, pasta, or rice!";
-  }
-  const top = matches[0];
-  return \`Perfect! With \${userIngredients.join(", ")}, I'd suggest \${top.name}.
-          You have \${top.matchCount} of the main ingredients.
-          \${top.missingIngredients.length > 0 ? \`You'd just need: \${top.missingIngredients.join(", ")}\` : "You have everything you need!"}\`;
-}
-\`\`\`
+APPROACH: Embed a local JSON database (30+ items), implement smart matching/filtering, add 800-2000ms "thinking" delays, vary responses based on input. Example: recipe app with ingredient matching, scoring by matchCount, showing missing ingredients.
 
 APP UI PATTERNS:
 ✓ Large, prominent input area (form, textarea, or interactive elements)
@@ -1135,44 +1100,9 @@ APP UI PATTERNS:
 ✓ Save results to localStorage (history feature)
 ✓ Share results (copy to clipboard)
 
-LOADING STATES:
-✓ Animated dots: "Thinking..."
-✓ Skeleton loaders for content
-✓ Progress bars for multi-step processes
-✓ Typing animation for "AI" responses
-✓ 800-2000ms delay before showing results (feels like processing)
+LOADING: Bouncing dots animation (3 dots, staggered delay, scale keyframe), skeleton loaders, 800-2000ms delay
 
-EXAMPLE LOADING ANIMATION:
-\`\`\`html
-<div class="loading">
-  <span class="dot"></span>
-  <span class="dot"></span>
-  <span class="dot"></span>
-</div>
-<style>
-.loading { display: flex; gap: 4px; }
-.dot { width: 8px; height: 8px; border-radius: 50%; background: currentColor; animation: bounce 1.4s infinite ease-in-out; }
-.dot:nth-child(1) { animation-delay: -0.32s; }
-.dot:nth-child(2) { animation-delay: -0.16s; }
-@keyframes bounce { 0%, 80%, 100% { transform: scale(0); } 40% { transform: scale(1); } }
-</style>
-\`\`\`
-
-FORM INTERACTIONS:
-✓ Real-time validation
-✓ Helpful error messages
-✓ Auto-focus on primary input
-✓ Enter key submits the form
-✓ Clear button to reset
-✓ Input history/suggestions (localStorage)
-
-DATA PERSISTENCE:
-\`\`\`javascript
-// Save history
-const history = JSON.parse(localStorage.getItem('app-history') || '[]');
-history.unshift({ input, result, timestamp: Date.now() });
-localStorage.setItem('app-history', JSON.stringify(history.slice(0, 20)));
-\`\`\`
+FORMS: Real-time validation, auto-focus primary input, Enter submits, clear/reset button, save history to localStorage (max 20 entries)
 
 ---
 HTML GENERATION RULES
