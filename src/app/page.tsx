@@ -460,33 +460,32 @@ function HomePageContent() {
     try {
       const doc = iframe.contentDocument;
       if (!doc?.body) return;
-      const canvas = await html2canvas(doc.body, {
-        useCORS: true,
-        allowTaint: false,
+      const opts = {
         scale: 0.5,
         logging: false,
         height: Math.min(doc.body.scrollHeight, 900),
         windowHeight: 900,
-        onclone: (clonedDoc) => {
-          // Remove cross-origin images that might cause taint errors
-          clonedDoc.querySelectorAll("img").forEach((img) => {
-            if (img.crossOrigin === null) {
-              img.crossOrigin = "anonymous";
-            }
-          });
-        },
-      });
-      const dataUrl = canvas.toDataURL("image/jpeg", 0.5);
-      setPreviewScreenshot(dataUrl);
-    } catch (err) {
-      // Silently handle cross-origin/taint errors - screenshot is optional context
-      const errMsg = err instanceof Error ? err.message : String(err);
-      if (errMsg.includes("taint") || errMsg.includes("cross-origin") || errMsg.includes("SecurityError")) {
-        // Cross-origin image prevented screenshot - continue without it
-        console.debug("Screenshot skipped due to cross-origin content");
-      } else {
-        console.error("Screenshot capture failed:", err);
+      };
+      let canvas: HTMLCanvasElement;
+      try {
+        // Try clean CORS mode first (exportable canvas, but may miss cross-origin images)
+        canvas = await html2canvas(doc.body, { ...opts, useCORS: true, allowTaint: false });
+        const dataUrl = canvas.toDataURL("image/jpeg", 0.5);
+        setPreviewScreenshot(dataUrl);
+      } catch {
+        // Fallback: allow tainted canvas (renders all images, but toDataURL may fail)
+        canvas = await html2canvas(doc.body, { ...opts, allowTaint: true });
+        try {
+          const dataUrl = canvas.toDataURL("image/jpeg", 0.5);
+          setPreviewScreenshot(dataUrl);
+        } catch {
+          // Tainted canvas can't export — screenshot is optional, continue without
+          console.debug("Screenshot skipped: tainted canvas");
+        }
       }
+    } catch {
+      // html2canvas itself failed — screenshot is optional context
+      console.debug("Screenshot capture failed");
     }
   }, []);
 

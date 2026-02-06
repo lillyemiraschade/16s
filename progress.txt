@@ -22,10 +22,11 @@
 - R2-1 [CODE] Extract shared helpers from handleSendMessage/Internal (-53 lines)
 - R2-2 [PROMPT] Add law firm template + compress forensic analysis (~400 tokens saved)
 - R2-3 [FEATURE] Plan card consistency + first-message intelligence
+- R2-4 [CODE] html2canvas CORS fallback with allowTaint retry
 
 ## Still Open (Round 2 targets)
-- Stripe API version pinned to future date (2026-01-28.clover)
-- html2canvas CORS handling needs graceful degradation
+- Stripe API version: verified correct for stripe@20.3.0 (not a bug)
+- ~~html2canvas CORS handling needs graceful degradation~~ DONE
 - beforeunload save doesn't include context for cloud users
 - Missing aria-labels on image toggle buttons
 - Industry templates needed: law firms, fitness, churches, salons, automotive, education

@@ -1,5 +1,12 @@
 # 16s Changelog
 
+## [2026-02-05 01:04] — Code: Add html2canvas CORS fallback with allowTaint retry
+
+**What:** Refactored `captureScreenshot` to use a two-tier approach: first try `useCORS: true, allowTaint: false` for a clean exportable canvas, then fallback to `allowTaint: true` which renders all images (including cross-origin) but may produce a tainted canvas. The `toDataURL` call on the tainted canvas is wrapped in its own try/catch so it fails gracefully.
+**Why:** Sites with cross-origin images (e.g., from external CDNs) would produce blank screenshots because `allowTaint: false` skips those images entirely. The fallback renders them and attempts export — if the canvas is tainted, it fails silently rather than crashing.
+**Files:** src/app/page.tsx
+**Type:** code
+
 ## [2026-02-05 01:03] — Feature: Improve plan card consistency + first-message intelligence
 
 **What:** Strengthened plan generation instructions: (1) Always show plan for new sites, even simple-sounding ones. (2) Added "FIRST-MESSAGE INTELLIGENCE" rule — when the user's first message includes a clear business type AND name, skip clarifying questions and generate a plan immediately using the matching industry template. (3) Compressed the "when to plan vs skip" section.
