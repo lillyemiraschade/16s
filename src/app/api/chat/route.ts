@@ -382,7 +382,6 @@ FORENSIC ANALYSIS (before coding — extract SPECIFIC values):
 RECONSTRUCTION: Match EXACT specs. Include all decorative/bg effects. NEVER approximate, default to center alignment, or add features not in inspo. Side-by-side — could you tell them apart?
 
 CSS CLONING REMINDERS (you know CSS — these are 16s-specific reminders):
-- Load specific Google Font weights: @import url('https://fonts.googleapis.com/css2?family=FONTNAME:wght@100;200;300;400;500;600;700&display=swap')
 - Glowing borders: use ::before pseudo with gradient bg, inset: -2px, border-radius: inherit, z-index: -1, filter: blur(4px)
 - Stars/dots: multiple radial-gradient backgrounds with background-size
 - Layer z-index: bg effects (1) → decorative (2) → main visual (3) → content (4) → overlays (5)
@@ -507,10 +506,14 @@ RESPONSIVE: Mobile-first, fluid clamp() values, container queries, no horizontal
 ✓ PROFESSIONAL COMPONENT PATTERNS
 ---
 
-BUTTONS: Specific CTAs ("View the work", "Book a table"), consistent radius (6/8/12px), padding 12px 24px min, one primary + one ghost style, 44px touch target.
-CARDS: Varied sizes (not identical), shadow 0 4px 20px rgba(0,0,0,0.08), hover lift + shadow, radius matching buttons.
-NAV: Fixed + backdrop-blur on scroll, logo left, links center/right, hamburger slide-out mobile, active state on current page.
-FORMS: Floating labels or clear placeholders, inline validation (not alert boxes), focus ring states, error states with red border + message.
+BUTTONS: Specific CTAs ("View the work", "Book a table"), radius 6/8/12px, padding 12px 24px min, 44px touch, primary (solid accent bg) + ghost (outline). LIGHT: solid bg + dark text. DARK: gradient bg + rgba(255,255,255,0.1) border. Hover: translateY(-1px) + shadow.
+CARDS: Varied sizes, hover lift + shadow. LIGHT: white bg + shadow-md. DARK: semi-transparent bg + backdrop-blur + subtle border.
+NAV: Fixed + backdrop-blur(12px), bottom border (rgba), logo left, links center/right, hamburger slide-out mobile, z-50, active state on current page.
+FORMS: Floating labels or clear placeholders, inline validation (not alert boxes), focus ring (box-shadow: 0 0 0 3px rgba accent 0.15), error: red border + message.
+BADGES: pill (radius 9999px), tinted bg (rgba accent 0.15) + matching text + subtle border.
+HERO: clamp(40px, 8vw, 80px) title, -0.03em letter-spacing, 1.1 line-height, gradient text optional.
+TABLES: uppercase 12px headers, subtle bottom borders, row hover bg. MODALS: fixed backdrop rgba(0,0,0,0.7) + blur(4px), centered card 16px radius + deep shadow.
+BG EFFECTS: radial-gradient accent glow at top, CSS grid pattern (1px/64px intervals 0.03 opacity), SVG noise overlay 0.03. All transitions: 0.15s ease. Match palette, not hardcoded zinc.
 
 ---
 ✓ ACCESSIBILITY + TECHNICAL REQUIREMENTS
@@ -599,19 +602,6 @@ IF NO INSPO: Does it use the banned AI layout (hero+3cards+CTA)? → REDO. Uniqu
 ALWAYS: Zero emojis? All buttons work? Forms submit? Mobile menu smooth? No dead links? Null-safe JS? Typography with personality (not just one weight)? Colors strategic (90% neutral + accent pops)? Section padding varied (not identical everywhere)? Micro-interactions on hovers? Focal points clear?
 Would a user screenshot this and post it on Twitter because it looks that good? If NO → revise before output.
 
----
-MODERN COMPONENT STYLE GUIDE (adapt all colors to site palette + light/dark mode):
-- Buttons: solid accent bg OR outline with subtle border, hover: translateY(-1px) + deeper shadow. LIGHT: solid bg + dark text. DARK: gradient bg + subtle border (rgba white 0.1)
-- Cards: LIGHT: white bg + shadow-md + hover lift. DARK: semi-transparent bg + backdrop-blur + subtle border. Both: hover lighter border + lift
-- Inputs: subtle bg, focus: colored ring (box-shadow: 0 0 0 3px rgba accent 0.15), muted placeholder
-- Badges: pill shape (radius 9999px), tinted bg (rgba accent 0.15) + matching text + subtle border
-- Nav: fixed, blur backdrop (12px), bottom border (dark: rgba white 0.06, light: rgba black 0.06), z-index 50
-- Hero: clamp(40px, 8vw, 80px) title, -0.03em letter-spacing, 1.1 line-height, gradient text optional
-- Animations: fadeInUp (opacity 0→1, translateY 20px→0, 0.5s ease-out), stagger with animation-delay
-- Backgrounds: radial-gradient accent glow at top, CSS grid pattern (1px lines at 64px intervals, 0.03 opacity), SVG noise overlay at 0.03 opacity
-- Tables: uppercase 12px headers, subtle bottom borders, row hover bg
-- Modals: fixed backdrop rgba(0,0,0,0.7) + blur(4px), centered card with 16px radius + deep shadow
-All transitions: 0.15s ease. All shadows: layered (subtle + ambient). Match colors to the site's palette, not hardcoded zinc.
 `;
 
 // React output mode addendum

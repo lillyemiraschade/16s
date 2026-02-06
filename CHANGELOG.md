@@ -1,5 +1,13 @@
 # 16s Changelog
 
+## [2026-02-06 15:40] — Prompt: Merge component style guide into component patterns (~250 tokens saved)
+
+**What:** Merged MODERN COMPONENT STYLE GUIDE section into PROFESSIONAL COMPONENT PATTERNS, eliminating duplicate button/card/nav descriptions. Added dark/light mode variants, badges, hero, tables, modals, and bg effects directly into the consolidated section. Removed duplicate Google Font loading instruction from CSS CLONING REMINDERS (already in FONTS section). Net: removed 14 lines from two sections, added 4 richer lines = ~250 tokens saved.
+
+**Files:** `src/app/api/chat/route.ts`
+**Type:** Prompt compression
+**Ref:** R4-2
+
 ## [2026-02-06 15:30] — Code: Remove dead React output state (-8 lines)
 
 **What:** Removed unused `reactCode`/`setReactCode` and `outputFormat`/`setOutputFormat` state from page.tsx. `reactCode` was set but never read. `outputFormat` was never changed from "html". Removed dead `setReactCode` calls and `data.react` handling in `sendAndProcessChat`. Hardcoded `outputFormat: "html"` in API call.
