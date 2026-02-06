@@ -97,6 +97,7 @@ export function UserMenu() {
             initial={{ opacity: 0, y: 4, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 4, scale: 0.95 }}
+            role="menu"
             className="absolute right-0 top-full mt-2 w-48 glass-matte rounded-xl p-1 shadow-xl shadow-black/30 z-50"
           >
             <div className="px-3 py-2 border-b border-zinc-700/50">
@@ -117,6 +118,7 @@ export function UserMenu() {
                   signOut();
                   setShowDropdown(false);
                 }}
+                role="menuitem"
                 className="w-full flex items-center gap-2 px-3 py-2 rounded-lg text-[12px] text-zinc-300 hover:bg-zinc-700/50 transition-colors"
               >
                 <LogOut className="w-3.5 h-3.5" />

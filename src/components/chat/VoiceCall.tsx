@@ -476,6 +476,7 @@ export const VoiceCall = forwardRef<VoiceCallHandle, VoiceCallProps>(
           onClick={handleHangUp}
           className="w-8 h-8 rounded-full bg-red-500/60 hover:bg-red-400/70 flex items-center justify-center transition-all duration-200 flex-shrink-0"
           title="End call"
+          aria-label="End call"
         >
           <PhoneOff className="w-3.5 h-3.5 text-white" />
         </button>

@@ -1,5 +1,12 @@
 # 16s Changelog
 
+## [2026-02-05 03:15] — Feature: Add a11y to VoiceCall hangup button + UserMenu dropdown roles
+
+**What:** Added `aria-label="End call"` to the VoiceCall hangup button (had `title` but no `aria-label`). Added `role="menu"` to the UserMenu dropdown container and `role="menuitem"` to the sign out button, completing the ARIA menu pattern alongside the existing `aria-haspopup="true"` on the trigger.
+**Why:** The hangup button was the last interactive button missing an aria-label. The UserMenu dropdown had `aria-haspopup="true"` on its trigger but never declared the actual menu/menuitem roles, which screen readers need to announce the dropdown as a menu widget.
+**Files:** src/components/chat/VoiceCall.tsx, src/components/auth/UserMenu.tsx
+**Type:** feature
+
 ## [2026-02-05 03:05] — Prompt: Compress PHASE 3 QUALITY CHECK section (~550 tokens saved)
 
 **What:** Compressed the PHASE 3 QUALITY CHECK from ~85 lines to ~15 lines. Combined VISUAL VERIFICATION (8 lines) and IMAGE VERIFICATION (19 lines) into a single 4-line block. Compressed the INTERNAL QA CHECKLIST from checkbox-per-line to a single line with □ separators. Replaced the 18-line QA report JSON example with a compact 1-line schema reference. Merged the QA STATUS definitions and important notes into 1 line.
