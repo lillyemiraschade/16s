@@ -72,6 +72,7 @@
 - R2-51 [CODE] Downgrade 8 client-side console.error/warn to debug (VoiceCall + ChatPanel)
 - R2-52 [PROMPT] Merge QUALITY BENCHMARKS into PRE-OUTPUT QUALITY CHECK (~150 tokens saved, now ~7.3K)
 - R2-53 [FEATURE] Add password visibility toggle (Eye/EyeOff) to AuthModal
+- R2-54 [CODE] Downgrade 8 page.tsx console.error to debug (completes client-side console cleanup)
 
 ## Still Open (Round 2 targets)
 - Stripe API version: verified correct for stripe@20.3.0 (not a bug)

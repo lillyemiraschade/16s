@@ -1,5 +1,12 @@
 # 16s Changelog
 
+## [2026-02-05 03:55] — Code: Downgrade 8 page.tsx console.error statements to debug
+
+**What:** Downgraded all 8 remaining `console.error` calls in page.tsx to `console.debug`. Covered: API response parse fallback, auth callback errors, autosave failures, beforeunload save, blob upload failures (2), and send message errors (2). All errors are already handled via UI state — fallback messages, `setWelcomeError()`, image fallback objects, and message removal.
+**Why:** Completes the client-side console cleanup started in R2-48 (AuthModal/AuthContext), R2-51 (VoiceCall/ChatPanel). All client-facing components now use `console.debug` for diagnostics, keeping the browser console clean for end users while preserving logs for developers.
+**Files:** src/app/page.tsx
+**Type:** code
+
 ## [2026-02-05 03:50] — Feature: Add password visibility toggle to AuthModal
 
 **What:** Added Eye/EyeOff toggle button to the password input in AuthModal. Toggles between `type="password"` and `type="text"`. Button has `aria-label` ("Show password"/"Hide password"), `tabIndex={-1}` to skip in tab order, and resets when switching between sign-in/sign-up modes.

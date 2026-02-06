@@ -201,7 +201,7 @@ async function fetchAndParseChat(response: Response): Promise<ChatAPIResponse> {
 
   // Strategy 6: Use raw text as message if available, else show error
   if (!data) {
-    console.error("Failed to parse API response");
+    console.debug("Failed to parse API response");
     const rawText = responseText.trim();
     data = { message: rawText || "Let me try that again..." };
   }
@@ -260,7 +260,7 @@ function HomePageContent() {
     const authError = searchParams.get("auth_error");
     if (authError) {
       const errorMessage = decodeURIComponent(authError);
-      console.error("[Auth] Error from callback:", errorMessage);
+      console.debug("[Auth] Error from callback:", errorMessage);
       setWelcomeError(`Sign in failed: ${errorMessage}`);
       // Clear the error from URL
       window.history.replaceState({}, "", "/");
@@ -399,7 +399,7 @@ function HomePageContent() {
         pendingSaveRef.current = null;
         pendingProjectIdRef.current = null;
       } catch (error) {
-        console.error("[AutoSave] Failed to save project:", error);
+        console.debug("[AutoSave] Failed to save project:", error);
         // Don't clear pendingSaveRef so it can retry
       }
     };
@@ -444,7 +444,7 @@ function HomePageContent() {
           else existing.unshift(project);
           localStorage.setItem(key, JSON.stringify(existing.slice(0, 20)));
         } catch (e) {
-          console.error("[Save] Failed to save on unload:", e);
+          console.debug("[Save] Failed to save on unload:", e);
         }
       }
     };
@@ -682,7 +682,7 @@ function HomePageContent() {
           const url = await uploadToBlob(img.data, img.label);
           return { ...img, url };
         } catch (error) {
-          console.error("[Blob Upload] Failed:", error);
+          console.debug("[Blob Upload] Failed:", error);
           return img; // Keep original without URL as fallback
         }
       });
@@ -743,7 +743,7 @@ function HomePageContent() {
             const url = await uploadToBlob(img.data, img.label);
             return { ...img, url };
           } catch (error) {
-            console.error("[Blob Upload] History upload failed:", error);
+            console.debug("[Blob Upload] History upload failed:", error);
             return img;
           }
         });
@@ -778,7 +778,7 @@ function HomePageContent() {
       });
     } catch (error) {
       if (error instanceof DOMException && error.name === "AbortError") return;
-      console.error("Error sending message:", error);
+      console.debug("Error sending message:", error);
 
       // Remove the failed user message to keep history clean
       setMessages((prev) => prev.filter((m) => m.id !== userMessage.id));
@@ -873,7 +873,7 @@ function HomePageContent() {
       await sendAndProcessChat(cleanMessages, imagesToSend, userMessage, controller);
     } catch (error) {
       if (error instanceof DOMException && error.name === "AbortError") return;
-      console.error("Error sending message:", error);
+      console.debug("Error sending message:", error);
 
       setMessages((prev) => prev.filter((m) => m.id !== userMessage.id));
 
