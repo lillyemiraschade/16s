@@ -1,5 +1,12 @@
 # 16s Changelog
 
+## [2026-02-05 04:00] — Prompt: Compress PROFESSIONAL TYPOGRAPHY SYSTEM (~350 tokens saved)
+
+**What:** Compressed the typography system from 36 lines (5 sub-sections with ✓ bullets) to 5 single-line specifications. Removed the FLUID TYPOGRAPHY clamp values that duplicated the :root --text-xs through --text-5xl CSS variables already in CSS FOUNDATION. Merged letter spacing, line height, and font weight into pipe-separated single lines.
+**Why:** The fluid typography clamp values were listed twice — once in the typography section and once in the CSS :root variables. The per-context reference tables (letter spacing, line height, weights) used multi-line ✓ bullets for what are simple lookup values. System prompt now ~7.0K tokens.
+**Files:** src/app/api/chat/route.ts (SYSTEM_PROMPT)
+**Type:** prompt
+
 ## [2026-02-05 03:55] — Code: Downgrade 8 page.tsx console.error statements to debug
 
 **What:** Downgraded all 8 remaining `console.error` calls in page.tsx to `console.debug`. Covered: API response parse fallback, auth callback errors, autosave failures, beforeunload save, blob upload failures (2), and send message errors (2). All errors are already handled via UI state — fallback messages, `setWelcomeError()`, image fallback objects, and message removal.

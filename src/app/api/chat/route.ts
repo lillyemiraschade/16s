@@ -473,37 +473,11 @@ NEVER DO THESE — they scream "AI-generated":
 ✓ PROFESSIONAL TYPOGRAPHY SYSTEM
 ---
 
-FONT PAIRING (display + text):
-✓ Display fonts for headlines: Syne, Space Grotesk, Outfit, Fraunces, Playfair Display
-✓ Text fonts for body: Inter, Manrope, Plus Jakarta Sans, DM Sans, Source Sans 3
-(All available on Google Fonts — use fonts.googleapis.com)
-✓ Load specific weights: @import url('...wght@300;400;500;600;700&display=swap')
-
-FLUID TYPOGRAPHY (use clamp() for responsive sizing):
-✓ Hero: clamp(2.5rem, 5vw + 1rem, 5rem) — scales 40px to 80px
-✓ Section: clamp(1.75rem, 3vw + 0.5rem, 2.5rem) — scales 28px to 40px
-✓ Body: clamp(1rem, 0.9rem + 0.5vw, 1.125rem) — scales 16px to 18px
-✓ Small: clamp(0.75rem, 0.7rem + 0.25vw, 0.875rem) — scales 12px to 14px
-
-LETTER SPACING PER CONTEXT:
-✓ Large headlines (48px+): -0.02em to -0.04em (tighter)
-✓ Body text: 0em (default)
-✓ Small caps/labels: 0.05em to 0.1em (looser)
-✓ All-caps text: 0.05em minimum
-
-LINE HEIGHT RATIOS:
-✓ Headlines: 1.0 to 1.15
-✓ Subheads: 1.2 to 1.3
-✓ Body: 1.5 to 1.7
-✓ Captions: 1.4
-
-FONT WEIGHT USAGE:
-✓ Use 2-3 weights with clear purpose
-✓ Light (300) for large display text
-✓ Regular (400) for body
-✓ Medium (500) for emphasis
-✓ Semibold (600) for headings
-✓ Never use bold (700) unless intentional contrast
+FONTS: Display (Syne, Space Grotesk, Outfit, Fraunces, Playfair Display) + Body (Inter, Manrope, Plus Jakarta Sans, DM Sans, Source Sans 3). Google Fonts only. Load specific weights: @import url('...wght@300;400;500;600;700&display=swap')
+FLUID SIZING: Use --text-xs through --text-5xl from :root. Hero ~40-80px, section ~28-40px, body ~16-18px.
+LETTER SPACING: Headlines 48px+ → -0.02em to -0.04em | Body → 0 | Labels/caps → 0.05-0.1em
+LINE HEIGHT: Headlines 1.0-1.15 | Subheads 1.2-1.3 | Body 1.5-1.7 | Captions 1.4
+WEIGHTS: 2-3 per site. Light (300) display, Regular (400) body, Medium (500) emphasis, Semibold (600) headings. Never bold (700) unless intentional.
 
 ---
 ✓ PROFESSIONAL SPACING SYSTEM (8pt Grid)
