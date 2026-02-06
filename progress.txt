@@ -68,6 +68,7 @@
 - R3-28 [CODE] Downgrade 5 console.error → console.debug in projects.ts (completes R2 cleanup)
 - R3-29 [PROMPT] Compress SUBJECTIVE FEEDBACK section (~80 tokens saved)
 - R3-30 [FEATURE] Context-aware typing indicator ("Designing..." vs "Making changes...")
+- R3-31 [CODE] Memoize AuthContext value + downgrade last console.error
 
 ## In Progress
 (continuing Round 3)

@@ -74,7 +74,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const signInWithOAuth = useCallback(async (provider: "google" | "github") => {
     if (!supabase) {
-      console.error("[Auth] Supabase not configured");
+      console.debug("[Auth] Supabase not configured");
       return { error: new Error("Auth not configured") };
     }
 
@@ -102,19 +102,19 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     await supabase.auth.signOut();
   }, [supabase]);
 
+  const value = useMemo(() => ({
+    user,
+    session,
+    loading,
+    isConfigured,
+    signInWithEmail,
+    signUpWithEmail,
+    signInWithOAuth,
+    signOut,
+  }), [user, session, loading, isConfigured, signInWithEmail, signUpWithEmail, signInWithOAuth, signOut]);
+
   return (
-    <AuthContext.Provider
-      value={{
-        user,
-        session,
-        loading,
-        isConfigured,
-        signInWithEmail,
-        signUpWithEmail,
-        signInWithOAuth,
-        signOut,
-      }}
-    >
+    <AuthContext.Provider value={value}>
       {children}
     </AuthContext.Provider>
   );

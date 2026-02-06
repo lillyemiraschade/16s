@@ -1,5 +1,12 @@
 # 16s Changelog
 
+## [2026-02-06 14:16] — Code: Memoize AuthContext value + downgrade console.error
+
+**What:** Wrapped the AuthContext.Provider `value` object with `useMemo` to prevent all `useAuth()` consumers from re-rendering on every AuthProvider render. Also downgraded one remaining `console.error` to `console.debug`.
+**Why:** The value object was recreated every render, causing unnecessary re-renders of all auth-consuming components even when auth state hadn't changed.
+**Files:** src/lib/auth/AuthContext.tsx
+**Type:** code
+
 ## [2026-02-06 14:12] — Feature: Context-aware typing indicator messages
 
 **What:** TypingIndicator now accepts a `label` prop (default "Working on it..."). ChatPanel passes context-aware labels: "Designing your site..." when no preview exists, "Making changes..." when iterating on an existing design.
