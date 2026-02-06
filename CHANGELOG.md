@@ -1,5 +1,12 @@
 # 16s Changelog
 
+## [2026-02-05 02:45] — Code: Add missing aria-labels to ChatPanel + PreviewPanel buttons
+
+**What:** Added `aria-label` to Call button, New Project button, and Edit Message button in ChatPanel. Added `aria-label` to Close History button and two Remove Bookmark buttons in PreviewPanel. Also added `focus-visible:opacity-100` to the Edit Message button so keyboard users can see it (previously only visible on mouse hover).
+**Why:** The accessibility audit found these interactive buttons had only `title` attributes (tooltip only) without `aria-label` (needed for screen readers). The Edit Message button was invisible to keyboard users due to `opacity-0 group-hover:opacity-100` without a `focus-visible` counterpart.
+**Files:** src/components/chat/ChatPanel.tsx, src/components/preview/PreviewPanel.tsx
+**Type:** code
+
 ## [2026-02-05 02:40] — Feature: Add a11y + Escape key handler to UserMenu dropdown
 
 **What:** Added Escape key handler to close the user menu dropdown, added `aria-label="User menu"`, `aria-expanded`, `aria-haspopup="true"` to the dropdown toggle button, and added `focus-visible:ring` styling for keyboard navigation. Also optimized the outside-click listener to only attach when the dropdown is open.

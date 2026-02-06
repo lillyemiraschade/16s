@@ -279,6 +279,7 @@ export function ChatPanel({
                 : "text-zinc-400 hover:text-zinc-200 hover:bg-white/[0.04]"
             } disabled:cursor-not-allowed`}
             title={isOnCall ? "Call in progress..." : "Voice call with AI"}
+            aria-label={isOnCall ? "Call in progress" : "Start voice call with AI"}
           >
             <Phone className="w-3.5 h-3.5" />
             <span>{isOnCall ? "On Call" : "Call"}</span>
@@ -287,6 +288,7 @@ export function ChatPanel({
             onClick={onNewProject}
             className="flex items-center gap-1.5 px-2.5 py-1.5 text-[11px] font-medium text-zinc-400 hover:text-zinc-200 hover:bg-white/[0.04] rounded-lg transition-all duration-200"
             title="Start new project"
+            aria-label="Start new project"
           >
             <Plus className="w-3.5 h-3.5" />
             <span>New</span>
@@ -447,8 +449,9 @@ export function ChatPanel({
                       {isUser && !isGenerating && (
                         <button
                           onClick={() => { setEditingMessageId(message.id); setEditingContent(message.content); }}
-                          className="absolute -right-1 -top-1 p-1 rounded-full bg-white/5 text-zinc-500 hover:text-zinc-300 hover:bg-white/10 opacity-0 group-hover/msg:opacity-100 transition-all"
+                          className="absolute -right-1 -top-1 p-1 rounded-full bg-white/5 text-zinc-500 hover:text-zinc-300 hover:bg-white/10 opacity-0 group-hover/msg:opacity-100 focus-visible:opacity-100 transition-all"
                           title="Edit message"
+                          aria-label="Edit message"
                         >
                           <Pencil className="w-3 h-3" />
                         </button>

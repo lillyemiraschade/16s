@@ -649,6 +649,7 @@ export function PreviewPanel({
                   <button
                     onClick={() => setShowHistory(false)}
                     className="p-1 rounded-full text-zinc-500 hover:text-zinc-300 hover:bg-white/[0.04] transition-colors"
+                    aria-label="Close version history"
                   >
                     <X className="w-3.5 h-3.5" />
                   </button>
@@ -668,6 +669,7 @@ export function PreviewPanel({
                               onClick={() => onRemoveBookmark(currentBookmark.id)}
                               className="p-1 rounded text-green-400/60 hover:text-red-400 hover:bg-red-500/10 transition-colors"
                               title="Remove bookmark"
+                              aria-label="Remove bookmark"
                             >
                               <Trash2 className="w-3 h-3" />
                             </button>
@@ -711,6 +713,7 @@ export function PreviewPanel({
                                 }}
                                 className="p-1 rounded text-amber-400/60 hover:text-red-400 hover:bg-red-500/10 transition-colors"
                                 title="Remove bookmark"
+                                aria-label="Remove bookmark"
                               >
                                 <Trash2 className="w-3 h-3" />
                               </button>
