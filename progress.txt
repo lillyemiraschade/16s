@@ -25,17 +25,18 @@
 - System prompt compressed from ~14K to ~5.9K tokens (58% reduction)
 - Compressed: color system, typography, spacing, motion, layout, component patterns, quality benchmarks, a11y rules, fonts, technical requirements
 
-## Still Open (Round 3 targets)
-- OUTPUT QUALITY: Generated sites look too samey — need anti-template, anti-vibe-code design rules
-- Industry templates: law firms, fitness, churches, salons, automotive, education
-- Conversation flow: first-message intelligence, multi-request handling, undo acknowledgment
-- Modern design patterns: bento grids, glassmorphism, gradient mesh, scroll-driven animations
-- QA checks: touch targets, form labels, CLS prevention, external link rel attributes
-- Plan card consistency, QA report quality, context persistence, contextual pills
-- Performance: React.memo on heavy components, error boundaries, loading skeletons
-- Virtualized message list for long conversations
-- Dependency array audits across all hooks
-- Keyboard shortcuts help, empty state polish
+## Round 3 Targets — Status
+- ✅ OUTPUT QUALITY: Anti-template rules, banned AI layout, layout variety, visual hierarchy, copy quality
+- ✅ Industry templates: 6 new industries (law, fitness, church, salon, auto, education) + 12 industry pills
+- ✅ Conversation flow: first-message intelligence, multi-request handling, undo acknowledgment (all in prompt)
+- ✅ Modern design patterns: bento grids, gradient mesh, scroll-driven, container queries, color-mix, :has(), noise/grain, clip-path
+- ✅ QA checks: touch targets, form labels, CLS, external links, layout diversity check
+- ✅ QA report quality + contextual pills for all 12 industries
+- ✅ Performance: React.memo, useCallback stabilization, AuthContext memoization, error boundaries, loading skeleton
+- ✅ Dependency array audits: all hooks audited, no stale closures found
+- ✅ Keyboard shortcuts: overlay (Cmd+?), focus (Cmd+K), Escape to stop/close
+- ✅ UX polish: stop button, clipboard paste, drag-and-drop, auto-focus, context-aware typing indicator
+- ⬜ Virtualized message list (deferred — not needed until very long conversations)
 
 ## Round 3 Progress
 - R3-1 [CODE] React.memo on ChatPanel + PreviewPanel, stabilized 5 callback props
@@ -78,5 +79,19 @@
 - R3-38 [PROMPT] Compress CONTEXT LEARNING + uppercase typography rule
 - R3-39 [FEATURE] Auto-focus welcome textarea on page load
 
-## In Progress
-(continuing Round 3)
+## Round 3 Summary (39 changes)
+- PERFORMANCE: React.memo on ChatPanel + PreviewPanel, useCallback on all handler props, AuthContext value memoized, error boundaries, loading skeleton, async cleanup guards
+- OUTPUT QUALITY: Anti-template rules (banned AI layout, layout variety, visual hierarchy), designer voice, copy quality rules, dark-mode bias fixed, section bg variety, uppercase typography rule
+- INDUSTRY: 6 new design personalities (law/fitness/church/salon/auto/education), contextual pills for all 12 industries
+- MODERN CSS: bento grids, gradient mesh, scroll-driven, container queries, color-mix, :has(), noise/grain, clip-path
+- UX FEATURES: Stop generating button, keyboard shortcut overlay (Cmd+?), Cmd+K focus, clipboard paste, drag-and-drop on welcome, auto-focus, context-aware typing indicator, IDEA_POOL replacement with 30 evocative examples
+- CODE HEALTH: ensureBlobUrls helper (-60 lines), dead code removal (-45 lines), console.error→debug cleanup, internal-only exports
+- PROMPT: System prompt compressed from ~8.3K to ~7.6K tokens through 8 compression passes, while adding ~2.4K tokens of quality rules (anti-template, copy, dark-mode, uppercase)
+- JS SAFETY: Null-guard instructions completed for all 10 JS patterns
+- REMAINING: Virtualized message list deferred (not needed until very long conversations)
+
+## Still Open (Round 4 targets)
+- Virtualized message list for 50+ message conversations
+- Welcome state extraction to reduce parent re-renders
+- AbortController on image upload/deploy utility functions
+- Further prompt quality tuning based on user feedback
