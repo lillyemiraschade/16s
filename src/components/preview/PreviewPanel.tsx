@@ -474,6 +474,9 @@ export function PreviewPanel({
                 onClick={() => setShowExportMenu((v) => !v)}
                 className="flex items-center gap-1.5 px-2.5 py-1.5 text-[11px] font-medium text-zinc-400 hover:text-zinc-200 hover:bg-white/[0.04] rounded-lg transition-all duration-150"
                 title="Export options"
+                aria-label="Export options"
+                aria-haspopup="true"
+                aria-expanded={showExportMenu}
               >
                 <Download className="w-3.5 h-3.5" />
                 <span>Export</span>
@@ -486,9 +489,11 @@ export function PreviewPanel({
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -4 }}
                     transition={{ duration: 0.12 }}
+                    role="menu"
                     className="absolute top-full right-0 mt-1 z-20 glass rounded-xl overflow-hidden min-w-[180px] py-1 shadow-xl shadow-black/40"
                   >
                     <button
+                      role="menuitem"
                       onClick={() => handleExportAction(onExport)}
                       className="w-full flex items-center gap-2.5 px-4 py-2.5 text-[13px] text-zinc-300 hover:text-zinc-100 hover:bg-white/[0.04] transition-colors"
                     >
@@ -496,6 +501,7 @@ export function PreviewPanel({
                       Download HTML
                     </button>
                     <button
+                      role="menuitem"
                       onClick={() => handleExportAction(handleCopyWithFeedback)}
                       className="w-full flex items-center gap-2.5 px-4 py-2.5 text-[13px] text-zinc-300 hover:text-zinc-100 hover:bg-white/[0.04] transition-colors"
                     >
@@ -503,6 +509,7 @@ export function PreviewPanel({
                       Copy to Clipboard
                     </button>
                     <button
+                      role="menuitem"
                       onClick={() => handleExportAction(onOpenInNewTab)}
                       className="w-full flex items-center gap-2.5 px-4 py-2.5 text-[13px] text-zinc-300 hover:text-zinc-100 hover:bg-white/[0.04] transition-colors"
                     >
@@ -513,6 +520,7 @@ export function PreviewPanel({
                       <>
                         <div className="border-t border-zinc-700/50 my-1" />
                         <button
+                          role="menuitem"
                           onClick={() => handleExportAction(onDeploy)}
                           disabled={isDeploying}
                           className="w-full flex items-center gap-2.5 px-4 py-2.5 text-[13px] text-green-400 hover:text-green-300 hover:bg-white/[0.04] transition-colors disabled:opacity-50"

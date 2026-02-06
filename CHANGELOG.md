@@ -1,5 +1,12 @@
 # 16s Changelog
 
+## [2026-02-05 04:05] — Feature: Add ARIA menu pattern to export dropdown in PreviewPanel
+
+**What:** Added `aria-label="Export options"`, `aria-haspopup="true"`, and `aria-expanded` to the export dropdown trigger button. Added `role="menu"` to the dropdown container. Added `role="menuitem"` to all 4 menu items (Download HTML, Copy to Clipboard, Open in New Tab, Deploy to Web).
+**Why:** The export dropdown was missing the ARIA menu pattern, making it invisible to screen readers as a menu widget. Consistent with the UserMenu dropdown fix in R2-47.
+**Files:** src/components/preview/PreviewPanel.tsx
+**Type:** feature
+
 ## [2026-02-05 04:00] — Prompt: Compress PROFESSIONAL TYPOGRAPHY SYSTEM (~350 tokens saved)
 
 **What:** Compressed the typography system from 36 lines (5 sub-sections with ✓ bullets) to 5 single-line specifications. Removed the FLUID TYPOGRAPHY clamp values that duplicated the :root --text-xs through --text-5xl CSS variables already in CSS FOUNDATION. Merged letter spacing, line height, and font weight into pipe-separated single lines.
