@@ -964,6 +964,13 @@ function HomePageContent() {
   const handleStop = useCallback(() => {
     abortRef.current?.abort();
     setIsGenerating(false);
+    // Remove orphaned user message (last message with no AI response after it)
+    setMessages(prev => {
+      if (prev.length > 0 && prev[prev.length - 1].role === "user") {
+        return prev.slice(0, -1);
+      }
+      return prev;
+    });
   }, []);
 
   const handleClearSelection = useCallback(() => {
@@ -997,10 +1004,10 @@ function HomePageContent() {
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
-    a.download = "website.html";
+    a.download = `${projectName || "website"}.html`;
     a.click();
     URL.revokeObjectURL(url);
-  }, [currentPreview]);
+  }, [currentPreview, projectName]);
 
   const handleCopyToClipboard = useCallback(() => {
     if (!currentPreview) return;

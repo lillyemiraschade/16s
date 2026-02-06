@@ -62,6 +62,7 @@
 - R3-22 [CODE] Remove dead no-op setMessages in handleSendMessage history upload (-7 lines)
 - R3-23 [PROMPT] Compress JS PATTERNS + CSS :root block (~200 tokens saved)
 - R3-24 [FEATURE] Stop generating button + Escape to cancel in-flight request
+- R3-25 [CODE] Clean up orphaned user message on stop + project name in export filename
 
 ## In Progress
 (continuing Round 3)

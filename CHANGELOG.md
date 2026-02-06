@@ -1,5 +1,12 @@
 # 16s Changelog
 
+## [2026-02-06 13:48] — Code: Clean up orphaned user message on stop + export filename
+
+**What:** handleStop now removes the last user message if no AI response followed it (orphaned message cleanup). Also changed export filename from hardcoded "website.html" to use the project name.
+**Why:** Stopping generation left a dangling user message in the chat with no response, which was confusing. Export downloading as "website.html" was generic — using the project name is more useful.
+**Files:** src/app/page.tsx
+**Type:** code
+
 ## [2026-02-06 13:42] — Feature: Stop generating button + Escape to cancel
 
 **What:** Added a "Stop" button next to the typing indicator during AI generation. Also wired Escape key to abort in-flight requests. Both call `abortRef.current?.abort()` + `setIsGenerating(false)`. Added Escape to the keyboard shortcuts overlay.
