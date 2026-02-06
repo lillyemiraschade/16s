@@ -1,38 +1,33 @@
-# 16s — Project Instructions
+# 16s — Testing Loop Instructions
 
 ## What This Is
-16s is an AI-powered web design platform. Users describe websites in natural language (text or voice), and the AI generates production-ready HTML/React with live preview and one-click deploy.
-
-## Tech Stack
-Next.js 14.2, TypeScript, Tailwind CSS, Supabase (DB + Auth), Stripe (billing), Anthropic Claude (Sonnet 4 + Haiku 3.5), Vercel Blob (images), Monaco Editor, Web Speech API.
-
-## Key Files
-- src/app/api/chat/route.ts — Core AI endpoint. Contains SYSTEM_PROMPT (~14K tokens). This is the heart of the product.
-- src/app/api/chat/voice/route.ts — Voice call AI with VOICE_SYSTEM_PROMPT.
-- src/app/page.tsx — Main app: chat + preview split layout, all state management.
-- src/components/chat/ChatPanel.tsx — Chat UI, message rendering, image uploads.
-- src/components/preview/PreviewPanel.tsx — Live iframe preview, viewport switching, deploy.
-- src/lib/projects.ts — Dual-mode storage (localStorage for guests, Supabase for auth users).
-- supabase/schema.sql — Database schema with RLS policies.
-- SMARTER_16S_PLAN.md — Product vision for planning phase, task lists, QA, agent mode.
-- ROADMAP.md — Full product roadmap with phases and priorities.
+16s is an AI-powered web design platform. Next.js 14.2, TypeScript, Tailwind, Supabase, Stripe, Anthropic Claude.
 
 ## Commands
-- npm run build — MUST pass after every change. Non-negotiable.
-- npm run dev — Local dev server
-- npm run lint — Linting
+- npm run build — Must pass. Non-negotiable.
+- npm run dev — Starts dev server on localhost:3000
+- npx tsc --noEmit — Type checking without building
+- npm test — Run test suite (if tests exist)
+
+## Key Files
+- src/app/api/chat/route.ts — Core AI endpoint
+- src/app/api/chat/voice/route.ts — Voice call endpoint
+- src/app/api/upload/route.ts — Image upload
+- src/app/api/remove-bg/route.ts — Background removal
+- src/app/api/deploy/route.ts — Vercel deployment
+- src/app/api/stripe/checkout/route.ts — Stripe checkout
+- src/app/api/stripe/webhook/route.ts — Stripe webhooks
+- src/app/page.tsx — Main app page
+- src/lib/projects.ts — Project storage
+- src/lib/images.ts — Image processing
+- src/lib/react-preview.ts — React preview generation
 
 ## Rules
-1. One focused change per cycle. Never batch multiple unrelated changes.
-2. Alternate between code fixes, prompt improvements, and small features.
-3. After changing SYSTEM_PROMPT, mentally simulate 3 user scenarios to verify improvement.
-4. Never change the JSON response format: {message, html, pills, plan, qaReport}.
-5. If adding tokens to the system prompt, cut tokens elsewhere. Target <13K total.
-6. Always run npm run build after code changes.
-7. Always commit with descriptive message prefixed [Ralph R2].
-8. Log every change to CHANGELOG.md with timestamp, description, files, and type.
-9. Update progress.txt with what you did and what to tackle next.
-10. Do NOT add new API routes, database tables, or major features.
-11. Do NOT refactor page.tsx into multiple files — keep the single-file architecture.
-12. Do NOT modify the Stripe webhook secret handling or auth callback flow.
-13. Read CHANGELOG.md before starting to avoid repeating work from Round 1.
+1. One test area per cycle. Fix what you find before moving on.
+2. Always commit fixes with [Ralph Test] prefix.
+3. Log every finding and fix to CHANGELOG.md.
+4. Update progress.txt with test results after each cycle.
+5. If a test requires env vars that aren't set (ANTHROPIC_API_KEY, STRIPE_SECRET_KEY, etc), note it as UNTESTABLE and move on. Do NOT skip — document what cant be tested and why.
+6. Write reusable test files in __tests__/ so these tests can be re-run later.
+7. If you write a test that reveals a bug, fix the bug AND keep the test.
+8. Do NOT modify the system prompt or make cosmetic code changes. This loop is TESTING ONLY plus fixing what breaks.
