@@ -1,5 +1,12 @@
 # 16s Changelog
 
+## [2026-02-05 01:11] — Prompt: Add automotive + education industry templates
+
+**What:** Added AUTOMOTIVE/DEALER/MECHANIC template (vehicle inventory, filtering, test drive CTA, service department, financing, bold palette) and EDUCATION/TUTORING/COURSES template (course catalog, instructor profiles, enrollment CTA, schedule, testimonials, approachable palette). Completes all 6 planned industry templates for Round 2.
+**Why:** Automotive and education are common business types that benefit from specific functionality templates (vehicle inventory cards, course catalog). These are the last two industries from the Round 2 target list.
+**Files:** src/app/api/chat/route.ts (SYSTEM_PROMPT)
+**Type:** prompt
+
 ## [2026-02-05 01:10] — Code: Remove dead code and excessive console.logs
 
 **What:** Removed dead code in route.ts (lines 2080-2082: `systemPromptText` built but never used). Removed ~25 console.log/warn statements from page.tsx (image replacement, blob upload, autosave), route.ts (request debug, response preview, retry), and projects.ts (save/list/migration). Kept console.error statements for actual errors. Simplified catch blocks where error variable was only used for logging.

@@ -29,13 +29,14 @@
 - R2-8 [PROMPT] Church/nonprofit + salon/spa templates, compress pixel-perfect checklist
 - R2-9 [FEATURE] Strengthen QA checklist (touch targets, form labels, CLS, external links)
 - R2-10 [CODE] Remove dead code + ~25 console.logs from page.tsx, route.ts, projects.ts
+- R2-11 [PROMPT] Add automotive + education templates (completes all 6 industry templates)
 
 ## Still Open (Round 2 targets)
 - Stripe API version: verified correct for stripe@20.3.0 (not a bug)
 - ~~html2canvas CORS handling needs graceful degradation~~ DONE
 - ~~beforeunload save doesn't include context for cloud users~~ Already fixed (line 438)
 - ~~Missing aria-labels on image toggle buttons~~ DONE
-- Industry templates needed: law firms, fitness, churches, salons, automotive, education
+- ~~Industry templates needed: law firms, fitness, churches, salons, automotive, education~~ ALL DONE
 - Conversation flow: first-message intelligence, iteration memory, multi-request handling
 - Design system: modern CSS patterns, bento grids, glassmorphism
 - QA system: touch targets, form labels, CLS prevention, external link attributes

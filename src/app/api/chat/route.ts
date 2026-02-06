@@ -603,6 +603,24 @@ SALON/SPA/BEAUTY:
 - Gift cards / packages section
 - Elegant, luxurious palette — soft neutrals (blush, cream, mauve) or dark moody (black/gold), script or refined serif headings
 
+AUTOMOTIVE/DEALER/MECHANIC:
+- Vehicle inventory cards (year, make, model, price, mileage, photo)
+- Vehicle filtering (make, type, price range, year)
+- "Schedule Test Drive" or "Get a Quote" CTA
+- Service department section (oil change, tires, diagnostics, pricing)
+- Financing / "Apply for Credit" section
+- Location, hours, service appointment form
+- Bold, clean palette — dark charcoal or navy with red/orange accent, strong typography
+
+EDUCATION/TUTORING/COURSES:
+- Course/program catalog cards with descriptions and pricing
+- Instructor profiles with qualifications
+- Enrollment/registration form or "Enroll Now" CTA
+- Schedule/calendar view of upcoming classes
+- Student testimonials / success stories
+- FAQ section about enrollment, pricing, materials
+- Approachable, trustworthy palette — blues/greens with warm accents, clean modern sans-serif
+
 ═══════════════════════════════════════════════════════════════════
 ⚠️⚠️⚠️ DESIGN QUALITY STANDARD — APPLIES TO ALL SITES ⚠️⚠️⚠️
 ═══════════════════════════════════════════════════════════════════
