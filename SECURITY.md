@@ -61,3 +61,47 @@ The generated website preview uses `<iframe srcDoc sandbox="allow-scripts allow-
 - `allow-scripts`: Required for interactive preview
 - `allow-same-origin`: Required for postMessage communication
 - No `allow-top-navigation` or `allow-popups` — prevents escape from iframe
+
+## Runtime Verification (Round 8 — Feb 2026)
+
+All security controls verified against running dev server with actual curl requests.
+
+### Pen Test Findings — All Verified
+| Finding | Test | Result |
+|---------|------|--------|
+| 1M char input | POST /api/chat with 1M char message | 400 "Message too long" |
+| CORS bypass | OPTIONS /api/chat with Origin: evil.com | 403 Forbidden |
+| Missing CSP | Check response headers on / | Full CSP policy present |
+| Supabase RLS | Query User/projects/deployments with anon key | Empty arrays (no data) |
+| Deploy no auth | POST /api/deploy without session | 401 Unauthorized |
+| Upload no auth | POST /api/upload without session | 401 "Sign in" |
+| Remove-bg no auth | POST /api/remove-bg without session | 401 "Sign in" |
+| Error leaks | Malformed JSON, wrong method, bad content type | Generic errors only |
+
+### Endpoint Hardening — All Verified
+| Endpoint | Tests | Result |
+|----------|-------|--------|
+| /api/chat | Empty body, bad types, 200 msgs, system role, non-JSON | All rejected with specific Zod errors |
+| /api/chat/voice | Empty body, wrong schema | 400 with generic error |
+| /api/upload | No auth, empty, non-image | 401 on all |
+| /api/remove-bg | No auth, empty, missing fields | 401 on all |
+| /api/deploy | No auth, empty, 5MB payload | 401 on all |
+| /api/stripe/checkout | No auth, invalid plan, missing plan | 401 on all |
+| /api/stripe/webhook | No signature, fake signature | 400/500 (correct) |
+| /auth/callback | No code, open redirect attempt | Redirects to / only |
+
+### Security Headers — All Present
+CSP, X-Frame-Options (DENY), X-Content-Type-Options (nosniff), Referrer-Policy, COOP, COEP, CORP, Permissions-Policy. X-Powered-By removed.
+
+### Build Health
+- `npm run build`: 0 warnings, all 14 pages generated
+- `npx tsc --noEmit`: 0 errors
+- `npm audit`: 4 vulnerabilities in Next.js 14.2.18 (upgrade to 14.2.35+ deferred)
+- Bundle: 276 kB First Load JS (main page), 87.2 kB shared
+
+### Static Files
+- `/robots.txt`: Disallows /api/, /auth/, /projects/
+- `/.well-known/security.txt`: Contact info present
+- `/sitemap.xml`: Valid with canonical URL
+- `/manifest.json`: Valid PWA manifest
+- `/.env`, `/.git/config`: Both return 404
