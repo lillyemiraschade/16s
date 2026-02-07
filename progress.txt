@@ -22,7 +22,7 @@
 ## P4 — Deferred Items
 - [x] 11. Autosave indicator
 - [x] 12. Deploy flow improvements (URL display, copy, open)
-- [ ] 14. Stripe webhook tests
+- [x] 14. Stripe webhook tests
 
 ## P5 — Final Verification
 - [ ] 15. Full smoke test
@@ -36,3 +36,4 @@
 - R11-5: Error monitoring. Created reportError utility (dev: console, prod: POST to endpoint). GlobalErrorHandler for window.onerror + unhandledrejection. Wired into ErrorBoundary, useChat, useDeployment.
 - R11-6: Autosave indicator. saveStatus state in page.tsx (idle→saving→saved→idle after 2s). Passed to ChatPanel. Subtle "Saving..." / "Saved" text in header next to UserMenu.
 - R11-7: Deploy flow improvements. Larger URL display with break-all for long URLs. Explicit "Open" and "Copy URL" buttons with labels instead of icon-only. Visually prominent green-themed action buttons.
+- R11-8: Stripe webhook tests. 3 tests: checkout.session.completed → updates subscription, invalid signature → 400, missing admin client → 500. Total tests: 28.
