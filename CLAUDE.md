@@ -1,207 +1,254 @@
-# 16s — Round 13: Product Features (Sharing, Custom Domains, Templates)
+# 16s — Round 14: Edge of Perfection
 
 ## Context
-12 rounds complete (~210 changes). Infrastructure is done — architecture, security, streaming, testing, CI/CD, performance, onboarding, analytics, discussion mode all shipped. The codebase is production-grade.
-
-This round builds the features that drive adoption and make 16s feel like a real product. No more cleanup. Only user-facing features.
+13 rounds complete. Infrastructure is bulletproof. Sharing, custom domains, templates, deployment history all shipped. This round adds every remaining feature that makes 16s competitive with Lovable/Base44/v0 — stock photos, working contact forms, GitHub export, email notifications, SEO/accessibility scoring, and more.
 
 ## Tech Stack
 Next.js 14.2, TypeScript, Tailwind, Supabase, Stripe, Anthropic Claude, Vercel Blob/API, Vercel hosting.
 
 ## Commands
 ```
-npm run build
-npm run dev
-npm test
-npm run check
+npm run build && npm test && npx tsc --noEmit
 ```
 
-## Commit: [Ralph R13-N]
+## Commit: [Ralph R14-N]
 
-## BANNED (done — 12 rounds of it)
-All infrastructure, cleanup, refactoring, security hardening, prompt compression, component splitting, testing infrastructure, CI/CD. These are DONE. Only product features this round.
+## BANNED
+All infrastructure/cleanup. Only product features.
+
+## ⚡ NEW API KEYS NEEDED (user must obtain these)
+After this round, the .env.example will include these NEW variables:
+
+```bash
+# --- EXISTING (already configured) ---
+ANTHROPIC_API_KEY=           # https://console.anthropic.com/settings/keys
+NEXT_PUBLIC_SUPABASE_URL=    # https://supabase.com/dashboard/project/_/settings/api
+NEXT_PUBLIC_SUPABASE_ANON_KEY=
+SUPABASE_SERVICE_ROLE_KEY=
+VERCEL_TOKEN=                # https://vercel.com/account/tokens
+VERCEL_TEAM_ID=              # https://vercel.com/account (Team Settings → General)
+BLOB_READ_WRITE_TOKEN=       # https://vercel.com/dashboard/stores (Blob Store → Tokens)
+STRIPE_SECRET_KEY=           # https://dashboard.stripe.com/apikeys
+STRIPE_WEBHOOK_SECRET=       # https://dashboard.stripe.com/webhooks (endpoint signing secret)
+STRIPE_PRO_PRICE_ID=         # https://dashboard.stripe.com/products (create Pro product → copy price ID)
+STRIPE_TEAM_PRICE_ID=        # https://dashboard.stripe.com/products (create Team product → copy price ID)
+REMOVE_BG_API_KEY=           # https://www.remove.bg/dashboard#api-key
+
+# --- NEW (this round) ---
+RESEND_API_KEY=re_pTxhuSV4_3WT9YbV81c5unMBBbqqwmECT
+RESEND_FROM_EMAIL=hello@try16s.app    # Verify this domain at https://resend.com/domains first
+GITHUB_CLIENT_ID=Iv23liNFmu0P9ssBejC5
+GITHUB_CLIENT_SECRET=39657b5d2d57a87ae2426ae20f61ed4396ed3868
+NEXT_PUBLIC_POSTHOG_KEY=phc_9fZ5NxgEj3h7CPAeG18yoJPVqZd3UelrDyRu2GRkS1t
+NEXT_PUBLIC_POSTHOG_HOST=https://us.i.posthog.com
+NEXT_PUBLIC_SENTRY_DSN=      # https://sentry.io/settings/projects/ → Select project → Client Keys (DSN)
+```
 
 ## PRIORITY ORDER
 
-### P0 — PROJECT SHARING (cycles 1-4)
-"Look what I built with 16s" is the growth loop. Users need shareable links.
+### P0 — CONTACT FORM BACKEND (cycles 1-3)
+Generated sites have contact forms that don't actually work. This is the #1 complaint users will have.
 
-1. **Schema migration: add sharing columns to projects table**
-   Create supabase/migrations/add_sharing.sql:
-   ```sql
-   -- Public sharing support
-   ALTER TABLE projects ADD COLUMN IF NOT EXISTS is_public BOOLEAN DEFAULT FALSE;
-   ALTER TABLE projects ADD COLUMN IF NOT EXISTS public_slug TEXT UNIQUE;
-   ALTER TABLE projects ADD COLUMN IF NOT EXISTS public_preview TEXT; -- frozen HTML snapshot for sharing
-
-   -- Index for public lookups
-   CREATE INDEX IF NOT EXISTS idx_projects_public_slug ON projects(public_slug) WHERE is_public = TRUE;
-
-   -- RLS policy: anyone can READ public projects (by slug)
-   CREATE POLICY "Anyone can view public projects" ON projects
-     FOR SELECT USING (is_public = TRUE);
-   -- Note: existing policy "Users can CRUD own projects" still handles owner access
-   ```
-
-   Also update supabase/schema.sql with these columns (for fresh installs).
-   Update src/lib/supabase/types.ts to include the new columns.
-
-2. **Share API endpoint: POST /api/share**
-   Create src/app/api/share/route.ts:
-   - POST: Takes projectId, generates a slug (nanoid 8 chars or project-name-slugified), sets is_public=true, snapshots current_preview into public_preview, returns the share URL
-   - DELETE: Takes projectId, sets is_public=false, clears slug and snapshot
-   - GET: Takes slug (public, no auth required), returns the public_preview HTML
-
-   The slug should be human-readable: take project name, slugify, append 4 random chars. Example: "tokyo-ramen-shop-a3f2"
-
-   Rate limit: 10 shares per minute per user.
-
-3. **Public project page: /share/[slug]**
-   Create src/app/share/[slug]/page.tsx:
-   - Server component that fetches the public project by slug
-   - Renders the frozen HTML in a full-screen iframe
-   - Header bar at top: "Built with 16s" branding + "Build your own" CTA button linking to homepage
-   - The header should be minimal — not obstructing the site preview
-   - If slug not found: 404 page with "This project doesn't exist or was unpublished"
-   - OG meta tags: title = project name, description = "Built with 16s", image = auto-generated (or skip for now)
-
-4. **Share button in the UI**
-   In PreviewToolbar (or wherever the deploy button lives):
-   - Add a "Share" button next to Deploy
-   - Clicking opens a small popover/modal:
-     - If not shared: "Share this project publicly?" + Share button
-     - If already shared: shows the URL, Copy button, "Unshare" button
-   - After sharing: show success toast with the URL
-   - The share URL format: https://16s.dev/share/tokyo-ramen-shop-a3f2 (or whatever the domain is)
-
-### P1 — CUSTOM DOMAINS (cycles 5-8)
-Deployed sites currently get ugly random Vercel URLs. Users need custom domains.
-
-5. **Schema: add custom domain tracking**
-   Add to supabase/migrations/add_domains.sql:
-   ```sql
-   CREATE TABLE IF NOT EXISTS domains (
-     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-     user_id UUID NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE,
-     project_id UUID NOT NULL REFERENCES projects(id) ON DELETE CASCADE,
-     domain TEXT NOT NULL UNIQUE,
-     status TEXT DEFAULT 'pending', -- pending, verifying, active, failed
-     vercel_domain_id TEXT,
-     verification_token TEXT,
-     created_at TIMESTAMPTZ DEFAULT NOW(),
-     updated_at TIMESTAMPTZ DEFAULT NOW()
-   );
-
-   ALTER TABLE domains ENABLE ROW LEVEL SECURITY;
-   CREATE POLICY "Users manage own domains" ON domains FOR ALL USING (auth.uid() = user_id);
-   CREATE INDEX IF NOT EXISTS idx_domains_user_id ON domains(user_id);
-   CREATE INDEX IF NOT EXISTS idx_domains_project_id ON domains(project_id);
-   ```
-
-6. **Domain API: /api/domains**
-   Create src/app/api/domains/route.ts:
-   - POST: Add domain to Vercel project via Vercel Domains API, save to DB, return verification instructions
-   - GET: Check domain verification status via Vercel API, update DB
-   - DELETE: Remove domain from Vercel, delete from DB
-
-   Vercel Domains API:
-   ```
-   POST https://api.vercel.com/v10/projects/{projectId}/domains
-   Body: { "name": "example.com" }
-
-   GET https://api.vercel.com/v10/projects/{projectId}/domains/{domain}
-   Returns: verification status, DNS records needed
-   ```
-
-   Pro plan required (check subscription before allowing).
-
-7. **Domain management UI**
-   In the deploy success area or a new settings panel:
-   - "Connect custom domain" button (Pro only — show upgrade CTA for free users)
-   - Input for domain name
-   - After adding: show DNS instructions (CNAME record pointing to cname.vercel-dns.com)
-   - Verification status indicator (pending → checking → active)
-   - Auto-refresh status every 30 seconds while pending
-
-   Keep it simple — this is V1. Just domain connection + DNS instructions + status.
-
-8. **Domain status in projects list**
-   On the projects page, show the custom domain (if any) under each project card. Small badge: "→ example.com" or "→ vercel.app URL"
-
-### P2 — TEMPLATE SYSTEM (cycles 9-12)
-Starting from a blank prompt is intimidating. Templates give users a head start.
-
-9. **Template data structure**
-   Create src/lib/templates.ts:
+4. **Form submission API**
+   Create src/app/api/forms/route.ts:
    ```typescript
-   export interface Template {
-     id: string;
-     name: string;
-     description: string;
-     industry: string;
-     prompt: string; // the initial prompt that generates this template
-     thumbnail?: string; // gradient placeholder for now, screenshot later
-     tags: string[];
-   }
-
-   export const TEMPLATES: Template[] = [
-     {
-       id: 'tokyo-ramen',
-       name: 'Tokyo Ramen Shop',
-       description: 'Moody editorial menu with dark theme',
-       industry: 'restaurant',
-       prompt: 'A Tokyo ramen shop called Ichiban with a moody, editorial menu layout. Dark background, warm amber accents, Japanese typography influence. Include menu with categories, location info, and hours.',
-       tags: ['restaurant', 'dark', 'editorial'],
-     },
-     {
-       id: 'architect-portfolio',
-       name: 'Architect Portfolio',
-       description: 'Brutalist design with raw concrete vibes',
-       industry: 'portfolio',
-       prompt: 'A brutalist architect portfolio for Studio Forme. Raw concrete aesthetic, bold typography, asymmetric grid layout for projects. Include project gallery, about section, and contact.',
-       tags: ['portfolio', 'brutalist', 'minimal'],
-     },
-     // ... 8-10 more covering key industries:
-     // SaaS landing, fitness studio, law firm, coffee shop, photographer,
-     // wedding planner, real estate, medical practice
-   ];
+   // POST — receives form submissions from deployed sites
+   // Body: { projectId, formId, fields: { name, email, message, ... } }
+   // 1. Validate projectId exists and has active deployment
+   // 2. Store submission in Supabase (form_submissions table)
+   // 3. Send email notification to project owner via Resend
+   // 4. Return { success: true }
    ```
 
-   Write 10 total templates with EXCELLENT prompts that showcase 16s's design diversity. Each prompt should produce a visually distinct site. Cover: restaurant, portfolio, SaaS, fitness, law, cafe, photography, wedding, real estate, medical.
+   Schema: form_submissions table with id, project_id, user_id (owner), form_data JSONB, created_at.
 
-10. **Templates page: /templates**
-    Create src/app/templates/page.tsx:
-    - Grid of template cards (3 columns desktop, 2 tablet, 1 mobile)
-    - Each card: gradient bg placeholder, template name, industry tag, description
-    - Filter by industry (horizontal pill bar at top)
-    - Click a card → navigate to /?template=tokyo-ramen
-    - On main page, detect the template param, fill the input with the template prompt, optionally auto-submit
+   CORS: Allow requests from any *.vercel.app domain (deployed sites post back to 16s API).
 
-11. **Templates in welcome screen**
-    Replace the R12 showcase cards with actual template cards from the template data. "Start from a template" section below the idea pills. Show 4-6 featured templates. "See all templates →" link to /templates page.
+5. **Inject form handling into generated HTML**
+   When the AI generates a site with a contact form, the post-processor should inject a small script at the bottom:
+   ```javascript
+   document.querySelectorAll('form').forEach(form => {
+     form.addEventListener('submit', async (e) => {
+       e.preventDefault();
+       const data = Object.fromEntries(new FormData(form));
+       const btn = form.querySelector('[type="submit"]');
+       btn.disabled = true; btn.textContent = 'Sending...';
+       try {
+         await fetch('https://16s.dev/api/forms', {
+           method: 'POST',
+           headers: { 'Content-Type': 'application/json' },
+           body: JSON.stringify({ projectId: '{{PROJECT_ID}}', fields: data })
+         });
+         btn.textContent = '✓ Sent!';
+         form.reset();
+       } catch { btn.textContent = 'Error — try again'; btn.disabled = false; }
+     });
+   });
+   ```
 
-12. **Template attribution**
-    When a project is started from a template, save `{ startedFrom: templateId }` in the project context. This lets you track which templates are popular (via analytics).
+   Replace {{PROJECT_ID}} with the actual project ID at deploy time.
 
-### P3 — DEPLOYMENT HISTORY & ROLLBACK (cycles 13-15)
-Users deploy, then keep iterating. They need to see past deployments and roll back.
+6. **Form submissions dashboard**
+   Create src/app/submissions/page.tsx (or a section in the projects page):
+   - List of form submissions per project
+   - Each submission: sender name, email, message, timestamp
+   - Mark as read/unread
+   - Basic — just a table. This can be fancy later.
 
-13. **Deployment history UI**
-    In the preview toolbar or a slide-out panel:
-    - List past deployments for the current project (from deployments table)
-    - Each entry: URL, timestamp, status badge
-    - "Revert to this version" button that restores the html_snapshot from that deployment to current_preview
-    - Limit to last 10 deployments
+### P1 — EMAIL NOTIFICATIONS (cycles 4-6)
+Users should know when things happen without checking the app.
 
-14. **Deployment comparison**
-    When hovering a past deployment in the list, show a small tooltip preview (just the URL as a link, or a mini-iframe if feasible). Users should be able to open any past deployment URL.
+7. **Resend integration**
+   Create src/lib/email.ts:
+   ```typescript
+   import { Resend } from 'resend';
 
-15. **Auto-deploy on publish**
-    Add a "Publish changes" button that appears when the current preview differs from the latest deployment. This is a softer UX than the current deploy button — it implies "update your live site" rather than "create a new deployment."
+   const resend = new Resend(process.env.RESEND_API_KEY);
+   const FROM = process.env.RESEND_FROM_EMAIL || 'hello@16s.dev';
+
+   export async function sendEmail(to: string, subject: string, html: string) {
+     if (!process.env.RESEND_API_KEY) return; // silently skip if not configured
+     await resend.emails.send({ from: FROM, to, subject, html });
+   }
+   ```
+
+   Install: npm install resend
+
+8. **Email templates + triggers**
+   Create src/lib/email-templates.ts with simple HTML templates (inline CSS, no framework needed):
+   - **Welcome email**: Sent on signup. "Welcome to 16s! Here's how to build your first site."
+   - **Deploy notification**: "Your site is live! [URL]"
+   - **Form submission notification**: "New message from your {site name} contact form"
+   - **Shared project notification**: "Your project {name} is now public at {url}"
+
+   Wire triggers:
+   - Welcome: in auth callback or signup webhook
+   - Deploy: after successful deployment in deploy route
+   - Form: in the forms route (item 4)
+   - Share: in the share route (item 4 from R13)
+
+9. **Email preferences**
+   Add email_notifications BOOLEAN to the subscriptions table (default true).
+   Check before sending. Let users toggle in account settings.
+
+### P2 — GITHUB EXPORT (cycles 7-9)
+Users want their code in a repo, not trapped in 16s.
+
+10. **GitHub OAuth flow**
+    GitHub is already a Supabase auth provider (OAuth button exists in AuthModal). But for repo access, users need to grant additional scopes.
+
+    Create src/app/api/github/auth/route.ts:
+    - Redirects to GitHub OAuth with `repo` scope
+    - Callback stores the access token in Supabase (encrypted in user metadata or a separate table)
+    - This is separate from the Supabase auth GitHub login — this is for repo access
+
+11. **Export to GitHub API**
+    Create src/app/api/github/export/route.ts:
+    ```typescript
+    // POST { projectId, repoName?, private? }
+    // 1. Get user's GitHub token
+    // 2. Create repo if it doesn't exist (GitHub API: POST /user/repos)
+    // 3. Commit the HTML as index.html (GitHub Contents API: PUT /repos/{owner}/{repo}/contents/index.html)
+    // 4. If React mode: generate package.json, src/App.tsx, etc.
+    // 5. Return { repoUrl, commitUrl }
+    ```
+
+    For V1: single commit with index.html. Don't overcomplicate with git history.
+
+12. **Export button in UI**
+    In the export menu (PreviewToolbar), add "Push to GitHub":
+    - If not connected: "Connect GitHub" button → OAuth flow
+    - If connected: repo name input (defaults to project name), public/private toggle, "Push" button
+    - Success: show repo URL with "Open on GitHub" link
+
+### P3 — REAL ANALYTICS (cycles 10-11)
+The R12 analytics utility logs to console. Replace with PostHog for real tracking.
+
+13. **PostHog integration**
+    Install: npm install posthog-js
+
+    Create src/lib/posthog.ts:
+    ```typescript
+    import posthog from 'posthog-js';
+
+    export function initPostHog() {
+      if (typeof window === 'undefined') return;
+      if (!process.env.NEXT_PUBLIC_POSTHOG_KEY) return;
+      posthog.init(process.env.NEXT_PUBLIC_POSTHOG_KEY, {
+        api_host: process.env.NEXT_PUBLIC_POSTHOG_HOST || 'https://us.i.posthog.com',
+        capture_pageview: true,
+        capture_pageleave: true,
+      });
+    }
+
+    export { posthog };
+    ```
+
+    Initialize in Providers.tsx on mount. Update the analytics.ts track() function to call posthog.capture() instead of console.debug in production.
+
+14. **Sentry error monitoring**
+    Install: npm install @sentry/nextjs
+
+    Run: npx @sentry/wizard@latest -i nextjs
+
+    This creates sentry.client.config.ts, sentry.server.config.ts, sentry.edge.config.ts, and next.config.js instrumentation.
+
+    Update the error-reporter.ts to call Sentry.captureException() in production instead of the manual fetch.
+
+### P4 — SITE QUALITY SCORING (cycles 12-14)
+Show users how good their generated site is.
+
+15. **Accessibility audit**
+    Install: npm install axe-core (already small, ~200KB)
+
+    After generation, run axe-core on the preview iframe content:
+    ```typescript
+    const axe = (await import('axe-core')).default;
+    const results = await axe.run(iframeDocument);
+    // results.violations = accessibility issues
+    // results.passes = things done right
+    ```
+
+    Show as a score card in the QA report: "Accessibility: 94/100 (2 minor issues)"
+    List violations with fix suggestions as pills: "Fix contrast on footer text", "Add alt text to hero image"
+
+16. **SEO checker**
+    After generation, check the HTML for:
+    - Has <title> tag
+    - Has meta description
+    - Has og:title and og:description
+    - Has proper heading hierarchy (only one h1)
+    - All images have alt text
+    - Has favicon
+    - Has canonical URL
+
+    Show as: "SEO: 8/10 — Missing: og:image, canonical URL"
+
+    Implement as a pure function in src/lib/quality/seo-checker.ts — no external API needed.
+
+17. **Performance hints**
+    Check the generated HTML for:
+    - Images have loading="lazy"
+    - Fonts use preconnect
+    - No render-blocking scripts
+    - CSS is inlined (it always is for single-file HTML)
+    - Total HTML size (warn if >500KB)
+
+    Show as: "Performance: ✓ All good" or flag specific issues.
+
+    Combine all three scores into a "Site Quality" card shown after generation, next to or inside the QA report.
+
+### P5 — POLISH (cycles 15-17)
+
+18. **Favicon in browser tab**: The 16s app itself should have a proper favicon. Create a simple SVG favicon — the "16s" logo mark or just "16" in a rounded square. Add to /public/favicon.svg and reference in layout.tsx.
+
+19. **OG image for sharing**: When a project is shared, generate a simple OG image. Use @vercel/og or a simple HTML→image approach. The OG image should show: project name + "Built with 16s" + a preview thumbnail (or just a branded card).
+
+20. **Update .env.example**: Add ALL new env vars with comments explaining where to get each key. Group by service. This is the "API keys needed" reference doc.
 
 ### VERIFICATION
 After each change:
 1. npm run build + npm test pass
-2. For schema changes: include migration SQL in commit
-3. For API routes: test with curl
-4. For UI: spot-check in browser
+2. For new API routes: test with curl
+3. For new env vars: gracefully degrade if not set (don't crash)
+4. Every new integration should be OPTIONAL — the app must still work without it

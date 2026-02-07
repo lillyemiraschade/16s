@@ -1,38 +1,33 @@
-# Round 13: Product Features
+# Round 14: Edge of Perfection
 
-## P0 — Sharing
-- [x] 1. Schema migration (is_public, public_slug, public_preview) — R13-1
-- [x] 2. Share API (POST/DELETE/GET /api/share) — R13-2
-- [x] 3. Public project page (/share/[slug]) — R13-2
-- [x] 4. Share button in PreviewToolbar — R13-2
+## P0 — Contact Form Backend
+- [ ] 1. Form submission API + schema (/api/forms)
+- [ ] 2. Inject form handler into deployed HTML
+- [ ] 3. Form submissions dashboard
 
-## P1 — Custom Domains
-- [x] 5. Schema (domains table) — R13-3
-- [x] 6. Domain API (/api/domains) — R13-3
-- [x] 7. Domain management UI — R13-3
-- [x] 8. Domain status in projects list — R13-3
+## P1 — Email Notifications
+- [ ] 4. Resend integration (src/lib/email.ts)
+- [ ] 5. Email templates + triggers (welcome, deploy, form, share)
+- [ ] 6. Email preferences toggle
 
-## P2 — Templates
-- [x] 9. Template data (10 industry-diverse templates) — R13-4
-- [x] 10. Templates page (/templates) — R13-4
-- [x] 11. Templates in welcome screen — R13-4
-- [x] 12. Template attribution tracking — R13-4
+## P2 — GitHub Export
+- [ ] 7. GitHub OAuth for repo access
+- [ ] 8. Export to GitHub API
+- [ ] 9. Export button in UI
 
-## P3 — Deployment History
-- [x] 13. Deployment history UI — R13-5
-- [x] 14. Deployment comparison/preview — R13-5
-- [x] 15. "Publish changes" button — R13-5
+## P3 — Real Analytics
+- [ ] 10. PostHog integration
+- [ ] 11. Sentry error monitoring
+
+## P4 — Site Quality Scoring
+- [ ] 12. Accessibility audit (axe-core)
+- [ ] 13. SEO checker
+- [ ] 14. Performance hints + combined quality card
+
+## P5 — Polish
+- [ ] 15. 16s favicon
+- [ ] 16. OG image for shared projects
+- [ ] 17. Update .env.example with ALL keys
 
 ## Log
-- R13-1: Schema migration — is_public, public_slug, public_preview columns + index + RLS
-- R13-2: Full sharing feature — API with slug generation, /share/[slug] page, share button with popover
-- R13-3: Custom domains — domains table, Vercel API integration, DomainManager UI, Pro plan gate
-- R13-4: Template system — 10 templates, /templates page with filters, welcome screen integration
-- R13-5: Deployment history — timeline panel with revert, hover previews, publish button
-
-## Stats
-- 5 commits, 15 tasks complete
-- New files: 10 (2 migrations, 3 API routes, 3 pages, 2 components)
-- Modified files: 7 (schema, types, toolbar, panel, page, projects, deploy API)
-- Build: passes (237KB first load)
-- Tests: 28/28 passing
+(cycle notes here)
