@@ -89,31 +89,6 @@
 }
 
 @layer utilities {
-  @keyframes fade-in {
-    from { opacity: 0; transform: translateY(8px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  @keyframes shimmer {
-    0% { background-position: -200% 0; }
-    100% { background-position: 200% 0; }
-  }
-
-  @keyframes glow-pulse {
-    0%, 100% { opacity: 0.4; }
-    50% { opacity: 0.8; }
-  }
-
-  .animate-fade-in {
-    animation: fade-in 0.2s ease-out;
-  }
-
-  .animate-shimmer {
-    background: linear-gradient(90deg, transparent 25%, hsl(var(--muted) / 0.3) 50%, transparent 75%);
-    background-size: 200% 100%;
-    animation: shimmer 1.5s ease-in-out infinite;
-  }
-
   /* Dot grid background */
   .dot-grid {
     background-image: radial-gradient(circle, rgba(255,255,255,0.04) 1px, transparent 1px);
@@ -252,23 +227,4 @@
       inset 0 1px 0 rgba(255, 255, 255, 0.15);
   }
 
-  .glow-red {
-    box-shadow:
-      0 0 20px rgba(239, 68, 68, 0.2),
-      0 0 60px rgba(239, 68, 68, 0.05);
-  }
-
-  /* Code preview syntax highlighting */
-  .code-preview {
-    font-family: "SF Mono", "Fira Code", "Fira Mono", Menlo, Consolas, monospace;
-    color: #a1a1aa;
-    white-space: pre-wrap;
-    word-break: break-all;
-    tab-size: 2;
-  }
-
-  .code-preview .hl-tag { color: #f472b6; }
-  .code-preview .hl-attr { color: #93c5fd; }
-  .code-preview .hl-str { color: #86efac; }
-  .code-preview .hl-comment { color: #52525b; font-style: italic; }
 }
