@@ -1,67 +1,30 @@
-# Round 9: Architecture, Polish & Features
+# Round 10: Deep Clean, Streaming & Component Polish
 
-## P0 — Architecture (COMPLETE)
-- [x] 1. Rate limiter dedup → [Ralph R9-1] src/lib/rate-limit.ts, 7 routes updated
-- [x] 2. God component split → [Ralph R9-8] page.tsx 1741→750 lines, 4 hooks extracted
-- [x] 3. System prompt extraction → [Ralph R9-2] src/lib/ai/prompts.ts, route.ts 1072→637
-- [x] 4. Clean up _bmad folder → [Ralph R9-3] moved to docs/
-- [x] 5. Env validation module → [Ralph R9-4] src/lib/env.ts
-- [x] 6. API response helpers → [Ralph R9-5] src/lib/api-utils.ts, 5 routes updated
-- [x] 7. Types cleanup → [Ralph R9-6] ChatAPIResponse, ChatPanelProps, PreviewPanelProps
-- [x] 8. Globals.css audit → [Ralph R9-7] removed 5 dead CSS rules (274→230 lines)
+## P0 — Streaming
+- [ ] 1. Server-side streaming (send tokens as they arrive)
+- [ ] 2. Client-side streaming display (word-by-word text, partial preview)
+- [ ] 3. Streaming protocol (newline-delimited JSON chunks)
+- [ ] 4. Fallback to buffered on stream failure
 
-## P1 — App UI
-- [x] 9. Welcome screen polish → [Ralph R9-9] animated gradient, pill hover, input glow, headline
-- [x] 10. Chat panel polish → [Ralph R9-10] plan cards glass-matte, QA icons, AI text tracking
-- [x] 11. Preview panel improvements → [Ralph R9-11] generating animation, deploy celebration
-- [x] 12. Projects page → [Ralph R9-12] relative time, better empty state, clickable cards
-- [x] 13. Responsive layout → [Ralph R9-15] mobile tab switcher, 44px touch targets
-- [x] 14. Loading states → [Ralph R9-16] project switch overlay, deploy error display
-- [x] 15. Error states → [Ralph R9-17] network/credits error messages + action pills
-- [ ] 16. Toast system
+## P1 — Component Splits
+- [ ] 5. ChatPanel split → ChatMessage + ImageUploadBar + ChatInput
+- [ ] 6. PreviewPanel split → PreviewToolbar + VersionHistory + GeneratingState
 
-## P2 — Output Quality
-- [x] 17. Dark mode toggle → [Ralph R9-18] system prompt instruction for generated sites
-- [x] 18. Favicon generation → [Ralph R9-14] SVG favicon from brand initial + accent color
-- [x] 19. SEO defaults → [Ralph R9-13] title, meta description, og tags in system prompt
-- [x] 20. Animation quality — already in prompt (IO, stagger, reduced-motion)
-- [x] 21. Multi-page navigation → [Ralph R9-19] hash-based routing for back/forward
-- [x] 22. Image handling — verified (10MB limit, compression, placement rules)
+## P2 — Response Parsing
+- [ ] 7. Server-side parseAIResponse extraction + cleanup
+- [ ] 8. Client-side parser simplification (stream-aware)
 
-## P3 — Developer Experience
-- [x] 23. README → [Ralph R9-21] comprehensive README.md
-- [x] 24. .env.example → [Ralph R9-21] detailed comments + URLs
-- [x] 25. Error boundary → [Ralph R9-22] resetKey remount, error details, reload
-- [x] 26. Bundle analysis → [Ralph R9-23] Monaco lazy-loaded, findings documented
+## P3 — Testing
+- [ ] 9. Vitest setup + config
+- [ ] 10. Unit tests (rate-limit, parse-response, api-utils)
+- [ ] 11. Chat API integration test
+
+## P4 — Polish
+- [ ] 12. VoiceCall browser compatibility message
+- [ ] 13. Preview iframe sandbox audit
+- [ ] 14. Deploy flow improvements (prominent URL, QR code)
+- [ ] 15. Mobile chat/preview toggle verification
+- [ ] 16. Autosave indicator
 
 ## Log
-R9-1: Rate limiter factory — createRateLimiter(limit, windowMs). Replaced 7 copies.
-R9-2: System prompt extraction — SYSTEM_PROMPT + REACT_ADDENDUM → src/lib/ai/prompts.ts
-R9-3: Moved _bmad/, ROADMAP.md, SMARTER_16S_PLAN.md to docs/
-R9-4: Env validation — requireEnv/optionalEnv pattern in src/lib/env.ts
-R9-5: API response helpers — apiError/apiSuccess in src/lib/api-utils.ts, 5 routes updated
-R9-6: Types cleanup — centralized ChatAPIResponse, ChatPanelProps, PreviewPanelProps
-R9-7: CSS audit — removed animate-fade-in, animate-shimmer, glow-pulse, glow-red, code-preview
-R9-8: God component split — useImages, useWelcome, usePreview, useChat extracted from page.tsx
-R9-9: Welcome screen polish — animated gradient, pill hover, input glow, larger headline
-R9-10: Chat panel polish — glass-matte plan cards, QA check icons, AI text leading/tracking
-R9-11: Preview panel — premium generating animation, deploy celebration green tint
-R9-12: Projects page — relative time formatting, better empty state, clickable cards
-R9-13: SEO defaults — title, meta description, og:title, og:description in system prompt
-R9-14: Favicon generation — inline SVG from brand initial + accent color on deploy
-R9-15: Responsive layout — mobile tab switcher, 44px touch targets, viewport hide
-R9-16: Loading states — project switch overlay, deploy error display
-R9-17: Error states — network/credits error messages + action pills
-R9-18: Dark mode toggle — system prompt instruction for generated sites
-R9-19: Multi-page routing — hash-based navigation for back/forward
-R9-20: Toast system — ToastProvider with 4 types, auto-dismiss, progress bar
-R9-21: README + .env.example — comprehensive docs for onboarding
-R9-22: Error boundary — resetKey remount, error details, reload button
-R9-23: Bundle analysis — Monaco lazy-loaded via next/dynamic
-
-## Bundle Analysis Findings
-- Monaco editor: NOW lazy-loaded (was static import, ~1MB+ deferred until code view toggled)
-- framer-motion: Used heavily — tree-shaking works (only importing used components)
-- Shared JS: 87.2 kB first load — reasonable for React + Next.js
-- No large unnecessary dependencies found
-- @monaco-editor/react handles its own chunk splitting internally
+(cycle notes here)

@@ -1,190 +1,116 @@
-# 16s — Round 9: Architecture, Polish & Features
+# 16s — Round 10: Deep Clean, Streaming & Component Polish
 
-## What 16s Is
-AI web builder. Users describe a website, AI builds it. Next.js 14.2, TypeScript, Tailwind, Supabase, Stripe, Anthropic Claude, Vercel Blob, Vercel hosting. Live at 16s-ruddy.vercel.app.
+## Context
+After 9 rounds (179 changes): architecture extracted (hooks, shared rate limiter, prompt file, env validation, API helpers), security hardened and verified, prompt refined, app UI polished, features added.
 
-## What Rounds 1-8 Did
-- Rounds 1-7: 156 changes — mostly prompt compression (50), code cleanup (45), features (35), security (12)
-- Round 8: Runtime pen testing — verified all endpoints, headers, auth, RLS with real curl commands
+## What's Left — The Honest Assessment
+1. **ChatPanel (858 lines) and PreviewPanel (931 lines) are still bloated** — R9 split page.tsx but these two components weren't touched
+2. **No real-time streaming to the user** — the API uses Anthropic streaming internally but buffers the ENTIRE response before sending it. Users see nothing until the full response is complete. This is the single biggest UX gap.
+3. **No test coverage at all** — zero test files in the project
+4. **The response parsing is fragile** — both server-side (route.ts) and client-side (page.tsx) have multi-layer JSON extraction with regex fallbacks
+5. **VoiceCall (489 lines) uses Web Speech API** which is unreliable and Chrome-only
+6. **No loading skeleton or progress indicator during AI generation** — users just see a typing indicator with no sense of progress
 
-## What This Round Does
-Architecture cleanup, real feature additions, output quality improvements, and app UI polish. Every change must either (a) make the codebase more maintainable, (b) make the user experience better, or (c) make the AI output higher quality.
+## Tech Stack
+Next.js 14.2, TypeScript, Tailwind, Supabase, Stripe, Anthropic Claude, Vercel Blob, Vercel hosting.
 
 ## Commands
 ```
 npm run build          # Must pass after every change
-npm run dev            # Dev server (start with: npm run dev > /dev/null 2>&1 &)
+npm run dev            # Dev server
 npx tsc --noEmit       # Type check
 ```
 
 ## Commit Rules
-- Prefix: [Ralph R9-N] where N is the cycle number
+- Prefix: [Ralph R10-N]
 - One logical change per commit
-- npm run build must pass before committing
-- If build fails, fix before moving on
+- Build must pass before committing
 
-## BANNED (already done in prior rounds)
-- Prompt compression or restructuring
-- Removing dead code or unused imports
-- Downgrading console.error to console.debug
-- Adding aria-labels, focus traps, escape handlers
-- Adding keyboard shortcuts
-- Extracting small helper functions
+## BANNED (exhausted in prior rounds)
+- Prompt compression or restructuring (done 50+ times)
+- Dead code removal (done)
+- console.error downgrades (done)
+- aria-labels, focus traps, escape handlers (done)
+- Keyboard shortcuts (done)
+- Rate limiter changes (just consolidated in R9)
+- Extracting hooks from page.tsx (just done in R9)
 
-## PRIORITY ORDER (work through top to bottom)
+## PRIORITY ORDER
 
-### P0 — ARCHITECTURE (cycles 1-8)
-These are structural problems that make the codebase harder to maintain.
+### P0 — STREAMING (the biggest UX win possible)
+**This is the #1 priority.** Currently the API streams from Anthropic but buffers everything server-side, then sends the complete JSON blob at the end. Users wait 5-15 seconds seeing only a typing indicator.
 
-1. **RATE LIMITER DEDUP**: The exact same rate limiter is copy-pasted 7 times across routes. Extract to src/lib/rate-limit.ts:
-   ```typescript
-   export function createRateLimiter(limit: number, windowMs: number = 60_000) {
-     const map = new Map<string, { count: number; resetAt: number }>();
-     return {
-       check(ip: string): boolean { ... },
-       cleanup() { ... }
-     };
-   }
+Implement proper streaming:
+
+1. **Server**: Stream partial text tokens to the client as they arrive from Anthropic. Use Server-Sent Events or chunked text. When HTML/React code starts appearing in the stream, send a signal so the client can show partial preview.
+
+2. **Client**: Show the AI's message text appearing word-by-word as it streams. When HTML starts streaming, begin rendering partial preview. Show a progress indicator based on token count.
+
+3. **Protocol**: Use newline-delimited JSON chunks:
    ```
-   Then replace all 7 copies. Import and use: `const limiter = createRateLimiter(20);`
-
-2. **GOD COMPONENT SPLIT**: page.tsx is 1741 lines with 27 useState hooks. Split into:
-   - src/lib/hooks/useChat.ts — message state, send logic, pill handling, stop generation, edit message
-   - src/lib/hooks/usePreview.ts — preview state, history, undo/redo, bookmarks, viewport
-   - src/lib/hooks/useImages.ts — image upload, remove, type toggle, bg removal, blob URLs
-   - src/lib/hooks/useWelcome.ts — welcome screen state, headline rotation, idea pool, welcome input
-   - page.tsx becomes ~400 lines of composition: hooks + layout + render
-
-   IMPORTANT: Don't break any functionality. The hooks just move state and handlers out of page.tsx. All the same props get passed to ChatPanel and PreviewPanel.
-
-3. **SYSTEM PROMPT EXTRACTION**: Move the 372-line SYSTEM_PROMPT and 63-line REACT_ADDENDUM from route.ts to src/lib/ai/prompts.ts. Route.ts should import them. This makes the prompt editable without touching API logic.
-
-4. **CLEAN UP _bmad FOLDER**: The _bmad/ directory contains planning templates that aren't used by the app. Move to docs/_bmad/ or delete. Same with SMARTER_16S_PLAN.md and ROADMAP.md — consolidate into one docs/ROADMAP.md.
-
-5. **ENV VALIDATION**: Add src/lib/env.ts that validates required env vars at startup and provides typed access:
-   ```typescript
-   export const env = {
-     anthropicApiKey: requireEnv('ANTHROPIC_API_KEY'),
-     supabaseUrl: requireEnv('NEXT_PUBLIC_SUPABASE_URL'),
-     // ... etc, with optional ones clearly marked
-   };
+   {"type":"text","content":"Here's what I'm thinking..."}
+   {"type":"text","content":" I'll create a modern layout"}
+   {"type":"html_start"}
+   {"type":"html_chunk","content":"<!DOCTYPE html><html>..."}
+   {"type":"html_chunk","content":"<head>..."}
+   {"type":"complete","message":"...", "pills":[...], "html":"...", "qaReport":{...}}
    ```
 
-6. **ERROR HANDLING CONSISTENCY**: Some routes return `Response()`, others `NextResponse.json()`. Standardize all routes to use a shared `apiError(message, status)` and `apiSuccess(data)` helper from src/lib/api-utils.ts.
+4. **Fallback**: If streaming fails, fall back to buffered response (current behavior).
 
-7. **TYPES CLEANUP**: types.ts is lean but missing some types that are defined inline in components (ChatPanelProps has 17 props — this interface should be in types.ts and imported). Also add a ChatAPIResponse type that matches what route.ts actually returns.
+### P1 — COMPONENT SPLITS (maintainability)
 
-8. **GLOBALS.CSS AUDIT**: 274 lines. Check for unused styles, duplicate declarations, styles that could be Tailwind classes. The welcome-bg, sidebar gradients, and custom scrollbar styles should stay. Remove anything dead.
+5. **ChatPanel split (858 → ~400 lines)**:
+   - Extract message rendering to ChatMessage.tsx (single message bubble with edit, images, plan card, QA report)
+   - Extract image upload bar to ImageUploadBar.tsx (thumbnail strip, upload button, type toggle, bg remove)
+   - Extract input area to ChatInput.tsx (textarea, send button, pill rendering)
+   - ChatPanel.tsx becomes composition: message list + image bar + input
 
-### P1 — APP UI IMPROVEMENTS (cycles 9-16)
-These improve the 16s interface itself (not the output websites).
+6. **PreviewPanel split (931 → ~400 lines)**:
+   - Extract toolbar to PreviewToolbar.tsx (viewport buttons, undo/redo, export menu, deploy button)
+   - Extract version history to VersionHistory.tsx (history dropdown, bookmarks)
+   - Extract GeneratingState to its own file (it's already a separate function)
+   - PreviewPanel.tsx becomes: toolbar + iframe + generating state + version history
 
-9. **WELCOME SCREEN POLISH**: The welcome screen is functional but plain. Improve:
-   - Subtle animated gradient or grain texture on the background
-   - Better visual hierarchy on the headline
-   - Idea pills should have slight hover animations
-   - The input area should feel more premium (subtle glow on focus, better placeholder)
+### P2 — RESPONSE PARSING CLEANUP
 
-10. **CHAT PANEL POLISH**:
-    - Messages should have slightly better typography (line-height, letter-spacing on AI messages)
-    - The pill buttons after AI responses need better visual design — currently basic rounded buttons
-    - Image upload thumbnails should be slightly larger and have better hover states
-    - Plan cards (BMad planning phase) need visual polish — currently they look like debug output
-    - QA report cards need visual polish — make pass/fail checks feel polished, not clinical
+7. **Server-side**: The JSON parsing in route.ts has 5 nested fallback strategies (direct parse → markdown fence → last line → last object → regex). Consolidate into a clean `parseAIResponse(text: string): ChatResponse` function in src/lib/ai/parse-response.ts. Add proper typing and unit-test-ready structure.
 
-11. **PREVIEW PANEL IMPROVEMENTS**:
-    - The generating state animation should feel more premium
-    - Version history dropdown should show preview thumbnails if possible (or at least timestamps)
-    - The toolbar should be more compact and better organized
-    - The deploy success state should be more celebratory (this is a big moment for users)
+8. **Client-side**: fetchAndParseChat in page.tsx (or now useChat.ts) has the same multi-fallback pattern. With streaming (P0), most of this goes away — the server sends pre-parsed JSON chunks. Simplify the client parser to just handle the streaming protocol.
 
-12. **PROJECTS PAGE**: Currently basic list view. Add:
-    - Preview thumbnails for each project (store a small screenshot on save)
-    - Better empty state for new users
-    - Project cards instead of list items
-    - Last edited time relative ("2 hours ago" not "Feb 5, 2025")
+### P3 — TESTING FOUNDATION
 
-13. **RESPONSIVE IMPROVEMENTS**: Test at 375px (iPhone SE):
-    - Chat and preview should stack vertically on mobile
-    - The toolbar should collapse appropriately
-    - Touch targets should all be 44px+
-    - No horizontal scroll anywhere
+9. **Setup**: Install vitest + @testing-library/react. Create vitest.config.ts. This is the testing foundation — once it exists, future rounds can add tests incrementally.
 
-14. **LOADING STATES**: Every async operation needs a good loading state:
-    - Initial page load (LoadingSkeleton exists, verify it's used)
-    - Project loading from cloud
-    - Image upload progress
-    - Deploy in progress
-    - AI response streaming (typing indicator exists, make sure it looks good)
+10. **Unit tests for critical paths**:
+    - src/lib/rate-limit.test.ts — rate limiter logic (created in R9)
+    - src/lib/ai/parse-response.test.ts — JSON parsing fallbacks
+    - src/lib/api-utils.test.ts — apiError/apiSuccess helpers
 
-15. **ERROR STATES**: When things go wrong, users should see helpful messages:
-    - Network error during generation → "Connection lost. Your project is safe. Try again."
-    - Image upload fails → specific error message
-    - Deploy fails → show what went wrong
-    - No credits left → clear upgrade CTA
+11. **Integration test for chat API**:
+    - Mock Anthropic SDK
+    - Test: valid request → 200, no auth → allows (free tier), invalid JSON → 400, rate limit → 429
+    - This catches regressions from future changes
 
-16. **TOAST SYSTEM**: The current error toasts are basic. Create a proper toast component:
-    - Success (green), Error (red), Info (blue), Warning (yellow)
-    - Auto-dismiss with progress bar
-    - Dismiss button
-    - Stack multiple toasts
-    - Used consistently across the app
+### P4 — REMAINING POLISH
 
-### P2 — OUTPUT QUALITY (cycles 17-22)
-These improve the websites that 16s generates.
+12. **VoiceCall reliability**: Add a fallback message when Web Speech API isn't available: "Voice calls work best in Chrome. Try typing your ideas instead." Currently it shows "unsupported" which isn't helpful.
 
-17. **DARK MODE TOGGLE**: Add a rule to the system prompt and generated HTML: every site should include a dark/light mode toggle in the nav. The AI should generate both color schemes in CSS custom properties and a small JS toggle.
+13. **Preview iframe sandboxing audit**: Verify the iframe has proper sandbox attributes. Generated HTML runs in the preview — it shouldn't be able to access the parent frame, make network requests to 16s APIs, or access localStorage of the main app.
 
-18. **FAVICON GENERATION**: When deploying, generate a simple SVG favicon from the brand's first letter + accent color. Include it in the deployed HTML. This is a small touch that makes deployed sites feel more real.
+14. **Deploy flow improvements**:
+    - Show deployed URL more prominently after deploy
+    - Add "Copy URL" button on the deploy success state
+    - Add "Open in new tab" button
+    - Show a QR code for the deployed URL (users testing on phone)
 
-19. **SEO DEFAULTS**: Every generated site should include:
-    - Proper <title> with brand name
-    - meta description
-    - og:title, og:description
-    - Proper heading hierarchy (this is in the prompt but verify it works)
+15. **Mobile chat/preview toggle**: On mobile, chat and preview should be separate tabs (not side-by-side). Verify this works well after R9 responsive changes. The toggle should be sticky and obvious.
 
-20. **ANIMATION QUALITY**: Review the scroll-reveal animations in generated output. They should:
-    - Use IntersectionObserver (not scroll event listeners)
-    - Have natural stagger timing (0.05-0.1s per element)
-    - Respect prefers-reduced-motion
-    - Not trigger on elements already in viewport on load
-
-21. **MULTI-PAGE NAVIGATION**: The showPage() routing system needs audit:
-    - Does it handle browser back/forward? (It should update URL hash)
-    - Do nav links highlight the current page?
-    - Is the mobile menu closing after navigation?
-    - Do pages fade in/out smoothly?
-
-22. **IMAGE HANDLING**: When users upload images:
-    - Verify the AI actually places them correctly (headshot → about, logo → nav, etc.)
-    - Verify background removal works and the result looks good in context
-    - Test what happens with very large images (>2MB)
-    - Test what happens with non-standard aspect ratios
-
-### P3 — DEVELOPER EXPERIENCE (cycles 23-26)
-
-23. **README OVERHAUL**: Current README is probably minimal. Create a comprehensive one:
-    - What 16s is (with screenshot)
-    - Quick start (clone, install, env vars, run)
-    - Architecture overview (key files and what they do)
-    - Deployment guide
-    - Contributing guidelines
-
-24. **ENV.EXAMPLE UPDATE**: Ensure .env.example has every variable with comments explaining where to get each one.
-
-25. **ERROR BOUNDARY IMPROVEMENTS**: The ErrorBoundary is basic. Add:
-    - Error reporting (console + optional Sentry hook)
-    - Different fallbacks for different components
-    - "Refresh" button that actually reloads the component, not just clears the error state
-
-26. **BUNDLE ANALYSIS**: Run `npx @next/bundle-analyzer` (install if needed). Identify:
-    - Is Monaco lazy-loaded? (It should be — it's huge)
-    - Is framer-motion tree-shaking properly?
-    - Are there any large dependencies that could be replaced?
-    - Document findings in progress.txt
+16. **Autosave indicator**: Show a subtle "Saved" or "Saving..." indicator near the project name so users know their work is being saved. Currently autosave happens silently with no feedback.
 
 ### VERIFICATION
 After each change:
-1. npm run build — must pass
-2. Manual spot-check if it's a UI change
-3. For architecture changes: verify the same functionality still works
+1. npm run build passes
+2. For streaming: test with actual AI response (npm run dev)
+3. For component splits: verify same visual output
+4. For tests: npm test passes
