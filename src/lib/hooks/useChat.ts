@@ -5,6 +5,7 @@ import { VoiceCallHandle } from "@/components/chat/VoiceCall";
 import { ensureBlobUrls } from "@/lib/hooks/useImages";
 import { parseAIResponse } from "@/lib/ai/parse-response";
 import { reportError } from "@/lib/error-reporter";
+import { track } from "@/lib/analytics";
 import type { Message, UploadedImage, SelectedElement, ProjectContext, ChatAPIResponse } from "@/lib/types";
 
 /** Discussion mode brainstorm pills */
@@ -487,6 +488,7 @@ export function useChat({
 
     setMessages((prev) => [...prev, userMessage]);
     setIsGenerating(true);
+    track({ name: "message_sent", props: { hasImages: imagesToSend.length > 0, mode: discussionMode ? "discussion" : "build" } });
 
     abortRef.current?.abort();
     const controller = new AbortController();

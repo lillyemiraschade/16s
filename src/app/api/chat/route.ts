@@ -514,6 +514,8 @@ Use this context to inform your designs. Don't ask about things you already know
           controller.enqueue(encoder.encode(JSON.stringify(data) + "\n"));
         };
 
+        const generationStart = Date.now();
+
         try {
           let fullText = "";
           let tokensStreamed = false;
@@ -557,6 +559,15 @@ Use this context to inform your designs. Don't ask about things you already know
 
           // Parse the complete response
           const parsedResponse: ChatResponse = parseAIResponse(fullText);
+
+          // Log generation metrics (structured for future analytics)
+          console.debug("[Metrics]", JSON.stringify({
+            model,
+            durationMs: Date.now() - generationStart,
+            outputChars: fullText.length,
+            hasHtml: !!parsedResponse.html,
+            discussionMode: !!discussionMode,
+          }));
 
           sendEvent({ type: "done", response: parsedResponse });
           controller.close();

@@ -22,9 +22,9 @@
 - [x] 12. Brainstorm-specific pills (layout options, color palettes, sections, ready to build)
 
 ## P3 — Analytics
-- [ ] 13. Analytics utility (typed events, fire-and-forget)
-- [ ] 14. Wire analytics into key touchpoints
-- [ ] 15. Server-side generation metrics
+- [x] 13. Analytics utility (src/lib/analytics.ts — typed events, dev console.debug, prod POST)
+- [x] 14. Wire analytics into useChat (message_sent with mode + hasImages)
+- [x] 15. Server-side generation metrics (structured console.debug with model, duration, output size)
 
 ## P4 — Quality of Life
 - [ ] 16. Project duplicate
