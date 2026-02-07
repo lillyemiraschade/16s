@@ -1,5 +1,43 @@
 # 16s Changelog
 
+## [2026-02-07] — Ultimate R2: Summary
+
+**What:** 4 commits fixing 11 findings across security (3), UI (1), output quality (6), and code (1). Deep audit with actual curl attacks on every endpoint, CORS bypass testing, header verification, UI edge case tracing, prompt analysis, and memory leak hunting.
+
+**Ref:** Ralph Ultimate Round 2 — 5 cycles, 11 findings
+
+## [2026-02-07] — Code: Fix OAuth timeout leak in AuthModal
+
+**What:** The 3s OAuth redirect timeout had no cleanup — if modal closed before it fired, setState would fire on unmounted component. Now stored in ref with clearTimeout on unmount.
+
+**Files:** `src/components/auth/AuthModal.tsx`
+**Type:** Code
+**Ref:** C1
+
+## [2026-02-07] — Prompt: Footer rules, pill intelligence, heading hierarchy, dedup
+
+**What:** Added footer design rules (multi-column, never just ©). Pill intelligence: check existing features before suggesting. Industry-contextual inspo-skip directions. Added heading hierarchy h1→h2→h3 + fallback fonts to QA checklist. Removed redundant MODERN CSS line and compressed PRE-OUTPUT CHECK.
+
+**Files:** `src/app/api/chat/route.ts`
+**Type:** Prompt
+**Ref:** O1-O6
+
+## [2026-02-07] — UI: Cap preview history at 50 versions
+
+**What:** previewHistory grew unbounded — 100+ iterations × ~200KB HTML = 20MB+. Now drops oldest versions when exceeding 50. Affects all 3 push sites (new HTML, redo, version restore).
+
+**Files:** `src/app/page.tsx`
+**Type:** UI
+**Ref:** U1
+
+## [2026-02-07] — Security: Deploy HTML size limit + COEP header + no error detail leak
+
+**What:** Added 5MB size limit on deploy HTML payload. Removed Vercel API error details from client response (info leak). Added Cross-Origin-Embedder-Policy: unsafe-none header.
+
+**Files:** `src/app/api/deploy/route.ts`, `next.config.mjs`
+**Type:** Security
+**Ref:** S1-S3
+
 ## [2026-02-06] — Ultimate Loop: Summary
 
 **What:** 6 commits fixing 10 findings across security, UI, code, and prompt categories. postMessage origin validation, Stripe rate limiting, auto-scroll fix, pill hover/focus states, unhandled promise fixes, decodeURI crash fix, error timer cleanup, modern CSS in prompt, icon guidance, error toast improvements, localStorage quota handling.
