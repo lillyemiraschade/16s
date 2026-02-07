@@ -20,7 +20,7 @@
 - [x] 10. Global unhandled error handler
 
 ## P4 — Deferred Items
-- [ ] 11. Autosave indicator
+- [x] 11. Autosave indicator
 - [ ] 12. Deploy flow improvements (URL display, copy, open)
 - [ ] 14. Stripe webhook tests
 
@@ -34,3 +34,4 @@
 - R11-3: Playwright E2E setup + 5 smoke tests. Tests: homepage loads, idea pills visible, send prompt + streaming response, preview iframe renders, projects page. CI workflow includes e2e job. Supabase env stripped in Playwright config so auth gate doesn't block E2E sends.
 - R11-4: Iframe security hardening. Dropped allow-same-origin (→ allow-scripts allow-popups). Fixed postMessage handler to validate 16s- type prefix instead of origin. Injected CSP meta tag with connect-src 'none' + frame-src 'none' to block network requests from generated HTML.
 - R11-5: Error monitoring. Created reportError utility (dev: console, prod: POST to endpoint). GlobalErrorHandler for window.onerror + unhandledrejection. Wired into ErrorBoundary, useChat, useDeployment.
+- R11-6: Autosave indicator. saveStatus state in page.tsx (idle→saving→saved→idle after 2s). Passed to ChatPanel. Subtle "Saving..." / "Saved" text in header next to UserMenu.

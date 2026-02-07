@@ -125,6 +125,7 @@ export interface ChatPanelProps {
   selectedElement: SelectedElement | null;
   onClearSelection: () => void;
   onEditMessage: (messageId: string, newContent: string) => void;
+  saveStatus?: "idle" | "saving" | "saved";
 }
 
 // Props for PreviewPanel component

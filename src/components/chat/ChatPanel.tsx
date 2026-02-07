@@ -30,6 +30,7 @@ export const ChatPanel = memo(function ChatPanel({
   selectedElement,
   onClearSelection,
   onEditMessage,
+  saveStatus,
 }: ChatPanelProps) {
   const [isDragging, setIsDragging] = useState(false);
   const [lightboxImage, setLightboxImage] = useState<string | null>(null);
@@ -267,7 +268,16 @@ export const ChatPanel = memo(function ChatPanel({
             <span>New</span>
           </button>
         </div>
-        <UserMenu />
+        <div className="flex items-center gap-3">
+          {saveStatus && saveStatus !== "idle" && (
+            <span className={`text-[11px] font-medium transition-opacity duration-300 ${
+              saveStatus === "saving" ? "text-zinc-500" : "text-zinc-500"
+            }`}>
+              {saveStatus === "saving" ? "Saving..." : "Saved"}
+            </span>
+          )}
+          <UserMenu />
+        </div>
       </div>
 
       {/* Messages area */}

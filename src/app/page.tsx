@@ -43,6 +43,8 @@ function HomePageContent() {
   const [showShortcuts, setShowShortcuts] = useState(false);
   const [mobileView, setMobileView] = useState<"chat" | "preview">("chat");
   const [isLoadingProject, setIsLoadingProject] = useState(false);
+  const [saveStatus, setSaveStatus] = useState<"idle" | "saving" | "saved">("idle");
+  const saveStatusTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   // External hooks
   const { save: saveProject, load: loadProject, list: listProjects, remove: deleteProject, isCloud, isAuthLoading, migrationStatus, migratedCount } = useProjects();
@@ -187,6 +189,7 @@ function HomePageContent() {
 
     const doSave = async () => {
       try {
+        setSaveStatus("saving");
         const id = currentProjectId || pendingProjectIdRef.current || generateId();
         if (!currentProjectId) {
           pendingProjectIdRef.current = id;
@@ -216,7 +219,11 @@ function HomePageContent() {
         setSavedProjects(updatedList);
         pendingSaveRef.current = null;
         pendingProjectIdRef.current = null;
+        setSaveStatus("saved");
+        if (saveStatusTimerRef.current) clearTimeout(saveStatusTimerRef.current);
+        saveStatusTimerRef.current = setTimeout(() => setSaveStatus("idle"), 2000);
       } catch (error) {
+        setSaveStatus("idle");
         console.debug("[AutoSave] Failed to save project:", error);
       }
     };
@@ -648,6 +655,7 @@ function HomePageContent() {
             selectedElement={preview.selectedElement}
             onClearSelection={preview.handleClearSelection}
             onEditMessage={chat.handleEditMessage}
+            saveStatus={saveStatus}
           />
           </ErrorBoundary>
         </nav>
