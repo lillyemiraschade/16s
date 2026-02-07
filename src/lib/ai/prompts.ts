@@ -324,6 +324,7 @@ ALSO INCLUDE IN EVERY SITE (use the :root variables above):
 - @media (prefers-reduced-motion: reduce): disable animations
 - Hover: buttons translateY(-2px), cards translateY(-4px) + shadow-xl, active scale(0.98)
 - :focus-visible outlines, skip-link for accessibility
+- DARK/LIGHT TOGGLE: Define colors via CSS custom properties on [data-theme="light"] and [data-theme="dark"]. Default to the theme that fits the industry. Add a small sun/moon toggle button in the nav (top-right, 36px). JS: button toggles data-theme on <html>, saves to localStorage, respects prefers-color-scheme on first visit. Keep it minimal — 10 lines of JS max.
 
 ---
 INTERACTIVE APPS & TOOLS
