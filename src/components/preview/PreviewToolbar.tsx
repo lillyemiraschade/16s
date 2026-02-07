@@ -71,6 +71,10 @@ interface PreviewToolbarProps {
   projectId?: string | null;
   isPro?: boolean;
   onUpgradeClick?: () => void;
+  showDeployHistory?: boolean;
+  onToggleDeployHistory?: () => void;
+  hasDeployments?: boolean;
+  onPublish?: () => void;
 }
 
 export const PreviewToolbar = memo(function PreviewToolbar({
@@ -109,6 +113,10 @@ export const PreviewToolbar = memo(function PreviewToolbar({
   projectId,
   isPro,
   onUpgradeClick,
+  showDeployHistory,
+  onToggleDeployHistory,
+  hasDeployments,
+  onPublish,
 }: PreviewToolbarProps) {
   const [showExportMenu, setShowExportMenu] = useState(false);
   const [showShareMenu, setShowShareMenu] = useState(false);
@@ -247,6 +255,18 @@ export const PreviewToolbar = memo(function PreviewToolbar({
               <Bookmark className="w-3.5 h-3.5" />
             </button>
           )}
+          {onToggleDeployHistory && hasDeployments && (
+            <button
+              onClick={onToggleDeployHistory}
+              className={`p-2.5 md:p-2 rounded-lg transition-all duration-150 hidden md:block ${
+                showDeployHistory ? "text-green-400 bg-green-500/10" : "text-zinc-500 hover:text-zinc-300 hover:bg-white/[0.04]"
+              }`}
+              title="Deployment history"
+              aria-label="Deployment history"
+            >
+              <Rocket className="w-3.5 h-3.5" />
+            </button>
+          )}
         </div>
 
         {/* Center: Viewport + Code toggles */}
@@ -383,6 +403,19 @@ export const PreviewToolbar = memo(function PreviewToolbar({
                 )}
               </AnimatePresence>
             </div>
+          )}
+
+          {/* Publish button — shows when preview differs from last deploy */}
+          {onPublish && lastDeployUrl && html && !isGenerating && !isDeploying && (
+            <button
+              onClick={onPublish}
+              className="flex items-center gap-1.5 px-2.5 py-2.5 md:py-1.5 text-[12px] md:text-[11px] font-medium text-amber-400 hover:text-amber-300 hover:bg-amber-500/10 rounded-lg transition-all duration-150"
+              title="Publish changes to your live site"
+              aria-label="Publish changes"
+            >
+              <Rocket className="w-3.5 h-3.5" />
+              <span className="hidden md:inline">Publish</span>
+            </button>
           )}
 
           {/* Export button */}

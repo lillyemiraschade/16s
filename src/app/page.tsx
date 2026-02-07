@@ -804,6 +804,11 @@ function HomePageContent() {
             isSharing={isSharing}
             shareUrl={shareUrl}
             projectId={currentProjectId}
+            onRevertToDeployment={(html) => {
+              preview.pushPreview(html);
+              toast("success", "Reverted to previous deployment");
+            }}
+            onPublish={handleDeploy}
           />
           </ErrorBoundary>
           {/* Voice call widget */}

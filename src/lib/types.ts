@@ -169,4 +169,6 @@ export interface PreviewPanelProps {
   projectId?: string | null;
   isPro?: boolean;
   onUpgradeClick?: () => void;
+  onRevertToDeployment?: (html: string) => void;
+  onPublish?: () => void;
 }

@@ -149,9 +149,27 @@ export async function GET(request: Request) {
 
     const { searchParams } = new URL(request.url);
     const projectId = searchParams.get("projectId");
+    const deploymentId = searchParams.get("deploymentId");
 
     if (!projectId) {
       return apiError("Missing projectId", 400);
+    }
+
+    // Fetch single deployment with html_snapshot (for revert)
+    if (deploymentId) {
+      const { data: deployment, error: depError } = await supabase
+        .from("deployments")
+        .select("id, url, status, created_at, custom_domain, html_snapshot")
+        .eq("id", deploymentId)
+        .eq("project_id", projectId)
+        .eq("user_id", user.id)
+        .single();
+
+      if (depError || !deployment) {
+        return apiError("Deployment not found", 404);
+      }
+
+      return apiSuccess({ deployment });
     }
 
     const { data: deployments, error } = await supabase

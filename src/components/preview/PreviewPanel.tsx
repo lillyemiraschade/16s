@@ -10,6 +10,7 @@ import { createReactPreviewHtml } from "@/lib/react-preview";
 import { GeneratingState } from "./GeneratingState";
 import { PreviewToolbar } from "./PreviewToolbar";
 import { VersionHistory } from "./VersionHistory";
+import { DeploymentHistory } from "@/components/deploy/DeploymentHistory";
 
 const CodeEditor = dynamic(() => import("./CodeEditor").then((m) => m.CodeEditor), {
   loading: () => <div className="flex items-center justify-center h-full text-zinc-500 text-sm">Loading editor...</div>,
@@ -138,11 +139,14 @@ export const PreviewPanel = memo(function PreviewPanel({
   projectId,
   isPro,
   onUpgradeClick,
+  onRevertToDeployment,
+  onPublish,
 }: PreviewPanelProps) {
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const [reloadKey, setReloadKey] = useState(0);
   const [showCode, setShowCode] = useState(false);
   const [showHistory, setShowHistory] = useState(false);
+  const [showDeployHistory, setShowDeployHistory] = useState(false);
   const [showBookmarkInput, setShowBookmarkInput] = useState(false);
 
   // Listen for element selection messages from iframe
@@ -224,6 +228,10 @@ export const PreviewPanel = memo(function PreviewPanel({
         projectId={projectId}
         isPro={isPro}
         onUpgradeClick={onUpgradeClick}
+        showDeployHistory={showDeployHistory}
+        onToggleDeployHistory={() => setShowDeployHistory(v => !v)}
+        hasDeployments={!!lastDeployUrl}
+        onPublish={onPublish}
       />
 
       {/* Main content area */}
@@ -331,6 +339,18 @@ export const PreviewPanel = memo(function PreviewPanel({
             />
           )}
         </AnimatePresence>
+
+        {/* Deployment history slide-out */}
+        {projectId && (
+          <DeploymentHistory
+            projectId={projectId}
+            isOpen={showDeployHistory}
+            onClose={() => setShowDeployHistory(false)}
+            onRevert={(html) => onRevertToDeployment?.(html)}
+            currentPreview={html}
+            latestDeployUrl={lastDeployUrl || null}
+          />
+        )}
       </div>
 
       {/* Selected element floating panel */}
