@@ -401,9 +401,10 @@ export const VoiceCall = forwardRef<VoiceCallHandle, VoiceCallProps>(
           exit={{ opacity: 0, scale: 0.9, y: -10 }}
           className="glass-matte rounded-2xl p-4 max-w-[260px]"
         >
-          <p className="text-zinc-300 text-[13px] font-medium">Voice requires Chrome, Edge, or Safari 14.1+</p>
-          <button onClick={() => onHangUp()} className="mt-2 px-3 py-1.5 text-[12px] font-medium text-zinc-300 glass glass-hover rounded-full transition-all duration-200">
-            Dismiss
+          <p className="text-zinc-300 text-[13px] font-medium">Voice calls work best in Chrome, Edge, or Safari 14.1+</p>
+          <p className="text-zinc-500 text-[12px] mt-1">Try typing your ideas in the chat instead — the AI works the same way!</p>
+          <button onClick={() => onHangUp()} className="mt-3 px-3 py-1.5 text-[12px] font-medium text-zinc-300 glass glass-hover rounded-full transition-all duration-200">
+            Got it
           </button>
         </motion.div>
       );
