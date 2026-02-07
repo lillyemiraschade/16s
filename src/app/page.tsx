@@ -418,11 +418,14 @@ function HomePageContent() {
             transition={{ duration: 0.5, ease: "easeOut" }}
             className="flex flex-col items-center gap-8 w-full max-w-[640px]"
           >
-            <div className="flex flex-col items-center gap-4">
+            <div className="flex flex-col items-center gap-3">
               <Image src="/logo.png" alt="" width={48} height={48} className="object-contain" />
-              <h1 className="text-[36px] font-semibold text-zinc-100 tracking-[-0.03em] text-center">
+              <h1 className="text-[40px] md:text-[48px] font-semibold text-white tracking-[-0.04em] text-center leading-[1.1]">
                 {welcome.headline}
               </h1>
+              <p className="text-[14px] md:text-[15px] text-zinc-500 font-medium tracking-wide">
+                Describe it. We build it. In seconds.
+              </p>
             </div>
 
             {/* Error toast */}
@@ -490,7 +493,7 @@ function HomePageContent() {
                   }}
                   onKeyDown={welcome.handleWelcomeKeyDown}
                   onPaste={welcome.handleWelcomePaste}
-                  placeholder="Describe what you want to build..."
+                  placeholder="A minimalist portfolio for a photographer in Brooklyn..."
                   disabled={chat.isGenerating}
                   aria-label="Message input"
                   id="welcome-input"
