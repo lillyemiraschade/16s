@@ -162,4 +162,8 @@ export interface PreviewPanelProps {
   onCodeChange?: (code: string) => void;
   codeMode?: CodeMode;
   onCodeModeChange?: (mode: CodeMode) => void;
+  onShare?: () => void;
+  onUnshare?: () => void;
+  isSharing?: boolean;
+  shareUrl?: string | null;
 }

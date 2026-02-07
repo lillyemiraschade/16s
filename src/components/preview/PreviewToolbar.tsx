@@ -22,6 +22,9 @@ import {
   CheckCircle,
   FileCode,
   FolderArchive,
+  Share2,
+  Link2,
+  Link2Off,
 } from "lucide-react";
 import type { Viewport, SelectedElement, CodeMode } from "@/lib/types";
 
@@ -60,6 +63,10 @@ interface PreviewToolbarProps {
   isDeploying?: boolean;
   lastDeployUrl?: string | null;
   deployError?: string | null;
+  onShare?: () => void;
+  onUnshare?: () => void;
+  isSharing?: boolean;
+  shareUrl?: string | null;
 }
 
 export const PreviewToolbar = memo(function PreviewToolbar({
@@ -91,10 +98,16 @@ export const PreviewToolbar = memo(function PreviewToolbar({
   isDeploying,
   lastDeployUrl,
   deployError,
+  onShare,
+  onUnshare,
+  isSharing,
+  shareUrl,
 }: PreviewToolbarProps) {
   const [showExportMenu, setShowExportMenu] = useState(false);
+  const [showShareMenu, setShowShareMenu] = useState(false);
   const [copyToast, setCopyToast] = useState(false);
   const exportRef = useRef<HTMLDivElement>(null);
+  const shareRef = useRef<HTMLDivElement>(null);
 
   const handleCopyWithFeedback = useCallback(() => {
     onCopyToClipboard();
@@ -139,6 +152,25 @@ export const PreviewToolbar = memo(function PreviewToolbar({
       document.removeEventListener("keydown", handleKey);
     };
   }, [showExportMenu]);
+
+  // Close share dropdown on outside click or Escape
+  useEffect(() => {
+    if (!showShareMenu) return;
+    const handleClick = (e: MouseEvent) => {
+      if (shareRef.current && !shareRef.current.contains(e.target as Node)) {
+        setShowShareMenu(false);
+      }
+    };
+    const handleKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setShowShareMenu(false);
+    };
+    document.addEventListener("mousedown", handleClick);
+    document.addEventListener("keydown", handleKey);
+    return () => {
+      document.removeEventListener("mousedown", handleClick);
+      document.removeEventListener("keydown", handleKey);
+    };
+  }, [showShareMenu]);
 
   return (
     <>
@@ -260,8 +292,94 @@ export const PreviewToolbar = memo(function PreviewToolbar({
           )}
         </div>
 
-        {/* Right: Export */}
-        <div className="flex justify-end relative" ref={exportRef}>
+        {/* Right: Share + Export */}
+        <div className="flex items-center gap-1 justify-end">
+          {/* Share button */}
+          {html && !isGenerating && onShare && (
+            <div className="relative" ref={shareRef}>
+              <button
+                onClick={() => setShowShareMenu((v) => !v)}
+                className={`flex items-center gap-1.5 px-2.5 py-2.5 md:py-1.5 text-[12px] md:text-[11px] font-medium rounded-lg transition-all duration-150 ${
+                  shareUrl
+                    ? "text-green-400 hover:text-green-300 hover:bg-green-500/10"
+                    : "text-zinc-400 hover:text-zinc-200 hover:bg-white/[0.04]"
+                }`}
+                title={shareUrl ? "Shared" : "Share"}
+                aria-label="Share project"
+              >
+                <Share2 className="w-3.5 h-3.5" />
+                <span className="hidden md:inline">{shareUrl ? "Shared" : "Share"}</span>
+              </button>
+              <AnimatePresence>
+                {showShareMenu && (
+                  <motion.div
+                    initial={{ opacity: 0, y: -4 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -4 }}
+                    transition={{ duration: 0.12 }}
+                    className="absolute top-full right-0 mt-1 z-20 glass rounded-xl overflow-hidden min-w-[260px] py-1 shadow-xl shadow-black/40"
+                  >
+                    {shareUrl ? (
+                      <>
+                        <div className="px-4 py-3">
+                          <div className="flex items-center gap-2 mb-2">
+                            <Link2 className="w-3.5 h-3.5 text-green-400" />
+                            <span className="text-[12px] font-semibold text-green-400 uppercase tracking-wider">Public link</span>
+                          </div>
+                          <p className="text-[12px] text-zinc-300 break-all leading-relaxed">{shareUrl.replace("https://", "")}</p>
+                        </div>
+                        <div className="flex gap-2 px-4 py-2 border-t border-white/[0.06]">
+                          <button
+                            onClick={() => {
+                              navigator.clipboard.writeText(shareUrl).catch(() => {});
+                              setCopyToast(true);
+                              setTimeout(() => setCopyToast(false), 2000);
+                            }}
+                            className="flex-1 flex items-center justify-center gap-1.5 px-3 py-2 text-[12px] font-medium text-green-300 bg-green-500/10 hover:bg-green-500/20 rounded-lg transition-colors"
+                          >
+                            <Copy className="w-3.5 h-3.5" /> Copy Link
+                          </button>
+                          <button
+                            onClick={() => {
+                              window.open(shareUrl, "_blank");
+                            }}
+                            className="flex items-center justify-center gap-1.5 px-3 py-2 text-[12px] font-medium text-zinc-300 bg-white/[0.04] hover:bg-white/[0.08] rounded-lg transition-colors"
+                          >
+                            <ExternalLink className="w-3.5 h-3.5" />
+                          </button>
+                        </div>
+                        {onUnshare && (
+                          <div className="border-t border-white/[0.06]">
+                            <button
+                              onClick={() => { onUnshare(); setShowShareMenu(false); }}
+                              className="w-full flex items-center gap-2.5 px-4 py-2.5 text-[12px] text-red-400 hover:text-red-300 hover:bg-white/[0.04] transition-colors"
+                            >
+                              <Link2Off className="w-3.5 h-3.5" /> Unshare
+                            </button>
+                          </div>
+                        )}
+                      </>
+                    ) : (
+                      <div className="px-4 py-3">
+                        <p className="text-[13px] text-zinc-300 mb-3">Share this project publicly?</p>
+                        <button
+                          onClick={() => { onShare(); setShowShareMenu(false); }}
+                          disabled={isSharing}
+                          className="w-full flex items-center justify-center gap-2 px-4 py-2 text-[13px] font-medium text-white bg-green-500/80 hover:bg-green-500 disabled:opacity-50 rounded-lg transition-colors"
+                        >
+                          {isSharing ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Share2 className="w-3.5 h-3.5" />}
+                          {isSharing ? "Sharing..." : "Create public link"}
+                        </button>
+                      </div>
+                    )}
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+          )}
+
+          {/* Export button */}
+          <div className="relative" ref={exportRef}>
           {html && !isGenerating && (
             <>
               <button
@@ -348,6 +466,7 @@ export const PreviewToolbar = memo(function PreviewToolbar({
               </AnimatePresence>
             </>
           )}
+          </div>
         </div>
       </div>
 

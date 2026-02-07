@@ -49,6 +49,8 @@ function HomePageContent() {
   const [mobileView, setMobileView] = useState<"chat" | "preview">("chat");
   const [isLoadingProject, setIsLoadingProject] = useState(false);
   const [saveStatus, setSaveStatus] = useState<"idle" | "saving" | "saved">("idle");
+  const [isSharing, setIsSharing] = useState(false);
+  const [shareUrl, setShareUrl] = useState<string | null>(null);
   const saveStatusTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   // External hooks
@@ -298,6 +300,49 @@ function HomePageContent() {
     }
   }, [preview.currentPreview, currentProjectId, projectName, deploy, toast]);
 
+  const handleShare = useCallback(async () => {
+    if (!currentProjectId) return;
+    setIsSharing(true);
+    try {
+      const res = await fetch("/api/share", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ projectId: currentProjectId }),
+      });
+      const data = await res.json();
+      if (res.ok && data.url) {
+        setShareUrl(data.url);
+        navigator.clipboard.writeText(data.url).catch(() => {});
+        toast("success", "Link copied to clipboard!");
+      } else {
+        toast("error", data.error || "Failed to share");
+      }
+    } catch {
+      toast("error", "Failed to share project");
+    } finally {
+      setIsSharing(false);
+    }
+  }, [currentProjectId, toast]);
+
+  const handleUnshare = useCallback(async () => {
+    if (!currentProjectId) return;
+    try {
+      const res = await fetch("/api/share", {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ projectId: currentProjectId }),
+      });
+      if (res.ok) {
+        setShareUrl(null);
+        toast("success", "Project unshared");
+      } else {
+        toast("error", "Failed to unshare");
+      }
+    } catch {
+      toast("error", "Failed to unshare project");
+    }
+  }, [currentProjectId, toast]);
+
   const handleNewProject = useCallback(() => {
     chat.resetChat();
     preview.resetPreview();
@@ -309,6 +354,7 @@ function HomePageContent() {
     setCurrentProjectId(null);
     setProjectName("Untitled");
     setProjectContext(undefined);
+    setShareUrl(null);
   // eslint-disable-next-line react-hooks/exhaustive-deps -- depending on stable hook functions
   }, [chat.resetChat, preview.resetPreview, images.setUploadedImages, welcome.resetWelcome]);
 
@@ -341,8 +387,16 @@ function HomePageContent() {
     setCurrentProjectId(proj.id);
     setProjectName(proj.name);
     setProjectContext(proj.context);
+    setShareUrl(null);
+    // Fetch share state for cloud projects
+    if (isCloud) {
+      fetch(`/api/share?projectId=${encodeURIComponent(proj.id)}`)
+        .then(r => r.ok ? r.json() : null)
+        .then(data => { if (data?.url) setShareUrl(data.url); })
+        .catch(() => {});
+    }
   // eslint-disable-next-line react-hooks/exhaustive-deps -- depending on stable hook functions
-  }, [loadProject, chat.abortRef, chat.setMessages, chat.setHasStarted, chat.setIsOnCall, preview.setCurrentPreview, preview.setPreviewHistory, preview.setRedoHistory, preview.setSelectMode, preview.setSelectedElement, preview.setBookmarks, images.setUploadedImages]);
+  }, [loadProject, chat.abortRef, chat.setMessages, chat.setHasStarted, chat.setIsOnCall, preview.setCurrentPreview, preview.setPreviewHistory, preview.setRedoHistory, preview.setSelectMode, preview.setSelectedElement, preview.setBookmarks, images.setUploadedImages, isCloud]);
 
   const handleDeleteProject = useCallback(async (id: string) => {
     await deleteProject(id);
@@ -720,6 +774,10 @@ function HomePageContent() {
             onCodeChange={preview.handleCodeChange}
             codeMode={preview.codeMode}
             onCodeModeChange={preview.setCodeMode}
+            onShare={handleShare}
+            onUnshare={handleUnshare}
+            isSharing={isSharing}
+            shareUrl={shareUrl}
           />
           </ErrorBoundary>
           {/* Voice call widget */}

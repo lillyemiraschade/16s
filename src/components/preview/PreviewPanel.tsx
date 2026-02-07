@@ -131,6 +131,10 @@ export const PreviewPanel = memo(function PreviewPanel({
   onCodeChange,
   codeMode = "html",
   onCodeModeChange,
+  onShare,
+  onUnshare,
+  isSharing,
+  shareUrl,
 }: PreviewPanelProps) {
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const [reloadKey, setReloadKey] = useState(0);
@@ -210,6 +214,10 @@ export const PreviewPanel = memo(function PreviewPanel({
         isDeploying={isDeploying}
         lastDeployUrl={lastDeployUrl}
         deployError={deployError}
+        onShare={onShare}
+        onUnshare={onUnshare}
+        isSharing={isSharing}
+        shareUrl={shareUrl}
       />
 
       {/* Main content area */}
