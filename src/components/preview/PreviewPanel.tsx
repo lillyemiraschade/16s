@@ -563,7 +563,7 @@ export const PreviewPanel = memo(function PreviewPanel({
                             </a>
                             <button
                               onClick={() => {
-                                navigator.clipboard.writeText(lastDeployUrl);
+                                navigator.clipboard.writeText(lastDeployUrl).catch(() => {});
                                 setCopyToast(true);
                                 setTimeout(() => setCopyToast(false), 2000);
                                 setShowExportMenu(false);

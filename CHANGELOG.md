@@ -1,5 +1,16 @@
 # 16s Changelog
 
+## [2026-02-07] — Code: Fix edit rollback, clipboard errors, URL encoding
+
+**What:** Three issues found in Cycle 8 deep edge case audit:
+1. `handleEditMessage` preview rollback assumed every assistant message produced a preview, but text-only responses don't add to previewHistory. This caused stale preview state when editing messages in mixed text/HTML conversations. Fixed by resetting preview state cleanly and letting the re-sent message regenerate.
+2. `navigator.clipboard.writeText()` called without `.catch()` in two places — can throw if page lacks focus or clipboard permission denied. Added `.catch(() => {})` guards.
+3. `fetchDeployments` URL param not encoded — `useDeployment.ts` used template literal without `encodeURIComponent`. UUIDs are URL-safe but added defense-in-depth encoding.
+
+**Files:** `src/app/page.tsx`, `src/components/preview/PreviewPanel.tsx`, `src/lib/hooks/useDeployment.ts`
+**Type:** Code
+**Ref:** C7, C8, C9
+
 ## [2026-02-07] — Code: Runtime edge case fixes (localStorage, VoiceCall, deploy timeout)
 
 **What:** Three runtime edge cases found by exhaustive audit (JSON.parse, optional chaining, array bounds, string ops, fetch timeouts, localStorage quota across all files):

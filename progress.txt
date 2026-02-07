@@ -95,11 +95,27 @@
 - Auth race conditions protected by guard clauses + try/catch ✓
 - Client image upload/deploy fetch calls lack timeout but are non-blocking user actions ✓
 
+### Cycle 8: DEEP EDGE CASES (State management, async, browser APIs)
+**Deep analysis of handleEditMessage rollback, message ID collisions, stale closures, clipboard API, URL encoding.**
+
+**Findings fixed:**
+- [x] C7: handleEditMessage preview rollback assumed every assistant message produced a preview. Text-only responses (asking questions, inspo prompts) don't add to previewHistory, causing stale preview state. Reset preview cleanly on edit — the re-sent message regenerates it.
+- [x] C8: navigator.clipboard.writeText() called without .catch() in page.tsx and PreviewPanel.tsx — can throw if page lacks focus or clipboard permission. Added .catch(() => {}) guards.
+- [x] C9: fetchDeployments URL param not encoded — useDeployment.ts used template literal without encodeURIComponent. UUIDs are URL-safe but defense-in-depth.
+
+**Verified OK:**
+- Message ID collision (Date.now().toString()): IDs only used for React keys and local state matching. Even if two messages share a timestamp, the `+1` offset for AI messages prevents user/AI collision. Duplicate keys cause React warning but no data loss. VERIFIED OK.
+- sendAndProcessChat stale closure on currentPreview: useCallback deps include currentPreview. The function is recreated when preview changes. Messages use messagesRef for fresh state. VERIFIED OK.
+- ensureBlobUrls duplicate image matching: If two images have identical base64 data, the first match is used for both. Since they're identical, this produces correct results. VERIFIED OK.
+- navGuard injection without <head>: AI is instructed to output full HTML with <!DOCTYPE html>. If somehow missing, navGuard silently fails — links just navigate the sandboxed iframe. No security impact. VERIFIED OK.
+- ErrorBoundary infinite loop: Try Again resets hasError, which re-renders children. If children throw again immediately, getDerivedStateFromError catches it in the same tick. React limits this internally. LOW risk, accepted.
+- handleCallComplete with empty data: compileCallData handles empty conversations gracefully — returns "The call ended before I could gather details" summary. VERIFIED OK.
+
 ### npm audit
 - 4 Next.js vulnerabilities (3 high, 1 critical) in v14.2.18
 - Fix requires upgrading to 14.2.35 (`npm audit fix --force`)
 - NOTED: Requires testing — not auto-applied to avoid breaking changes
 
 ## Summary
-Ultimate R2: 7 cycles, 17 findings fixed (4 security, 1 UI, 6 output quality, 6 code).
-Total across all rounds: 140 changes.
+Ultimate R2: 8 cycles, 20 findings fixed (4 security, 1 UI, 6 output quality, 9 code).
+Total across all rounds: 143 changes.

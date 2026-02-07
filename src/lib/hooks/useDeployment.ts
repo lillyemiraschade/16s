@@ -59,7 +59,7 @@ export function useDeployment() {
 
   const fetchDeployments = useCallback(async (projectId: string) => {
     try {
-      const response = await fetch(`/api/deploy?projectId=${projectId}`);
+      const response = await fetch(`/api/deploy?projectId=${encodeURIComponent(projectId)}`);
       const data = await response.json();
 
       if (response.ok && data.deployments) {

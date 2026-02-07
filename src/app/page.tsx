@@ -901,23 +901,18 @@ function HomePageContent() {
     // Update messages state
     setMessages(truncatedMessages);
 
-    // Find the preview state at this point - roll back preview history
-    // Each user message after a preview change means we need to go back in history
-    const messagesWithPreview = truncatedMessages.filter(
-      (m) => m.role === "assistant"
-    ).length;
-    const historyTarget = Math.max(0, messagesWithPreview - 1);
-
-    if (previewHistory.length > historyTarget) {
-      const newHistory = previewHistory.slice(0, historyTarget);
-      const restoredPreview = historyTarget > 0 ? previewHistory[historyTarget - 1] : null;
-      setPreviewHistory(newHistory);
-      setCurrentPreview(restoredPreview);
-    }
+    // Roll back preview to state before the edited message.
+    // We can't perfectly map assistant messages to preview versions (text-only
+    // responses don't create previews), so reset preview and let the re-sent
+    // message regenerate it. This is safe because handleSendMessage always triggers
+    // a new AI response that will restore the preview.
+    setPreviewHistory([]);
+    setCurrentPreview(null);
+    setRedoHistory([]);
 
     // Send the edited message
     handleSendMessage(newContent, originalMessage.uploadedImages);
-  }, [messages, previewHistory, handleSendMessage]);
+  }, [messages, handleSendMessage]);
 
   const handleImageUpload = useCallback(async (base64: string, type: "inspo" | "content" = "content", label?: string) => {
     // Add image immediately with base64 for preview
@@ -1049,7 +1044,7 @@ function HomePageContent() {
 
   const handleCopyToClipboard = useCallback(() => {
     if (!currentPreview) return;
-    navigator.clipboard.writeText(currentPreview);
+    navigator.clipboard.writeText(currentPreview).catch(() => {});
   }, [currentPreview]);
 
   const handleOpenInNewTab = useCallback(() => {
