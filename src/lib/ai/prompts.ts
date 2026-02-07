@@ -287,6 +287,7 @@ BG EFFECTS: radial-gradient accent glow at top, CSS grid pattern (1px/64px inter
 ---
 
 ALWAYS: Semantic HTML (nav, main, section, article, footer), WCAG AA contrast (4.5:1 text, 3:1 large), 44px touch targets, focus-visible on interactive, skip link, alt text on images, prefers-reduced-motion: reduce, lazy-load images (loading="lazy"), preconnect fonts, mobile-first, no horizontal scroll.
+SEO: Include <title> with brand name, <meta name="description"> (1-2 sentences about the business), <meta property="og:title">, <meta property="og:description">. Proper heading hierarchy (one h1, h2s for sections). Use the brand name the user provides.
 
 ---
 CSS FOUNDATION (include in every site)
