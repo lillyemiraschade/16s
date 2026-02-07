@@ -1,140 +1,25 @@
 "use client";
 
-import { useRef, useState, useCallback, useEffect, memo } from "react";
+import { useRef, useState, useEffect, memo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import {
-  Monitor,
-  Tablet,
-  Smartphone,
-  ChevronLeft,
-  RotateCcw,
-  RotateCw,
-  Download,
-  Code,
-  Copy,
-  ExternalLink,
-  ChevronDown,
-  Clock,
-  X,
-  MousePointer2,
-  Bookmark,
-  BookmarkCheck,
-  Trash2,
-  Rocket,
-  Loader2,
-  CheckCircle,
-  FileCode,
-} from "lucide-react";
-import type { PreviewPanelProps, Viewport, SelectedElement, VersionBookmark } from "@/lib/types";
+import { X } from "lucide-react";
+import type { PreviewPanelProps, Viewport } from "@/lib/types";
 import Image from "next/image";
 import dynamic from "next/dynamic";
 import { createReactPreviewHtml } from "@/lib/react-preview";
+import { GeneratingState } from "./GeneratingState";
+import { PreviewToolbar } from "./PreviewToolbar";
+import { VersionHistory } from "./VersionHistory";
 
 const CodeEditor = dynamic(() => import("./CodeEditor").then((m) => m.CodeEditor), {
   loading: () => <div className="flex items-center justify-center h-full text-zinc-500 text-sm">Loading editor...</div>,
 });
 
-const viewportConfig = {
-  desktop: { width: "100%", icon: Monitor, label: "Desktop" },
-  tablet: { width: "768px", icon: Tablet, label: "Tablet" },
-  mobile: { width: "375px", icon: Smartphone, label: "Mobile" },
-} as const;
-
-// Tips and fun messages for the loading state
-const TIPS = [
-  "Drop inspiration images for pixel-perfect cloning",
-  "Try the voice call feature - it's like having a designer on speed dial",
-  "You can select any element and ask to change it",
-  "Use bookmarks to save versions you love",
-  "Export to HTML or deploy directly to the web",
-  "Ask for specific vibes: 'make it feel like Apple'",
-  "Upload your logo and it'll be placed automatically",
-  "Say 'make it more minimal' or 'add more personality'",
-  "You can edit the code directly with Cmd+/",
-  "Try 'hop on a call' for a 2-minute design session",
-];
-
-const REVISION_MESSAGES = [
-  "One sec, redecorating...",
-  "Hold tight, moving some pixels around",
-  "Brewing up something fresh",
-  "Almost there, just adding some magic",
-  "Working on it, no peeking!",
-  "The pixels are doing their thing",
-  "Making it even better...",
-  "Give me a moment to work my magic",
-  "Tweaking things behind the scenes",
-  "Just a sec, perfectionism takes time",
-];
-
-function GeneratingState({ isRevision }: { isRevision: boolean }) {
-  const [tipIndex, setTipIndex] = useState(0);
-  const [revisionMessage] = useState(() =>
-    REVISION_MESSAGES[Math.floor(Math.random() * REVISION_MESSAGES.length)]
-  );
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setTipIndex((prev) => (prev + 1) % TIPS.length);
-    }, 4000);
-    return () => clearInterval(interval);
-  }, []);
-
-  return (
-    <div className="flex flex-col items-center justify-center h-full gap-8">
-      <div className="relative flex items-center justify-center w-32 h-32">
-        {/* Outermost ring — slow rotation */}
-        <motion.div
-          className="absolute w-28 h-28 rounded-full border border-green-500/10"
-          animate={{ rotate: 360 }}
-          transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
-        />
-        {/* Outer pulse */}
-        <motion.div
-          className="absolute w-24 h-24 rounded-full bg-green-500/8"
-          animate={{ scale: [1, 1.3, 1], opacity: [0.15, 0.35, 0.15] }}
-          transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
-        />
-        {/* Inner pulse — staggered */}
-        <motion.div
-          className="absolute w-16 h-16 rounded-full bg-green-500/15"
-          animate={{ scale: [1, 1.15, 1], opacity: [0.25, 0.5, 0.25] }}
-          transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut", delay: 0.4 }}
-        />
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <motion.img
-          src="/logo.png"
-          alt="Loading"
-          className="w-12 h-12 object-contain relative z-10"
-          animate={{ scale: [0.95, 1.05, 0.95] }}
-          transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
-        />
-      </div>
-
-      <div className="text-center max-w-md px-4">
-        <p className="text-zinc-200 text-[16px] font-medium mb-4">
-          {isRevision ? revisionMessage : "Building your site..."}
-        </p>
-
-        {/* Rotating tips */}
-        <div className="h-10 relative">
-          <AnimatePresence mode="wait">
-            <motion.p
-              key={tipIndex}
-              initial={{ opacity: 0, y: 8, filter: "blur(4px)" }}
-              animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-              exit={{ opacity: 0, y: -8, filter: "blur(4px)" }}
-              transition={{ duration: 0.5, ease: "easeOut" }}
-              className="text-zinc-500 text-[13px] absolute inset-x-0 leading-relaxed"
-            >
-              {TIPS[tipIndex]}
-            </motion.p>
-          </AnimatePresence>
-        </div>
-      </div>
-    </div>
-  );
-}
+const viewportWidths: Record<Viewport, string> = {
+  desktop: "100%",
+  tablet: "768px",
+  mobile: "375px",
+};
 
 // Script to inject into iframe for element selection
 const SELECT_MODE_SCRIPT = `
@@ -249,23 +134,12 @@ export const PreviewPanel = memo(function PreviewPanel({
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const [reloadKey, setReloadKey] = useState(0);
   const [showCode, setShowCode] = useState(false);
-  const [showExportMenu, setShowExportMenu] = useState(false);
   const [showHistory, setShowHistory] = useState(false);
   const [showBookmarkInput, setShowBookmarkInput] = useState(false);
-  const [bookmarkName, setBookmarkName] = useState("");
-  const [copyToast, setCopyToast] = useState(false);
-  const exportRef = useRef<HTMLDivElement>(null);
-
-  const handleCopyWithFeedback = useCallback(() => {
-    onCopyToClipboard();
-    setCopyToast(true);
-    setTimeout(() => setCopyToast(false), 2000);
-  }, [onCopyToClipboard]);
 
   // Listen for element selection messages from iframe
   useEffect(() => {
     const handler = (e: MessageEvent) => {
-      // Only accept messages from same origin (our sandboxed iframe)
       if (e.origin !== window.location.origin) return;
       if (e.data?.type === '16s-element-selected') {
         onElementSelect(e.data.element);
@@ -290,295 +164,51 @@ export const PreviewPanel = memo(function PreviewPanel({
       : html.replace('</body>', `${SELECT_MODE_SCRIPT}</body>`)
     : null;
 
-  // Listen for keyboard shortcut toggle
+  // Keyboard shortcut for code view
   useEffect(() => {
     const handler = () => setShowCode((v) => !v);
     window.addEventListener("toggle-code-view", handler);
     return () => window.removeEventListener("toggle-code-view", handler);
   }, []);
 
-  // Close export dropdown on outside click or Escape
-  useEffect(() => {
-    if (!showExportMenu) return;
-    const handleClick = (e: MouseEvent) => {
-      if (exportRef.current && !exportRef.current.contains(e.target as Node)) {
-        setShowExportMenu(false);
-      }
-    };
-    const handleKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setShowExportMenu(false);
-      if (e.key === "ArrowDown" || e.key === "ArrowUp") {
-        e.preventDefault();
-        const items = exportRef.current?.querySelectorAll<HTMLElement>('[role="menuitem"]:not([disabled])');
-        if (!items?.length) return;
-        const active = document.activeElement;
-        const idx = Array.from(items).indexOf(active as HTMLElement);
-        const next = e.key === "ArrowDown"
-          ? (idx + 1) % items.length
-          : (idx - 1 + items.length) % items.length;
-        items[next].focus();
-      }
-    };
-    document.addEventListener("mousedown", handleClick);
-    document.addEventListener("keydown", handleKey);
-    // Auto-focus first menu item when opened via keyboard
-    requestAnimationFrame(() => {
-      exportRef.current?.querySelector<HTMLElement>('[role="menuitem"]')?.focus();
-    });
-    return () => {
-      document.removeEventListener("mousedown", handleClick);
-      document.removeEventListener("keydown", handleKey);
-    };
-  }, [showExportMenu]);
-
-  const handleExportAction = useCallback(
-    (action: () => void) => {
-      action();
-      setShowExportMenu(false);
-    },
-    []
-  );
-
   const totalVersions = previewHistory.length + (html ? 1 : 0);
 
   return (
-    <div className="flex flex-col h-full bg-[#0c0c0d] dot-grid">
-      {/* Top bar */}
-      <div className="h-[52px] flex items-center justify-between px-2 md:px-4 border-b border-white/[0.04]">
-        {/* Left: Nav buttons */}
-        <div className="flex items-center gap-0.5">
-          <button
-            onClick={onBack}
-            disabled={!canGoBack}
-            className="p-2.5 md:p-2 rounded-lg text-zinc-500 hover:text-zinc-300 hover:bg-white/[0.04] disabled:text-zinc-700 disabled:cursor-not-allowed transition-all duration-150"
-            title="Undo (Cmd+Z)"
-            aria-label="Undo"
-          >
-            <ChevronLeft className="w-4 h-4" />
-          </button>
-          <button
-            onClick={onRedo}
-            disabled={!canRedo}
-            className="p-2.5 md:p-2 rounded-lg text-zinc-500 hover:text-zinc-300 hover:bg-white/[0.04] disabled:text-zinc-700 disabled:cursor-not-allowed transition-all duration-150"
-            title="Redo (Cmd+Shift+Z)"
-            aria-label="Redo"
-          >
-            <RotateCw className="w-3.5 h-3.5" />
-          </button>
-          <button
-            onClick={() => setReloadKey((k) => k + 1)}
-            disabled={!html}
-            className="p-2.5 md:p-2 rounded-lg text-zinc-500 hover:text-zinc-300 hover:bg-white/[0.04] disabled:text-zinc-700 disabled:cursor-not-allowed transition-all duration-150"
-            title="Reload"
-            aria-label="Reload preview"
-          >
-            <RotateCcw className="w-3.5 h-3.5" />
-          </button>
-          <div className="w-px h-4 bg-white/[0.06] mx-1" />
-          <button
-            onClick={() => totalVersions > 1 && setShowHistory((v) => !v)}
-            disabled={totalVersions <= 1}
-            className={`p-2.5 md:p-2 rounded-lg transition-all duration-150 ${
-              showHistory ? "text-green-400 bg-green-500/10" :
-              totalVersions > 1 ? "text-zinc-500 hover:text-zinc-300 hover:bg-white/[0.04]" :
-              "text-zinc-700 cursor-not-allowed"
-            }`}
-            title={totalVersions > 1 ? "Version history" : "Version history (make changes to build history)"}
-            aria-label="Version history"
-          >
-            <Clock className="w-3.5 h-3.5" />
-          </button>
-          {html && !isGenerating && (
-            <button
-              onClick={() => { onSelectModeChange(!selectMode); if (selectMode) onElementSelect(null); }}
-              className={`p-2.5 md:p-2 rounded-lg transition-all duration-150 hidden md:block ${
-                selectMode ? "text-green-400 bg-green-500/10" : "text-zinc-500 hover:text-zinc-300 hover:bg-white/[0.04]"
-              }`}
-              title="Select element"
-              aria-label="Select element"
-            >
-              <MousePointer2 className="w-3.5 h-3.5" />
-            </button>
-          )}
-          {html && !isGenerating && (
-            <button
-              onClick={() => setShowBookmarkInput(true)}
-              className="p-2.5 md:p-2 rounded-lg text-zinc-500 hover:text-zinc-300 hover:bg-white/[0.04] transition-all duration-150"
-              title="Bookmark"
-              aria-label="Bookmark this version"
-            >
-              <Bookmark className="w-3.5 h-3.5" />
-            </button>
-          )}
-        </div>
-
-        {/* Center: Viewport + Code toggles */}
-        <div className="flex items-center gap-1">
-          <div className="hidden md:flex items-center bg-white/[0.03] rounded-lg p-0.5">
-            {(Object.keys(viewportConfig) as Viewport[]).map((vp) => {
-              const Icon = viewportConfig[vp].icon;
-              return (
-                <button
-                  key={vp}
-                  onClick={() => onViewportChange(vp)}
-                  disabled={!html}
-                  className={`p-1.5 rounded-md transition-all duration-150 ${
-                    !html
-                      ? "text-zinc-600 cursor-not-allowed opacity-50"
-                      : viewport === vp ? "bg-white/[0.08] text-zinc-100" : "text-zinc-500 hover:text-zinc-300"
-                  }`}
-                  title={html ? viewportConfig[vp].label : "Generate a website first"}
-                  aria-label={`${viewportConfig[vp].label} viewport${viewport === vp ? " (active)" : ""}${!html ? " (disabled)" : ""}`}
-                >
-                  <Icon className="w-4 h-4" />
-                </button>
-              );
-            })}
-          </div>
-          <div className="w-px h-4 bg-white/[0.06] mx-1" />
-          {html && !isGenerating && (
-            <button
-              onClick={() => setShowCode((v) => !v)}
-              className={`p-1.5 rounded-lg transition-all duration-150 ${
-                showCode ? "text-green-400 bg-green-500/10" : "text-zinc-500 hover:text-zinc-300 hover:bg-white/[0.04]"
-              }`}
-              title="Code view (Cmd+/)"
-              aria-label={showCode ? "Hide code view" : "Show code view"}
-            >
-              <Code className="w-4 h-4" />
-            </button>
-          )}
-          {onCodeModeChange && (
-            <button
-              onClick={() => onCodeModeChange(codeMode === "html" ? "react" : "html")}
-              className={`p-1.5 rounded-lg transition-all duration-150 ${
-                codeMode === "react" ? "text-blue-400 bg-blue-500/10" : "text-zinc-500 hover:text-zinc-300 hover:bg-white/[0.04]"
-              }`}
-              title={`${codeMode === "html" ? "HTML" : "React"} mode`}
-              aria-label={`Switch to ${codeMode === "html" ? "React" : "HTML"} mode`}
-            >
-              <FileCode className="w-4 h-4" />
-            </button>
-          )}
-        </div>
-
-        {/* Right: Export */}
-        <div className="flex justify-end relative" ref={exportRef}>
-          {html && !isGenerating && (
-            <>
-              <button
-                onClick={() => setShowExportMenu((v) => !v)}
-                className="flex items-center gap-1.5 px-2.5 py-2.5 md:py-1.5 text-[12px] md:text-[11px] font-medium text-zinc-400 hover:text-zinc-200 hover:bg-white/[0.04] rounded-lg transition-all duration-150"
-                title="Export options"
-                aria-label="Export options"
-                aria-haspopup="true"
-                aria-expanded={showExportMenu}
-              >
-                <Download className="w-3.5 h-3.5" />
-                <span>Export</span>
-                <ChevronDown className="w-3 h-3 opacity-50" />
-              </button>
-              <AnimatePresence>
-                {showExportMenu && (
-                  <motion.div
-                    initial={{ opacity: 0, y: -4 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -4 }}
-                    transition={{ duration: 0.12 }}
-                    role="menu"
-                    className="absolute top-full right-0 mt-1 z-20 glass rounded-xl overflow-hidden min-w-[180px] py-1 shadow-xl shadow-black/40"
-                  >
-                    <button
-                      role="menuitem"
-                      onClick={() => handleExportAction(onExport)}
-                      className="w-full flex items-center gap-2.5 px-4 py-2.5 text-[13px] text-zinc-300 hover:text-zinc-100 hover:bg-white/[0.04] transition-colors"
-                    >
-                      <Download className="w-3.5 h-3.5" />
-                      Download HTML
-                    </button>
-                    <button
-                      role="menuitem"
-                      onClick={() => handleExportAction(handleCopyWithFeedback)}
-                      className="w-full flex items-center gap-2.5 px-4 py-2.5 text-[13px] text-zinc-300 hover:text-zinc-100 hover:bg-white/[0.04] transition-colors"
-                    >
-                      <Copy className="w-3.5 h-3.5" />
-                      Copy to Clipboard
-                    </button>
-                    <button
-                      role="menuitem"
-                      onClick={() => handleExportAction(onOpenInNewTab)}
-                      className="w-full flex items-center gap-2.5 px-4 py-2.5 text-[13px] text-zinc-300 hover:text-zinc-100 hover:bg-white/[0.04] transition-colors"
-                    >
-                      <ExternalLink className="w-3.5 h-3.5" />
-                      Open in New Tab
-                    </button>
-                    {onDeploy && (
-                      <>
-                        <div className="border-t border-zinc-700/50 my-1" />
-                        <button
-                          role="menuitem"
-                          onClick={() => handleExportAction(onDeploy)}
-                          disabled={isDeploying}
-                          className="w-full flex items-center gap-2.5 px-4 py-2.5 text-[13px] text-green-400 hover:text-green-300 hover:bg-white/[0.04] transition-colors disabled:opacity-50"
-                        >
-                          {isDeploying ? (
-                            <Loader2 className="w-3.5 h-3.5 animate-spin" />
-                          ) : (
-                            <Rocket className="w-3.5 h-3.5" />
-                          )}
-                          {isDeploying ? "Deploying..." : "Deploy to Web"}
-                        </button>
-                        {deployError && (
-                          <div className="border-t border-red-500/20 bg-red-500/5 px-4 py-2.5">
-                            <p className="text-[12px] text-red-400">{deployError}</p>
-                          </div>
-                        )}
-                        {lastDeployUrl && (
-                          <div className="border-t border-green-500/20 bg-green-500/5">
-                            <div className="px-4 py-2 flex items-center gap-2">
-                              <CheckCircle className="w-3.5 h-3.5 text-green-400" />
-                              <span className="text-[11px] font-semibold text-green-400/80 uppercase tracking-wider">Live</span>
-                            </div>
-                            <div className="flex items-center">
-                              <a
-                                href={lastDeployUrl}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="flex-1 flex items-center gap-2.5 px-4 py-2.5 text-[13px] text-green-300/80 hover:text-green-200 hover:bg-green-500/5 transition-colors"
-                              >
-                                <span className="truncate flex-1">{lastDeployUrl.replace("https://", "")}</span>
-                                <ExternalLink className="w-3 h-3 flex-shrink-0" />
-                              </a>
-                              <button
-                                onClick={() => {
-                                  navigator.clipboard.writeText(lastDeployUrl).catch(() => {});
-                                  setCopyToast(true);
-                                  setTimeout(() => setCopyToast(false), 2000);
-                                  setShowExportMenu(false);
-                                }}
-                                className="px-2.5 py-2.5 text-zinc-500 hover:text-green-300 transition-colors"
-                                title="Copy URL"
-                                aria-label="Copy deploy URL"
-                              >
-                                <Copy className="w-3.5 h-3.5" />
-                              </button>
-                            </div>
-                          </div>
-                        )}
-                      </>
-                    )}
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </>
-          )}
-        </div>
-      </div>
+    <div className="flex flex-col h-full bg-[#0c0c0d] dot-grid relative">
+      <PreviewToolbar
+        html={html}
+        viewport={viewport}
+        onViewportChange={onViewportChange}
+        isGenerating={isGenerating}
+        canGoBack={canGoBack}
+        canRedo={canRedo}
+        onBack={onBack}
+        onRedo={onRedo}
+        onReload={() => setReloadKey((k) => k + 1)}
+        totalVersions={totalVersions}
+        showHistory={showHistory}
+        onToggleHistory={() => setShowHistory((v) => !v)}
+        selectMode={selectMode}
+        onSelectModeChange={onSelectModeChange}
+        onElementSelect={onElementSelect}
+        onBookmark={() => setShowBookmarkInput(true)}
+        showCode={showCode}
+        onToggleCode={() => setShowCode((v) => !v)}
+        codeMode={codeMode}
+        onCodeModeChange={onCodeModeChange}
+        onExport={onExport}
+        onCopyToClipboard={onCopyToClipboard}
+        onOpenInNewTab={onOpenInNewTab}
+        onDeploy={onDeploy}
+        isDeploying={isDeploying}
+        lastDeployUrl={lastDeployUrl}
+        deployError={deployError}
+      />
 
       {/* Main content area */}
       <div className="flex-1 overflow-hidden flex">
-        {/* Preview / Code area */}
         <div className="flex-1 overflow-auto p-4 flex items-start justify-center">
+          {/* Empty state */}
           {!html && !isGenerating && (
             <div className="flex flex-col items-center justify-center h-full gap-4">
               <div className="w-12 h-12 rounded-2xl glass flex items-center justify-center">
@@ -591,10 +221,12 @@ export const PreviewPanel = memo(function PreviewPanel({
             </div>
           )}
 
+          {/* Generating animation */}
           {isGenerating && (
             <GeneratingState isRevision={previewHistory.length > 0 || !!html} />
           )}
 
+          {/* Preview iframe */}
           {html && !isGenerating && !showCode && (
             <motion.div
               initial={{ opacity: 0, scale: 0.99 }}
@@ -602,11 +234,10 @@ export const PreviewPanel = memo(function PreviewPanel({
               transition={{ duration: 0.25, ease: "easeOut" }}
               className="w-full flex flex-col items-center"
             >
-              {/* Browser chrome */}
               <div
                 className="glass rounded-t-xl transition-all duration-300"
                 style={{
-                  width: viewport === "desktop" ? "100%" : viewportConfig[viewport].width,
+                  width: viewport === "desktop" ? "100%" : viewportWidths[viewport],
                   maxWidth: "100%",
                 }}
               >
@@ -618,12 +249,10 @@ export const PreviewPanel = memo(function PreviewPanel({
                   </div>
                 </div>
               </div>
-
-              {/* iframe */}
               <motion.div
                 className="bg-white rounded-b-xl overflow-hidden border-x border-b border-white/[0.06] shadow-2xl shadow-black/40 transition-all duration-300"
                 style={{
-                  width: viewport === "desktop" ? "100%" : viewportConfig[viewport].width,
+                  width: viewport === "desktop" ? "100%" : viewportWidths[viewport],
                   maxWidth: "100%",
                   height: "calc(100vh - 140px)",
                 }}
@@ -639,7 +268,6 @@ export const PreviewPanel = memo(function PreviewPanel({
                   aria-label="Generated website preview"
                   onLoad={() => {
                     if (iframeRef.current) {
-                      // Enable select mode if active
                       if (selectMode) {
                         iframeRef.current.contentWindow?.postMessage({ type: '16s-set-select-mode', enabled: true }, '*');
                       }
@@ -653,6 +281,7 @@ export const PreviewPanel = memo(function PreviewPanel({
             </motion.div>
           )}
 
+          {/* Code editor */}
           {html && !isGenerating && showCode && (
             <div className="w-full h-full">
               <CodeEditor
@@ -668,190 +297,20 @@ export const PreviewPanel = memo(function PreviewPanel({
         {/* Version history slide-out */}
         <AnimatePresence>
           {showHistory && html && !isGenerating && (
-            <motion.div
-              initial={{ width: 0, opacity: 0 }}
-              animate={{ width: 240, opacity: 1 }}
-              exit={{ width: 0, opacity: 0 }}
-              transition={{ duration: 0.2, ease: "easeOut" }}
-              className="border-l border-white/[0.04] overflow-hidden flex-shrink-0"
-            >
-              <div className="w-[240px] h-full flex flex-col">
-                <div className="flex items-center justify-between px-4 py-3 border-b border-white/[0.04]">
-                  <span className="text-[13px] font-medium text-zinc-300">History</span>
-                  <button
-                    onClick={() => setShowHistory(false)}
-                    className="p-1 rounded-full text-zinc-500 hover:text-zinc-300 hover:bg-white/[0.04] transition-colors"
-                    aria-label="Close version history"
-                  >
-                    <X className="w-3.5 h-3.5" />
-                  </button>
-                </div>
-                <div className="flex-1 overflow-y-auto py-2 space-y-1">
-                  {/* Current version */}
-                  {(() => {
-                    const currentBookmark = bookmarks.find(b => b.versionIndex === previewHistory.length);
-                    return (
-                      <div className="px-3 py-2 mx-2 rounded-lg bg-green-500/10 border border-green-500/20">
-                        <div className="flex items-center gap-2">
-                          <div className="text-[13px] font-medium text-green-400 flex-1">
-                            {currentBookmark ? currentBookmark.name : `Version ${totalVersions}`}
-                          </div>
-                          {currentBookmark && (
-                            <button
-                              onClick={() => onRemoveBookmark(currentBookmark.id)}
-                              className="p-1 rounded text-green-400/60 hover:text-red-400 hover:bg-red-500/10 transition-colors"
-                              title="Remove bookmark"
-                              aria-label="Remove bookmark"
-                            >
-                              <Trash2 className="w-3 h-3" />
-                            </button>
-                          )}
-                        </div>
-                        <div className="flex items-center gap-1.5 mt-0.5">
-                          {currentBookmark && <BookmarkCheck className="w-3 h-3 text-green-400/60" />}
-                          <span className="text-[11px] text-zinc-500">Current</span>
-                        </div>
-                      </div>
-                    );
-                  })()}
-                  {/* Previous versions */}
-                  {[...previewHistory].reverse().map((_, reverseIdx) => {
-                    const actualIdx = previewHistory.length - 1 - reverseIdx;
-                    const bookmark = bookmarks.find(b => b.versionIndex === actualIdx);
-                    return (
-                      <div
-                        key={actualIdx}
-                        className={`mx-2 rounded-lg transition-colors ${
-                          bookmark
-                            ? "bg-amber-500/10 border border-amber-500/20"
-                            : "hover:bg-white/[0.04]"
-                        }`}
-                      >
-                        <button
-                          onClick={() => onRestoreVersion(actualIdx)}
-                          className="w-full text-left px-3 py-2"
-                        >
-                          <div className="flex items-center gap-2">
-                            <div className={`text-[13px] flex-1 ${
-                              bookmark ? "font-medium text-amber-400" : "text-zinc-400"
-                            }`}>
-                              {bookmark ? bookmark.name : `Version ${actualIdx + 1}`}
-                            </div>
-                            {bookmark && (
-                              <button
-                                onClick={(e) => {
-                                  e.stopPropagation();
-                                  onRemoveBookmark(bookmark.id);
-                                }}
-                                className="p-1 rounded text-amber-400/60 hover:text-red-400 hover:bg-red-500/10 transition-colors"
-                                title="Remove bookmark"
-                                aria-label="Remove bookmark"
-                              >
-                                <Trash2 className="w-3 h-3" />
-                              </button>
-                            )}
-                          </div>
-                          {bookmark && (
-                            <div className="flex items-center gap-1.5 mt-0.5">
-                              <BookmarkCheck className="w-3 h-3 text-amber-400/60" />
-                              <span className="text-[11px] text-zinc-500">Bookmarked</span>
-                            </div>
-                          )}
-                        </button>
-                      </div>
-                    );
-                  })}
-                </div>
-              </div>
-            </motion.div>
+            <VersionHistory
+              previewHistory={previewHistory}
+              totalVersions={totalVersions}
+              bookmarks={bookmarks}
+              onRestoreVersion={onRestoreVersion}
+              onAddBookmark={onAddBookmark}
+              onRemoveBookmark={onRemoveBookmark}
+              onClose={() => setShowHistory(false)}
+              showBookmarkInput={showBookmarkInput}
+              onShowBookmarkInput={setShowBookmarkInput}
+            />
           )}
         </AnimatePresence>
       </div>
-
-      {/* Bookmark input dialog */}
-      <AnimatePresence>
-        {showBookmarkInput && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="absolute inset-0 bg-black/50 flex items-center justify-center z-50"
-            onClick={() => { setShowBookmarkInput(false); setBookmarkName(""); }}
-          >
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.95 }}
-              className="glass rounded-xl p-6 w-[320px] shadow-xl shadow-black/40"
-              onClick={(e) => e.stopPropagation()}
-              role="dialog"
-              aria-modal="true"
-              aria-labelledby="bookmark-dialog-title"
-            >
-              <h3 id="bookmark-dialog-title" className="text-[15px] font-medium text-zinc-200 mb-4">
-                Bookmark this version
-              </h3>
-              <input
-                type="text"
-                id="bookmark-name"
-                name="bookmark-name"
-                value={bookmarkName}
-                onChange={(e) => setBookmarkName(e.target.value)}
-                onKeyDown={(e) => {
-                  if (e.key === "Enter" && bookmarkName.trim()) {
-                    onAddBookmark(bookmarkName.trim());
-                    setBookmarkName("");
-                    setShowBookmarkInput(false);
-                  } else if (e.key === "Escape") {
-                    setBookmarkName("");
-                    setShowBookmarkInput(false);
-                  }
-                }}
-                placeholder="e.g., Before hero redesign"
-                className="w-full px-3 py-2 bg-white/[0.04] border border-white/[0.06] rounded-lg text-[14px] text-zinc-200 placeholder:text-zinc-600 focus:outline-none focus:border-green-500/40 transition-colors"
-                autoFocus
-              />
-              <div className="flex gap-2 mt-4">
-                <button
-                  onClick={() => { setShowBookmarkInput(false); setBookmarkName(""); }}
-                  className="flex-1 px-4 py-2 text-[13px] text-zinc-400 hover:text-zinc-200 glass glass-hover rounded-lg transition-colors"
-                >
-                  Cancel
-                </button>
-                <button
-                  onClick={() => {
-                    if (bookmarkName.trim()) {
-                      onAddBookmark(bookmarkName.trim());
-                      setBookmarkName("");
-                      setShowBookmarkInput(false);
-                    }
-                  }}
-                  disabled={!bookmarkName.trim()}
-                  className="flex-1 px-4 py-2 text-[13px] text-white bg-green-500/60 hover:bg-green-500/80 disabled:bg-zinc-700 disabled:text-zinc-500 rounded-lg transition-colors"
-                >
-                  Save
-                </button>
-              </div>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      {/* Copy toast */}
-      <AnimatePresence>
-        {copyToast && (
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 10 }}
-            role="status"
-            aria-live="polite"
-            className="absolute bottom-4 left-1/2 -translate-x-1/2 glass rounded-lg px-4 py-2 shadow-lg z-50"
-          >
-            <p className="text-[13px] text-green-400 font-medium">Copied to clipboard</p>
-          </motion.div>
-        )}
-      </AnimatePresence>
 
       {/* Selected element floating panel */}
       <AnimatePresence>
@@ -884,22 +343,14 @@ export const PreviewPanel = memo(function PreviewPanel({
                 )}
                 <div className="flex flex-wrap gap-2">
                   <div className="flex items-center gap-1.5">
-                    <div
-                      className="w-4 h-4 rounded border border-white/10"
-                      style={{ backgroundColor: selectedElement.computedStyles.backgroundColor }}
-                    />
+                    <div className="w-4 h-4 rounded border border-white/10" style={{ backgroundColor: selectedElement.computedStyles.backgroundColor }} />
                     <span className="text-[11px] text-zinc-500">bg</span>
                   </div>
                   <div className="flex items-center gap-1.5">
-                    <div
-                      className="w-4 h-4 rounded border border-white/10"
-                      style={{ backgroundColor: selectedElement.computedStyles.color }}
-                    />
+                    <div className="w-4 h-4 rounded border border-white/10" style={{ backgroundColor: selectedElement.computedStyles.color }} />
                     <span className="text-[11px] text-zinc-500">text</span>
                   </div>
-                  <span className="text-[11px] text-zinc-500">
-                    {selectedElement.computedStyles.fontSize}
-                  </span>
+                  <span className="text-[11px] text-zinc-500">{selectedElement.computedStyles.fontSize}</span>
                 </div>
               </div>
               <button
