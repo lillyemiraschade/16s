@@ -27,6 +27,7 @@ import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { useToast } from "@/components/Toast";
 import { OnboardingTooltip } from "@/components/onboarding/OnboardingTooltip";
 import type { SavedProjectMeta, ProjectContext, UploadedImage } from "@/lib/types";
+import { TEMPLATES } from "@/lib/templates";
 
 function generateId(): string {
   if (typeof crypto !== "undefined" && crypto.randomUUID) {
@@ -144,6 +145,22 @@ function HomePageContent() {
     if (isAuthLoading) return;
     let cancelled = false;
     const projectIdFromUrl = searchParams.get("project");
+    const templateIdFromUrl = searchParams.get("template");
+
+    // Handle template param — fill input with template prompt
+    if (templateIdFromUrl && !chat.hasStarted) {
+      const template = TEMPLATES.find(t => t.id === templateIdFromUrl);
+      if (template) {
+        welcome.setWelcomeInput(template.prompt);
+        setProjectContext(prev => ({
+          ...prev,
+          startedFrom: template.id,
+          industry: template.industry,
+        } as ProjectContext));
+        window.history.replaceState({}, "", "/");
+        return;
+      }
+    }
 
     const restoreProject = async () => {
       if (projectIdFromUrl) {
@@ -656,22 +673,30 @@ function HomePageContent() {
             )}
           </motion.div>
 
-          {/* Showcase section */}
-          <div className="mt-8 mb-6 flex flex-wrap justify-center gap-3 px-4 max-w-[700px]">
-            {[
-              { label: "Tokyo Ramen Shop", gradient: "from-orange-600/30 to-red-900/30" },
-              { label: "Architect Portfolio", gradient: "from-zinc-600/30 to-slate-900/30" },
-              { label: "SaaS Landing Page", gradient: "from-blue-600/30 to-indigo-900/30" },
-              { label: "Plant Shop", gradient: "from-green-600/30 to-emerald-900/30" },
-            ].map((item) => (
-              <div
-                key={item.label}
-                className={`w-[140px] h-[90px] rounded-xl bg-gradient-to-br ${item.gradient} border border-white/[0.06] flex items-end p-2.5 cursor-default`}
-              >
-                <span className="text-[11px] font-medium text-zinc-400">{item.label}</span>
-              </div>
-            ))}
-            <p className="w-full text-center text-[11px] text-zinc-600 mt-1">See what 16s can build</p>
+          {/* Templates section */}
+          <div className="mt-8 mb-6 max-w-[700px] px-4">
+            <p className="text-[12px] text-zinc-500 font-medium mb-3 text-center">Start from a template</p>
+            <div className="flex flex-wrap justify-center gap-3">
+              {TEMPLATES.slice(0, 6).map((template) => (
+                <button
+                  key={template.id}
+                  onClick={() => {
+                    welcome.setWelcomeInput(template.prompt);
+                    setProjectContext(prev => ({
+                      ...prev,
+                      startedFrom: template.id,
+                      industry: template.industry,
+                    } as ProjectContext));
+                  }}
+                  className={`w-[140px] h-[90px] rounded-xl bg-gradient-to-br ${template.gradient} border border-white/[0.06] hover:border-white/[0.15] flex items-end p-2.5 transition-all duration-200 hover:scale-[1.02] group`}
+                >
+                  <span className="text-[11px] font-medium text-zinc-400 group-hover:text-zinc-200 transition-colors">{template.name}</span>
+                </button>
+              ))}
+            </div>
+            <Link href="/templates" className="block text-center text-[11px] text-zinc-500 hover:text-green-400 mt-2 transition-colors">
+              See all templates &rarr;
+            </Link>
           </div>
         </div>
 
