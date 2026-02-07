@@ -58,7 +58,17 @@ export default function ProjectsPage() {
     router.push(`/?project=${id}`);
   };
 
-  const formatDate = (ts: number) => {
+  const formatRelativeTime = (ts: number) => {
+    const now = Date.now();
+    const diff = now - ts;
+    const minutes = Math.floor(diff / 60_000);
+    if (minutes < 1) return "Just now";
+    if (minutes < 60) return `${minutes}m ago`;
+    const hours = Math.floor(minutes / 60);
+    if (hours < 24) return `${hours}h ago`;
+    const days = Math.floor(hours / 24);
+    if (days < 7) return `${days}d ago`;
+    if (days < 30) return `${Math.floor(days / 7)}w ago`;
     const date = new Date(ts);
     return date.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
   };
@@ -147,23 +157,23 @@ export default function ProjectsPage() {
 
         {/* Projects grid */}
         {filteredProjects.length === 0 ? (
-          <div className="text-center py-12 md:py-20">
-            <div className="w-14 h-14 md:w-16 md:h-16 mx-auto mb-4 rounded-2xl bg-white/[0.03] flex items-center justify-center">
-              <Monitor className="w-7 h-7 md:w-8 md:h-8 text-zinc-600" />
+          <div className="text-center py-16 md:py-24">
+            <div className="w-20 h-20 mx-auto mb-6 rounded-2xl bg-white/[0.03] border border-white/[0.06] flex items-center justify-center">
+              <Monitor className="w-9 h-9 text-zinc-600" />
             </div>
-            <p className="text-zinc-400 text-[14px] md:text-[15px] mb-2">
-              {search ? "No projects match your search" : "No projects yet"}
+            <p className="text-zinc-300 text-[16px] md:text-[18px] font-medium mb-2">
+              {search ? "No matches found" : "Start building something"}
             </p>
-            <p className="text-zinc-600 text-[12px] md:text-[13px] mb-6">
-              {search ? "Try a different search term" : "Create your first project to get started"}
+            <p className="text-zinc-600 text-[13px] md:text-[14px] mb-8 max-w-sm mx-auto">
+              {search ? "Try a different search term" : "Describe a website and we\u2019ll bring it to life in seconds. Your projects will show up here."}
             </p>
             {!search && (
               <Link
                 href="/"
-                className="inline-flex items-center gap-2 px-4 py-2 bg-green-500/80 hover:bg-green-500 text-white text-[13px] font-medium rounded-lg transition-colors"
+                className="inline-flex items-center gap-2 px-5 py-2.5 bg-green-500/80 hover:bg-green-500 text-white text-[14px] font-medium rounded-lg transition-colors glow-green"
               >
                 <Plus className="w-4 h-4" />
-                Create Project
+                Create Your First Site
               </Link>
             )}
           </div>
@@ -177,7 +187,8 @@ export default function ProjectsPage() {
                   initial={{ opacity: 0, scale: 0.95 }}
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.95 }}
-                  className="group relative bg-white/[0.02] border border-white/[0.06] rounded-xl overflow-hidden hover:border-white/[0.1] transition-all"
+                  className="group relative bg-white/[0.02] border border-white/[0.06] rounded-xl overflow-hidden hover:border-white/[0.12] hover:bg-white/[0.03] transition-all duration-200 cursor-pointer"
+                  onClick={() => handleOpenProject(project.id)}
                 >
                   {/* Preview placeholder */}
                   <div className="aspect-[16/10] bg-gradient-to-br from-zinc-800/50 to-zinc-900/50 flex items-center justify-center">
@@ -193,7 +204,7 @@ export default function ProjectsPage() {
                       {project.name}
                     </h3>
                     <p className="text-[12px] text-zinc-500">
-                      Modified {formatDate(project.updatedAt)}
+                      {formatRelativeTime(project.updatedAt)}
                     </p>
                   </div>
 
