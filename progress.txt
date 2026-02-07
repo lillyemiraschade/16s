@@ -1,20 +1,20 @@
 # Round 9: Architecture, Polish & Features
 
-## P0 — Architecture
-- [ ] 1. Rate limiter dedup (7 copies → 1 shared module)
-- [ ] 2. God component split (page.tsx 1741→~400 lines, 4 new hooks)
-- [ ] 3. System prompt extraction (route.ts → src/lib/ai/prompts.ts)
-- [ ] 4. Clean up _bmad folder + consolidate docs
-- [ ] 5. Env validation module
-- [ ] 6. API response helpers (standardize error/success patterns)
-- [ ] 7. Types cleanup (ChatAPIResponse, move inline props)
-- [ ] 8. Globals.css audit (remove dead styles)
+## P0 — Architecture (COMPLETE)
+- [x] 1. Rate limiter dedup → [Ralph R9-1] src/lib/rate-limit.ts, 7 routes updated
+- [x] 2. God component split → [Ralph R9-8] page.tsx 1741→750 lines, 4 hooks extracted
+- [x] 3. System prompt extraction → [Ralph R9-2] src/lib/ai/prompts.ts, route.ts 1072→637
+- [x] 4. Clean up _bmad folder → [Ralph R9-3] moved to docs/
+- [x] 5. Env validation module → [Ralph R9-4] src/lib/env.ts
+- [x] 6. API response helpers → [Ralph R9-5] src/lib/api-utils.ts, 5 routes updated
+- [x] 7. Types cleanup → [Ralph R9-6] ChatAPIResponse, ChatPanelProps, PreviewPanelProps
+- [x] 8. Globals.css audit → [Ralph R9-7] removed 5 dead CSS rules (274→230 lines)
 
 ## P1 — App UI
-- [ ] 9. Welcome screen polish
-- [ ] 10. Chat panel polish (pills, plan cards, QA reports)
-- [ ] 11. Preview panel improvements (toolbar, deploy celebration)
-- [ ] 12. Projects page (cards, thumbnails, relative time)
+- [x] 9. Welcome screen polish → [Ralph R9-9] animated gradient, pill hover, input glow, headline
+- [x] 10. Chat panel polish → [Ralph R9-10] plan cards glass-matte, QA icons, AI text tracking
+- [x] 11. Preview panel improvements → [Ralph R9-11] generating animation, deploy celebration
+- [x] 12. Projects page → [Ralph R9-12] relative time, better empty state, clickable cards
 - [ ] 13. Responsive audit at 375px
 - [ ] 14. Loading states audit
 - [ ] 15. Error states audit
@@ -23,7 +23,7 @@
 ## P2 — Output Quality
 - [ ] 17. Dark mode toggle in generated sites
 - [ ] 18. Favicon generation on deploy
-- [ ] 19. SEO defaults in generated HTML
+- [x] 19. SEO defaults → [Ralph R9-13] title, meta description, og tags in system prompt
 - [ ] 20. Animation quality audit
 - [ ] 21. Multi-page navigation audit
 - [ ] 22. Image handling verification
@@ -35,4 +35,16 @@
 - [ ] 26. Bundle analysis
 
 ## Log
-(cycle-by-cycle notes go here)
+R9-1: Rate limiter factory — createRateLimiter(limit, windowMs). Replaced 7 copies.
+R9-2: System prompt extraction — SYSTEM_PROMPT + REACT_ADDENDUM → src/lib/ai/prompts.ts
+R9-3: Moved _bmad/, ROADMAP.md, SMARTER_16S_PLAN.md to docs/
+R9-4: Env validation — requireEnv/optionalEnv pattern in src/lib/env.ts
+R9-5: API response helpers — apiError/apiSuccess in src/lib/api-utils.ts, 5 routes updated
+R9-6: Types cleanup — centralized ChatAPIResponse, ChatPanelProps, PreviewPanelProps
+R9-7: CSS audit — removed animate-fade-in, animate-shimmer, glow-pulse, glow-red, code-preview
+R9-8: God component split — useImages, useWelcome, usePreview, useChat extracted from page.tsx
+R9-9: Welcome screen polish — animated gradient, pill hover, input glow, larger headline
+R9-10: Chat panel polish — glass-matte plan cards, QA check icons, AI text leading/tracking
+R9-11: Preview panel — premium generating animation, deploy celebration green tint
+R9-12: Projects page — relative time formatting, better empty state, clickable cards
+R9-13: SEO defaults — title, meta description, og:title, og:description in system prompt

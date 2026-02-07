@@ -41,6 +41,9 @@ export async function POST(request: NextRequest) {
       return apiError("HTML too large. Maximum 5MB.", 413);
     }
 
+    // Inject SVG favicon if none exists
+    const htmlWithFavicon = injectFavicon(html, projectName);
+
     // Create a clean project name for Vercel
     const safeName = (projectName || "16s-site")
       .toLowerCase()
@@ -63,7 +66,7 @@ export async function POST(request: NextRequest) {
         files: [
           {
             file: "index.html",
-            data: Buffer.from(html).toString("base64"),
+            data: Buffer.from(htmlWithFavicon).toString("base64"),
             encoding: "base64",
           },
         ],
@@ -107,6 +110,31 @@ export async function POST(request: NextRequest) {
     console.debug("[Deploy] Error:", error);
     return apiError("Deployment failed", 500);
   }
+}
+
+/** Generate an inline SVG favicon from the site's first letter + accent color */
+function injectFavicon(html: string, projectName?: string): string {
+  // Skip if favicon already exists
+  if (/rel=["'](?:shortcut )?icon["']/i.test(html)) return html;
+
+  // Extract first letter from title tag or project name
+  const titleMatch = html.match(/<title[^>]*>([^<]+)<\/title>/i);
+  const brandName = titleMatch?.[1]?.trim() || projectName || "S";
+  const letter = brandName.charAt(0).toUpperCase();
+
+  // Try to extract accent color from CSS custom properties or common patterns
+  const colorMatch = html.match(/--(?:primary|accent|brand)[^:]*:\s*(#[0-9a-fA-F]{3,8})/);
+  const accentColor = colorMatch?.[1] || "#10b981"; // fallback to emerald-500
+
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect width="32" height="32" rx="6" fill="${accentColor}"/><text x="16" y="22" font-family="system-ui,sans-serif" font-size="18" font-weight="600" fill="white" text-anchor="middle">${letter}</text></svg>`;
+  const dataUri = `data:image/svg+xml,${encodeURIComponent(svg)}`;
+  const linkTag = `<link rel="icon" type="image/svg+xml" href="${dataUri}">`;
+
+  // Insert after <head> or before </head>
+  if (/<head[^>]*>/i.test(html)) {
+    return html.replace(/<head([^>]*)>/i, `<head$1>\n    ${linkTag}`);
+  }
+  return html;
 }
 
 // Get deployments for a project
