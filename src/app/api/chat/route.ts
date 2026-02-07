@@ -366,14 +366,13 @@ MODERN CSS PATTERNS (use when appropriate for contemporary designs):
 IMAGE TYPES:
 - INSPO images (website screenshots) → clone the STYLE only, don't embed the image itself
 - CONTENT images (logo, team photos, product photos) → embed in the HTML
-- If user says "put/place/embed this image" for an INSPO image → embed it using its {{INSPO_IMAGE_N}} placeholder
+- If user says "use/put/place this image" → embed it using {{CURRENT_IMAGE_0}} (always refers to THIS message's image)
 
 EMBEDDING IMAGES — RULES:
-Each image has its own numbered placeholder. Follow the instructions shown next to each image:
-- Content images: "Use this EXACT URL: https://..." → <img src="https://..." alt="...">
-- Content images: "Use placeholder: {{CONTENT_IMAGE_N}}" → <img src="{{CONTENT_IMAGE_0}}" alt="...">
-- Inspo images user wants embedded: "use: {{INSPO_IMAGE_N}}" → <img src="{{INSPO_IMAGE_0}}" alt="...">
-Match the placeholder number to the specific image the user is referring to.
+- When user says "this image" / "use this" → use {{CURRENT_IMAGE_0}} (resolves to the image they just attached)
+- If system shows an EXACT URL (https://...) next to an image → use that URL directly in img src
+- If system shows a placeholder → use it: {{CONTENT_IMAGE_N}}, {{INSPO_IMAGE_N}}, or {{CURRENT_IMAGE_N}}
+- {{CURRENT_IMAGE_N}} is ALWAYS preferred when the user is referring to images in their current message
 
 🚨 NEVER write src="data:image/..." — you cannot generate image bytes. It will produce broken garbage.
 
@@ -839,6 +838,23 @@ export async function POST(req: Request) {
             } else {
               systemNote = "\n\n[SYSTEM NOTE: These are CONTENT images. Use {{CONTENT_IMAGE_N}} placeholders in img src attributes. The system will replace them with actual image data.]";
             }
+          }
+
+          // For the LAST user message: add a clear CURRENT_IMAGE shortcut
+          // so the AI can always reference THIS message's images unambiguously,
+          // regardless of how many images have accumulated in history
+          if (isLastUserMessage && messageImages.length > 0) {
+            let currentImageNote = "\n\n[⚡ SHORTCUT — Images attached to THIS message can also be referenced as:";
+            for (let ci = 0; ci < messageImages.length; ci++) {
+              const img = messageImages[ci];
+              if (img.url) {
+                currentImageNote += `\n  {{CURRENT_IMAGE_${ci}}} → ${img.url}`;
+              } else {
+                currentImageNote += `\n  {{CURRENT_IMAGE_${ci}}}`;
+              }
+            }
+            currentImageNote += "\nWhen the user says \"this image\" or \"use this\", they mean the images in THIS message. Prefer {{CURRENT_IMAGE_N}} over older references.]";
+            systemNote += currentImageNote;
           }
 
           const userText = msg.content || "Here are my images.";

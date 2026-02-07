@@ -579,6 +579,22 @@ function HomePageContent() {
 
     const fallbackPixel = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7";
 
+    // Collect current message images (most recent user message's images)
+    // These are what {{CURRENT_IMAGE_N}} references
+    const currentMessageImages: UploadedImage[] = [];
+    if (currentImages && currentImages.length > 0) {
+      currentMessageImages.push(...currentImages);
+    } else {
+      // Find the last user message with images in history
+      for (let i = messagesRef.current.length - 1; i >= 0; i--) {
+        const msg = messagesRef.current[i];
+        if (msg.role === "user" && msg.uploadedImages && msg.uploadedImages.length > 0) {
+          currentMessageImages.push(...msg.uploadedImages);
+          break;
+        }
+      }
+    }
+
     let result = html;
 
     // Helper: resolve an image from an array by index, falling back to most recent
@@ -588,6 +604,12 @@ function HomePageContent() {
       if (images.length > 0) return images[images.length - 1].url || images[images.length - 1].data;
       return fallbackPixel;
     };
+
+    // Step 0: Replace {{CURRENT_IMAGE_N}} — always resolves to THIS message's images
+    const currentPlaceholderRegex = /\{\{\s*CURRENT_IMAGE_(\d+)\s*\}\}/g;
+    result = result.replace(currentPlaceholderRegex, (_match, indexStr) => {
+      return resolveImage(currentMessageImages, parseInt(indexStr, 10));
+    });
 
     // Step 1a: Replace {{INSPO_IMAGE_N}} placeholders with inspo image data
     const inspoPlaceholderRegex = /\{\{\s*INSPO_IMAGE_(\d+)\s*\}\}/g;
