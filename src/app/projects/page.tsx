@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Search, Plus, Monitor, Trash2, Pencil, Copy } from "lucide-react";
+import { Search, Plus, Monitor, Trash2, Pencil, Copy, Globe } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -24,6 +24,7 @@ export default function ProjectsPage() {
   const [sort, setSort] = useState<SortOption>("recent");
   const [deleteConfirm, setDeleteConfirm] = useState<string | null>(null);
   const [showAuthModal, setShowAuthModal] = useState(false);
+  const [projectDomains, setProjectDomains] = useState<Record<string, string>>({}); // projectId → domain
 
   // Load projects (wait for migration to complete if signed in)
   useEffect(() => {
@@ -34,9 +35,23 @@ export default function ProjectsPage() {
     const loadProjects = async () => {
       const list = await listProjects();
       setProjects(list);
+      // Fetch domains for all projects
+      if (user) {
+        for (const p of list.slice(0, 20)) {
+          fetch(`/api/domains?projectId=${encodeURIComponent(p.id)}`)
+            .then(r => r.ok ? r.json() : null)
+            .then(data => {
+              const activeDomain = data?.domains?.find((d: { status: string }) => d.status === "active");
+              if (activeDomain) {
+                setProjectDomains(prev => ({ ...prev, [p.id]: activeDomain.domain }));
+              }
+            })
+            .catch(() => {});
+        }
+      }
     };
     loadProjects();
-  }, [isAuthLoading, listProjects, migrationStatus]);
+  }, [isAuthLoading, listProjects, migrationStatus, user]);
 
   // Filter and sort projects
   const filteredProjects = projects
@@ -221,6 +236,12 @@ export default function ProjectsPage() {
                     <p className="text-[12px] text-zinc-500">
                       {formatRelativeTime(project.updatedAt)}
                     </p>
+                    {projectDomains[project.id] && (
+                      <div className="flex items-center gap-1 mt-1.5">
+                        <Globe className="w-3 h-3 text-green-500" />
+                        <span className="text-[11px] text-green-400 truncate">{projectDomains[project.id]}</span>
+                      </div>
+                    )}
                   </div>
 
                   {/* Hover actions */}

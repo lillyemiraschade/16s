@@ -166,4 +166,7 @@ export interface PreviewPanelProps {
   onUnshare?: () => void;
   isSharing?: boolean;
   shareUrl?: string | null;
+  projectId?: string | null;
+  isPro?: boolean;
+  onUpgradeClick?: () => void;
 }

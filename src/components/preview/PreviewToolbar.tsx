@@ -27,6 +27,7 @@ import {
   Link2Off,
 } from "lucide-react";
 import type { Viewport, SelectedElement, CodeMode } from "@/lib/types";
+import { DomainManager } from "@/components/domains/DomainManager";
 
 const viewportConfig = {
   desktop: { width: "100%", icon: Monitor, label: "Desktop" },
@@ -67,6 +68,9 @@ interface PreviewToolbarProps {
   onUnshare?: () => void;
   isSharing?: boolean;
   shareUrl?: string | null;
+  projectId?: string | null;
+  isPro?: boolean;
+  onUpgradeClick?: () => void;
 }
 
 export const PreviewToolbar = memo(function PreviewToolbar({
@@ -102,6 +106,9 @@ export const PreviewToolbar = memo(function PreviewToolbar({
   onUnshare,
   isSharing,
   shareUrl,
+  projectId,
+  isPro,
+  onUpgradeClick,
 }: PreviewToolbarProps) {
   const [showExportMenu, setShowExportMenu] = useState(false);
   const [showShareMenu, setShowShareMenu] = useState(false);
@@ -457,6 +464,15 @@ export const PreviewToolbar = memo(function PreviewToolbar({
                                 <Copy className="w-3.5 h-3.5" /> Copy URL
                               </button>
                             </div>
+                          </div>
+                        )}
+                        {lastDeployUrl && projectId && (
+                          <div className="border-t border-white/[0.06]">
+                            <DomainManager
+                              projectId={projectId}
+                              isPro={isPro ?? false}
+                              onUpgradeClick={onUpgradeClick}
+                            />
                           </div>
                         )}
                       </>

@@ -59,6 +59,41 @@ export interface Database {
           updated_at?: string;
         };
       };
+      domains: {
+        Row: {
+          id: string;
+          user_id: string;
+          project_id: string;
+          domain: string;
+          status: string;
+          vercel_domain_id: string | null;
+          verification_token: string | null;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          user_id: string;
+          project_id: string;
+          domain: string;
+          status?: string;
+          vercel_domain_id?: string | null;
+          verification_token?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          user_id?: string;
+          project_id?: string;
+          domain?: string;
+          status?: string;
+          vercel_domain_id?: string | null;
+          verification_token?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+      };
       deployments: {
         Row: {
           id: string;

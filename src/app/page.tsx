@@ -778,6 +778,7 @@ function HomePageContent() {
             onUnshare={handleUnshare}
             isSharing={isSharing}
             shareUrl={shareUrl}
+            projectId={currentProjectId}
           />
           </ErrorBoundary>
           {/* Voice call widget */}

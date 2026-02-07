@@ -63,6 +63,24 @@ CREATE INDEX IF NOT EXISTS idx_deployments_project_id ON deployments(project_id)
 CREATE INDEX IF NOT EXISTS idx_deployments_user_id ON deployments(user_id);
 
 -- ============================================================================
+-- DOMAINS TABLE (custom domains for deployed projects)
+-- ============================================================================
+CREATE TABLE IF NOT EXISTS domains (
+  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  user_id UUID NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE,
+  project_id UUID NOT NULL REFERENCES projects(id) ON DELETE CASCADE,
+  domain TEXT NOT NULL UNIQUE,
+  status TEXT DEFAULT 'pending',
+  vercel_domain_id TEXT,
+  verification_token TEXT,
+  created_at TIMESTAMPTZ DEFAULT NOW(),
+  updated_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+CREATE INDEX IF NOT EXISTS idx_domains_user_id ON domains(user_id);
+CREATE INDEX IF NOT EXISTS idx_domains_project_id ON domains(project_id);
+
+-- ============================================================================
 -- SUBSCRIPTIONS TABLE (for future billing)
 -- ============================================================================
 CREATE TABLE IF NOT EXISTS subscriptions (
@@ -108,6 +126,7 @@ CREATE INDEX IF NOT EXISTS idx_usage_created_at ON usage(created_at DESC);
 -- Enable RLS on all tables
 ALTER TABLE projects ENABLE ROW LEVEL SECURITY;
 ALTER TABLE deployments ENABLE ROW LEVEL SECURITY;
+ALTER TABLE domains ENABLE ROW LEVEL SECURITY;
 ALTER TABLE subscriptions ENABLE ROW LEVEL SECURITY;
 ALTER TABLE usage ENABLE ROW LEVEL SECURITY;
 
@@ -122,6 +141,11 @@ CREATE POLICY "Anyone can view public projects" ON projects
 
 -- Deployments: Users can only access their own deployments
 CREATE POLICY "Users can CRUD own deployments" ON deployments
+  FOR ALL USING (auth.uid() = user_id)
+  WITH CHECK (auth.uid() = user_id);
+
+-- Domains: Users can manage their own domains
+CREATE POLICY "Users manage own domains" ON domains
   FOR ALL USING (auth.uid() = user_id)
   WITH CHECK (auth.uid() = user_id);
 
@@ -152,6 +176,13 @@ $$ LANGUAGE plpgsql;
 DROP TRIGGER IF EXISTS projects_updated_at ON projects;
 CREATE TRIGGER projects_updated_at
   BEFORE UPDATE ON projects
+  FOR EACH ROW
+  EXECUTE FUNCTION update_updated_at();
+
+-- Apply to domains table
+DROP TRIGGER IF EXISTS domains_updated_at ON domains;
+CREATE TRIGGER domains_updated_at
+  BEFORE UPDATE ON domains
   FOR EACH ROW
   EXECUTE FUNCTION update_updated_at();
 

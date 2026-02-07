@@ -135,6 +135,9 @@ export const PreviewPanel = memo(function PreviewPanel({
   onUnshare,
   isSharing,
   shareUrl,
+  projectId,
+  isPro,
+  onUpgradeClick,
 }: PreviewPanelProps) {
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const [reloadKey, setReloadKey] = useState(0);
@@ -218,6 +221,9 @@ export const PreviewPanel = memo(function PreviewPanel({
         onUnshare={onUnshare}
         isSharing={isSharing}
         shareUrl={shareUrl}
+        projectId={projectId}
+        isPro={isPro}
+        onUpgradeClick={onUpgradeClick}
       />
 
       {/* Main content area */}
