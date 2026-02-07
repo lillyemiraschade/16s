@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Search, Plus, Monitor, Trash2, Pencil } from "lucide-react";
+import { Search, Plus, Monitor, Trash2, Pencil, Copy } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -17,7 +17,7 @@ type SortOption = "recent" | "name" | "oldest";
 export default function ProjectsPage() {
   const router = useRouter();
   const { user, loading: authLoading, isConfigured } = useAuth();
-  const { list: listProjects, remove: deleteProject, isAuthLoading, migrationStatus } = useProjects();
+  const { list: listProjects, load: loadProject, save: saveProject, remove: deleteProject, isAuthLoading, migrationStatus } = useProjects();
 
   const [projects, setProjects] = useState<SavedProjectMeta[]>([]);
   const [search, setSearch] = useState("");
@@ -51,6 +51,21 @@ export default function ProjectsPage() {
     await deleteProject(id);
     setProjects((prev) => prev.filter((p) => p.id !== id));
     setDeleteConfirm(null);
+  };
+
+  const handleDuplicate = async (id: string, e: React.MouseEvent) => {
+    e.stopPropagation();
+    const project = await loadProject(id);
+    if (!project) return;
+    const newId = crypto.randomUUID();
+    const duplicated = {
+      ...project,
+      id: newId,
+      name: `${project.name} (Copy)`,
+      updatedAt: Date.now(),
+    };
+    await saveProject(duplicated);
+    setProjects((prev) => [{ id: newId, name: duplicated.name, updatedAt: duplicated.updatedAt }, ...prev]);
   };
 
   const handleOpenProject = (id: string) => {
@@ -216,6 +231,13 @@ export default function ProjectsPage() {
                     >
                       <Pencil className="w-3.5 h-3.5" />
                       Edit
+                    </button>
+                    <button
+                      onClick={(e) => handleDuplicate(project.id, e)}
+                      className="p-2 bg-zinc-700/90 hover:bg-zinc-600 text-zinc-300 hover:text-white rounded-lg transition-colors"
+                      title="Duplicate"
+                    >
+                      <Copy className="w-4 h-4" />
                     </button>
                     {deleteConfirm === project.id ? (
                       <div className="flex items-center gap-1">

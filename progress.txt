@@ -27,7 +27,7 @@
 - [x] 15. Server-side generation metrics (structured console.debug with model, duration, output size)
 
 ## P4 — Quality of Life
-- [ ] 16. Project duplicate
+- [x] 16. Project duplicate (Copy icon button on hover, loads full project, saves with new ID + "(Copy)" name)
 - [ ] 17. Export as ZIP
 - [ ] 18. Keyboard shortcuts verification
 
@@ -35,3 +35,4 @@
 - R12-1: Fixed streaming blank messages. Root cause: empty assistant placeholder was created immediately, hiding the typing indicator and showing a blank bubble. Fix: delay message creation via `upsertStreamingMsg` helper — message only appears when `extractStreamingMessage` returns non-empty text. Also hardened typing indicator to show when last assistant message has empty content.
 - R12-2: Updated SECURITY.md to match current iframe sandbox config.
 - R12-3: Lazy-loaded html2canvas (dynamic import at call site in usePreview.ts) and VoiceCall (next/dynamic in page.tsx). Monaco was already lazy, Stripe was already server-only. Result: 277→228 kB first load (-18%).
+- R12-8: Project duplicate — Copy button in project card hover actions. Loads full project data, saves with new UUID + "(Copy)" name, inserts into local state immediately.
