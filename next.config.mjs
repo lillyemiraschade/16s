@@ -8,7 +8,7 @@ const cspDirectives = [
   "style-src-elem 'self' 'unsafe-inline' https://fonts.googleapis.com",
   "font-src 'self' https://cdn.jsdelivr.net https://fonts.gstatic.com data:",
   "img-src 'self' blob: data: https://*.vercel-storage.com https://*.supabase.co https://*.googleusercontent.com",
-  "connect-src 'self' https://*.supabase.co wss://*.supabase.co https://cdn.jsdelivr.net https://*.vercel-storage.com",
+  "connect-src 'self' https://*.supabase.co wss://*.supabase.co https://cdn.jsdelivr.net https://*.vercel-storage.com https://us.i.posthog.com https://*.sentry.io https://*.ingest.sentry.io",
   "worker-src 'self' blob:",
   "frame-src 'self' blob:",
   "frame-ancestors 'none'",
@@ -50,4 +50,19 @@ const nextConfig = {
   },
 };
 
-export default nextConfig;
+// Wrap with Sentry if available (no-op if NEXT_PUBLIC_SENTRY_DSN is not set)
+let finalConfig = nextConfig;
+try {
+  const { withSentryConfig } = await import("@sentry/nextjs");
+  finalConfig = withSentryConfig(nextConfig, {
+    silent: true,
+    disableLogger: true,
+    // Only upload source maps if DSN is configured
+    org: process.env.SENTRY_ORG,
+    project: process.env.SENTRY_PROJECT,
+  });
+} catch {
+  // Sentry not installed or misconfigured — use base config
+}
+
+export default finalConfig;
