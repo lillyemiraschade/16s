@@ -1,51 +1,32 @@
-# Round 11: Production Readiness
+# Round 12: Performance, Onboarding & Features
 
-## P0 — CRITICAL BUG + CI/CD
-- [x] 0. FIX: Messages go blank during generation (streaming regression from R10)
-- [x] 1. GitHub Actions CI workflow
-- [x] 2. npm run check script
-- [x] 3. Vercel build verification (Vercel runs npm run build by default — CI covers type check + tests)
+## P0 — Performance
+- [ ] 1. Lazy-load Monaco Editor (next/dynamic)
+- [ ] 2. Lazy-load html2canvas (dynamic import at call site)
+- [ ] 3. Lazy-load Stripe client (verify or fix)
+- [ ] 4. Lazy-load VoiceCall component
+- [ ] 5. Bundle analysis + document improvement
 
-## P1 — E2E Tests
-- [x] 4. Playwright setup + config
-- [x] 5. Critical path E2E tests (5 tests)
-- [x] 6. Add Playwright to CI
+## P1 — Onboarding
+- [ ] 6. First-visit tooltip tour (3-4 tooltips, localStorage flag)
+- [ ] 7. Welcome screen showcase section
+- [ ] 8. Smart first prompt handling (isFirstMessage flag)
+- [ ] 9. Credit counter in header
 
-## P2 — Iframe Security
-- [x] 7. Fix sandbox (drop allow-same-origin, fix postMessage)
-- [x] 8. Inject CSP into preview HTML
+## P2 — Discussion Mode
+- [ ] 10. Chat-only toggle (no code generation)
+- [ ] 11. Discussion → Build transition context
+- [ ] 12. Brainstorm-specific pills
 
-## P3 — Error Monitoring
-- [x] 9. Error reporting utility + wiring
-- [x] 10. Global unhandled error handler
+## P3 — Analytics
+- [ ] 13. Analytics utility (typed events, fire-and-forget)
+- [ ] 14. Wire analytics into key touchpoints
+- [ ] 15. Server-side generation metrics
 
-## P4 — Deferred Items
-- [x] 11. Autosave indicator
-- [x] 12. Deploy flow improvements (URL display, copy, open)
-- [x] 14. Stripe webhook tests
-
-## P5 — Final Verification
-- [x] 15. Full smoke test
-- [x] 16. README update
+## P4 — Quality of Life
+- [ ] 16. Project duplicate
+- [ ] 17. Export as ZIP
+- [ ] 18. Keyboard shortcuts verification
 
 ## Log
-- R11-1: Fixed blank streaming messages. extractStreamingMessage used hardcoded '"message":"' (no space) but Claude outputs '"message": "' (with space). Changed to regex /"message"\s*:\s*"/ to handle whitespace. Same fix for "html" phase detection.
-- R11-2: Added GitHub Actions CI (.github/workflows/ci.yml) + npm run check script. CI runs type check, build, and tests on push/PR to main.
-- R11-3: Playwright E2E setup + 5 smoke tests. Tests: homepage loads, idea pills visible, send prompt + streaming response, preview iframe renders, projects page. CI workflow includes e2e job. Supabase env stripped in Playwright config so auth gate doesn't block E2E sends.
-- R11-4: Iframe security hardening. Dropped allow-same-origin (→ allow-scripts allow-popups). Fixed postMessage handler to validate 16s- type prefix instead of origin. Injected CSP meta tag with connect-src 'none' + frame-src 'none' to block network requests from generated HTML.
-- R11-5: Error monitoring. Created reportError utility (dev: console, prod: POST to endpoint). GlobalErrorHandler for window.onerror + unhandledrejection. Wired into ErrorBoundary, useChat, useDeployment.
-- R11-6: Autosave indicator. saveStatus state in page.tsx (idle→saving→saved→idle after 2s). Passed to ChatPanel. Subtle "Saving..." / "Saved" text in header next to UserMenu.
-- R11-7: Deploy flow improvements. Larger URL display with break-all for long URLs. Explicit "Open" and "Copy URL" buttons with labels instead of icon-only. Visually prominent green-themed action buttons.
-- R11-8: Stripe webhook tests. 3 tests: checkout.session.completed → updates subscription, invalid signature → 400, missing admin client → 500. Total tests: 28.
-- R11-9: Final verification + README update.
-
-## Smoke Test Results
-- Homepage: loads ✓ (welcome screen, headline, input, idea pills)
-- Chat: message sending works with streaming ✓ (E2E verified with mocked API)
-- Preview: iframe renders ✓ (E2E verified)
-- Projects page: loads ✓
-- tsc --noEmit: passes ✓
-- npm run build: passes ✓
-- npm test: 28/28 pass ✓ (5 test files: parse-response, rate-limit, api-utils, chat API, stripe webhook)
-- npm run test:e2e: 5/5 pass ✓ (homepage, pills, chat flow, preview, projects)
-- CI config: valid ✓ (2 jobs: check + e2e)
+(cycle notes here)

@@ -1,10 +1,7 @@
-# 16s — Round 11: Production Readiness
+# 16s — Round 12: Performance, Onboarding & New Features
 
 ## Context
-10 rounds complete (187+ changes). Architecture clean, security verified, streaming live, components split, 25 tests passing. This is the final hardening round before treating the codebase as production-ready.
-
-## What This Round Does
-Ship-blocking gaps: CI/CD, E2E testing, iframe security, error monitoring hooks, and the deferred items from R10. Everything in this round is about "can I deploy this confidently and sleep at night."
+11 rounds complete (~200 changes). Architecture clean, security hardened, streaming live, 33 tests passing, CI/CD running, iframe sandboxed. The infra is solid. This round shifts focus to user experience, performance, and features that make 16s feel like a real product vs. a prototype.
 
 ## Tech Stack
 Next.js 14.2, TypeScript, Tailwind, Supabase, Stripe, Anthropic Claude, Vercel Blob, Vercel hosting.
@@ -13,181 +10,174 @@ Next.js 14.2, TypeScript, Tailwind, Supabase, Stripe, Anthropic Claude, Vercel B
 ```
 npm run build
 npm run dev
-npm test              # vitest (25 unit tests from R10)
-npx tsc --noEmit
+npm test
+npm run check         # tsc + build + test
 ```
 
-## Commit: [Ralph R11-N]
+## Commit: [Ralph R12-N]
 
-## BANNED (done)
-- Prompt changes (done 50+ times)
-- Code cleanup, dead code, console.log changes (done)
-- Aria-labels, focus traps, keyboard shortcuts (done)
+## BANNED (done in prior rounds)
+- Prompt compression (done 50+ times)
+- Dead code removal, console changes (done)
 - Component splitting (done — page.tsx, ChatPanel, PreviewPanel all split)
-- Rate limiter changes (consolidated in R9)
-- Hook extraction (done in R9)
+- Rate limiter, env validation, API helpers (done)
+- Security headers, CORS, CSP, sandbox (done)
+- CI/CD setup (done)
 
 ## PRIORITY ORDER
 
-### P0 — CRITICAL BUG: Messages Go Blank During Generation (cycle 1)
-R10 added real-time streaming. Since then, messages go blank while the AI is generating. This is a regression that breaks the core UX. Fix this FIRST before anything else.
+### P0 — PERFORMANCE (cycles 1-5)
+Three heavy dependencies are statically imported but only used conditionally. This bloats the initial bundle for every user.
 
-The bug is almost certainly in the streaming client code (useChat.ts or wherever the stream reader lives). What's happening:
-- User sends a message → user message appears in chat ✓
-- AI starts generating → the assistant message bubble goes BLANK ✗
-- Generation completes → message may or may not appear
+1. **Lazy-load Monaco Editor**: CodeEditor.tsx imports @monaco-editor/react at the top level, but users only see it when they click the code toggle. Monaco is ~2MB.
 
-Likely causes (check all of these):
-1. The streaming handler is REPLACING the messages array instead of APPENDING to it. It should create a new assistant message and UPDATE its content as tokens arrive, not clear everything.
-2. The streaming assistant message is being created with empty content and never updated — the state setter might not be receiving the accumulated tokens.
-3. Race condition: setMessages is called with a stale closure that doesn't include the user's message, so it overwrites the array.
-4. The message content is being set to the raw NDJSON protocol text ({"type":"token","text":"..."}) instead of extracted text.
-
-How to fix:
-- Find where the streaming response is processed (useChat.ts or page.tsx)
-- Ensure the flow is: (a) add user message to state, (b) add empty assistant message, (c) as tokens arrive, update ONLY that assistant message's content, (d) on stream complete, finalize with pills/qaReport/etc.
-- Use a functional state update: `setMessages(prev => prev.map(m => m.id === streamingId ? {...m, content: accumulated} : m))`
-- NEVER replace the entire messages array during streaming — always update the specific message
-
-Start the dev server and verify the fix works before moving on. Send a real message, confirm you see text streaming into the chat bubble.
-
-### P0.5 — CI/CD Pipeline (cycles 2-4)
-The project has zero automation. No linting on push, no type checking on PR, no test running.
-
-1. **GitHub Actions workflow** — .github/workflows/ci.yml:
-   - Trigger: push to main, pull_request to main
-   - Steps: checkout → setup Node 20 → npm ci → npx tsc --noEmit → npm run build → npm test
-   - Cache node_modules with actions/cache
-   - This catches build failures and test regressions before deploy
-
-2. **Pre-commit quality gate** — Add a "check" script to package.json:
-   ```json
-   "check": "tsc --noEmit && npm run build && npm test"
-   ```
-   Document in README: run `npm run check` before pushing.
-
-3. **Vercel build settings** — Ensure the Vercel project runs `npm run build` (it should already, but verify). Add `npm test` to the build command if Vercel supports it, or document that tests only run in CI.
-
-### P1 — E2E Test Foundation (cycles 4-6)
-Unit tests cover utilities. E2E tests cover user flows.
-
-4. **Playwright setup**:
-   - npm install -D @playwright/test
-   - npx playwright install chromium (just Chrome, not all browsers)
-   - playwright.config.ts: baseURL localhost:3000, webServer starts dev, timeout 30s
-
-5. **Critical path E2E tests** (3-5 tests):
-   - Homepage loads, welcome screen visible, idea pills render
-   - Type a prompt → see typing indicator → see response in chat
-   - Response includes preview → iframe renders HTML
-   - Projects page loads (even if empty)
-   - Auth modal opens on sign-in click
-
-   These don't need a real Anthropic API key — mock the /api/chat endpoint to return a fixed response.
-
-6. **Add Playwright to CI** — extend the GitHub Actions workflow to run E2E tests. Use the Playwright GitHub Action.
-
-### P2 — Iframe Security Hardening (cycles 7-8)
-The preview iframe has `sandbox="allow-scripts allow-same-origin"`. This is dangerous — allow-same-origin + allow-scripts together effectively nullify the sandbox because scripts can remove the sandbox attribute.
-
-7. **Fix iframe sandbox**:
-   The problem: generated HTML needs to run JS (for navigation, forms, animations), and the select-mode feature needs postMessage between iframe and parent. But allow-same-origin + allow-scripts = no real sandbox.
-
-   Options (pick the best one):
-   a) Use a different origin for preview: serve iframe content via blob: URL or data: URL (different origin blocks direct parent access but postMessage still works with *)
-   b) Use srcdoc with just `sandbox="allow-scripts"` (drops same-origin — postMessage still works, but iframe can't access parent cookies/storage)
-   c) Keep current setup but add CSP on the iframe content via a meta tag injected into the srcdoc
-
-   Option (b) is probably best: change to `sandbox="allow-scripts allow-popups"` (drop allow-same-origin). Then fix the postMessage origin check — it'll be "null" for sandboxed iframes without same-origin, so check for message type prefix instead of origin.
-
-   IMPORTANT: Test that after this change:
-   - Preview still renders and runs JS (navigation, forms, animations)
-   - Select mode still works (hover highlight, click to select)
-   - postMessage from iframe to parent still works
-   - iframe CANNOT access parent's localStorage, cookies, or DOM
-
-8. **Inject CSP into preview HTML**: Before setting srcdoc, inject a meta tag:
-   ```html
-   <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' 'unsafe-eval' blob: data: https://fonts.googleapis.com https://fonts.gstatic.com; img-src * data: blob:; connect-src 'none';">
-   ```
-   This prevents the generated HTML from making network requests back to 16s APIs or any external endpoint, while still allowing fonts and inline scripts.
-
-### P3 — Error Monitoring Hooks (cycles 9-10)
-
-9. **Error reporting utility** — src/lib/error-reporter.ts:
+   In PreviewPanel.tsx (or wherever CodeEditor is imported), replace:
    ```typescript
-   export function reportError(error: Error, context?: Record<string, unknown>) {
-     // In development: console.error
-     // In production: send to configured endpoint (Sentry, LogFlare, etc.)
-     // For now: just structure the error for future integration
-     if (process.env.NODE_ENV === 'development') {
-       console.error('[16s Error]', error.message, context);
-       return;
-     }
-     // Future: Sentry.captureException(error, { extra: context });
-     // For now: POST to a logging endpoint if configured
-     const endpoint = process.env.NEXT_PUBLIC_ERROR_ENDPOINT;
-     if (endpoint) {
-       fetch(endpoint, {
-         method: 'POST',
-         headers: { 'Content-Type': 'application/json' },
-         body: JSON.stringify({ message: error.message, stack: error.stack, context, timestamp: Date.now() }),
-       }).catch(() => {}); // fire and forget
-     }
-   }
+   import { CodeEditor } from "./CodeEditor";
+   ```
+   with:
+   ```typescript
+   import dynamic from 'next/dynamic';
+   const CodeEditor = dynamic(() => import('./CodeEditor').then(m => ({ default: m.CodeEditor })), {
+     loading: () => <div className="w-full h-full flex items-center justify-center text-zinc-500 text-sm">Loading editor...</div>,
+     ssr: false,
+   });
+   ```
+   This defers Monaco until the user actually opens the code view.
+
+2. **Lazy-load html2canvas**: page.tsx (or usePreview.ts after R9) imports html2canvas at the top level. It's only used for taking screenshots before AI calls. ~400KB.
+
+   Replace the static import with dynamic import at call site:
+   ```typescript
+   // Remove: import html2canvas from "html2canvas";
+   // In the function that uses it:
+   const html2canvas = (await import('html2canvas')).default;
    ```
 
-   Wire this into:
-   - ErrorBoundary.tsx (componentDidCatch)
-   - API route catch blocks (replace console.debug with reportError for actual errors, keep debug for expected conditions)
-   - Client-side catch blocks in useChat, useDeployment, useProjects
+3. **Lazy-load Stripe client**: @stripe/stripe-js is imported but only needed when user clicks upgrade/checkout. Verify it's already lazy — if not, make it so:
+   ```typescript
+   const getStripeClient = async () => {
+     const { loadStripe } = await import('@stripe/stripe-js');
+     return loadStripe(process.env.NEXT_PUBLIC_STRIPE_KEY!);
+   };
+   ```
 
-10. **Global unhandled error/rejection handler** — In layout.tsx or a client component:
+4. **Lazy-load VoiceCall**: The VoiceCall component (489 lines, includes Web Speech API setup) is imported but only rendered when user starts a call. Use next/dynamic.
+
+5. **Bundle analysis + verification**: After lazy-loading changes, run:
+   ```
+   npm run build
+   ```
+   Compare the "First Load JS" numbers from the build output before and after. Document the improvement in progress.txt. Target: <200KB first load for the main page (currently ~276KB).
+
+### P1 — ONBOARDING (cycles 6-9)
+New users land on the welcome screen and have to figure things out themselves. No guidance on what 16s can do or how to get the best results.
+
+6. **First-visit tooltip tour**: On first visit (check localStorage flag `16s-onboarded`), show 3-4 lightweight tooltips that highlight key features:
+   - Tooltip 1: Points at the input area — "Describe any website and I'll build it in seconds"
+   - Tooltip 2: Points at the idea pills — "Or pick an idea to start with"
+   - Tooltip 3: After first generation, points at the preview — "Your site appears here. Edit it by chatting."
+   - Tooltip 4: Points at the voice call button (once visible) — "Try a voice call for a hands-free design session"
+
+   Implementation: Create src/components/onboarding/OnboardingTooltip.tsx — a small positioned tooltip with "Got it" button and step indicator (1/4). Use absolute positioning relative to the target element. Simple framer-motion fade in/out. Set localStorage flag when dismissed.
+
+   Keep it LIGHTWEIGHT — no full-page overlay, no modal, no video. Just subtle pointers.
+
+7. **Welcome screen example showcase**: Below the idea pills, add a "See what 16s can build" section with 3-4 static screenshots of impressive generated sites. These should be real screenshots, but for now use placeholder div with gradient backgrounds and text labels ("Tokyo Ramen Shop", "Architect Portfolio", "SaaS Landing Page"). Later you'll replace with real screenshots.
+
+8. **Smart first prompt handling**: When a brand new user sends their first message, the AI should be extra helpful. Add a flag in the chat request: `isFirstMessage: boolean`. In the system prompt, add:
+   ```
+   FIRST MESSAGE: If this is the user's first message ever, be extra warm and encouraging. Explain what will happen next. Don't overwhelm with options. Generate something impressive quickly to build trust. Skip the plan approval step on first message — just build something great.
+   ```
+
+9. **Credit counter in header**: Authenticated users should see their remaining credits in the header (near UserMenu). Small pill: "42 credits left" or "∞" for unlimited. Helps users understand the value of their subscription.
+
+### P2 — DISCUSSION MODE (cycles 10-12)
+Users sometimes want to brainstorm without generating code. Currently every message triggers a full AI response with HTML generation expectations.
+
+10. **Discussion toggle**: Add a "Chat only" mode toggle in the chat input area. When enabled:
+    - The AI responds conversationally without generating HTML
+    - System prompt gets a short addendum: "DISCUSSION MODE: The user wants to chat about their project without code generation. Help them brainstorm, refine ideas, discuss design choices, and plan. Do NOT generate HTML or React code. Respond with just a message and optional pills. When they're ready to build, they'll switch back to build mode."
+    - The toggle is a small icon button (MessageSquare icon from Lucide) next to the send button
+    - Visual indicator when in discussion mode (different input background, label "Chat mode")
+    - Persists per project (save in project settings)
+
+11. **Discussion → Build transition**: When user switches from discussion back to build mode, the AI should receive the full conversation context and a note: "The user has been brainstorming and is now ready to build. Use the discussion context to generate code."
+
+12. **Quick actions in discussion mode**: Add pills specific to brainstorming:
+    - "Show me layout options"
+    - "Compare color palettes"
+    - "What sections should I include?"
+    - "Ready to build!"
+
+### P3 — ANALYTICS HOOKS (cycles 13-15)
+No tracking exists. You can't know what users do, where they drop off, or what features they use.
+
+13. **Analytics utility**: Create src/lib/analytics.ts:
     ```typescript
-    useEffect(() => {
-      const handleError = (e: ErrorEvent) => reportError(new Error(e.message), { type: 'unhandled' });
-      const handleRejection = (e: PromiseRejectionEvent) => reportError(new Error(String(e.reason)), { type: 'unhandled_rejection' });
-      window.addEventListener('error', handleError);
-      window.addEventListener('unhandledrejection', handleRejection);
-      return () => { window.removeEventListener('error', handleError); window.removeEventListener('unhandledrejection', handleRejection); };
-    }, []);
+    type Event =
+      | { name: 'page_view'; props: { page: string } }
+      | { name: 'message_sent'; props: { hasImages: boolean; mode: 'build' | 'discussion' } }
+      | { name: 'generation_complete'; props: { model: string; tokens: number; hasHtml: boolean } }
+      | { name: 'deploy'; props: { success: boolean } }
+      | { name: 'voice_call'; props: { duration: number } }
+      | { name: 'image_upload'; props: { type: 'inspo' | 'content'; bgRemoved: boolean } }
+      | { name: 'project_created' | 'project_loaded' | 'project_deleted' }
+      | { name: 'auth_signin' | 'auth_signup' | 'auth_signout' }
+      | { name: 'upgrade_clicked'; props: { from: string } }
+      | { name: 'feature_used'; props: { feature: string } };
+
+    export function track(event: Event) {
+      // In development: console.debug
+      // In production: send to configured endpoint
+      if (process.env.NODE_ENV === 'development') {
+        console.debug('[Analytics]', event.name, event.props);
+        return;
+      }
+      const endpoint = process.env.NEXT_PUBLIC_ANALYTICS_ENDPOINT;
+      if (endpoint) {
+        fetch(endpoint, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ ...event, timestamp: Date.now() }),
+        }).catch(() => {});
+      }
+    }
     ```
 
-### P4 — Deferred Items From R10 (cycles 11-14)
+14. **Wire analytics into key touchpoints**:
+    - useChat: track message_sent, generation_complete
+    - useDeployment: track deploy
+    - VoiceCall: track voice_call with duration
+    - useImages: track image_upload
+    - useProjects: track project_created/loaded/deleted
+    - AuthContext: track auth events
+    - Page navigation: track page_view
 
-11. **Autosave indicator**: Small "Saved ✓" or "Saving..." text near the project name in the header. Needs a `saveStatus` state in page.tsx that the autosave timer updates. Subtle — fades in for 2s after save, then fades out.
+    All fire-and-forget. Never block UI. Never fail visibly.
 
-12. **Deploy flow improvements**:
-    - After successful deploy, show the URL prominently with large text
-    - "Copy URL" button (one click copy)
-    - "Open in new tab" button
-    - Optional: QR code using a simple QR library or inline SVG generation
+15. **Server-side generation metrics**: In the chat API route, log generation metrics:
+    - Model used (Haiku vs Sonnet)
+    - Token count (input + output)
+    - Response time
+    - Whether HTML was generated
+    - Whether it was a cache hit (prompt caching)
+    Store in a simple `generation_metrics` Supabase table (or just structured logs for now).
 
-13. **Preview iframe sandbox** — covered in P2 above (items 7-8)
+### P4 — QUALITY OF LIFE (cycles 16-18)
 
-14. **Stripe webhook tests**: Add 2-3 vitest tests for the webhook handler:
-    - Valid checkout.session.completed → updates subscription
-    - Invalid signature → 400
-    - Missing admin client → 500
-    Mock Stripe's constructEvent and Supabase client.
+16. **Project duplicate**: Add a "Duplicate" button on the projects page. Copies the project with "(Copy)" appended to the name. Users want to try different directions from the same starting point.
 
-### P5 — Final Verification (cycle 15)
+17. **Export improvements**: Beyond HTML download, add:
+    - "Copy HTML" button (already exists? verify)
+    - "Download as ZIP" — index.html + any referenced images (from Vercel Blob URLs) packaged together
+    - This lets users take their site to any hosting provider
 
-15. **Full smoke test**: Start dev server, run through the entire user flow:
-    - Load homepage
-    - Type a prompt, see streaming response
-    - See preview render
-    - Upload an image
-    - Try voice call (or verify fallback)
-    - Switch to projects page
-    - npm run build passes
-    - npm test passes
-    - All CI checks would pass
-    - Document results in progress.txt
+18. **Keyboard shortcuts help**: Verify the shortcuts modal (Cmd+/) still works after all the refactoring. If the shortcuts changed, update the modal content.
 
-16. **Update README**: Ensure it reflects the current state:
-    - Architecture diagram (text-based)
-    - All npm scripts documented
-    - CI/CD explained
-    - Test coverage summary
-    - Security model reference
+### VERIFICATION
+After each change:
+1. npm run build passes
+2. npm test passes
+3. For performance: compare build output before/after
+4. For UI: spot-check visually
