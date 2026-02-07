@@ -50,6 +50,8 @@ src/
       upload/route.ts     Image upload to Vercel Blob
       remove-bg/route.ts  Background removal proxy
       stripe/             Checkout, portal, webhook
+      share/route.ts      Project sharing (public slug + preview snapshot)
+      domains/route.ts    Custom domain management (Vercel API)
   lib/
     ai/prompts.ts         System prompt + React addendum (~380 lines)
     hooks/
@@ -66,6 +68,7 @@ src/
     env.ts                Typed env var validation
     analytics.ts          Typed analytics events (dev: console, prod: POST endpoint)
     error-reporter.ts     Structured error reporting (dev: console, prod: endpoint)
+    templates.ts          10 starter templates across industries
     types.ts              Shared TypeScript interfaces
   components/
     chat/
@@ -79,12 +82,19 @@ src/
       VersionHistory.tsx  History dropdown, bookmarks
     onboarding/
       OnboardingTooltip.tsx  First-visit tooltip tour (2 steps)
+    deploy/
+      DeploymentHistory.tsx Deployment list, revert, publish
+    domains/
+      DomainManager.tsx   Custom domain connect + DNS status
     auth/                 AuthModal, UserMenu, MigrationBanner
     GlobalErrorHandler.tsx  Window error/rejection catcher
     Toast.tsx             Toast notification system
     ErrorBoundary.tsx     Error boundary with fallback UI
 e2e/
   smoke.spec.ts           Playwright smoke tests (5 tests)
+app/
+  templates/page.tsx      Template gallery with industry filter
+  share/[slug]/page.tsx   Public project share page
 .github/workflows/ci.yml  GitHub Actions CI pipeline
 ```
 
@@ -102,6 +112,10 @@ e2e/
 - **Onboarding**: First-visit tooltip tour, showcase section, warm first-prompt experience
 - **Dark/Light Toggle**: Generated sites include theme switching
 - **Multi-Page Routing**: Generated sites have hash-based navigation with back/forward support
+- **Project Sharing**: Public shareable links with frozen HTML snapshots
+- **Custom Domains**: Connect your own domain to deployed sites (Pro plan)
+- **Templates**: 10 starter templates across industries (restaurant, SaaS, portfolio, etc.)
+- **Deployment History**: View past deploys, revert to any version, publish changes
 
 ## Commands
 
@@ -109,7 +123,7 @@ e2e/
 npm run dev            # Dev server (HTTPS, requires certificates/)
 npm run dev:http       # Dev server (HTTP, no certs needed)
 npm run build          # Production build
-npm test               # Unit tests (vitest, 28 tests)
+npm test               # Unit tests (vitest, 30 tests)
 npm run test:e2e       # E2E tests (Playwright, 5 smoke tests)
 npm run check          # Full pre-push check: tsc + build + test
 npx tsc --noEmit       # Type check only
@@ -123,7 +137,7 @@ GitHub Actions runs on push/PR to main:
 
 ## Testing
 
-- **Unit tests** (vitest): rate limiter, API response parser, API utils, chat API integration, Stripe webhook — 28 tests
+- **Unit tests** (vitest): rate limiter, API response parser, API utils, chat API integration, Stripe webhook (3 main paths) — 30 tests
 - **E2E tests** (Playwright): homepage, idea pills, chat flow with mock API, preview iframe, projects page — 5 tests
 - Tests run in CI automatically. Run `npm run check` locally before pushing.
 

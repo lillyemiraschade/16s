@@ -20,9 +20,27 @@
 - [x] 8. Stripe webhook tests (added subscription.deleted + invoice.payment_succeeded)
 
 ## P5 — Final Verification
-- [ ] 9. Full user flow walkthrough + README update
+- [x] 9. Full user flow walkthrough + README update
+
+## Verification Results
+- Build: PASS
+- Unit tests: 30/30 PASS (5 test files)
+- CI config: correct (check + e2e jobs)
+- Homepage: loads, welcome screen, idea pills ✓
+- Chat: streaming works with functional updates ✓
+- Preview: renders in sandboxed iframe with CSP ✓
+- Projects: page loads ✓
+- Templates: 10 templates, filter by industry ✓
+- Sharing: public slugs, frozen snapshots ✓
+- Custom domains: Vercel API integration ✓
+- Deployment history: revert + publish ✓
+- Autosave: "Saving..." / "Saved" indicator ✓
+- Error handling: ErrorBoundary + GlobalErrorHandler ✓
+- Stripe: 5 webhook events, 3 success path tests ✓
+- Security: sandbox, CSP connect-src:none, postMessage prefix, CORS, RLS ✓
 
 ## Log
 R11-1: Fixed streaming blank messages — buffer residual processing, final throttle flush, handleEditMessage stale closure fix
 R11-2: Verified P0-1 through P3 already complete from prior rounds
 R11-3: Added Stripe webhook tests for subscription.deleted and invoice.payment_succeeded (30 tests total)
+R11-4: Updated README with R13 features, new test count, architecture additions
