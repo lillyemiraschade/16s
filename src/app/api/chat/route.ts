@@ -501,54 +501,60 @@ Use this context to inform your designs. Don't ask about things you already know
       ...(outputFormat === "react" ? [{ type: "text" as const, text: "\n\n" + REACT_ADDENDUM }] : []),
     ];
 
-    // Use streaming to avoid Vercel function timeout - with retry logic
-    const makeRequest = async (retryCount = 0): Promise<string> => {
-      try {
-        const stream = anthropic.messages.stream({
-          model,
-          max_tokens: maxTokens,
-          system: systemPromptWithCache,
-          messages: claudeMessages,
-        });
-
-        let fullText = "";
-        for await (const event of stream) {
-          if (event.type === "content_block_delta" && event.delta.type === "text_delta") {
-            fullText += event.delta.text;
-          }
-        }
-        return fullText;
-      } catch (apiError) {
-        const errMsg = apiError instanceof Error ? apiError.message : String(apiError);
-        console.debug(`[Chat API] API error (attempt ${retryCount + 1}):`, errMsg);
-
-        // Retry on transient errors (overloaded, rate limits, network issues)
-        const isRetryable = errMsg.includes("overloaded") ||
-                           errMsg.includes("529") ||
-                           errMsg.includes("rate") ||
-                           errMsg.includes("timeout") ||
-                           errMsg.includes("ECONNRESET") ||
-                           errMsg.includes("503");
-
-        if (isRetryable && retryCount < 2) {
-          const delay = (retryCount + 1) * 2000; // 2s, 4s backoff
-          await new Promise(resolve => setTimeout(resolve, delay));
-          return makeRequest(retryCount + 1);
-        }
-        throw apiError;
-      }
-    };
-
+    // Stream tokens to client as NDJSON for real-time display
     const encoder = new TextEncoder();
     const readable = new ReadableStream({
       async start(controller) {
-        try {
-          const fullText = await makeRequest();
+        const sendEvent = (data: Record<string, unknown>) => {
+          controller.enqueue(encoder.encode(JSON.stringify(data) + "\n"));
+        };
 
+        try {
+          let fullText = "";
+          let tokensStreamed = false;
+
+          // Retry loop — only retries connection-level failures (before tokens flow)
+          for (let attempt = 0; attempt <= 2; attempt++) {
+            try {
+              const stream = anthropic.messages.stream({
+                model,
+                max_tokens: maxTokens,
+                system: systemPromptWithCache,
+                messages: claudeMessages,
+              });
+
+              for await (const event of stream) {
+                if (event.type === "content_block_delta" && event.delta.type === "text_delta") {
+                  fullText += event.delta.text;
+                  tokensStreamed = true;
+                  sendEvent({ type: "token", text: event.delta.text });
+                }
+              }
+              break; // Success — exit retry loop
+            } catch (apiError) {
+              const errMsg = apiError instanceof Error ? apiError.message : String(apiError);
+              console.debug(`[Chat API] API error (attempt ${attempt + 1}):`, errMsg);
+
+              const isRetryable = !tokensStreamed && (
+                errMsg.includes("overloaded") || errMsg.includes("529") ||
+                errMsg.includes("rate") || errMsg.includes("timeout") ||
+                errMsg.includes("ECONNRESET") || errMsg.includes("503")
+              );
+
+              if (isRetryable && attempt < 2) {
+                await new Promise(resolve => setTimeout(resolve, (attempt + 1) * 2000));
+                fullText = "";
+                continue;
+              }
+              throw apiError;
+            }
+          }
+
+          // Parse the complete response
           let parsedResponse: ChatResponse;
           try {
             parsedResponse = JSON.parse(fullText.trim());
-          } catch (parseError) {
+          } catch {
             console.debug("[Chat API] JSON parse failed, attempting fallback extraction");
             try {
               const jsonMatch = fullText.match(/```(?:json)?\n?([\s\S]+?)\n?```/);
@@ -559,7 +565,6 @@ Use this context to inform your designs. Don't ask about things you already know
                 if (objMatch) {
                   parsedResponse = JSON.parse(objMatch[0]);
                 } else {
-                  // Be honest - use the text if available, otherwise admit failure
                   parsedResponse = { message: fullText || "Sorry, I couldn't process that. Could you try rephrasing?" };
                 }
               }
@@ -568,18 +573,14 @@ Use this context to inform your designs. Don't ask about things you already know
             }
           }
 
-          // Send the final JSON
-          controller.enqueue(encoder.encode("\n" + JSON.stringify(parsedResponse)));
+          sendEvent({ type: "done", response: parsedResponse });
           controller.close();
         } catch (error) {
           const errMsg = error instanceof Error ? error.message : String(error);
-
           console.debug("[Chat API] Stream error:", errMsg);
 
           const { message: userMessage } = getUserFriendlyError(errMsg);
-          controller.enqueue(
-            encoder.encode("\n" + JSON.stringify({ message: userMessage }))
-          );
+          sendEvent({ type: "error", message: userMessage });
           controller.close();
         }
       },
@@ -589,7 +590,7 @@ Use this context to inform your designs. Don't ask about things you already know
       status: 200,
       headers: {
         "Content-Type": "text/plain; charset=utf-8",
-        "Transfer-Encoding": "chunked",
+        "Cache-Control": "no-cache, no-transform",
       },
     });
   } catch (error) {

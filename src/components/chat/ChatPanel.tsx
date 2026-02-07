@@ -631,9 +631,12 @@ export const ChatPanel = memo(function ChatPanel({
             transition={{ duration: 0.2 }}
             className="flex items-end gap-2 mt-4"
           >
-            <div className="glass-bubble bubble-tail-left px-4 py-3">
-              <TypingIndicator label={hasPreview ? "Making changes..." : "Designing your site..."} />
-            </div>
+            {/* Show typing indicator only before streaming text appears */}
+            {(!messages.length || messages[messages.length - 1].role !== "assistant") && (
+              <div className="glass-bubble bubble-tail-left px-4 py-3">
+                <TypingIndicator label={hasPreview ? "Making changes..." : "Designing your site..."} />
+              </div>
+            )}
             <button
               onClick={onStop}
               className="px-3 py-1.5 text-[11px] font-medium text-zinc-400 hover:text-zinc-200 bg-white/[0.04] hover:bg-white/[0.08] border border-white/[0.06] rounded-lg transition-colors"

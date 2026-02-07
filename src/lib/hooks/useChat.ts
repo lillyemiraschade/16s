@@ -32,102 +32,40 @@ function getContextualFallbackPills(
   return ["I'll drop some inspo", "Surprise me with a style", "Hop on a call"];
 }
 
-async function fetchAndParseChat(response: Response): Promise<ChatAPIResponse> {
-  if (!response.ok) {
-    let errorMsg = "Let me try that again...";
-    try {
-      const errorData = await response.json();
-      if (errorData.message) errorMsg = errorData.message;
-      else if (errorData.error) errorMsg = errorData.error;
-    } catch {
-      if (response.status === 413) errorMsg = "Request too large. Try with fewer or smaller images.";
-      else if (response.status === 429) errorMsg = "Too many requests. Please wait a moment.";
-      else if (response.status === 503) errorMsg = "The AI is busy right now. Please try again.";
-      else if (response.status === 504) errorMsg = "Request timed out. Please try again.";
-    }
-    throw new Error(errorMsg);
+/** Extract message text from partially-streamed JSON response */
+function extractStreamingMessage(raw: string): { messageText: string; phase: "thinking" | "message" | "html" } {
+  const prefix = '"message":"';
+  const msgStart = raw.indexOf(prefix);
+  if (msgStart === -1) return { messageText: "", phase: "thinking" };
+
+  const contentStart = msgStart + prefix.length;
+
+  // Find where message value ends (unescaped quote)
+  let messageEnd = -1;
+  let i = contentStart;
+  while (i < raw.length) {
+    if (raw[i] === "\\") { i += 2; continue; }
+    if (raw[i] === '"') { messageEnd = i; break; }
+    i++;
   }
 
-  const responseText = await response.text();
-  const lines = responseText.trim().split("\n").filter((l) => l.trim());
-  const lastLine = lines[lines.length - 1];
+  const endIndex = messageEnd === -1 ? raw.length : messageEnd;
+  const messageContent = raw.substring(contentStart, endIndex);
 
-  let data: ChatAPIResponse | undefined;
+  // Unescape JSON string escapes
+  const unescaped = messageContent
+    .replace(/\\n/g, "\n")
+    .replace(/\\"/g, '"')
+    .replace(/\\\\/g, "\\")
+    .replace(/\\t/g, "\t");
 
-  // Strategy 1: Try parsing the last line directly (most common case)
-  if (lastLine && lastLine !== "undefined" && lastLine.startsWith("{")) {
-    try {
-      data = JSON.parse(lastLine);
-    } catch { /* continue */ }
-  }
+  // Check if we've moved past message into HTML
+  const htmlStart = raw.indexOf('"html":"', contentStart);
 
-  // Strategy 2: Handle markdown-wrapped JSON
-  if (!data) {
-    const jsonMatch = responseText.match(/```(?:json)?\n?([\s\S]+?)\n?```/);
-    if (jsonMatch) {
-      try {
-        data = JSON.parse(jsonMatch[1].trim());
-      } catch { /* continue */ }
-    }
-  }
-
-  // Strategy 3: Find the last complete JSON object
-  if (!data) {
-    const jsonStart = responseText.lastIndexOf("\n{");
-    if (jsonStart !== -1) {
-      const jsonCandidate = responseText.slice(jsonStart + 1).trim();
-      try {
-        data = JSON.parse(jsonCandidate);
-      } catch { /* continue */ }
-    }
-  }
-
-  // Strategy 4: Find JSON with "message" field
-  if (!data) {
-    const msgIndex = responseText.lastIndexOf('{"message"');
-    if (msgIndex !== -1) {
-      const jsonCandidate = responseText.slice(msgIndex);
-      try {
-        data = JSON.parse(jsonCandidate);
-      } catch {
-        let depth = 0;
-        let endIndex = -1;
-        for (let i = 0; i < jsonCandidate.length; i++) {
-          if (jsonCandidate[i] === "{") depth++;
-          else if (jsonCandidate[i] === "}") {
-            depth--;
-            if (depth === 0) { endIndex = i + 1; break; }
-          }
-        }
-        if (endIndex > 0) {
-          try { data = JSON.parse(jsonCandidate.slice(0, endIndex)); } catch { /* continue */ }
-        }
-      }
-    }
-  }
-
-  // Strategy 5: Extract any JSON object from the response
-  if (!data) {
-    const objMatch = responseText.match(/\{[\s\S]*\}/);
-    if (objMatch) {
-      try {
-        data = JSON.parse(objMatch[0]);
-      } catch { /* continue */ }
-    }
-  }
-
-  // Strategy 6: Use raw text as message
-  if (!data) {
-    console.debug("Failed to parse API response");
-    const rawText = responseText.trim();
-    data = { message: rawText || "Let me try that again..." };
-  }
-
-  if (data.error) {
-    throw new Error(String(data.error));
-  }
-
-  return data;
+  return {
+    messageText: unescaped,
+    phase: htmlStart !== -1 ? "html" : "message",
+  };
 }
 
 interface UseChatOptions {
@@ -322,7 +260,7 @@ export function useChat({
       }));
   }, []);
 
-  // Shared helper: send to API, parse response, update preview state
+  // Shared helper: send to API, read streaming response, update state progressively
   const sendAndProcessChat = useCallback(async (
     cleanMessages: Partial<Message>[],
     imagesToSend: UploadedImage[],
@@ -348,35 +286,155 @@ export function useChat({
       signal: controller.signal,
     });
 
-    const data = await fetchAndParseChat(response);
+    if (!response.ok) {
+      let errorMsg = "Let me try that again...";
+      try {
+        const errorData = await response.json();
+        if (errorData.message) errorMsg = errorData.message;
+        else if (errorData.error) errorMsg = errorData.error;
+      } catch {
+        if (response.status === 413) errorMsg = "Request too large. Try with fewer or smaller images.";
+        else if (response.status === 429) errorMsg = "Too many requests. Please wait a moment.";
+        else if (response.status === 503) errorMsg = "The AI is busy right now. Please try again.";
+        else if (response.status === 504) errorMsg = "Request timed out. Please try again.";
+      }
+      throw new Error(errorMsg);
+    }
 
-    const isErrorResponse = !data.html && !data.plan && /unavailable|try again|timed? out|too many|busy/i.test(data.message || "");
+    // Create streaming placeholder message
+    const streamingMsgId = (Date.now() + 1).toString();
+    setMessages(prev => [...prev, {
+      id: streamingMsgId,
+      role: "assistant" as const,
+      content: "",
+    }]);
+
+    // Read NDJSON stream
+    const reader = response.body?.getReader();
+    if (!reader) {
+      // Fallback: non-streaming (shouldn't happen but be safe)
+      const text = await response.text();
+      const lines = text.trim().split("\n").filter(l => l.trim());
+      let data: ChatAPIResponse = { message: "Let me try that again..." };
+      for (const line of lines.reverse()) {
+        try { data = JSON.parse(line); break; } catch { /* continue */ }
+      }
+      setMessages(prev => prev.map(m =>
+        m.id === streamingMsgId
+          ? { ...m, content: data.message || "...", pills: data.pills, showUpload: data.showUpload, plan: data.plan, qaReport: data.qaReport }
+          : m
+      ));
+      if (data.html) {
+        const processedHtml = replaceImagePlaceholders(data.html, imagesToSend);
+        const navGuard = `<script>document.addEventListener('click',function(e){var a=e.target.closest('a');if(a){var h=a.getAttribute('href');if(h&&h.startsWith('http')){e.preventDefault();return;}if(h&&!h.startsWith('javascript:')){e.preventDefault();}}},true);<\/script>`;
+        onPushPreview(processedHtml.replace(/<head([^>]*)>/i, `<head$1>${navGuard}`));
+      }
+      if (data.context) onContextUpdate(data.context);
+      return;
+    }
+
+    const decoder = new TextDecoder();
+    let buffer = "";
+    let rawTokens = "";
+    let doneResponse: ChatAPIResponse | null = null;
+    let lastUpdateTime = 0;
+    const UPDATE_INTERVAL = 50; // ms — ~20 updates/sec for smooth text display
+
+    try {
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+
+        buffer += decoder.decode(value, { stream: true });
+        const lines = buffer.split("\n");
+        buffer = lines.pop() || "";
+
+        for (const line of lines) {
+          if (!line.trim()) continue;
+          try {
+            const event = JSON.parse(line);
+            if (event.type === "token") {
+              rawTokens += event.text;
+
+              const now = Date.now();
+              if (now - lastUpdateTime >= UPDATE_INTERVAL) {
+                lastUpdateTime = now;
+                const { messageText } = extractStreamingMessage(rawTokens);
+                setMessages(prev => prev.map(m =>
+                  m.id === streamingMsgId
+                    ? { ...m, content: messageText || "" }
+                    : m
+                ));
+              }
+            } else if (event.type === "done") {
+              doneResponse = event.response;
+            } else if (event.type === "error") {
+              throw new Error(event.message);
+            }
+          } catch (e) {
+            if (e instanceof SyntaxError) continue;
+            throw e;
+          }
+        }
+      }
+    } catch (error) {
+      if (error instanceof DOMException && error.name === "AbortError") {
+        // User stopped — keep whatever streaming content is shown
+        return;
+      }
+      // Stream error after tokens started — show partial content + error note
+      const { messageText } = extractStreamingMessage(rawTokens);
+      if (messageText) {
+        setMessages(prev => prev.map(m =>
+          m.id === streamingMsgId
+            ? { ...m, content: messageText + "\n\n*Generation interrupted. Try again?*", pills: ["Try again"] }
+            : m
+        ));
+        return;
+      }
+      throw error;
+    } finally {
+      reader.releaseLock();
+    }
+
+    // If no done event, fallback parse accumulated tokens
+    const finalResponse: ChatAPIResponse = doneResponse ?? (() => {
+      try { return JSON.parse(rawTokens.trim()); } catch {
+        return { message: rawTokens || "Let me try that again..." };
+      }
+    })();
+
+    // Finalize message with pills, HTML, context
+    const isErrorResponse = !finalResponse.html && !finalResponse.plan && /unavailable|try again|timed? out|too many|busy/i.test(finalResponse.message || "");
     const pills = isErrorResponse
       ? undefined
-      : (data.pills && data.pills.length > 0)
-        ? data.pills
-        : getContextualFallbackPills(!!currentPreview, !!data.html, !!data.plan, cleanMessages.length);
+      : (finalResponse.pills && finalResponse.pills.length > 0)
+        ? finalResponse.pills
+        : getContextualFallbackPills(!!currentPreview, !!finalResponse.html, !!finalResponse.plan, cleanMessages.length);
 
-    const aiMessage: Message = {
-      id: (Date.now() + 1).toString(),
-      role: "assistant",
-      content: data.message || "I'm working on your request...",
-      pills,
-      showUpload: data.showUpload,
-      plan: data.plan,
-      qaReport: data.qaReport,
-    };
-    setMessages((prev) => [...prev, aiMessage]);
+    setMessages(prev => prev.map(m =>
+      m.id === streamingMsgId
+        ? {
+            id: streamingMsgId,
+            role: "assistant" as const,
+            content: finalResponse.message || "I'm working on your request...",
+            pills,
+            showUpload: finalResponse.showUpload,
+            plan: finalResponse.plan,
+            qaReport: finalResponse.qaReport,
+          }
+        : m
+    ));
 
-    if (data.html) {
-      const processedHtml = replaceImagePlaceholders(data.html, imagesToSend);
-      const navGuard = `<script>document.addEventListener('click',function(e){var a=e.target.closest('a');if(a){var h=a.getAttribute('href');if(h&&h.startsWith('http')){e.preventDefault();return;}if(h&&!h.startsWith('javascript:')){e.preventDefault();}}},true);</script>`;
+    if (finalResponse.html) {
+      const processedHtml = replaceImagePlaceholders(finalResponse.html, imagesToSend);
+      const navGuard = `<script>document.addEventListener('click',function(e){var a=e.target.closest('a');if(a){var h=a.getAttribute('href');if(h&&h.startsWith('http')){e.preventDefault();return;}if(h&&!h.startsWith('javascript:')){e.preventDefault();}}},true);<\/script>`;
       const safeHtml = processedHtml.replace(/<head([^>]*)>/i, `<head$1>${navGuard}`);
       onPushPreview(safeHtml);
     }
 
-    if (data.context) {
-      onContextUpdate(data.context);
+    if (finalResponse.context) {
+      onContextUpdate(finalResponse.context);
     }
   }, [currentPreview, previewScreenshot, projectContext, replaceImagePlaceholders, onPushPreview, onContextUpdate]);
 
