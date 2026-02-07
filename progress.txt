@@ -19,3 +19,20 @@
 
 ## Log
 - [x] P0-0: Fixed streaming blank messages — immediate assistant message creation, auto-restore race condition guard, no-rethrow error handler
+- [x] P0-1: GitHub Actions CI — already existed (.github/workflows/ci.yml with check + e2e jobs)
+- [x] P0-2: check script — already existed in package.json
+- [x] P1: Playwright E2E — already existed (5 smoke tests, all passing)
+- [x] P2: Iframe security — already implemented (sandbox=allow-scripts allow-popups, CSP injected, postMessage type-prefix validation)
+- [x] P3: Error monitoring — already implemented (error-reporter.ts → Sentry/endpoint/console, GlobalErrorHandler, ErrorBoundary)
+- [x] P4: Deferred items — autosave indicator, deploy flow, webhook tests all already implemented
+
+## Verification (R11-2)
+- Homepage: ✓ loads, welcome screen, idea pills, templates section
+- Chat: ✓ type prompt → streaming response with no blank messages
+- Preview: ✓ iframe renders HTML from response
+- Projects: ✓ /projects page loads
+- Build: ✓ npm run build passes
+- TypeScript: ✓ tsc --noEmit clean
+- Unit tests: ✓ 30 tests pass across 5 test files
+- E2E tests: ✓ 5 Playwright tests pass (including streaming test)
+- CI config: ✓ .github/workflows/ci.yml with check + e2e jobs
