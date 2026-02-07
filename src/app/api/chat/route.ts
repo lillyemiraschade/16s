@@ -18,7 +18,7 @@ const UploadedImageSchema = z.object({
 const ProjectContextSchema = z.object({
   brandName: z.string().optional(),
   industry: z.string().optional(),
-  targetAudience: z.string().optional(),
+  targetAudience: z.union([z.string(), z.array(z.string())]).optional(),
   stylePreferences: z.array(z.string()).optional(),
   colorPreferences: z.array(z.string()).optional(),
   fontPreferences: z.array(z.string()).optional(),
@@ -67,7 +67,7 @@ interface ChatResponse {
   context?: {
     brandName?: string;
     industry?: string;
-    targetAudience?: string;
+    targetAudience?: string | string[];
     stylePreferences?: string[];
     colorPreferences?: string[];
     fontPreferences?: string[];
@@ -962,7 +962,7 @@ export async function POST(req: Request) {
       const parts: string[] = [];
       if (context.brandName) parts.push(`Brand: ${context.brandName}`);
       if (context.industry) parts.push(`Industry: ${context.industry}`);
-      if (context.targetAudience) parts.push(`Audience: ${context.targetAudience}`);
+      if (context.targetAudience) parts.push(`Audience: ${Array.isArray(context.targetAudience) ? context.targetAudience.join(", ") : context.targetAudience}`);
       if (context.stylePreferences?.length) parts.push(`Style: ${context.stylePreferences.join(", ")}`);
       if (context.colorPreferences?.length) parts.push(`Colors: ${context.colorPreferences.join(", ")}`);
       if (context.fontPreferences?.length) parts.push(`Fonts: ${context.fontPreferences.join(", ")}`);

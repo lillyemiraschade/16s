@@ -61,7 +61,7 @@ export interface VersionBookmark {
 export interface ProjectContext {
   brandName?: string;
   industry?: string;
-  targetAudience?: string;
+  targetAudience?: string | string[];
   stylePreferences?: string[]; // "modern", "minimal", "bold", etc.
   colorPreferences?: string[]; // hex codes or color names
   fontPreferences?: string[];
