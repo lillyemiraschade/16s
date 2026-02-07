@@ -15,8 +15,12 @@ vi.mock("@/lib/stripe/config", () => ({
 }));
 
 // Mock Supabase admin client
-const mockUpdate = vi.fn().mockReturnValue({ eq: vi.fn().mockReturnValue({ eq: vi.fn() }) });
-const mockSelect = vi.fn();
+const mockEqInner = vi.fn();
+const mockEqOuter = vi.fn().mockReturnValue({ eq: mockEqInner });
+const mockUpdate = vi.fn().mockReturnValue({ eq: mockEqOuter });
+const mockSingle = vi.fn();
+const mockSelectEq = vi.fn().mockReturnValue({ single: mockSingle });
+const mockSelect = vi.fn().mockReturnValue({ eq: mockSelectEq });
 const mockFrom = vi.fn().mockReturnValue({ update: mockUpdate, select: mockSelect });
 let adminClientAvailable = true;
 
@@ -75,6 +79,56 @@ describe("Stripe webhook", () => {
         plan: "pro",
         status: "active",
         stripe_subscription_id: "sub_123",
+        credits_remaining: 500,
+      })
+    );
+  });
+
+  it("handles customer.subscription.deleted — downgrades to free", async () => {
+    mockSingle.mockResolvedValue({ data: { user_id: "user-2" }, error: null });
+    mockConstructEvent.mockReturnValue({
+      type: "customer.subscription.deleted",
+      data: {
+        object: {
+          customer: "cus_deleted",
+        },
+      },
+    });
+
+    const res = await POST(makeRequest("{}"));
+    expect(res.status).toBe(200);
+
+    expect(mockFrom).toHaveBeenCalledWith("subscriptions");
+    expect(mockSelect).toHaveBeenCalledWith("user_id");
+    expect(mockUpdate).toHaveBeenCalledWith(
+      expect.objectContaining({
+        plan: "free",
+        status: "canceled",
+        stripe_subscription_id: null,
+        credits_remaining: 50,
+      })
+    );
+  });
+
+  it("handles invoice.payment_succeeded — resets credits on renewal", async () => {
+    mockSingle.mockResolvedValue({ data: { user_id: "user-3", plan: "pro" }, error: null });
+    mockConstructEvent.mockReturnValue({
+      type: "invoice.payment_succeeded",
+      data: {
+        object: {
+          customer: "cus_renew",
+          billing_reason: "subscription_cycle",
+        },
+      },
+    });
+
+    const res = await POST(makeRequest("{}"));
+    expect(res.status).toBe(200);
+
+    expect(mockFrom).toHaveBeenCalledWith("subscriptions");
+    expect(mockSelect).toHaveBeenCalledWith("user_id, plan");
+    expect(mockUpdate).toHaveBeenCalledWith(
+      expect.objectContaining({
         credits_remaining: 500,
       })
     );

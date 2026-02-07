@@ -2,25 +2,27 @@
 
 ## P0 — Critical Bugs & CI
 - [x] 0. Fix streaming blank messages bug
-- [ ] 1. GitHub Actions CI
-- [ ] 2. npm check script (already exists)
+- [x] 1. GitHub Actions CI (already exists from prior round)
+- [x] 2. npm check script (already exists from prior round)
 
 ## P1 — Playwright E2E Tests
-- [ ] 3. Playwright setup + smoke tests (already exists, verify)
+- [x] 3. Playwright setup + smoke tests (already exists — 5 tests, config, mock API)
 
 ## P2 — Iframe Security
-- [ ] 4. Sandbox + CSP + postMessage hardening
+- [x] 4. Sandbox + CSP + postMessage hardening (already done — allow-scripts allow-popups, CSP connect-src:none, type prefix validation)
 
 ## P3 — Error Monitoring
-- [ ] 5. Error reporter + GlobalErrorHandler
+- [x] 5. Error reporter + GlobalErrorHandler (already done — error-reporter.ts, ErrorBoundary.tsx, GlobalErrorHandler.tsx in Providers)
 
 ## P4 — Deferred Items
-- [ ] 6. Autosave indicator
-- [ ] 7. Deploy flow polish
-- [ ] 8. Stripe webhook tests
+- [x] 6. Autosave indicator (already done — "Saving..." / "Saved" in ChatPanel header)
+- [x] 7. Deploy flow polish (already done — DeploymentHistory, revert, publish button)
+- [x] 8. Stripe webhook tests (added subscription.deleted + invoice.payment_succeeded)
 
 ## P5 — Final Verification
 - [ ] 9. Full user flow walkthrough + README update
 
 ## Log
 R11-1: Fixed streaming blank messages — buffer residual processing, final throttle flush, handleEditMessage stale closure fix
+R11-2: Verified P0-1 through P3 already complete from prior rounds
+R11-3: Added Stripe webhook tests for subscription.deleted and invoice.payment_succeeded (30 tests total)
