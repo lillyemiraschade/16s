@@ -31,6 +31,19 @@ export async function GET(request: Request) {
       return NextResponse.redirect(`${origin}/?auth_error=${encodeURIComponent(error.message)}`);
     }
 
+    // Send welcome email for new signups (fire-and-forget)
+    try {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (user?.email && user.created_at) {
+        const createdAt = new Date(user.created_at).getTime();
+        const isNewUser = Date.now() - createdAt < 60_000; // within last 60s
+        if (isNewUser) {
+          const { sendWelcomeEmail } = await import("@/lib/email");
+          sendWelcomeEmail(user.email, user.user_metadata?.full_name);
+        }
+      }
+    } catch {}
+
     console.debug("[Auth Callback] Success, redirecting to:", next);
     return NextResponse.redirect(`${origin}${next}`);
   } catch (err) {

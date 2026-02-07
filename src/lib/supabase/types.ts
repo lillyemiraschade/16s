@@ -94,6 +94,32 @@ export interface Database {
           updated_at?: string;
         };
       };
+      form_submissions: {
+        Row: {
+          id: string;
+          project_id: string;
+          owner_id: string;
+          form_data: Json;
+          is_read: boolean;
+          created_at: string;
+        };
+        Insert: {
+          id?: string;
+          project_id: string;
+          owner_id: string;
+          form_data: Json;
+          is_read?: boolean;
+          created_at?: string;
+        };
+        Update: {
+          id?: string;
+          project_id?: string;
+          owner_id?: string;
+          form_data?: Json;
+          is_read?: boolean;
+          created_at?: string;
+        };
+      };
       deployments: {
         Row: {
           id: string;

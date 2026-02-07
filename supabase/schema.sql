@@ -81,6 +81,21 @@ CREATE INDEX IF NOT EXISTS idx_domains_user_id ON domains(user_id);
 CREATE INDEX IF NOT EXISTS idx_domains_project_id ON domains(project_id);
 
 -- ============================================================================
+-- FORM SUBMISSIONS TABLE (contact form data from deployed sites)
+-- ============================================================================
+CREATE TABLE IF NOT EXISTS form_submissions (
+  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  project_id UUID NOT NULL REFERENCES projects(id) ON DELETE CASCADE,
+  owner_id UUID NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE,
+  form_data JSONB NOT NULL,
+  is_read BOOLEAN DEFAULT FALSE,
+  created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+CREATE INDEX IF NOT EXISTS idx_form_submissions_project ON form_submissions(project_id);
+CREATE INDEX IF NOT EXISTS idx_form_submissions_owner ON form_submissions(owner_id);
+
+-- ============================================================================
 -- SUBSCRIPTIONS TABLE (for future billing)
 -- ============================================================================
 CREATE TABLE IF NOT EXISTS subscriptions (
@@ -127,6 +142,7 @@ CREATE INDEX IF NOT EXISTS idx_usage_created_at ON usage(created_at DESC);
 ALTER TABLE projects ENABLE ROW LEVEL SECURITY;
 ALTER TABLE deployments ENABLE ROW LEVEL SECURITY;
 ALTER TABLE domains ENABLE ROW LEVEL SECURITY;
+ALTER TABLE form_submissions ENABLE ROW LEVEL SECURITY;
 ALTER TABLE subscriptions ENABLE ROW LEVEL SECURITY;
 ALTER TABLE usage ENABLE ROW LEVEL SECURITY;
 
@@ -148,6 +164,14 @@ CREATE POLICY "Users can CRUD own deployments" ON deployments
 CREATE POLICY "Users manage own domains" ON domains
   FOR ALL USING (auth.uid() = user_id)
   WITH CHECK (auth.uid() = user_id);
+
+-- Form submissions: Owners view + update their own, anyone can insert
+CREATE POLICY "Owners view own submissions" ON form_submissions
+  FOR SELECT USING (auth.uid() = owner_id);
+CREATE POLICY "Owners update own submissions" ON form_submissions
+  FOR UPDATE USING (auth.uid() = owner_id);
+CREATE POLICY "Anyone can insert submissions" ON form_submissions
+  FOR INSERT WITH CHECK (TRUE);
 
 -- Subscriptions: Users can view and update their own subscription
 CREATE POLICY "Users can view own subscription" ON subscriptions

@@ -89,7 +89,17 @@ export async function POST(request: NextRequest) {
     }
 
     const origin = request.headers.get("origin") || request.nextUrl.origin;
-    return apiSuccess({ url: `${origin}/share/${slug}`, slug });
+    const shareUrl = `${origin}/share/${slug}`;
+
+    // Send share notification email (fire-and-forget)
+    try {
+      const { sendShareEmail } = await import("@/lib/email");
+      if (user.email) {
+        sendShareEmail(user.email, project.name, shareUrl);
+      }
+    } catch {}
+
+    return apiSuccess({ url: shareUrl, slug });
   } catch {
     return apiError("Failed to share project", 500);
   }

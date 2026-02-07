@@ -44,6 +44,9 @@ export async function POST(request: NextRequest) {
     // Inject SVG favicon if none exists
     const htmlWithFavicon = injectFavicon(html, projectName);
 
+    // Inject form handler script so contact forms work on deployed sites
+    const htmlWithForms = injectFormHandler(htmlWithFavicon, projectId);
+
     // Create a clean project name for Vercel
     const safeName = (projectName || "16s-site")
       .toLowerCase()
@@ -66,7 +69,7 @@ export async function POST(request: NextRequest) {
         files: [
           {
             file: "index.html",
-            data: Buffer.from(htmlWithFavicon).toString("base64"),
+            data: Buffer.from(htmlWithForms).toString("base64"),
             encoding: "base64",
           },
         ],
@@ -99,6 +102,14 @@ export async function POST(request: NextRequest) {
       console.debug("[Deploy] Database error:", dbError);
       // Don't fail the request, deployment still succeeded
     }
+
+    // Send deploy notification email (fire-and-forget)
+    try {
+      const { sendDeployEmail } = await import("@/lib/email");
+      if (user.email) {
+        sendDeployEmail(user.email, projectName || "Your site", `https://${deployment.url}`);
+      }
+    } catch {}
 
     return apiSuccess({
       success: true,
@@ -135,6 +146,39 @@ function injectFavicon(html: string, projectName?: string): string {
     return html.replace(/<head([^>]*)>/i, `<head$1>\n    ${linkTag}`);
   }
   return html;
+}
+
+/** Inject form submission handler so contact forms POST back to 16s API */
+function injectFormHandler(html: string, projectId: string): string {
+  // Only inject if there are <form> elements
+  if (!/<form[\s>]/i.test(html)) return html;
+
+  const script = `<script>
+document.querySelectorAll('form').forEach(f=>{
+f.addEventListener('submit',async e=>{
+e.preventDefault();
+const btn=f.querySelector('[type="submit"]')||f.querySelector('button:last-of-type');
+const orig=btn?btn.textContent:'';
+if(btn){btn.disabled=true;btn.textContent='Sending...';}
+try{
+const d=Object.fromEntries(new FormData(f));
+await fetch('https://try16s.app/api/forms',{
+method:'POST',headers:{'Content-Type':'application/json'},
+body:JSON.stringify({projectId:'${projectId}',fields:d})
+});
+if(btn)btn.textContent='\\u2713 Sent!';
+f.reset();
+setTimeout(()=>{if(btn){btn.textContent=orig;btn.disabled=false;}},3000);
+}catch(err){if(btn){btn.textContent='Error \\u2014 try again';btn.disabled=false;}}
+});
+});
+<\/script>`;
+
+  // Insert before </body> or at end
+  if (/<\/body>/i.test(html)) {
+    return html.replace(/<\/body>/i, `${script}\n</body>`);
+  }
+  return html + script;
 }
 
 // Get deployments for a project
