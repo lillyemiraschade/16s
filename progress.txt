@@ -1,27 +1,38 @@
 # Round 13: Product Features
 
 ## P0 — Sharing
-- [ ] 1. Schema migration (is_public, public_slug, public_preview)
-- [ ] 2. Share API (POST/DELETE/GET /api/share)
-- [ ] 3. Public project page (/share/[slug])
-- [ ] 4. Share button in PreviewToolbar
+- [x] 1. Schema migration (is_public, public_slug, public_preview) — R13-1
+- [x] 2. Share API (POST/DELETE/GET /api/share) — R13-2
+- [x] 3. Public project page (/share/[slug]) — R13-2
+- [x] 4. Share button in PreviewToolbar — R13-2
 
 ## P1 — Custom Domains
-- [ ] 5. Schema (domains table)
-- [ ] 6. Domain API (/api/domains)
-- [ ] 7. Domain management UI
-- [ ] 8. Domain status in projects list
+- [x] 5. Schema (domains table) — R13-3
+- [x] 6. Domain API (/api/domains) — R13-3
+- [x] 7. Domain management UI — R13-3
+- [x] 8. Domain status in projects list — R13-3
 
 ## P2 — Templates
-- [ ] 9. Template data (10 industry-diverse templates)
-- [ ] 10. Templates page (/templates)
-- [ ] 11. Templates in welcome screen
-- [ ] 12. Template attribution tracking
+- [x] 9. Template data (10 industry-diverse templates) — R13-4
+- [x] 10. Templates page (/templates) — R13-4
+- [x] 11. Templates in welcome screen — R13-4
+- [x] 12. Template attribution tracking — R13-4
 
 ## P3 — Deployment History
-- [ ] 13. Deployment history UI
-- [ ] 14. Deployment comparison/preview
-- [ ] 15. "Publish changes" button
+- [x] 13. Deployment history UI — R13-5
+- [x] 14. Deployment comparison/preview — R13-5
+- [x] 15. "Publish changes" button — R13-5
 
 ## Log
-(cycle notes here)
+- R13-1: Schema migration — is_public, public_slug, public_preview columns + index + RLS
+- R13-2: Full sharing feature — API with slug generation, /share/[slug] page, share button with popover
+- R13-3: Custom domains — domains table, Vercel API integration, DomainManager UI, Pro plan gate
+- R13-4: Template system — 10 templates, /templates page with filters, welcome screen integration
+- R13-5: Deployment history — timeline panel with revert, hover previews, publish button
+
+## Stats
+- 5 commits, 15 tasks complete
+- New files: 10 (2 migrations, 3 API routes, 3 pages, 2 components)
+- Modified files: 7 (schema, types, toolbar, panel, page, projects, deploy API)
+- Build: passes (237KB first load)
+- Tests: 28/28 passing
