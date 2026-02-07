@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useCallback } from "react";
+import { reportError } from "@/lib/error-reporter";
 
 interface Deployment {
   id: string;
@@ -49,6 +50,7 @@ export function useDeployment() {
       setLastDeployment(result);
       return result;
     } catch (error) {
+      reportError(error instanceof Error ? error : new Error(String(error)), { source: "useDeployment.deploy" });
       const result = { success: false, error: "Network error" };
       setLastDeployment(result);
       return result;
@@ -66,7 +68,7 @@ export function useDeployment() {
         setDeployments(data.deployments);
       }
     } catch (error) {
-      console.debug("Failed to fetch deployments:", error);
+      reportError(error instanceof Error ? error : new Error(String(error)), { source: "useDeployment.fetchDeployments" });
     }
   }, []);
 

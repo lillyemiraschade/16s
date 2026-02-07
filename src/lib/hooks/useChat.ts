@@ -4,6 +4,7 @@ import { useState, useRef, useCallback, useEffect } from "react";
 import { VoiceCallHandle } from "@/components/chat/VoiceCall";
 import { ensureBlobUrls } from "@/lib/hooks/useImages";
 import { parseAIResponse } from "@/lib/ai/parse-response";
+import { reportError } from "@/lib/error-reporter";
 import type { Message, UploadedImage, SelectedElement, ProjectContext, ChatAPIResponse } from "@/lib/types";
 
 /** Generate contextual fallback pills when the AI response is missing them */
@@ -499,7 +500,7 @@ export function useChat({
       await sendAndProcessChat(cleanMessages, imagesToSend, userMessage, controller);
     } catch (error) {
       if (error instanceof DOMException && error.name === "AbortError") return;
-      console.debug("Error sending message:", error);
+      reportError(error instanceof Error ? error : new Error(String(error)), { source: "useChat" });
 
       setMessages((prev) => prev.filter((m) => m.id !== userMessage.id));
 
@@ -576,7 +577,7 @@ export function useChat({
       await sendAndProcessChat(cleanMessages, imagesToSend, userMessage, controller);
     } catch (error) {
       if (error instanceof DOMException && error.name === "AbortError") return;
-      console.debug("Error sending message:", error);
+      reportError(error instanceof Error ? error : new Error(String(error)), { source: "useChat" });
 
       setMessages((prev) => prev.filter((m) => m.id !== userMessage.id));
 

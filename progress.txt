@@ -16,8 +16,8 @@
 - [x] 8. Inject CSP into preview HTML
 
 ## P3 — Error Monitoring
-- [ ] 9. Error reporting utility + wiring
-- [ ] 10. Global unhandled error handler
+- [x] 9. Error reporting utility + wiring
+- [x] 10. Global unhandled error handler
 
 ## P4 — Deferred Items
 - [ ] 11. Autosave indicator
@@ -33,3 +33,4 @@
 - R11-2: Added GitHub Actions CI (.github/workflows/ci.yml) + npm run check script. CI runs type check, build, and tests on push/PR to main.
 - R11-3: Playwright E2E setup + 5 smoke tests. Tests: homepage loads, idea pills visible, send prompt + streaming response, preview iframe renders, projects page. CI workflow includes e2e job. Supabase env stripped in Playwright config so auth gate doesn't block E2E sends.
 - R11-4: Iframe security hardening. Dropped allow-same-origin (→ allow-scripts allow-popups). Fixed postMessage handler to validate 16s- type prefix instead of origin. Injected CSP meta tag with connect-src 'none' + frame-src 'none' to block network requests from generated HTML.
+- R11-5: Error monitoring. Created reportError utility (dev: console, prod: POST to endpoint). GlobalErrorHandler for window.onerror + unhandledrejection. Wired into ErrorBoundary, useChat, useDeployment.
