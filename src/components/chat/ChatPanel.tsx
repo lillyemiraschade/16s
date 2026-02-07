@@ -58,6 +58,8 @@ export const ChatPanel = memo(function ChatPanel({
   const [uploadContext, setUploadContext] = useState<{ type: "inspo" | "content"; label?: string }>({ type: "inspo" });
   const [removingBgIndex, setRemovingBgIndex] = useState<number | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const userScrolledUpRef = useRef(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const lightboxCloseRef = useRef<HTMLButtonElement>(null);
@@ -134,8 +136,11 @@ export const ChatPanel = memo(function ChatPanel({
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
+  // Only auto-scroll if user hasn't scrolled up to read history
   useEffect(() => {
-    scrollToBottom();
+    if (!userScrolledUpRef.current) {
+      scrollToBottom();
+    }
   }, [messages, isGenerating]);
 
   // Focus textarea after generation completes
@@ -353,7 +358,20 @@ export const ChatPanel = memo(function ChatPanel({
       </div>
 
       {/* Messages area */}
-      <div className="flex-1 overflow-y-auto px-5 py-5 relative flex flex-col" role="log" aria-label="Conversation" aria-live="polite">
+      <div
+        ref={scrollContainerRef}
+        className="flex-1 overflow-y-auto px-5 py-5 relative flex flex-col"
+        role="log"
+        aria-label="Conversation"
+        aria-live="polite"
+        onScroll={() => {
+          const el = scrollContainerRef.current;
+          if (!el) return;
+          // User is "near bottom" if within 150px of the end
+          const nearBottom = el.scrollHeight - el.scrollTop - el.clientHeight < 150;
+          userScrolledUpRef.current = !nearBottom;
+        }}
+      >
         {/* Spacer pushes messages to bottom when few */}
         <div className="flex-1" />
         {/* Drag overlay */}
@@ -577,7 +595,7 @@ export const ChatPanel = memo(function ChatPanel({
                           key={idx}
                           onClick={() => onPillClick(pill)}
                           disabled={isGenerating}
-                          className="px-4 py-2 text-[13px] font-medium glass-pill text-zinc-200 disabled:opacity-40 disabled:cursor-not-allowed rounded-full transition-all duration-200"
+                          className="px-4 py-2 text-[13px] font-medium glass-pill text-zinc-200 hover:text-white hover:bg-white/[0.08] focus-visible:ring-1 focus-visible:ring-green-500/50 focus-visible:outline-none disabled:opacity-40 disabled:cursor-not-allowed rounded-full transition-all duration-200"
                         >
                           {pill}
                         </button>
