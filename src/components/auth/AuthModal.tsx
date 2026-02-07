@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, Mail, Github, Loader2, Eye, EyeOff } from "lucide-react";
 import { useAuth } from "@/lib/auth/AuthContext";
@@ -24,6 +24,12 @@ export function AuthModal({ isOpen, onClose, title, subtitle }: AuthModalProps) 
   const [showPassword, setShowPassword] = useState(false);
 
   const { signInWithEmail, signUpWithEmail, signInWithOAuth } = useAuth();
+  const oauthTimerRef = useRef<ReturnType<typeof setTimeout>>();
+
+  // Cleanup OAuth timeout on unmount
+  useEffect(() => {
+    return () => clearTimeout(oauthTimerRef.current);
+  }, []);
 
   // Close on Escape key
   useEffect(() => {
@@ -71,7 +77,7 @@ export function AuthModal({ isOpen, onClose, title, subtitle }: AuthModalProps) 
 
       // If we're still here after 3 seconds, the redirect didn't happen
       // This catches silent failures where OAuth doesn't initiate properly
-      setTimeout(() => {
+      oauthTimerRef.current = setTimeout(() => {
         setLoading(false);
         setError("Sign in failed to start. Please check that popups are allowed and try again.");
       }, 3000);
