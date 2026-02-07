@@ -111,11 +111,25 @@
 - ErrorBoundary infinite loop: Try Again resets hasError, which re-renders children. If children throw again immediately, getDerivedStateFromError catches it in the same tick. React limits this internally. LOW risk, accepted.
 - handleCallComplete with empty data: compileCallData handles empty conversations gracefully — returns "The call ended before I could gather details" summary. VERIFIED OK.
 
+### Cycle 9: FULL CODEBASE VERIFICATION (Stripe, voice, streaming, security)
+**End-to-end audit of all remaining routes, streaming logic, XSS vectors, and browser API usage.**
+
+**Verified OK (no new issues):**
+- Stripe checkout/portal `origin` header usage: CORS middleware blocks malicious origins. Auth blocks unauthenticated users. Stripe redirect URLs aren't exploitable. VERIFIED OK.
+- Chat route streaming: Returns status 200 even for errors (by design). Client-side `isErrorResponse` regex catches error messages and suppresses pills. VERIFIED OK.
+- Voice route: Solid Zod validation, proper error handling, rate limiting, maxDuration=60. VERIFIED OK.
+- `window.open` calls: Both open controlled URLs (blob URL for preview, Vercel deployment URL). VERIFIED OK.
+- No `dangerouslySetInnerHTML` or `innerHTML` outside sandboxed iframes. VERIFIED OK.
+- iframe sandbox `allow-scripts allow-same-origin` is correct for AI-generated previews. Needed for html2canvas and postMessage. VERIFIED OK.
+- handleBeforeUnload: Comment says "sendBeacon" but uses synchronous localStorage. Comment inaccuracy only — code is correct. NOTED (cosmetic, not fixing per rules).
+- All Zod schemas have appropriate max sizes (currentPreview 500K, previewScreenshot 2MB, messages 100 max, content 15000 chars). VERIFIED OK.
+- Type assertions: Only 2 `as unknown` casts in entire codebase, both documented and intentional. VERIFIED OK.
+
 ### npm audit
 - 4 Next.js vulnerabilities (3 high, 1 critical) in v14.2.18
 - Fix requires upgrading to 14.2.35 (`npm audit fix --force`)
 - NOTED: Requires testing — not auto-applied to avoid breaking changes
 
 ## Summary
-Ultimate R2: 8 cycles, 20 findings fixed (4 security, 1 UI, 6 output quality, 9 code).
+Ultimate R2: 9 cycles, 20 findings fixed (4 security, 1 UI, 6 output quality, 9 code).
 Total across all rounds: 143 changes.
