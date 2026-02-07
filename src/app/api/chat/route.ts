@@ -366,12 +366,14 @@ MODERN CSS PATTERNS (use when appropriate for contemporary designs):
 IMAGE TYPES:
 - INSPO images (website screenshots) → clone the STYLE only, don't embed the image itself
 - CONTENT images (logo, team photos, product photos) → embed in the HTML
-- If user says "put this image in" for an INSPO image → embed it anyway using the rules below
+- If user says "put/place/embed this image" for an INSPO image → embed it using its {{INSPO_IMAGE_N}} placeholder
 
-EMBEDDING CONTENT IMAGES — ONE RULE:
-The system tells you how to reference each image. Follow it exactly:
-- If system says "Use this EXACT URL: https://..." → use that URL: <img src="https://..." alt="...">
-- If system says "Use placeholder: {{CONTENT_IMAGE_N}}" → use it: <img src="{{CONTENT_IMAGE_0}}" alt="...">
+EMBEDDING IMAGES — RULES:
+Each image has its own numbered placeholder. Follow the instructions shown next to each image:
+- Content images: "Use this EXACT URL: https://..." → <img src="https://..." alt="...">
+- Content images: "Use placeholder: {{CONTENT_IMAGE_N}}" → <img src="{{CONTENT_IMAGE_0}}" alt="...">
+- Inspo images user wants embedded: "use: {{INSPO_IMAGE_N}}" → <img src="{{INSPO_IMAGE_0}}" alt="...">
+Match the placeholder number to the specific image the user is referring to.
 
 🚨 NEVER write src="data:image/..." — you cannot generate image bytes. It will produce broken garbage.
 
@@ -719,8 +721,9 @@ export async function POST(req: Request) {
 
     const claudeMessages: MessageParam[] = [];
 
-    // Track global content image index across all messages
+    // Track global image indices across all messages
     let globalContentImageIndex = 0;
+    let globalInspoImageIndex = 0;
 
     for (const msg of messages) {
       if (msg.role === "user") {
@@ -736,7 +739,7 @@ export async function POST(req: Request) {
           const inspoImgs = messageImages.filter((img) => img.type === "inspo");
           const contentImgs = messageImages.filter((img) => img.type === "content");
 
-          // Add inspo images first with label
+          // Add inspo images first with label and individual indices
           if (inspoImgs.length > 0) {
             contentBlocks.push({
               type: "text",
@@ -753,6 +756,12 @@ export async function POST(req: Request) {
                     data: matches[2],
                   },
                 });
+                const labelNote = img.label ? ` (${img.label})` : "";
+                contentBlocks.push({
+                  type: "text",
+                  text: `[Inspo image #${globalInspoImageIndex}${labelNote} — to embed this image directly, use: {{INSPO_IMAGE_${globalInspoImageIndex}}}]`,
+                });
+                globalInspoImageIndex++;
               }
             }
           }
@@ -810,12 +819,12 @@ export async function POST(req: Request) {
           const hasUrls = contentImgs.some(img => img.url);
           if (inspoImgs.length > 0 && contentImgs.length > 0) {
             if (hasUrls) {
-              systemNote = "\n\n[SYSTEM NOTE: The user provided both INSPIRATION images (clone the design style) and CONTENT images. For inspiration images: extract exact colors, typography, spacing, layout. For content images: use the EXACT https:// URLs provided above in img src. NEVER embed base64 data:image — it breaks images!]";
+              systemNote = "\n\n[SYSTEM NOTE: The user provided both INSPIRATION images (clone the design style) and CONTENT images. For inspiration images: extract exact colors, typography, spacing, layout. For content images: use the EXACT https:// URLs provided above in img src. NEVER embed base64 data:image — it breaks images! If user asks to embed an inspo image directly, use its {{INSPO_IMAGE_N}} placeholder.]";
             } else {
-              systemNote = "\n\n[SYSTEM NOTE: The user provided both INSPIRATION images (clone the design style) and CONTENT images (use placeholders like {{CONTENT_IMAGE_0}}). For inspiration images: extract exact colors, typography, spacing, layout. For content images: use the {{CONTENT_IMAGE_N}} placeholders in img src attributes.]";
+              systemNote = "\n\n[SYSTEM NOTE: The user provided both INSPIRATION images (clone the design style) and CONTENT images (use placeholders like {{CONTENT_IMAGE_0}}). For inspiration images: extract exact colors, typography, spacing, layout. For content images: use the {{CONTENT_IMAGE_N}} placeholders. If user asks to embed an inspo image directly, use its {{INSPO_IMAGE_N}} placeholder.]";
             }
           } else if (inspoImgs.length > 0) {
-            systemNote = "\n\n[SYSTEM NOTE: These are INSPIRATION images. CLONE THE DESIGN PIXEL-PERFECTLY. Extract exact colors, typography, spacing, layout, button styles, nav style — everything. DO NOT interpret. CLONE EXACTLY what you see. HOWEVER: If user asks to PUT THIS IMAGE IN THE WEBSITE (not just clone the style), use {{CONTENT_IMAGE_0}} as the src — the system will replace it with the actual image.]";
+            systemNote = "\n\n[SYSTEM NOTE: These are INSPIRATION images. CLONE THE DESIGN PIXEL-PERFECTLY. Extract exact colors, typography, spacing, layout, button styles, nav style — everything. DO NOT interpret. CLONE EXACTLY what you see. HOWEVER: If user asks to PUT/PLACE/EMBED THIS IMAGE IN THE WEBSITE (not just clone the style), use the {{INSPO_IMAGE_N}} placeholder shown next to that specific image. Each inspo image has its own numbered placeholder — use the one that matches the image the user is referring to.]";
           } else if (contentImgs.length > 0) {
             if (hasUrls) {
               systemNote = "\n\n[SYSTEM NOTE: These are CONTENT images to embed in the website. Use the EXACT https:// URLs provided above in <img src=\"...\">. CRITICAL: NEVER use base64 data:image — only use the https:// URLs!]";

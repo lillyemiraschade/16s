@@ -577,14 +577,25 @@ function HomePageContent() {
       }
     }
 
-    // If no content images but we have inspo images, use inspo as fallback
-    // This handles the common case where user uploads an image tagged as inspo
-    // but actually wants it embedded in the website
-    const imagesToUse = allContentImages.length > 0 ? allContentImages : allInspoImages;
+    const fallbackPixel = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7";
 
     let result = html;
 
-    // Step 1: Replace {{CONTENT_IMAGE_N}} placeholders with image data
+    // Step 1a: Replace {{INSPO_IMAGE_N}} placeholders with inspo image data
+    const inspoPlaceholderRegex = /\{\{\s*INSPO_IMAGE_(\d+)\s*\}\}/g;
+    result = result.replace(inspoPlaceholderRegex, (_match, indexStr) => {
+      const index = parseInt(indexStr, 10);
+      if (allInspoImages[index]) {
+        return allInspoImages[index].url || allInspoImages[index].data;
+      } else if (allInspoImages.length > 0) {
+        return allInspoImages[allInspoImages.length - 1].url || allInspoImages[allInspoImages.length - 1].data;
+      }
+      return fallbackPixel;
+    });
+
+    // Step 1b: Replace {{CONTENT_IMAGE_N}} placeholders with content image data
+    // Falls back to inspo images if no content images exist (legacy behavior)
+    const imagesToUse = allContentImages.length > 0 ? allContentImages : allInspoImages;
     const placeholderRegex = /\{\{\s*CONTENT_IMAGE_(\d+)\s*\}\}/g;
 
     result = result.replace(placeholderRegex, (_match, indexStr) => {
@@ -593,9 +604,8 @@ function HomePageContent() {
         return imagesToUse[index].url || imagesToUse[index].data;
       } else if (imagesToUse.length > 0) {
         return imagesToUse[0].url || imagesToUse[0].data;
-      } else {
-        return "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7";
       }
+      return fallbackPixel;
     });
 
     // Step 2: Validate blob URLs - replace any unrecognized blob URLs
