@@ -476,6 +476,7 @@ export const ChatPanel = memo(function ChatPanel({
                         rows={3}
                         maxLength={10000}
                         autoFocus
+                        aria-label="Edit message"
                       />
                       <div className="flex gap-2 justify-end">
                         <button

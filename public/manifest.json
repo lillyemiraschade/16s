@@ -1,0 +1,16 @@
+{
+  "name": "16s — AI Web Designer",
+  "short_name": "16s",
+  "description": "Describe your dream website. 16s builds it in seconds with AI.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0a0a0b",
+  "theme_color": "#0a0a0b",
+  "icons": [
+    {
+      "src": "/logo.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

@@ -10,7 +10,27 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   title: "16s — AI Web Designer",
-  description: "Describe it. See it. Ship it.",
+  description: "Describe your dream website in plain English. 16s builds it in seconds with AI — live preview, one-click deploy.",
+  metadataBase: new URL("https://16s-ruddy.vercel.app"),
+  openGraph: {
+    title: "16s — AI Web Designer",
+    description: "Describe your dream website in plain English. 16s builds it in seconds with AI.",
+    url: "https://16s-ruddy.vercel.app",
+    siteName: "16s",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "16s — AI Web Designer",
+    description: "Describe your dream website in plain English. 16s builds it in seconds with AI.",
+  },
+  alternates: {
+    canonical: "https://16s-ruddy.vercel.app",
+  },
+  icons: {
+    apple: "/logo.png",
+  },
+  manifest: "/manifest.json",
 };
 
 export const viewport: Viewport = {
@@ -33,6 +53,11 @@ export default function RootLayout({
         <a href="#main-content" className="skip-link">
           Skip to content
         </a>
+        <noscript>
+          <div style={{ padding: "2rem", textAlign: "center", color: "#fff", background: "#0a0a0b" }}>
+            16s requires JavaScript to run. Please enable JavaScript in your browser.
+          </div>
+        </noscript>
         <Providers>{children}</Providers>
       </body>
     </html>

@@ -1296,7 +1296,7 @@ function HomePageContent() {
   // Welcome screen
   if (!hasStarted) {
     return (
-      <div id="main-content" className="h-screen welcome-bg flex flex-col" onDrop={handleWelcomeDrop} onDragOver={(e) => e.preventDefault()}>
+      <main id="main-content" className="h-screen welcome-bg flex flex-col" onDrop={handleWelcomeDrop} onDragOver={(e) => e.preventDefault()}>
         <header className="relative z-20 h-14 md:h-[60px] flex items-center justify-between px-4 md:px-6">
           <div className="flex items-center gap-4 md:gap-8">
             <Image src="/logo.png" alt="16s logo" width={28} height={28} className="object-contain" />
@@ -1496,7 +1496,7 @@ function HomePageContent() {
           title={authModalMessage?.title}
           subtitle={authModalMessage?.subtitle}
         />
-      </div>
+      </main>
     );
   }
 
