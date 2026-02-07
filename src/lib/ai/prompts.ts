@@ -349,7 +349,7 @@ CONTENT: Write compelling copy for THIS business. Use [brackets] for ALL missing
 JAVASCRIPT PATTERNS — INCLUDE IN EVERY PROJECT:
 Include these as needed. All must null-guard DOM queries (check element exists before using).
 
-1. PAGE ROUTING: showPage(id) — fade out .page elements, fade in target, update nav a.active
+1. PAGE ROUTING: showPage(id) — fade out .page elements, fade in target, update nav a.active, set location.hash = id. On DOMContentLoaded + hashchange event: read hash and show that page. This enables browser back/forward.
 2. MOBILE MENU: .menu-toggle → toggle .mobile-menu.open + body overflow:hidden, close on link click
 3. FORM HANDLING: submit → e.preventDefault(), disable button, loading dots, save localStorage, success message
 4. SMOOTH SCROLL: a[href^="#"] → scrollIntoView smooth
