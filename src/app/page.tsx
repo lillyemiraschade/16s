@@ -2,7 +2,7 @@
 
 import { useState, useRef, useCallback, useEffect, Suspense } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Paperclip, ArrowUp, ImagePlus, X, FolderOpen } from "lucide-react";
+import { Paperclip, ArrowUp, ImagePlus, X, FolderOpen, MessageSquare, Monitor } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
@@ -40,6 +40,7 @@ function HomePageContent() {
   const [savedProjects, setSavedProjects] = useState<SavedProjectMeta[]>([]);
   const [projectContext, setProjectContext] = useState<ProjectContext | undefined>(undefined);
   const [showShortcuts, setShowShortcuts] = useState(false);
+  const [mobileView, setMobileView] = useState<"chat" | "preview">("chat");
 
   // External hooks
   const { save: saveProject, load: loadProject, list: listProjects, remove: deleteProject, isCloud, isAuthLoading, migrationStatus, migratedCount } = useProjects();
@@ -92,6 +93,15 @@ function HomePageContent() {
     onSend: chat.handleSendMessage,
     onImageUpload: images.handleImageUpload,
   });
+
+  // ─── Auto-switch to preview on mobile when new preview arrives ───
+  const prevPreviewRef = useRef(preview.currentPreview);
+  useEffect(() => {
+    if (preview.currentPreview && preview.currentPreview !== prevPreviewRef.current && window.innerWidth < 768) {
+      setMobileView("preview");
+    }
+    prevPreviewRef.current = preview.currentPreview;
+  }, [preview.currentPreview]);
 
   // ─── Auth error from URL ───
   useEffect(() => {
@@ -592,12 +602,12 @@ function HomePageContent() {
       <AnimatePresence>
         <motion.div
           id="main-content"
-          className="flex h-screen overflow-hidden"
+          className="flex flex-col md:flex-row h-screen overflow-hidden"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.3 }}
         >
-          <nav className="w-1/3 min-w-[360px] max-w-[480px]" aria-label="Chat">
+          <nav className={`md:w-1/3 md:min-w-[360px] md:max-w-[480px] ${mobileView === "chat" ? "flex-1" : "hidden"} md:block`} aria-label="Chat">
           <ErrorBoundary fallbackLabel="Chat panel crashed">
           <ChatPanel
             messages={chat.messages}
@@ -620,7 +630,7 @@ function HomePageContent() {
           />
           </ErrorBoundary>
         </nav>
-        <main className="flex-1 relative" aria-label="Preview">
+        <main className={`flex-1 relative ${mobileView === "preview" ? "block" : "hidden"} md:block`} aria-label="Preview">
           <ErrorBoundary fallbackLabel="Preview panel crashed">
           <PreviewPanel
             html={preview.currentPreview}
@@ -666,6 +676,28 @@ function HomePageContent() {
             )}
           </AnimatePresence>
         </main>
+
+          {/* Mobile tab bar */}
+          <div className="md:hidden flex-shrink-0 h-12 border-t border-white/[0.06] bg-[#0a0a0b] flex">
+            <button
+              onClick={() => setMobileView("chat")}
+              className={`flex-1 flex items-center justify-center gap-2 text-[13px] font-medium transition-colors ${
+                mobileView === "chat" ? "text-green-400" : "text-zinc-500"
+              }`}
+            >
+              <MessageSquare className="w-4 h-4" />
+              Chat
+            </button>
+            <button
+              onClick={() => setMobileView("preview")}
+              className={`flex-1 flex items-center justify-center gap-2 text-[13px] font-medium transition-colors ${
+                mobileView === "preview" ? "text-green-400" : "text-zinc-500"
+              }`}
+            >
+              <Monitor className="w-4 h-4" />
+              Preview
+            </button>
+          </div>
       </motion.div>
     </AnimatePresence>
 

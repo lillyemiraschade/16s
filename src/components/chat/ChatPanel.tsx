@@ -315,7 +315,7 @@ export const ChatPanel = memo(function ChatPanel({
           <button
             onClick={handleCallClick}
             disabled={isOnCall}
-            className={`flex items-center gap-1.5 px-2.5 py-1.5 text-[11px] font-medium rounded-lg transition-all duration-200 ${
+            className={`flex items-center gap-1.5 px-2.5 py-2 md:py-1.5 text-[12px] md:text-[11px] font-medium rounded-lg transition-all duration-200 min-h-[44px] md:min-h-0 ${
               isOnCall
                 ? "text-green-400 bg-green-500/15"
                 : "text-zinc-400 hover:text-zinc-200 hover:bg-white/[0.04]"
@@ -323,16 +323,16 @@ export const ChatPanel = memo(function ChatPanel({
             title={isOnCall ? "Call in progress..." : "Voice call with AI"}
             aria-label={isOnCall ? "Call in progress" : "Start voice call with AI"}
           >
-            <Phone className="w-3.5 h-3.5" />
+            <Phone className="w-4 h-4 md:w-3.5 md:h-3.5" />
             <span>{isOnCall ? "On Call" : "Call"}</span>
           </button>
           <button
             onClick={onNewProject}
-            className="flex items-center gap-1.5 px-2.5 py-1.5 text-[11px] font-medium text-zinc-400 hover:text-zinc-200 hover:bg-white/[0.04] rounded-lg transition-all duration-200"
+            className="flex items-center gap-1.5 px-2.5 py-2 md:py-1.5 text-[12px] md:text-[11px] font-medium text-zinc-400 hover:text-zinc-200 hover:bg-white/[0.04] rounded-lg transition-all duration-200 min-h-[44px] md:min-h-0"
             title="Start new project"
             aria-label="Start new project"
           >
-            <Plus className="w-3.5 h-3.5" />
+            <Plus className="w-4 h-4 md:w-3.5 md:h-3.5" />
             <span>New</span>
           </button>
         </div>
@@ -749,7 +749,7 @@ export const ChatPanel = memo(function ChatPanel({
                 }
                 fileInputRef.current?.click();
               }}
-              className="p-1.5 mb-0.5 hover:bg-white/[0.06] rounded-lg transition-colors flex-shrink-0"
+              className="p-2.5 md:p-1.5 mb-0.5 hover:bg-white/[0.06] rounded-lg transition-colors flex-shrink-0"
               title={hasPreview ? "Upload content images (logo, photos)" : "Upload inspiration images"}
               aria-label={hasPreview ? "Upload content images" : "Upload inspiration images"}
             >
@@ -793,7 +793,7 @@ export const ChatPanel = memo(function ChatPanel({
             <button
               onClick={handleSend}
               disabled={(!input.trim() && uploadedImages.length === 0) || isGenerating}
-              className="p-2.5 mb-0.5 bg-green-500/60 hover:bg-green-400/70 disabled:bg-zinc-800/50 disabled:cursor-not-allowed rounded-full transition-all duration-200 flex-shrink-0 glow-green-strong disabled:shadow-none"
+              className="p-3 md:p-2.5 mb-0.5 bg-green-500/60 hover:bg-green-400/70 disabled:bg-zinc-800/50 disabled:cursor-not-allowed rounded-full transition-all duration-200 flex-shrink-0 glow-green-strong disabled:shadow-none"
               aria-label="Send message"
             >
               <ArrowUp className="w-4 h-4 text-white" />
