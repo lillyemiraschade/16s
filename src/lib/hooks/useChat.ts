@@ -7,13 +7,18 @@ import { parseAIResponse } from "@/lib/ai/parse-response";
 import { reportError } from "@/lib/error-reporter";
 import type { Message, UploadedImage, SelectedElement, ProjectContext, ChatAPIResponse } from "@/lib/types";
 
+/** Discussion mode brainstorm pills */
+const DISCUSSION_PILLS = ["Show me layout options", "Compare color palettes", "What sections should I include?", "Ready to build!"];
+
 /** Generate contextual fallback pills when the AI response is missing them */
 function getContextualFallbackPills(
   hasPreview: boolean,
   hasNewHtml: boolean,
   hasPlan: boolean,
   messageCount: number,
+  isDiscussion?: boolean,
 ): string[] {
+  if (isDiscussion) return DISCUSSION_PILLS;
   if (hasPlan) return ["Looks good, build it!", "Let's adjust the plan"];
   if (hasNewHtml && !hasPreview) return ["Love it, keep going", "Different direction", "Send me my photos"];
   if (hasNewHtml && hasPreview) return ["Looks great", "Make more changes", "Let's deploy"];
@@ -94,6 +99,7 @@ export function useChat({
   const [isGenerating, setIsGenerating] = useState(false);
   const [isOnCall, setIsOnCall] = useState(false);
   const [hasStarted, setHasStarted] = useState(false);
+  const [discussionMode, setDiscussionMode] = useState(false);
 
   // Auth state for new user flow
   const [showAuthModal, setShowAuthModal] = useState(false);
@@ -275,6 +281,7 @@ export function useChat({
         outputFormat: "html",
         context: projectContext,
         isFirstMessage: isFirstMessage || undefined,
+        discussionMode: discussionMode || undefined,
       }),
       signal: controller.signal,
     });
@@ -413,7 +420,7 @@ export function useChat({
       ? undefined
       : (finalResponse.pills && finalResponse.pills.length > 0)
         ? finalResponse.pills
-        : getContextualFallbackPills(!!currentPreview, !!finalResponse.html, !!finalResponse.plan, cleanMessages.length);
+        : getContextualFallbackPills(!!currentPreview, !!finalResponse.html, !!finalResponse.plan, cleanMessages.length, discussionMode);
 
     upsertStreamingMsg(
       finalResponse.message || "I'm working on your request...",
@@ -435,7 +442,7 @@ export function useChat({
     if (finalResponse.context) {
       onContextUpdate(finalResponse.context);
     }
-  }, [currentPreview, previewScreenshot, projectContext, replaceImagePlaceholders, onPushPreview, onContextUpdate]);
+  }, [currentPreview, previewScreenshot, projectContext, discussionMode, replaceImagePlaceholders, onPushPreview, onContextUpdate]);
 
   const handleSendMessage = useCallback(async (text: string, imagesToInclude?: UploadedImage[]) => {
     // If auth is configured but user is not signed in
@@ -549,6 +556,10 @@ export function useChat({
     if (lowerPill.includes("call") || lowerPill.includes("phone") || lowerPill.includes("voice")) {
       setIsOnCall(true);
       return;
+    }
+    // "Ready to build!" pill exits discussion mode
+    if (lowerPill.includes("ready to build")) {
+      setDiscussionMode(false);
     }
     handleSendMessage(pill);
   }, [isGenerating, handleSendMessage]);
@@ -669,6 +680,8 @@ export function useChat({
     setPendingPrompt,
     authModalMessage,
     setAuthModalMessage,
+    discussionMode,
+    setDiscussionMode,
     voiceCallRef,
     sendMessageRef,
     abortRef,

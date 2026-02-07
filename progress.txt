@@ -17,9 +17,9 @@
 - [x] 9. Credit counter in header (AuthContext fetches credits, UserMenu displays in dropdown + badge)
 
 ## P2 — Discussion Mode
-- [ ] 10. Chat-only toggle (no code generation)
-- [ ] 11. Discussion → Build transition context
-- [ ] 12. Brainstorm-specific pills
+- [x] 10. Chat-only toggle (MessageSquare/Code2 button, blue ring indicator, API flag)
+- [x] 11. Discussion → Build transition ("Ready to build!" pill auto-switches mode)
+- [x] 12. Brainstorm-specific pills (layout options, color palettes, sections, ready to build)
 
 ## P3 — Analytics
 - [ ] 13. Analytics utility (typed events, fire-and-forget)

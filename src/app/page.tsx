@@ -682,6 +682,8 @@ function HomePageContent() {
             onClearSelection={preview.handleClearSelection}
             onEditMessage={chat.handleEditMessage}
             saveStatus={saveStatus}
+            discussionMode={chat.discussionMode}
+            onToggleDiscussionMode={() => chat.setDiscussionMode(prev => !prev)}
           />
           </ErrorBoundary>
         </nav>

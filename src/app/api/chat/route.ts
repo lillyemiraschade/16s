@@ -46,6 +46,7 @@ const ChatRequestSchema = z.object({
   outputFormat: z.enum(["html", "react"]).default("html"), // Output format: vanilla HTML or React components
   context: ProjectContextSchema.nullable().default(null), // Learned preferences (invisible memory)
   isFirstMessage: z.boolean().optional(), // Extra-warm response for brand new users
+  discussionMode: z.boolean().optional(), // Chat-only mode, no code generation
 });
 
 type ChatRequest = z.infer<typeof ChatRequestSchema>;
@@ -197,7 +198,7 @@ export async function POST(req: Request) {
         { status: 400, headers: { "Content-Type": "application/json" } }
       );
     }
-    const { messages, uploadedImages, inspoImages, currentPreview, previewScreenshot, outputFormat, context, isFirstMessage } = parsed.data;
+    const { messages, uploadedImages, inspoImages, currentPreview, previewScreenshot, outputFormat, context, isFirstMessage, discussionMode } = parsed.data;
 
     // Check and deduct credits for authenticated users
     try {
@@ -502,6 +503,7 @@ Use this context to inform your designs. Don't ask about things you already know
       ...(contextInjection ? [{ type: "text" as const, text: contextInjection }] : []),
       ...(outputFormat === "react" ? [{ type: "text" as const, text: "\n\n" + REACT_ADDENDUM }] : []),
       ...(isFirstMessage ? [{ type: "text" as const, text: "\n\nFIRST MESSAGE: This is the user's very first message. Be extra warm and encouraging. Generate something impressive quickly to build trust. Skip plan approval — just build something great." }] : []),
+      ...(discussionMode ? [{ type: "text" as const, text: "\n\nDISCUSSION MODE: The user wants to chat about their project without code generation. Help them brainstorm, refine ideas, discuss design choices, and plan. Do NOT generate HTML or React code. Do NOT include an \"html\" field. Respond with just a message and optional pills." }] : []),
     ];
 
     // Stream tokens to client as NDJSON for real-time display

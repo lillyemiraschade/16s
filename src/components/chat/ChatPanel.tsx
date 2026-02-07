@@ -31,6 +31,8 @@ export const ChatPanel = memo(function ChatPanel({
   onClearSelection,
   onEditMessage,
   saveStatus,
+  discussionMode,
+  onToggleDiscussionMode,
 }: ChatPanelProps) {
   const [isDragging, setIsDragging] = useState(false);
   const [lightboxImage, setLightboxImage] = useState<string | null>(null);
@@ -396,6 +398,8 @@ export const ChatPanel = memo(function ChatPanel({
         onAttach={handleAttach}
         uploadedImages={uploadedImages}
         onPaste={handlePaste}
+        discussionMode={discussionMode}
+        onToggleDiscussionMode={onToggleDiscussionMode}
       />
 
       {/* Hidden file input */}
