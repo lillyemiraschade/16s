@@ -1,29 +1,23 @@
 # 16s Improvement Progress
 
-## Previous Rounds
-- Rounds 1-4 (113 changes): DB fixes, rate limiting, credit enforcement, templates, JS safety, UX, code dedup, a11y, dead code, prompt compression 14K→5.9K, React.memo, anti-template rules, industries, modern CSS, focus traps, console audit.
-- Round 5 (10 changes): Guided 6-step conversation flow, inspo-first, fallback pills, smart photo placement, voice handoff, social link intelligence, bg removal UX.
-- Security hardening (8 commits): Input limits, CORS lockdown, CSP, RLS verification, auth on upload/remove-bg, security headers, static files, SECURITY.md.
+## History
+- Rounds 1-4: 113 code/prompt changes, prompt compressed 14K→5.9K tokens
+- Round 5 (Flow): Conversation flow, inspo-first, photo intelligence
+- Ultimate R1: 10 findings fixed (postMessage validation, Stripe rate limiting, auto-scroll yank, pill states, unhandled promises, decodeURI crash, error timer cleanup, modern CSS prompt, error toast UX, localStorage quota handling)
 
-## Audit Findings
+## Ultimate R1 found only 10 issues in 7 cycles.
+That means the surface-level audit is exhausted. This round goes DEEPER.
 
-### SECURITY
-- [x] S1: postMessage origin validation — FIXED: message handler validates e.origin
-- [x] S2: Stripe rate limiting — FIXED: 5/min/IP on checkout + portal routes
-- [x] S3: Unhandled promises — FIXED: Promise.allSettled + Promise.resolve().catch()
+## Round 2 Focus Areas
+- Security: actually curl every endpoint, test auth bypass, test CORS, verify CSP works
+- App UI: test at real device widths, test slow connections, test with 100+ messages
+- Output quality: the AI prompt changes are untested — nobody has verified generated sites actually look different
+- Integration testing: Supabase + Stripe + Vercel deploy chain end-to-end
+- Stress testing: what breaks under load or extreme inputs?
+- Mobile: the entire app on 375px width
 
-### UI/UX
-- [x] U1: Auto-scroll yanking — FIXED: only scrolls when user is near bottom (<150px)
-- [x] U2: Pill hover/focus — FIXED: hover:text-white + bg highlight + focus-visible ring
-- [x] U3: Error toast — FIXED: 4s→6s, timer ref cleanup, dismiss button added
+## Findings
+(Ralph fills this in)
 
-### CODE/BUGS
-- [x] C1: decodeURIComponent — FIXED: wrapped in try-catch
-- [x] C2: localStorage quota — FIXED: trims to 5 projects on QuotaExceededError
-- [x] C3: Welcome error timer — FIXED: ref-based timer with clearTimeout
-
-### PROMPT
-- [x] P1: Output quality — FIXED: modern CSS (text-wrap:balance, scroll-snap, :has(), subgrid), clearer icon guidance (inline SVG for HTML, Lucide for React)
-
-## Summary
-Ultimate loop: 6 commits, 10 findings fixed across security, UI, code, and prompt.
+## Fixed
+(Ralph checks off)
