@@ -1,150 +1,38 @@
-# Round 8: Runtime Verification Log
+# Round 9: Architecture, Polish & Features
 
-## Dev Server
-Status: Running
-PID: 5175 (port 3000)
+## P0 — Architecture
+- [ ] 1. Rate limiter dedup (7 copies → 1 shared module)
+- [ ] 2. God component split (page.tsx 1741→~400 lines, 4 new hooks)
+- [ ] 3. System prompt extraction (route.ts → src/lib/ai/prompts.ts)
+- [ ] 4. Clean up _bmad folder + consolidate docs
+- [ ] 5. Env validation module
+- [ ] 6. API response helpers (standardize error/success patterns)
+- [ ] 7. Types cleanup (ChatAPIResponse, move inline props)
+- [ ] 8. Globals.css audit (remove dead styles)
 
-## PHASE 1 — PEN TEST FINDINGS VERIFICATION
+## P1 — App UI
+- [ ] 9. Welcome screen polish
+- [ ] 10. Chat panel polish (pills, plan cards, QA reports)
+- [ ] 11. Preview panel improvements (toolbar, deploy celebration)
+- [ ] 12. Projects page (cards, thumbnails, relative time)
+- [ ] 13. Responsive audit at 375px
+- [ ] 14. Loading states audit
+- [ ] 15. Error states audit
+- [ ] 16. Toast system
 
-### 1. Input Length — textarea accepts 1M chars
-Command: curl -s -w "\n%{http_code}" -X POST http://localhost:3000/api/chat -H "Content-Type: application/json" -d '{"messages":[{"role":"user","content":"<1M chars>"}]}'
-Response: {"error":"Message too long. Please shorten your request."} 400
-Status: [x] PASS — 1M char message rejected with 400
+## P2 — Output Quality
+- [ ] 17. Dark mode toggle in generated sites
+- [ ] 18. Favicon generation on deploy
+- [ ] 19. SEO defaults in generated HTML
+- [ ] 20. Animation quality audit
+- [ ] 21. Multi-page navigation audit
+- [ ] 22. Image handling verification
 
-### 2. Wildcard CORS
-Command: curl -s -D- -o /dev/null -X OPTIONS http://localhost:3000/api/chat -H "Origin: https://evil.com" -H "Access-Control-Request-Method: POST"
-Response: HTTP/1.1 403 Forbidden (no Access-Control-Allow-Origin header)
-Status: [x] PASS — evil.com origin blocked with 403
+## P3 — Developer Experience
+- [ ] 23. README overhaul
+- [ ] 24. .env.example update
+- [ ] 25. Error boundary improvements
+- [ ] 26. Bundle analysis
 
-### 3. No CSP Header
-Command: curl -s -D- -o /dev/null http://localhost:3000/ | grep -i content-security
-Response: Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-eval' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline'; font-src 'self' https://cdn.jsdelivr.net data:; img-src 'self' blob: data: https://*.vercel-storage.com https://*.supabase.co; connect-src 'self' https://*.supabase.co wss://*.supabase.co https://cdn.jsdelivr.net; worker-src 'self' blob:; frame-src 'self' blob:; frame-ancestors 'none'; base-uri 'self'; form-action 'self'
-Status: [x] PASS — comprehensive CSP header present
-
-### 4. Supabase RLS
-Command: curl -s "$SUPABASE_URL/rest/v1/User?select=*&limit=1" -H "apikey: $ANON_KEY" -H "Authorization: Bearer $ANON_KEY"
-Response: [] (empty array for User, projects, deployments tables)
-Status: [x] PASS — anon key returns no data from any table
-
-### 5. /api/deploy without auth
-Command: curl -s -w "\nHTTP %{http_code}" -X POST http://localhost:3000/api/deploy -H "Content-Type: application/json" -d '{"html":"<h1>test</h1>"}'
-Response: {"error":"Unauthorized"} HTTP 401
-Status: [x] PASS — requires authentication
-
-### 6. /api/chat without auth
-Command: curl -s -w "\nHTTP %{http_code}" -X POST http://localhost:3000/api/chat -H "Content-Type: application/json" -d '{"messages":[{"role":"user","content":"hello"}],"currentPreview":""}'
-Response: {"message":"The AI service is temporarily unavailable..."} HTTP 200
-Status: [x] PASS — by design: chat is free-tier accessible (credits deducted for authed users)
-
-### 7. /api/upload without auth
-Command: curl -s -w "\nHTTP %{http_code}" -X POST http://localhost:3000/api/upload -H "Content-Type: application/json" -d '{"file":"test"}'
-Response: {"error":"Sign in to upload images"} HTTP 401
-Status: [x] PASS — requires authentication
-
-### 8. /api/remove-bg without auth
-Command: curl -s -w "\nHTTP %{http_code}" -X POST http://localhost:3000/api/remove-bg -H "Content-Type: application/json" -d '{"imageUrl":"test"}'
-Response: {"error":"Sign in to remove backgrounds"} HTTP 401
-Status: [x] PASS — requires authentication
-
-### 9. Static files (robots.txt, security.txt)
-Command: curl -s http://localhost:3000/robots.txt && curl -s http://localhost:3000/.well-known/security.txt
-Response: robots.txt → 200 with "Disallow: /api/, /auth/, /projects/". security.txt → 200 with contact info.
-Status: [x] PASS — both present and correct
-
-### 10. Error leak — stack traces
-Command: curl -s -X POST http://localhost:3000/api/chat -H "Content-Type: application/json" -d 'NOT JSON'
-Response: {"error":"Request too large. Try with fewer or smaller images."} — generic error, no stack trace
-GET to POST-only: empty response (no error detail)
-Bad content type: same generic error
-Status: [x] PASS — no stack traces or internal details leaked
-
-## PHASE 2 — ENDPOINT HARDENING
-
-### /api/chat
-Auth bypass: [x] N/A (free tier by design)
-Empty body: [x] PASS → {"error":"Invalid request: messages: Required"} 400
-Missing messages: [x] PASS → {"error":"Invalid request: messages: Required"} 400
-Messages not array: [x] PASS → {"error":"Invalid request: messages: Expected array, received string"} 400
-100K message: [x] PASS → 400 "Message too long" (tested with 1M chars)
-200 messages: [x] PASS → {"error":"Invalid request: messages: Array must contain at most 100 element(s)"} 400
-Role=system: [x] PASS → {"error":"Invalid request: messages.0.role: Invalid enum value. Expected 'user' | 'assistant', received 'system'"} 400
-Rate limit: [x] N/A (rate limiting verified in prior rounds)
-Non-JSON: [x] PASS → 413 "Request too large" (body parser rejects)
-
-### /api/chat/voice
-Auth bypass: [x] N/A (voice shares chat free tier)
-Empty body: [x] PASS → {"message":"Invalid request format.","complete":false} 400
-Valid-looking body: [x] PASS → 400 (requires voiceMessages, not messages)
-100K message: [x] Zod-enforced max 10000 chars per message, 5000 for projectContext
-
-### /api/upload
-Auth bypass: [x] PASS → {"error":"Sign in to upload images"} 401
-Empty body: [x] PASS → 401 (auth checked first)
-Non-image: [x] PASS → 401 (auth checked first)
-
-### /api/remove-bg
-Auth bypass: [x] PASS → {"error":"Sign in to remove backgrounds"} 401
-Empty body: [x] PASS → 401 (auth checked first)
-Missing key: [x] PASS → 401 (auth checked first)
-
-### /api/deploy
-Auth bypass: [x] PASS → {"error":"Unauthorized"} 401
-Empty HTML: [x] PASS → 401 (auth checked first)
-5MB HTML: [x] PASS → 401 (auth checked first; size limit enforced in code)
-
-### /api/stripe/checkout
-Auth bypass: [x] PASS → {"error":"Unauthorized"} 401
-Invalid plan: [x] PASS → 401 (auth checked first)
-Missing plan: [x] PASS → 401 (auth checked first)
-
-### /api/stripe/webhook
-No signature: [x] PASS → {"error":"No signature"} 400
-Fake signature: [x] PASS → {"error":"Webhook not configured"} 500 (no webhook secret in dev — correct)
-
-### /auth/callback
-No code param: [x] PASS → 307 redirect to / (no error leaked)
-Invalid code: [x] PASS → 307 redirect to /?auth_error=PKCE...
-Open redirect: [x] PASS → ?next=https://evil.com → redirects to localhost:3000 NOT evil.com
-
-## PHASE 3 — SECURITY HEADERS
-Content-Security-Policy: [x] PASS — comprehensive policy present
-Access-Control-Allow-Origin: [x] PASS — not set for non-CORS requests, 403 for evil origin
-X-Frame-Options: [x] PASS — DENY
-X-Content-Type-Options: [x] PASS — nosniff
-Referrer-Policy: [x] PASS — strict-origin-when-cross-origin
-Cross-Origin-Opener-Policy: [x] PASS — same-origin-allow-popups
-Cross-Origin-Embedder-Policy: [x] PASS — unsafe-none
-Permissions-Policy: [x] PASS — camera=(), geolocation=(), microphone=(self), payment=(), usb=(), bluetooth=(), serial=(), display-capture=(), fullscreen=(self), autoplay=(self)
-X-Powered-By absent: [x] PASS — not present in response headers
-Cross-Origin-Resource-Policy: [x] PASS — same-origin
-
-## PHASE 4 — BUILD HEALTH
-npm run build: [x] PASS — 0 warnings, all pages generated
-npx tsc --noEmit: [x] PASS — 0 errors
-npm audit: [x] 4 vulnerabilities (3 high, 1 critical) — all in Next.js 14.2.18 (known, needs upgrade to 14.2.35+)
-Bundle size:
-  / (main page): 78.7 kB → 276 kB First Load JS
-  /projects: 2.4 kB → 200 kB First Load JS
-  Shared JS: 87.2 kB
-  Middleware: 74.6 kB
-Largest chunks:
-  fd9d1056 (shared): 53.6 kB
-  117 (shared): 31.6 kB
-
-## PHASE 5 — STATIC FILES
-/robots.txt: [x] PASS — 200, correct disallow rules
-/.well-known/security.txt: [x] PASS — 200, contact info present
-/sitemap.xml: [x] PASS — 200, valid XML with canonical URL
-/manifest.json: [x] PASS — 200, valid PWA manifest
-/.env: [x] PASS — 404
-/.git/config: [x] PASS — 404
-
-## PHASE 6 — DOCUMENTATION
-SECURITY.md created: [x] PASS — updated with verified runtime test results
-
-## SUMMARY
-Total tests: 50+
-Passed: ALL
-Failures: 0
-Fixes needed: 0 (all security measures verified working)
-Known deferred: Next.js upgrade (14.2.18 → 14.2.35+) for 4 vulnerabilities
+## Log
+(cycle-by-cycle notes go here)
