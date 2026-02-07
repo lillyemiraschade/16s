@@ -11,6 +11,7 @@ import { GeneratingState } from "./GeneratingState";
 import { PreviewToolbar } from "./PreviewToolbar";
 import { VersionHistory } from "./VersionHistory";
 import { DeploymentHistory } from "@/components/deploy/DeploymentHistory";
+import { QualityCard } from "./QualityCard";
 
 const CodeEditor = dynamic(() => import("./CodeEditor").then((m) => m.CodeEditor), {
   loading: () => <div className="flex items-center justify-center h-full text-zinc-500 text-sm">Loading editor...</div>,
@@ -148,6 +149,7 @@ export const PreviewPanel = memo(function PreviewPanel({
   const [showHistory, setShowHistory] = useState(false);
   const [showDeployHistory, setShowDeployHistory] = useState(false);
   const [showBookmarkInput, setShowBookmarkInput] = useState(false);
+  const [showQuality, setShowQuality] = useState(false);
 
   // Listen for element selection messages from iframe
   // Sandboxed iframes without allow-same-origin have origin "null",
@@ -232,6 +234,8 @@ export const PreviewPanel = memo(function PreviewPanel({
         onToggleDeployHistory={() => setShowDeployHistory(v => !v)}
         hasDeployments={!!lastDeployUrl}
         onPublish={onPublish}
+        showQuality={showQuality}
+        onToggleQuality={() => setShowQuality(v => !v)}
       />
 
       {/* Main content area */}
@@ -352,6 +356,20 @@ export const PreviewPanel = memo(function PreviewPanel({
           />
         )}
       </div>
+
+      {/* Quality audit panel */}
+      <AnimatePresence>
+        {showQuality && html && !isGenerating && (
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 10 }}
+            className="absolute bottom-4 right-4 z-40 w-[300px]"
+          >
+            <QualityCard html={html} />
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* Selected element floating panel */}
       <AnimatePresence>

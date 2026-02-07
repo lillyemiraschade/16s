@@ -26,6 +26,7 @@ import {
   Link2,
   Link2Off,
   Github,
+  BarChart3,
 } from "lucide-react";
 import type { Viewport, SelectedElement, CodeMode } from "@/lib/types";
 import { DomainManager } from "@/components/domains/DomainManager";
@@ -79,6 +80,8 @@ interface PreviewToolbarProps {
   onGitHubExport?: (repoName: string, isPrivate: boolean) => void;
   isGitHubConnected?: boolean;
   isExportingToGitHub?: boolean;
+  showQuality?: boolean;
+  onToggleQuality?: () => void;
 }
 
 export const PreviewToolbar = memo(function PreviewToolbar({
@@ -124,6 +127,8 @@ export const PreviewToolbar = memo(function PreviewToolbar({
   onGitHubExport,
   isGitHubConnected,
   isExportingToGitHub,
+  showQuality,
+  onToggleQuality,
 }: PreviewToolbarProps) {
   const [showExportMenu, setShowExportMenu] = useState(false);
   const [showShareMenu, setShowShareMenu] = useState(false);
@@ -260,6 +265,18 @@ export const PreviewToolbar = memo(function PreviewToolbar({
               aria-label="Bookmark this version"
             >
               <Bookmark className="w-3.5 h-3.5" />
+            </button>
+          )}
+          {html && !isGenerating && onToggleQuality && (
+            <button
+              onClick={onToggleQuality}
+              className={`p-2.5 md:p-2 rounded-lg transition-all duration-150 ${
+                showQuality ? "text-green-400 bg-green-500/10" : "text-zinc-500 hover:text-zinc-300 hover:bg-white/[0.04]"
+              }`}
+              title="Site quality audit"
+              aria-label="Site quality audit"
+            >
+              <BarChart3 className="w-3.5 h-3.5" />
             </button>
           )}
           {onToggleDeployHistory && hasDeployments && (
