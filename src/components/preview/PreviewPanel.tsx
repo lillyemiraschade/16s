@@ -286,6 +286,8 @@ export const PreviewPanel = memo(function PreviewPanel({
   // Listen for element selection messages from iframe
   useEffect(() => {
     const handler = (e: MessageEvent) => {
+      // Only accept messages from same origin (our sandboxed iframe)
+      if (e.origin !== window.location.origin) return;
       if (e.data?.type === '16s-element-selected') {
         onElementSelect(e.data.element);
       }
