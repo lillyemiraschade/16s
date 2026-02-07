@@ -32,9 +32,9 @@ const ChatRequestSchema = z.object({
   messages: z.array(z.object({
     id: z.string().default(() => `msg-${Date.now()}-${Math.random().toString(36).slice(2)}`),
     role: z.enum(["user", "assistant"]),
-    content: z.string().max(50000).default(""),
+    content: z.string().max(15000).default(""),
     uploadedImages: z.array(UploadedImageSchema).optional(),
-  })).max(200),
+  })).max(100),
   uploadedImages: z.array(UploadedImageSchema).max(10).optional(), // New typed format
   inspoImages: z.array(z.string()).max(10).optional(), // Legacy format for backward compat
   currentPreview: z.string().max(500000).nullable(),
@@ -649,6 +649,17 @@ export async function POST(req: Request) {
         JSON.stringify({ error: "Request too large. Try with fewer or smaller images." }),
         { status: 413, headers: { "Content-Type": "application/json" } }
       );
+    }
+
+    // Last user message length check — reject before expensive AI call
+    if (raw.messages && Array.isArray(raw.messages)) {
+      const lastUserMsg = [...raw.messages].reverse().find((m: Record<string, unknown>) => m.role === "user");
+      if (lastUserMsg && typeof lastUserMsg.content === "string" && lastUserMsg.content.length > 10000) {
+        return new Response(
+          JSON.stringify({ error: "Message too long. Please shorten your request." }),
+          { status: 400, headers: { "Content-Type": "application/json" } }
+        );
+      }
     }
 
     // Pre-sanitize messages to fix common issues before validation

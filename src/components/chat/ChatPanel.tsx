@@ -474,6 +474,7 @@ export const ChatPanel = memo(function ChatPanel({
                         }}
                         className="w-full bg-black/20 text-[15px] text-zinc-100 rounded-lg px-3 py-2 focus:outline-none focus:ring-1 focus:ring-green-500/50 resize-none"
                         rows={3}
+                        maxLength={10000}
                         autoFocus
                       />
                       <div className="flex gap-2 justify-end">
@@ -769,6 +770,7 @@ export const ChatPanel = memo(function ChatPanel({
               disabled={isGenerating}
               aria-label="Message input"
               autoComplete="off"
+              maxLength={10000}
               rows={1}
               className="flex-1 bg-transparent text-[15px] text-zinc-100 placeholder:text-zinc-600 focus:outline-none disabled:opacity-40 resize-none overflow-y-auto leading-relaxed"
               style={{ maxHeight: 160 }}
