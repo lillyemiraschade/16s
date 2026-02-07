@@ -459,13 +459,18 @@ export function useChat({
         onRestoreImages(imagesToSend);
       }
 
-      const errorMsg = error instanceof Error ? error.message : "Let me try that again...";
+      const isNetwork = error instanceof TypeError && /fetch|network/i.test(error.message);
+      const isCredits = error instanceof Error && /credits|insufficient/i.test(error.message);
+      const errorMsg = isNetwork
+        ? "Connection lost. Your project is safe — try again when you're back online."
+        : error instanceof Error ? error.message : "Let me try that again...";
       setMessages((prev) => [
         ...prev,
         {
           id: (Date.now() + 1).toString(),
           role: "assistant",
           content: errorMsg,
+          pills: isCredits ? ["Upgrade plan"] : isNetwork ? ["Try again"] : undefined,
         },
       ]);
     } finally {
@@ -527,13 +532,18 @@ export function useChat({
 
       setMessages((prev) => prev.filter((m) => m.id !== userMessage.id));
 
-      const errorMsg = error instanceof Error ? error.message : "Let me try that again...";
+      const isNetwork = error instanceof TypeError && /fetch|network/i.test(error.message);
+      const isCredits = error instanceof Error && /credits|insufficient/i.test(error.message);
+      const errorMsg = isNetwork
+        ? "Connection lost. Your project is safe — try again when you're back online."
+        : error instanceof Error ? error.message : "Let me try that again...";
       setMessages((prev) => [
         ...prev,
         {
           id: (Date.now() + 1).toString(),
           role: "assistant",
           content: errorMsg,
+          pills: isCredits ? ["Upgrade plan"] : isNetwork ? ["Try again"] : undefined,
         },
       ]);
     } finally {
