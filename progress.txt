@@ -1,33 +1,26 @@
-# Round 14: Edge of Perfection
+# Round 11: Production Readiness
 
-## P0 — Contact Form Backend
-- [ ] 1. Form submission API + schema (/api/forms)
-- [ ] 2. Inject form handler into deployed HTML
-- [ ] 3. Form submissions dashboard
+## P0 — Critical Bugs & CI
+- [x] 0. Fix streaming blank messages bug
+- [ ] 1. GitHub Actions CI
+- [ ] 2. npm check script (already exists)
 
-## P1 — Email Notifications
-- [ ] 4. Resend integration (src/lib/email.ts)
-- [ ] 5. Email templates + triggers (welcome, deploy, form, share)
-- [ ] 6. Email preferences toggle
+## P1 — Playwright E2E Tests
+- [ ] 3. Playwright setup + smoke tests (already exists, verify)
 
-## P2 — GitHub Export
-- [ ] 7. GitHub OAuth for repo access
-- [ ] 8. Export to GitHub API
-- [ ] 9. Export button in UI
+## P2 — Iframe Security
+- [ ] 4. Sandbox + CSP + postMessage hardening
 
-## P3 — Real Analytics
-- [ ] 10. PostHog integration
-- [ ] 11. Sentry error monitoring
+## P3 — Error Monitoring
+- [ ] 5. Error reporter + GlobalErrorHandler
 
-## P4 — Site Quality Scoring
-- [ ] 12. Accessibility audit (axe-core)
-- [ ] 13. SEO checker
-- [ ] 14. Performance hints + combined quality card
+## P4 — Deferred Items
+- [ ] 6. Autosave indicator
+- [ ] 7. Deploy flow polish
+- [ ] 8. Stripe webhook tests
 
-## P5 — Polish
-- [ ] 15. 16s favicon
-- [ ] 16. OG image for shared projects
-- [ ] 17. Update .env.example with ALL keys
+## P5 — Final Verification
+- [ ] 9. Full user flow walkthrough + README update
 
 ## Log
-(cycle notes here)
+R11-1: Fixed streaming blank messages — buffer residual processing, final throttle flush, handleEditMessage stale closure fix

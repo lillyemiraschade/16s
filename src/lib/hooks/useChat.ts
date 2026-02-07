@@ -358,6 +358,33 @@ export function useChat({
     let lastUpdateTime = 0;
     const UPDATE_INTERVAL = 50; // ms — ~20 updates/sec for smooth text display
 
+    // Helper: process a single NDJSON line
+    const processLine = (line: string) => {
+      if (!line.trim()) return;
+      try {
+        const event = JSON.parse(line);
+        if (event.type === "token") {
+          rawTokens += event.text;
+
+          const now = Date.now();
+          if (now - lastUpdateTime >= UPDATE_INTERVAL) {
+            lastUpdateTime = now;
+            const { messageText } = extractStreamingMessage(rawTokens);
+            if (messageText) {
+              upsertStreamingMsg(messageText);
+            }
+          }
+        } else if (event.type === "done") {
+          doneResponse = event.response;
+        } else if (event.type === "error") {
+          throw new Error(event.message);
+        }
+      } catch (e) {
+        if (e instanceof SyntaxError) return;
+        throw e;
+      }
+    };
+
     try {
       while (true) {
         const { done, value } = await reader.read();
@@ -368,29 +395,20 @@ export function useChat({
         buffer = lines.pop() || "";
 
         for (const line of lines) {
-          if (!line.trim()) continue;
-          try {
-            const event = JSON.parse(line);
-            if (event.type === "token") {
-              rawTokens += event.text;
+          processLine(line);
+        }
+      }
 
-              const now = Date.now();
-              if (now - lastUpdateTime >= UPDATE_INTERVAL) {
-                lastUpdateTime = now;
-                const { messageText } = extractStreamingMessage(rawTokens);
-                if (messageText) {
-                  upsertStreamingMsg(messageText);
-                }
-              }
-            } else if (event.type === "done") {
-              doneResponse = event.response;
-            } else if (event.type === "error") {
-              throw new Error(event.message);
-            }
-          } catch (e) {
-            if (e instanceof SyntaxError) continue;
-            throw e;
-          }
+      // Flush any remaining buffer content (last line without trailing newline)
+      if (buffer.trim()) {
+        processLine(buffer);
+      }
+
+      // Final flush: render any throttled tokens before applying done response
+      if (rawTokens) {
+        const { messageText } = extractStreamingMessage(rawTokens);
+        if (messageText) {
+          upsertStreamingMsg(messageText);
         }
       }
     } catch (error) {
@@ -630,20 +648,20 @@ export function useChat({
   }, [handleSendMessageInternal]);
 
   const handleEditMessage = useCallback((messageId: string, newContent: string) => {
-    const messageIndex = messages.findIndex((m) => m.id === messageId);
+    const currentMessages = messagesRef.current;
+    const messageIndex = currentMessages.findIndex((m) => m.id === messageId);
     if (messageIndex === -1) return;
 
-    const originalMessage = messages[messageIndex];
+    const originalMessage = currentMessages[messageIndex];
     if (originalMessage.role !== "user") return;
 
-    const truncatedMessages = messages.slice(0, messageIndex);
-    setMessages(truncatedMessages);
+    setMessages(currentMessages.slice(0, messageIndex));
 
     // Reset preview state since we're replaying from an earlier point
     onResetPreview();
 
     handleSendMessage(newContent, originalMessage.uploadedImages);
-  }, [messages, handleSendMessage, onResetPreview]);
+  }, [handleSendMessage, onResetPreview]);
 
   const handleStop = useCallback(() => {
     abortRef.current?.abort();
