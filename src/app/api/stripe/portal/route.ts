@@ -1,25 +1,26 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextRequest } from "next/server";
 import { createClient } from "@/lib/supabase/server";
 import { getStripe } from "@/lib/stripe/config";
 import { createRateLimiter } from "@/lib/rate-limit";
+import { apiError, apiSuccess } from "@/lib/api-utils";
 
 const limiter = createRateLimiter(5);
 
 export async function POST(request: NextRequest) {
   const ip = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
   if (!limiter.check(ip)) {
-    return NextResponse.json({ error: "Too many requests" }, { status: 429 });
+    return apiError("Too many requests", 429);
   }
 
   try {
     const supabase = await createClient();
     if (!supabase) {
-      return NextResponse.json({ error: "Server not configured" }, { status: 500 });
+      return apiError("Server not configured", 500);
     }
 
     const { data: { user } } = await supabase.auth.getUser();
     if (!user) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+      return apiError("Unauthorized", 401);
     }
 
     // Get customer ID
@@ -30,7 +31,7 @@ export async function POST(request: NextRequest) {
       .single();
 
     if (!subscription?.stripe_customer_id) {
-      return NextResponse.json({ error: "No billing account found" }, { status: 400 });
+      return apiError("No billing account found", 400);
     }
 
     const origin = request.headers.get("origin") || "http://localhost:3000";
@@ -41,12 +42,9 @@ export async function POST(request: NextRequest) {
       return_url: `${origin}/billing`,
     });
 
-    return NextResponse.json({ url: session.url });
+    return apiSuccess({ url: session.url });
   } catch (error) {
     console.debug("Portal error:", error);
-    return NextResponse.json(
-      { error: "Failed to create portal session" },
-      { status: 500 }
-    );
+    return apiError("Failed to create portal session", 500);
   }
 }

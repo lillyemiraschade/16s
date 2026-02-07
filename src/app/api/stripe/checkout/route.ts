@@ -1,36 +1,37 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextRequest } from "next/server";
 import { createClient } from "@/lib/supabase/server";
 import { getStripe, PLANS, PlanType } from "@/lib/stripe/config";
 import { createRateLimiter } from "@/lib/rate-limit";
+import { apiError, apiSuccess } from "@/lib/api-utils";
 
 const limiter = createRateLimiter(5);
 
 export async function POST(request: NextRequest) {
   const ip = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
   if (!limiter.check(ip)) {
-    return NextResponse.json({ error: "Too many requests" }, { status: 429 });
+    return apiError("Too many requests", 429);
   }
 
   try {
     const supabase = await createClient();
     if (!supabase) {
-      return NextResponse.json({ error: "Server not configured" }, { status: 500 });
+      return apiError("Server not configured", 500);
     }
 
     const { data: { user } } = await supabase.auth.getUser();
     if (!user) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+      return apiError("Unauthorized", 401);
     }
 
     const { plan } = await request.json() as { plan: PlanType };
 
     if (plan !== "pro" && plan !== "team") {
-      return NextResponse.json({ error: "Invalid plan" }, { status: 400 });
+      return apiError("Invalid plan", 400);
     }
 
     const planConfig = PLANS[plan];
     if (!planConfig.priceId) {
-      return NextResponse.json({ error: "Price not configured" }, { status: 500 });
+      return apiError("Price not configured", 500);
     }
 
     // Check if user already has a Stripe customer ID
@@ -82,12 +83,9 @@ export async function POST(request: NextRequest) {
       },
     });
 
-    return NextResponse.json({ url: session.url });
+    return apiSuccess({ url: session.url });
   } catch (error) {
     console.debug("Checkout error:", error);
-    return NextResponse.json(
-      { error: "Failed to create checkout session" },
-      { status: 500 }
-    );
+    return apiError("Failed to create checkout session", 500);
   }
 }

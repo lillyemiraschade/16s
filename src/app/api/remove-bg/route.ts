@@ -1,6 +1,7 @@
 import { NextRequest } from "next/server";
 import { createClient } from "@/lib/supabase/server";
 import { createRateLimiter } from "@/lib/rate-limit";
+import { apiError, apiSuccess } from "@/lib/api-utils";
 
 export const runtime = "nodejs";
 export const maxDuration = 30;
@@ -13,10 +14,7 @@ export async function POST(req: NextRequest) {
   // Rate limiting
   const ip = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
   if (!limiter.check(ip)) {
-    return new Response(
-      JSON.stringify({ error: "Too many requests. Please wait a moment." }),
-      { status: 429, headers: { "Content-Type": "application/json", "Retry-After": "60" } }
-    );
+    return apiError("Too many requests. Please wait a moment.", 429, { "Retry-After": "60" });
   }
 
   try {
@@ -24,45 +22,30 @@ export async function POST(req: NextRequest) {
     const supabase = await createClient();
     const { data: { user } } = await supabase.auth.getUser();
     if (!user) {
-      return new Response(
-        JSON.stringify({ error: "Sign in to remove backgrounds" }),
-        { status: 401, headers: { "Content-Type": "application/json" } }
-      );
+      return apiError("Sign in to remove backgrounds", 401);
     }
 
     // [2026-02-05] Server-side payload size check — reject oversized requests before processing
     const contentLength = parseInt(req.headers.get("content-length") || "0", 10);
     const MAX_PAYLOAD_BYTES = 10 * 1024 * 1024; // 10MB (remove.bg supports up to 12MB)
     if (contentLength > MAX_PAYLOAD_BYTES) {
-      return new Response(
-        JSON.stringify({ error: "Image too large. Maximum 10MB." }),
-        { status: 413, headers: { "Content-Type": "application/json" } }
-      );
+      return apiError("Image too large. Maximum 10MB.", 413);
     }
 
     const { imageData } = await req.json();
 
     if (!imageData || typeof imageData !== "string") {
-      return new Response(
-        JSON.stringify({ error: "No image data provided" }),
-        { status: 400, headers: { "Content-Type": "application/json" } }
-      );
+      return apiError("No image data provided", 400);
     }
 
     if (imageData.length > MAX_PAYLOAD_BYTES) {
-      return new Response(
-        JSON.stringify({ error: "Image too large. Maximum 10MB." }),
-        { status: 413, headers: { "Content-Type": "application/json" } }
-      );
+      return apiError("Image too large. Maximum 10MB.", 413);
     }
 
     // Extract base64 data from data URL
     const matches = imageData.match(/^data:(image\/[a-zA-Z]+);base64,(.+)$/);
     if (!matches) {
-      return new Response(
-        JSON.stringify({ error: "Invalid image format" }),
-        { status: 400, headers: { "Content-Type": "application/json" } }
-      );
+      return apiError("Invalid image format", 400);
     }
 
     const base64Data = matches[2];
@@ -85,10 +68,7 @@ export async function POST(req: NextRequest) {
     if (!response.ok) {
       const errorText = await response.text();
       console.debug("remove.bg error:", errorText);
-      return new Response(
-        JSON.stringify({ error: "Background removal failed" }),
-        { status: 500, headers: { "Content-Type": "application/json" } }
-      );
+      return apiError("Background removal failed", 500);
     }
 
     // Get the result as buffer and convert to base64
@@ -96,15 +76,9 @@ export async function POST(req: NextRequest) {
     const resultBase64 = Buffer.from(resultBuffer).toString("base64");
     const resultDataUrl = `data:image/png;base64,${resultBase64}`;
 
-    return new Response(
-      JSON.stringify({ imageData: resultDataUrl }),
-      { status: 200, headers: { "Content-Type": "application/json" } }
-    );
+    return apiSuccess({ imageData: resultDataUrl });
   } catch (error) {
     console.debug("remove-bg API error:", error);
-    return new Response(
-      JSON.stringify({ error: "Failed to process image" }),
-      { status: 500, headers: { "Content-Type": "application/json" } }
-    );
+    return apiError("Failed to process image", 500);
   }
 }

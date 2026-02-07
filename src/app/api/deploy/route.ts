@@ -1,6 +1,7 @@
 import { createClient } from "@/lib/supabase/server";
-import { NextResponse, NextRequest } from "next/server";
+import { NextRequest } from "next/server";
 import { createRateLimiter } from "@/lib/rate-limit";
+import { apiError, apiSuccess } from "@/lib/api-utils";
 
 export const maxDuration = 30; // 30s — Vercel API calls can be slow
 
@@ -13,10 +14,7 @@ export async function POST(request: NextRequest) {
   // Rate limiting
   const ip = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
   if (!limiter.check(ip)) {
-    return NextResponse.json(
-      { error: "Too many deployments. Please wait a moment." },
-      { status: 429, headers: { "Retry-After": "60" } }
-    );
+    return apiError("Too many deployments. Please wait a moment.", 429, { "Retry-After": "60" });
   }
 
   try {
@@ -25,22 +23,22 @@ export async function POST(request: NextRequest) {
     const { data: { user } } = await supabase.auth.getUser();
 
     if (!user) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+      return apiError("Unauthorized", 401);
     }
 
     if (!VERCEL_TOKEN) {
-      return NextResponse.json({ error: "Vercel token not configured" }, { status: 500 });
+      return apiError("Vercel token not configured", 500);
     }
 
     const { html, projectId, projectName } = await request.json();
 
     if (!html || !projectId) {
-      return NextResponse.json({ error: "Missing html or projectId" }, { status: 400 });
+      return apiError("Missing html or projectId", 400);
     }
 
     // Size limit: 5MB for HTML payload (Vercel's limit is 6MB per file)
     if (typeof html !== "string" || html.length > 5 * 1024 * 1024) {
-      return NextResponse.json({ error: "HTML too large. Maximum 5MB." }, { status: 413 });
+      return apiError("HTML too large. Maximum 5MB.", 413);
     }
 
     // Create a clean project name for Vercel
@@ -79,7 +77,7 @@ export async function POST(request: NextRequest) {
     if (!vercelResponse.ok) {
       const errorText = await vercelResponse.text();
       console.debug("[Deploy] Vercel API error:", errorText);
-      return NextResponse.json({ error: "Deployment failed" }, { status: 500 });
+      return apiError("Deployment failed", 500);
     }
 
     const deployment = await vercelResponse.json();
@@ -99,7 +97,7 @@ export async function POST(request: NextRequest) {
       // Don't fail the request, deployment still succeeded
     }
 
-    return NextResponse.json({
+    return apiSuccess({
       success: true,
       deploymentId: deployment.id,
       url: `https://${deployment.url}`,
@@ -107,7 +105,7 @@ export async function POST(request: NextRequest) {
     });
   } catch (error) {
     console.debug("[Deploy] Error:", error);
-    return NextResponse.json({ error: "Deployment failed" }, { status: 500 });
+    return apiError("Deployment failed", 500);
   }
 }
 
@@ -118,14 +116,14 @@ export async function GET(request: Request) {
     const { data: { user } } = await supabase.auth.getUser();
 
     if (!user) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+      return apiError("Unauthorized", 401);
     }
 
     const { searchParams } = new URL(request.url);
     const projectId = searchParams.get("projectId");
 
     if (!projectId) {
-      return NextResponse.json({ error: "Missing projectId" }, { status: 400 });
+      return apiError("Missing projectId", 400);
     }
 
     const { data: deployments, error } = await supabase
@@ -138,12 +136,12 @@ export async function GET(request: Request) {
 
     if (error) {
       console.debug("[Deploy] Query error:", error);
-      return NextResponse.json({ error: "Failed to fetch deployments" }, { status: 500 });
+      return apiError("Failed to fetch deployments", 500);
     }
 
-    return NextResponse.json({ deployments });
+    return apiSuccess({ deployments });
   } catch (error) {
     console.debug("[Deploy] Error:", error);
-    return NextResponse.json({ error: "Failed to fetch deployments" }, { status: 500 });
+    return apiError("Failed to fetch deployments", 500);
   }
 }
