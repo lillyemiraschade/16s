@@ -478,6 +478,15 @@ function HomePageContent() {
           else existing.unshift(project);
           localStorage.setItem(key, JSON.stringify(existing.slice(0, 20)));
         } catch (e) {
+          // If quota exceeded, try trimming older projects to make room
+          if (e instanceof DOMException && e.name === "QuotaExceededError") {
+            try {
+              const key = `16s_projects`;
+              const existing = JSON.parse(localStorage.getItem(key) || "[]");
+              // Keep only 5 most recent projects to free space
+              localStorage.setItem(key, JSON.stringify(existing.slice(0, 5)));
+            } catch { /* truly out of space */ }
+          }
           console.debug("[Save] Failed to save on unload:", e);
         }
       }

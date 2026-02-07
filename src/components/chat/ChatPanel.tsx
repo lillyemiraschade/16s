@@ -72,9 +72,11 @@ export const ChatPanel = memo(function ChatPanel({
     lightboxTriggerRef.current = null;
   }, []);
 
+  const errorTimerRef = useRef<ReturnType<typeof setTimeout>>();
   const handleImageError = useCallback((msg: string) => {
+    clearTimeout(errorTimerRef.current);
     setUploadError(msg);
-    setTimeout(() => setUploadError(null), 4000);
+    errorTimerRef.current = setTimeout(() => setUploadError(null), 6000);
   }, []);
 
   const handleRemoveBackground = useCallback(async (index: number) => {
@@ -400,7 +402,10 @@ export const ChatPanel = memo(function ChatPanel({
               exit={{ opacity: 0, y: -10 }}
               className="absolute top-4 left-4 right-4 z-20 glass rounded-xl px-4 py-3 border border-red-500/20"
             >
-              <p className="text-[13px] text-red-400">{uploadError}</p>
+              <div className="flex items-center justify-between gap-2">
+                <p className="text-[13px] text-red-400">{uploadError}</p>
+                <button onClick={() => setUploadError(null)} className="text-red-400/60 hover:text-red-400 text-xs flex-shrink-0" aria-label="Dismiss error">&times;</button>
+              </div>
             </motion.div>
           )}
         </AnimatePresence>
