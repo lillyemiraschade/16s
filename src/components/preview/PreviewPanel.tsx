@@ -804,6 +804,8 @@ export const PreviewPanel = memo(function PreviewPanel({
               </h3>
               <input
                 type="text"
+                id="bookmark-name"
+                name="bookmark-name"
                 value={bookmarkName}
                 onChange={(e) => setBookmarkName(e.target.value)}
                 onKeyDown={(e) => {

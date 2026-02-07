@@ -195,6 +195,8 @@ export function AuthModal({ isOpen, onClose, title, subtitle }: AuthModalProps) 
                 <div>
                   <input
                     type="email"
+                    id="auth-email"
+                    name="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="Email"
@@ -206,6 +208,8 @@ export function AuthModal({ isOpen, onClose, title, subtitle }: AuthModalProps) 
                 <div className="relative">
                   <input
                     type={showPassword ? "text" : "password"}
+                    id="auth-password"
+                    name="password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     placeholder="Password"

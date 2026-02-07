@@ -655,6 +655,30 @@ function HomePageContent() {
       });
     }
 
+    // Step 4: Safety net — if the current message has images but NONE appear
+    // in the output HTML, the AI likely copied an old URL. Force the first
+    // img tag to use the current image. This catches the common case where
+    // the AI says "swapped to your image" but actually kept the old src.
+    if (currentMessageImages.length > 0) {
+      const currentSrcs = currentMessageImages
+        .map(img => img.url || img.data)
+        .filter(Boolean);
+      const anyCurrentImageUsed = currentSrcs.some(src => result.includes(src));
+
+      if (!anyCurrentImageUsed) {
+        const firstImgSrc = currentSrcs[0];
+        if (firstImgSrc) {
+          // Replace the first img src with the current image
+          let replaced = false;
+          result = result.replace(/(<img\s[^>]*?)src="[^"]*"/, (match, prefix) => {
+            if (replaced) return match;
+            replaced = true;
+            return `${prefix}src="${firstImgSrc}"`;
+          });
+        }
+      }
+    }
+
     return result;
   }, []);
 
@@ -1458,6 +1482,8 @@ function HomePageContent() {
                   placeholder="Describe what you want to build..."
                   disabled={isGenerating}
                   aria-label="Message input"
+                  id="welcome-input"
+                  name="welcome-input"
                   autoFocus
                   autoComplete="off"
                   rows={1}
@@ -1490,6 +1516,8 @@ function HomePageContent() {
                   onChange={handleWelcomeFileUpload}
                   className="hidden"
                   aria-hidden="true"
+                  id="welcome-file-upload"
+                  name="welcome-file-upload"
                 />
               </div>
             </div>

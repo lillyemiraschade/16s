@@ -487,6 +487,8 @@ export const ChatPanel = memo(function ChatPanel({
                   {editingMessageId === message.id ? (
                     <div className="flex flex-col gap-2">
                       <textarea
+                        id="edit-message"
+                        name="edit-message"
                         value={editingContent}
                         onChange={(e) => setEditingContent(e.target.value)}
                         onKeyDown={(e) => {
@@ -776,9 +778,13 @@ export const ChatPanel = memo(function ChatPanel({
               onChange={handleFileUpload}
               className="hidden"
               aria-hidden="true"
+              id="chat-file-upload"
+              name="chat-file-upload"
             />
             <textarea
               ref={textareaRef}
+              id="chat-input"
+              name="chat-input"
               value={input}
               onChange={(e) => {
                 setInput(e.target.value);
