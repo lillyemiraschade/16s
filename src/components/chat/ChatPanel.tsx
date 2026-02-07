@@ -2,11 +2,14 @@
 
 import { useEffect, useRef, useState, useCallback, memo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Paperclip, ArrowUp, X, ImagePlus, Plus, Phone, Info, Pencil, Sparkles, Loader2, Mic, CheckCircle, AlertCircle, FileText } from "lucide-react";
+import { ImagePlus, X, Plus, Phone, Info, Sparkles, Mic } from "lucide-react";
 import Image from "next/image";
 import { TypingIndicator } from "./TypingIndicator";
+import { ChatMessage } from "./ChatMessage";
+import { ImageUploadBar } from "./ImageUploadBar";
+import { ChatInput } from "./ChatInput";
 import { UserMenu } from "@/components/auth/UserMenu";
-import { processImageFiles, removeBackground } from "@/lib/images";
+import { processImageFiles } from "@/lib/images";
 import type { ChatPanelProps } from "@/lib/types";
 
 export const ChatPanel = memo(function ChatPanel({
@@ -28,26 +31,21 @@ export const ChatPanel = memo(function ChatPanel({
   onClearSelection,
   onEditMessage,
 }: ChatPanelProps) {
-  const [input, setInput] = useState("");
   const [isDragging, setIsDragging] = useState(false);
   const [lightboxImage, setLightboxImage] = useState<string | null>(null);
   const [showCallDisclaimer, setShowCallDisclaimer] = useState(false);
   const [uploadError, setUploadError] = useState<string | null>(null);
-  const [editingMessageId, setEditingMessageId] = useState<string | null>(null);
-  const [editingContent, setEditingContent] = useState("");
   const [uploadContext, setUploadContext] = useState<{ type: "inspo" | "content"; label?: string }>({ type: "inspo" });
-  const [removingBgIndex, setRemovingBgIndex] = useState<number | null>(null);
+
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const userScrolledUpRef = useRef(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const textareaRef = useRef<HTMLTextAreaElement>(null);
   const lightboxCloseRef = useRef<HTMLButtonElement>(null);
   const lightboxTriggerRef = useRef<HTMLElement | null>(null);
 
   const closeLightbox = useCallback(() => {
     setLightboxImage(null);
-    // Restore focus to the element that opened the lightbox
     lightboxTriggerRef.current?.focus();
     lightboxTriggerRef.current = null;
   }, []);
@@ -59,50 +57,30 @@ export const ChatPanel = memo(function ChatPanel({
     errorTimerRef.current = setTimeout(() => setUploadError(null), 6000);
   }, []);
 
-  const handleRemoveBackground = useCallback(async (index: number) => {
-    if (removingBgIndex !== null) return; // Already processing
-    setRemovingBgIndex(index);
-    try {
-      const img = uploadedImages[index];
-      const result = await removeBackground(img.data);
-      onImageUpdate(index, result);
-    } catch (err) {
-      console.debug("Failed to remove background:", err);
-      handleImageError("Failed to remove background. Please try again.");
-    } finally {
-      setRemovingBgIndex(null);
-    }
-  }, [removingBgIndex, uploadedImages, onImageUpdate, handleImageError]);
-
+  // Lightbox escape + focus trap
   useEffect(() => {
     if (!lightboxImage) return;
-    // Auto-focus close button when lightbox opens
     requestAnimationFrame(() => lightboxCloseRef.current?.focus());
     const handler = (e: KeyboardEvent) => {
       if (e.key === "Escape") closeLightbox();
-      // Trap focus — only the close button is focusable
-      if (e.key === "Tab") {
-        e.preventDefault();
-        lightboxCloseRef.current?.focus();
-      }
+      if (e.key === "Tab") { e.preventDefault(); lightboxCloseRef.current?.focus(); }
     };
     window.addEventListener("keydown", handler);
     return () => window.removeEventListener("keydown", handler);
   }, [lightboxImage, closeLightbox]);
 
-  // Escape key + focus trap for call disclaimer modal
+  // Call disclaimer escape + focus trap
   useEffect(() => {
     if (!showCallDisclaimer) return;
-    // Auto-focus the "Start Call" button (primary action)
     requestAnimationFrame(() => {
       const dialog = document.querySelector<HTMLElement>('[aria-labelledby="call-disclaimer-title"]');
-      dialog?.querySelector<HTMLElement>('button:last-of-type')?.focus();
+      dialog?.querySelector<HTMLElement>("button:last-of-type")?.focus();
     });
     const handler = (e: KeyboardEvent) => {
       if (e.key === "Escape") setShowCallDisclaimer(false);
       if (e.key === "Tab") {
         const dialog = document.querySelector<HTMLElement>('[aria-labelledby="call-disclaimer-title"]');
-        const focusable = dialog?.querySelectorAll<HTMLElement>('button');
+        const focusable = dialog?.querySelectorAll<HTMLElement>("button");
         if (!focusable?.length) return;
         const first = focusable[0];
         const last = focusable[focusable.length - 1];
@@ -114,57 +92,22 @@ export const ChatPanel = memo(function ChatPanel({
     return () => window.removeEventListener("keydown", handler);
   }, [showCallDisclaimer]);
 
-  const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  };
-
-  // Only auto-scroll if user hasn't scrolled up to read history
+  // Auto-scroll
+  const scrollToBottom = () => messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   useEffect(() => {
-    if (!userScrolledUpRef.current) {
-      scrollToBottom();
-    }
+    if (!userScrolledUpRef.current) scrollToBottom();
   }, [messages, isGenerating]);
 
-  // Focus textarea after generation completes
-  useEffect(() => {
-    if (!isGenerating) {
-      textareaRef.current?.focus();
-    }
-  }, [isGenerating]);
-
-  // Focus textarea on Cmd+K custom event
-  useEffect(() => {
-    const handler = () => textareaRef.current?.focus();
-    window.addEventListener("focus-chat-input", handler);
-    return () => window.removeEventListener("focus-chat-input", handler);
-  }, []);
-
-  const handleSend = () => {
-    if ((!input.trim() && uploadedImages.length === 0) || isGenerating) return;
-    onSend(input.trim() || "Here are my images.");
-    setInput("");
-    if (textareaRef.current) textareaRef.current.style.height = "auto";
-  };
-
-  const handleKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key === "Enter" && !e.shiftKey) {
-      e.preventDefault();
-      handleSend();
-    }
-  };
-
+  // File upload handler
   const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
     if (!files) return;
-    // Use uploadContext to determine image type
-    const uploadWithType = (base64: string) => {
-      onImageUpload(base64, uploadContext.type, uploadContext.label);
-    };
-    // Compress more aggressively for content images (they need to fit in HTML output)
+    const uploadWithType = (base64: string) => onImageUpload(base64, uploadContext.type, uploadContext.label);
     processImageFiles(files, uploadWithType, handleImageError, uploadContext.type === "content");
     e.target.value = "";
   };
 
+  // Paste handler
   const handlePaste = useCallback((e: React.ClipboardEvent) => {
     const items = e.clipboardData?.items;
     if (!items) return;
@@ -177,54 +120,47 @@ export const ChatPanel = memo(function ChatPanel({
     }
     if (imageFiles.length === 0) return;
     e.preventDefault();
-    const uploadWithType = (base64: string) => {
-      onImageUpload(base64, uploadContext.type, uploadContext.label);
-    };
+    const uploadWithType = (base64: string) => onImageUpload(base64, uploadContext.type, uploadContext.label);
     processImageFiles(imageFiles, uploadWithType, handleImageError, uploadContext.type === "content");
   }, [onImageUpload, uploadContext, handleImageError]);
 
+  // Drag handlers
   const handleDrop = (e: React.DragEvent) => {
     e.preventDefault();
     setIsDragging(false);
-    const uploadWithType = (base64: string) => {
-      onImageUpload(base64, uploadContext.type, uploadContext.label);
-    };
-    // Compress more aggressively for content images (they need to fit in HTML output)
+    const uploadWithType = (base64: string) => onImageUpload(base64, uploadContext.type, uploadContext.label);
     processImageFiles(e.dataTransfer.files, uploadWithType, handleImageError, uploadContext.type === "content");
   };
 
-  const handleDragOver = (e: React.DragEvent) => {
-    e.preventDefault();
-    setIsDragging(true);
-  };
+  // Callbacks for sub-components
+  const handleLightboxOpen = useCallback((src: string, trigger: HTMLElement) => {
+    lightboxTriggerRef.current = trigger;
+    setLightboxImage(src);
+  }, []);
 
-  const handleDragLeave = (e: React.DragEvent) => {
-    e.preventDefault();
-    setIsDragging(false);
-  };
+  const handleUploadTrigger = useCallback((type: "inspo" | "content", label?: string) => {
+    setUploadContext({ type, label });
+    fileInputRef.current?.click();
+  }, []);
+
+  const handleAttach = useCallback(() => {
+    if (!uploadContext.label) {
+      setUploadContext({ type: hasPreview ? "content" : "inspo" });
+    }
+    fileInputRef.current?.click();
+  }, [uploadContext.label, hasPreview]);
 
   const handleCallClick = () => {
     if (isOnCall) return;
     setShowCallDisclaimer(true);
   };
 
-  const handleAcceptCall = () => {
-    setShowCallDisclaimer(false);
-    onStartCall();
-  };
-
-  const placeholder = selectedElement
-    ? `Edit this ${selectedElement.tagName}...`
-    : hasPreview
-    ? "Describe what you want to change..."
-    : "Describe what you want to build...";
-
   return (
     <div
       className="flex flex-col h-full bg-[#0a0a0b] dot-grid border-r border-white/[0.04] relative"
       onDrop={handleDrop}
-      onDragOver={handleDragOver}
-      onDragLeave={handleDragLeave}
+      onDragOver={(e) => { e.preventDefault(); setIsDragging(true); }}
+      onDragLeave={(e) => { e.preventDefault(); setIsDragging(false); }}
     >
       {/* Call disclaimer modal */}
       <AnimatePresence>
@@ -245,7 +181,6 @@ export const ChatPanel = memo(function ChatPanel({
               transition={{ type: "spring", duration: 0.5 }}
               className="glass-matte rounded-2xl p-8 max-w-[400px] w-full shadow-2xl shadow-black/50"
             >
-              {/* AI Agent Icon */}
               <div className="flex justify-center mb-6">
                 <div className="relative">
                   <div className="w-16 h-16 rounded-full bg-gradient-to-b from-green-400 to-green-600 flex items-center justify-center">
@@ -258,7 +193,6 @@ export const ChatPanel = memo(function ChatPanel({
                   />
                 </div>
               </div>
-
               <h2 id="call-disclaimer-title" className="text-zinc-100 text-[18px] font-semibold text-center mb-2">
                 Start AI Voice Call
               </h2>
@@ -266,8 +200,6 @@ export const ChatPanel = memo(function ChatPanel({
                 You&apos;re about to speak with an <span className="text-green-400 font-medium">AI design assistant</span>.
                 Tell it about your project and it will help design your website.
               </p>
-
-              {/* Features */}
               <div className="space-y-3 mb-6">
                 <div className="flex items-center gap-3 text-[13px] text-zinc-300">
                   <div className="w-6 h-6 rounded-full bg-green-500/20 flex items-center justify-center flex-shrink-0">
@@ -288,7 +220,6 @@ export const ChatPanel = memo(function ChatPanel({
                   <span>Hang up anytime to start designing</span>
                 </div>
               </div>
-
               <div className="flex gap-3">
                 <button
                   onClick={() => setShowCallDisclaimer(false)}
@@ -297,7 +228,7 @@ export const ChatPanel = memo(function ChatPanel({
                   Cancel
                 </button>
                 <button
-                  onClick={handleAcceptCall}
+                  onClick={() => { setShowCallDisclaimer(false); onStartCall(); }}
                   className="flex-1 px-4 py-3 text-[14px] font-medium text-black bg-gradient-to-b from-green-400 to-green-500 hover:from-green-300 hover:to-green-400 rounded-xl transition-all duration-200 shadow-lg shadow-green-500/25"
                 >
                   Start Call
@@ -349,13 +280,12 @@ export const ChatPanel = memo(function ChatPanel({
         onScroll={() => {
           const el = scrollContainerRef.current;
           if (!el) return;
-          // User is "near bottom" if within 150px of the end
           const nearBottom = el.scrollHeight - el.scrollTop - el.clientHeight < 150;
           userScrolledUpRef.current = !nearBottom;
         }}
       >
-        {/* Spacer pushes messages to bottom when few */}
         <div className="flex-1" />
+
         {/* Drag overlay */}
         <AnimatePresence>
           {isDragging && (
@@ -390,240 +320,24 @@ export const ChatPanel = memo(function ChatPanel({
           )}
         </AnimatePresence>
 
+        {/* Message list */}
         <AnimatePresence>
-          {messages.map((message, index) => {
-            const prev = messages[index - 1];
-            const next = messages[index + 1];
-            const isFirstInGroup = !prev || prev.role !== message.role;
-            const isLastInGroup = !next || next.role !== message.role;
-            const isUser = message.role === "user";
-
-            const cornerClass = isLastInGroup
-              ? isUser ? "bubble-tail-right" : "bubble-tail-left"
-              : isUser ? "bubble-grouped-right" : "bubble-grouped-left";
-
-            return (
-              <motion.div
-                key={message.id}
-                initial={{ opacity: 0, y: 8 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.2, ease: "easeOut" }}
-                className={`flex ${isUser ? "justify-end" : "justify-start"} ${isFirstInGroup ? "mt-4" : "mt-1.5"}`}
-                style={index === 0 ? { marginTop: 0 } : undefined}
-              >
-                <div
-                  className={`${
-                    isUser
-                      ? "glass-bubble glass-bubble-user text-green-100 ml-auto max-w-[85%]"
-                      : "glass-bubble text-zinc-200 max-w-[90%]"
-                  } ${cornerClass} px-4 py-3`}
-                >
-                  {/* Attached images (new typed format) */}
-                  {message.uploadedImages && message.uploadedImages.length > 0 && (
-                    <div className="flex flex-wrap gap-1.5 mb-2.5">
-                      {message.uploadedImages.map((img, idx) => (
-                        <div key={idx} className="relative">
-                          <button
-                            onClick={(e) => { lightboxTriggerRef.current = e.currentTarget; setLightboxImage(img.data); }}
-                            className="rounded-lg overflow-hidden hover:ring-2 hover:ring-green-500/50 transition-all duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-green-500"
-                          >
-                            {/* eslint-disable-next-line @next/next/no-img-element */}
-                            <img
-                              src={img.data}
-                              alt={`${img.type === "content" ? "Content" : "Inspiration"} image ${idx + 1}`}
-                              className="h-16 w-16 object-cover"
-                            />
-                          </button>
-                          <span className={`absolute -bottom-1 left-1/2 -translate-x-1/2 px-1.5 py-0.5 text-[9px] font-medium rounded ${
-                            img.type === "content" ? "bg-green-500/80 text-white" : "bg-zinc-700 text-zinc-300"
-                          }`}>
-                            {img.type === "content" ? (img.label || "content") : "inspo"}
-                          </span>
-                        </div>
-                      ))}
-                    </div>
-                  )}
-                  {/* Legacy attached images */}
-                  {message.images && message.images.length > 0 && (
-                    <div className="flex flex-wrap gap-1.5 mb-2.5">
-                      {message.images.map((img, idx) => (
-                        <button
-                          key={idx}
-                          onClick={(e) => { lightboxTriggerRef.current = e.currentTarget; setLightboxImage(img); }}
-                          className="rounded-lg overflow-hidden hover:ring-2 hover:ring-green-500/50 transition-all duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-green-500"
-                        >
-                          {/* eslint-disable-next-line @next/next/no-img-element */}
-                          <img
-                            src={img}
-                            alt={`Inspiration image ${idx + 1}`}
-                            className="h-16 w-16 object-cover"
-                          />
-                        </button>
-                      ))}
-                    </div>
-                  )}
-                  {/* Message content or edit form */}
-                  {editingMessageId === message.id ? (
-                    <div className="flex flex-col gap-2">
-                      <textarea
-                        id="edit-message"
-                        name="edit-message"
-                        value={editingContent}
-                        onChange={(e) => setEditingContent(e.target.value)}
-                        onKeyDown={(e) => {
-                          if (e.key === "Escape") {
-                            setEditingMessageId(null);
-                            setEditingContent("");
-                          }
-                        }}
-                        className="w-full bg-black/20 text-[15px] text-zinc-100 rounded-lg px-3 py-2 focus:outline-none focus:ring-1 focus:ring-green-500/50 resize-none"
-                        rows={3}
-                        maxLength={10000}
-                        autoFocus
-                        aria-label="Edit message"
-                      />
-                      <div className="flex gap-2 justify-end">
-                        <button
-                          onClick={() => { setEditingMessageId(null); setEditingContent(""); }}
-                          className="px-3 py-1 text-[12px] text-zinc-400 hover:text-zinc-200 transition-colors"
-                        >
-                          Cancel
-                        </button>
-                        <button
-                          onClick={() => {
-                            if (editingContent.trim()) {
-                              onEditMessage(message.id, editingContent.trim());
-                              setEditingMessageId(null);
-                              setEditingContent("");
-                            }
-                          }}
-                          disabled={!editingContent.trim() || isGenerating}
-                          className="px-3 py-1 text-[12px] font-medium text-green-400 hover:text-green-300 disabled:opacity-40 transition-colors"
-                        >
-                          Save & Regenerate
-                        </button>
-                      </div>
-                    </div>
-                  ) : (
-                    <div className="group/msg relative">
-                      <p className={`text-[15px] leading-[1.7] whitespace-pre-wrap break-words ${!isUser ? "tracking-[-0.01em] text-zinc-200" : ""}`}>{message.content}</p>
-                      {isUser && !isGenerating && (
-                        <button
-                          onClick={() => { setEditingMessageId(message.id); setEditingContent(message.content); }}
-                          className="absolute -right-1 -top-1 p-1 rounded-full bg-white/5 text-zinc-500 hover:text-zinc-300 hover:bg-white/10 opacity-0 group-hover/msg:opacity-100 focus-visible:opacity-100 transition-all"
-                          title="Edit message"
-                          aria-label="Edit message"
-                        >
-                          <Pencil className="w-3 h-3" />
-                        </button>
-                      )}
-                    </div>
-                  )}
-
-                  {/* BMAD Plan Card */}
-                  {message.plan && (
-                    <div className="mt-3 p-4 rounded-xl glass-matte">
-                      <div className="flex items-center gap-2 mb-3">
-                        <div className="w-6 h-6 rounded-lg bg-green-500/15 flex items-center justify-center">
-                          <FileText className="w-3.5 h-3.5 text-green-400" />
-                        </div>
-                        <span className="text-[12px] font-semibold text-zinc-400 uppercase tracking-wider">Build Plan</span>
-                      </div>
-                      <p className="text-[14px] text-zinc-200 leading-relaxed mb-3">{message.plan.summary}</p>
-                      <div className="flex flex-wrap gap-1.5 mb-3">
-                        {message.plan.sections.map((section, idx) => (
-                          <span key={idx} className="px-2.5 py-1 text-[11px] font-medium bg-green-500/8 text-green-300/80 rounded-md border border-green-500/10">
-                            {section}
-                          </span>
-                        ))}
-                      </div>
-                      <p className="text-[12px] text-zinc-500 italic">{message.plan.style}</p>
-                    </div>
-                  )}
-
-                  {/* BMAD QA Report */}
-                  {message.qaReport && (
-                    <div className={`mt-3 p-4 rounded-xl glass-matte ${
-                      message.qaReport.status === "all_good" ? "border-green-500/15" : "border-amber-500/15"
-                    }`}>
-                      <div className="flex items-center gap-2 mb-3">
-                        <div className={`w-6 h-6 rounded-lg flex items-center justify-center ${
-                          message.qaReport.status === "all_good" ? "bg-green-500/15" : "bg-amber-500/15"
-                        }`}>
-                          {message.qaReport.status === "all_good" ? (
-                            <CheckCircle className="w-3.5 h-3.5 text-green-400" />
-                          ) : (
-                            <AlertCircle className="w-3.5 h-3.5 text-amber-400" />
-                          )}
-                        </div>
-                        <span className={`text-[12px] font-semibold uppercase tracking-wider ${
-                          message.qaReport.status === "all_good" ? "text-green-400/70" : "text-amber-400/70"
-                        }`}>
-                          {message.qaReport.status === "all_good" ? "All Checks Passed" : "Review Notes"}
-                        </span>
-                      </div>
-                      <div className="flex flex-wrap gap-1.5 mb-3">
-                        {message.qaReport.checks.map((check, idx) => (
-                          <span key={idx} className={`flex items-center gap-1 px-2.5 py-1 text-[11px] font-medium rounded-md border ${
-                            check.passed
-                              ? "bg-green-500/8 border-green-500/15 text-green-300/80"
-                              : "bg-amber-500/8 border-amber-500/15 text-amber-300/80"
-                          }`}>
-                            {check.passed ? <CheckCircle className="w-2.5 h-2.5" /> : <AlertCircle className="w-2.5 h-2.5" />}
-                            {check.name}
-                          </span>
-                        ))}
-                      </div>
-                      <p className="text-[12px] text-zinc-500">{message.qaReport.summary}</p>
-                    </div>
-                  )}
-
-                  {/* Pills */}
-                  {message.pills && message.pills.length > 0 && (
-                    <div className="flex flex-wrap gap-2 mt-3">
-                      {message.pills.map((pill, idx) => (
-                        <button
-                          key={idx}
-                          onClick={() => onPillClick(pill)}
-                          disabled={isGenerating}
-                          className="px-4 py-2 text-[13px] font-medium glass-pill text-zinc-200 hover:text-white hover:bg-white/[0.08] focus-visible:ring-1 focus-visible:ring-green-500/50 focus-visible:outline-none disabled:opacity-40 disabled:cursor-not-allowed rounded-full transition-all duration-200"
-                        >
-                          {pill}
-                        </button>
-                      ))}
-                    </div>
-                  )}
-
-                  {/* Upload zone */}
-                  {message.showUpload && (
-                    <div className="mt-3">
-                      <button
-                        onClick={() => {
-                          // Determine if this is content (logo, photos, etc.) or inspo based on label
-                          const label = typeof message.showUpload === "string" ? message.showUpload.toLowerCase() : "";
-                          const isContent = label.includes("logo") || label.includes("photo") || label.includes("team") ||
-                                          label.includes("product") || label.includes("work") || label.includes("menu") ||
-                                          label.includes("food") || label.includes("portfolio");
-                          setUploadContext({
-                            type: isContent ? "content" : "inspo",
-                            label: isContent ? label : undefined
-                          });
-                          fileInputRef.current?.click();
-                        }}
-                        className="w-full px-4 py-3 text-[13px] font-medium glass-pill text-zinc-300 rounded-xl transition-all duration-200 flex items-center justify-center gap-2"
-                      >
-                        <ImagePlus className="w-4 h-4" />
-                        {typeof message.showUpload === "string" ? message.showUpload : "Upload inspiration images"}
-                      </button>
-                    </div>
-                  )}
-                </div>
-              </motion.div>
-            );
-          })}
+          {messages.map((message, index) => (
+            <ChatMessage
+              key={message.id}
+              message={message}
+              prevMessage={messages[index - 1]}
+              nextMessage={messages[index + 1]}
+              isGenerating={isGenerating}
+              onPillClick={onPillClick}
+              onEditMessage={onEditMessage}
+              onLightboxOpen={handleLightboxOpen}
+              onUploadTrigger={handleUploadTrigger}
+            />
+          ))}
         </AnimatePresence>
 
+        {/* Typing indicator + stop button */}
         {isGenerating && (
           <motion.div
             initial={{ opacity: 0, y: 8 }}
@@ -631,7 +345,6 @@ export const ChatPanel = memo(function ChatPanel({
             transition={{ duration: 0.2 }}
             className="flex items-end gap-2 mt-4"
           >
-            {/* Show typing indicator only before streaming text appears */}
             {(!messages.length || messages[messages.length - 1].role !== "assistant") && (
               <div className="glass-bubble bubble-tail-left px-4 py-3">
                 <TypingIndicator label={hasPreview ? "Making changes..." : "Designing your site..."} />
@@ -649,161 +362,44 @@ export const ChatPanel = memo(function ChatPanel({
         <div ref={messagesEndRef} />
       </div>
 
-      {/* Input bar */}
-      <div className="px-5 pb-5 pt-3">
-        {/* Selected element indicator */}
-        <AnimatePresence>
-          {selectedElement && (
-            <motion.div
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: "auto" }}
-              exit={{ opacity: 0, height: 0 }}
-              className="mb-3"
-            >
-              <div className="flex items-center gap-2 px-3 py-2 rounded-xl bg-green-500/10 border border-green-500/20">
-                <span className="px-1.5 py-0.5 text-[10px] font-mono font-medium text-green-400 bg-green-500/20 rounded">
-                  {selectedElement.tagName}
-                </span>
-                <span className="text-[12px] text-zinc-400 truncate flex-1">
-                  {selectedElement.textContent?.slice(0, 30) || selectedElement.className?.split(" ")[0] || "Element selected"}
-                </span>
-                <button
-                  onClick={onClearSelection}
-                  className="p-0.5 rounded text-zinc-500 hover:text-zinc-300 transition-colors"
-                >
-                  <X className="w-3 h-3" />
-                </button>
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
-
-        {/* Image previews */}
+      {/* Image upload bar + input */}
+      <div className="px-5 pb-0">
         {uploadedImages.length > 0 && (
-          <div className="mb-3 flex gap-2 flex-wrap">
-            {uploadedImages.map((img, idx) => (
-              <div key={idx} className="relative group">
-                <button
-                  onClick={(e) => { lightboxTriggerRef.current = e.currentTarget; setLightboxImage(img.data); }}
-                  className="rounded-lg overflow-hidden focus:outline-none focus-visible:ring-2 focus-visible:ring-green-500"
-                >
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    src={img.data}
-                    alt={`${img.type === "content" ? "Content" : "Inspiration"} image ${idx + 1}`}
-                    className="h-14 w-14 object-cover ring-1 ring-white/[0.06]"
-                  />
-                </button>
-                {/* Remove background button — always visible so users discover it */}
-                <button
-                  onClick={() => handleRemoveBackground(idx)}
-                  disabled={removingBgIndex !== null}
-                  className={`absolute -top-1.5 -left-1.5 w-5 h-5 bg-violet-600 hover:bg-violet-500 disabled:bg-zinc-700 rounded-full flex items-center justify-center transition-all duration-150 ring-1 ring-white/[0.06] ${
-                    removingBgIndex === idx ? "opacity-100" : "opacity-50 group-hover:opacity-100"
-                  }`}
-                  aria-label="Remove image background"
-                  title="Remove background — great for headshots, logos, product photos"
-                >
-                  {removingBgIndex === idx ? (
-                    <Loader2 className="w-3 h-3 text-white animate-spin" />
-                  ) : (
-                    <Sparkles className="w-3 h-3 text-white" />
-                  )}
-                </button>
-                <button
-                  onClick={() => onImageTypeToggle(idx)}
-                  className={`absolute -bottom-1 left-1/2 -translate-x-1/2 px-1.5 py-0.5 text-[9px] font-medium rounded cursor-pointer hover:opacity-80 transition-opacity ${
-                    img.type === "content" ? "bg-green-500/80 text-white" : "bg-zinc-700 text-zinc-300"
-                  }`}
-                  title={img.type === "content"
-                    ? "Content: this image will be placed in your website. Click to switch to inspo (design reference)."
-                    : "Inspo: AI will clone this design style. Click to switch to content (embed in website)."}
-                  aria-label={`Toggle image ${idx + 1} type: currently ${img.type === "content" ? "content (embedded in site)" : "inspiration (design reference)"}`}
-                >
-                  {img.type === "content" ? (img.label || "content") : "inspo"}
-                </button>
-                <button
-                  onClick={() => onImageRemove(idx)}
-                  className="absolute -top-1.5 -right-1.5 w-5 h-5 bg-zinc-800 hover:bg-red-500 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 focus:opacity-100 transition-all duration-150 ring-1 ring-white/[0.06]"
-                  aria-label={`Remove image ${idx + 1}`}
-                >
-                  <X className="w-3 h-3 text-zinc-300" />
-                </button>
-              </div>
-            ))}
-            <button
-              onClick={() => fileInputRef.current?.click()}
-              className="h-14 w-14 rounded-lg glass glass-hover flex items-center justify-center transition-all duration-200"
-              aria-label="Add more images"
-            >
-              <ImagePlus className="w-4 h-4 text-zinc-500" />
-            </button>
-          </div>
+          <ImageUploadBar
+            images={uploadedImages}
+            onRemove={onImageRemove}
+            onTypeToggle={onImageTypeToggle}
+            onUpdate={onImageUpdate}
+            onLightboxOpen={handleLightboxOpen}
+            onAddMore={() => fileInputRef.current?.click()}
+            onError={handleImageError}
+          />
         )}
-
-        {/* Input container — glass with green glow border */}
-        <div className="glass-input-glow rounded-2xl">
-          <div className="flex items-end gap-2 px-4 py-3">
-            <button
-              onClick={() => {
-                // Default upload type based on stage: inspo before first generation, content after
-                if (!uploadContext.label) {
-                  setUploadContext({ type: hasPreview ? "content" : "inspo" });
-                }
-                fileInputRef.current?.click();
-              }}
-              className="p-2.5 md:p-1.5 mb-0.5 hover:bg-white/[0.06] rounded-lg transition-colors flex-shrink-0"
-              title={hasPreview ? "Upload content images (logo, photos)" : "Upload inspiration images"}
-              aria-label={hasPreview ? "Upload content images" : "Upload inspiration images"}
-            >
-              <Paperclip className="w-4 h-4 text-zinc-500" />
-            </button>
-            <input
-              ref={fileInputRef}
-              type="file"
-              accept="image/*"
-              multiple
-              onChange={handleFileUpload}
-              className="hidden"
-              aria-hidden="true"
-              id="chat-file-upload"
-              name="chat-file-upload"
-            />
-            <textarea
-              ref={textareaRef}
-              id="chat-input"
-              name="chat-input"
-              value={input}
-              onChange={(e) => {
-                setInput(e.target.value);
-                const el = textareaRef.current;
-                if (el) {
-                  el.style.height = "auto";
-                  el.style.height = Math.min(el.scrollHeight, 160) + "px";
-                }
-              }}
-              onKeyDown={handleKeyDown}
-              onPaste={handlePaste}
-              placeholder={placeholder}
-              disabled={isGenerating}
-              aria-label="Message input"
-              autoComplete="off"
-              maxLength={10000}
-              rows={1}
-              className="flex-1 bg-transparent text-[15px] text-zinc-100 placeholder:text-zinc-600 focus:outline-none disabled:opacity-40 resize-none overflow-y-auto leading-relaxed"
-              style={{ maxHeight: 160 }}
-            />
-            <button
-              onClick={handleSend}
-              disabled={(!input.trim() && uploadedImages.length === 0) || isGenerating}
-              className="p-3 md:p-2.5 mb-0.5 bg-green-500/60 hover:bg-green-400/70 disabled:bg-zinc-800/50 disabled:cursor-not-allowed rounded-full transition-all duration-200 flex-shrink-0 glow-green-strong disabled:shadow-none"
-              aria-label="Send message"
-            >
-              <ArrowUp className="w-4 h-4 text-white" />
-            </button>
-          </div>
-        </div>
       </div>
+
+      <ChatInput
+        onSend={onSend}
+        isGenerating={isGenerating}
+        hasPreview={hasPreview}
+        selectedElement={selectedElement}
+        onClearSelection={onClearSelection}
+        onAttach={handleAttach}
+        uploadedImages={uploadedImages}
+        onPaste={handlePaste}
+      />
+
+      {/* Hidden file input */}
+      <input
+        ref={fileInputRef}
+        type="file"
+        accept="image/*"
+        multiple
+        onChange={handleFileUpload}
+        className="hidden"
+        aria-hidden="true"
+        id="chat-file-upload"
+        name="chat-file-upload"
+      />
 
       {/* Image lightbox */}
       <AnimatePresence>
