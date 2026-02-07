@@ -20,6 +20,7 @@ import { UserMenu } from "@/components/auth/UserMenu";
 import { AuthModal } from "@/components/auth/AuthModal";
 import { useAuth } from "@/lib/auth/AuthContext";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
+import { useToast } from "@/components/Toast";
 import type { SavedProjectMeta, ProjectContext, UploadedImage } from "@/lib/types";
 
 function generateId(): string {
@@ -47,6 +48,7 @@ function HomePageContent() {
   const { save: saveProject, load: loadProject, list: listProjects, remove: deleteProject, isCloud, isAuthLoading, migrationStatus, migratedCount } = useProjects();
   const { user, isConfigured } = useAuth();
   const { deploy, isDeploying, lastDeployment } = useDeployment();
+  const { toast } = useToast();
   const searchParams = useSearchParams();
 
   // ─── Hook composition ───
@@ -277,9 +279,12 @@ function HomePageContent() {
     if (!preview.currentPreview || !currentProjectId) return;
     const result = await deploy(preview.currentPreview, currentProjectId, projectName);
     if (result.success && result.url) {
+      toast("success", "Site deployed! Opening in new tab...");
       window.open(result.url, "_blank");
+    } else if (result.error) {
+      toast("error", result.error);
     }
-  }, [preview.currentPreview, currentProjectId, projectName, deploy]);
+  }, [preview.currentPreview, currentProjectId, projectName, deploy, toast]);
 
   const handleNewProject = useCallback(() => {
     chat.resetChat();
