@@ -154,6 +154,7 @@ export interface PreviewPanelProps {
   onDeploy?: () => void;
   isDeploying?: boolean;
   lastDeployUrl?: string | null;
+  deployError?: string | null;
   onCodeChange?: (code: string) => void;
   codeMode?: CodeMode;
   onCodeModeChange?: (mode: CodeMode) => void;

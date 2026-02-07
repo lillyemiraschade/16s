@@ -41,6 +41,7 @@ function HomePageContent() {
   const [projectContext, setProjectContext] = useState<ProjectContext | undefined>(undefined);
   const [showShortcuts, setShowShortcuts] = useState(false);
   const [mobileView, setMobileView] = useState<"chat" | "preview">("chat");
+  const [isLoadingProject, setIsLoadingProject] = useState(false);
 
   // External hooks
   const { save: saveProject, load: loadProject, list: listProjects, remove: deleteProject, isCloud, isAuthLoading, migrationStatus, migratedCount } = useProjects();
@@ -305,7 +306,9 @@ function HomePageContent() {
   }, [user, chat.hasStarted, handleNewProject]);
 
   const handleLoadProject = useCallback(async (id: string) => {
+    setIsLoadingProject(true);
     const proj = await loadProject(id);
+    setIsLoadingProject(false);
     if (!proj) return;
     chat.abortRef.current?.abort();
     chat.setMessages(proj.messages);
@@ -599,6 +602,19 @@ function HomePageContent() {
   return (
     <>
       <MigrationBanner status={migrationStatus} count={migratedCount} />
+      {/* Project loading overlay */}
+      <AnimatePresence>
+        {isLoadingProject && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 bg-black/40 flex items-center justify-center"
+          >
+            <div className="w-8 h-8 border-2 border-green-500/30 border-t-green-500 rounded-full animate-spin" />
+          </motion.div>
+        )}
+      </AnimatePresence>
       <AnimatePresence>
         <motion.div
           id="main-content"
@@ -658,6 +674,7 @@ function HomePageContent() {
             onDeploy={handleDeploy}
             isDeploying={isDeploying}
             lastDeployUrl={lastDeployment?.url}
+            deployError={lastDeployment?.success === false ? lastDeployment.error : null}
             onCodeChange={preview.handleCodeChange}
             codeMode={preview.codeMode}
             onCodeModeChange={preview.setCodeMode}

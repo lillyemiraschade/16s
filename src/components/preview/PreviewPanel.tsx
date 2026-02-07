@@ -237,6 +237,7 @@ export const PreviewPanel = memo(function PreviewPanel({
   onDeploy,
   isDeploying,
   lastDeployUrl,
+  deployError,
   onCodeChange,
   codeMode = "html",
   onCodeModeChange,
@@ -523,6 +524,11 @@ export const PreviewPanel = memo(function PreviewPanel({
                           )}
                           {isDeploying ? "Deploying..." : "Deploy to Web"}
                         </button>
+                        {deployError && (
+                          <div className="border-t border-red-500/20 bg-red-500/5 px-4 py-2.5">
+                            <p className="text-[12px] text-red-400">{deployError}</p>
+                          </div>
+                        )}
                         {lastDeployUrl && (
                           <div className="border-t border-green-500/20 bg-green-500/5">
                             <div className="px-4 py-2 flex items-center gap-2">
