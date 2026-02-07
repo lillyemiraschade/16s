@@ -22,12 +22,22 @@ export function track(event: AnalyticsEvent): void {
     return;
   }
 
+  // PostHog (preferred)
+  if (typeof window !== "undefined" && process.env.NEXT_PUBLIC_POSTHOG_KEY) {
+    try {
+      const { posthog } = require("@/lib/posthog");
+      posthog.capture(event.name, "props" in event ? event.props : {});
+    } catch {}
+    return;
+  }
+
+  // Fallback: custom endpoint
   const endpoint = process.env.NEXT_PUBLIC_ANALYTICS_ENDPOINT;
   if (endpoint) {
     fetch(endpoint, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ ...event, timestamp: Date.now() }),
-    }).catch(() => {}); // fire and forget
+    }).catch(() => {});
   }
 }
