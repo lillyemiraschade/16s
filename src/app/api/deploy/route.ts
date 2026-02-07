@@ -1,36 +1,18 @@
 import { createClient } from "@/lib/supabase/server";
 import { NextResponse, NextRequest } from "next/server";
+import { createRateLimiter } from "@/lib/rate-limit";
 
 export const maxDuration = 30; // 30s — Vercel API calls can be slow
 
 const VERCEL_TOKEN = process.env.VERCEL_TOKEN;
 const VERCEL_TEAM_ID = process.env.VERCEL_TEAM_ID;
 
-// [2026-02-05] Rate limiting — deployments consume Vercel API quota
-const rateLimitMap = new Map<string, { count: number; resetAt: number }>();
-const RATE_LIMIT = 5; // 5 deploys per minute per IP
-const RATE_WINDOW_MS = 60_000;
-
-function checkRateLimit(ip: string): boolean {
-  const now = Date.now();
-  const entry = rateLimitMap.get(ip);
-  if (!entry || now > entry.resetAt) {
-    rateLimitMap.set(ip, { count: 1, resetAt: now + RATE_WINDOW_MS });
-    // Sweep expired entries when map gets large
-    if (rateLimitMap.size > 500) {
-      rateLimitMap.forEach((v, k) => { if (now > v.resetAt) rateLimitMap.delete(k); });
-    }
-    return true;
-  }
-  if (entry.count >= RATE_LIMIT) return false;
-  entry.count++;
-  return true;
-}
+const limiter = createRateLimiter(5); // 5 deploys per minute per IP
 
 export async function POST(request: NextRequest) {
   // Rate limiting
   const ip = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
-  if (!checkRateLimit(ip)) {
+  if (!limiter.check(ip)) {
     return NextResponse.json(
       { error: "Too many deployments. Please wait a moment." },
       { status: 429, headers: { "Retry-After": "60" } }

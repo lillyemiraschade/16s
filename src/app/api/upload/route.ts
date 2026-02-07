@@ -1,33 +1,16 @@
 import { put } from "@vercel/blob";
 import { NextRequest } from "next/server";
 import { createClient } from "@/lib/supabase/server";
+import { createRateLimiter } from "@/lib/rate-limit";
 
 export const runtime = "nodejs";
 
-// [2026-02-05] Added rate limiting — prevents abuse of Vercel Blob storage quota
-const rateLimitMap = new Map<string, { count: number; resetAt: number }>();
-const RATE_LIMIT = 15; // 15 uploads per minute per IP
-const RATE_WINDOW_MS = 60_000;
-
-function checkRateLimit(ip: string): boolean {
-  const now = Date.now();
-  const entry = rateLimitMap.get(ip);
-  if (!entry || now > entry.resetAt) {
-    rateLimitMap.set(ip, { count: 1, resetAt: now + RATE_WINDOW_MS });
-    if (rateLimitMap.size > 500) {
-      rateLimitMap.forEach((v, k) => { if (now > v.resetAt) rateLimitMap.delete(k); });
-    }
-    return true;
-  }
-  if (entry.count >= RATE_LIMIT) return false;
-  entry.count++;
-  return true;
-}
+const limiter = createRateLimiter(15); // 15 uploads per minute per IP
 
 export async function POST(req: NextRequest) {
   // Rate limiting
   const ip = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
-  if (!checkRateLimit(ip)) {
+  if (!limiter.check(ip)) {
     return new Response(
       JSON.stringify({ error: "Too many uploads. Please wait a moment." }),
       { status: 429, headers: { "Content-Type": "application/json", "Retry-After": "60" } }

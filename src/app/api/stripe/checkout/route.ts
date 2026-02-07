@@ -1,23 +1,13 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
 import { getStripe, PLANS, PlanType } from "@/lib/stripe/config";
+import { createRateLimiter } from "@/lib/rate-limit";
 
-const rateLimitMap = new Map<string, { count: number; resetAt: number }>();
-function checkRateLimit(ip: string, limit = 5): boolean {
-  const now = Date.now();
-  const entry = rateLimitMap.get(ip);
-  if (!entry || now > entry.resetAt) {
-    rateLimitMap.set(ip, { count: 1, resetAt: now + 60_000 });
-    return true;
-  }
-  if (entry.count >= limit) return false;
-  entry.count++;
-  return true;
-}
+const limiter = createRateLimiter(5);
 
 export async function POST(request: NextRequest) {
   const ip = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
-  if (!checkRateLimit(ip)) {
+  if (!limiter.check(ip)) {
     return NextResponse.json({ error: "Too many requests" }, { status: 429 });
   }
 

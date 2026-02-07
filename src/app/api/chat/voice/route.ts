@@ -2,29 +2,12 @@ import { anthropic } from "@/lib/ai/anthropic";
 import { MessageParam } from "@anthropic-ai/sdk/resources/messages";
 import { z } from "zod";
 import { NextRequest } from "next/server";
+import { createRateLimiter } from "@/lib/rate-limit";
 
 export const runtime = "nodejs";
 export const maxDuration = 60;
 
-// [2026-02-05] Rate limiting — voice uses expensive Sonnet model, prevent abuse
-const rateLimitMap = new Map<string, { count: number; resetAt: number }>();
-const RATE_LIMIT = 30; // 30 req/min (voice needs fast back-and-forth but still needs limits)
-const RATE_WINDOW_MS = 60_000;
-
-function checkRateLimit(ip: string): boolean {
-  const now = Date.now();
-  const entry = rateLimitMap.get(ip);
-  if (!entry || now > entry.resetAt) {
-    rateLimitMap.set(ip, { count: 1, resetAt: now + RATE_WINDOW_MS });
-    if (rateLimitMap.size > 500) {
-      rateLimitMap.forEach((v, k) => { if (now > v.resetAt) rateLimitMap.delete(k); });
-    }
-    return true;
-  }
-  if (entry.count >= RATE_LIMIT) return false;
-  entry.count++;
-  return true;
-}
+const limiter = createRateLimiter(30); // 30 req/min (voice needs fast back-and-forth)
 
 const VoiceRequestSchema = z.object({
   voiceMessages: z.array(z.object({
@@ -93,7 +76,7 @@ Set "complete": true ONLY when you've gathered enough info AND delivered the ins
 export async function POST(req: NextRequest) {
   // Rate limiting
   const ip = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
-  if (!checkRateLimit(ip)) {
+  if (!limiter.check(ip)) {
     return new Response(
       JSON.stringify({ message: "Too many requests. Please wait a moment.", complete: false }),
       { status: 429, headers: { "Content-Type": "application/json", "Retry-After": "60" } }

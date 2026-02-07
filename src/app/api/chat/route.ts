@@ -2,6 +2,7 @@ import { anthropic } from "@/lib/ai/anthropic";
 import { MessageParam, ImageBlockParam, TextBlockParam } from "@anthropic-ai/sdk/resources/messages";
 import { z } from "zod";
 import { createClient } from "@/lib/supabase/server";
+import { createRateLimiter } from "@/lib/rate-limit";
 
 export const runtime = "nodejs";
 export const maxDuration = 300; // 5 minutes max for Pro plans
@@ -76,25 +77,7 @@ interface ChatResponse {
   };
 }
 
-// Simple in-memory rate limiter (per IP, 20 requests per minute)
-// NOTE: This is in-memory and resets on each serverless cold start.
-// For production at scale, consider Redis or Upstash for distributed rate limiting.
-// Current approach works for moderate traffic where occasional resets are acceptable.
-const rateLimitMap = new Map<string, { count: number; resetAt: number }>();
-const RATE_LIMIT = 20;
-const RATE_WINDOW_MS = 60_000;
-
-function checkRateLimit(ip: string): boolean {
-  const now = Date.now();
-  const entry = rateLimitMap.get(ip);
-  if (!entry || now > entry.resetAt) {
-    rateLimitMap.set(ip, { count: 1, resetAt: now + RATE_WINDOW_MS });
-    return true;
-  }
-  if (entry.count >= RATE_LIMIT) return false;
-  entry.count++;
-  return true;
-}
+const limiter = createRateLimiter(20);
 
 // Map API/stream errors to user-friendly messages with HTTP status codes
 function getUserFriendlyError(errMsg: string): { message: string; statusCode: number } {
@@ -113,18 +96,6 @@ function getUserFriendlyError(errMsg: string): { message: string; statusCode: nu
   if (errMsg.includes("Supabase") || errMsg.includes("not configured"))
     return { message: "Service configuration error. Please try again.", statusCode: 500 };
   return { message: "Let me try that again...", statusCode: 500 };
-}
-
-// Clean stale entries periodically
-if (typeof globalThis !== "undefined") {
-  const cleanup = () => {
-    const now = Date.now();
-    rateLimitMap.forEach((val, key) => {
-      if (now > val.resetAt) rateLimitMap.delete(key);
-    });
-  };
-  const timer = setInterval(cleanup, RATE_WINDOW_MS);
-  if (typeof timer === "object" && "unref" in timer) timer.unref();
 }
 
 // Credit management for authenticated users
@@ -638,7 +609,7 @@ REMEMBER:
 export async function POST(req: Request) {
   // Rate limiting
   const ip = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
-  if (!checkRateLimit(ip)) {
+  if (!limiter.check(ip)) {
     return new Response(
       JSON.stringify({ message: "You\u2019re sending requests too quickly. Please wait a moment." }),
       { status: 429, headers: { "Content-Type": "application/json", "Retry-After": "60" } }
