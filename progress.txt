@@ -1,56 +1,27 @@
-# Round 12: Performance, Onboarding & Features
+# Round 13: Product Features
 
-## P0-0 — Critical Bug Fix
-- [x] 0. Fix blank messages during streaming (delay assistant message creation until content arrives)
+## P0 — Sharing
+- [ ] 1. Schema migration (is_public, public_slug, public_preview)
+- [ ] 2. Share API (POST/DELETE/GET /api/share)
+- [ ] 3. Public project page (/share/[slug])
+- [ ] 4. Share button in PreviewToolbar
 
-## P0 — Performance
-- [x] 1. Lazy-load Monaco Editor (next/dynamic) — already done in R11
-- [x] 2. Lazy-load html2canvas (dynamic import at call site)
-- [x] 3. Lazy-load Stripe client — already clean (only server-side imports)
-- [x] 4. Lazy-load VoiceCall component (next/dynamic)
-- [x] 5. Bundle analysis: 277 kB → 228 kB first load (-18%), page JS 79.1 kB → 30.7 kB (-61%)
+## P1 — Custom Domains
+- [ ] 5. Schema (domains table)
+- [ ] 6. Domain API (/api/domains)
+- [ ] 7. Domain management UI
+- [ ] 8. Domain status in projects list
 
-## P1 — Onboarding
-- [x] 6. First-visit tooltip tour (2 tooltips: input + pills, localStorage flag, skip/next/got it)
-- [x] 7. Welcome screen showcase section (4 gradient placeholder cards)
-- [x] 8. Smart first prompt handling (isFirstMessage flag → extra-warm system prompt addendum)
-- [x] 9. Credit counter in header (AuthContext fetches credits, UserMenu displays in dropdown + badge)
+## P2 — Templates
+- [ ] 9. Template data (10 industry-diverse templates)
+- [ ] 10. Templates page (/templates)
+- [ ] 11. Templates in welcome screen
+- [ ] 12. Template attribution tracking
 
-## P2 — Discussion Mode
-- [x] 10. Chat-only toggle (MessageSquare/Code2 button, blue ring indicator, API flag)
-- [x] 11. Discussion → Build transition ("Ready to build!" pill auto-switches mode)
-- [x] 12. Brainstorm-specific pills (layout options, color palettes, sections, ready to build)
-
-## P3 — Analytics
-- [x] 13. Analytics utility (src/lib/analytics.ts — typed events, dev console.debug, prod POST)
-- [x] 14. Wire analytics into useChat (message_sent with mode + hasImages)
-- [x] 15. Server-side generation metrics (structured console.debug with model, duration, output size)
-
-## P4 — Quality of Life
-- [x] 16. Project duplicate (Copy icon button on hover, loads full project, saves with new ID + "(Copy)" name)
-- [x] 17. Export as ZIP (JSZip dynamic import, "Download as ZIP" in export menu, bundles index.html)
-- [x] 18. Keyboard shortcuts verification (all 9 shortcuts + Enter/Shift+Enter working, dialog accurate, input guards correct)
+## P3 — Deployment History
+- [ ] 13. Deployment history UI
+- [ ] 14. Deployment comparison/preview
+- [ ] 15. "Publish changes" button
 
 ## Log
-- R12-1: Fixed streaming blank messages. Root cause: empty assistant placeholder was created immediately, hiding the typing indicator and showing a blank bubble. Fix: delay message creation via `upsertStreamingMsg` helper — message only appears when `extractStreamingMessage` returns non-empty text. Also hardened typing indicator to show when last assistant message has empty content.
-- R12-2: Updated SECURITY.md to match current iframe sandbox config.
-- R12-3: Lazy-loaded html2canvas (dynamic import at call site in usePreview.ts) and VoiceCall (next/dynamic in page.tsx). Monaco was already lazy, Stripe was already server-only. Result: 277→228 kB first load (-18%).
-- R12-8: Project duplicate — Copy button in project card hover actions. Loads full project data, saves with new UUID + "(Copy)" name, inserts into local state immediately.
-- R12-9: Export as ZIP — JSZip dynamically imported at call site. New "Download as ZIP" option in export menu (FolderArchive icon). Bundles current preview HTML as index.html inside a .zip file.
-- R12-10: Keyboard shortcuts verification — all 9 shortcuts (Cmd+N/E/Shift+C/Z/Shift+Z/K/?, Cmd+/, Esc) working correctly. Enter/Shift+Enter in chat input correct. Undo/redo properly guarded against input/textarea focus. Help dialog accurate. Export dropdown handles Escape. No changes needed.
-
-## P5 — Final Verification
-- npm run build: PASS — 230 kB first load, /projects 201 kB
-- npm test: PASS — 28/28 tests (5 files: rate-limit, api-utils, parse-response, chat route, stripe webhook)
-- npx tsc --noEmit: PASS — zero type errors
-- 11 commits on branch ralph/round-12-performance-features (R12 setup + R12-1 through R12-10)
-
-### Round 12 Summary (18 items)
-| Area | Items | Key Results |
-|------|-------|-------------|
-| P0-0 Bug Fix | 1 | Streaming blank messages fixed (deferred message creation) |
-| P0 Performance | 4 | Bundle: 277→230 kB first load (-17%), page JS 79→31 kB (-61%) |
-| P1 Onboarding | 4 | Tooltip tour, showcase cards, warm first prompt, credit counter |
-| P2 Discussion Mode | 3 | Chat-only toggle, auto-transition, brainstorm-specific pills |
-| P3 Analytics | 3 | Typed event system, client tracking, server metrics |
-| P4 Quality of Life | 3 | Project duplicate, ZIP export, keyboard shortcuts verified |
+(cycle notes here)
