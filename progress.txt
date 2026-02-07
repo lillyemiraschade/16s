@@ -1,5 +1,8 @@
 # Round 12: Performance, Onboarding & Features
 
+## P0-0 — Critical Bug Fix
+- [x] 0. Fix blank messages during streaming (delay assistant message creation until content arrives)
+
 ## P0 — Performance
 - [ ] 1. Lazy-load Monaco Editor (next/dynamic)
 - [ ] 2. Lazy-load html2canvas (dynamic import at call site)
@@ -29,4 +32,4 @@
 - [ ] 18. Keyboard shortcuts verification
 
 ## Log
-(cycle notes here)
+- R12-1: Fixed streaming blank messages. Root cause: empty assistant placeholder was created immediately, hiding the typing indicator and showing a blank bubble. Fix: delay message creation via `upsertStreamingMsg` helper — message only appears when `extractStreamingMessage` returns non-empty text. Also hardened typing indicator to show when last assistant message has empty content.

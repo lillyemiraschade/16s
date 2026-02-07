@@ -355,7 +355,7 @@ export const ChatPanel = memo(function ChatPanel({
             transition={{ duration: 0.2 }}
             className="flex items-end gap-2 mt-4"
           >
-            {(!messages.length || messages[messages.length - 1].role !== "assistant") && (
+            {(!messages.length || messages[messages.length - 1].role !== "assistant" || !messages[messages.length - 1].content) && (
               <div className="glass-bubble bubble-tail-left px-4 py-3">
                 <TypingIndicator label={hasPreview ? "Making changes..." : "Designing your site..."} />
               </div>

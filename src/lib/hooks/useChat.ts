@@ -292,13 +292,27 @@ export function useChat({
       throw new Error(errorMsg);
     }
 
-    // Create streaming placeholder message
+    // Streaming message ID — message is NOT created until we have content to show.
+    // This keeps the typing indicator visible instead of showing a blank bubble.
     const streamingMsgId = (Date.now() + 1).toString();
-    setMessages(prev => [...prev, {
-      id: streamingMsgId,
-      role: "assistant" as const,
-      content: "",
-    }]);
+    let streamingMsgCreated = false;
+
+    // Helper: create assistant message on first content, update on subsequent calls
+    const upsertStreamingMsg = (content: string, extra?: Partial<Message>) => {
+      if (!streamingMsgCreated) {
+        streamingMsgCreated = true;
+        setMessages(prev => [...prev, {
+          id: streamingMsgId,
+          role: "assistant" as const,
+          content,
+          ...extra,
+        }]);
+      } else {
+        setMessages(prev => prev.map(m =>
+          m.id === streamingMsgId ? { ...m, content, ...extra } : m
+        ));
+      }
+    };
 
     // Read NDJSON stream
     const reader = response.body?.getReader();
@@ -314,11 +328,10 @@ export function useChat({
           if (event.message) { data = event; break; }
         } catch { continue; }
       }
-      setMessages(prev => prev.map(m =>
-        m.id === streamingMsgId
-          ? { ...m, content: data.message || "...", pills: data.pills, showUpload: data.showUpload, plan: data.plan, qaReport: data.qaReport }
-          : m
-      ));
+      upsertStreamingMsg(
+        data.message || "...",
+        { pills: data.pills, showUpload: data.showUpload, plan: data.plan, qaReport: data.qaReport },
+      );
       if (data.html) {
         const processedHtml = replaceImagePlaceholders(data.html, imagesToSend);
         const navGuard = `<script>document.addEventListener('click',function(e){var a=e.target.closest('a');if(a){var h=a.getAttribute('href');if(h&&h.startsWith('http')){e.preventDefault();return;}if(h&&!h.startsWith('javascript:')){e.preventDefault();}}},true);<\/script>`;
@@ -355,11 +368,9 @@ export function useChat({
               if (now - lastUpdateTime >= UPDATE_INTERVAL) {
                 lastUpdateTime = now;
                 const { messageText } = extractStreamingMessage(rawTokens);
-                setMessages(prev => prev.map(m =>
-                  m.id === streamingMsgId
-                    ? { ...m, content: messageText || "" }
-                    : m
-                ));
+                if (messageText) {
+                  upsertStreamingMsg(messageText);
+                }
               }
             } else if (event.type === "done") {
               doneResponse = event.response;
@@ -380,11 +391,10 @@ export function useChat({
       // Stream error after tokens started — show partial content + error note
       const { messageText } = extractStreamingMessage(rawTokens);
       if (messageText) {
-        setMessages(prev => prev.map(m =>
-          m.id === streamingMsgId
-            ? { ...m, content: messageText + "\n\n*Generation interrupted. Try again?*", pills: ["Try again"] }
-            : m
-        ));
+        upsertStreamingMsg(
+          messageText + "\n\n*Generation interrupted. Try again?*",
+          { pills: ["Try again"] },
+        );
         return;
       }
       throw error;
@@ -403,19 +413,15 @@ export function useChat({
         ? finalResponse.pills
         : getContextualFallbackPills(!!currentPreview, !!finalResponse.html, !!finalResponse.plan, cleanMessages.length);
 
-    setMessages(prev => prev.map(m =>
-      m.id === streamingMsgId
-        ? {
-            id: streamingMsgId,
-            role: "assistant" as const,
-            content: finalResponse.message || "I'm working on your request...",
-            pills,
-            showUpload: finalResponse.showUpload,
-            plan: finalResponse.plan,
-            qaReport: finalResponse.qaReport,
-          }
-        : m
-    ));
+    upsertStreamingMsg(
+      finalResponse.message || "I'm working on your request...",
+      {
+        pills,
+        showUpload: finalResponse.showUpload,
+        plan: finalResponse.plan,
+        qaReport: finalResponse.qaReport,
+      },
+    );
 
     if (finalResponse.html) {
       const processedHtml = replaceImagePlaceholders(finalResponse.html, imagesToSend);
