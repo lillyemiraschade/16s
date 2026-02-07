@@ -28,7 +28,7 @@
 
 ## P4 — Quality of Life
 - [x] 16. Project duplicate (Copy icon button on hover, loads full project, saves with new ID + "(Copy)" name)
-- [ ] 17. Export as ZIP
+- [x] 17. Export as ZIP (JSZip dynamic import, "Download as ZIP" in export menu, bundles index.html)
 - [ ] 18. Keyboard shortcuts verification
 
 ## Log
@@ -36,3 +36,4 @@
 - R12-2: Updated SECURITY.md to match current iframe sandbox config.
 - R12-3: Lazy-loaded html2canvas (dynamic import at call site in usePreview.ts) and VoiceCall (next/dynamic in page.tsx). Monaco was already lazy, Stripe was already server-only. Result: 277→228 kB first load (-18%).
 - R12-8: Project duplicate — Copy button in project card hover actions. Loads full project data, saves with new UUID + "(Copy)" name, inserts into local state immediately.
+- R12-9: Export as ZIP — JSZip dynamically imported at call site. New "Download as ZIP" option in export menu (FolderArchive icon). Bundles current preview HTML as index.html inside a .zip file.

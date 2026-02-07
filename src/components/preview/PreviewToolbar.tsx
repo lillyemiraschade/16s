@@ -21,6 +21,7 @@ import {
   Loader2,
   CheckCircle,
   FileCode,
+  FolderArchive,
 } from "lucide-react";
 import type { Viewport, SelectedElement, CodeMode } from "@/lib/types";
 
@@ -52,6 +53,7 @@ interface PreviewToolbarProps {
   codeMode: CodeMode;
   onCodeModeChange?: (mode: CodeMode) => void;
   onExport: () => void;
+  onExportZip: () => void;
   onCopyToClipboard: () => void;
   onOpenInNewTab: () => void;
   onDeploy?: () => void;
@@ -82,6 +84,7 @@ export const PreviewToolbar = memo(function PreviewToolbar({
   codeMode,
   onCodeModeChange,
   onExport,
+  onExportZip,
   onCopyToClipboard,
   onOpenInNewTab,
   onDeploy,
@@ -286,6 +289,10 @@ export const PreviewToolbar = memo(function PreviewToolbar({
                     <button role="menuitem" onClick={() => handleExportAction(onExport)}
                       className="w-full flex items-center gap-2.5 px-4 py-2.5 text-[13px] text-zinc-300 hover:text-zinc-100 hover:bg-white/[0.04] transition-colors">
                       <Download className="w-3.5 h-3.5" /> Download HTML
+                    </button>
+                    <button role="menuitem" onClick={() => handleExportAction(onExportZip)}
+                      className="w-full flex items-center gap-2.5 px-4 py-2.5 text-[13px] text-zinc-300 hover:text-zinc-100 hover:bg-white/[0.04] transition-colors">
+                      <FolderArchive className="w-3.5 h-3.5" /> Download as ZIP
                     </button>
                     <button role="menuitem" onClick={() => handleExportAction(handleCopyWithFeedback)}
                       className="w-full flex items-center gap-2.5 px-4 py-2.5 text-[13px] text-zinc-300 hover:text-zinc-100 hover:bg-white/[0.04] transition-colors">

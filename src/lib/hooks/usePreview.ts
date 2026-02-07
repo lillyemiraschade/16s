@@ -94,6 +94,20 @@ export function usePreview(projectName: string) {
     URL.revokeObjectURL(url);
   }, [currentPreview, projectName]);
 
+  const handleExportZip = useCallback(async () => {
+    if (!currentPreview) return;
+    const JSZip = (await import("jszip")).default;
+    const zip = new JSZip();
+    zip.file("index.html", currentPreview);
+    const blob = await zip.generateAsync({ type: "blob" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `${projectName || "website"}.zip`;
+    a.click();
+    URL.revokeObjectURL(url);
+  }, [currentPreview, projectName]);
+
   const handleCopyToClipboard = useCallback(() => {
     if (!currentPreview) return;
     navigator.clipboard.writeText(currentPreview).catch(() => {});
@@ -210,6 +224,7 @@ export function usePreview(projectName: string) {
     handleUndo,
     handleRedo,
     handleExport,
+    handleExportZip,
     handleCopyToClipboard,
     handleOpenInNewTab,
     handleRestoreVersion,

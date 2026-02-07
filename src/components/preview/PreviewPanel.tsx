@@ -110,6 +110,7 @@ export const PreviewPanel = memo(function PreviewPanel({
   onBack,
   onRedo,
   onExport,
+  onExportZip,
   onCopyToClipboard,
   onOpenInNewTab,
   onIframeLoad,
@@ -202,6 +203,7 @@ export const PreviewPanel = memo(function PreviewPanel({
         codeMode={codeMode}
         onCodeModeChange={onCodeModeChange}
         onExport={onExport}
+        onExportZip={onExportZip}
         onCopyToClipboard={onCopyToClipboard}
         onOpenInNewTab={onOpenInNewTab}
         onDeploy={onDeploy}

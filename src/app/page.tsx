@@ -699,6 +699,7 @@ function HomePageContent() {
             onBack={preview.handleUndo}
             onRedo={preview.handleRedo}
             onExport={preview.handleExport}
+            onExportZip={preview.handleExportZip}
             onCopyToClipboard={preview.handleCopyToClipboard}
             onOpenInNewTab={preview.handleOpenInNewTab}
             onIframeLoad={preview.handleIframeLoad}

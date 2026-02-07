@@ -141,6 +141,7 @@ export interface PreviewPanelProps {
   onBack: () => void;
   onRedo: () => void;
   onExport: () => void;
+  onExportZip: () => void;
   onCopyToClipboard: () => void;
   onOpenInNewTab: () => void;
   onIframeLoad?: (iframe: HTMLIFrameElement) => void;
