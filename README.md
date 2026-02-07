@@ -64,13 +64,25 @@ src/
     rate-limit.ts         Shared rate limiter factory
     api-utils.ts          apiError/apiSuccess response helpers
     env.ts                Typed env var validation
+    error-reporter.ts     Structured error reporting (dev: console, prod: endpoint)
     types.ts              Shared TypeScript interfaces
   components/
-    chat/ChatPanel.tsx    Chat interface, messages, input
-    preview/PreviewPanel.tsx  Live preview, toolbar, code editor
+    chat/
+      ChatPanel.tsx       Chat interface, messages, input
+      ChatMessage.tsx     Single message bubble
+      ChatInput.tsx       Input area with send button
+      ImageUploadBar.tsx  Image thumbnail strip
+    preview/
+      PreviewPanel.tsx    Live preview, toolbar, code editor
+      PreviewToolbar.tsx  Viewport, export, deploy controls
+      VersionHistory.tsx  History dropdown, bookmarks
     auth/                 AuthModal, UserMenu, MigrationBanner
+    GlobalErrorHandler.tsx  Window error/rejection catcher
     Toast.tsx             Toast notification system
     ErrorBoundary.tsx     Error boundary with fallback UI
+e2e/
+  smoke.spec.ts           Playwright smoke tests (5 tests)
+.github/workflows/ci.yml  GitHub Actions CI pipeline
 ```
 
 ## Key Features
@@ -88,10 +100,36 @@ src/
 ## Commands
 
 ```bash
-npm run dev            # Dev server
+npm run dev            # Dev server (HTTPS, requires certificates/)
+npm run dev:http       # Dev server (HTTP, no certs needed)
 npm run build          # Production build
+npm test               # Unit tests (vitest, 28 tests)
+npm run test:e2e       # E2E tests (Playwright, 5 smoke tests)
+npm run check          # Full pre-push check: tsc + build + test
 npx tsc --noEmit       # Type check only
 ```
+
+## CI/CD
+
+GitHub Actions runs on push/PR to main:
+- **check** job: type check, build, unit tests
+- **e2e** job: Playwright smoke tests with Chromium
+
+## Testing
+
+- **Unit tests** (vitest): rate limiter, API response parser, API utils, chat API integration, Stripe webhook — 28 tests
+- **E2E tests** (Playwright): homepage, idea pills, chat flow with mock API, preview iframe, projects page — 5 tests
+- Tests run in CI automatically. Run `npm run check` locally before pushing.
+
+## Security
+
+- **Iframe sandbox**: `allow-scripts allow-popups` (no `allow-same-origin` — generated HTML cannot access parent cookies/storage/DOM)
+- **Preview CSP**: `connect-src 'none'` prevents generated HTML from making fetch/XHR requests
+- **postMessage validation**: Messages validated by `16s-` type prefix
+- **CORS/CSP**: Configured in middleware and Next.js config
+- **RLS**: All Supabase tables use Row Level Security
+- **Rate limiting**: All API routes rate-limited (shared factory)
+- **Auth**: Supabase Auth with email + OAuth providers
 
 ## Tech Stack
 

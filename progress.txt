@@ -25,8 +25,8 @@
 - [x] 14. Stripe webhook tests
 
 ## P5 — Final Verification
-- [ ] 15. Full smoke test
-- [ ] 16. README update
+- [x] 15. Full smoke test
+- [x] 16. README update
 
 ## Log
 - R11-1: Fixed blank streaming messages. extractStreamingMessage used hardcoded '"message":"' (no space) but Claude outputs '"message": "' (with space). Changed to regex /"message"\s*:\s*"/ to handle whitespace. Same fix for "html" phase detection.
@@ -37,3 +37,15 @@
 - R11-6: Autosave indicator. saveStatus state in page.tsx (idle→saving→saved→idle after 2s). Passed to ChatPanel. Subtle "Saving..." / "Saved" text in header next to UserMenu.
 - R11-7: Deploy flow improvements. Larger URL display with break-all for long URLs. Explicit "Open" and "Copy URL" buttons with labels instead of icon-only. Visually prominent green-themed action buttons.
 - R11-8: Stripe webhook tests. 3 tests: checkout.session.completed → updates subscription, invalid signature → 400, missing admin client → 500. Total tests: 28.
+- R11-9: Final verification + README update.
+
+## Smoke Test Results
+- Homepage: loads ✓ (welcome screen, headline, input, idea pills)
+- Chat: message sending works with streaming ✓ (E2E verified with mocked API)
+- Preview: iframe renders ✓ (E2E verified)
+- Projects page: loads ✓
+- tsc --noEmit: passes ✓
+- npm run build: passes ✓
+- npm test: 28/28 pass ✓ (5 test files: parse-response, rate-limit, api-utils, chat API, stripe webhook)
+- npm run test:e2e: 5/5 pass ✓ (homepage, pills, chat flow, preview, projects)
+- CI config: valid ✓ (2 jobs: check + e2e)
