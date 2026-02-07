@@ -44,3 +44,20 @@ R11-1: Fixed streaming blank messages — buffer residual processing, final thro
 R11-2: Verified P0-1 through P3 already complete from prior rounds
 R11-3: Added Stripe webhook tests for subscription.deleted and invoice.payment_succeeded (30 tests total)
 R11-4: Updated README with R13 features, new test count, architecture additions
+
+---
+
+# Round 14: Edge of Perfection
+
+## Features
+- [x] R14-4: Contact form backend + email notifications (Resend)
+- [x] R14-5: GitHub export (OAuth + repo creation + file push)
+- [x] R14-6: PostHog analytics (client init, identify, track)
+- [x] R14-7: Sentry error monitoring (client/server/edge configs, error-reporter)
+- [x] R14-8: Site quality scoring (axe-core a11y, 8-check SEO, 6-hint perf, QualityCard UI)
+- [x] R14-9: Polish (SVG favicon, @vercel/og share images, .env.example update)
+
+## Verification
+- Build: PASS
+- Tests: 30/30 PASS
+- All integrations gracefully degrade when env vars are missing
