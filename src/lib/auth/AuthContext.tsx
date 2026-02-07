@@ -9,6 +9,7 @@ interface AuthContextType {
   session: Session | null;
   loading: boolean;
   isConfigured: boolean;
+  credits: number | null; // null = unknown/unlimited, number = remaining
   signInWithEmail: (email: string, password: string) => Promise<{ error: Error | null }>;
   signUpWithEmail: (email: string, password: string) => Promise<{ error: Error | null }>;
   signInWithOAuth: (provider: "google" | "github") => Promise<{ error: Error | null }>;
@@ -21,6 +22,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [session, setSession] = useState<Session | null>(null);
   const [loading, setLoading] = useState(true);
+  const [credits, setCredits] = useState<number | null>(null);
 
   const isConfigured = useMemo(() => isSupabaseConfigured(), []);
   const supabase = useMemo(() => createClient(), []);
@@ -53,6 +55,23 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
     return () => subscription.unsubscribe();
   }, [supabase]);
+
+  // Fetch credits when user changes
+  useEffect(() => {
+    if (!supabase || !user) { setCredits(null); return; }
+    (async () => {
+      try {
+        const { data } = await supabase
+          .from("subscriptions")
+          .select("credits_remaining")
+          .eq("user_id", user.id)
+          .single();
+        setCredits(data?.credits_remaining ?? null);
+      } catch {
+        setCredits(null);
+      }
+    })();
+  }, [supabase, user]);
 
   const signInWithEmail = useCallback(async (email: string, password: string) => {
     if (!supabase) return { error: new Error("Auth not configured") };
@@ -107,11 +126,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     session,
     loading,
     isConfigured,
+    credits,
     signInWithEmail,
     signUpWithEmail,
     signInWithOAuth,
     signOut,
-  }), [user, session, loading, isConfigured, signInWithEmail, signUpWithEmail, signInWithOAuth, signOut]);
+  }), [user, session, loading, isConfigured, credits, signInWithEmail, signUpWithEmail, signInWithOAuth, signOut]);
 
   return (
     <AuthContext.Provider value={value}>

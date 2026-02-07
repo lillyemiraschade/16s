@@ -13,8 +13,8 @@
 ## P1 — Onboarding
 - [x] 6. First-visit tooltip tour (2 tooltips: input + pills, localStorage flag, skip/next/got it)
 - [x] 7. Welcome screen showcase section (4 gradient placeholder cards)
-- [ ] 8. Smart first prompt handling (isFirstMessage flag)
-- [ ] 9. Credit counter in header
+- [x] 8. Smart first prompt handling (isFirstMessage flag → extra-warm system prompt addendum)
+- [x] 9. Credit counter in header (AuthContext fetches credits, UserMenu displays in dropdown + badge)
 
 ## P2 — Discussion Mode
 - [ ] 10. Chat-only toggle (no code generation)

@@ -45,6 +45,7 @@ const ChatRequestSchema = z.object({
   previewScreenshot: z.string().max(2000000).nullable().optional(),
   outputFormat: z.enum(["html", "react"]).default("html"), // Output format: vanilla HTML or React components
   context: ProjectContextSchema.nullable().default(null), // Learned preferences (invisible memory)
+  isFirstMessage: z.boolean().optional(), // Extra-warm response for brand new users
 });
 
 type ChatRequest = z.infer<typeof ChatRequestSchema>;
@@ -196,7 +197,7 @@ export async function POST(req: Request) {
         { status: 400, headers: { "Content-Type": "application/json" } }
       );
     }
-    const { messages, uploadedImages, inspoImages, currentPreview, previewScreenshot, outputFormat, context } = parsed.data;
+    const { messages, uploadedImages, inspoImages, currentPreview, previewScreenshot, outputFormat, context, isFirstMessage } = parsed.data;
 
     // Check and deduct credits for authenticated users
     try {
@@ -500,6 +501,7 @@ Use this context to inform your designs. Don't ask about things you already know
       // Add dynamic parts without caching (they change per request)
       ...(contextInjection ? [{ type: "text" as const, text: contextInjection }] : []),
       ...(outputFormat === "react" ? [{ type: "text" as const, text: "\n\n" + REACT_ADDENDUM }] : []),
+      ...(isFirstMessage ? [{ type: "text" as const, text: "\n\nFIRST MESSAGE: This is the user's very first message. Be extra warm and encouraging. Generate something impressive quickly to build trust. Skip plan approval — just build something great." }] : []),
     ];
 
     // Stream tokens to client as NDJSON for real-time display

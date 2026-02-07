@@ -256,6 +256,7 @@ export function useChat({
     cleanMessages: Partial<Message>[],
     imagesToSend: UploadedImage[],
     userMessage: Message,
+    isFirstMessage: boolean,
     controller: AbortController,
   ) => {
     const MAX_PREVIEW_FOR_API = 30_000;
@@ -273,6 +274,7 @@ export function useChat({
         previewScreenshot,
         outputFormat: "html",
         context: projectContext,
+        isFirstMessage: isFirstMessage || undefined,
       }),
       signal: controller.signal,
     });
@@ -502,8 +504,9 @@ export function useChat({
 
       const apiUserMessage = { ...userMessage, content: messageText };
       const cleanMessages = buildCleanMessages(messagesRef.current, [apiUserMessage]);
+      const isFirst = messagesRef.current.length === 0;
 
-      await sendAndProcessChat(cleanMessages, imagesToSend, userMessage, controller);
+      await sendAndProcessChat(cleanMessages, imagesToSend, userMessage, isFirst, controller);
     } catch (error) {
       if (error instanceof DOMException && error.name === "AbortError") return;
       reportError(error instanceof Error ? error : new Error(String(error)), { source: "useChat" });
@@ -580,7 +583,7 @@ export function useChat({
     try {
       const apiUserMessage = { ...userMessage, content: apiText };
       const cleanMessages = buildCleanMessages(messagesRef.current, [apiUserMessage]);
-      await sendAndProcessChat(cleanMessages, imagesToSend, userMessage, controller);
+      await sendAndProcessChat(cleanMessages, imagesToSend, userMessage, false, controller);
     } catch (error) {
       if (error instanceof DOMException && error.name === "AbortError") return;
       reportError(error instanceof Error ? error : new Error(String(error)), { source: "useChat" });
