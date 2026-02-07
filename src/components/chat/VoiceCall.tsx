@@ -105,6 +105,7 @@ export const VoiceCall = forwardRef<VoiceCallHandle, VoiceCallProps>(
     const recognitionRef = useRef<SpeechRecognition | null>(null);
     const mountedRef = useRef(true);
     const stateRef = useRef<CallState>("idle");
+    const silenceTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
     const voiceMessagesRef = useRef<VoiceMessage[]>([]);
 
     useEffect(() => { stateRef.current = state; }, [state]);
@@ -131,6 +132,7 @@ export const VoiceCall = forwardRef<VoiceCallHandle, VoiceCallProps>(
       mountedRef.current = false;
       speechSynthesis.cancel();
       recognitionRef.current?.stop();
+      if (silenceTimerRef.current) clearTimeout(silenceTimerRef.current);
       const { visibleSummary, privateData } = compileCallData(messages);
       onCallComplete(visibleSummary, privateData);
     }, [onCallComplete]);
@@ -148,7 +150,6 @@ export const VoiceCall = forwardRef<VoiceCallHandle, VoiceCallProps>(
 
       // Accumulate transcript and use silence detection
       let accumulatedTranscript = "";
-      let silenceTimer: ReturnType<typeof setTimeout> | null = null;
       const SILENCE_TIMEOUT = 1500; // Wait 1.5s of silence before processing
 
       const processTranscript = () => {
@@ -172,7 +173,7 @@ export const VoiceCall = forwardRef<VoiceCallHandle, VoiceCallProps>(
 
       recognition.onresult = (event: SpeechRecognitionEvent) => {
         // Clear previous silence timer
-        if (silenceTimer) clearTimeout(silenceTimer);
+        if (silenceTimerRef.current) clearTimeout(silenceTimerRef.current);
 
         let finalTranscript = "";
         let interimTranscript = "";
@@ -191,7 +192,7 @@ export const VoiceCall = forwardRef<VoiceCallHandle, VoiceCallProps>(
         setTranscript((accumulatedTranscript + " " + interimTranscript).trim());
 
         // Set silence timer - process when user stops speaking
-        silenceTimer = setTimeout(() => {
+        silenceTimerRef.current = setTimeout(() => {
           if (accumulatedTranscript.trim()) {
             processTranscript();
           }
@@ -372,6 +373,7 @@ export const VoiceCall = forwardRef<VoiceCallHandle, VoiceCallProps>(
         mountedRef.current = false;
         speechSynthesis.cancel();
         recognitionRef.current?.stop();
+        if (silenceTimerRef.current) clearTimeout(silenceTimerRef.current);
       };
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);

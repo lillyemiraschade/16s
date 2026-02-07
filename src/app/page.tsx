@@ -948,6 +948,8 @@ function HomePageContent() {
     const img = uploadedImages[index];
     if (!img) return;
 
+    // Capture stable identifier — index can shift if images are added/removed during async ops
+    const imgData = img.data;
     const newType = img.type === "inspo" ? "content" : "inspo";
 
     // If switching to content, re-compress and upload to blob
@@ -956,30 +958,30 @@ function HomePageContent() {
         const compressed = await compressForContent(img.data);
         // Update type and compressed data first
         setUploadedImages((prev) =>
-          prev.map((img, i) =>
-            i === index ? { ...img, type: newType, data: compressed } : img
+          prev.map((p) =>
+            p.data === imgData ? { ...p, type: newType, data: compressed } : p
           )
         );
-        // Then upload to blob
+        // Then upload to blob — match by compressed data since we just updated it
         const url = await uploadToBlob(compressed, img.label);
         setUploadedImages((prev) =>
-          prev.map((img, i) =>
-            i === index ? { ...img, url } : img
+          prev.map((p) =>
+            p.data === compressed ? { ...p, url } : p
           )
         );
       } catch {
         // Fallback: just change type without re-compressing
         setUploadedImages((prev) =>
-          prev.map((img, i) =>
-            i === index ? { ...img, type: newType } : img
+          prev.map((p) =>
+            p.data === imgData ? { ...p, type: newType } : p
           )
         );
       }
     } else {
       // Switching to inspo - no re-compression needed, clear url
       setUploadedImages((prev) =>
-        prev.map((img, i) =>
-          i === index ? { ...img, type: newType, url: undefined } : img
+        prev.map((p) =>
+          p.data === imgData ? { ...p, type: newType, url: undefined } : p
         )
       );
     }

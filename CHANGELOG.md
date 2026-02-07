@@ -1,10 +1,20 @@
 # 16s Changelog
 
+## [2026-02-07] — Code: Fix VoiceCall silenceTimer leak + image toggle race condition
+
+**What:** Two deep bugs found in second-pass audit:
+1. VoiceCall: silenceTimer was a local variable inside startListening — could not be cleared on unmount/endCall. If component unmounted while timer was pending, setState would fire on unmounted component. Fixed by moving to silenceTimerRef with cleanup in unmount and endCall.
+2. handleImageTypeToggle: Used index-based lookup (`prev.map((img, i) => i === index)`) for async updates (compress → upload). If user added/removed images between the two async steps, the index would point to the wrong image. Fixed by matching on `img.data` (stable identity) instead of array index.
+
+**Files:** `src/components/chat/VoiceCall.tsx`, `src/app/page.tsx`
+**Type:** Code
+**Ref:** C2, C3
+
 ## [2026-02-07] — Ultimate R2: Summary
 
-**What:** 4 commits fixing 11 findings across security (3), UI (1), output quality (6), and code (1). Deep audit with actual curl attacks on every endpoint, CORS bypass testing, header verification, UI edge case tracing, prompt analysis, and memory leak hunting.
+**What:** 5 commits fixing 13 findings across security (3), UI (1), output quality (6), and code (3). Deep audit with actual curl attacks on every endpoint, CORS bypass testing, header verification, UI edge case tracing, prompt analysis, race condition hunting, and memory leak analysis.
 
-**Ref:** Ralph Ultimate Round 2 — 5 cycles, 11 findings
+**Ref:** Ralph Ultimate Round 2 — 6 cycles, 13 findings
 
 ## [2026-02-07] — Code: Fix OAuth timeout leak in AuthModal
 

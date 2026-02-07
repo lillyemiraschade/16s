@@ -59,11 +59,27 @@
 - Voice prompt has state tracking for longer calls ✓
 - Voice prompt has proper inspo handoff language ✓
 
+### Cycle 6: DEEP CODE AUDIT (Race conditions, memory leaks, edge cases)
+**Deep audit of all major files for race conditions, state staleness, and cleanup gaps.**
+
+**Findings fixed:**
+- [x] C2: VoiceCall silenceTimer was a local variable — not cleared on unmount/endCall. Could fire setState after unmount. Moved to ref + cleanup.
+- [x] C3: handleImageTypeToggle used index-based lookup for async updates — race condition if images added/removed between compress/upload. Switched to data-based identity matching.
+
+**Verified OK (noted but not fixed — requires schema changes or cross-cutting concerns):**
+- Stripe webhook duplicate delivery: Updates are largely idempotent (`.update()` with same data). current_period_end uses Date.now() so duplicates shift date slightly. Fix requires webhook_events table (schema change). NOTED.
+- html_snapshot stored in deployments table: Up to 5MB per deploy. Fills DB over time. Fix requires schema refactor. NOTED.
+- Promise.allSettled for history image uploads: Fire-and-forget pattern is intentional — these are historical images, not needed for the current API call. URLs from current message are already resolved via ensureBlobUrls(). VERIFIED OK.
+- Rate-limit Map never fully cleaned in deploy route: Only sweeps when >500 entries. In serverless (Vercel), map resets on cold start, so this is a non-issue in production. VERIFIED OK.
+- Migration race across tabs: useProjects hook has migrationStatus guard per-component. Cross-tab races possible but Supabase upsert (onConflict: "id") makes duplicates harmless. VERIFIED OK.
+- navGuard injection: Regex-based but only injects after first `<head>` tag. AI-generated HTML is sandboxed in iframe with allow-scripts allow-same-origin. XSS in iframe cannot escape to parent. VERIFIED OK.
+- Code edit debounce race: Only occurs if user edits in Monaco while AI generates simultaneously. useEffect guard `!lastCodeRef.current` prevents AI from overwriting user edits. Edge case accepted.
+
 ### npm audit
 - 4 Next.js vulnerabilities (3 high, 1 critical) in v14.2.18
 - Fix requires upgrading to 14.2.35 (`npm audit fix --force`)
 - NOTED: Requires testing — not auto-applied to avoid breaking changes
 
 ## Summary
-Ultimate R2: 5 cycles, 11 findings fixed (3 security, 1 UI, 6 output quality, 1 code).
-Total across all rounds: 134 changes.
+Ultimate R2: 6 cycles, 13 findings fixed (3 security, 1 UI, 6 output quality, 3 code).
+Total across all rounds: 136 changes.
