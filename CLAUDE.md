@@ -1,43 +1,45 @@
-# 16s — Project Instructions
+# 16s — Round 8: Runtime Verification
 
 ## What This Is
-16s is an AI-powered web design platform. Users describe websites in natural language (text or voice), and the AI generates production-ready HTML/React with live preview and one-click deploy.
+16s is a live AI web builder at 16s-ruddy.vercel.app. 156 changes made. NONE verified at runtime. This round verifies everything.
 
 ## Tech Stack
-Next.js 14.2, TypeScript, Tailwind CSS, Supabase (DB + Auth), Stripe (billing), Anthropic Claude (Sonnet 4 + Haiku 3.5), Vercel Blob (images), Monaco Editor, Web Speech API.
-
-## Key Files
-- src/app/api/chat/route.ts — Core AI endpoint with SYSTEM_PROMPT (~5.9K tokens). THE HEART OF THE PRODUCT.
-- src/app/api/chat/voice/route.ts — Voice call AI with VOICE_SYSTEM_PROMPT.
-- src/app/page.tsx — Main app: chat + preview split layout, state management, message handling.
-- src/components/chat/ChatPanel.tsx — Chat UI, message rendering, image uploads, pill buttons.
-- src/components/preview/PreviewPanel.tsx — Live iframe preview, viewport switching, deploy.
-- src/lib/projects.ts — Dual-mode storage (localStorage guests, Supabase auth).
-- src/lib/images.ts — Image compression, upload, background removal pipeline.
-- src/lib/types.ts — TypeScript interfaces.
-
-## Image System (IMPORTANT — understand this before changing anything)
-- Users can upload images tagged as INSPO (design reference) or CONTENT (use in site)
-- Inspo images: AI analyzes the design style and clones it
-- Content images: AI embeds them in the generated HTML using Vercel Blob URLs
-- Background removal: available via remove.bg API, triggered by user clicking sparkle icon
-- Images are compressed client-side before upload (inspo: 500KB max, content: 100KB max)
-- Up to 5 images per upload, 10MB per file pre-compression
+Next.js 14.2, TypeScript, Tailwind, Supabase, Stripe, Anthropic Claude, Vercel Blob, Vercel hosting.
 
 ## Commands
-- npm run build — MUST pass after every change
-- npm run dev — Local dev server
-- npm run lint — Linting
+- npm run build — Must pass. Always.
+- npm run dev — Dev server on :3000. Start with: npm run dev > /dev/null 2>&1 &
+- npx tsc --noEmit — Type check
+- npm audit — Vulnerability check
+- curl — Your primary testing tool this round
 
-## Rules
-1. One focused change per cycle. Never batch multiple unrelated changes.
-2. Rotate: PROMPT → CODE → PROMPT → CODE. Prompt changes are the priority this round.
-3. After changing SYSTEM_PROMPT, simulate 3 real user conversations to verify improvement.
-4. Never change the JSON response format: {message, html, pills, plan, qaReport}.
-5. System prompt is ~5.9K tokens. If you add, cut elsewhere. Do NOT re-expand past 6.5K.
-6. Always run npm run build after code changes.
-7. Commit with [Ralph R5] prefix. Log to CHANGELOG.md. Update progress.txt.
-8. Do NOT add new API routes or database tables.
-9. Do NOT refactor page.tsx into multiple files.
-10. Read CHANGELOG.md to avoid repeating work from Rounds 1-4.
-11. CONVERSATION FLOW IS THE #1 PRIORITY. The AI should feel like a smart designer leading a client through a discovery call, not a form asking for inputs.
+## THE RULE FOR EVERY SINGLE CYCLE
+1. Start dev server if not already running
+2. Run a real test (curl, script, or code analysis with runtime implications)
+3. Paste the ACTUAL OUTPUT into progress.txt
+4. If the test fails: fix it, re-test, paste the passing output
+5. If the test passes: mark PASS and move on
+6. npm run build
+7. Commit with [Ralph R8] prefix
+
+A cycle without actual test output in progress.txt is a WASTED CYCLE. Do not waste cycles.
+
+## DO NOT
+- Compress the system prompt (done — 50 times)
+- Remove dead code or unused imports (done — 45 times)
+- Add aria-labels (done)
+- Downgrade console.error to console.debug (done — every single one)
+- Add focus traps or escape key handlers (done)
+- Extract helper functions (done)
+- Add keyboard shortcuts (done)
+
+## DO
+- Send curl requests to every API endpoint
+- Verify every security header exists
+- Test every input validation with bad data
+- Test every auth check with no credentials
+- Measure actual bundle size and identify bloat
+- Verify RLS with direct Supabase API calls
+- Test what happens when things go wrong (network failures, bad JSON, huge payloads)
+- Create SECURITY.md with verified test results
+- Run npm audit and fix vulnerabilities

@@ -1,155 +1,110 @@
-# 16s Improvement Progress
+# Round 8: Runtime Verification Log
 
-## History
-- Rounds 1-4: 113 code/prompt changes, prompt compressed 14K→5.9K tokens
-- Round 5 (Flow): Conversation flow, inspo-first, photo intelligence
-- Ultimate R1: 10 findings fixed (postMessage validation, Stripe rate limiting, auto-scroll yank, pill states, unhandled promises, decodeURI crash, error timer cleanup, modern CSS prompt, error toast UX, localStorage quota handling)
+## Dev Server
+Status: (not started)
+PID: (none)
 
-## Ultimate R2 — Deep Audit
+## PHASE 1 — PEN TEST FINDINGS VERIFICATION
+### 1. Input Length — textarea accepts 1M chars
+Command: (paste here)
+Response: (paste here)
+Status: [ ] UNTESTED
 
-### Cycle 1: SECURITY (Endpoint-by-endpoint curl testing)
-**Tests run:**
-- /api/chat: no auth → processes (free tier by design), 50K msg → 400 rejected, 200 msgs → 400 rejected, role=system → 400 rejected (Zod enum), text/plain Content-Type → parsed anyway (Next.js behavior), 25 rapid requests → rate limit fires at request 21 ✓
-- /api/upload: no auth → 401, non-string imageData → 401 (auth first), javascript: URI → 401 (auth first)
-- /api/remove-bg: no auth → 401
-- /api/deploy: no auth → 401 (CRITICAL: verified)
-- /api/stripe/checkout: no auth → 401, invalid plan → 401 (auth first), missing plan → 401 (auth first)
-- /api/stripe/webhook: no signature → 400, fake signature → 500 (webhook secret not configured locally)
-- CORS: evil.com origin → 403 ✓, allowed origin → proper ACAO header ✓
-- Security headers: All present (CSP, COOP, CORP, X-Frame-Options, X-Content-Type-Options, Referrer-Policy, Permissions-Policy)
+### 2. Wildcard CORS
+Command: (paste here)
+Response: (paste here)
+Status: [ ] UNTESTED
 
-**Findings fixed:**
-- [x] S1: Deploy route had NO size limit on HTML payload — added 5MB cap
-- [x] S2: Deploy route leaked Vercel API error details to client — removed `details` field
-- [x] S3: Missing Cross-Origin-Embedder-Policy header — added `unsafe-none`
+### 3. No CSP Header
+Command: (paste here)
+Response: (paste here)
+Status: [ ] UNTESTED
 
-### Cycle 2: APP UI (Edge case analysis)
-**Findings fixed:**
-- [x] U1: previewHistory grew unbounded (100+ versions × 200KB = 20MB+ memory) — capped at 50
+### 4. Supabase RLS
+Command: (paste here)
+Response: (paste here)
+Status: [ ] UNTESTED
 
-**Verified OK:**
-- Double-send protection: isGenerating check + disabled button + AbortController ✓
-- File type validation: processImageFiles checks file.type.startsWith("image/") + max 5 files + 10MB limit ✓
-- Empty HTML: srcDoc={previewHtml || ""} shows blank ✓
-- Iframe sandbox: allow-scripts allow-same-origin ✓
+### 5. /api/deploy without auth
+Command: (paste here)
+Response: (paste here)
+Status: [ ] UNTESTED
 
-### Cycle 3: OUTPUT QUALITY (Prompt analysis)
-**Findings fixed:**
-- [x] O1: No footer design rules — added multi-column footer spec to COMPONENT PATTERNS
-- [x] O2: Pill suggestions didn't check existing features — added "check what's already built" rule
-- [x] O3: Inspo-skip directions not industry-contextual — now requires relevant style options
-- [x] O4: QA checklist missing heading hierarchy — added h1→h2→h3 + fallback fonts checks
-- [x] O5: Redundant MODERN CSS line in LAYOUT PATTERNS — removed (duplicated earlier section)
-- [x] O6: PRE-OUTPUT CHECK repeated QA items — compressed, added heading/footer checks
+### 6. /api/chat without auth
+Command: (paste here)
+Response: (paste here)
+Status: [ ] UNTESTED
 
-### Cycle 4: CODE (Deep dive)
-**Findings fixed:**
-- [x] C1: AuthModal OAuth 3s timeout had no cleanup — could setState on unmounted component. Added ref + clearTimeout
+### 7. /api/upload without auth
+Command: (paste here)
+Response: (paste here)
+Status: [ ] UNTESTED
 
-**Verified OK:**
-- All API routes return proper 4xx/5xx status codes (no 200 on error) ✓
-- All setInterval/setTimeout have cleanup (except the AuthModal fix above) ✓
-- All window.addEventListener have removeEventListener cleanup ✓
-- AbortController properly managed ✓
-- Type casts minimal: 2 `as unknown` (both documented, intentional) ✓
+### 8. /api/remove-bg without auth
+Command: (paste here)
+Response: (paste here)
+Status: [ ] UNTESTED
 
-### Cycle 5: PROMPT (Voice prompt + compression)
-**Verified OK:**
-- Voice prompt aligns with main flow (DISCOVER → inspo handoff) ✓
-- Voice prompt has state tracking for longer calls ✓
-- Voice prompt has proper inspo handoff language ✓
+### 9. Static files (robots.txt, security.txt)
+Command: (paste here)
+Response: (paste here)
+Status: [ ] UNTESTED
 
-### Cycle 6: DEEP CODE AUDIT (Race conditions, memory leaks, edge cases)
-**Deep audit of all major files for race conditions, state staleness, and cleanup gaps.**
+### 10. Error leak — stack traces
+Command: (paste here)
+Response: (paste here)
+Status: [ ] UNTESTED
 
-**Findings fixed:**
-- [x] C2: VoiceCall silenceTimer was a local variable — not cleared on unmount/endCall. Could fire setState after unmount. Moved to ref + cleanup.
-- [x] C3: handleImageTypeToggle used index-based lookup for async updates — race condition if images added/removed between compress/upload. Switched to data-based identity matching.
-- [x] S4: Auth callback open redirect — `next` param not sanitized. `next=@evil.com` → `https://16s.dev@evil.com` redirects to evil.com. Fixed: validate starts with `/` and not `//`.
+## PHASE 2 — ENDPOINT HARDENING
+### /api/chat
+Auth bypass: [ ] Empty body: [ ] Missing messages: [ ] Messages not array: [ ] 100K message: [ ] 200 messages: [ ] Role=system: [ ] Rate limit: [ ] Non-JSON: [ ]
 
-**Verified OK (noted but not fixed — requires schema changes or cross-cutting concerns):**
-- Stripe webhook duplicate delivery: Updates are largely idempotent (`.update()` with same data). current_period_end uses Date.now() so duplicates shift date slightly. Fix requires webhook_events table (schema change). NOTED.
-- html_snapshot stored in deployments table: Up to 5MB per deploy. Fills DB over time. Fix requires schema refactor. NOTED.
-- Promise.allSettled for history image uploads: Fire-and-forget pattern is intentional — these are historical images, not needed for the current API call. URLs from current message are already resolved via ensureBlobUrls(). VERIFIED OK.
-- Rate-limit Map never fully cleaned in deploy route: Only sweeps when >500 entries. In serverless (Vercel), map resets on cold start, so this is a non-issue in production. VERIFIED OK.
-- Migration race across tabs: useProjects hook has migrationStatus guard per-component. Cross-tab races possible but Supabase upsert (onConflict: "id") makes duplicates harmless. VERIFIED OK.
-- navGuard injection: Regex-based but only injects after first `<head>` tag. AI-generated HTML is sandboxed in iframe with allow-scripts allow-same-origin. XSS in iframe cannot escape to parent. VERIFIED OK.
-- Code edit debounce race: Only occurs if user edits in Monaco while AI generates simultaneously. useEffect guard `!lastCodeRef.current` prevents AI from overwriting user edits. Edge case accepted.
+### /api/chat/voice
+Auth bypass: [ ] Empty body: [ ] 100K message: [ ] Rate limit: [ ]
 
-### Cycle 7: RUNTIME EDGE CASES (TypeScript can't catch these)
-**Full audit of all JSON.parse, optional chaining, array bounds, string ops, number parsing, regex, localStorage quota, fetch timeouts, auth races.**
+### /api/upload
+Auth bypass: [ ] Empty body: [ ] 20MB payload: [ ] Non-image: [ ] Missing filename: [ ] Rate limit: [ ]
 
-**Findings fixed:**
-- [x] C4: setLocalAll() in projects.ts had no try/catch — localStorage.setItem crashes on QuotaExceededError. Added try/catch with trim-to-5 recovery.
-- [x] C5: VoiceCall result[0].transcript accessed without bounds check — SpeechRecognition result could theoretically be empty. Added `if (!result[0]) continue` guard.
-- [x] C6: Deploy route had no maxDuration — external Vercel API calls could hang indefinitely. Added `maxDuration = 30`.
+### /api/remove-bg
+Auth bypass: [ ] Empty body: [ ] Missing key behavior: [ ] Rate limit: [ ]
 
-**Verified OK:**
-- All JSON.parse calls wrapped in try/catch ✓
-- All optional chaining correctly used where needed ✓
-- All string operations guarded with null checks ✓
-- All parseInt calls have fallback values ✓
-- No ReDoS-vulnerable regex patterns (greedy patterns only on trusted API output) ✓
-- Main chat fetch has AbortController ✓
-- Voice fetch has AbortController + 30s timeout ✓
-- Auth race conditions protected by guard clauses + try/catch ✓
-- Client image upload/deploy fetch calls lack timeout but are non-blocking user actions ✓
+### /api/deploy
+Auth bypass: [ ] Empty HTML: [ ] 50MB HTML: [ ] Rate limit: [ ]
 
-### Cycle 8: DEEP EDGE CASES (State management, async, browser APIs)
-**Deep analysis of handleEditMessage rollback, message ID collisions, stale closures, clipboard API, URL encoding.**
+### /api/stripe/checkout
+Auth bypass: [ ] Invalid plan: [ ] Missing plan: [ ]
 
-**Findings fixed:**
-- [x] C7: handleEditMessage preview rollback assumed every assistant message produced a preview. Text-only responses (asking questions, inspo prompts) don't add to previewHistory, causing stale preview state. Reset preview cleanly on edit — the re-sent message regenerates it.
-- [x] C8: navigator.clipboard.writeText() called without .catch() in page.tsx and PreviewPanel.tsx — can throw if page lacks focus or clipboard permission. Added .catch(() => {}) guards.
-- [x] C9: fetchDeployments URL param not encoded — useDeployment.ts used template literal without encodeURIComponent. UUIDs are URL-safe but defense-in-depth.
+### /api/stripe/webhook
+No signature: [ ] Fake signature: [ ] Unhandled event: [ ]
 
-**Verified OK:**
-- Message ID collision (Date.now().toString()): IDs only used for React keys and local state matching. Even if two messages share a timestamp, the `+1` offset for AI messages prevents user/AI collision. Duplicate keys cause React warning but no data loss. VERIFIED OK.
-- sendAndProcessChat stale closure on currentPreview: useCallback deps include currentPreview. The function is recreated when preview changes. Messages use messagesRef for fresh state. VERIFIED OK.
-- ensureBlobUrls duplicate image matching: If two images have identical base64 data, the first match is used for both. Since they're identical, this produces correct results. VERIFIED OK.
-- navGuard injection without <head>: AI is instructed to output full HTML with <!DOCTYPE html>. If somehow missing, navGuard silently fails — links just navigate the sandboxed iframe. No security impact. VERIFIED OK.
-- ErrorBoundary infinite loop: Try Again resets hasError, which re-renders children. If children throw again immediately, getDerivedStateFromError catches it in the same tick. React limits this internally. LOW risk, accepted.
-- handleCallComplete with empty data: compileCallData handles empty conversations gracefully — returns "The call ended before I could gather details" summary. VERIFIED OK.
+### /auth/callback
+No code param: [ ] Invalid code: [ ] Open redirect: [ ]
 
-### Cycle 9: FULL CODEBASE VERIFICATION (Stripe, voice, streaming, security)
-**End-to-end audit of all remaining routes, streaming logic, XSS vectors, and browser API usage.**
+## PHASE 3 — SECURITY HEADERS
+Content-Security-Policy: [ ]
+Access-Control-Allow-Origin: [ ]
+X-Frame-Options: [ ]
+X-Content-Type-Options: [ ]
+Referrer-Policy: [ ]
+Cross-Origin-Opener-Policy: [ ]
+Cross-Origin-Embedder-Policy: [ ]
+Permissions-Policy: [ ]
+X-Powered-By absent: [ ]
 
-**Verified OK (no new issues):**
-- Stripe checkout/portal `origin` header usage: CORS middleware blocks malicious origins. Auth blocks unauthenticated users. Stripe redirect URLs aren't exploitable. VERIFIED OK.
-- Chat route streaming: Returns status 200 even for errors (by design). Client-side `isErrorResponse` regex catches error messages and suppresses pills. VERIFIED OK.
-- Voice route: Solid Zod validation, proper error handling, rate limiting, maxDuration=60. VERIFIED OK.
-- `window.open` calls: Both open controlled URLs (blob URL for preview, Vercel deployment URL). VERIFIED OK.
-- No `dangerouslySetInnerHTML` or `innerHTML` outside sandboxed iframes. VERIFIED OK.
-- iframe sandbox `allow-scripts allow-same-origin` is correct for AI-generated previews. Needed for html2canvas and postMessage. VERIFIED OK.
-- handleBeforeUnload: Comment says "sendBeacon" but uses synchronous localStorage. Comment inaccuracy only — code is correct. NOTED (cosmetic, not fixing per rules).
-- All Zod schemas have appropriate max sizes (currentPreview 500K, previewScreenshot 2MB, messages 100 max, content 15000 chars). VERIFIED OK.
-- Type assertions: Only 2 `as unknown` casts in entire codebase, both documented and intentional. VERIFIED OK.
+## PHASE 4 — BUILD HEALTH
+npm run build: [ ] warnings: ___
+npx tsc --noEmit: [ ] errors: ___
+npm audit: [ ] vulns: ___
+Bundle size: ___ KB
+Largest chunks: ___
 
-### Cycle 10: COMPLETE FILE COVERAGE (Every .ts/.tsx file audited)
-**Read and analyzed ALL 37 TypeScript/TSX files in src/ plus next.config.mjs. Files not previously deep-audited:**
+## PHASE 5 — STATIC FILES
+/robots.txt: [ ]
+/.well-known/security.txt: [ ]
+/sitemap.xml: [ ]
+/manifest.json: [ ]
+/.env: [ ] returns 404
+/.git/config: [ ] returns 404
 
-**Verified OK (no new issues):**
-- AuthContext.tsx: Proper Supabase auth lifecycle, subscription cleanup, null checks, useMemo for value ✓
-- CodeEditor.tsx: Monaco editor config, no security concerns, proper callback deps ✓
-- projects/page.tsx: Project listing, UUID-safe router.push, search is string .includes() (no injection) ✓
-- MigrationBanner.tsx: Simple display component ✓
-- TypingIndicator.tsx: Simple animation component ✓
-- Providers.tsx: Simple wrapper ✓
-- layout.tsx: Proper metadata, skip-link, noscript fallback ✓
-- utils.ts: Simple cn() helper ✓
-- supabase/client.ts: Singleton pattern, null-safe ✓
-- supabase/server.ts: Cookie handling with try/catch for Server Components ✓
-- supabase/index.ts: Re-exports only ✓
-- next.config.mjs: Comprehensive security headers (CSP, COOP, CORP, X-Frame-Options, etc.). unsafe-eval needed for Monaco, documented trade-off. frame-ancestors 'none' prevents clickjacking ✓
-
-**COMPLETE CODEBASE COVERAGE: All 37 source files + next.config.mjs read and audited.**
-
-### npm audit
-- 4 Next.js vulnerabilities (3 high, 1 critical) in v14.2.18
-- Fix requires upgrading to 14.2.35 (`npm audit fix --force`)
-- NOTED: Requires testing — not auto-applied to avoid breaking changes
-
-## Summary
-Ultimate R2: 10 cycles, 20 findings fixed (4 security, 1 UI, 6 output quality, 9 code).
-Total across all rounds: 143 changes.
-COMPLETE FILE COVERAGE: Every source file in the codebase has been read and audited.
+## PHASE 6 — DOCUMENTATION
+SECURITY.md created: [ ]
