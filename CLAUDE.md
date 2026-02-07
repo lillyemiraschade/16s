@@ -1,116 +1,193 @@
-# 16s — Round 10: Deep Clean, Streaming & Component Polish
+# 16s — Round 11: Production Readiness
 
 ## Context
-After 9 rounds (179 changes): architecture extracted (hooks, shared rate limiter, prompt file, env validation, API helpers), security hardened and verified, prompt refined, app UI polished, features added.
+10 rounds complete (187+ changes). Architecture clean, security verified, streaming live, components split, 25 tests passing. This is the final hardening round before treating the codebase as production-ready.
 
-## What's Left — The Honest Assessment
-1. **ChatPanel (858 lines) and PreviewPanel (931 lines) are still bloated** — R9 split page.tsx but these two components weren't touched
-2. **No real-time streaming to the user** — the API uses Anthropic streaming internally but buffers the ENTIRE response before sending it. Users see nothing until the full response is complete. This is the single biggest UX gap.
-3. **No test coverage at all** — zero test files in the project
-4. **The response parsing is fragile** — both server-side (route.ts) and client-side (page.tsx) have multi-layer JSON extraction with regex fallbacks
-5. **VoiceCall (489 lines) uses Web Speech API** which is unreliable and Chrome-only
-6. **No loading skeleton or progress indicator during AI generation** — users just see a typing indicator with no sense of progress
+## What This Round Does
+Ship-blocking gaps: CI/CD, E2E testing, iframe security, error monitoring hooks, and the deferred items from R10. Everything in this round is about "can I deploy this confidently and sleep at night."
 
 ## Tech Stack
 Next.js 14.2, TypeScript, Tailwind, Supabase, Stripe, Anthropic Claude, Vercel Blob, Vercel hosting.
 
 ## Commands
 ```
-npm run build          # Must pass after every change
-npm run dev            # Dev server
-npx tsc --noEmit       # Type check
+npm run build
+npm run dev
+npm test              # vitest (25 unit tests from R10)
+npx tsc --noEmit
 ```
 
-## Commit Rules
-- Prefix: [Ralph R10-N]
-- One logical change per commit
-- Build must pass before committing
+## Commit: [Ralph R11-N]
 
-## BANNED (exhausted in prior rounds)
-- Prompt compression or restructuring (done 50+ times)
-- Dead code removal (done)
-- console.error downgrades (done)
-- aria-labels, focus traps, escape handlers (done)
-- Keyboard shortcuts (done)
-- Rate limiter changes (just consolidated in R9)
-- Extracting hooks from page.tsx (just done in R9)
+## BANNED (done)
+- Prompt changes (done 50+ times)
+- Code cleanup, dead code, console.log changes (done)
+- Aria-labels, focus traps, keyboard shortcuts (done)
+- Component splitting (done — page.tsx, ChatPanel, PreviewPanel all split)
+- Rate limiter changes (consolidated in R9)
+- Hook extraction (done in R9)
 
 ## PRIORITY ORDER
 
-### P0 — STREAMING (the biggest UX win possible)
-**This is the #1 priority.** Currently the API streams from Anthropic but buffers everything server-side, then sends the complete JSON blob at the end. Users wait 5-15 seconds seeing only a typing indicator.
+### P0 — CRITICAL BUG: Messages Go Blank During Generation (cycle 1)
+R10 added real-time streaming. Since then, messages go blank while the AI is generating. This is a regression that breaks the core UX. Fix this FIRST before anything else.
 
-Implement proper streaming:
+The bug is almost certainly in the streaming client code (useChat.ts or wherever the stream reader lives). What's happening:
+- User sends a message → user message appears in chat ✓
+- AI starts generating → the assistant message bubble goes BLANK ✗
+- Generation completes → message may or may not appear
 
-1. **Server**: Stream partial text tokens to the client as they arrive from Anthropic. Use Server-Sent Events or chunked text. When HTML/React code starts appearing in the stream, send a signal so the client can show partial preview.
+Likely causes (check all of these):
+1. The streaming handler is REPLACING the messages array instead of APPENDING to it. It should create a new assistant message and UPDATE its content as tokens arrive, not clear everything.
+2. The streaming assistant message is being created with empty content and never updated — the state setter might not be receiving the accumulated tokens.
+3. Race condition: setMessages is called with a stale closure that doesn't include the user's message, so it overwrites the array.
+4. The message content is being set to the raw NDJSON protocol text ({"type":"token","text":"..."}) instead of extracted text.
 
-2. **Client**: Show the AI's message text appearing word-by-word as it streams. When HTML starts streaming, begin rendering partial preview. Show a progress indicator based on token count.
+How to fix:
+- Find where the streaming response is processed (useChat.ts or page.tsx)
+- Ensure the flow is: (a) add user message to state, (b) add empty assistant message, (c) as tokens arrive, update ONLY that assistant message's content, (d) on stream complete, finalize with pills/qaReport/etc.
+- Use a functional state update: `setMessages(prev => prev.map(m => m.id === streamingId ? {...m, content: accumulated} : m))`
+- NEVER replace the entire messages array during streaming — always update the specific message
 
-3. **Protocol**: Use newline-delimited JSON chunks:
+Start the dev server and verify the fix works before moving on. Send a real message, confirm you see text streaming into the chat bubble.
+
+### P0.5 — CI/CD Pipeline (cycles 2-4)
+The project has zero automation. No linting on push, no type checking on PR, no test running.
+
+1. **GitHub Actions workflow** — .github/workflows/ci.yml:
+   - Trigger: push to main, pull_request to main
+   - Steps: checkout → setup Node 20 → npm ci → npx tsc --noEmit → npm run build → npm test
+   - Cache node_modules with actions/cache
+   - This catches build failures and test regressions before deploy
+
+2. **Pre-commit quality gate** — Add a "check" script to package.json:
+   ```json
+   "check": "tsc --noEmit && npm run build && npm test"
    ```
-   {"type":"text","content":"Here's what I'm thinking..."}
-   {"type":"text","content":" I'll create a modern layout"}
-   {"type":"html_start"}
-   {"type":"html_chunk","content":"<!DOCTYPE html><html>..."}
-   {"type":"html_chunk","content":"<head>..."}
-   {"type":"complete","message":"...", "pills":[...], "html":"...", "qaReport":{...}}
+   Document in README: run `npm run check` before pushing.
+
+3. **Vercel build settings** — Ensure the Vercel project runs `npm run build` (it should already, but verify). Add `npm test` to the build command if Vercel supports it, or document that tests only run in CI.
+
+### P1 — E2E Test Foundation (cycles 4-6)
+Unit tests cover utilities. E2E tests cover user flows.
+
+4. **Playwright setup**:
+   - npm install -D @playwright/test
+   - npx playwright install chromium (just Chrome, not all browsers)
+   - playwright.config.ts: baseURL localhost:3000, webServer starts dev, timeout 30s
+
+5. **Critical path E2E tests** (3-5 tests):
+   - Homepage loads, welcome screen visible, idea pills render
+   - Type a prompt → see typing indicator → see response in chat
+   - Response includes preview → iframe renders HTML
+   - Projects page loads (even if empty)
+   - Auth modal opens on sign-in click
+
+   These don't need a real Anthropic API key — mock the /api/chat endpoint to return a fixed response.
+
+6. **Add Playwright to CI** — extend the GitHub Actions workflow to run E2E tests. Use the Playwright GitHub Action.
+
+### P2 — Iframe Security Hardening (cycles 7-8)
+The preview iframe has `sandbox="allow-scripts allow-same-origin"`. This is dangerous — allow-same-origin + allow-scripts together effectively nullify the sandbox because scripts can remove the sandbox attribute.
+
+7. **Fix iframe sandbox**:
+   The problem: generated HTML needs to run JS (for navigation, forms, animations), and the select-mode feature needs postMessage between iframe and parent. But allow-same-origin + allow-scripts = no real sandbox.
+
+   Options (pick the best one):
+   a) Use a different origin for preview: serve iframe content via blob: URL or data: URL (different origin blocks direct parent access but postMessage still works with *)
+   b) Use srcdoc with just `sandbox="allow-scripts"` (drops same-origin — postMessage still works, but iframe can't access parent cookies/storage)
+   c) Keep current setup but add CSP on the iframe content via a meta tag injected into the srcdoc
+
+   Option (b) is probably best: change to `sandbox="allow-scripts allow-popups"` (drop allow-same-origin). Then fix the postMessage origin check — it'll be "null" for sandboxed iframes without same-origin, so check for message type prefix instead of origin.
+
+   IMPORTANT: Test that after this change:
+   - Preview still renders and runs JS (navigation, forms, animations)
+   - Select mode still works (hover highlight, click to select)
+   - postMessage from iframe to parent still works
+   - iframe CANNOT access parent's localStorage, cookies, or DOM
+
+8. **Inject CSP into preview HTML**: Before setting srcdoc, inject a meta tag:
+   ```html
+   <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' 'unsafe-eval' blob: data: https://fonts.googleapis.com https://fonts.gstatic.com; img-src * data: blob:; connect-src 'none';">
+   ```
+   This prevents the generated HTML from making network requests back to 16s APIs or any external endpoint, while still allowing fonts and inline scripts.
+
+### P3 — Error Monitoring Hooks (cycles 9-10)
+
+9. **Error reporting utility** — src/lib/error-reporter.ts:
+   ```typescript
+   export function reportError(error: Error, context?: Record<string, unknown>) {
+     // In development: console.error
+     // In production: send to configured endpoint (Sentry, LogFlare, etc.)
+     // For now: just structure the error for future integration
+     if (process.env.NODE_ENV === 'development') {
+       console.error('[16s Error]', error.message, context);
+       return;
+     }
+     // Future: Sentry.captureException(error, { extra: context });
+     // For now: POST to a logging endpoint if configured
+     const endpoint = process.env.NEXT_PUBLIC_ERROR_ENDPOINT;
+     if (endpoint) {
+       fetch(endpoint, {
+         method: 'POST',
+         headers: { 'Content-Type': 'application/json' },
+         body: JSON.stringify({ message: error.message, stack: error.stack, context, timestamp: Date.now() }),
+       }).catch(() => {}); // fire and forget
+     }
+   }
    ```
 
-4. **Fallback**: If streaming fails, fall back to buffered response (current behavior).
+   Wire this into:
+   - ErrorBoundary.tsx (componentDidCatch)
+   - API route catch blocks (replace console.debug with reportError for actual errors, keep debug for expected conditions)
+   - Client-side catch blocks in useChat, useDeployment, useProjects
 
-### P1 — COMPONENT SPLITS (maintainability)
+10. **Global unhandled error/rejection handler** — In layout.tsx or a client component:
+    ```typescript
+    useEffect(() => {
+      const handleError = (e: ErrorEvent) => reportError(new Error(e.message), { type: 'unhandled' });
+      const handleRejection = (e: PromiseRejectionEvent) => reportError(new Error(String(e.reason)), { type: 'unhandled_rejection' });
+      window.addEventListener('error', handleError);
+      window.addEventListener('unhandledrejection', handleRejection);
+      return () => { window.removeEventListener('error', handleError); window.removeEventListener('unhandledrejection', handleRejection); };
+    }, []);
+    ```
 
-5. **ChatPanel split (858 → ~400 lines)**:
-   - Extract message rendering to ChatMessage.tsx (single message bubble with edit, images, plan card, QA report)
-   - Extract image upload bar to ImageUploadBar.tsx (thumbnail strip, upload button, type toggle, bg remove)
-   - Extract input area to ChatInput.tsx (textarea, send button, pill rendering)
-   - ChatPanel.tsx becomes composition: message list + image bar + input
+### P4 — Deferred Items From R10 (cycles 11-14)
 
-6. **PreviewPanel split (931 → ~400 lines)**:
-   - Extract toolbar to PreviewToolbar.tsx (viewport buttons, undo/redo, export menu, deploy button)
-   - Extract version history to VersionHistory.tsx (history dropdown, bookmarks)
-   - Extract GeneratingState to its own file (it's already a separate function)
-   - PreviewPanel.tsx becomes: toolbar + iframe + generating state + version history
+11. **Autosave indicator**: Small "Saved ✓" or "Saving..." text near the project name in the header. Needs a `saveStatus` state in page.tsx that the autosave timer updates. Subtle — fades in for 2s after save, then fades out.
 
-### P2 — RESPONSE PARSING CLEANUP
+12. **Deploy flow improvements**:
+    - After successful deploy, show the URL prominently with large text
+    - "Copy URL" button (one click copy)
+    - "Open in new tab" button
+    - Optional: QR code using a simple QR library or inline SVG generation
 
-7. **Server-side**: The JSON parsing in route.ts has 5 nested fallback strategies (direct parse → markdown fence → last line → last object → regex). Consolidate into a clean `parseAIResponse(text: string): ChatResponse` function in src/lib/ai/parse-response.ts. Add proper typing and unit-test-ready structure.
+13. **Preview iframe sandbox** — covered in P2 above (items 7-8)
 
-8. **Client-side**: fetchAndParseChat in page.tsx (or now useChat.ts) has the same multi-fallback pattern. With streaming (P0), most of this goes away — the server sends pre-parsed JSON chunks. Simplify the client parser to just handle the streaming protocol.
+14. **Stripe webhook tests**: Add 2-3 vitest tests for the webhook handler:
+    - Valid checkout.session.completed → updates subscription
+    - Invalid signature → 400
+    - Missing admin client → 500
+    Mock Stripe's constructEvent and Supabase client.
 
-### P3 — TESTING FOUNDATION
+### P5 — Final Verification (cycle 15)
 
-9. **Setup**: Install vitest + @testing-library/react. Create vitest.config.ts. This is the testing foundation — once it exists, future rounds can add tests incrementally.
+15. **Full smoke test**: Start dev server, run through the entire user flow:
+    - Load homepage
+    - Type a prompt, see streaming response
+    - See preview render
+    - Upload an image
+    - Try voice call (or verify fallback)
+    - Switch to projects page
+    - npm run build passes
+    - npm test passes
+    - All CI checks would pass
+    - Document results in progress.txt
 
-10. **Unit tests for critical paths**:
-    - src/lib/rate-limit.test.ts — rate limiter logic (created in R9)
-    - src/lib/ai/parse-response.test.ts — JSON parsing fallbacks
-    - src/lib/api-utils.test.ts — apiError/apiSuccess helpers
-
-11. **Integration test for chat API**:
-    - Mock Anthropic SDK
-    - Test: valid request → 200, no auth → allows (free tier), invalid JSON → 400, rate limit → 429
-    - This catches regressions from future changes
-
-### P4 — REMAINING POLISH
-
-12. **VoiceCall reliability**: Add a fallback message when Web Speech API isn't available: "Voice calls work best in Chrome. Try typing your ideas instead." Currently it shows "unsupported" which isn't helpful.
-
-13. **Preview iframe sandboxing audit**: Verify the iframe has proper sandbox attributes. Generated HTML runs in the preview — it shouldn't be able to access the parent frame, make network requests to 16s APIs, or access localStorage of the main app.
-
-14. **Deploy flow improvements**:
-    - Show deployed URL more prominently after deploy
-    - Add "Copy URL" button on the deploy success state
-    - Add "Open in new tab" button
-    - Show a QR code for the deployed URL (users testing on phone)
-
-15. **Mobile chat/preview toggle**: On mobile, chat and preview should be separate tabs (not side-by-side). Verify this works well after R9 responsive changes. The toggle should be sticky and obvious.
-
-16. **Autosave indicator**: Show a subtle "Saved" or "Saving..." indicator near the project name so users know their work is being saved. Currently autosave happens silently with no feedback.
-
-### VERIFICATION
-After each change:
-1. npm run build passes
-2. For streaming: test with actual AI response (npm run dev)
-3. For component splits: verify same visual output
-4. For tests: npm test passes
+16. **Update README**: Ensure it reflects the current state:
+    - Architecture diagram (text-based)
+    - All npm scripts documented
+    - CI/CD explained
+    - Test coverage summary
+    - Security model reference
