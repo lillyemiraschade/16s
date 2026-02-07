@@ -1,5 +1,6 @@
 import { put } from "@vercel/blob";
 import { NextRequest } from "next/server";
+import { createClient } from "@/lib/supabase/server";
 
 export const runtime = "nodejs";
 
@@ -34,6 +35,16 @@ export async function POST(req: NextRequest) {
   }
 
   try {
+    // Auth check — uploads cost storage quota
+    const supabase = await createClient();
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) {
+      return new Response(
+        JSON.stringify({ error: "Sign in to upload images" }),
+        { status: 401, headers: { "Content-Type": "application/json" } }
+      );
+    }
+
     // Check if blob token is configured
     if (!process.env.BLOB_READ_WRITE_TOKEN) {
       console.debug("BLOB_READ_WRITE_TOKEN is not set");

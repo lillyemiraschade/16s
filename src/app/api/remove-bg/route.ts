@@ -1,4 +1,5 @@
 import { NextRequest } from "next/server";
+import { createClient } from "@/lib/supabase/server";
 
 export const runtime = "nodejs";
 export const maxDuration = 30;
@@ -36,6 +37,16 @@ export async function POST(req: NextRequest) {
   }
 
   try {
+    // Auth check — remove.bg costs money per call
+    const supabase = await createClient();
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) {
+      return new Response(
+        JSON.stringify({ error: "Sign in to remove backgrounds" }),
+        { status: 401, headers: { "Content-Type": "application/json" } }
+      );
+    }
+
     // [2026-02-05] Server-side payload size check — reject oversized requests before processing
     const contentLength = parseInt(req.headers.get("content-length") || "0", 10);
     const MAX_PAYLOAD_BYTES = 10 * 1024 * 1024; // 10MB (remove.bg supports up to 12MB)
