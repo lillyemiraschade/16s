@@ -20,6 +20,9 @@ export interface Database {
           bookmarks: Json;
           settings: Json;
           context: Json | null;
+          is_public: boolean;
+          public_slug: string | null;
+          public_preview: string | null;
           created_at: string;
           updated_at: string;
         };
@@ -33,6 +36,9 @@ export interface Database {
           bookmarks?: Json;
           settings?: Json;
           context?: Json | null;
+          is_public?: boolean;
+          public_slug?: string | null;
+          public_preview?: string | null;
           created_at?: string;
           updated_at?: string;
         };
@@ -46,6 +52,9 @@ export interface Database {
           bookmarks?: Json;
           settings?: Json;
           context?: Json | null;
+          is_public?: boolean;
+          public_slug?: string | null;
+          public_preview?: string | null;
           created_at?: string;
           updated_at?: string;
         };

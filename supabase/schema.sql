@@ -26,16 +26,23 @@ CREATE TABLE IF NOT EXISTS projects (
   bookmarks JSONB DEFAULT '[]',
   settings JSONB DEFAULT '{}',
   context JSONB DEFAULT NULL,
+  is_public BOOLEAN DEFAULT FALSE,
+  public_slug TEXT UNIQUE,
+  public_preview TEXT,
   created_at TIMESTAMPTZ DEFAULT NOW(),
   updated_at TIMESTAMPTZ DEFAULT NOW()
 );
 
 -- Migration for existing deployments
 ALTER TABLE projects ADD COLUMN IF NOT EXISTS context JSONB DEFAULT NULL;
+ALTER TABLE projects ADD COLUMN IF NOT EXISTS is_public BOOLEAN DEFAULT FALSE;
+ALTER TABLE projects ADD COLUMN IF NOT EXISTS public_slug TEXT UNIQUE;
+ALTER TABLE projects ADD COLUMN IF NOT EXISTS public_preview TEXT;
 
 -- Index for faster user queries
 CREATE INDEX IF NOT EXISTS idx_projects_user_id ON projects(user_id);
 CREATE INDEX IF NOT EXISTS idx_projects_updated_at ON projects(updated_at DESC);
+CREATE INDEX IF NOT EXISTS idx_projects_public_slug ON projects(public_slug) WHERE is_public = TRUE;
 
 -- ============================================================================
 -- DEPLOYMENTS TABLE (for future use)
@@ -108,6 +115,10 @@ ALTER TABLE usage ENABLE ROW LEVEL SECURITY;
 CREATE POLICY "Users can CRUD own projects" ON projects
   FOR ALL USING (auth.uid() = user_id)
   WITH CHECK (auth.uid() = user_id);
+
+-- Projects: Anyone can view public projects (for sharing)
+CREATE POLICY "Anyone can view public projects" ON projects
+  FOR SELECT USING (is_public = TRUE);
 
 -- Deployments: Users can only access their own deployments
 CREATE POLICY "Users can CRUD own deployments" ON deployments
