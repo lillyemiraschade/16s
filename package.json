@@ -9,7 +9,8 @@
     "start": "next start",
     "lint": "next lint",
     "test": "vitest run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "check": "tsc --noEmit && npm run build && npm test"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.32.1",

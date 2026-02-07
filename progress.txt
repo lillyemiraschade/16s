@@ -2,9 +2,9 @@
 
 ## P0 — CRITICAL BUG + CI/CD
 - [x] 0. FIX: Messages go blank during generation (streaming regression from R10)
-- [ ] 1. GitHub Actions CI workflow
-- [ ] 2. npm run check script
-- [ ] 3. Vercel build verification
+- [x] 1. GitHub Actions CI workflow
+- [x] 2. npm run check script
+- [x] 3. Vercel build verification (Vercel runs npm run build by default — CI covers type check + tests)
 
 ## P1 — E2E Tests
 - [ ] 4. Playwright setup + config
@@ -30,3 +30,4 @@
 
 ## Log
 - R11-1: Fixed blank streaming messages. extractStreamingMessage used hardcoded '"message":"' (no space) but Claude outputs '"message": "' (with space). Changed to regex /"message"\s*:\s*"/ to handle whitespace. Same fix for "html" phase detection.
+- R11-2: Added GitHub Actions CI (.github/workflows/ci.yml) + npm run check script. CI runs type check, build, and tests on push/PR to main.
