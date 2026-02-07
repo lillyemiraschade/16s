@@ -41,6 +41,7 @@ const nextConfig = {
           { key: "Permissions-Policy", value: "camera=(), geolocation=(), microphone=(self), payment=(), usb=(), bluetooth=(), serial=(), display-capture=(), fullscreen=(self), autoplay=(self)" },
           { key: "Content-Security-Policy", value: cspDirectives },
           { key: "Cross-Origin-Opener-Policy", value: "same-origin-allow-popups" },
+          { key: "Cross-Origin-Embedder-Policy", value: "unsafe-none" },
           { key: "Cross-Origin-Resource-Policy", value: "same-origin" },
         ],
       },

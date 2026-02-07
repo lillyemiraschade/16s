@@ -54,6 +54,11 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "Missing html or projectId" }, { status: 400 });
     }
 
+    // Size limit: 5MB for HTML payload (Vercel's limit is 6MB per file)
+    if (typeof html !== "string" || html.length > 5 * 1024 * 1024) {
+      return NextResponse.json({ error: "HTML too large. Maximum 5MB." }, { status: 413 });
+    }
+
     // Create a clean project name for Vercel
     const safeName = (projectName || "16s-site")
       .toLowerCase()
@@ -90,7 +95,7 @@ export async function POST(request: NextRequest) {
     if (!vercelResponse.ok) {
       const errorText = await vercelResponse.text();
       console.debug("[Deploy] Vercel API error:", errorText);
-      return NextResponse.json({ error: "Deployment failed", details: errorText }, { status: 500 });
+      return NextResponse.json({ error: "Deployment failed" }, { status: 500 });
     }
 
     const deployment = await vercelResponse.json();
