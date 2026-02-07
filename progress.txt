@@ -1,30 +1,33 @@
 # Round 10: Deep Clean, Streaming & Component Polish
 
 ## P0 — Streaming
-- [ ] 1. Server-side streaming (send tokens as they arrive)
-- [ ] 2. Client-side streaming display (word-by-word text, partial preview)
-- [ ] 3. Streaming protocol (newline-delimited JSON chunks)
-- [ ] 4. Fallback to buffered on stream failure
+- [x] 1-4. Real-time streaming (R10-1) — NDJSON protocol, server streams tokens, client displays progressively, fallback + abort handling
 
 ## P1 — Component Splits
-- [ ] 5. ChatPanel split → ChatMessage + ImageUploadBar + ChatInput
-- [ ] 6. PreviewPanel split → PreviewToolbar + VersionHistory + GeneratingState
+- [x] 5. ChatPanel split → ChatMessage + ImageUploadBar + ChatInput (R10-2)
+- [x] 6. PreviewPanel split → PreviewToolbar + VersionHistory + GeneratingState (R10-3)
 
 ## P2 — Response Parsing
-- [ ] 7. Server-side parseAIResponse extraction + cleanup
-- [ ] 8. Client-side parser simplification (stream-aware)
+- [x] 7. Server-side parseAIResponse extraction + cleanup (R10-4)
+- [x] 8. Client-side parser simplification (stream-aware) (R10-4)
 
 ## P3 — Testing
-- [ ] 9. Vitest setup + config
-- [ ] 10. Unit tests (rate-limit, parse-response, api-utils)
-- [ ] 11. Chat API integration test
+- [x] 9. Vitest setup + config (R10-5)
+- [x] 10. Unit tests (rate-limit, parse-response, api-utils) — 21 tests, 3 suites (R10-5)
+- [x] 11. Chat API integration test — 4 tests (R10-6)
 
 ## P4 — Polish
-- [ ] 12. VoiceCall browser compatibility message
-- [ ] 13. Preview iframe sandbox audit
-- [ ] 14. Deploy flow improvements (prominent URL, QR code)
-- [ ] 15. Mobile chat/preview toggle verification
-- [ ] 16. Autosave indicator
+- [x] 12. VoiceCall browser compatibility message (R10-7)
+- [x] 13. Preview iframe sandbox audit — sandbox="allow-scripts allow-same-origin" verified, needed for select mode postMessage
+- [x] 14. Deploy flow improvements — already has URL display, copy button, external link in export dropdown
+- [x] 15. Mobile chat/preview toggle — verified: md:hidden tab bar, mobileView state, proper show/hide logic
+- [ ] 16. Autosave indicator (deferred — no natural UI location without threading new props)
 
 ## Log
-(cycle notes here)
+- R10-1: Real-time streaming (P0 complete). Server sends NDJSON tokens, client reads via getReader(), 50ms throttled display, graceful abort/error handling. 3 files, +226/-164 lines.
+- R10-2: ChatPanel split (847→443 lines). Extracted ChatMessage, ImageUploadBar, ChatInput. 4 files, +586/-494.
+- R10-3: PreviewPanel split (921→371 lines). Extracted PreviewToolbar, VersionHistory, GeneratingState. 4 files, +721/-611.
+- R10-4: parseAIResponse extraction to src/lib/ai/parse-response.ts. Shared by server (route.ts) and client (useChat.ts). 3 files, +53/-40.
+- R10-5: Vitest setup + 21 unit tests across 3 suites (rate-limit, parse-response, api-utils). 6 files.
+- R10-6: Chat API integration test — 4 tests (valid request, invalid body, rate limit, message length).
+- R10-7: VoiceCall browser compat — friendlier fallback message with typing suggestion.
