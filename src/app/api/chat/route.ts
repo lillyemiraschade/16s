@@ -177,14 +177,16 @@ async function checkAndDeductCredits(userId: string, creditsToDeduct: number = 1
     }
 
     // Log usage (non-blocking — don't await to avoid slowing the response)
-    supabase.from("usage").insert({
-      user_id: userId,
-      action: "chat_message",
-      credits_used: creditsToDeduct,
-      metadata: { timestamp: new Date().toISOString() },
-    }).then(({ error }) => {
+    Promise.resolve(
+      supabase.from("usage").insert({
+        user_id: userId,
+        action: "chat_message",
+        credits_used: creditsToDeduct,
+        metadata: { timestamp: new Date().toISOString() },
+      })
+    ).then(({ error }) => {
       if (error) console.debug("[Credits] Failed to log usage:", error);
-    });
+    }).catch(() => {});
 
     return { success: true, remaining: updated[0].credits_remaining };
   } catch (err) {

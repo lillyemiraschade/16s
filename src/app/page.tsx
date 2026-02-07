@@ -284,7 +284,8 @@ function HomePageContent() {
   useEffect(() => {
     const authError = searchParams.get("auth_error");
     if (authError) {
-      const errorMessage = decodeURIComponent(authError);
+      let errorMessage: string;
+      try { errorMessage = decodeURIComponent(authError); } catch { errorMessage = authError; }
       console.debug("[Auth] Error from callback:", errorMessage);
       setWelcomeError(`Sign in failed: ${errorMessage}`);
       // Clear the error from URL
@@ -749,7 +750,7 @@ function HomePageContent() {
       );
       if (hasHistoryUploads) {
         // Upload history images in background (fire-and-forget, updates state when done)
-        Promise.all(
+        Promise.allSettled(
           messagesRef.current
             .filter(msg => msg.uploadedImages?.some(img => img.type === "content" && !img.url))
             .map(async (msg) => {
@@ -1276,9 +1277,11 @@ function HomePageContent() {
     processImageFiles(imageFiles, handleImageUpload, handleWelcomeError);
   };
 
+  const welcomeErrorTimerRef = useRef<ReturnType<typeof setTimeout>>();
   const handleWelcomeError = (msg: string) => {
+    clearTimeout(welcomeErrorTimerRef.current);
     setWelcomeError(msg);
-    setTimeout(() => setWelcomeError(null), 4000);
+    welcomeErrorTimerRef.current = setTimeout(() => setWelcomeError(null), 6000);
   };
 
   const handleWelcomeFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
