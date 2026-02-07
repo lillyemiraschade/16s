@@ -96,6 +96,9 @@ interface ChatAPIResponse {
   error?: string;
 }
 
+// Cap version history to prevent memory bloat (50 × ~200KB HTML = ~10MB max)
+const MAX_PREVIEW_HISTORY = 50;
+
 /** Generate contextual fallback pills when the AI response is missing them */
 function getContextualFallbackPills(
   hasPreview: boolean,
@@ -684,7 +687,7 @@ function HomePageContent() {
 
     if (data.html) {
       if (currentPreview) {
-        setPreviewHistory((prev) => [...prev, currentPreview]);
+        setPreviewHistory((prev) => [...prev, currentPreview].slice(-MAX_PREVIEW_HISTORY));
       }
       setRedoHistory([]);
       const processedHtml = replaceImagePlaceholders(data.html, imagesToSend);
@@ -1026,7 +1029,7 @@ function HomePageContent() {
       const redo = [...redoHistory];
       const next = redo.pop()!;
       setRedoHistory(redo);
-      setPreviewHistory((prev) => [...prev, currentPreview]);
+      setPreviewHistory((prev) => [...prev, currentPreview].slice(-MAX_PREVIEW_HISTORY));
       setCurrentPreview(next);
     }
   }, [redoHistory, currentPreview]);
@@ -1072,7 +1075,7 @@ function HomePageContent() {
 
       // Add current preview to history (it becomes a new version)
       // Keep all existing history intact
-      setPreviewHistory((prev) => [...prev, currentPreview]);
+      setPreviewHistory((prev) => [...prev, currentPreview].slice(-MAX_PREVIEW_HISTORY));
 
       // Switch to the selected version
       setCurrentPreview(selectedVersion);
