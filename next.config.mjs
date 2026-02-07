@@ -4,10 +4,10 @@
 const cspDirectives = [
   "default-src 'self'",
   "script-src 'self' 'unsafe-eval' 'unsafe-inline' https://cdn.jsdelivr.net",
-  "style-src 'self' 'unsafe-inline'",
-  "font-src 'self' https://cdn.jsdelivr.net data:",
+  "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
+  "font-src 'self' https://cdn.jsdelivr.net https://fonts.gstatic.com data:",
   "img-src 'self' blob: data: https://*.vercel-storage.com https://*.supabase.co",
-  "connect-src 'self' https://*.supabase.co wss://*.supabase.co https://cdn.jsdelivr.net",
+  "connect-src 'self' https://*.supabase.co wss://*.supabase.co https://cdn.jsdelivr.net https://*.vercel-storage.com",
   "worker-src 'self' blob:",
   "frame-src 'self' blob:",
   "frame-ancestors 'none'",
