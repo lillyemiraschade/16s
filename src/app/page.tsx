@@ -120,9 +120,9 @@ function getContextualFallbackPills(
   return ["I'll drop some inspo", "Surprise me with a style", "Hop on a call"];
 }
 
-/** Upload content images that don't have blob URLs yet. Returns updated array. */
+/** Upload images that don't have blob URLs yet. Returns updated array. */
 async function ensureBlobUrls(images: UploadedImage[]): Promise<UploadedImage[]> {
-  const needUpload = images.filter(img => img.type === "content" && !img.url);
+  const needUpload = images.filter(img => !img.url);
   if (needUpload.length === 0) return images;
 
   const uploaded = await Promise.all(
@@ -137,7 +137,7 @@ async function ensureBlobUrls(images: UploadedImage[]): Promise<UploadedImage[]>
   );
 
   return images.map(img => {
-    if (img.type === "content" && !img.url) {
+    if (!img.url) {
       return uploaded.find(u => u.data === img.data) || img;
     }
     return img;
@@ -581,16 +581,18 @@ function HomePageContent() {
 
     let result = html;
 
+    // Helper: resolve an image from an array by index, falling back to most recent
+    const resolveImage = (images: UploadedImage[], index: number): string => {
+      if (images[index]) return images[index].url || images[index].data;
+      // Index out of bounds — use the most recent image (likely what user intended)
+      if (images.length > 0) return images[images.length - 1].url || images[images.length - 1].data;
+      return fallbackPixel;
+    };
+
     // Step 1a: Replace {{INSPO_IMAGE_N}} placeholders with inspo image data
     const inspoPlaceholderRegex = /\{\{\s*INSPO_IMAGE_(\d+)\s*\}\}/g;
     result = result.replace(inspoPlaceholderRegex, (_match, indexStr) => {
-      const index = parseInt(indexStr, 10);
-      if (allInspoImages[index]) {
-        return allInspoImages[index].url || allInspoImages[index].data;
-      } else if (allInspoImages.length > 0) {
-        return allInspoImages[allInspoImages.length - 1].url || allInspoImages[allInspoImages.length - 1].data;
-      }
-      return fallbackPixel;
+      return resolveImage(allInspoImages, parseInt(indexStr, 10));
     });
 
     // Step 1b: Replace {{CONTENT_IMAGE_N}} placeholders with content image data
@@ -599,35 +601,35 @@ function HomePageContent() {
     const placeholderRegex = /\{\{\s*CONTENT_IMAGE_(\d+)\s*\}\}/g;
 
     result = result.replace(placeholderRegex, (_match, indexStr) => {
-      const index = parseInt(indexStr, 10);
-      if (imagesToUse[index]) {
-        return imagesToUse[index].url || imagesToUse[index].data;
-      } else if (imagesToUse.length > 0) {
-        return imagesToUse[0].url || imagesToUse[0].data;
-      }
-      return fallbackPixel;
+      return resolveImage(imagesToUse, parseInt(indexStr, 10));
     });
+
+    // Combine all images for URL/base64 validation (both content and inspo)
+    const allImages = [...allContentImages, ...allInspoImages];
+    const allValidUrls = allImages.map(img => img.url).filter(Boolean);
 
     // Step 2: Validate blob URLs - replace any unrecognized blob URLs
     const blobUrlRegex = /src="(https:\/\/[^"]*\.public\.blob\.vercel-storage\.com\/[^"]*)"/g;
-    const validUrls = imagesToUse.map(img => img.url).filter(Boolean);
 
     result = result.replace(blobUrlRegex, (match, url) => {
-      if (validUrls.includes(url)) return match;
-      if (imagesToUse.length > 0) {
-        return `src="${imagesToUse[0].url || imagesToUse[0].data}"`;
+      if (allValidUrls.includes(url)) return match;
+      // Unknown blob URL — replace with most recent image
+      if (allImages.length > 0) {
+        const last = allImages[allImages.length - 1];
+        return `src="${last.url || last.data}"`;
       }
-      return 'src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"';
+      return `src="${fallbackPixel}"`;
     });
 
     // Step 3: Replace AI-generated base64 (gibberish) with real images
-    if (imagesToUse.length > 0) {
+    if (allImages.length > 0) {
       const aiBase64Regex = /src="(data:image\/[^;]+;base64,[A-Za-z0-9+/=]{100,})"/g;
-      const validBase64s = imagesToUse.map(img => img.data);
+      const validBase64s = allImages.map(img => img.data);
 
       result = result.replace(aiBase64Regex, (match, base64) => {
         if (validBase64s.includes(base64)) return match;
-        return `src="${imagesToUse[0].url || imagesToUse[0].data}"`;
+        const last = allImages[allImages.length - 1];
+        return `src="${last.url || last.data}"`;
       });
     }
 
@@ -929,19 +931,18 @@ function HomePageContent() {
     const newImage: UploadedImage = { data: base64, type, label };
     setUploadedImages((prev) => [...prev, newImage]);
 
-    // For content images, upload to Vercel Blob in background
-    if (type === "content") {
-      try {
-        const url = await uploadToBlob(base64, label);
-        // Update the image with the blob URL
-        setUploadedImages((prev) =>
-          prev.map((img) =>
-            img.data === base64 && img.type === "content" ? { ...img, url } : img
-          )
-        );
-      } catch {
-        // Image still works with base64 fallback
-      }
+    // Upload ALL images to Vercel Blob in background (not just content)
+    // This ensures every image gets a stable URL so the AI can reference it
+    // directly instead of using fragile index-based placeholders
+    try {
+      const url = await uploadToBlob(base64, label);
+      setUploadedImages((prev) =>
+        prev.map((img) =>
+          img.data === base64 && img.type === type ? { ...img, url } : img
+        )
+      );
+    } catch {
+      // Image still works with base64 fallback (e.g. user not authenticated)
     }
   }, []);
 

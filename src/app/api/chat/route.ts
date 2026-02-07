@@ -757,10 +757,18 @@ export async function POST(req: Request) {
                   },
                 });
                 const labelNote = img.label ? ` (${img.label})` : "";
-                contentBlocks.push({
-                  type: "text",
-                  text: `[Inspo image #${globalInspoImageIndex}${labelNote} — to embed this image directly, use: {{INSPO_IMAGE_${globalInspoImageIndex}}}]`,
-                });
+                // Prefer direct URL over placeholder when available
+                if (img.url) {
+                  contentBlocks.push({
+                    type: "text",
+                    text: `[Inspo image #${globalInspoImageIndex}${labelNote} — to embed this image directly, use this EXACT URL: ${img.url}]`,
+                  });
+                } else {
+                  contentBlocks.push({
+                    type: "text",
+                    text: `[Inspo image #${globalInspoImageIndex}${labelNote} — to embed this image directly, use: {{INSPO_IMAGE_${globalInspoImageIndex}}}]`,
+                  });
+                }
                 globalInspoImageIndex++;
               }
             }
