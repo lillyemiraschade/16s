@@ -1,63 +1,20 @@
-# Round 11: Production Readiness
+# Round 15: Audit & Billing Polish
 
-## P0 — Critical Bugs & CI
-- [x] 0. Fix streaming blank messages bug
-- [x] 1. GitHub Actions CI (already exists from prior round)
-- [x] 2. npm check script (already exists from prior round)
+## Part 1 — Critical Bugs
+- [ ] 1. Fix domain: try16s.app in layout, middleware, Stripe routes, form handler
+- [ ] 2. Fix CORS: allow /api/forms from any origin (deployed sites)
+- [ ] 3. Deduplicate rate limiter: shared module → all 7 routes
+- [ ] 4. Update .env.example with all R13+R14 env vars
 
-## P1 — Playwright E2E Tests
-- [x] 3. Playwright setup + smoke tests (already exists — 5 tests, config, mock API)
+## Part 2 — Billing System
+- [ ] 5. Create /billing page (plan card, comparison, usage, success/cancel handling)
+- [ ] 6. Upgrade prompts (insufficient credits → upgrade CTA, credits in UserMenu)
+- [ ] 7. Credit deduction audit (missing subscription fallback, voice credits, error codes)
+- [ ] 8. Webhook hardening (mid-cycle upgrade credits)
 
-## P2 — Iframe Security
-- [x] 4. Sandbox + CSP + postMessage hardening (already done — allow-scripts allow-popups, CSP connect-src:none, type prefix validation)
-
-## P3 — Error Monitoring
-- [x] 5. Error reporter + GlobalErrorHandler (already done — error-reporter.ts, ErrorBoundary.tsx, GlobalErrorHandler.tsx in Providers)
-
-## P4 — Deferred Items
-- [x] 6. Autosave indicator (already done — "Saving..." / "Saved" in ChatPanel header)
-- [x] 7. Deploy flow polish (already done — DeploymentHistory, revert, publish button)
-- [x] 8. Stripe webhook tests (added subscription.deleted + invoice.payment_succeeded)
-
-## P5 — Final Verification
-- [x] 9. Full user flow walkthrough + README update
-
-## Verification Results
-- Build: PASS
-- Unit tests: 30/30 PASS (5 test files)
-- CI config: correct (check + e2e jobs)
-- Homepage: loads, welcome screen, idea pills ✓
-- Chat: streaming works with functional updates ✓
-- Preview: renders in sandboxed iframe with CSP ✓
-- Projects: page loads ✓
-- Templates: 10 templates, filter by industry ✓
-- Sharing: public slugs, frozen snapshots ✓
-- Custom domains: Vercel API integration ✓
-- Deployment history: revert + publish ✓
-- Autosave: "Saving..." / "Saved" indicator ✓
-- Error handling: ErrorBoundary + GlobalErrorHandler ✓
-- Stripe: 5 webhook events, 3 success path tests ✓
-- Security: sandbox, CSP connect-src:none, postMessage prefix, CORS, RLS ✓
+## Part 3 — Polish
+- [ ] 9. Navigation links (UserMenu → billing/submissions/projects, header → templates)
+- [ ] 10. Error states audit
+- [ ] 11. Final verification pass
 
 ## Log
-R11-1: Fixed streaming blank messages — buffer residual processing, final throttle flush, handleEditMessage stale closure fix
-R11-2: Verified P0-1 through P3 already complete from prior rounds
-R11-3: Added Stripe webhook tests for subscription.deleted and invoice.payment_succeeded (30 tests total)
-R11-4: Updated README with R13 features, new test count, architecture additions
-
----
-
-# Round 14: Edge of Perfection
-
-## Features
-- [x] R14-4: Contact form backend + email notifications (Resend)
-- [x] R14-5: GitHub export (OAuth + repo creation + file push)
-- [x] R14-6: PostHog analytics (client init, identify, track)
-- [x] R14-7: Sentry error monitoring (client/server/edge configs, error-reporter)
-- [x] R14-8: Site quality scoring (axe-core a11y, 8-check SEO, 6-hint perf, QualityCard UI)
-- [x] R14-9: Polish (SVG favicon, @vercel/og share images, .env.example update)
-
-## Verification
-- Build: PASS
-- Tests: 30/30 PASS
-- All integrations gracefully degrade when env vars are missing
