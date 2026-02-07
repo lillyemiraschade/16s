@@ -76,11 +76,30 @@
 - navGuard injection: Regex-based but only injects after first `<head>` tag. AI-generated HTML is sandboxed in iframe with allow-scripts allow-same-origin. XSS in iframe cannot escape to parent. VERIFIED OK.
 - Code edit debounce race: Only occurs if user edits in Monaco while AI generates simultaneously. useEffect guard `!lastCodeRef.current` prevents AI from overwriting user edits. Edge case accepted.
 
+### Cycle 7: RUNTIME EDGE CASES (TypeScript can't catch these)
+**Full audit of all JSON.parse, optional chaining, array bounds, string ops, number parsing, regex, localStorage quota, fetch timeouts, auth races.**
+
+**Findings fixed:**
+- [x] C4: setLocalAll() in projects.ts had no try/catch — localStorage.setItem crashes on QuotaExceededError. Added try/catch with trim-to-5 recovery.
+- [x] C5: VoiceCall result[0].transcript accessed without bounds check — SpeechRecognition result could theoretically be empty. Added `if (!result[0]) continue` guard.
+- [x] C6: Deploy route had no maxDuration — external Vercel API calls could hang indefinitely. Added `maxDuration = 30`.
+
+**Verified OK:**
+- All JSON.parse calls wrapped in try/catch ✓
+- All optional chaining correctly used where needed ✓
+- All string operations guarded with null checks ✓
+- All parseInt calls have fallback values ✓
+- No ReDoS-vulnerable regex patterns (greedy patterns only on trusted API output) ✓
+- Main chat fetch has AbortController ✓
+- Voice fetch has AbortController + 30s timeout ✓
+- Auth race conditions protected by guard clauses + try/catch ✓
+- Client image upload/deploy fetch calls lack timeout but are non-blocking user actions ✓
+
 ### npm audit
 - 4 Next.js vulnerabilities (3 high, 1 critical) in v14.2.18
 - Fix requires upgrading to 14.2.35 (`npm audit fix --force`)
 - NOTED: Requires testing — not auto-applied to avoid breaking changes
 
 ## Summary
-Ultimate R2: 6 cycles, 14 findings fixed (4 security, 1 UI, 6 output quality, 3 code).
-Total across all rounds: 137 changes.
+Ultimate R2: 7 cycles, 17 findings fixed (4 security, 1 UI, 6 output quality, 6 code).
+Total across all rounds: 140 changes.

@@ -1,5 +1,16 @@
 # 16s Changelog
 
+## [2026-02-07] — Code: Runtime edge case fixes (localStorage, VoiceCall, deploy timeout)
+
+**What:** Three runtime edge cases found by exhaustive audit (JSON.parse, optional chaining, array bounds, string ops, fetch timeouts, localStorage quota across all files):
+1. `setLocalAll()` in projects.ts called `localStorage.setItem()` without try/catch — crashes on QuotaExceededError. Added try/catch with trim-to-5 recovery fallback.
+2. VoiceCall `result[0].transcript` accessed without bounds check on SpeechRecognition result. Added `if (!result[0]) continue` guard.
+3. Deploy route had no `maxDuration` — external Vercel API calls could hang with no timeout. Added `maxDuration = 30`.
+
+**Files:** `src/lib/projects.ts`, `src/components/chat/VoiceCall.tsx`, `src/app/api/deploy/route.ts`
+**Type:** Code
+**Ref:** C4, C5, C6
+
 ## [2026-02-07] — Security: Fix open redirect in auth callback
 
 **What:** The `/auth/callback` route accepted an unsanitized `next` query parameter. An attacker could craft `next=@evil.com` which would redirect to `https://16s.dev@evil.com` — the browser interprets `16s.dev` as a username and `evil.com` as the host. Fixed by validating that `next` starts with `/` and does not start with `//`.

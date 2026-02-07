@@ -60,7 +60,16 @@ function getLocalAll(): SavedProject[] {
 
 function setLocalAll(projects: SavedProject[]): void {
   if (typeof window === "undefined") return;
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(projects));
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(projects));
+  } catch (e) {
+    // Quota exceeded — trim to 5 most recent projects and retry
+    if (e instanceof DOMException && e.name === "QuotaExceededError") {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(projects.slice(0, 5)));
+      } catch { /* truly out of space — silent fail, cloud save is primary */ }
+    }
+  }
 }
 
 function saveLocalProject(project: SavedProject): void {
