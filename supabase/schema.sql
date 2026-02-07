@@ -1,5 +1,14 @@
 -- 16s Database Schema for Supabase
 -- Run this in the Supabase SQL Editor to set up your database
+--
+-- SECURITY MODEL:
+-- All tables have Row Level Security (RLS) enabled.
+-- Every policy restricts access to auth.uid() = user_id.
+-- The anon role CANNOT read, write, or delete any other user's data.
+-- Subscriptions: INSERT handled by SECURITY DEFINER trigger on auth.users signup.
+-- Usage: INSERT handled by service_role only (server-side credit deduction).
+-- The Supabase anon key is safe to expose client-side because RLS enforces
+-- all access control at the database level.
 
 -- Enable UUID extension
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
