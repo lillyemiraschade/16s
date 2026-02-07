@@ -3,19 +3,8 @@
 import { useState, useRef, useCallback, useEffect } from "react";
 import { VoiceCallHandle } from "@/components/chat/VoiceCall";
 import { ensureBlobUrls } from "@/lib/hooks/useImages";
-import type { Message, UploadedImage, SelectedElement, ProjectContext, BMadPlan, BMadQAReport } from "@/lib/types";
-
-interface ChatAPIResponse {
-  message?: string;
-  pills?: string[];
-  showUpload?: boolean | string;
-  html?: string;
-  react?: string;
-  plan?: BMadPlan;
-  qaReport?: BMadQAReport;
-  context?: ProjectContext;
-  error?: string;
-}
+import { parseAIResponse } from "@/lib/ai/parse-response";
+import type { Message, UploadedImage, SelectedElement, ProjectContext, ChatAPIResponse } from "@/lib/types";
 
 /** Generate contextual fallback pills when the AI response is missing them */
 function getContextualFallbackPills(
@@ -317,7 +306,11 @@ export function useChat({
       const lines = text.trim().split("\n").filter(l => l.trim());
       let data: ChatAPIResponse = { message: "Let me try that again..." };
       for (const line of lines.reverse()) {
-        try { data = JSON.parse(line); break; } catch { /* continue */ }
+        try {
+          const event = JSON.parse(line);
+          if (event.type === "done" && event.response) { data = event.response; break; }
+          if (event.message) { data = event; break; }
+        } catch { continue; }
       }
       setMessages(prev => prev.map(m =>
         m.id === streamingMsgId
@@ -398,11 +391,7 @@ export function useChat({
     }
 
     // If no done event, fallback parse accumulated tokens
-    const finalResponse: ChatAPIResponse = doneResponse ?? (() => {
-      try { return JSON.parse(rawTokens.trim()); } catch {
-        return { message: rawTokens || "Let me try that again..." };
-      }
-    })();
+    const finalResponse: ChatAPIResponse = doneResponse ?? parseAIResponse(rawTokens);
 
     // Finalize message with pills, HTML, context
     const isErrorResponse = !finalResponse.html && !finalResponse.plan && /unavailable|try again|timed? out|too many|busy/i.test(finalResponse.message || "");

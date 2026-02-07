@@ -4,6 +4,7 @@ import { z } from "zod";
 import { createClient } from "@/lib/supabase/server";
 import { createRateLimiter } from "@/lib/rate-limit";
 import { SYSTEM_PROMPT, REACT_ADDENDUM } from "@/lib/ai/prompts";
+import { parseAIResponse } from "@/lib/ai/parse-response";
 import type { ChatAPIResponse } from "@/lib/types";
 
 export const runtime = "nodejs";
@@ -551,27 +552,7 @@ Use this context to inform your designs. Don't ask about things you already know
           }
 
           // Parse the complete response
-          let parsedResponse: ChatResponse;
-          try {
-            parsedResponse = JSON.parse(fullText.trim());
-          } catch {
-            console.debug("[Chat API] JSON parse failed, attempting fallback extraction");
-            try {
-              const jsonMatch = fullText.match(/```(?:json)?\n?([\s\S]+?)\n?```/);
-              if (jsonMatch) {
-                parsedResponse = JSON.parse(jsonMatch[1].trim());
-              } else {
-                const objMatch = fullText.match(/\{[\s\S]*\}/);
-                if (objMatch) {
-                  parsedResponse = JSON.parse(objMatch[0]);
-                } else {
-                  parsedResponse = { message: fullText || "Sorry, I couldn't process that. Could you try rephrasing?" };
-                }
-              }
-            } catch {
-              parsedResponse = { message: fullText || "Sorry, I couldn't process that. Could you try rephrasing?" };
-            }
-          }
+          const parsedResponse: ChatResponse = parseAIResponse(fullText);
 
           sendEvent({ type: "done", response: parsedResponse });
           controller.close();
