@@ -57,10 +57,12 @@ Email: security@16s.dev
 7. **Client-side rendering**: The app requires browser APIs (localStorage, WebSpeech, etc.). SSR skeleton includes noscript fallback and proper meta tags for crawlers.
 
 ## Preview Iframe Sandbox
-The generated website preview uses `<iframe srcDoc sandbox="allow-scripts allow-same-origin">`.
-- `allow-scripts`: Required for interactive preview
-- `allow-same-origin`: Required for postMessage communication
-- No `allow-top-navigation` or `allow-popups` — prevents escape from iframe
+The generated website preview uses `<iframe srcDoc sandbox="allow-scripts allow-popups">`.
+- `allow-scripts`: Required for interactive preview (navigation, forms, animations)
+- `allow-popups`: Required for target="_blank" links in generated sites
+- No `allow-same-origin` — iframe cannot access parent cookies, localStorage, or DOM
+- PostMessage communication uses `'*'` origin with type-prefix validation (`16s-`)
+- CSP meta tag injected into srcdoc: `connect-src 'none'; frame-src 'none'` prevents network requests and nested iframes
 
 ## Runtime Verification (Round 8 — Feb 2026)
 
