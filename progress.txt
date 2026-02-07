@@ -15,24 +15,24 @@
 - [x] 10. Chat panel polish → [Ralph R9-10] plan cards glass-matte, QA icons, AI text tracking
 - [x] 11. Preview panel improvements → [Ralph R9-11] generating animation, deploy celebration
 - [x] 12. Projects page → [Ralph R9-12] relative time, better empty state, clickable cards
-- [ ] 13. Responsive audit at 375px
-- [ ] 14. Loading states audit
-- [ ] 15. Error states audit
+- [x] 13. Responsive layout → [Ralph R9-15] mobile tab switcher, 44px touch targets
+- [x] 14. Loading states → [Ralph R9-16] project switch overlay, deploy error display
+- [x] 15. Error states → [Ralph R9-17] network/credits error messages + action pills
 - [ ] 16. Toast system
 
 ## P2 — Output Quality
-- [ ] 17. Dark mode toggle in generated sites
-- [ ] 18. Favicon generation on deploy
+- [x] 17. Dark mode toggle → [Ralph R9-18] system prompt instruction for generated sites
+- [x] 18. Favicon generation → [Ralph R9-14] SVG favicon from brand initial + accent color
 - [x] 19. SEO defaults → [Ralph R9-13] title, meta description, og tags in system prompt
-- [ ] 20. Animation quality audit
-- [ ] 21. Multi-page navigation audit
-- [ ] 22. Image handling verification
+- [x] 20. Animation quality — already in prompt (IO, stagger, reduced-motion)
+- [x] 21. Multi-page navigation → [Ralph R9-19] hash-based routing for back/forward
+- [x] 22. Image handling — verified (10MB limit, compression, placement rules)
 
 ## P3 — Developer Experience
-- [ ] 23. README overhaul
-- [ ] 24. .env.example update
-- [ ] 25. Error boundary improvements
-- [ ] 26. Bundle analysis
+- [x] 23. README → [Ralph R9-21] comprehensive README.md
+- [x] 24. .env.example → [Ralph R9-21] detailed comments + URLs
+- [x] 25. Error boundary → [Ralph R9-22] resetKey remount, error details, reload
+- [x] 26. Bundle analysis → [Ralph R9-23] Monaco lazy-loaded, findings documented
 
 ## Log
 R9-1: Rate limiter factory — createRateLimiter(limit, windowMs). Replaced 7 copies.
@@ -48,3 +48,20 @@ R9-10: Chat panel polish — glass-matte plan cards, QA check icons, AI text lea
 R9-11: Preview panel — premium generating animation, deploy celebration green tint
 R9-12: Projects page — relative time formatting, better empty state, clickable cards
 R9-13: SEO defaults — title, meta description, og:title, og:description in system prompt
+R9-14: Favicon generation — inline SVG from brand initial + accent color on deploy
+R9-15: Responsive layout — mobile tab switcher, 44px touch targets, viewport hide
+R9-16: Loading states — project switch overlay, deploy error display
+R9-17: Error states — network/credits error messages + action pills
+R9-18: Dark mode toggle — system prompt instruction for generated sites
+R9-19: Multi-page routing — hash-based navigation for back/forward
+R9-20: Toast system — ToastProvider with 4 types, auto-dismiss, progress bar
+R9-21: README + .env.example — comprehensive docs for onboarding
+R9-22: Error boundary — resetKey remount, error details, reload button
+R9-23: Bundle analysis — Monaco lazy-loaded via next/dynamic
+
+## Bundle Analysis Findings
+- Monaco editor: NOW lazy-loaded (was static import, ~1MB+ deferred until code view toggled)
+- framer-motion: Used heavily — tree-shaking works (only importing used components)
+- Shared JS: 87.2 kB first load — reasonable for React + Next.js
+- No large unnecessary dependencies found
+- @monaco-editor/react handles its own chunk splitting internally

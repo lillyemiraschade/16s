@@ -27,8 +27,12 @@ import {
 } from "lucide-react";
 import type { PreviewPanelProps, Viewport, SelectedElement, VersionBookmark } from "@/lib/types";
 import Image from "next/image";
-import { CodeEditor } from "./CodeEditor";
+import dynamic from "next/dynamic";
 import { createReactPreviewHtml } from "@/lib/react-preview";
+
+const CodeEditor = dynamic(() => import("./CodeEditor").then((m) => m.CodeEditor), {
+  loading: () => <div className="flex items-center justify-center h-full text-zinc-500 text-sm">Loading editor...</div>,
+});
 
 const viewportConfig = {
   desktop: { width: "100%", icon: Monitor, label: "Desktop" },
