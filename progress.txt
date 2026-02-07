@@ -38,3 +38,19 @@
 - R12-8: Project duplicate — Copy button in project card hover actions. Loads full project data, saves with new UUID + "(Copy)" name, inserts into local state immediately.
 - R12-9: Export as ZIP — JSZip dynamically imported at call site. New "Download as ZIP" option in export menu (FolderArchive icon). Bundles current preview HTML as index.html inside a .zip file.
 - R12-10: Keyboard shortcuts verification — all 9 shortcuts (Cmd+N/E/Shift+C/Z/Shift+Z/K/?, Cmd+/, Esc) working correctly. Enter/Shift+Enter in chat input correct. Undo/redo properly guarded against input/textarea focus. Help dialog accurate. Export dropdown handles Escape. No changes needed.
+
+## P5 — Final Verification
+- npm run build: PASS — 230 kB first load, /projects 201 kB
+- npm test: PASS — 28/28 tests (5 files: rate-limit, api-utils, parse-response, chat route, stripe webhook)
+- npx tsc --noEmit: PASS — zero type errors
+- 11 commits on branch ralph/round-12-performance-features (R12 setup + R12-1 through R12-10)
+
+### Round 12 Summary (18 items)
+| Area | Items | Key Results |
+|------|-------|-------------|
+| P0-0 Bug Fix | 1 | Streaming blank messages fixed (deferred message creation) |
+| P0 Performance | 4 | Bundle: 277→230 kB first load (-17%), page JS 79→31 kB (-61%) |
+| P1 Onboarding | 4 | Tooltip tour, showcase cards, warm first prompt, credit counter |
+| P2 Discussion Mode | 3 | Chat-only toggle, auto-transition, brainstorm-specific pills |
+| P3 Analytics | 3 | Typed event system, client tracking, server metrics |
+| P4 Quality of Life | 3 | Project duplicate, ZIP export, keyboard shortcuts verified |

@@ -64,18 +64,21 @@ src/
     rate-limit.ts         Shared rate limiter factory
     api-utils.ts          apiError/apiSuccess response helpers
     env.ts                Typed env var validation
+    analytics.ts          Typed analytics events (dev: console, prod: POST endpoint)
     error-reporter.ts     Structured error reporting (dev: console, prod: endpoint)
     types.ts              Shared TypeScript interfaces
   components/
     chat/
       ChatPanel.tsx       Chat interface, messages, input
       ChatMessage.tsx     Single message bubble
-      ChatInput.tsx       Input area with send button
+      ChatInput.tsx       Input area with discussion mode toggle
       ImageUploadBar.tsx  Image thumbnail strip
     preview/
       PreviewPanel.tsx    Live preview, toolbar, code editor
-      PreviewToolbar.tsx  Viewport, export, deploy controls
+      PreviewToolbar.tsx  Viewport, export (HTML/ZIP), deploy controls
       VersionHistory.tsx  History dropdown, bookmarks
+    onboarding/
+      OnboardingTooltip.tsx  First-visit tooltip tour (2 steps)
     auth/                 AuthModal, UserMenu, MigrationBanner
     GlobalErrorHandler.tsx  Window error/rejection catcher
     Toast.tsx             Toast notification system
@@ -92,8 +95,11 @@ e2e/
 - **Image Intelligence**: Upload logos, photos, products - AI places them contextually
 - **Voice Calls**: Built-in AI voice design consultation
 - **Live Preview**: Real-time preview with viewport switching, undo/redo, bookmarks
+- **Discussion Mode**: Brainstorm ideas without generating code, then transition to build
 - **Code Editor**: Monaco-based code editing with live reload
 - **One-Click Deploy**: Deploy to Vercel with a single click
+- **Project Management**: Duplicate projects, export as ZIP, full keyboard shortcuts
+- **Onboarding**: First-visit tooltip tour, showcase section, warm first-prompt experience
 - **Dark/Light Toggle**: Generated sites include theme switching
 - **Multi-Page Routing**: Generated sites have hash-based navigation with back/forward support
 
