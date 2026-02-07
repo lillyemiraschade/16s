@@ -1,7 +1,7 @@
 # Round 11: Production Readiness
 
 ## P0 — CRITICAL BUG + CI/CD
-- [ ] 0. FIX: Messages go blank during generation (streaming regression from R10)
+- [x] 0. FIX: Messages go blank during generation (streaming regression from R10)
 - [ ] 1. GitHub Actions CI workflow
 - [ ] 2. npm run check script
 - [ ] 3. Vercel build verification
@@ -29,4 +29,4 @@
 - [ ] 16. README update
 
 ## Log
-(cycle notes here)
+- R11-1: Fixed blank streaming messages. extractStreamingMessage used hardcoded '"message":"' (no space) but Claude outputs '"message": "' (with space). Changed to regex /"message"\s*:\s*"/ to handle whitespace. Same fix for "html" phase detection.

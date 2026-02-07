@@ -23,11 +23,12 @@ function getContextualFallbackPills(
 
 /** Extract message text from partially-streamed JSON response */
 function extractStreamingMessage(raw: string): { messageText: string; phase: "thinking" | "message" | "html" } {
-  const prefix = '"message":"';
-  const msgStart = raw.indexOf(prefix);
-  if (msgStart === -1) return { messageText: "", phase: "thinking" };
+  // Match "message": "..." with optional whitespace around the colon
+  // Claude outputs formatted JSON like {"message": "text"} (with space after colon)
+  const msgMatch = raw.match(/"message"\s*:\s*"/);
+  if (!msgMatch || msgMatch.index === undefined) return { messageText: "", phase: "thinking" };
 
-  const contentStart = msgStart + prefix.length;
+  const contentStart = msgMatch.index + msgMatch[0].length;
 
   // Find where message value ends (unescaped quote)
   let messageEnd = -1;
@@ -48,12 +49,12 @@ function extractStreamingMessage(raw: string): { messageText: string; phase: "th
     .replace(/\\\\/g, "\\")
     .replace(/\\t/g, "\t");
 
-  // Check if we've moved past message into HTML
-  const htmlStart = raw.indexOf('"html":"', contentStart);
+  // Check if we've moved past message into HTML (handle optional whitespace)
+  const htmlMatch = raw.slice(contentStart).match(/"html"\s*:\s*"/);
 
   return {
     messageText: unescaped,
-    phase: htmlStart !== -1 ? "html" : "message",
+    phase: htmlMatch ? "html" : "message",
   };
 }
 
