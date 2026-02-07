@@ -11,8 +11,8 @@
 - [x] 5. Bundle analysis: 277 kB → 228 kB first load (-18%), page JS 79.1 kB → 30.7 kB (-61%)
 
 ## P1 — Onboarding
-- [ ] 6. First-visit tooltip tour (3-4 tooltips, localStorage flag)
-- [ ] 7. Welcome screen showcase section
+- [x] 6. First-visit tooltip tour (2 tooltips: input + pills, localStorage flag, skip/next/got it)
+- [x] 7. Welcome screen showcase section (4 gradient placeholder cards)
 - [ ] 8. Smart first prompt handling (isFirstMessage flag)
 - [ ] 9. Credit counter in header
 

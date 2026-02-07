@@ -25,6 +25,7 @@ import { AuthModal } from "@/components/auth/AuthModal";
 import { useAuth } from "@/lib/auth/AuthContext";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { useToast } from "@/components/Toast";
+import { OnboardingTooltip } from "@/components/onboarding/OnboardingTooltip";
 import type { SavedProjectMeta, ProjectContext, UploadedImage } from "@/lib/types";
 
 function generateId(): string {
@@ -568,6 +569,7 @@ function HomePageContent() {
             {/* Scrolling idea suggestions marquee */}
             {welcome.randomIdeas.length > 0 && (
               <div
+                data-onboarding="pills"
                 className="w-full max-w-[90vw] md:max-w-[700px] overflow-hidden"
                 style={{
                   maskImage: "linear-gradient(to right, transparent, black 15%, black 85%, transparent)",
@@ -599,7 +601,27 @@ function HomePageContent() {
               </div>
             )}
           </motion.div>
+
+          {/* Showcase section */}
+          <div className="mt-8 mb-6 flex flex-wrap justify-center gap-3 px-4 max-w-[700px]">
+            {[
+              { label: "Tokyo Ramen Shop", gradient: "from-orange-600/30 to-red-900/30" },
+              { label: "Architect Portfolio", gradient: "from-zinc-600/30 to-slate-900/30" },
+              { label: "SaaS Landing Page", gradient: "from-blue-600/30 to-indigo-900/30" },
+              { label: "Plant Shop", gradient: "from-green-600/30 to-emerald-900/30" },
+            ].map((item) => (
+              <div
+                key={item.label}
+                className={`w-[140px] h-[90px] rounded-xl bg-gradient-to-br ${item.gradient} border border-white/[0.06] flex items-end p-2.5 cursor-default`}
+              >
+                <span className="text-[11px] font-medium text-zinc-400">{item.label}</span>
+              </div>
+            ))}
+            <p className="w-full text-center text-[11px] text-zinc-600 mt-1">See what 16s can build</p>
+          </div>
         </div>
+
+        <OnboardingTooltip />
 
         <AuthModal
           isOpen={chat.showAuthModal}
