@@ -1,5 +1,13 @@
 # 16s Changelog
 
+## [2026-02-07] — Security: Fix open redirect in auth callback
+
+**What:** The `/auth/callback` route accepted an unsanitized `next` query parameter. An attacker could craft `next=@evil.com` which would redirect to `https://16s.dev@evil.com` — the browser interprets `16s.dev` as a username and `evil.com` as the host. Fixed by validating that `next` starts with `/` and does not start with `//`.
+
+**Files:** `src/app/auth/callback/route.ts`
+**Type:** Security
+**Ref:** S4
+
 ## [2026-02-07] — Code: Fix VoiceCall silenceTimer leak + image toggle race condition
 
 **What:** Two deep bugs found in second-pass audit:

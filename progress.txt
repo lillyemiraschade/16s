@@ -65,6 +65,7 @@
 **Findings fixed:**
 - [x] C2: VoiceCall silenceTimer was a local variable — not cleared on unmount/endCall. Could fire setState after unmount. Moved to ref + cleanup.
 - [x] C3: handleImageTypeToggle used index-based lookup for async updates — race condition if images added/removed between compress/upload. Switched to data-based identity matching.
+- [x] S4: Auth callback open redirect — `next` param not sanitized. `next=@evil.com` → `https://16s.dev@evil.com` redirects to evil.com. Fixed: validate starts with `/` and not `//`.
 
 **Verified OK (noted but not fixed — requires schema changes or cross-cutting concerns):**
 - Stripe webhook duplicate delivery: Updates are largely idempotent (`.update()` with same data). current_period_end uses Date.now() so duplicates shift date slightly. Fix requires webhook_events table (schema change). NOTED.
@@ -81,5 +82,5 @@
 - NOTED: Requires testing — not auto-applied to avoid breaking changes
 
 ## Summary
-Ultimate R2: 6 cycles, 13 findings fixed (3 security, 1 UI, 6 output quality, 3 code).
-Total across all rounds: 136 changes.
+Ultimate R2: 6 cycles, 14 findings fixed (4 security, 1 UI, 6 output quality, 3 code).
+Total across all rounds: 137 changes.

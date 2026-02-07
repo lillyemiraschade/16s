@@ -6,7 +6,9 @@ export async function GET(request: Request) {
   const code = searchParams.get("code");
   const errorParam = searchParams.get("error");
   const errorDescription = searchParams.get("error_description");
-  const next = searchParams.get("next") ?? "/";
+  // Sanitize `next` param to prevent open redirect (e.g., next=@evil.com → https://16s.dev@evil.com)
+  const rawNext = searchParams.get("next") ?? "/";
+  const next = rawNext.startsWith("/") && !rawNext.startsWith("//") ? rawNext : "/";
 
   // Handle OAuth provider errors (e.g., user denied access)
   if (errorParam) {
