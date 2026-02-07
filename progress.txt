@@ -7,9 +7,9 @@
 - [x] 3. Vercel build verification (Vercel runs npm run build by default — CI covers type check + tests)
 
 ## P1 — E2E Tests
-- [ ] 4. Playwright setup + config
-- [ ] 5. Critical path E2E tests (5 tests)
-- [ ] 6. Add Playwright to CI
+- [x] 4. Playwright setup + config
+- [x] 5. Critical path E2E tests (5 tests)
+- [x] 6. Add Playwright to CI
 
 ## P2 — Iframe Security
 - [ ] 7. Fix sandbox (drop allow-same-origin, fix postMessage)
@@ -31,3 +31,4 @@
 ## Log
 - R11-1: Fixed blank streaming messages. extractStreamingMessage used hardcoded '"message":"' (no space) but Claude outputs '"message": "' (with space). Changed to regex /"message"\s*:\s*"/ to handle whitespace. Same fix for "html" phase detection.
 - R11-2: Added GitHub Actions CI (.github/workflows/ci.yml) + npm run check script. CI runs type check, build, and tests on push/PR to main.
+- R11-3: Playwright E2E setup + 5 smoke tests. Tests: homepage loads, idea pills visible, send prompt + streaming response, preview iframe renders, projects page. CI workflow includes e2e job. Supabase env stripped in Playwright config so auth gate doesn't block E2E sends.
