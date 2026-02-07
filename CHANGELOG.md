@@ -1,5 +1,51 @@
 # 16s Changelog
 
+## [2026-02-06] — Ultimate Loop: Summary
+
+**What:** 6 commits fixing 10 findings across security, UI, code, and prompt categories. postMessage origin validation, Stripe rate limiting, auto-scroll fix, pill hover/focus states, unhandled promise fixes, decodeURI crash fix, error timer cleanup, modern CSS in prompt, icon guidance, error toast improvements, localStorage quota handling.
+
+**Ref:** Ralph Ultimate Loop — 10 findings, 6 cycles
+
+## [2026-02-06] — UI+Code: Error toast improvements + localStorage quota handling
+
+**What:** Error toast duration 4s→6s with ref-based cleanup and dismiss button. localStorage catches QuotaExceededError and trims to 5 most recent projects.
+
+**Files:** `src/components/chat/ChatPanel.tsx`, `src/app/page.tsx`
+**Type:** UI + Code
+**Ref:** U3, C2
+
+## [2026-02-06] — Prompt: Modern CSS techniques + clearer icon guidance
+
+**What:** Added modern CSS to system prompt: text-wrap:balance, scroll-snap, aspect-ratio, :has(), subgrid. Clarified icon guidance: inline SVG for HTML mode, Lucide React components for React mode.
+
+**Files:** `src/app/api/chat/route.ts`
+**Type:** Prompt
+**Ref:** P1
+
+## [2026-02-06] — Code: Fix unhandled promises, decodeURI crash, error timer
+
+**What:** Promise.all→Promise.allSettled for fire-and-forget uploads. Supabase usage log wrapped in Promise.resolve().catch(). decodeURIComponent wrapped in try-catch. Welcome error timer uses ref with clearTimeout.
+
+**Files:** `src/app/page.tsx`, `src/app/api/chat/route.ts`
+**Type:** Code/Bugs
+**Ref:** C1, C3, S3
+
+## [2026-02-06] — UI: Fix auto-scroll yanking + pill hover/focus states
+
+**What:** Auto-scroll only triggers when user is near bottom (<150px) using onScroll handler + userScrolledUpRef. Pill buttons get hover:text-white, bg highlight, and focus-visible ring.
+
+**Files:** `src/components/chat/ChatPanel.tsx`
+**Type:** UI/UX
+**Ref:** U1, U2
+
+## [2026-02-06] — Security: postMessage origin validation + Stripe rate limiting
+
+**What:** PreviewPanel validates e.origin on postMessage handler. Stripe checkout and portal routes get 5/min/IP rate limiting via in-memory Map.
+
+**Files:** `src/components/preview/PreviewPanel.tsx`, `src/app/api/stripe/checkout/route.ts`, `src/app/api/stripe/portal/route.ts`
+**Type:** Security
+**Ref:** S1, S2
+
 ## [2026-02-06] — Security: SECURITY.md + final documentation
 
 **What:** Created SECURITY.md documenting the full security model: auth, RLS, rate limiting, input validation, CORS policy, security headers, accepted risks, and iframe sandbox configuration.

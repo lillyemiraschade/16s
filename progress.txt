@@ -1,42 +1,29 @@
-# 16s Security Hardening Progress
+# 16s Improvement Progress
 
-## Context
-A real penetration test was run against 16s-ruddy.vercel.app and found critical vulnerabilities.
-This loop fixes every finding systematically, in priority order.
+## Previous Rounds
+- Rounds 1-4 (113 changes): DB fixes, rate limiting, credit enforcement, templates, JS safety, UX, code dedup, a11y, dead code, prompt compression 14K→5.9K, React.memo, anti-template rules, industries, modern CSS, focus traps, console audit.
+- Round 5 (10 changes): Guided 6-step conversation flow, inspo-first, fallback pills, smart photo placement, voice handoff, social link intelligence, bg removal UX.
+- Security hardening (8 commits): Input limits, CORS lockdown, CSP, RLS verification, auth on upload/remove-bg, security headers, static files, SECURITY.md.
 
-## Pen Test Findings (by severity)
+## Audit Findings
 
-### CRITICAL
-1. [x] No input length limit — FIXED: maxLength=10000 client, Zod max 15K/msg + 100 msgs server, pre-schema 10K check
-2. [x] Wildcard CORS — FIXED: Origin allowlist in middleware, unknown origins get 403, OPTIONS preflight handled
-3. [x] No Content Security Policy header — FIXED: Full CSP in next.config.mjs
-4. [x] Supabase anon key exposed — VERIFIED: All tables have RLS, all policies use auth.uid()=user_id, documented in schema.sql
-5. [x] User UUID in query params — ACCEPTED RISK: Standard Supabase client behavior, HTTPS encrypts in transit, RLS prevents cross-user access, UUIDs not guessable
-6. [x] API routes auth — FIXED: Added auth to /upload and /remove-bg. Deploy already had auth. Chat allows unauth (free tier, rate-limited).
+### SECURITY
+- [x] S1: postMessage origin validation — FIXED: message handler validates e.origin
+- [x] S2: Stripe rate limiting — FIXED: 5/min/IP on checkout + portal routes
+- [x] S3: Unhandled promises — FIXED: Promise.allSettled + Promise.resolve().catch()
 
-### MEDIUM
-7. [x] Missing security headers — FIXED: COOP same-origin-allow-popups, CORP same-origin
-8. [x] dangerouslySetInnerHTML — VERIFIED: Not used anywhere. Preview uses sandboxed srcDoc iframe. No custom 404 template.
-9. [x] Missing robots.txt, sitemap.xml, security.txt — FIXED: All created in public/
-10. [x] Information disclosure — FIXED: poweredByHeader:false. Build ID/RSC are standard Next.js, accepted risk.
-11. [x] SSR bailout — FIXED: noscript tag, proper meta tags. Client-side rendering is architectural decision (app requires browser APIs).
+### UI/UX
+- [x] U1: Auto-scroll yanking — FIXED: only scrolls when user is near bottom (<150px)
+- [x] U2: Pill hover/focus — FIXED: hover:text-white + bg highlight + focus-visible ring
+- [x] U3: Error toast — FIXED: 4s→6s, timer ref cleanup, dismiss button added
 
-### LOW
-12. [x] Meta tags — FIXED: OG, Twitter Card, canonical, manifest.json, apple-touch-icon all added in layout.tsx
-13. [x] Accessibility — FIXED: Welcome uses &lt;main&gt; landmark, edit textarea has aria-label, skip-link target verified working
-14. [x] Monaco SRI — ACCEPTED RISK: @monaco-editor/react loads dynamically via AMD loader, SRI not feasible without forking. CSP script-src locked to cdn.jsdelivr.net as mitigation.
-15. [x] Permissions-Policy — FIXED: Expanded to restrict 10+ APIs (camera, payment, usb, bluetooth, serial, etc.)
+### CODE/BUGS
+- [x] C1: decodeURIComponent — FIXED: wrapped in try-catch
+- [x] C2: localStorage quota — FIXED: trims to 5 projects on QuotaExceededError
+- [x] C3: Welcome error timer — FIXED: ref-based timer with clearTimeout
 
-### CONFIRMED SECURE (no action needed)
-- HTTPS enforced, HSTS with preload
-- X-Frame-Options: DENY
-- X-Content-Type-Options: nosniff
-- Referrer-Policy: strict-origin-when-cross-origin
-- No XSS reflection in URLs
-- No path traversal (Vercel WAF)
-- No .env/.git exposure
-- Server-side API keys properly kept server-side
-- All target=_blank links have rel=noopener
+### PROMPT
+- [x] P1: Output quality — FIXED: modern CSS (text-wrap:balance, scroll-snap, :has(), subgrid), clearer icon guidance (inline SVG for HTML, Lucide for React)
 
-## In Progress
-ALL 15 FINDINGS ADDRESSED — security hardening complete
+## Summary
+Ultimate loop: 6 commits, 10 findings fixed across security, UI, code, and prompt.
