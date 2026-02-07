@@ -7,27 +7,7 @@ import Image from "next/image";
 import { TypingIndicator } from "./TypingIndicator";
 import { UserMenu } from "@/components/auth/UserMenu";
 import { processImageFiles, removeBackground } from "@/lib/images";
-import type { Message, SelectedElement, UploadedImage } from "@/lib/types";
-
-interface ChatPanelProps {
-  messages: Message[];
-  onSend: (text: string, imagesToInclude?: UploadedImage[]) => void;
-  onPillClick: (pill: string) => void;
-  onImageUpload: (base64: string, type?: "inspo" | "content", label?: string) => void;
-  onImageRemove: (index: number) => void;
-  onImageTypeToggle: (index: number) => void;
-  onImageUpdate: (index: number, newData: string) => void;
-  isGenerating: boolean;
-  onStop: () => void;
-  uploadedImages: UploadedImage[];
-  onNewProject: () => void;
-  isOnCall: boolean;
-  onStartCall: () => void;
-  hasPreview: boolean;
-  selectedElement: SelectedElement | null;
-  onClearSelection: () => void;
-  onEditMessage: (messageId: string, newContent: string) => void;
-}
+import type { ChatPanelProps } from "@/lib/types";
 
 export const ChatPanel = memo(function ChatPanel({
   messages,

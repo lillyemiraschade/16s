@@ -25,44 +25,10 @@ import {
   CheckCircle,
   FileCode,
 } from "lucide-react";
-import type { Viewport, SelectedElement, VersionBookmark, CodeMode } from "@/lib/types";
+import type { PreviewPanelProps, Viewport, SelectedElement, VersionBookmark } from "@/lib/types";
 import Image from "next/image";
 import { CodeEditor } from "./CodeEditor";
 import { createReactPreviewHtml } from "@/lib/react-preview";
-
-interface PreviewPanelProps {
-  html: string | null;
-  viewport: Viewport;
-  onViewportChange: (viewport: Viewport) => void;
-  isGenerating: boolean;
-  canGoBack: boolean;
-  canRedo: boolean;
-  onBack: () => void;
-  onRedo: () => void;
-  onExport: () => void;
-  onCopyToClipboard: () => void;
-  onOpenInNewTab: () => void;
-  onIframeLoad?: (iframe: HTMLIFrameElement) => void;
-  previewHistory: string[];
-  onRestoreVersion: (index: number) => void;
-  selectMode: boolean;
-  onSelectModeChange: (enabled: boolean) => void;
-  selectedElement: SelectedElement | null;
-  onElementSelect: (element: SelectedElement | null) => void;
-  bookmarks: VersionBookmark[];
-  onAddBookmark: (name: string) => void;
-  onRemoveBookmark: (id: string) => void;
-  onRestoreBookmark: (bookmark: VersionBookmark) => void;
-  // Deployment
-  onDeploy?: () => void;
-  isDeploying?: boolean;
-  lastDeployUrl?: string | null;
-  // Code editing
-  onCodeChange?: (code: string) => void;
-  // Code mode
-  codeMode?: CodeMode;
-  onCodeModeChange?: (mode: CodeMode) => void;
-}
 
 const viewportConfig = {
   desktop: { width: "100%", icon: Monitor, label: "Desktop" },

@@ -4,6 +4,7 @@ import { z } from "zod";
 import { createClient } from "@/lib/supabase/server";
 import { createRateLimiter } from "@/lib/rate-limit";
 import { SYSTEM_PROMPT, REACT_ADDENDUM } from "@/lib/ai/prompts";
+import type { ChatAPIResponse } from "@/lib/types";
 
 export const runtime = "nodejs";
 export const maxDuration = 300; // 5 minutes max for Pro plans
@@ -47,36 +48,7 @@ const ChatRequestSchema = z.object({
 
 type ChatRequest = z.infer<typeof ChatRequestSchema>;
 
-interface ChatResponse {
-  message: string;
-  pills?: string[];
-  showUpload?: boolean | string;
-  html?: string;
-  react?: string; // React component code when outputFormat is "react"
-  // BMAD Planning phase
-  plan?: {
-    summary: string;
-    sections: string[];
-    style: string;
-  };
-  // BMAD QA Report (shown after generation)
-  qaReport?: {
-    status: "all_good" | "minor_notes" | "needs_fixes";
-    checks: Array<{ name: string; passed: boolean; note?: string }>;
-    summary: string;
-  };
-  // Learned preferences (invisible memory, persisted across sessions)
-  context?: {
-    brandName?: string;
-    industry?: string;
-    targetAudience?: string | string[];
-    stylePreferences?: string[];
-    colorPreferences?: string[];
-    fontPreferences?: string[];
-    featuresRequested?: string[];
-    thingsToAvoid?: string[];
-  };
-}
+type ChatResponse = ChatAPIResponse;
 
 const limiter = createRateLimiter(20);
 

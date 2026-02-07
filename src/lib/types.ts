@@ -93,3 +93,68 @@ export type CodeMode = "html" | "react";
 export interface ProjectSettings {
   codeMode: CodeMode;
 }
+
+// API response from /api/chat (matches route.ts ChatResponse)
+export interface ChatAPIResponse {
+  message: string;
+  pills?: string[];
+  showUpload?: boolean | string;
+  html?: string;
+  react?: string;
+  plan?: BMadPlan;
+  qaReport?: BMadQAReport;
+  context?: Omit<ProjectContext, "lastUpdated">;
+}
+
+// Props for ChatPanel component
+export interface ChatPanelProps {
+  messages: Message[];
+  onSend: (text: string, imagesToInclude?: UploadedImage[]) => void;
+  onPillClick: (pill: string) => void;
+  onImageUpload: (base64: string, type?: "inspo" | "content", label?: string) => void;
+  onImageRemove: (index: number) => void;
+  onImageTypeToggle: (index: number) => void;
+  onImageUpdate: (index: number, newData: string) => void;
+  isGenerating: boolean;
+  onStop: () => void;
+  uploadedImages: UploadedImage[];
+  onNewProject: () => void;
+  isOnCall: boolean;
+  onStartCall: () => void;
+  hasPreview: boolean;
+  selectedElement: SelectedElement | null;
+  onClearSelection: () => void;
+  onEditMessage: (messageId: string, newContent: string) => void;
+}
+
+// Props for PreviewPanel component
+export interface PreviewPanelProps {
+  html: string | null;
+  viewport: Viewport;
+  onViewportChange: (viewport: Viewport) => void;
+  isGenerating: boolean;
+  canGoBack: boolean;
+  canRedo: boolean;
+  onBack: () => void;
+  onRedo: () => void;
+  onExport: () => void;
+  onCopyToClipboard: () => void;
+  onOpenInNewTab: () => void;
+  onIframeLoad?: (iframe: HTMLIFrameElement) => void;
+  previewHistory: string[];
+  onRestoreVersion: (index: number) => void;
+  selectMode: boolean;
+  onSelectModeChange: (enabled: boolean) => void;
+  selectedElement: SelectedElement | null;
+  onElementSelect: (element: SelectedElement | null) => void;
+  bookmarks: VersionBookmark[];
+  onAddBookmark: (name: string) => void;
+  onRemoveBookmark: (id: string) => void;
+  onRestoreBookmark: (bookmark: VersionBookmark) => void;
+  onDeploy?: () => void;
+  isDeploying?: boolean;
+  lastDeployUrl?: string | null;
+  onCodeChange?: (code: string) => void;
+  codeMode?: CodeMode;
+  onCodeModeChange?: (mode: CodeMode) => void;
+}
