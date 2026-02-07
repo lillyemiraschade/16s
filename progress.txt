@@ -1,35 +1,42 @@
-# 16s Improvement Progress
+# 16s Security Hardening Progress
 
-## Rounds 1-4 Summary (113 changes)
-All code-level improvements complete. System prompt compressed from 14K to 5.9K tokens.
-Full ARIA coverage, clean console, dead code removed, all critical bugs fixed.
+## Context
+A real penetration test was run against 16s-ruddy.vercel.app and found critical vulnerabilities.
+This loop fixes every finding systematically, in priority order.
 
-## Round 5 Focus: CONVERSATION FLOW & IMAGE INTELLIGENCE
-The AI conversation is clunky. Users have to figure out how to give info, when to upload photos,
-what kind of photos to give, and the AI doesn't guide them through it.
+## Pen Test Findings (by severity)
 
-### Known Issues:
-- Pill buttons sometimes don't render (message gets cut off mid-generation)
-- AI asks for photos but doesn't specify WHAT KIND (inspo vs content)
-- No structured flow for gathering user info (contact, socials, business details)
-- AI doesn't know when to remove backgrounds vs use photos as-is
-- Inspo images should be requested FIRST before any generation happens
-- Photo placement is random — AI doesn't ask WHERE user wants photos
-- User has to know the system to use it well — should be guided naturally
+### CRITICAL
+1. [x] No input length limit — FIXED: maxLength=10000 client, Zod max 15K/msg + 100 msgs server, pre-schema 10K check
+2. [x] Wildcard CORS — FIXED: Origin allowlist in middleware, unknown origins get 403, OPTIONS preflight handled
+3. [x] No Content Security Policy header — FIXED: Full CSP in next.config.mjs
+4. [x] Supabase anon key exposed — VERIFIED: All tables have RLS, all policies use auth.uid()=user_id, documented in schema.sql
+5. [x] User UUID in query params — ACCEPTED RISK: Standard Supabase client behavior, HTTPS encrypts in transit, RLS prevents cross-user access, UUIDs not guessable
+6. [x] API routes auth — FIXED: Added auth to /upload and /remove-bg. Deploy already had auth. Chat allows unauth (free tier, rate-limited).
 
-## Completed
-- R5-1: PROMPT — Rewrite CONVERSATION FLOW to guided 6-step journey (inspo-first, smart photo placement, structured info gathering)
-- R5-2: CODE — Add fallback pill generation when pills missing from AI response
-- R5-3: PROMPT — Update voice call flow with conversation arc + inspo handoff
-- R5-4: CODE — Improve bg removal + image type toggle discoverability
-- R5-5: PROMPT — Add social link placement rules + showUpload hint for content photos
-- R5-6: CODE — Increase max_tokens for complex generations (16K → 18K)
-- R5-7: CODE — Smart default upload type based on conversation stage
-- R5-8: PROMPT — Add placeholder transparency to DESIGN step
-- R5-9: CODE — Strengthen voice-to-chat handoff with inspo signal
-- R5-10: PROMPT — Compress VOICE CALLS + REQUEST TYPES + SUBJECTIVE FEEDBACK (~150 tokens saved)
+### MEDIUM
+7. [x] Missing security headers — FIXED: COOP same-origin-allow-popups, CORP same-origin
+8. [x] dangerouslySetInnerHTML — VERIFIED: Not used anywhere. Preview uses sandboxed srcDoc iframe. No custom 404 template.
+9. [x] Missing robots.txt, sitemap.xml, security.txt — FIXED: All created in public/
+10. [x] Information disclosure — FIXED: poweredByHeader:false. Build ID/RSC are standard Next.js, accepted risk.
+11. [x] SSR bailout — FIXED: noscript tag, proper meta tags. Client-side rendering is architectural decision (app requires browser APIs).
 
-## Summary
-Round 5 complete. 10 changes across prompt and code:
-- 5 prompt changes: guided journey, voice arc, social links, placeholders, compression
-- 5 code changes: fallback pills, max_tokens, bg removal UX, smart upload default, voice handoff
+### LOW
+12. [x] Meta tags — FIXED: OG, Twitter Card, canonical, manifest.json, apple-touch-icon all added in layout.tsx
+13. [x] Accessibility — FIXED: Welcome uses &lt;main&gt; landmark, edit textarea has aria-label, skip-link target verified working
+14. [x] Monaco SRI — ACCEPTED RISK: @monaco-editor/react loads dynamically via AMD loader, SRI not feasible without forking. CSP script-src locked to cdn.jsdelivr.net as mitigation.
+15. [x] Permissions-Policy — FIXED: Expanded to restrict 10+ APIs (camera, payment, usb, bluetooth, serial, etc.)
+
+### CONFIRMED SECURE (no action needed)
+- HTTPS enforced, HSTS with preload
+- X-Frame-Options: DENY
+- X-Content-Type-Options: nosniff
+- Referrer-Policy: strict-origin-when-cross-origin
+- No XSS reflection in URLs
+- No path traversal (Vercel WAF)
+- No .env/.git exposure
+- Server-side API keys properly kept server-side
+- All target=_blank links have rel=noopener
+
+## In Progress
+ALL 15 FINDINGS ADDRESSED — security hardening complete

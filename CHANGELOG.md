@@ -1,5 +1,69 @@
 # 16s Changelog
 
+## [2026-02-06] — Security: SECURITY.md + final documentation
+
+**What:** Created SECURITY.md documenting the full security model: auth, RLS, rate limiting, input validation, CORS policy, security headers, accepted risks, and iframe sandbox configuration.
+
+**Files:** `SECURITY.md`
+**Type:** Security (documentation)
+**Ref:** Final step
+
+## [2026-02-06] — Security: Findings 11,12,13 — SSR, meta tags, accessibility
+
+**What:** Added noscript fallback, OG/Twitter meta tags, canonical URL, manifest.json, apple-touch-icon. Welcome screen now uses `<main>` landmark. Edit textarea gets aria-label.
+
+**Files:** `src/app/layout.tsx`, `src/app/page.tsx`, `src/components/chat/ChatPanel.tsx`, `public/manifest.json`
+**Type:** Security (SEO/a11y)
+**Ref:** Findings 11, 12, 13
+
+## [2026-02-06] — Security: Finding 9 — Static security files
+
+**What:** Created robots.txt (blocks /api/, /auth/, /projects/), sitemap.xml, and .well-known/security.txt with security contact.
+
+**Files:** `public/robots.txt`, `public/sitemap.xml`, `public/.well-known/security.txt`
+**Type:** Security (static files)
+**Ref:** Finding 9
+
+## [2026-02-06] — Security: Finding 6 — Auth on upload + remove-bg
+
+**What:** Added Supabase auth checks to /api/upload and /api/remove-bg. Both cost real money and must not be accessible anonymously.
+
+**Files:** `src/app/api/upload/route.ts`, `src/app/api/remove-bg/route.ts`
+**Type:** Security (auth)
+**Ref:** Finding 6
+
+## [2026-02-06] — Security: Findings 4,5 — RLS verification + UUID documentation
+
+**What:** Verified all 4 tables have RLS with auth.uid() policies. Documented security model in schema.sql. UUID in query params is standard Supabase behavior, accepted risk (HTTPS + RLS + non-guessable UUIDs).
+
+**Files:** `supabase/schema.sql`
+**Type:** Security (verification)
+**Ref:** Findings 4, 5
+
+## [2026-02-06] — Security: Findings 3,7,10,15 — CSP + security headers
+
+**What:** Added Content-Security-Policy with locked-down directives (self + cdn.jsdelivr.net for Monaco + Supabase). Added COOP (same-origin-allow-popups for OAuth), CORP (same-origin). Expanded Permissions-Policy to restrict 10+ browser APIs. Removed X-Powered-By header. Build ID/RSC payload documented as accepted risk (standard Next.js behavior).
+
+**Files:** `next.config.mjs`
+**Type:** Security (headers)
+**Ref:** Findings 3, 7, 10, 15
+
+## [2026-02-06] — Security: Finding 2 — CORS lockdown
+
+**What:** Added CORS origin allowlist in middleware. API routes reject cross-origin requests from unknown origins (403). Allows no-Origin requests for Stripe webhooks and non-browser clients. Handles OPTIONS preflight. Production origins: 16s-ruddy.vercel.app, 16s.dev. Localhost only in development.
+
+**Files:** `src/middleware.ts`
+**Type:** Security (CORS)
+**Ref:** Finding 2
+
+## [2026-02-06] — Security: Finding 1 — Input length limits
+
+**What:** Added maxLength=10000 to both textareas (main chat input + message edit). Tightened server-side Zod schema: message content max 15K (was 50K), messages array max 100 (was 200). Added pre-schema check rejecting last user message over 10K chars before expensive AI call.
+
+**Files:** `src/components/chat/ChatPanel.tsx`, `src/app/api/chat/route.ts`
+**Type:** Security (input validation)
+**Ref:** Finding 1
+
 ## [2026-02-06 19:30] — Prompt: Compress VOICE CALLS + REQUEST TYPES + SUBJECTIVE FEEDBACK (~150 tokens saved)
 
 **What:** Compressed VOICE CALLS from 3 lines to 1 (removed redundant "you DO NOT need phone numbers" when "NO phone numbers needed" says the same). Compressed RECOGNIZE REQUEST TYPE from 3 lines to 1 with pipe-separated format. Compressed SUBJECTIVE FEEDBACK by combining similar entries. Offsets tokens added by the guided journey.
