@@ -25,6 +25,7 @@ import {
   Share2,
   Link2,
   Link2Off,
+  Github,
 } from "lucide-react";
 import type { Viewport, SelectedElement, CodeMode } from "@/lib/types";
 import { DomainManager } from "@/components/domains/DomainManager";
@@ -75,6 +76,9 @@ interface PreviewToolbarProps {
   onToggleDeployHistory?: () => void;
   hasDeployments?: boolean;
   onPublish?: () => void;
+  onGitHubExport?: (repoName: string, isPrivate: boolean) => void;
+  isGitHubConnected?: boolean;
+  isExportingToGitHub?: boolean;
 }
 
 export const PreviewToolbar = memo(function PreviewToolbar({
@@ -117,6 +121,9 @@ export const PreviewToolbar = memo(function PreviewToolbar({
   onToggleDeployHistory,
   hasDeployments,
   onPublish,
+  onGitHubExport,
+  isGitHubConnected,
+  isExportingToGitHub,
 }: PreviewToolbarProps) {
   const [showExportMenu, setShowExportMenu] = useState(false);
   const [showShareMenu, setShowShareMenu] = useState(false);
@@ -460,6 +467,26 @@ export const PreviewToolbar = memo(function PreviewToolbar({
                       className="w-full flex items-center gap-2.5 px-4 py-2.5 text-[13px] text-zinc-300 hover:text-zinc-100 hover:bg-white/[0.04] transition-colors">
                       <ExternalLink className="w-3.5 h-3.5" /> Open in New Tab
                     </button>
+                    {onGitHubExport && (
+                      <>
+                        <div className="border-t border-zinc-700/50 my-1" />
+                        {isGitHubConnected ? (
+                          <button role="menuitem" onClick={() => {
+                            const name = (projectId || "my-site").replace(/[^a-z0-9-]/gi, "-").toLowerCase();
+                            handleExportAction(() => onGitHubExport(name, false));
+                          }} disabled={isExportingToGitHub}
+                            className="w-full flex items-center gap-2.5 px-4 py-2.5 text-[13px] text-zinc-300 hover:text-zinc-100 hover:bg-white/[0.04] transition-colors disabled:opacity-50">
+                            {isExportingToGitHub ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Github className="w-3.5 h-3.5" />}
+                            {isExportingToGitHub ? "Pushing..." : "Push to GitHub"}
+                          </button>
+                        ) : (
+                          <a href="/api/github/connect" role="menuitem"
+                            className="w-full flex items-center gap-2.5 px-4 py-2.5 text-[13px] text-zinc-300 hover:text-zinc-100 hover:bg-white/[0.04] transition-colors">
+                            <Github className="w-3.5 h-3.5" /> Connect GitHub
+                          </a>
+                        )}
+                      </>
+                    )}
                     {onDeploy && (
                       <>
                         <div className="border-t border-zinc-700/50 my-1" />
