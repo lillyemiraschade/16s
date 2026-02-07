@@ -8,7 +8,11 @@ import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { ChatPanel } from "@/components/chat/ChatPanel";
 import { PreviewPanel } from "@/components/preview/PreviewPanel";
-import { VoiceCall } from "@/components/chat/VoiceCall";
+import dynamic from "next/dynamic";
+const VoiceCall = dynamic(() => import("@/components/chat/VoiceCall").then(m => m.VoiceCall), {
+  ssr: false,
+  loading: () => <div className="glass-matte rounded-2xl p-6 text-zinc-500 text-sm">Loading voice call...</div>,
+});
 import { useProjects } from "@/lib/hooks/useProjects";
 import { useDeployment } from "@/lib/hooks/useDeployment";
 import { useImages } from "@/lib/hooks/useImages";

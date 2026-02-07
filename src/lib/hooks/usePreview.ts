@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useRef, useCallback, useEffect } from "react";
-import html2canvas from "html2canvas";
 import type { Viewport, SelectedElement, VersionBookmark, CodeMode } from "@/lib/types";
 
 // Cap version history to prevent memory bloat (50 x ~200KB HTML = ~10MB max)
@@ -33,6 +32,7 @@ export function usePreview(projectName: string) {
     try {
       const doc = iframe.contentDocument;
       if (!doc?.body) return;
+      const html2canvas = (await import("html2canvas")).default;
       const opts = {
         scale: 0.5,
         logging: false,
