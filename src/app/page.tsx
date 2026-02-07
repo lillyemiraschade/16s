@@ -143,12 +143,14 @@ function HomePageContent() {
   // ─── Auto-restore last project on mount or load from URL param ───
   useEffect(() => {
     if (isAuthLoading) return;
+    // Don't overwrite messages if user has already started chatting
+    if (chat.hasStarted) return;
     let cancelled = false;
     const projectIdFromUrl = searchParams.get("project");
     const templateIdFromUrl = searchParams.get("template");
 
     // Handle template param — fill input with template prompt
-    if (templateIdFromUrl && !chat.hasStarted) {
+    if (templateIdFromUrl) {
       const template = TEMPLATES.find(t => t.id === templateIdFromUrl);
       if (template) {
         welcome.setWelcomeInput(template.prompt);
@@ -198,9 +200,10 @@ function HomePageContent() {
       }
     };
     restoreProject();
+    // When chat.hasStarted changes to true, cleanup cancels any in-flight restoration
     return () => { cancelled = true; };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isAuthLoading, searchParams]);
+  }, [isAuthLoading, searchParams, chat.hasStarted]);
 
   // ─── Auto-save project (debounced) ───
   const saveTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);

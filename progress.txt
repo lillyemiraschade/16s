@@ -18,3 +18,4 @@
 - [ ] 11. Final verification pass
 
 ## Log
+- [x] P0-0: Fixed streaming blank messages — immediate assistant message creation, auto-restore race condition guard, no-rethrow error handler

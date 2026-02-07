@@ -29,6 +29,9 @@ export const ChatMessage = memo(function ChatMessage({
   const [isEditing, setIsEditing] = useState(false);
   const [editContent, setEditContent] = useState("");
 
+  // Empty assistant messages are placeholders for streaming — typing indicator handles display
+  if (message.role === "assistant" && !message.content) return null;
+
   const isUser = message.role === "user";
   const isFirstInGroup = !prevMessage || prevMessage.role !== message.role;
   const isLastInGroup = !nextMessage || nextMessage.role !== message.role;

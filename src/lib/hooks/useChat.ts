@@ -302,26 +302,21 @@ export function useChat({
       throw new Error(errorMsg);
     }
 
-    // Streaming message ID — message is NOT created until we have content to show.
-    // This keeps the typing indicator visible instead of showing a blank bubble.
-    const streamingMsgId = (Date.now() + 1).toString();
-    let streamingMsgCreated = false;
+    // Create assistant message immediately — empty content keeps typing indicator visible
+    // while preventing race conditions where concurrent state updates could blank messages.
+    // ChatMessage returns null for empty content, so no blank bubble is shown.
+    const streamingMsgId = `s-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`;
+    setMessages(prev => [...prev, {
+      id: streamingMsgId,
+      role: "assistant" as const,
+      content: "",
+    }]);
 
-    // Helper: create assistant message on first content, update on subsequent calls
-    const upsertStreamingMsg = (content: string, extra?: Partial<Message>) => {
-      if (!streamingMsgCreated) {
-        streamingMsgCreated = true;
-        setMessages(prev => [...prev, {
-          id: streamingMsgId,
-          role: "assistant" as const,
-          content,
-          ...extra,
-        }]);
-      } else {
-        setMessages(prev => prev.map(m =>
-          m.id === streamingMsgId ? { ...m, content, ...extra } : m
-        ));
-      }
+    // Helper: update streaming message (always functional update — never capture messages from closure)
+    const updateStreamingMsg = (content: string, extra?: Partial<Message>) => {
+      setMessages(prev => prev.map(m =>
+        m.id === streamingMsgId ? { ...m, content, ...extra } : m
+      ));
     };
 
     // Read NDJSON stream
@@ -338,7 +333,7 @@ export function useChat({
           if (event.message) { data = event; break; }
         } catch { continue; }
       }
-      upsertStreamingMsg(
+      updateStreamingMsg(
         data.message || "...",
         { pills: data.pills, showUpload: data.showUpload, plan: data.plan, qaReport: data.qaReport },
       );
@@ -371,7 +366,7 @@ export function useChat({
             lastUpdateTime = now;
             const { messageText } = extractStreamingMessage(rawTokens);
             if (messageText) {
-              upsertStreamingMsg(messageText);
+              updateStreamingMsg(messageText);
             }
           }
         } else if (event.type === "done") {
@@ -408,7 +403,7 @@ export function useChat({
       if (rawTokens) {
         const { messageText } = extractStreamingMessage(rawTokens);
         if (messageText) {
-          upsertStreamingMsg(messageText);
+          updateStreamingMsg(messageText);
         }
       }
     } catch (error) {
@@ -416,50 +411,56 @@ export function useChat({
         // User stopped — keep whatever streaming content is shown
         return;
       }
-      // Stream error after tokens started — show partial content + error note
+      // Stream error — show partial content + error note (never re-throw after message creation)
       const { messageText } = extractStreamingMessage(rawTokens);
-      if (messageText) {
-        upsertStreamingMsg(
-          messageText + "\n\n*Generation interrupted. Try again?*",
-          { pills: ["Try again"] },
-        );
-        return;
-      }
-      throw error;
+      updateStreamingMsg(
+        (messageText || "") + "\n\n*Generation interrupted. Try again?*",
+        { pills: ["Try again"] },
+      );
+      return;
     } finally {
       reader.releaseLock();
     }
 
-    // If no done event, fallback parse accumulated tokens
-    const finalResponse: ChatAPIResponse = doneResponse ?? parseAIResponse(rawTokens);
+    // Finalize message — wrapped in try/catch to never propagate errors after message creation
+    try {
+      // If no done event, fallback parse accumulated tokens
+      const finalResponse: ChatAPIResponse = doneResponse ?? parseAIResponse(rawTokens);
 
-    // Finalize message with pills, HTML, context
-    const isErrorResponse = !finalResponse.html && !finalResponse.plan && /unavailable|try again|timed? out|too many|busy/i.test(finalResponse.message || "");
-    const pills = isErrorResponse
-      ? undefined
-      : (finalResponse.pills && finalResponse.pills.length > 0)
-        ? finalResponse.pills
-        : getContextualFallbackPills(!!currentPreview, !!finalResponse.html, !!finalResponse.plan, cleanMessages.length, discussionMode);
+      // Finalize message with pills, HTML, context
+      const isErrorResponse = !finalResponse.html && !finalResponse.plan && /unavailable|try again|timed? out|too many|busy/i.test(finalResponse.message || "");
+      const pills = isErrorResponse
+        ? undefined
+        : (finalResponse.pills && finalResponse.pills.length > 0)
+          ? finalResponse.pills
+          : getContextualFallbackPills(!!currentPreview, !!finalResponse.html, !!finalResponse.plan, cleanMessages.length, discussionMode);
 
-    upsertStreamingMsg(
-      finalResponse.message || "I'm working on your request...",
-      {
-        pills,
-        showUpload: finalResponse.showUpload,
-        plan: finalResponse.plan,
-        qaReport: finalResponse.qaReport,
-      },
-    );
+      updateStreamingMsg(
+        finalResponse.message || "I'm working on your request...",
+        {
+          pills,
+          showUpload: finalResponse.showUpload,
+          plan: finalResponse.plan,
+          qaReport: finalResponse.qaReport,
+        },
+      );
 
-    if (finalResponse.html) {
-      const processedHtml = replaceImagePlaceholders(finalResponse.html, imagesToSend);
-      const navGuard = `<script>document.addEventListener('click',function(e){var a=e.target.closest('a');if(a){var h=a.getAttribute('href');if(h&&h.startsWith('http')){e.preventDefault();return;}if(h&&!h.startsWith('javascript:')){e.preventDefault();}}},true);<\/script>`;
-      const safeHtml = processedHtml.replace(/<head([^>]*)>/i, `<head$1>${navGuard}`);
-      onPushPreview(safeHtml);
-    }
+      if (finalResponse.html) {
+        const processedHtml = replaceImagePlaceholders(finalResponse.html, imagesToSend);
+        const navGuard = `<script>document.addEventListener('click',function(e){var a=e.target.closest('a');if(a){var h=a.getAttribute('href');if(h&&h.startsWith('http')){e.preventDefault();return;}if(h&&!h.startsWith('javascript:')){e.preventDefault();}}},true);<\/script>`;
+        const safeHtml = processedHtml.replace(/<head([^>]*)>/i, `<head$1>${navGuard}`);
+        onPushPreview(safeHtml);
+      }
 
-    if (finalResponse.context) {
-      onContextUpdate(finalResponse.context);
+      if (finalResponse.context) {
+        onContextUpdate(finalResponse.context);
+      }
+    } catch {
+      // Post-processing failed — message is already shown, don't propagate
+      updateStreamingMsg(
+        "I generated your content, but there was an error processing it.",
+        { pills: ["Try again"] },
+      );
     }
   }, [currentPreview, previewScreenshot, projectContext, discussionMode, replaceImagePlaceholders, onPushPreview, onContextUpdate]);
 
@@ -552,7 +553,7 @@ export function useChat({
       setMessages((prev) => [
         ...prev,
         {
-          id: (Date.now() + 1).toString(),
+          id: `err-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`,
           role: "assistant",
           content: errorMsg,
           pills: isCredits ? ["Upgrade plan"] : isNetwork ? ["Try again"] : undefined,
@@ -629,7 +630,7 @@ export function useChat({
       setMessages((prev) => [
         ...prev,
         {
-          id: (Date.now() + 1).toString(),
+          id: `err-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`,
           role: "assistant",
           content: errorMsg,
           pills: isCredits ? ["Upgrade plan"] : isNetwork ? ["Try again"] : undefined,
@@ -667,9 +668,17 @@ export function useChat({
     abortRef.current?.abort();
     setIsGenerating(false);
     setMessages(prev => {
-      if (prev.length > 0 && prev[prev.length - 1].role === "user") {
+      if (prev.length === 0) return prev;
+      const last = prev[prev.length - 1];
+      // Remove empty streaming message + the user message that triggered it
+      if (last.role === "assistant" && !last.content) {
+        return prev.slice(0, -2);
+      }
+      // Remove user message if streaming hasn't created assistant msg yet
+      if (last.role === "user") {
         return prev.slice(0, -1);
       }
+      // Keep partial streaming content
       return prev;
     });
   }, []);
