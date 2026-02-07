@@ -21,6 +21,7 @@
     "@supabase/ssr": "^0.8.0",
     "@supabase/supabase-js": "^2.94.0",
     "@vercel/blob": "^2.0.1",
+    "@vercel/og": "^0.8.6",
     "axe-core": "^4.11.1",
     "clsx": "^2.1.1",
     "framer-motion": "^11.13.1",

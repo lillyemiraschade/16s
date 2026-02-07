@@ -28,6 +28,10 @@ export const metadata: Metadata = {
     canonical: "https://16s-ruddy.vercel.app",
   },
   icons: {
+    icon: [
+      { url: "/favicon.svg", type: "image/svg+xml" },
+      { url: "/favicon.png", type: "image/png" },
+    ],
     apple: "/logo.png",
   },
   manifest: "/manifest.json",
