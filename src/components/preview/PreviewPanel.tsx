@@ -138,10 +138,12 @@ export const PreviewPanel = memo(function PreviewPanel({
   const [showBookmarkInput, setShowBookmarkInput] = useState(false);
 
   // Listen for element selection messages from iframe
+  // Sandboxed iframes without allow-same-origin have origin "null",
+  // so we validate the message type prefix instead of origin
   useEffect(() => {
     const handler = (e: MessageEvent) => {
-      if (e.origin !== window.location.origin) return;
-      if (e.data?.type === '16s-element-selected') {
+      if (typeof e.data?.type !== 'string' || !e.data.type.startsWith('16s-')) return;
+      if (e.data.type === '16s-element-selected') {
         onElementSelect(e.data.element);
       }
     };
@@ -157,11 +159,14 @@ export const PreviewPanel = memo(function PreviewPanel({
   }, [selectMode]);
 
   // Detect if content is React code and prepare preview HTML
+  // Inject CSP to prevent generated HTML from making network requests
+  const PREVIEW_CSP = `<meta http-equiv="Content-Security-Policy" content="default-src 'unsafe-inline' 'unsafe-eval' data: blob:; img-src * data: blob:; font-src * data:; style-src 'unsafe-inline' https://fonts.googleapis.com; connect-src 'none'; frame-src 'none';">`;
   const isReact = html && codeMode === "react";
+  const injectCSP = (h: string) => h.replace(/<head([^>]*)>/i, `<head$1>${PREVIEW_CSP}`);
   const previewHtml = html
     ? isReact
       ? createReactPreviewHtml(html)
-      : html.replace('</body>', `${SELECT_MODE_SCRIPT}</body>`)
+      : injectCSP(html.replace('</body>', `${SELECT_MODE_SCRIPT}</body>`))
     : null;
 
   // Keyboard shortcut for code view
@@ -262,7 +267,7 @@ export const PreviewPanel = memo(function PreviewPanel({
                   key={reloadKey}
                   ref={iframeRef}
                   srcDoc={previewHtml || ""}
-                  sandbox="allow-scripts allow-same-origin"
+                  sandbox="allow-scripts allow-popups"
                   className={`w-full h-full border-0 ${selectMode ? "cursor-crosshair" : ""}`}
                   title="Website Preview"
                   aria-label="Generated website preview"
