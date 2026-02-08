@@ -26,7 +26,7 @@ export default function TemplatesPage() {
     <div className="min-h-screen bg-[#0a0a0b]">
       {/* Header */}
       <header className="h-14 border-b border-white/[0.04] px-4 md:px-6 flex items-center justify-between">
-        <div className="flex items-center gap-4 md:gap-8">
+        <div className="flex items-center gap-4 md:gap-6">
           <Link href="/">
             <Image src="/logo.png" alt="16s" width={26} height={26} className="object-contain" />
           </Link>

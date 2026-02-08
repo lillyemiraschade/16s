@@ -450,9 +450,9 @@ function HomePageContent() {
     return (
       <main id="main-content" className="h-screen welcome-bg flex flex-col" onDrop={welcome.handleWelcomeDrop} onDragOver={(e) => e.preventDefault()}>
         <header className="relative z-20 h-14 flex items-center justify-between px-4 md:px-6">
-          <div className="flex items-center gap-4 md:gap-8">
+          <div className="flex items-center gap-4 md:gap-6">
             <Link href="/">
-              <Image src="/logo.png" alt="16s logo" width={26} height={26} className="object-contain" />
+              <Image src="/logo.png" alt="16s" width={26} height={26} className="object-contain" />
             </Link>
             <nav className="flex items-center gap-0.5">
               <span className="px-2.5 py-1.5 text-[12px] md:text-[13px] font-medium text-zinc-100 bg-white/[0.06] rounded-lg">
