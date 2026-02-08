@@ -433,7 +433,7 @@ export const PreviewToolbar = memo(function PreviewToolbar({
           {onPublish && lastDeployUrl && html && !isGenerating && !isDeploying && (
             <button
               onClick={onPublish}
-              className="flex items-center gap-1.5 px-2.5 py-2.5 md:py-1.5 text-[12px] md:text-[11px] font-medium text-amber-400 hover:text-amber-300 hover:bg-amber-500/10 rounded-lg transition-all duration-150"
+              className="flex items-center gap-1.5 px-2.5 py-2.5 md:py-1.5 text-[12px] md:text-[11px] font-medium text-green-400 hover:text-green-300 hover:bg-green-500/10 rounded-lg transition-all duration-150"
               title="Publish changes to your live site"
               aria-label="Publish changes"
             >
