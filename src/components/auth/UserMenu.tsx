@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { User, LogOut, Cloud, HardDrive, ChevronDown, CreditCard, FolderOpen, Inbox } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 import { useAuth } from "@/lib/auth/AuthContext";
 import { AuthModal } from "./AuthModal";
@@ -76,10 +77,13 @@ export function UserMenu() {
         className="flex items-center gap-2 px-1.5 md:px-2 py-1 rounded-lg hover:bg-white/[0.04] focus-visible:ring-2 focus-visible:ring-green-500/50 transition-all duration-150"
       >
         {avatarUrl ? (
-          <img
+          <Image
             src={avatarUrl}
             alt={displayName}
+            width={28}
+            height={28}
             className="w-7 h-7 md:w-6 md:h-6 rounded-full ring-1 ring-white/10"
+            unoptimized
           />
         ) : (
           <div className="w-7 h-7 md:w-6 md:h-6 rounded-full bg-zinc-700 flex items-center justify-center ring-1 ring-white/10">

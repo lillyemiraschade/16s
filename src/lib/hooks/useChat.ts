@@ -565,7 +565,7 @@ export function useChat({
         setIsGenerating(false);
       }
     }
-  }, [isOnCall, uploadedImages, hasStarted, selectedElement, isConfigured, user, sendAndProcessChat, buildCleanMessages, onClearImages, onRestoreImages, onClearSelection]);
+  }, [isOnCall, uploadedImages, hasStarted, selectedElement, isConfigured, user, sendAndProcessChat, buildCleanMessages, onClearImages, onRestoreImages, onClearSelection, discussionMode]);
 
   // Keep ref updated for auth callback
   useEffect(() => {

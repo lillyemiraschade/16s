@@ -71,6 +71,13 @@ export function OnboardingTour({ active }: OnboardingTourProps) {
     return () => clearTimeout(timer);
   }, [active]);
 
+  const dismiss = useCallback(() => {
+    setVisible(false);
+    try {
+      localStorage.setItem(STORAGE_KEY, "1");
+    } catch {}
+  }, []);
+
   // Position the tooltip relative to the target element
   const updatePosition = useCallback(() => {
     if (!visible) return;
@@ -125,20 +132,13 @@ export function OnboardingTour({ active }: OnboardingTourProps) {
     top = Math.max(8, Math.min(top, window.innerHeight - tooltipH - 8));
 
     setCoords({ top, left, arrowDir });
-  }, [visible, step]);
+  }, [visible, step, dismiss]);
 
   useEffect(() => {
     updatePosition();
     window.addEventListener("resize", updatePosition);
     return () => window.removeEventListener("resize", updatePosition);
   }, [updatePosition]);
-
-  const dismiss = useCallback(() => {
-    setVisible(false);
-    try {
-      localStorage.setItem(STORAGE_KEY, "1");
-    } catch {}
-  }, []);
 
   const handleNext = useCallback(() => {
     if (step < STEPS.length - 1) {
