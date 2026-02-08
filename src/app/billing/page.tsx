@@ -71,16 +71,6 @@ function BillingPage() {
   const success = searchParams.get("success") === "true";
   const canceled = searchParams.get("canceled") === "true";
 
-  // Show success/cancel toast
-  useEffect(() => {
-    if (success) setToast({ type: "success", message: "Subscription activated! Your credits have been updated." });
-    if (canceled) setToast({ type: "error", message: "Checkout canceled. No changes were made." });
-    if (success || canceled) {
-      const timer = setTimeout(() => setToast(null), 5000);
-      return () => clearTimeout(timer);
-    }
-  }, [success, canceled]);
-
   // Fetch subscription
   useEffect(() => {
     if (authLoading) return;
@@ -172,6 +162,18 @@ function BillingPage() {
         </div>
       )}
 
+      {/* Success/Cancel banners (persistent) */}
+      {success && (
+        <div className="bg-green-500/10 border-b border-green-500/20 px-4 py-3 text-center text-[13px] font-medium text-green-400">
+          &#10003; Welcome to Pro! Your credits have been updated.
+        </div>
+      )}
+      {canceled && (
+        <div className="bg-zinc-800/50 border-b border-zinc-700/30 px-4 py-3 text-center text-[13px] font-medium text-zinc-400">
+          Checkout canceled. No charges were made.
+        </div>
+      )}
+
       {/* Header */}
       <header className="h-14 md:h-[60px] border-b border-white/[0.04] px-4 md:px-6 flex items-center justify-between">
         <div className="flex items-center gap-4 md:gap-8">
@@ -206,6 +208,25 @@ function BillingPage() {
       <main className="max-w-5xl mx-auto px-4 md:px-6 py-6 md:py-10">
         <h1 className="text-xl md:text-2xl font-semibold text-zinc-100 mb-2">Billing</h1>
         <p className="text-[14px] text-zinc-500 mb-8">Manage your plan and usage.</p>
+
+        {/* Out of credits banner */}
+        {user && currentPlan === "free" && subscription && subscription.credits_remaining <= 0 && (
+          <div className="mb-6 p-4 rounded-xl bg-amber-500/10 border border-amber-500/20 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+            <div className="flex items-center gap-2">
+              <AlertCircle className="w-4 h-4 text-amber-400 shrink-0" />
+              <span className="text-[13px] font-medium text-amber-300">
+                You&apos;ve used all your credits. Upgrade to continue building.
+              </span>
+            </div>
+            <button
+              onClick={() => handleUpgrade("pro")}
+              disabled={!!upgrading}
+              className="px-4 py-2 text-[13px] font-semibold bg-green-500/80 hover:bg-green-500 text-white rounded-lg transition-colors disabled:opacity-50 shrink-0"
+            >
+              {upgrading === "pro" ? "Redirecting..." : "Upgrade to Pro \u2192"}
+            </button>
+          </div>
+        )}
 
         {/* Current plan summary */}
         {user && subscription && (
