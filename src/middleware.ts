@@ -15,9 +15,17 @@ if (process.env.NODE_ENV === "development") {
   ALLOWED_ORIGINS.push("http://localhost:3000");
 }
 
-function isAllowedOrigin(origin: string | null): boolean {
+function isAllowedOrigin(origin: string | null, request: NextRequest): boolean {
   if (!origin) return true; // No Origin header = same-origin or non-browser (Stripe webhooks, curl)
-  return ALLOWED_ORIGINS.includes(origin);
+  if (ALLOWED_ORIGINS.includes(origin)) return true;
+  // Allow same-origin: compare Origin against the request's own Host header
+  // This covers all Vercel preview URLs without needing to enumerate them
+  const host = request.headers.get("host");
+  if (host) {
+    const protocol = request.headers.get("x-forwarded-proto") || "https";
+    if (origin === `${protocol}://${host}`) return true;
+  }
+  return false;
 }
 
 export async function middleware(request: NextRequest) {
@@ -27,7 +35,7 @@ export async function middleware(request: NextRequest) {
   // CORS check on API routes — reject cross-origin requests from unknown origins
   // /api/forms is exempt — deployed sites on any domain POST form submissions back
   if (pathname.startsWith("/api/") && !pathname.startsWith("/api/forms")) {
-    if (!isAllowedOrigin(origin)) {
+    if (!isAllowedOrigin(origin, request)) {
       return new NextResponse(JSON.stringify({ error: "Forbidden" }), {
         status: 403,
         headers: { "Content-Type": "application/json" },
@@ -52,7 +60,7 @@ export async function middleware(request: NextRequest) {
   if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
     const response = NextResponse.next();
     // Add CORS headers for API routes (/api/forms handles its own)
-    if (pathname.startsWith("/api/") && !pathname.startsWith("/api/forms") && origin && isAllowedOrigin(origin)) {
+    if (pathname.startsWith("/api/") && !pathname.startsWith("/api/forms") && origin && isAllowedOrigin(origin, request)) {
       response.headers.set("Access-Control-Allow-Origin", origin);
     }
     return response;
@@ -66,7 +74,7 @@ export async function middleware(request: NextRequest) {
     response = NextResponse.next();
   }
   // Add CORS headers for API routes (/api/forms handles its own)
-  if (pathname.startsWith("/api/") && !pathname.startsWith("/api/forms") && origin && isAllowedOrigin(origin)) {
+  if (pathname.startsWith("/api/") && !pathname.startsWith("/api/forms") && origin && isAllowedOrigin(origin, request)) {
     response.headers.set("Access-Control-Allow-Origin", origin);
   }
   return response;
