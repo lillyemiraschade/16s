@@ -131,3 +131,62 @@ Failures: "How It Works" STILL appears (ban not strong enough), 6 identical feat
 - Added rule: NEVER use same body font on more than one site in a session
 - Strengthened "gritty" vibe translation to MUST include noise texture
 - Build + tsc pass ✓
+
+## Cycle 7: Paws & Prose (Pet Grooming)
+Score: 33/40 (best so far!)
+```
+LAYOUT:       4/5 — ZERO card grids! Service list, gallery, story, booking
+TYPOGRAPHY:   4/5 — Cormorant Garamond + Manrope elegant
+COLOR:        5/5 — Art Deco gold + warm ivory + browns. Unexpected and beautiful
+COPY:         4/5 — "Paws and Prose" hero. "Tailored Treatments" specific
+FUNCTIONALITY: 4/5 — Page routing, theme toggle, gallery, booking
+UNIQUENESS:   4/5 — Art Deco pet grooming is very distinctive
+POLISH:       4/5 — Theme toggle! 7 bg treatments! Zero cards!
+OVERALL:      4/5 — Would screenshot this
+```
+
+## Cycle 8: Island Flame (Caribbean Food Truck)
+Score: 28/40
+```
+LAYOUT:       4/5 — No card grids. Menu, find truck, story
+TYPOGRAPHY:   3/5 — Bebas Neue + Work Sans repeated from site 5
+COLOR:        3/5 — Dark + red isn't Caribbean vibrant. Missing tropical yellows/teals
+COPY:         4/5 — Authentic Caribbean menu: Jerk Chicken, Curry Goat Roti, Ackee & Saltfish
+FUNCTIONALITY: 4/5 — Menu, locations, theme toggle, page routing
+UNIQUENESS:   3/5 — Menu authentic but visual treatment generic dark
+POLISH:       4/5 — Theme toggle, page routing, no cards
+OVERALL:      3/5 — Good truck but missing vibrant Caribbean energy
+```
+
+## Cycle 9: Summit Wealth (Financial Advisor)
+Score: 26/40
+```
+LAYOUT:       3/5 — No cards! But only 3 bg treatments
+TYPOGRAPHY:   4/5 — Fraunces + Source Sans 3 solid finance pair
+COLOR:        3/5 — Dark navy predictable. Only 3 bg treatments
+COPY:         3/5 — H1 7 words (violates 2-5 rule!)
+FUNCTIONALITY: 4/5 — Theme toggle, page routing
+UNIQUENESS:   3/5 — Standard financial advisor template
+POLISH:       3/5 — Theme toggle. Too few bg treatments
+OVERALL:      3/5 — Competent but not distinctive
+```
+
+## Cycle 10: Ink & Iron (Tattoo Studio)
+Score: 25/40
+```
+LAYOUT:       3/5 — Portfolio-focused. Only 4 sections
+TYPOGRAPHY:   3/5 — Bebas Neue + Work Sans REPEATED from sites 5 AND 8
+COLOR:        3/5 — Dark + red identical to food truck palette
+COPY:         4/5 — Portfolio styles authentic: Geometric Blackwork, Neo-Traditional
+FUNCTIONALITY: 3/5 — Portfolio, artists. Missing: booking, FAQ
+UNIQUENESS:   3/5 — Noise texture helps but same fonts/colors
+POLISH:       3/5 — Noise texture! Theme toggle! But 2 bg treatments
+OVERALL:      3/5 — Good foundation but font/color repetition hurts
+```
+
+## R17-3 Patch Summary
+- Added specific font pairings per industry (Bar=Bebas+Inter, Tattoo=Oswald+Source Sans, etc.)
+- Added specific hex palettes (Caribbean=amber+teal+red on cream, Finance=navy on cream)
+- Required LIGHT backgrounds for vibrant/Caribbean/tropical (NOT dark)
+- Required light bg for trustworthy finance feel
+- Build + tsc pass ✓

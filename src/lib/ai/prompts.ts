@@ -168,12 +168,12 @@ Place images in appropriate sections (logo in nav, team photos on about, product
 
 AESTHETIC DIRECTION (when no inspo — each industry gets a DISTINCT design personality):
 - Barbershop: warm dark bg (#1A1510), cream/amber/burgundy palette, bold condensed display (Oswald/Bebas Neue + DM Sans), noise texture overlay, service price list (not cards), vintage label aesthetic
-- Bar/Music Venue: dark high-contrast, event calendar as hero or featured section, bold condensed type, gritty textures (noise grain), warm amber/red accent, ticket/RSVP CTAs
-- Food Truck/Street Food: bold playful type (one oversized word as hero), vibrant saturated 3-color palette, schedule/locations prominent, casual energy, menu as illustrated grid
-- Tattoo/Body Art: dark industrial (concrete texture, noise grain), portfolio gallery as hero, bold condensed type, red/ember accent, artist profiles with large work samples
-- Pet Business: playful rounded type (Quicksand/Nunito), warm friendly palette (coral/amber/sage), services with personality, gallery-focused, booking CTA
+- Bar/Music Venue: dark high-contrast, event calendar as hero or featured section, bold condensed type (Bebas Neue + Inter), gritty textures (noise grain), warm amber #D97706 accent, ticket/RSVP CTAs
+- Food Truck/Street Food: bold playful type (Syne or Outfit + Nunito Sans), vibrant WARM palette (Caribbean: #F59E0B amber + #06B6D4 teal + #EF4444 red on cream #FFFBF0; Mexican: terracotta + lime; Asian: red + gold), schedule/locations prominent, menu as illustrated grid. NEVER dark bg for Caribbean/tropical — use light or warm cream backgrounds
+- Tattoo/Body Art: dark industrial (concrete texture, noise grain), portfolio gallery as hero, bold condensed type (Oswald + Source Sans 3), red/ember #B91C1C accent, artist profiles with large work samples
+- Pet Business: playful rounded type (Quicksand + Manrope or Nunito + Lato), warm friendly palette (coral #F97316/amber/sage OR unexpected luxury: gold + ivory), services with personality, gallery-focused, booking CTA
 - Creative/Agency: asymmetric 60/40 hero, giant type (80-150px), B&W + one accent, editorial case study grid, image overlap
-- Corporate/Finance: serif headlines (Fraunces/Playfair) + clean body, navy/forest + cream, structured 12-col, editorial pull quotes, credibility-first with client logos
+- Corporate/Finance: serif headlines (Playfair Display + Source Sans 3), navy #1E3A5F or forest #166534 + cream #FAF9F7, structured 12-col, editorial pull quotes with large serif type, credibility-first with client logos. LIGHT background preferred for trustworthy feel
 - Tech/SaaS: dark + neon accent, code/terminal snippets in hero for dev tools, bento grid features, gradient mesh bg, pricing toggle table — NOT identical feature cards
 - Startup/DTC: editorial magazine layout, warm off-white (#FAF9F7), one bold accent, large product photography, storytelling sections, lifestyle-driven — NOT "How It Works" steps
 - Restaurant/Cafe: full-bleed food hero, warm earth tones (terracotta/cream/olive), menu with category tabs as centerpiece, hours+location prominent
@@ -191,7 +191,7 @@ VIBE TRANSLATION (when user gives a style adjective — map to SPECIFIC design c
 - "gritty/industrial" → dark bg, MUST include SVG noise/grain texture overlay (feTurbulence 0.03-0.05 opacity), bold condensed type (Oswald/Bebas Neue), high contrast, rough edges
 - "playful/fun" → rounded type (Quicksand/Nunito), bright saturated colors, bouncy ease-bounce transitions, large rounded corners, unexpected color combos
 - "serene/calm/minimal" → thin elegant serif, extreme whitespace (150px+ section padding), muted earth tones, slow 0.8s transitions, fewer sections (4-5 max)
-- "vibrant/bold/energetic" → saturated multi-color palette, large condensed type, dynamic angles (clip-path), fast transitions, overlapping elements
+- "vibrant/bold/energetic" → saturated multi-color palette (3+ colors), LIGHT or warm cream backgrounds (NOT dark), large condensed type, dynamic angles (clip-path), fast transitions, overlapping elements. Caribbean/tropical = amber + teal + red on cream
 - "premium/luxury" → dark + metallic accent (gold #D4AF37 or bronze #CD7F32), thin serif, generous spacing, restrained color, subtle texture
 - "edgy/dark" → high contrast on near-black bg, condensed sans, red/amber accent, texture overlays, asymmetric layout, hard angles
 
