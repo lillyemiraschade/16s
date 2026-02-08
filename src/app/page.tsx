@@ -26,6 +26,7 @@ import { useAuth } from "@/lib/auth/AuthContext";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { useToast } from "@/components/Toast";
 import { Footer } from "@/components/layout/Footer";
+import { OnboardingTour } from "@/components/onboarding/OnboardingTour";
 
 import type { SavedProjectMeta, ProjectContext, UploadedImage } from "@/lib/types";
 
@@ -859,6 +860,9 @@ function HomePageContent() {
         </motion.div>
       )}
     </AnimatePresence>
+
+    {/* Onboarding tour — triggers after first preview loads */}
+    <OnboardingTour active={!!preview.currentPreview} />
     </>
   );
 }
