@@ -92,7 +92,7 @@ export async function POST(req: NextRequest) {
 
     if (user) {
       const creditResult = await checkAndDeductCredits(user.id, 1, "voice_message");
-      if (!creditResult.success) {
+      if (!creditResult.success && creditResult.error === "insufficient_credits") {
         return new Response(
           JSON.stringify({ message: "You've used all your credits. Upgrade your plan for more.", complete: false, error: "insufficient_credits" }),
           { status: 402, headers: { "Content-Type": "application/json" } }

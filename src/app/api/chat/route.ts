@@ -142,21 +142,21 @@ export async function POST(req: Request) {
       if (user) {
         const creditResult = await checkAndDeductCredits(user.id);
         if (!creditResult.success) {
-          return new Response(
-            JSON.stringify({
-              message: `You've used all your credits for this period. Upgrade your plan for more.`,
-              error: "insufficient_credits"
-            }),
-            { status: 402, headers: { "Content-Type": "application/json" } }
-          );
+          if (creditResult.error === "insufficient_credits") {
+            return new Response(
+              JSON.stringify({
+                message: `You've used all your credits for this period. Upgrade your plan for more.`,
+                error: "insufficient_credits"
+              }),
+              { status: 402, headers: { "Content-Type": "application/json" } }
+            );
+          }
+          // DB/system error — don't block the user, log and continue
+          console.error("[Credits] Credit check failed, allowing request:", creditResult.error);
         }
       }
     } catch (creditError) {
-      console.error("[Credits] Credit check error, denying request:", creditError);
-      return new Response(
-        JSON.stringify({ message: "Unable to verify credits. Please try again." }),
-        { status: 503, headers: { "Content-Type": "application/json" } }
-      );
+      console.error("[Credits] Credit check error, allowing request:", creditError);
     }
 
     // Normalize images: combine new typed format with legacy format
