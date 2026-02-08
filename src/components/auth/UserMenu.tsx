@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { User, LogOut, Cloud, HardDrive, ChevronDown, CreditCard } from "lucide-react";
+import { User, LogOut, Cloud, HardDrive, ChevronDown, CreditCard, FolderOpen, Inbox } from "lucide-react";
 import Link from "next/link";
 import { useAuth } from "@/lib/auth/AuthContext";
 import { AuthModal } from "./AuthModal";
@@ -124,6 +124,22 @@ export function UserMenu() {
                   <span>{credits} credits left</span>
                 </Link>
               )}
+              <Link
+                href="/projects"
+                onClick={() => setShowDropdown(false)}
+                className="flex items-center gap-2 px-3 py-2 rounded-lg text-[12px] text-zinc-400 hover:bg-zinc-700/50 transition-colors"
+              >
+                <FolderOpen className="w-3.5 h-3.5" />
+                <span>Projects</span>
+              </Link>
+              <Link
+                href="/submissions"
+                onClick={() => setShowDropdown(false)}
+                className="flex items-center gap-2 px-3 py-2 rounded-lg text-[12px] text-zinc-400 hover:bg-zinc-700/50 transition-colors"
+              >
+                <Inbox className="w-3.5 h-3.5" />
+                <span>Submissions</span>
+              </Link>
               <Link
                 href="/billing"
                 onClick={() => setShowDropdown(false)}
