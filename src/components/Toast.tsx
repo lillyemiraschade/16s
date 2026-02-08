@@ -35,8 +35,8 @@ const ICONS = {
 const COLORS = {
   success: { bg: "bg-green-500/10", border: "border-green-500/20", icon: "text-green-400", text: "text-green-200" },
   error: { bg: "bg-red-500/10", border: "border-red-500/20", icon: "text-red-400", text: "text-red-200" },
-  info: { bg: "bg-blue-500/10", border: "border-blue-500/20", icon: "text-blue-400", text: "text-blue-200" },
-  warning: { bg: "bg-amber-500/10", border: "border-amber-500/20", icon: "text-amber-400", text: "text-amber-200" },
+  info: { bg: "bg-zinc-500/10", border: "border-zinc-500/20", icon: "text-zinc-400", text: "text-zinc-200" },
+  warning: { bg: "bg-zinc-500/10", border: "border-zinc-500/20", icon: "text-zinc-400", text: "text-zinc-200" },
 } as const;
 
 const DEFAULT_DURATION = 4000;

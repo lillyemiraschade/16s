@@ -87,7 +87,7 @@ export const VersionHistory = memo(function VersionHistory({
                   key={actualIdx}
                   className={`mx-2 rounded-lg transition-colors ${
                     bookmark
-                      ? "bg-amber-500/10 border border-amber-500/20"
+                      ? "bg-green-500/10 border border-green-500/20"
                       : "hover:bg-white/[0.04]"
                   }`}
                 >
@@ -97,7 +97,7 @@ export const VersionHistory = memo(function VersionHistory({
                   >
                     <div className="flex items-center gap-2">
                       <div className={`text-[13px] flex-1 ${
-                        bookmark ? "font-medium text-amber-400" : "text-zinc-400"
+                        bookmark ? "font-medium text-green-400" : "text-zinc-400"
                       }`}>
                         {bookmark ? bookmark.name : `Version ${actualIdx + 1}`}
                       </div>
@@ -107,7 +107,7 @@ export const VersionHistory = memo(function VersionHistory({
                             e.stopPropagation();
                             onRemoveBookmark(bookmark.id);
                           }}
-                          className="p-1 rounded text-amber-400/60 hover:text-red-400 hover:bg-red-500/10 transition-colors"
+                          className="p-1 rounded text-green-400/60 hover:text-red-400 hover:bg-red-500/10 transition-colors"
                           title="Remove bookmark"
                           aria-label="Remove bookmark"
                         >
@@ -117,7 +117,7 @@ export const VersionHistory = memo(function VersionHistory({
                     </div>
                     {bookmark && (
                       <div className="flex items-center gap-1.5 mt-0.5">
-                        <BookmarkCheck className="w-3 h-3 text-amber-400/60" />
+                        <BookmarkCheck className="w-3 h-3 text-green-400/60" />
                         <span className="text-[11px] text-zinc-500">Bookmarked</span>
                       </div>
                     )}

@@ -96,14 +96,14 @@ export const ChatInput = memo(function ChatInput({
 
       {/* Discussion mode indicator */}
       {discussionMode && (
-        <div className="flex items-center gap-1.5 px-4 pb-1 text-[11px] text-blue-400 font-medium">
+        <div className="flex items-center gap-1.5 px-4 pb-1 text-[11px] text-green-400 font-medium">
           <MessageSquare className="w-3 h-3" />
           Chat mode — no code generation
         </div>
       )}
 
       {/* Input container */}
-      <div className={`glass-input-glow rounded-2xl ${discussionMode ? "ring-1 ring-blue-500/20" : ""}`}>
+      <div className={`glass-input-glow rounded-2xl ${discussionMode ? "ring-1 ring-green-500/20" : ""}`}>
         <div className="flex items-end gap-2 px-4 py-3">
           <button
             onClick={onAttach}
@@ -142,7 +142,7 @@ export const ChatInput = memo(function ChatInput({
               onClick={onToggleDiscussionMode}
               className={`p-2.5 md:p-1.5 mb-0.5 rounded-lg transition-colors flex-shrink-0 ${
                 discussionMode
-                  ? "bg-blue-500/15 text-blue-400 hover:bg-blue-500/25"
+                  ? "bg-green-500/15 text-green-400 hover:bg-green-500/25"
                   : "hover:bg-white/[0.06] text-zinc-500"
               }`}
               title={discussionMode ? "Switch to build mode" : "Switch to chat-only mode"}

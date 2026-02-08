@@ -178,7 +178,7 @@ export function DeploymentHistory({
                             <button
                               onClick={() => handleRevert(deployment)}
                               disabled={reverting === deployment.id}
-                              className="flex items-center gap-1 px-2 py-1 text-[11px] text-amber-500 hover:text-amber-400 bg-amber-500/5 hover:bg-amber-500/10 rounded transition-colors disabled:opacity-50"
+                              className="flex items-center gap-1 px-2 py-1 text-[11px] text-zinc-400 hover:text-zinc-200 bg-white/[0.04] hover:bg-white/[0.08] rounded transition-colors disabled:opacity-50"
                             >
                               {reverting === deployment.id ? (
                                 <Loader2 className="w-3 h-3 animate-spin" />

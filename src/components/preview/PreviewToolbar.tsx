@@ -333,7 +333,7 @@ export const PreviewToolbar = memo(function PreviewToolbar({
             <button
               onClick={() => onCodeModeChange(codeMode === "html" ? "react" : "html")}
               className={`p-1.5 rounded-lg transition-all duration-150 ${
-                codeMode === "react" ? "text-blue-400 bg-blue-500/10" : "text-zinc-500 hover:text-zinc-300 hover:bg-white/[0.04]"
+                codeMode === "react" ? "text-green-400 bg-green-500/10" : "text-zinc-500 hover:text-zinc-300 hover:bg-white/[0.04]"
               }`}
               title={`${codeMode === "html" ? "HTML" : "React"} mode`}
               aria-label={`Switch to ${codeMode === "html" ? "React" : "HTML"} mode`}

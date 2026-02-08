@@ -28,13 +28,13 @@ interface QualityCardProps {
 
 function scoreColor(score: number): string {
   if (score >= 90) return "text-green-400";
-  if (score >= 70) return "text-amber-400";
+  if (score >= 70) return "text-zinc-400";
   return "text-red-400";
 }
 
 function scoreBg(score: number): string {
   if (score >= 90) return "bg-green-500/10";
-  if (score >= 70) return "bg-amber-500/10";
+  if (score >= 70) return "bg-zinc-500/10";
   return "bg-red-500/10";
 }
 
@@ -150,7 +150,7 @@ export const QualityCard = memo(function QualityCard({ html }: QualityCardProps)
                       {issue.impact === "critical" || issue.impact === "serious" ? (
                         <XCircle className="w-3 h-3 text-red-400 mt-0.5 flex-shrink-0" />
                       ) : (
-                        <AlertTriangle className="w-3 h-3 text-amber-400 mt-0.5 flex-shrink-0" />
+                        <AlertTriangle className="w-3 h-3 text-zinc-400 mt-0.5 flex-shrink-0" />
                       )}
                       <div>
                         <span className="text-[11px] text-zinc-300">{issue.description}</span>
@@ -205,7 +205,7 @@ export const QualityCard = memo(function QualityCard({ html }: QualityCardProps)
                     {hint.severity === "good" ? (
                       <CheckCircle className="w-3 h-3 text-green-400 mt-0.5 flex-shrink-0" />
                     ) : hint.severity === "warning" ? (
-                      <AlertTriangle className="w-3 h-3 text-amber-400 mt-0.5 flex-shrink-0" />
+                      <AlertTriangle className="w-3 h-3 text-zinc-400 mt-0.5 flex-shrink-0" />
                     ) : (
                       <XCircle className="w-3 h-3 text-red-400 mt-0.5 flex-shrink-0" />
                     )}

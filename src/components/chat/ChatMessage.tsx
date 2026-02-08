@@ -181,18 +181,18 @@ export const ChatMessage = memo(function ChatMessage({
         {/* QA Report */}
         {message.qaReport && (
           <div className={`mt-3 p-4 rounded-xl glass-matte ${
-            message.qaReport.status === "all_good" ? "border-green-500/15" : "border-amber-500/15"
+            message.qaReport.status === "all_good" ? "border-green-500/15" : "border-zinc-500/15"
           }`}>
             <div className="flex items-center gap-2 mb-3">
               <div className={`w-6 h-6 rounded-lg flex items-center justify-center ${
-                message.qaReport.status === "all_good" ? "bg-green-500/15" : "bg-amber-500/15"
+                message.qaReport.status === "all_good" ? "bg-green-500/15" : "bg-zinc-500/15"
               }`}>
                 {message.qaReport.status === "all_good"
                   ? <CheckCircle className="w-3.5 h-3.5 text-green-400" />
-                  : <AlertCircle className="w-3.5 h-3.5 text-amber-400" />}
+                  : <AlertCircle className="w-3.5 h-3.5 text-zinc-400" />}
               </div>
               <span className={`text-[12px] font-semibold uppercase tracking-wider ${
-                message.qaReport.status === "all_good" ? "text-green-400/70" : "text-amber-400/70"
+                message.qaReport.status === "all_good" ? "text-green-400/70" : "text-zinc-400/70"
               }`}>
                 {message.qaReport.status === "all_good" ? "All Checks Passed" : "Review Notes"}
               </span>
@@ -202,7 +202,7 @@ export const ChatMessage = memo(function ChatMessage({
                 <span key={idx} className={`flex items-center gap-1 px-2.5 py-1 text-[11px] font-medium rounded-md border ${
                   check.passed
                     ? "bg-green-500/8 border-green-500/15 text-green-300/80"
-                    : "bg-amber-500/8 border-amber-500/15 text-amber-300/80"
+                    : "bg-zinc-500/8 border-zinc-500/15 text-zinc-300/80"
                 }`}>
                   {check.passed ? <CheckCircle className="w-2.5 h-2.5" /> : <AlertCircle className="w-2.5 h-2.5" />}
                   {check.name}

@@ -59,7 +59,7 @@ export const ImageUploadBar = memo(function ImageUploadBar({
           <button
             onClick={() => handleRemoveBackground(idx)}
             disabled={removingBgIndex !== null}
-            className={`absolute -top-1.5 -left-1.5 w-5 h-5 bg-violet-600 hover:bg-violet-500 disabled:bg-zinc-700 rounded-full flex items-center justify-center transition-all duration-150 ring-1 ring-white/[0.06] ${
+            className={`absolute -top-1.5 -left-1.5 w-5 h-5 bg-green-600 hover:bg-green-500 disabled:bg-zinc-700 rounded-full flex items-center justify-center transition-all duration-150 ring-1 ring-white/[0.06] ${
               removingBgIndex === idx ? "opacity-100" : "opacity-50 group-hover:opacity-100"
             }`}
             aria-label="Remove image background"
