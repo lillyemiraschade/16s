@@ -55,7 +55,13 @@ export async function middleware(request: NextRequest) {
     return response;
   }
 
-  const response = await updateSession(request);
+  let response: NextResponse;
+  try {
+    response = await updateSession(request);
+  } catch {
+    // Supabase unreachable — pass through without session
+    response = NextResponse.next();
+  }
   // Add CORS headers for API routes (/api/forms handles its own)
   if (pathname.startsWith("/api/") && !pathname.startsWith("/api/forms") && origin && isAllowedOrigin(origin)) {
     response.headers.set("Access-Control-Allow-Origin", origin);
