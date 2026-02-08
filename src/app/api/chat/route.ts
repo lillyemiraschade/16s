@@ -3,6 +3,7 @@ import { MessageParam, ImageBlockParam, TextBlockParam } from "@anthropic-ai/sdk
 import { z } from "zod";
 import { createClient } from "@/lib/supabase/server";
 import { createRateLimiter } from "@/lib/rate-limit";
+import { checkAndDeductCredits } from "@/lib/credits";
 import { SYSTEM_PROMPT, REACT_ADDENDUM } from "@/lib/ai/prompts";
 import { parseAIResponse } from "@/lib/ai/parse-response";
 import type { ChatAPIResponse } from "@/lib/types";
@@ -74,74 +75,7 @@ function getUserFriendlyError(errMsg: string): { message: string; statusCode: nu
   return { message: "Let me try that again...", statusCode: 500 };
 }
 
-// Credit management for authenticated users
-// [2026-02-05] Fixed TOCTOU race condition: uses optimistic concurrency control to prevent double-spending
-async function checkAndDeductCredits(userId: string, creditsToDeduct: number = 1, retryCount: number = 0): Promise<{ success: boolean; remaining?: number; error?: string }> {
-  try {
-    const supabase = await createClient();
-
-    // Get current subscription
-    const { data: subscription, error: fetchError } = await supabase
-      .from("subscriptions")
-      .select("credits_remaining")
-      .eq("user_id", userId)
-      .single();
-
-    if (fetchError || !subscription) {
-      // No subscription found - allow request but don't track (free tier behavior)
-      console.debug("[Credits] No subscription found for user, allowing request");
-      return { success: true };
-    }
-
-    if (subscription.credits_remaining < creditsToDeduct) {
-      return { success: false, remaining: subscription.credits_remaining, error: "Insufficient credits" };
-    }
-
-    // Deduct credits with optimistic concurrency control:
-    // Only update if credits_remaining still matches what we read (prevents double-spending)
-    const { data: updated, error: updateError } = await supabase
-      .from("subscriptions")
-      .update({ credits_remaining: subscription.credits_remaining - creditsToDeduct })
-      .eq("user_id", userId)
-      .eq("credits_remaining", subscription.credits_remaining)
-      .select("credits_remaining");
-
-    if (updateError) {
-      console.debug("[Credits] Failed to deduct credits:", updateError);
-      // Still allow request if deduction fails - don't block users
-      return { success: true, remaining: subscription.credits_remaining };
-    }
-
-    // If no rows were updated, another request modified credits concurrently — retry once
-    if (!updated || updated.length === 0) {
-      if (retryCount < 1) {
-        console.debug("[Credits] Concurrent modification detected, retrying...");
-        return checkAndDeductCredits(userId, creditsToDeduct, retryCount + 1);
-      }
-      // After retry, allow the request but log the issue
-      console.debug("[Credits] Concurrent modification persisted after retry, allowing request");
-      return { success: true };
-    }
-
-    // Log usage (non-blocking — don't await to avoid slowing the response)
-    Promise.resolve(
-      supabase.from("usage").insert({
-        user_id: userId,
-        action: "chat_message",
-        credits_used: creditsToDeduct,
-        metadata: { timestamp: new Date().toISOString() },
-      })
-    ).then(({ error }) => {
-      if (error) console.debug("[Credits] Failed to log usage:", error);
-    }).catch(() => {});
-
-    return { success: true, remaining: updated[0].credits_remaining };
-  } catch (err) {
-    console.debug("[Credits] Error checking credits:", err);
-    // Allow request on error - don't block users due to credit check failures
-    return { success: true };
-  }
-}
+// Credit management extracted to src/lib/credits.ts (shared with voice route)
 
 // Prompt constants extracted to src/lib/ai/prompts.ts
 

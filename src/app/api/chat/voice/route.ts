@@ -3,6 +3,8 @@ import { MessageParam } from "@anthropic-ai/sdk/resources/messages";
 import { z } from "zod";
 import { NextRequest } from "next/server";
 import { createRateLimiter } from "@/lib/rate-limit";
+import { createClient } from "@/lib/supabase/server";
+import { checkAndDeductCredits } from "@/lib/credits";
 
 export const runtime = "nodejs";
 export const maxDuration = 60;
@@ -84,6 +86,20 @@ export async function POST(req: NextRequest) {
   }
 
   try {
+    // Auth check — voice calls use Sonnet and should deduct credits
+    const supabase = await createClient();
+    const { data: { user } } = await supabase.auth.getUser();
+
+    if (user) {
+      const creditResult = await checkAndDeductCredits(user.id, 1, "voice_message");
+      if (!creditResult.success) {
+        return new Response(
+          JSON.stringify({ message: "You've used all your credits. Upgrade your plan for more.", complete: false, error: "insufficient_credits" }),
+          { status: 402, headers: { "Content-Type": "application/json" } }
+        );
+      }
+    }
+
     const raw = await req.json();
     const parsed = VoiceRequestSchema.safeParse(raw);
 
