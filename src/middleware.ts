@@ -7,6 +7,10 @@ const ALLOWED_ORIGINS = [
   APP_URL,
   "https://www.try16s.app",
 ];
+// Vercel sets VERCEL_URL on all deployments (preview + production)
+if (process.env.VERCEL_URL) {
+  ALLOWED_ORIGINS.push(`https://${process.env.VERCEL_URL}`);
+}
 if (process.env.NODE_ENV === "development") {
   ALLOWED_ORIGINS.push("http://localhost:3000");
 }
