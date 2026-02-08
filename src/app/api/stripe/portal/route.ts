@@ -44,7 +44,8 @@ export async function POST(request: NextRequest) {
 
     return apiSuccess({ url: session.url });
   } catch (error) {
-    console.debug("Portal error:", error);
-    return apiError("Failed to create portal session", 500);
+    console.error("[Portal] Error:", error);
+    const message = error instanceof Error ? error.message : "Failed to create portal session";
+    return apiError(message, 500);
   }
 }
