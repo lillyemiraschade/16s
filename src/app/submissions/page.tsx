@@ -3,7 +3,10 @@
 import { useState, useEffect, useCallback } from "react";
 import { useAuth } from "@/lib/auth/AuthContext";
 import { useRouter } from "next/navigation";
-import { Mail, ChevronDown, ChevronRight, Eye, ArrowLeft, Inbox } from "lucide-react";
+import { Mail, ChevronDown, ChevronRight, Eye, Inbox } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
+import { UserMenu } from "@/components/auth/UserMenu";
 import { Footer } from "@/components/layout/Footer";
 
 interface FormSubmission {
@@ -74,21 +77,27 @@ export default function SubmissionsPage() {
 
   return (
     <div className="min-h-screen bg-[#0a0a0b] text-zinc-100">
-      <div className="max-w-4xl mx-auto px-6 py-8">
-        {/* Header */}
-        <div className="flex items-center gap-4 mb-8">
-          <button
-            onClick={() => router.push("/")}
-            className="p-2 rounded-lg text-zinc-500 hover:text-zinc-300 hover:bg-white/[0.04] transition-colors"
-            aria-label="Back to home"
-          >
-            <ArrowLeft className="w-5 h-5" />
-          </button>
-          <div>
-            <h1 className="text-2xl font-semibold">Form Submissions</h1>
-            <p className="text-sm text-zinc-500 mt-1">Messages from your deployed site contact forms</p>
-          </div>
+      {/* Header */}
+      <header className="h-14 md:h-[60px] border-b border-white/[0.04] px-4 md:px-6 flex items-center justify-between">
+        <div className="flex items-center gap-4 md:gap-8">
+          <Link href="/" className="flex items-center gap-2">
+            <Image src="/logo.png" alt="16s" width={28} height={28} className="object-contain" />
+          </Link>
+          <nav className="flex items-center gap-1">
+            <Link href="/" className="px-2 md:px-3 py-1.5 text-[12px] md:text-[13px] font-medium text-zinc-400 hover:text-zinc-200 rounded-lg transition-colors">
+              Home
+            </Link>
+            <Link href="/submissions" className="px-2 md:px-3 py-1.5 text-[12px] md:text-[13px] font-medium text-zinc-100 bg-white/[0.06] rounded-lg">
+              Submissions
+            </Link>
+          </nav>
         </div>
+        <UserMenu />
+      </header>
+
+      <div className="max-w-4xl mx-auto px-6 py-8">
+        <h1 className="text-xl md:text-2xl font-semibold text-zinc-100 mb-2">Form Submissions</h1>
+        <p className="text-[14px] text-zinc-500 mb-8">Messages from your deployed site contact forms</p>
 
         {loading ? (
           <div className="flex items-center justify-center py-20">
