@@ -21,13 +21,36 @@ export async function checkAndDeductCredits(
       .single();
 
     if (fetchError || !subscription) {
-      // No subscription found — allow request (free tier behavior)
-      console.debug("[Credits] No subscription found for user, allowing request");
-      return { success: true };
+      console.debug("[Credits] No subscription found, creating default...");
+      try {
+        const { data: created, error: insertError } = await supabase
+          .from("subscriptions")
+          .upsert({
+            user_id: userId,
+            plan: "free",
+            status: "active",
+            credits_remaining: 50,
+          }, { onConflict: "user_id" })
+          .select("credits_remaining")
+          .single();
+
+        if (insertError || !created) {
+          console.debug("[Credits] Failed to create subscription:", insertError);
+          return { success: true }; // still fail-open on error
+        }
+
+        if (created.credits_remaining < creditsToDeduct) {
+          return { success: false, remaining: created.credits_remaining, error: "insufficient_credits" };
+        }
+
+        return checkAndDeductCredits(userId, creditsToDeduct, action, retryCount);
+      } catch {
+        return { success: true }; // fail-open
+      }
     }
 
     if (subscription.credits_remaining < creditsToDeduct) {
-      return { success: false, remaining: subscription.credits_remaining, error: "Insufficient credits" };
+      return { success: false, remaining: subscription.credits_remaining, error: "insufficient_credits" };
     }
 
     // Deduct with optimistic concurrency control
