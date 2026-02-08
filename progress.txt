@@ -1,50 +1,11 @@
-# Round 15: Audit & Billing Polish
+# Round 15: Audit, Legal & Billing Polish
 
-## Part 1 — Critical Bugs
-- [x] 1. Fix domain: try16s.app in layout, middleware, Stripe routes, form handler
-- [x] 2. Fix CORS: allow /api/forms from any origin (deployed sites)
-- [x] 3. Deduplicate rate limiter: shared module → all 7 routes (already done — 10 routes use shared createRateLimiter)
-- [x] 4. Update .env.example with all R13+R14 env vars
-
-## Part 2 — Billing System
-- [x] 5. Create /billing page (plan card, comparison, usage, success/cancel handling)
-- [x] 6. Upgrade prompts (insufficient credits → upgrade CTA, credits in UserMenu)
-- [x] 7. Credit deduction audit (missing subscription fallback, voice credits, error codes)
-- [x] 8. Webhook hardening (mid-cycle upgrade credits)
-
-## Part 3 — Polish
-- [x] 9. Navigation links (UserMenu → billing/submissions/projects, header → templates)
-- [x] 10. Error states audit
-- [x] 11. Final verification pass
+## Fixes
+- [ ] 1. Stale domains (Stripe localhost fallbacks, middleware 16s.dev)
+- [ ] 2. Credits: missing subscription → create on the fly
+- [ ] 3. Privacy Policy + TOS pages + Footer component + AuthModal legal text
+- [ ] 4. Share page legal links in header bar
+- [ ] 5. Billing page polish (success/cancel banners, out-of-credits CTA)
+- [ ] 6. Navigation verification
 
 ## Log
-- [x] P0-0: Fixed streaming blank messages — immediate assistant message creation, auto-restore race condition guard, no-rethrow error handler
-- [x] P0-1: GitHub Actions CI — already existed (.github/workflows/ci.yml with check + e2e jobs)
-- [x] P0-2: check script — already existed in package.json
-- [x] P1: Playwright E2E — already existed (5 smoke tests, all passing)
-- [x] P2: Iframe security — already implemented (sandbox=allow-scripts allow-popups, CSP injected, postMessage type-prefix validation)
-- [x] P3: Error monitoring — already implemented (error-reporter.ts → Sentry/endpoint/console, GlobalErrorHandler, ErrorBoundary)
-- [x] P4: Deferred items — autosave indicator, deploy flow, webhook tests all already implemented
-
-## Verification (R11-2)
-- Homepage: ✓ loads, welcome screen, idea pills, templates section
-- Chat: ✓ type prompt → streaming response with no blank messages
-- Preview: ✓ iframe renders HTML from response
-- Projects: ✓ /projects page loads
-- Build: ✓ npm run build passes
-- TypeScript: ✓ tsc --noEmit clean
-- Unit tests: ✓ 30 tests pass across 5 test files
-- E2E tests: ✓ 5 Playwright tests pass (including streaming test)
-- CI config: ✓ .github/workflows/ci.yml with check + e2e jobs
-
-## Verification (R15 Final)
-- Build: ✓ npm run build passes (billing page at 3.88KB)
-- TypeScript: ✓ tsc --noEmit clean
-- Unit tests: ✓ 30 tests pass across 5 test files
-- Domains: ✓ all hardcoded URLs use NEXT_PUBLIC_APP_URL
-- CORS: ✓ /api/forms exempt from strict origin check
-- Billing: ✓ /billing page renders with plan cards + usage bar
-- Credits: ✓ shared module, voice route metered
-- Webhook: ✓ mid-cycle upgrade preserves unused credits
-- Navigation: ✓ UserMenu has projects/submissions/billing, header has templates
-- Error states: ✓ submissions/projects/billing handle fetch failures
