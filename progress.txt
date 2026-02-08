@@ -76,3 +76,58 @@ Patch: Added "Why Choose Us" and "Learn more →" to HARD-BANNED, added CARD ALT
 - Added CARD ALTERNATIVES section: price list, editorial blocks, bento grid, comparison table, timeline, accordion
 - Strengthened COPY QUALITY: hero headlines MUST be 2-5 words, good/bad examples, specific business details
 - Build + tsc pass ✓
+
+## Cycle 4: Still Point (Yoga Studio)
+Score: 30/40 ✓ (major improvement from R17-1)
+```
+LAYOUT:       3/5 — 9 sections with page routing, good variety. But 16 card elements = still too many identical cards
+TYPOGRAPHY:   5/5 — Cormorant Garamond + DM Sans PERFECT for yoga (new prompt direction worked!)
+COLOR:        4/5 — Sage #7C9082 on warm off-white #FAFAF8 = thoughtful, not obvious green
+COPY:         3/5 — "Find your still point" clever. But "Our Offerings" heading is generic
+FUNCTIONALITY: 4/5 — Page routing, class descriptions, noise texture
+UNIQUENESS:   4/5 — Clearly different from other sites. Sage+serif+minimal = distinctly yoga
+POLISH:       3/5 — Noise texture (new!), 7 bg treatments. No theme toggle
+OVERALL:      4/5 — Genuinely looks like a thoughtful yoga studio
+```
+Improvements: Font choice now industry-specific, color palette more thoughtful, noise texture present
+Failures: Too many identical cards, no theme toggle, "Our Offerings" generic heading
+
+## Cycle 5: The Rusty Spur (Honky-Tonk Bar)
+Score: 30/40 ✓
+```
+LAYOUT:       3/5 — Only 4 sections (could use more). No page routing. Events featured well
+TYPOGRAPHY:   4/5 — Bebas Neue is strong. DM Sans body getting repetitive across sites
+COLOR:        5/5 — Warm dark #1A1510, amber #D97706, cream #F4F1ED = PERFECT Nashville palette
+COPY:         4/5 — "THE RUSTY SPUR" as giant hero name. "Boot Scootin' Night" = authentic
+FUNCTIONALITY: 3/5 — Events listed. Missing: drink menu, ticket/RSVP CTAs
+UNIQUENESS:   4/5 — Very different from other sites. Warm dark palette distinctly Nashville
+POLISH:       3/5 — 6 bg treatments. No noise/grain (should have for "gritty"), no theme toggle
+OVERALL:      4/5 — Feels like a real bar website. The palette sells it
+```
+Improvements: Color palette now warm/authentic instead of generic dark, hero uses just the name, event names are fun/specific
+Failures: No noise texture despite "gritty" vibe, DM Sans body repeated, no theme toggle
+
+## Cycle 6: Sentinel (AI SaaS)
+Score: 27/40
+```
+LAYOUT:       3/5 — "How It Works" nav section STILL appears despite hard ban. 6 identical feature cards
+TYPOGRAPHY:   5/5 — JetBrains Mono + Space Grotesk PERFECT for developer tools (new prompt worked!)
+COLOR:        4/5 — Dark + green #10B981. Appropriate but expected for dev tools
+COPY:         3/5 — "Ship code with [confidence]" punchy. But "How It Works" persists in nav
+FUNCTIONALITY: 3/5 — Pricing section. Missing: live demo, code examples
+UNIQUENESS:   3/5 — Dev-focused feel right but SaaS template structure remains
+POLISH:       3/5 — 7 bg treatments. UTF-8 checkmark instead of SVG, no theme toggle
+OVERALL:      3/5 — Good dev aesthetic but banned patterns still showing through
+```
+Improvements: JetBrains Mono + Space Grotesk for dev tools, terminal-style aesthetic mentioned in message
+Failures: "How It Works" STILL appears (ban not strong enough), 6 identical feature cards, no theme toggle
+
+## R17-2 Patch Summary
+- Rewrote PRE-OUTPUT QUALITY CHECK as FINAL GATE with explicit checkbox scan
+- Added 10-item checklist the model must scan before outputting (How It Works, card grids, theme toggle, etc.)
+- Required theme toggle explicitly in final gate checklist
+- Required noise/grain texture when vibe is gritty/vintage/industrial
+- Expanded font list with more body font variety (Nunito Sans, Work Sans, Lato)
+- Added rule: NEVER use same body font on more than one site in a session
+- Strengthened "gritty" vibe translation to MUST include noise texture
+- Build + tsc pass ✓

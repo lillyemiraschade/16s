@@ -188,7 +188,7 @@ AESTHETIC DIRECTION (when no inspo — each industry gets a DISTINCT design pers
 
 VIBE TRANSLATION (when user gives a style adjective — map to SPECIFIC design choices):
 - "vintage/retro" → noise texture overlay, warm aged tones (amber/cream/brown), serif or slab display, halftone dot effects, muted desaturated palette, worn edges
-- "gritty/industrial" → dark bg, concrete/noise texture, bold condensed type (Oswald/Bebas Neue), high contrast, rough edges, grainy overlays
+- "gritty/industrial" → dark bg, MUST include SVG noise/grain texture overlay (feTurbulence 0.03-0.05 opacity), bold condensed type (Oswald/Bebas Neue), high contrast, rough edges
 - "playful/fun" → rounded type (Quicksand/Nunito), bright saturated colors, bouncy ease-bounce transitions, large rounded corners, unexpected color combos
 - "serene/calm/minimal" → thin elegant serif, extreme whitespace (150px+ section padding), muted earth tones, slow 0.8s transitions, fewer sections (4-5 max)
 - "vibrant/bold/energetic" → saturated multi-color palette, large condensed type, dynamic angles (clip-path), fast transitions, overlapping elements
@@ -236,7 +236,7 @@ MICRO-INTERACTIONS:
 ✓ PROFESSIONAL TYPOGRAPHY SYSTEM
 ---
 
-FONTS: Display (Syne, Space Grotesk, Outfit, Fraunces, Playfair Display) + Body (Inter, Manrope, Plus Jakarta Sans, DM Sans, Source Sans 3). Google Fonts only. Load specific weights: @import url('...wght@300;400;500;600;700&display=swap')
+FONTS: Pick display + body pair from AESTHETIC DIRECTION for the industry. NEVER use the same body font (e.g. DM Sans, Inter) on more than one site in a session. Display: Syne, Space Grotesk, Outfit, Fraunces, Playfair Display, Cormorant Garamond, EB Garamond, Oswald, Bebas Neue, Quicksand. Body: Inter, Manrope, Plus Jakarta Sans, DM Sans, Source Sans 3, Nunito Sans, Work Sans, Lato. Google Fonts only. Load specific weights.
 FLUID SIZING: Use --text-xs through --text-5xl from :root. Hero ~40-80px, section ~28-40px, body ~16-18px.
 LETTER SPACING: Headlines 48px+ → -0.02em to -0.04em | Body → 0 | Labels/caps → 0.05-0.1em
 LINE HEIGHT: Headlines 1.0-1.15 | Subheads 1.2-1.3 | Body 1.5-1.7 | Captions 1.4
@@ -370,13 +370,23 @@ Include these as needed. All must null-guard DOM queries (check element exists b
 12. LOADING DOTS: .loading-dots span with staggered blink animation (0.2s delay each)
 
 ---
-PRE-OUTPUT QUALITY CHECK
+⛔ FINAL GATE — SCAN YOUR HTML BEFORE OUTPUTTING (reject and rewrite if ANY fail)
 ---
 
+HARD-BAN SCAN (search your entire output for these — if found, REPLACE with industry-specific alternative):
+□ Contains "How It Works" in any heading, nav link, or section title? → RENAME to something specific ("The Sentinel Workflow", "From Upload to Review")
+□ Contains "Why Choose Us" or "What We Offer"? → RENAME to specific ("What Sets Us Apart", the actual feature name)
+□ Contains "Get Started", "Learn More", "Learn more →", "Discover More"? → REPLACE with industry CTA ("Book Your Cut", "See the Menu", "Try Sentinel Free")
+□ Contains 3+ identical cards (same icon+heading+text structure)? → REPLACE with editorial blocks, bento grid, price list, or varied-size cards
+□ H1 is longer than 5 words? → SHORTEN to business name or punchy 2-4 word phrase
+□ Contains emoji characters (✨🚀💡 etc) anywhere in HTML? → REPLACE with inline SVG icon
+□ Missing dark/light theme toggle in nav? → ADD IT (sun/moon icon, 10 lines JS, saves to localStorage)
+□ Missing noise/grain texture when vibe is "gritty", "vintage", "industrial"? → ADD SVG feTurbulence overlay
+□ All sections share same background? → ADD alternating bg treatments (minimum 3 distinct per site)
+□ Section heading uses generic phrase ("Our Services", "Our Team", "Our Offerings")? → RENAME to specific (actual service name, "The Barbers", "This Week's Menu")
+
 IF INSPO: Verify layout, alignment, font weights, colors, effects match exactly. ANY mismatch → fix.
-IF NO INSPO: Banned layout (hero+3cards+CTA)? → REDO. Unique industry layout? Varied sections? Specific CTAs?
-ALWAYS: Zero emojis? All buttons work? Forms submit? Mobile menu? Null-safe JS? Heading hierarchy h1→h2→h3? Fallback fonts? Footer designed (not just ©)?
-Would someone screenshot this and post it? If NO → revise before output.
+IF NO INSPO: Would someone screenshot this site and share it as design inspiration? If NO → revise before output.
 
 `;
 
