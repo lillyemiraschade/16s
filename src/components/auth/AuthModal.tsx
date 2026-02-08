@@ -261,6 +261,11 @@ export function AuthModal({ isOpen, onClose, title, subtitle }: AuthModalProps) 
                   {mode === "signin" ? "Sign up" : "Sign in"}
                 </button>
               </p>
+              <p className="text-[10px] text-zinc-500 text-center mt-3">
+                By signing up, you agree to our{' '}
+                <a href="/terms" className="underline hover:text-zinc-300">Terms</a> and{' '}
+                <a href="/privacy" className="underline hover:text-zinc-300">Privacy Policy</a>.
+              </p>
             </div>
             </div>
           </motion.div>

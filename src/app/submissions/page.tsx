@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback } from "react";
 import { useAuth } from "@/lib/auth/AuthContext";
 import { useRouter } from "next/navigation";
 import { Mail, ChevronDown, ChevronRight, Eye, ArrowLeft, Inbox } from "lucide-react";
+import { Footer } from "@/components/layout/Footer";
 
 interface FormSubmission {
   id: string;
@@ -183,6 +184,7 @@ export default function SubmissionsPage() {
           </div>
         )}
       </div>
+      <Footer />
     </div>
   );
 }

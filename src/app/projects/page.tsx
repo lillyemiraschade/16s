@@ -11,6 +11,7 @@ import { useProjects } from "@/lib/hooks/useProjects";
 import { UserMenu } from "@/components/auth/UserMenu";
 import { AuthModal } from "@/components/auth/AuthModal";
 import type { SavedProjectMeta } from "@/lib/types";
+import { Footer } from "@/components/layout/Footer";
 
 type SortOption = "recent" | "name" | "oldest";
 
@@ -308,6 +309,7 @@ export default function ProjectsPage() {
         )}
       </main>
 
+      <Footer />
       <AuthModal isOpen={showAuthModal} onClose={() => setShowAuthModal(false)} />
     </div>
   );

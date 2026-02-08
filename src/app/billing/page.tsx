@@ -9,6 +9,7 @@ import { useAuth } from "@/lib/auth/AuthContext";
 import { UserMenu } from "@/components/auth/UserMenu";
 import { AuthModal } from "@/components/auth/AuthModal";
 import { createClient } from "@/lib/supabase/client";
+import { Footer } from "@/components/layout/Footer";
 
 const PLANS = {
   free: {
@@ -362,6 +363,7 @@ function BillingPage() {
         )}
       </main>
 
+      <Footer />
       <AuthModal isOpen={showAuthModal} onClose={() => setShowAuthModal(false)} />
     </div>
   );

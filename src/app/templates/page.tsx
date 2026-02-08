@@ -8,6 +8,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { TEMPLATES, INDUSTRIES, type Industry } from "@/lib/templates";
 import { UserMenu } from "@/components/auth/UserMenu";
+import { Footer } from "@/components/layout/Footer";
 
 export default function TemplatesPage() {
   const router = useRouter();
@@ -120,6 +121,7 @@ export default function TemplatesPage() {
           ))}
         </div>
       </main>
+      <Footer />
     </div>
   );
 }
