@@ -45,7 +45,6 @@ export async function POST(request: NextRequest) {
     return apiSuccess({ url: session.url });
   } catch (error) {
     console.error("[Portal] Error:", error);
-    const message = error instanceof Error ? error.message : "Failed to create portal session";
-    return apiError(message, 500);
+    return apiError("Unable to connect to payment provider. Please try again.", 500);
   }
 }
