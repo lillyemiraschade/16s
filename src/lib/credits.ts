@@ -83,10 +83,18 @@ export async function checkAndDeductCredits(
         }
       }
     } else {
-      // Legacy row with no period end — backfill it
+      // Legacy row with no period end — reset credits and start a fresh period
+      const planConfig = PLANS[subscription.plan as keyof typeof PLANS] || PLANS.free;
+      creditsRemaining = planConfig.credits;
+
+      console.debug(`[Credits] Backfilling period for user ${userId}, resetting to ${creditsRemaining} credits`);
+
       await supabase
         .from("subscriptions")
-        .update({ current_period_end: new Date(now + PERIOD_MS).toISOString() })
+        .update({
+          credits_remaining: creditsRemaining,
+          current_period_end: new Date(now + PERIOD_MS).toISOString(),
+        })
         .eq("user_id", userId);
     }
 
