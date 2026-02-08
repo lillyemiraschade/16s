@@ -1,4 +1,5 @@
 export interface UploadedImage {
+  id?: string; // stable identifier for matching across async ops (absent in legacy data)
   data: string; // base64 data URL (for thumbnails/AI vision)
   url?: string; // Vercel Blob URL (for embedding in HTML)
   type: "inspo" | "content";

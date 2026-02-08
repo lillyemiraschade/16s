@@ -13,6 +13,7 @@ export const maxDuration = 300; // 5 minutes max for Pro plans
 
 // Image type for typed uploads
 const UploadedImageSchema = z.object({
+  id: z.string().optional(), // stable ID (may be absent for legacy clients)
   data: z.string(), // base64 data URL
   url: z.string().optional(), // Vercel Blob URL for direct embedding
   type: z.enum(["inspo", "content"]),
