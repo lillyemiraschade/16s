@@ -108,13 +108,16 @@ export async function POST(request: NextRequest) {
       // Don't fail the request, deployment still succeeded
     }
 
-    // Send deploy notification email (fire-and-forget)
+    // Send deploy notification email (fire-and-forget with logging)
     try {
       const { sendDeployEmail } = await import("@/lib/email");
       if (user.email) {
-        sendDeployEmail(user.email, projectName || "Your site", `https://${deployment.url}`);
+        sendDeployEmail(user.email, projectName || "Your site", `https://${deployment.url}`)
+          .catch((err: unknown) => console.error("[Deploy] Email send failed:", err));
       }
-    } catch {}
+    } catch (emailErr) {
+      console.error("[Deploy] Email import failed:", emailErr);
+    }
 
     return apiSuccess({
       success: true,
@@ -164,7 +167,7 @@ function injectFormHandler(html: string, projectId: string): string {
 document.querySelectorAll('form').forEach(f=>{
 f.addEventListener('submit',async e=>{
 e.preventDefault();
-const btn=f.querySelector('[type="submit"]')||f.querySelector('button:last-of-type');
+const btn=f.querySelector('[type="submit"]')||f.querySelector('button:not([type="button"])');
 const orig=btn?btn.textContent:'';
 if(btn){btn.disabled=true;btn.textContent='Sending...';}
 try{

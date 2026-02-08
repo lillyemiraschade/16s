@@ -47,8 +47,8 @@ export async function POST(req: NextRequest) {
       return apiError("Image too large. Maximum 5MB.", 413);
     }
 
-    // Extract base64 data from data URL
-    const matches = imageData.match(/^data:(image\/[a-zA-Z]+);base64,(.+)$/);
+    // Extract base64 data from data URL (supports subtypes like svg+xml, jpeg, png, webp)
+    const matches = imageData.match(/^data:(image\/[a-zA-Z0-9.+_-]+);base64,(.+)$/);
     if (!matches) {
       return apiError("Invalid image format", 400);
     }
@@ -57,8 +57,9 @@ export async function POST(req: NextRequest) {
     const base64Data = matches[2];
     const imageBuffer = Buffer.from(base64Data, "base64");
 
-    // Determine file extension from mime type
-    const ext = mimeType.split("/")[1] || "png";
+    // Determine file extension from mime type (handle subtypes like svg+xml → svg)
+    const rawExt = mimeType.split("/")[1] || "png";
+    const ext = rawExt.split("+")[0]; // svg+xml → svg
     const uniqueFilename = `images/${filename || Date.now()}-${Math.random().toString(36).slice(2, 8)}.${ext}`;
 
     console.debug(`[Blob] Uploading ${uniqueFilename} (${imageBuffer.length} bytes)`);
@@ -74,7 +75,6 @@ export async function POST(req: NextRequest) {
     return apiSuccess({ url });
   } catch (error) {
     console.error("Upload error:", error);
-    const errorMessage = error instanceof Error ? error.message : "Unknown error";
-    return apiError(`Failed to upload: ${errorMessage}`, 500);
+    return apiError("Upload failed. Please try again.", 500);
   }
 }

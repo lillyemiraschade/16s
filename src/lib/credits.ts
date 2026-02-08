@@ -3,7 +3,7 @@ import { createClient } from "@/lib/supabase/server";
 /**
  * Check and deduct credits for an authenticated user.
  * Uses optimistic concurrency control to prevent double-spending.
- * Fail-open: allows request if credit check fails (don't block users on errors).
+ * Fail-closed: denies request if credit check fails to prevent abuse.
  */
 export async function checkAndDeductCredits(
   userId: string,
@@ -35,8 +35,8 @@ export async function checkAndDeductCredits(
           .single();
 
         if (insertError || !created) {
-          console.debug("[Credits] Failed to create subscription:", insertError);
-          return { success: true }; // still fail-open on error
+          console.error("[Credits] Failed to create subscription:", insertError);
+          return { success: false, error: "credit_check_failed" };
         }
 
         if (created.credits_remaining < creditsToDeduct) {
@@ -44,8 +44,9 @@ export async function checkAndDeductCredits(
         }
 
         return checkAndDeductCredits(userId, creditsToDeduct, action, retryCount);
-      } catch {
-        return { success: true }; // fail-open
+      } catch (err) {
+        console.error("[Credits] Subscription creation error:", err);
+        return { success: false, error: "credit_check_failed" };
       }
     }
 
@@ -62,8 +63,8 @@ export async function checkAndDeductCredits(
       .select("credits_remaining");
 
     if (updateError) {
-      console.debug("[Credits] Failed to deduct credits:", updateError);
-      return { success: true, remaining: subscription.credits_remaining };
+      console.error("[Credits] Failed to deduct credits:", updateError);
+      return { success: false, error: "credit_check_failed" };
     }
 
     // Concurrent modification — retry once
@@ -72,8 +73,8 @@ export async function checkAndDeductCredits(
         console.debug("[Credits] Concurrent modification detected, retrying...");
         return checkAndDeductCredits(userId, creditsToDeduct, action, retryCount + 1);
       }
-      console.debug("[Credits] Concurrent modification persisted after retry, allowing request");
-      return { success: true };
+      console.error("[Credits] Concurrent modification persisted after retry, denying request");
+      return { success: false, error: "credit_check_failed" };
     }
 
     // Log usage (non-blocking)
@@ -90,7 +91,7 @@ export async function checkAndDeductCredits(
 
     return { success: true, remaining: updated[0].credits_remaining };
   } catch (err) {
-    console.debug("[Credits] Error checking credits:", err);
-    return { success: true };
+    console.error("[Credits] Error checking credits:", err);
+    return { success: false, error: "credit_check_failed" };
   }
 }

@@ -176,7 +176,8 @@ export function useChat({
 
     const resolveImage = (images: UploadedImage[], index: number): string => {
       if (images[index]) return images[index].url || images[index].data;
-      if (images.length > 0) return images[images.length - 1].url || images[images.length - 1].data;
+      // Don't silently fall back to last image on index mismatch — use fallback pixel
+      console.debug(`[Images] Placeholder index ${index} out of bounds (${images.length} available)`);
       return fallbackPixel;
     };
 
@@ -527,7 +528,7 @@ export function useChat({
               const updated = await ensureBlobUrls(msg.uploadedImages);
               setMessages(prev => prev.map(m => m.id === msg.id ? { ...m, uploadedImages: updated } : m));
             })
-        );
+        ).catch((err) => console.error("[Images] Background upload failed:", err));
       }
 
       const apiUserMessage = { ...userMessage, content: messageText };

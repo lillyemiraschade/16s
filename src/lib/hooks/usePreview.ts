@@ -91,7 +91,8 @@ export function usePreview(projectName: string) {
     a.href = url;
     a.download = `${projectName || "website"}.html`;
     a.click();
-    URL.revokeObjectURL(url);
+    // Delay revoke so browser has time to start the download
+    setTimeout(() => URL.revokeObjectURL(url), 5000);
   }, [currentPreview, projectName]);
 
   const handleExportZip = useCallback(async () => {

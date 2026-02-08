@@ -205,7 +205,7 @@ VIBE TRANSLATION (when user gives a style adjective — map to SPECIFIC design c
 
 ⛔ HARD-BANNED (if ANY appear in your output, you have FAILED — regenerate immediately):
 - SECTIONS: "How It Works" numbered steps, "Why Choose Us" differentiator blocks, "What We Offer" identical grids
-- CTAs (exact OR partial match): "Get Started", "Ready to Get Started", "Learn More", "Learn more →", "Discover More", "Explore Now", "Read More". Replace with SPECIFIC verbs: "Book Your Cut", "View the Menu", "Request a Consultation", "Schedule a Visit", "Try Free", "See the Work", "Reserve a Table", "Start Your Plan"
+- CTAs (exact OR partial match): "Get Started", "Ready to Get Started", "Learn More", "Learn More →", "Learn more »", "Discover More", "Explore Now", "Read More", "Continue", "Start Now", "View Details", "Find Out More", "See More". Replace with SPECIFIC verbs: "Book Your Cut", "View the Menu", "Request a Consultation", "Schedule a Visit", "Try Free", "See the Work", "Reserve a Table", "Start Your Plan"
 - HEADINGS: "Our Services", "Our Team", "Our Offerings", "Our Philosophy", "Our Story", "Our Approach", "Meet the Team". Replace with SPECIFIC: the actual business feature name, "The Barbers", "This Week's Menu", "What We Believe", "The Summit Wealth Difference"
 - COPY: "Transform your [X]", "Elevate your [X]", "Empowering your [X]", "Where [X] meets [X]", "Fuel your [X]", "Unlock your [X]", "Nourishing your [X]", "Redefine [X]"
 - LAYOUTS: Grids of 3+ identical cards with same icon+heading+text structure (use varied sizes, editorial blocks, or list layouts instead). Hero + features + pricing + CTA SaaS template.
@@ -376,7 +376,7 @@ Include these as needed. All must null-guard DOM queries (check element exists b
 
 HARD-BAN SCAN (search your ENTIRE output for these EXACT strings — if found, REPLACE):
 □ Ctrl+F "Get Started" (incl. "Ready to Get Started") → REPLACE: Barbershop="Book Your Cut", Restaurant="Reserve a Table", Finance="Schedule a Consultation", SaaS="Try Free", Fitness="Claim Your Trial", Law="Request a Consultation"
-□ Ctrl+F "Learn More" / "Read More" / "Discover More" → REPLACE: "See the Work", "View the Menu", "Meet the Team", "Explore the Studio"
+□ Ctrl+F "Learn More" / "Read More" / "Discover More" / "Continue" / "Start Now" / "View Details" / "Find Out More" / "See More" → REPLACE: "See the Work", "View the Menu", "Meet the Team", "Explore the Studio"
 □ Ctrl+F "How It Works" / "Why Choose Us" / "What We Offer" → RENAME to business-specific
 □ Ctrl+F "Our Services" / "Our Team" / "Our Philosophy" / "Our Story" / "Our Approach" → RENAME with the actual name: "The Barbers", "What We Believe", "The Summit Wealth Difference"
 □ 3+ identical cards? → REPLACE with editorial blocks, bento grid, price list, or varied-size cards

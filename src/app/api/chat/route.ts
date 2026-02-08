@@ -152,8 +152,11 @@ export async function POST(req: Request) {
         }
       }
     } catch (creditError) {
-      // Log but don't block - credit check is non-critical
-      console.debug("[Credits] Credit check failed, allowing request:", creditError);
+      console.error("[Credits] Credit check error, denying request:", creditError);
+      return new Response(
+        JSON.stringify({ message: "Unable to verify credits. Please try again." }),
+        { status: 503, headers: { "Content-Type": "application/json" } }
+      );
     }
 
     // Normalize images: combine new typed format with legacy format
@@ -355,7 +358,11 @@ export async function POST(req: Request) {
     if (currentPreview && claudeMessages.length > 0) {
       const lastMessage = claudeMessages[claudeMessages.length - 1];
       const contextLimit = isSimpleIteration ? 15000 : 30000; // Less context for fast iterations
-      const previewContext = `[The user currently has a website preview. Here is the current HTML:\n${currentPreview.substring(0, contextLimit)}\n]`;
+      const isTruncated = currentPreview.length > contextLimit;
+      const truncationNote = isTruncated
+        ? `\n⚠️ NOTE: This HTML was truncated from ${currentPreview.length} to ${contextLimit} characters. The remaining ${currentPreview.length - contextLimit} characters (end of the document) are NOT shown. Be careful not to generate conflicting changes to unseen sections.`
+        : "";
+      const previewContext = `[The user currently has a website preview. Here is the current HTML:\n${currentPreview.substring(0, contextLimit)}${truncationNote}\n]`;
       if (lastMessage.role === "user") {
         if (typeof lastMessage.content === "string") {
           lastMessage.content = `${previewContext}\n\nUser request: ${lastMessage.content}`;
@@ -371,8 +378,8 @@ export async function POST(req: Request) {
       }
     }
 
-    // Inject screenshot only for complex generations (Sonnet) - skip for simple iterations
-    if (!isSimpleIteration && previewScreenshot && claudeMessages.length > 0) {
+    // Inject screenshot for all generations (both Haiku and Sonnet) for visual verification
+    if (previewScreenshot && claudeMessages.length > 0) {
       const lastMessage = claudeMessages[claudeMessages.length - 1];
       const screenshotMatch = previewScreenshot.match(/^data:(image\/[a-zA-Z]+);base64,(.+)$/);
       if (screenshotMatch) {
