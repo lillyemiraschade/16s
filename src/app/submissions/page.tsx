@@ -78,16 +78,16 @@ export default function SubmissionsPage() {
   return (
     <div className="min-h-screen bg-[#0a0a0b] text-zinc-100">
       {/* Header */}
-      <header className="h-14 md:h-[60px] border-b border-white/[0.04] px-4 md:px-6 flex items-center justify-between">
+      <header className="h-14 border-b border-white/[0.04] px-4 md:px-6 flex items-center justify-between">
         <div className="flex items-center gap-4 md:gap-8">
-          <Link href="/" className="flex items-center gap-2">
-            <Image src="/logo.png" alt="16s" width={28} height={28} className="object-contain" />
+          <Link href="/">
+            <Image src="/logo.png" alt="16s" width={26} height={26} className="object-contain" />
           </Link>
-          <nav className="flex items-center gap-1">
-            <Link href="/" className="px-2 md:px-3 py-1.5 text-[12px] md:text-[13px] font-medium text-zinc-400 hover:text-zinc-200 rounded-lg transition-colors">
+          <nav className="flex items-center gap-0.5">
+            <Link href="/" className="px-2.5 py-1.5 text-[12px] md:text-[13px] font-medium text-zinc-400 hover:text-zinc-200 rounded-lg transition-colors">
               Home
             </Link>
-            <Link href="/submissions" className="px-2 md:px-3 py-1.5 text-[12px] md:text-[13px] font-medium text-zinc-100 bg-white/[0.06] rounded-lg">
+            <Link href="/submissions" className="px-2.5 py-1.5 text-[12px] md:text-[13px] font-medium text-zinc-100 bg-white/[0.06] rounded-lg">
               Submissions
             </Link>
           </nav>

@@ -245,7 +245,9 @@ export const ChatPanel = memo(function ChatPanel({
       {/* Header */}
       <div className="h-[52px] px-4 border-b border-white/[0.04] flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <Image src="/logo.png" alt="16s logo" width={28} height={28} className="object-contain" />
+          <a href="/" title="Home">
+            <Image src="/logo.png" alt="16s logo" width={26} height={26} className="object-contain" />
+          </a>
           <button
             onClick={handleCallClick}
             disabled={isOnCall}

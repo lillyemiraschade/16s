@@ -122,24 +122,23 @@ export default function ProjectsPage() {
   return (
     <div className="min-h-screen bg-[#0a0a0b]">
       {/* Header */}
-      <header className="h-14 md:h-[60px] border-b border-white/[0.04] px-4 md:px-6 flex items-center justify-between">
+      <header className="h-14 border-b border-white/[0.04] px-4 md:px-6 flex items-center justify-between">
         <div className="flex items-center gap-4 md:gap-8">
-          <Link href="/" className="flex items-center gap-2">
-            <Image src="/logo.png" alt="16s" width={28} height={28} className="object-contain" />
+          <Link href="/">
+            <Image src="/logo.png" alt="16s" width={26} height={26} className="object-contain" />
           </Link>
-          <nav className="flex items-center gap-1">
+          <nav className="flex items-center gap-0.5">
             <Link
               href="/"
-              className="px-2 md:px-3 py-1.5 text-[12px] md:text-[13px] font-medium text-zinc-400 hover:text-zinc-200 rounded-lg transition-colors"
+              className="px-2.5 py-1.5 text-[12px] md:text-[13px] font-medium text-zinc-400 hover:text-zinc-200 rounded-lg transition-colors"
             >
               Home
             </Link>
             <Link
               href="/projects"
-              className="px-2 md:px-3 py-1.5 text-[12px] md:text-[13px] font-medium text-zinc-100 bg-white/[0.06] rounded-lg"
+              className="px-2.5 py-1.5 text-[12px] md:text-[13px] font-medium text-zinc-100 bg-white/[0.06] rounded-lg"
             >
-              <span className="sm:hidden">Projects</span>
-              <span className="hidden sm:inline">My Projects</span>
+              Projects
             </Link>
           </nav>
         </div>
@@ -149,7 +148,7 @@ export default function ProjectsPage() {
       {/* Main content */}
       <main className="max-w-6xl mx-auto px-4 md:px-6 py-6 md:py-10">
         <div className="flex items-center justify-between mb-6 md:mb-8">
-          <h1 className="text-xl md:text-2xl font-semibold text-zinc-100">My Projects</h1>
+          <h1 className="text-xl md:text-2xl font-semibold text-zinc-100">Projects</h1>
           <Link
             href="/"
             className="flex items-center gap-1.5 md:gap-2 px-3 md:px-4 py-2 bg-green-500/80 hover:bg-green-500 text-white text-[12px] md:text-[13px] font-medium rounded-lg transition-colors"

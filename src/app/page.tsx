@@ -2,7 +2,7 @@
 
 import { useState, useRef, useCallback, useEffect, Suspense } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Paperclip, ArrowUp, ImagePlus, X, FolderOpen, MessageSquare, Monitor } from "lucide-react";
+import { Paperclip, ArrowUp, ImagePlus, X, MessageSquare, Monitor } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
@@ -466,24 +466,24 @@ function HomePageContent() {
   if (!chat.hasStarted) {
     return (
       <main id="main-content" className="h-screen welcome-bg flex flex-col" onDrop={welcome.handleWelcomeDrop} onDragOver={(e) => e.preventDefault()}>
-        <header className="relative z-20 h-14 md:h-[60px] flex items-center justify-between px-4 md:px-6">
+        <header className="relative z-20 h-14 flex items-center justify-between px-4 md:px-6">
           <div className="flex items-center gap-4 md:gap-8">
-            <Image src="/logo.png" alt="16s logo" width={28} height={28} className="object-contain" />
-            <nav className="flex items-center gap-0.5 md:gap-1">
-              <span className="px-2.5 md:px-3 py-1.5 text-[12px] md:text-[13px] font-medium text-zinc-100 bg-white/[0.06] rounded-lg">
+            <Link href="/">
+              <Image src="/logo.png" alt="16s logo" width={26} height={26} className="object-contain" />
+            </Link>
+            <nav className="flex items-center gap-0.5">
+              <span className="px-2.5 py-1.5 text-[12px] md:text-[13px] font-medium text-zinc-100 bg-white/[0.06] rounded-lg">
                 Home
               </span>
               <Link
                 href="/projects"
-                className="flex items-center gap-1.5 px-2.5 md:px-3 py-1.5 text-[12px] md:text-[13px] font-medium text-zinc-400 hover:text-zinc-200 rounded-lg transition-colors"
+                className="px-2.5 py-1.5 text-[12px] md:text-[13px] font-medium text-zinc-400 hover:text-zinc-200 rounded-lg transition-colors"
               >
-                <FolderOpen className="w-4 h-4" />
-                <span className="hidden sm:inline">My Projects</span>
-                <span className="sm:hidden">Projects</span>
+                Projects
               </Link>
               <Link
                 href="/billing"
-                className="px-2.5 md:px-3 py-1.5 text-[12px] md:text-[13px] font-medium text-zinc-400 hover:text-zinc-200 rounded-lg transition-colors"
+                className="px-2.5 py-1.5 text-[12px] md:text-[13px] font-medium text-zinc-400 hover:text-zinc-200 rounded-lg transition-colors"
               >
                 Pricing
               </Link>
@@ -506,21 +506,17 @@ function HomePageContent() {
           )}
         </header>
 
-        <div className="relative z-10 flex-1 flex flex-col items-center justify-center px-6 -mt-16">
+        <div className="relative z-10 flex-1 flex flex-col items-center justify-center px-6 -mt-10">
           <motion.div
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, ease: "easeOut" }}
-            className="flex flex-col items-center gap-8 w-full max-w-[640px]"
+            className="flex flex-col items-center gap-6 w-full max-w-[640px]"
           >
             <div className="flex flex-col items-center gap-3">
-              <Image src="/logo.png" alt="" width={48} height={48} className="object-contain" />
-              <h1 className="text-[40px] md:text-[48px] font-semibold text-white tracking-[-0.04em] text-center leading-[1.1]">
+              <h1 className="text-[36px] md:text-[44px] font-semibold text-white tracking-[-0.04em] text-center leading-[1.1]">
                 {welcome.headline}
               </h1>
-              <p className="text-[14px] md:text-[15px] text-zinc-500 font-medium tracking-wide">
-                Describe it. We build it. In seconds.
-              </p>
             </div>
 
             {/* Error toast */}
@@ -870,18 +866,15 @@ function HomePageContent() {
 function LoadingSkeleton() {
   return (
     <div className="h-screen welcome-bg flex flex-col">
-      <header className="h-14 md:h-[60px] flex items-center justify-between px-4 md:px-6">
+      <header className="h-14 flex items-center justify-between px-4 md:px-6">
         <div className="flex items-center gap-4">
-          <div className="w-7 h-7 rounded-lg bg-white/[0.06] animate-pulse" />
+          <div className="w-[26px] h-[26px] rounded-lg bg-white/[0.06] animate-pulse" />
           <div className="w-16 h-7 rounded-lg bg-white/[0.06] animate-pulse" />
         </div>
         <div className="w-16 h-8 rounded-lg bg-white/[0.06] animate-pulse" />
       </header>
-      <div className="flex-1 flex flex-col items-center justify-center -mt-16 gap-8">
-        <div className="flex flex-col items-center gap-4">
-          <div className="w-12 h-12 rounded-xl bg-white/[0.06] animate-pulse" />
-          <div className="w-72 h-10 rounded-lg bg-white/[0.06] animate-pulse" />
-        </div>
+      <div className="flex-1 flex flex-col items-center justify-center -mt-10 gap-6">
+        <div className="w-72 h-10 rounded-lg bg-white/[0.06] animate-pulse" />
         <div className="w-full max-w-[640px] h-16 rounded-2xl bg-white/[0.04] animate-pulse mx-6" />
         <div className="flex gap-4">
           <div className="w-48 h-9 rounded-xl bg-white/[0.04] animate-pulse" />
