@@ -25,7 +25,7 @@ import { AuthModal } from "@/components/auth/AuthModal";
 import { useAuth } from "@/lib/auth/AuthContext";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { useToast } from "@/components/Toast";
-import { OnboardingTooltip } from "@/components/onboarding/OnboardingTooltip";
+
 import type { SavedProjectMeta, ProjectContext, UploadedImage } from "@/lib/types";
 
 
@@ -627,7 +627,7 @@ function HomePageContent() {
             {/* Scrolling idea suggestions marquee */}
             {welcome.randomIdeas.length > 0 && (
               <div
-                data-onboarding="pills"
+
                 className="w-full max-w-[90vw] md:max-w-[700px] overflow-hidden"
                 style={{
                   maskImage: "linear-gradient(to right, transparent, black 15%, black 85%, transparent)",
@@ -661,8 +661,6 @@ function HomePageContent() {
           </motion.div>
 
         </div>
-
-        <OnboardingTooltip />
 
         <AuthModal
           isOpen={chat.showAuthModal}
