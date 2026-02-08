@@ -142,51 +142,33 @@ function HomePageContent() {
     return () => { cancelled = true; };
   }, [isAuthLoading, listProjects, isCloud]);
 
-  // ─── Auto-restore last project on mount or load from URL param ───
+  // ─── Load project from URL param (?project=...) ───
+  const hasRestoredRef = useRef(false);
   useEffect(() => {
     if (isAuthLoading) return;
-    // Don't overwrite messages if user has already started chatting
     if (chat.hasStarted) return;
-    let cancelled = false;
+    if (hasRestoredRef.current) return;
     const projectIdFromUrl = searchParams.get("project");
+    if (!projectIdFromUrl) return;
+    let cancelled = false;
+    hasRestoredRef.current = true;
 
     const restoreProject = async () => {
-      if (projectIdFromUrl) {
-        const proj = await loadProject(projectIdFromUrl);
-        if (cancelled) return;
-        if (proj) {
-          setCurrentProjectId(proj.id);
-          setProjectName(proj.name);
-          chat.setMessages(proj.messages);
-          preview.setCurrentPreview(proj.currentPreview);
-          preview.setPreviewHistory(proj.previewHistory);
-          preview.setBookmarks(proj.bookmarks || []);
-          setProjectContext(proj.context);
-          chat.setHasStarted(true);
-          window.history.replaceState({}, "", "/");
-          return;
-        }
-      }
-
-      const projects = await listProjects();
+      const proj = await loadProject(projectIdFromUrl);
       if (cancelled) return;
-      if (projects.length > 0) {
-        const last = await loadProject(projects[0].id);
-        if (cancelled) return;
-        if (last && last.messages.length > 0) {
-          setCurrentProjectId(last.id);
-          setProjectName(last.name);
-          chat.setMessages(last.messages);
-          preview.setCurrentPreview(last.currentPreview);
-          preview.setPreviewHistory(last.previewHistory);
-          preview.setBookmarks(last.bookmarks || []);
-          setProjectContext(last.context);
-          chat.setHasStarted(true);
-        }
+      if (proj) {
+        setCurrentProjectId(proj.id);
+        setProjectName(proj.name);
+        chat.setMessages(proj.messages);
+        preview.setCurrentPreview(proj.currentPreview);
+        preview.setPreviewHistory(proj.previewHistory);
+        preview.setBookmarks(proj.bookmarks || []);
+        setProjectContext(proj.context);
+        chat.setHasStarted(true);
+        window.history.replaceState({}, "", "/");
       }
     };
     restoreProject();
-    // When chat.hasStarted changes to true, cleanup cancels any in-flight restoration
     return () => { cancelled = true; };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isAuthLoading, searchParams, chat.hasStarted]);
