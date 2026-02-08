@@ -153,6 +153,8 @@ function injectFormHandler(html: string, projectId: string): string {
   // Only inject if there are <form> elements
   if (!/<form[\s>]/i.test(html)) return html;
 
+  const appUrl = process.env.NEXT_PUBLIC_APP_URL || "https://try16s.app";
+
   const script = `<script>
 document.querySelectorAll('form').forEach(f=>{
 f.addEventListener('submit',async e=>{
@@ -162,7 +164,7 @@ const orig=btn?btn.textContent:'';
 if(btn){btn.disabled=true;btn.textContent='Sending...';}
 try{
 const d=Object.fromEntries(new FormData(f));
-await fetch('https://try16s.app/api/forms',{
+await fetch('${appUrl}/api/forms',{
 method:'POST',headers:{'Content-Type':'application/json'},
 body:JSON.stringify({projectId:'${projectId}',fields:d})
 });

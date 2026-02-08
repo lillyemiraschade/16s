@@ -36,4 +36,7 @@ export const env = {
   // Image features (optional — features gracefully degrade)
   blobReadWriteToken: optionalEnv("BLOB_READ_WRITE_TOKEN"),
   removeBgApiKey: optionalEnv("REMOVE_BG_API_KEY"),
+
+  // App URL (for metadata, CORS, emails — defaults to try16s.app)
+  appUrl: process.env.NEXT_PUBLIC_APP_URL || "https://try16s.app",
 } as const;

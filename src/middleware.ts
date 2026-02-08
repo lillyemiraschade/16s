@@ -2,8 +2,9 @@ import { type NextRequest, NextResponse } from "next/server";
 import { updateSession } from "@/lib/supabase/middleware";
 
 // Allowed origins for CORS on API routes
+const APP_URL = process.env.NEXT_PUBLIC_APP_URL || "https://try16s.app";
 const ALLOWED_ORIGINS = [
-  "https://16s-ruddy.vercel.app",
+  APP_URL,
   "https://16s.dev",
   "https://www.16s.dev",
 ];

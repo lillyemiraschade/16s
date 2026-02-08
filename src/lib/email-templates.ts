@@ -2,6 +2,7 @@ const BRAND_COLOR = "#22c55e";
 const BG_COLOR = "#ffffff";
 const TEXT_COLOR = "#18181b";
 const MUTED_COLOR = "#71717a";
+const APP_URL = process.env.NEXT_PUBLIC_APP_URL || "https://try16s.app";
 
 function wrap(title: string, body: string): string {
   return `<!DOCTYPE html>
@@ -15,7 +16,7 @@ function wrap(title: string, body: string): string {
 ${body}
 <div style="margin-top:40px;padding-top:20px;border-top:1px solid #e4e4e7;">
 <p style="font-size:12px;color:${MUTED_COLOR};margin:0;">
-Built with <a href="https://try16s.app" style="color:${BRAND_COLOR};text-decoration:none;">16s</a> — AI Web Designer
+Built with <a href="${APP_URL}" style="color:${BRAND_COLOR};text-decoration:none;">16s</a> — AI Web Designer
 </p>
 </div>
 </div></body></html>`;
@@ -41,7 +42,7 @@ You're all set to build beautiful websites with AI. Just describe what you want 
 <li>Iterate with follow-up prompts until it's perfect</li>
 <li>Deploy with one click</li>
 </ol>
-${button("Start Building", "https://try16s.app")}
+${button("Start Building", APP_URL)}
 `),
   };
 }
@@ -87,7 +88,7 @@ ${senderName} submitted a form on <strong style="color:${TEXT_COLOR};">${project
 ${fieldsHtml}
 </table>
 <div style="margin-top:24px;">
-${button("View All Submissions", "https://try16s.app/submissions")}
+${button("View All Submissions", `${APP_URL}/submissions`)}
 </div>
 `),
   };

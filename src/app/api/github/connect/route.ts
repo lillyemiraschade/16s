@@ -11,11 +11,12 @@ export async function GET() {
 
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
+  const appUrl = process.env.NEXT_PUBLIC_APP_URL || "https://try16s.app";
   if (!user) {
-    return NextResponse.redirect(new URL("/", process.env.NEXT_PUBLIC_SUPABASE_URL || "https://try16s.app"));
+    return NextResponse.redirect(new URL("/", appUrl));
   }
 
-  const redirectUri = `https://try16s.app/api/github/connect/callback`;
+  const redirectUri = `${appUrl}/api/github/connect/callback`;
   const url = `https://github.com/login/oauth/authorize?client_id=${GITHUB_CLIENT_ID}&scope=repo&redirect_uri=${encodeURIComponent(redirectUri)}&state=${user.id}`;
 
   return NextResponse.redirect(url);

@@ -8,14 +8,16 @@ const inter = Inter({
   display: "swap",
 });
 
+const APP_URL = process.env.NEXT_PUBLIC_APP_URL || "https://try16s.app";
+
 export const metadata: Metadata = {
   title: "16s — AI Web Designer",
   description: "Describe your dream website in plain English. 16s builds it in seconds with AI — live preview, one-click deploy.",
-  metadataBase: new URL("https://16s-ruddy.vercel.app"),
+  metadataBase: new URL(APP_URL),
   openGraph: {
     title: "16s — AI Web Designer",
     description: "Describe your dream website in plain English. 16s builds it in seconds with AI.",
-    url: "https://16s-ruddy.vercel.app",
+    url: APP_URL,
     siteName: "16s",
     type: "website",
   },
@@ -25,7 +27,7 @@ export const metadata: Metadata = {
     description: "Describe your dream website in plain English. 16s builds it in seconds with AI.",
   },
   alternates: {
-    canonical: "https://16s-ruddy.vercel.app",
+    canonical: APP_URL,
   },
   icons: {
     icon: [
