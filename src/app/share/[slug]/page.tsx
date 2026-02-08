@@ -50,12 +50,17 @@ export default async function SharePage({ params }: SharePageProps) {
             16s
           </a>
         </span>
-        <a
-          href="/"
-          className="text-xs text-green-400 hover:text-green-300 hover:underline transition-colors"
-        >
-          Build your own &rarr;
-        </a>
+        <div className="flex items-center gap-3">
+          <a href="/privacy" className="text-[9px] text-zinc-600 hover:text-zinc-400 transition-colors">Privacy</a>
+          <span className="text-[9px] text-zinc-700">&middot;</span>
+          <a href="/terms" className="text-[9px] text-zinc-600 hover:text-zinc-400 transition-colors">Terms</a>
+          <a
+            href="/"
+            className="text-xs text-green-400 hover:text-green-300 hover:underline transition-colors ml-2"
+          >
+            Build your own &rarr;
+          </a>
+        </div>
       </header>
       <iframe
         srcDoc={project.public_preview}
