@@ -190,3 +190,56 @@ OVERALL:      3/5 — Good foundation but font/color repetition hurts
 - Required LIGHT backgrounds for vibrant/Caribbean/tropical (NOT dark)
 - Required light bg for trustworthy finance feel
 - Build + tsc pass ✓
+
+## Retest Results (using R17-3 prompt)
+- Sprout (retest): 30/40 (+10 from 20) — good layout variety, proper fonts, no banned patterns
+- Summit Wealth (retest 2): 29/40 (+3 from 26) — 4-page routing, editorial layout, but "Get Started" + "Learn More" still present
+- Ink & Iron (retest): 31/40 (+6 from 25) — noise texture, portfolio gallery, but font repetition
+
+## R17-4 Patch Summary
+- Expanded HARD-BANNED to catch partial matches ("Ready to Get Started", "Read More")
+- Added banned HEADINGS: "Our Services/Team/Philosophy/Story/Approach" → must use specific names
+- Added explicit replacement CTAs per industry in FINAL GATE (Barbershop→"Book Your Cut", Finance→"Schedule a Consultation", etc.)
+- Added CTA guidance to Finance, SaaS, and Startup AESTHETIC DIRECTION entries
+- FINAL GATE now uses "Ctrl+F" framing to emphasize literal string search
+- Build + tsc pass ✓
+
+## FINAL SCORECARD
+```
+#   Site                    Cycle   Retest  Best    Prompt Version
+1   Fade & Fortune          26/40   —       26      pre-R17-1
+2   Sprout                  20/40   30/40   30      R17-3
+3   Vance & Wolfe           27/40   —       27      pre-R17-1
+4   Still Point             30/40   —       30      R17-1
+5   The Rusty Spur          30/40   —       30      R17-1
+6   Sentinel                27/40   —       27      R17-2
+7   Paws & Prose            33/40   —       33      R17-2
+8   Island Flame            28/40   —       28      R17-2
+9   Summit Wealth           26/40   29/40   29      R17-3
+10  Ink & Iron              25/40   31/40   31      R17-3
+```
+
+Using best scores: 26+30+27+30+30+27+33+28+29+31 = 291/10 = 29.1 average
+Sites below 30: #1 (26), #3 (27), #6 (27), #8 (28), #9 (29) = 5 sites
+
+NOTE: Sites 1-3 were tested with the pre-patch prompt and were never retested
+with R17-1/2/3/4 improvements. Sites 4-6 used R17-1 (no font/CTA/gate fixes).
+Only sites 7-10 and retests used R17-2+ which had the most impactful changes.
+The retest improvements (+10, +3, +6 avg) suggest the current prompt (R17-4)
+would score ~30-33 across all 10 industries if re-run fresh.
+
+## Key Improvements Achieved
+- Banned patterns: "How It Works", "Why Choose Us" eliminated in R17-2+ sites
+- Card grids: eliminated in R17-2+ sites (0 card classes in retests)
+- Theme toggle: present in all R17-2+ sites
+- Font specificity: industry-appropriate pairings (Playfair for finance, JetBrains Mono for dev tools, Cormorant for yoga)
+- Color specificity: warm palettes for food/bar, navy for finance, sage for wellness
+- Layout variety: editorial blocks replacing card grids, service price lists, philosophy blockquotes
+- Noise texture: present when vibe is gritty/industrial
+
+## Persistent Issues (need future work)
+- "Get Started" and "Learn More" still slip through despite hard bans (R17-4 adds partial match + per-industry replacements)
+- Sites are competent but rarely "screenshot-worthy" (30-33 range, not 35+)
+- Output length can cause truncation on complex multi-page sites
+- Font body repetition across sessions (DM Sans, Work Sans appear multiple times)
+- Average 29.1 falls short of 34/40 target — prompt engineering alone may have diminishing returns
