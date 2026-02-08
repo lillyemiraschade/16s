@@ -27,7 +27,7 @@ import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { useToast } from "@/components/Toast";
 import { OnboardingTooltip } from "@/components/onboarding/OnboardingTooltip";
 import type { SavedProjectMeta, ProjectContext, UploadedImage } from "@/lib/types";
-import { TEMPLATES } from "@/lib/templates";
+
 
 function generateId(): string {
   if (typeof crypto !== "undefined" && crypto.randomUUID) {
@@ -147,22 +147,6 @@ function HomePageContent() {
     if (chat.hasStarted) return;
     let cancelled = false;
     const projectIdFromUrl = searchParams.get("project");
-    const templateIdFromUrl = searchParams.get("template");
-
-    // Handle template param — fill input with template prompt
-    if (templateIdFromUrl) {
-      const template = TEMPLATES.find(t => t.id === templateIdFromUrl);
-      if (template) {
-        welcome.setWelcomeInput(template.prompt);
-        setProjectContext(prev => ({
-          ...prev,
-          startedFrom: template.id,
-          industry: template.industry,
-        } as ProjectContext));
-        window.history.replaceState({}, "", "/");
-        return;
-      }
-    }
 
     const restoreProject = async () => {
       if (projectIdFromUrl) {
@@ -496,12 +480,6 @@ function HomePageContent() {
                 <span className="hidden sm:inline">My Projects</span>
                 <span className="sm:hidden">Projects</span>
               </Link>
-              <Link
-                href="/templates"
-                className="hidden sm:flex items-center gap-1.5 px-2.5 md:px-3 py-1.5 text-[12px] md:text-[13px] font-medium text-zinc-400 hover:text-zinc-200 rounded-lg transition-colors"
-              >
-                Templates
-              </Link>
             </nav>
           </div>
           {user ? (
@@ -682,31 +660,6 @@ function HomePageContent() {
             )}
           </motion.div>
 
-          {/* Templates section */}
-          <div className="mt-8 mb-6 max-w-[700px] px-4">
-            <p className="text-[12px] text-zinc-500 font-medium mb-3 text-center">Start from a template</p>
-            <div className="flex flex-wrap justify-center gap-3">
-              {TEMPLATES.slice(0, 6).map((template) => (
-                <button
-                  key={template.id}
-                  onClick={() => {
-                    welcome.setWelcomeInput(template.prompt);
-                    setProjectContext(prev => ({
-                      ...prev,
-                      startedFrom: template.id,
-                      industry: template.industry,
-                    } as ProjectContext));
-                  }}
-                  className={`w-[140px] h-[90px] rounded-xl bg-gradient-to-br ${template.gradient} border border-white/[0.06] hover:border-white/[0.15] flex items-end p-2.5 transition-all duration-200 hover:scale-[1.02] group`}
-                >
-                  <span className="text-[11px] font-medium text-zinc-400 group-hover:text-zinc-200 transition-colors">{template.name}</span>
-                </button>
-              ))}
-            </div>
-            <Link href="/templates" className="block text-center text-[11px] text-zinc-500 hover:text-green-400 mt-2 transition-colors">
-              See all templates &rarr;
-            </Link>
-          </div>
         </div>
 
         <OnboardingTooltip />
