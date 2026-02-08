@@ -287,7 +287,7 @@ function BillingPage() {
             </div>
             {/* Usage bar */}
             <div className="mt-4">
-              <div className="h-2 bg-white/[0.04] rounded-full overflow-hidden">
+              <div className="h-2 bg-white/[0.06] rounded-full overflow-hidden">
                 <div
                   className={`h-full rounded-full transition-all ${usageRatio < 0.1 ? "bg-red-500" : "bg-green-500"}`}
                   style={{ width: `${Math.min(100, usageRatio * 100)}%` }}
@@ -311,12 +311,12 @@ function BillingPage() {
                 key={key}
                 className={`relative p-5 rounded-xl border transition-all ${
                   isCurrent
-                    ? "bg-white/[0.02] border-zinc-600"
+                    ? "bg-white/[0.02] border-white/[0.06]"
                     : "bg-white/[0.02] border-white/[0.06] hover:border-white/[0.12]"
                 }`}
               >
                 {isCurrent && (
-                  <span className="absolute top-3 right-3 text-[11px] font-medium text-zinc-500">
+                  <span className="absolute top-3 right-3 text-[11px] font-medium text-zinc-400">
                     Your current plan
                   </span>
                 )}
@@ -351,7 +351,7 @@ function BillingPage() {
                   <button
                     onClick={() => handleUpgrade(key)}
                     disabled={!!upgrading}
-                    className="w-full py-2.5 text-[13px] font-semibold rounded-lg transition-colors disabled:opacity-50 bg-green-500 hover:bg-green-400 text-black"
+                    className="w-full py-2.5 text-[13px] font-medium rounded-lg transition-colors disabled:opacity-50 bg-green-500 hover:bg-green-400 text-black"
                   >
                     {upgrading === key ? "Redirecting..." : "Upgrade to Pro"}
                   </button>
@@ -381,17 +381,17 @@ function BillingPage() {
             {FAQ.map((item, idx) => (
               <div
                 key={idx}
-                className="rounded-xl bg-white/[0.02] border border-white/[0.06]"
+                className="rounded-xl bg-white/[0.04] border border-white/[0.06]"
               >
                 <button
                   onClick={() => setOpenFaq(openFaq === idx ? null : idx)}
-                  className="w-full flex items-center justify-between px-4 py-3.5 text-left"
+                  className="w-full flex items-center justify-between p-5 text-left"
                 >
                   <span className="text-[13px] font-medium text-zinc-300">{item.q}</span>
                   <ChevronDown className={`w-4 h-4 text-zinc-600 shrink-0 ml-4 transition-transform ${openFaq === idx ? "rotate-180" : ""}`} />
                 </button>
                 {openFaq === idx && (
-                  <div className="px-4 pb-3.5 -mt-1">
+                  <div className="px-5 pb-5 -mt-1">
                     <p className="text-[13px] text-zinc-500 leading-relaxed">{item.a}</p>
                   </div>
                 )}
