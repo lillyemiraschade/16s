@@ -1,11 +1,17 @@
 # Round 15: Audit, Legal & Billing Polish
 
 ## Fixes
-- [ ] 1. Stale domains (Stripe localhost fallbacks, middleware 16s.dev)
-- [ ] 2. Credits: missing subscription → create on the fly
-- [ ] 3. Privacy Policy + TOS pages + Footer component + AuthModal legal text
-- [ ] 4. Share page legal links in header bar
-- [ ] 5. Billing page polish (success/cancel banners, out-of-credits CTA)
-- [ ] 6. Navigation verification
+- [x] 1. Stale domains (Stripe localhost fallbacks, middleware 16s.dev)
+- [x] 2. Credits: missing subscription → create on the fly
+- [x] 3. Privacy Policy + TOS pages + Footer component + AuthModal legal text
+- [x] 4. Share page legal links in header bar
+- [x] 5. Billing page polish (success/cancel banners, out-of-credits CTA)
+- [x] 6. Navigation verification
 
 ## Log
+- R15-1: Stripe checkout/portal fallback → try16s.app; middleware CORS: 16s.dev → www.try16s.app
+- R15-2: Credits upsert free-tier subscription if missing; error string → "insufficient_credits"
+- R15-3: /privacy, /terms pages; Footer on 4 sub-pages; AuthModal legal text
+- R15-4: Share page header: Privacy + Terms links (9px)
+- R15-5: Billing: persistent success/cancel banners; out-of-credits amber CTA
+- R15-6: Submissions page: consistent header with logo + nav + UserMenu
