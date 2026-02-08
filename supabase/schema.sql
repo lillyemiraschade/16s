@@ -189,12 +189,15 @@ CREATE POLICY "Users can view own usage" ON usage
 -- AUTO-UPDATE TIMESTAMP TRIGGER
 -- ============================================================================
 CREATE OR REPLACE FUNCTION update_updated_at()
-RETURNS TRIGGER AS $$
+RETURNS TRIGGER
+LANGUAGE plpgsql
+SET search_path = public
+AS $$
 BEGIN
   NEW.updated_at = NOW();
   RETURN NEW;
 END;
-$$ LANGUAGE plpgsql;
+$$;
 
 -- Apply to projects table
 DROP TRIGGER IF EXISTS projects_updated_at ON projects;
@@ -221,13 +224,17 @@ CREATE TRIGGER subscriptions_updated_at
 -- CREATE DEFAULT SUBSCRIPTION ON USER SIGNUP
 -- ============================================================================
 CREATE OR REPLACE FUNCTION create_default_subscription()
-RETURNS TRIGGER AS $$
+RETURNS TRIGGER
+LANGUAGE plpgsql
+SECURITY DEFINER
+SET search_path = public
+AS $$
 BEGIN
   INSERT INTO subscriptions (user_id, plan, status, credits_remaining)
   VALUES (NEW.id, 'free', 'active', 50);
   RETURN NEW;
 END;
-$$ LANGUAGE plpgsql SECURITY DEFINER;
+$$;
 
 DROP TRIGGER IF EXISTS on_auth_user_created ON auth.users;
 CREATE TRIGGER on_auth_user_created
