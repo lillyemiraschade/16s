@@ -28,6 +28,7 @@ import { useToast } from "@/components/Toast";
 import { Footer } from "@/components/layout/Footer";
 import { OnboardingTour } from "@/components/onboarding/OnboardingTour";
 
+import { TEMPLATES } from "@/lib/templates";
 import type { SavedProjectMeta, ProjectContext, UploadedImage } from "@/lib/types";
 
 
@@ -118,7 +119,7 @@ function HomePageContent() {
     prevPreviewRef.current = preview.currentPreview;
   }, [preview.currentPreview]);
 
-  // ─── Auth error from URL ───
+  // ─── Auth / GitHub errors from URL ───
   useEffect(() => {
     const authError = searchParams.get("auth_error");
     if (authError) {
@@ -128,7 +129,16 @@ function HomePageContent() {
       welcome.setWelcomeError(`Sign in failed: ${errorMessage}`);
       window.history.replaceState({}, "", "/");
     }
-  }, [searchParams, welcome]);
+    const githubStatus = searchParams.get("github");
+    const githubError = searchParams.get("github_error");
+    if (githubStatus === "connected") {
+      toast("success", "GitHub connected!");
+      window.history.replaceState({}, "", "/");
+    } else if (githubError) {
+      toast("error", `GitHub connection failed: ${githubError}`);
+      window.history.replaceState({}, "", "/");
+    }
+  }, [searchParams, welcome, toast]);
 
   // ─── Load saved projects list on mount ───
   useEffect(() => {
@@ -172,6 +182,20 @@ function HomePageContent() {
     return () => { cancelled = true; };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isAuthLoading, searchParams, chat.hasStarted]);
+
+  // ─── Load template from URL param (?template=...) ───
+  const hasLoadedTemplateRef = useRef(false);
+  useEffect(() => {
+    if (chat.hasStarted) return;
+    if (hasLoadedTemplateRef.current) return;
+    const templateId = searchParams.get("template");
+    if (!templateId) return;
+    const template = TEMPLATES.find((t) => t.id === templateId);
+    if (!template) return;
+    hasLoadedTemplateRef.current = true;
+    window.history.replaceState({}, "", "/");
+    chat.handleSendMessage(template.prompt);
+  }, [searchParams, chat.hasStarted, chat.handleSendMessage]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // ─── Auto-save project (debounced) ───
   const saveTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -328,6 +352,33 @@ function HomePageContent() {
       }
     } catch {
       toast("error", "Failed to unshare project");
+    }
+  }, [currentProjectId, toast]);
+
+  // ─── GitHub export ───
+  const [isExportingToGitHub, setIsExportingToGitHub] = useState(false);
+  const isGitHubConnected = !!user?.user_metadata?.github_token;
+
+  const handleGitHubExport = useCallback(async (repoName: string, isPrivate: boolean) => {
+    if (!currentProjectId) return;
+    setIsExportingToGitHub(true);
+    try {
+      const res = await fetch("/api/github/export", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ projectId: currentProjectId, repoName, isPrivate }),
+      });
+      const data = await res.json();
+      if (res.ok && data.repoUrl) {
+        toast("success", "Pushed to GitHub!");
+        window.open(data.repoUrl, "_blank");
+      } else {
+        toast("error", data.error || "Failed to export to GitHub");
+      }
+    } catch {
+      toast("error", "Failed to export to GitHub");
+    } finally {
+      setIsExportingToGitHub(false);
     }
   }, [currentProjectId, toast]);
 
@@ -757,6 +808,9 @@ function HomePageContent() {
               toast("success", "Reverted to previous deployment");
             }}
             onPublish={handleDeploy}
+            onGitHubExport={handleGitHubExport}
+            isGitHubConnected={isGitHubConnected}
+            isExportingToGitHub={isExportingToGitHub}
           />
           </ErrorBoundary>
           {/* Voice call widget */}

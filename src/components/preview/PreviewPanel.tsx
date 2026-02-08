@@ -142,6 +142,9 @@ export const PreviewPanel = memo(function PreviewPanel({
   onUpgradeClick,
   onRevertToDeployment,
   onPublish,
+  onGitHubExport,
+  isGitHubConnected,
+  isExportingToGitHub,
 }: PreviewPanelProps) {
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const [reloadKey, setReloadKey] = useState(0);
@@ -234,6 +237,9 @@ export const PreviewPanel = memo(function PreviewPanel({
         onToggleDeployHistory={() => setShowDeployHistory(v => !v)}
         hasDeployments={!!lastDeployUrl}
         onPublish={onPublish}
+        onGitHubExport={onGitHubExport}
+        isGitHubConnected={isGitHubConnected}
+        isExportingToGitHub={isExportingToGitHub}
         showQuality={showQuality}
         onToggleQuality={() => setShowQuality(v => !v)}
       />

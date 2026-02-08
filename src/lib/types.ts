@@ -172,4 +172,7 @@ export interface PreviewPanelProps {
   onUpgradeClick?: () => void;
   onRevertToDeployment?: (html: string) => void;
   onPublish?: () => void;
+  onGitHubExport?: (repoName: string, isPrivate: boolean) => void;
+  isGitHubConnected?: boolean;
+  isExportingToGitHub?: boolean;
 }
