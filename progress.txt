@@ -1,17 +1,78 @@
-# Round 15: Audit, Legal & Billing Polish
+# Round 17 Progress — Output Quality Gauntlet
 
-## Fixes
-- [x] 1. Stale domains (Stripe localhost fallbacks, middleware 16s.dev)
-- [x] 2. Credits: missing subscription → create on the fly
-- [x] 3. Privacy Policy + TOS pages + Footer component + AuthModal legal text
-- [x] 4. Share page legal links in header bar
-- [x] 5. Billing page polish (success/cancel banners, out-of-credits CTA)
-- [x] 6. Navigation verification
+## Test Prompts (10 industries)
+1. "A Brooklyn barbershop called Fade & Fortune with a vintage Americana vibe"
+2. "A plant-based meal delivery startup called Sprout — modern, clean, trustworthy"
+3. "A criminal defense law firm called Vance & Wolfe — authoritative, dark, serious"
+4. "A yoga and meditation studio called Still Point — serene, minimal, light"
+5. "A Nashville honky-tonk bar called The Rusty Spur — gritty, warm, live music focus"
+6. "An AI code review tool called Sentinel — dark SaaS landing page, developer-focused"
+7. "A luxury pet grooming salon called Paws & Prose — elegant, playful, premium"
+8. "A Caribbean food truck called Island Flame — vibrant, bold, street food energy"
+9. "A financial advisor practice called Summit Wealth — trustworthy, conservative, clean"
+10. "A tattoo studio called Ink & Iron — edgy, portfolio-heavy, dark industrial"
 
-## Log
-- R15-1: Stripe checkout/portal fallback → try16s.app; middleware CORS: 16s.dev → www.try16s.app
-- R15-2: Credits upsert free-tier subscription if missing; error string → "insufficient_credits"
-- R15-3: /privacy, /terms pages; Footer on 4 sub-pages; AuthModal legal text
-- R15-4: Share page header: Privacy + Terms links (9px)
-- R15-5: Billing: persistent success/cancel banners; out-of-credits amber CTA
-- R15-6: Submissions page: consistent header with logo + nav + UserMenu
+## Grading Rubric (each site scored 1-5 per category)
+- LAYOUT: Is the structure unique to this industry? No generic hero+3cards+CTA?
+- TYPOGRAPHY: Are fonts chosen for the brand? Proper hierarchy? No default system fonts?
+- COLOR: Is the palette industry-appropriate? ONE accent? Section bg variety?
+- COPY: Is the text specific and compelling? No "Transform your X" or "Elevate your Y"?
+- FUNCTIONALITY: Do buttons work? Forms validate? Mobile menu? Tabs/filters?
+- UNIQUENESS: Would you mistake this for another site from the batch? Different from template #3?
+- POLISH: Hover states? Scroll animations? Footer designed (not just ©)? Dark/light toggle?
+- OVERALL: Would someone screenshot this and share it? Demo-worthy?
+
+## Cycle 1: Fade & Fortune (Brooklyn Barbershop)
+Score: 26/40
+```
+LAYOUT:       3/5 — Left-aligned hero OK, but 6 identical service cards in grid = banned pattern in spirit
+TYPOGRAPHY:   4/5 — Bebas Neue + Oswald + Inter is a strong barbershop triple
+COLOR:        3/5 — Red/cream/navy/dark works but not "vintage Americana" — missing warm aged tones
+COPY:         3/5 — Service descriptions specific, but hero "CLASSIC CUTS / TIMELESS STYLE" is generic
+FUNCTIONALITY: 4/5 — Services with prices, contact form, mobile menu, scroll reveals
+UNIQUENESS:   3/5 — Fonts give personality but layout is generic dark services site
+POLISH:       3/5 — Hover states, scroll reveals. No texture, no noise grain, no section bg variety
+OVERALL:      3/5 — Decent but not screenshot-worthy. Missing the vintage soul
+```
+Failures: No vibe-to-design translation for "vintage Americana", identical card grid, no section bg variety, no dark/light toggle
+Patch: Added VIBE TRANSLATION block, expanded AESTHETIC DIRECTION with barbershop entry
+
+## Cycle 2: Sprout (Plant-Based Meal Delivery)
+Score: 20/40
+```
+LAYOUT:       2/5 — Classic "How It Works" 3-step startup layout (BANNED pattern)
+TYPOGRAPHY:   4/5 — Plus Jakarta Sans + Fraunces is strong editorial pairing
+COLOR:        2/5 — Green (#16A34A) for plant-based = zero creativity
+COPY:         2/5 — "Nourishing plant-based meals, delivered weekly" is AI slop. 3x "Get Started" (BANNED)
+FUNCTIONALITY: 3/5 — Meal cards, theme toggle. Missing: plan selection, pricing, dietary filters
+UNIQUENESS:   2/5 — Indistinguishable from any meal delivery landing page
+POLISH:       3/5 — Theme toggle, bg variety, hover states
+OVERALL:      2/5 — The canonical "I made this with an AI builder" page
+```
+Failures: "How It Works" steps (not banned in old prompt), "Get Started" CTA used 3x despite being banned, identical card pattern
+Patch: Added "How It Works" and "Why Choose Us" to HARD-BANNED list, strengthened CTA bans, added Startup/DTC aesthetic direction
+
+## Cycle 3: Vance & Wolfe (Criminal Defense Law Firm)
+Score: 27/40
+```
+LAYOUT:       3/5 — Multi-page is good, but 6 identical practice area cards + "Why Choose Us" section
+TYPOGRAPHY:   4/5 — Fraunces + Inter. Proper serif display for law
+COLOR:        4/5 — Dark #0A0A0B + gold #D4AF37. Strong, appropriate
+COPY:         3/5 — H1 "When Your Future Is on the Line" decent, but 6x "Learn more →" (BANNED)
+FUNCTIONALITY: 4/5 — Attorney profiles, practice areas, contact form, page routing, mobile menu
+UNIQUENESS:   3/5 — Dark+gold+serif law firm template but solid execution
+POLISH:       3/5 — Theme toggle, gradient treatments, hover states. Banned patterns present
+OVERALL:      3/5 — Looks like a real law firm site but not exceptional
+```
+Failures: "Why Choose Us" section (now banned), 6x "Learn more →" (now hard-banned), practice areas as identical cards instead of editorial blocks
+Patch: Added "Why Choose Us" and "Learn more →" to HARD-BANNED, added CARD ALTERNATIVES section with editorial block/list/bento suggestions, strengthened law firm aesthetic to say "editorial blocks NOT identical cards"
+
+## R17-1 Patch Summary
+- Compressed CSS CLONING REMINDERS + MODERN CSS PATTERNS (16 lines → 2 lines)
+- Expanded AESTHETIC DIRECTION: added barbershop, bar/music venue, food truck, tattoo, pet business, startup/DTC, wellness/yoga/spa (13→18 entries, each more specific with fonts + layout + palette)
+- Added VIBE TRANSLATION block: 7 adjective→design mappings (vintage, gritty, playful, serene, vibrant, premium, edgy)
+- Rewrote BANNED PATTERNS as HARD-BANNED with explicit scan-before-output rule
+- Added "How It Works", "Why Choose Us", "Get Started", "Learn More", "Learn more →" to hard bans
+- Added CARD ALTERNATIVES section: price list, editorial blocks, bento grid, comparison table, timeline, accordion
+- Strengthened COPY QUALITY: hero headlines MUST be 2-5 words, good/bad examples, specific business details
+- Build + tsc pass ✓
