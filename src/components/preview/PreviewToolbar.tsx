@@ -436,6 +436,7 @@ export const PreviewToolbar = memo(function PreviewToolbar({
               className="flex items-center gap-1.5 px-2.5 py-2.5 md:py-1.5 text-[12px] md:text-[11px] font-medium text-green-400 hover:text-green-300 hover:bg-green-500/10 rounded-lg transition-all duration-150"
               title="Publish changes to your live site"
               aria-label="Publish changes"
+              data-tour="deploy"
             >
               <Rocket className="w-3.5 h-3.5" />
               <span className="hidden md:inline">Publish</span>
@@ -451,6 +452,7 @@ export const PreviewToolbar = memo(function PreviewToolbar({
                 className="flex items-center gap-1.5 px-2.5 py-2.5 md:py-1.5 text-[12px] md:text-[11px] font-medium text-zinc-400 hover:text-zinc-200 hover:bg-white/[0.04] rounded-lg transition-all duration-150"
                 title="Export options"
                 aria-label="Export options"
+                data-tour="export"
                 aria-haspopup="true"
                 aria-expanded={showExportMenu}
               >
@@ -508,6 +510,7 @@ export const PreviewToolbar = memo(function PreviewToolbar({
                       <>
                         <div className="border-t border-zinc-700/50 my-1" />
                         <button role="menuitem" onClick={() => handleExportAction(onDeploy)} disabled={isDeploying}
+                          data-tour="deploy"
                           className="w-full flex items-center gap-2.5 px-4 py-2.5 text-[13px] text-green-400 hover:text-green-300 hover:bg-white/[0.04] transition-colors disabled:opacity-50">
                           {isDeploying ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Rocket className="w-3.5 h-3.5" />}
                           {isDeploying ? "Deploying..." : "Deploy to Web"}

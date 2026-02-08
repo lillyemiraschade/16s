@@ -110,6 +110,7 @@ export const ChatInput = memo(function ChatInput({
             className="p-2.5 md:p-1.5 mb-0.5 hover:bg-white/[0.06] rounded-lg transition-colors flex-shrink-0"
             title={hasPreview ? "Upload content images (logo, photos)" : "Upload inspiration images"}
             aria-label={hasPreview ? "Upload content images" : "Upload inspiration images"}
+            data-tour="image-upload"
           >
             <Paperclip className="w-4 h-4 text-zinc-500" />
           </button>

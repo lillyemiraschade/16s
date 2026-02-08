@@ -15,31 +15,37 @@ const STEPS: TourStep[] = [
   {
     selector: 'main[aria-label="Preview"]',
     title: "Live Preview",
-    description: "This is your live preview. Every change appears here instantly.",
+    description: "Your live preview updates instantly as you describe changes.",
     position: "left",
   },
   {
     selector: "#chat-input",
     title: "Chat Input",
-    description: "Describe what you want to change \u2014 be as specific as you like.",
+    description: "Type what you want to build or change. Be specific \u2014 colors, layout, content.",
+    position: "top",
+  },
+  {
+    selector: '[data-tour="image-upload"]',
+    title: "Image Upload",
+    description: "Upload screenshots to clone designs, or content images to embed in your site.",
     position: "top",
   },
   {
     selector: 'button[aria-label="Undo"]',
     title: "Undo & Redo",
-    description: "Made a mistake? Undo and redo anytime.",
+    description: "Step back through versions anytime.",
     position: "bottom",
   },
   {
-    selector: 'button[aria-label="Export options"]',
+    selector: '[data-tour="deploy"]',
     title: "Deploy",
-    description: "When you\u2019re ready, deploy your site live with one click.",
+    description: "Publish your site live with one click.",
     position: "bottom",
   },
   {
-    selector: 'button[aria-label="Export options"]',
+    selector: '[data-tour="export"]',
     title: "Export",
-    description: "You can also export your code or push to GitHub.",
+    description: "Download your code or push to GitHub.",
     position: "bottom",
   },
 ];
@@ -72,7 +78,15 @@ export function OnboardingTour({ active }: OnboardingTourProps) {
     if (!currentStep) return;
 
     const target = document.querySelector(currentStep.selector);
-    if (!target) return;
+    if (!target) {
+      // Skip steps whose targets aren't rendered yet (e.g. deploy before first deploy)
+      if (step < STEPS.length - 1) {
+        setStep((s) => s + 1);
+      } else {
+        dismiss();
+      }
+      return;
+    }
 
     const rect = target.getBoundingClientRect();
     const tooltipW = 260;
@@ -119,20 +133,20 @@ export function OnboardingTour({ active }: OnboardingTourProps) {
     return () => window.removeEventListener("resize", updatePosition);
   }, [updatePosition]);
 
-  const handleNext = useCallback(() => {
-    if (step < STEPS.length - 1) {
-      setStep((s) => s + 1);
-    } else {
-      dismiss();
-    }
-  }, [step]);
-
   const dismiss = useCallback(() => {
     setVisible(false);
     try {
       localStorage.setItem(STORAGE_KEY, "1");
     } catch {}
   }, []);
+
+  const handleNext = useCallback(() => {
+    if (step < STEPS.length - 1) {
+      setStep((s) => s + 1);
+    } else {
+      dismiss();
+    }
+  }, [step, dismiss]);
 
   if (!visible || !coords) return null;
 
