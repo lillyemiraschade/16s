@@ -73,28 +73,44 @@ export async function POST(request: NextRequest) {
         const subscription = event.data.object as Stripe.Subscription;
         const customerId = subscription.customer as string;
 
-        // Find user by customer ID
+        // Find user by customer ID, including current plan and credits
         const { data: sub } = await supabase
           .from("subscriptions")
-          .select("user_id")
+          .select("user_id, plan, credits_remaining")
           .eq("stripe_customer_id", customerId)
           .single();
 
         if (sub) {
           const priceId = subscription.items.data[0]?.price.id;
-          const plan = getPlanByPriceId(priceId || "") || "free";
-          const planConfig = PLANS[plan];
+          const newPlan = getPlanByPriceId(priceId || "") || "free";
+          const newPlanConfig = PLANS[newPlan];
+          const oldPlanConfig = PLANS[sub.plan as keyof typeof PLANS] || PLANS.free;
 
-          // Get current_period_end from the subscription (accessing via any due to Stripe types)
+          // Get current_period_end from the subscription
           const periodEnd = (subscription as unknown as { current_period_end?: number }).current_period_end;
+
+          // Smart credit adjustment for mid-cycle changes:
+          // - Upgrade: add the difference so unused credits aren't lost
+          // - Downgrade: cap at new plan's max credits
+          // - Same plan: don't change credits (status update only)
+          let credits = sub.credits_remaining;
+          if (newPlan !== sub.plan) {
+            if (newPlanConfig.credits > oldPlanConfig.credits) {
+              // Upgrading — add the credit difference
+              credits = sub.credits_remaining + (newPlanConfig.credits - oldPlanConfig.credits);
+            } else {
+              // Downgrading — cap at new plan's max
+              credits = Math.min(sub.credits_remaining, newPlanConfig.credits);
+            }
+          }
 
           await supabase
             .from("subscriptions")
             .update({
-              plan,
+              plan: newPlan,
               status: subscription.status === "active" ? "active" : "canceled",
               current_period_end: periodEnd ? new Date(periodEnd * 1000).toISOString() : null,
-              credits_remaining: planConfig.credits,
+              credits_remaining: credits,
             })
             .eq("user_id", sub.user_id);
         }
