@@ -25,6 +25,7 @@ import { AuthModal } from "@/components/auth/AuthModal";
 import { useAuth } from "@/lib/auth/AuthContext";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { useToast } from "@/components/Toast";
+import { Footer } from "@/components/layout/Footer";
 
 import type { SavedProjectMeta, ProjectContext, UploadedImage } from "@/lib/types";
 
@@ -661,6 +662,8 @@ function HomePageContent() {
           </motion.div>
 
         </div>
+
+        <Footer />
 
         <AuthModal
           isOpen={chat.showAuthModal}
