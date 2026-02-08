@@ -574,6 +574,10 @@ export function useChat({
   const handlePillClick = useCallback((pill: string) => {
     if (isGenerating) return;
     const lowerPill = pill.toLowerCase();
+    if (lowerPill.includes("upgrade")) {
+      window.location.href = "/billing";
+      return;
+    }
     if (lowerPill.includes("call") || lowerPill.includes("phone") || lowerPill.includes("voice")) {
       setIsOnCall(true);
       return;

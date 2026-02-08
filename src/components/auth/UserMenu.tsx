@@ -2,7 +2,8 @@
 
 import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { User, LogOut, Cloud, HardDrive, ChevronDown } from "lucide-react";
+import { User, LogOut, Cloud, HardDrive, ChevronDown, CreditCard } from "lucide-react";
+import Link from "next/link";
 import { useAuth } from "@/lib/auth/AuthContext";
 import { AuthModal } from "./AuthModal";
 
@@ -114,11 +115,23 @@ export function UserMenu() {
                 <span>Cloud sync enabled</span>
               </div>
               {credits !== null && (
-                <div className="flex items-center gap-2 px-3 py-2 text-[12px] text-zinc-400">
+                <Link
+                  href="/billing"
+                  onClick={() => setShowDropdown(false)}
+                  className="flex items-center gap-2 px-3 py-2 text-[12px] text-zinc-400 hover:bg-zinc-700/50 rounded-lg transition-colors"
+                >
                   <span className="w-3.5 h-3.5 flex items-center justify-center text-[10px] font-bold text-green-400">⚡</span>
                   <span>{credits} credits left</span>
-                </div>
+                </Link>
               )}
+              <Link
+                href="/billing"
+                onClick={() => setShowDropdown(false)}
+                className="flex items-center gap-2 px-3 py-2 rounded-lg text-[12px] text-zinc-400 hover:bg-zinc-700/50 transition-colors"
+              >
+                <CreditCard className="w-3.5 h-3.5" />
+                <span>Billing</span>
+              </Link>
             </div>
 
             <div className="border-t border-zinc-700/50 pt-1">
