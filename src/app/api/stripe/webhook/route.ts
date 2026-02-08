@@ -51,7 +51,7 @@ export async function POST(request: NextRequest) {
       case "checkout.session.completed": {
         const session = event.data.object as Stripe.Checkout.Session;
         const userId = session.metadata?.supabase_user_id;
-        const plan = session.metadata?.plan as "pro" | "team";
+        const plan = session.metadata?.plan as "pro";
 
         if (userId && plan) {
           const planConfig = PLANS[plan];

@@ -24,7 +24,6 @@ export const env = {
   stripeSecretKey: optionalEnv("STRIPE_SECRET_KEY"),
   stripeWebhookSecret: optionalEnv("STRIPE_WEBHOOK_SECRET"),
   stripeProPriceId: optionalEnv("STRIPE_PRO_PRICE_ID"),
-  stripeTeamPriceId: optionalEnv("STRIPE_TEAM_PRICE_ID"),
 
   // Supabase admin (only needed for webhook route)
   supabaseServiceRoleKey: optionalEnv("SUPABASE_SERVICE_ROLE_KEY"),

@@ -16,7 +16,7 @@ async function checkProPlan(supabase: Awaited<ReturnType<typeof createClient>>, 
     .select("plan")
     .eq("user_id", userId)
     .single();
-  return data?.plan === "pro" || data?.plan === "team";
+  return data?.plan === "pro";
 }
 
 // POST: Add a custom domain to a project

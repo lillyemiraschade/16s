@@ -25,7 +25,7 @@ export async function POST(request: NextRequest) {
 
     const { plan } = await request.json() as { plan: PlanType };
 
-    if (plan !== "pro" && plan !== "team") {
+    if (plan !== "pro") {
       return apiError("Invalid plan", 400);
     }
 

@@ -105,7 +105,7 @@ CREATE TABLE IF NOT EXISTS subscriptions (
   stripe_subscription_id TEXT,
   plan TEXT DEFAULT 'free',
   status TEXT DEFAULT 'active',
-  credits_remaining INTEGER DEFAULT 50,
+  credits_remaining INTEGER DEFAULT 10,
   credits_reset_at TIMESTAMPTZ,
   current_period_end TIMESTAMPTZ,
   created_at TIMESTAMPTZ DEFAULT NOW(),
@@ -231,7 +231,7 @@ SET search_path = public
 AS $$
 BEGIN
   INSERT INTO subscriptions (user_id, plan, status, credits_remaining)
-  VALUES (NEW.id, 'free', 'active', 50);
+  VALUES (NEW.id, 'free', 'active', 10);
   RETURN NEW;
 END;
 $$;

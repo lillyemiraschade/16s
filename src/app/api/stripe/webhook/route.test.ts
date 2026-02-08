@@ -8,9 +8,8 @@ vi.mock("@/lib/stripe/config", () => ({
   }),
   getPlanByPriceId: (id: string) => (id === "price_pro" ? "pro" : null),
   PLANS: {
-    free: { credits: 50 },
-    pro: { credits: 500 },
-    team: { credits: 2000 },
+    free: { credits: 10 },
+    pro: { credits: 75 },
   },
 }));
 
@@ -79,7 +78,7 @@ describe("Stripe webhook", () => {
         plan: "pro",
         status: "active",
         stripe_subscription_id: "sub_123",
-        credits_remaining: 500,
+        credits_remaining: 75,
       })
     );
   });
@@ -105,7 +104,7 @@ describe("Stripe webhook", () => {
         plan: "free",
         status: "canceled",
         stripe_subscription_id: null,
-        credits_remaining: 50,
+        credits_remaining: 10,
       })
     );
   });
@@ -129,7 +128,7 @@ describe("Stripe webhook", () => {
     expect(mockSelect).toHaveBeenCalledWith("user_id, plan");
     expect(mockUpdate).toHaveBeenCalledWith(
       expect.objectContaining({
-        credits_remaining: 500,
+        credits_remaining: 75,
       })
     );
   });

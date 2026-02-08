@@ -2,7 +2,7 @@
 
 import { useState, useEffect, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
-import { Check, Zap, Crown, Users, ExternalLink, AlertCircle } from "lucide-react";
+import { Check, Minus, ExternalLink, ChevronDown } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useAuth } from "@/lib/auth/AuthContext";
@@ -15,27 +15,54 @@ const PLANS = {
   free: {
     name: "Free",
     price: 0,
-    icon: Zap,
-    credits: 50,
-    features: ["50 AI generations/month", "3 projects", "1 deployment", "Basic support"],
+    credits: 10,
+    features: [
+      { text: "10 generations/month", included: true },
+      { text: "2 sites", included: true },
+      { text: "1 live deployment", included: true },
+      { text: "Community support", included: true },
+      { text: "Custom domains", included: false },
+      { text: "GitHub export", included: false },
+      { text: "Form submissions", included: false },
+      { text: "Priority support", included: false },
+    ],
   },
   pro: {
     name: "Pro",
-    price: 20,
-    icon: Crown,
-    credits: 500,
-    features: ["500 AI generations/month", "Unlimited projects", "10 deployments", "Custom domains", "Priority support"],
-  },
-  team: {
-    name: "Team",
-    price: 50,
-    icon: Users,
-    credits: 2000,
-    features: ["2000 AI generations/month", "Unlimited projects", "Unlimited deployments", "Team collaboration", "Analytics", "Dedicated support"],
+    price: 24,
+    credits: 75,
+    features: [
+      { text: "75 generations/month", included: true },
+      { text: "25 sites", included: true },
+      { text: "10 live deployments", included: true },
+      { text: "Custom domains", included: true },
+      { text: "GitHub export", included: true },
+      { text: "Form submissions", included: true },
+      { text: "Priority support", included: true },
+    ],
   },
 } as const;
 
 type PlanKey = keyof typeof PLANS;
+
+const FAQ = [
+  {
+    q: "What counts as a generation?",
+    a: "Each message you send that produces or modifies a website counts as one generation. Discussion-mode messages and voice calls that don\u2019t generate code are free.",
+  },
+  {
+    q: "Do unused credits roll over?",
+    a: "No. Credits reset at the start of each billing cycle. Use them or lose them.",
+  },
+  {
+    q: "Can I cancel anytime?",
+    a: "Yes. Cancel from the Manage Subscription portal. You\u2019ll keep Pro access until the end of your current billing period.",
+  },
+  {
+    q: "What happens if I downgrade?",
+    a: "Your sites stay live, but you\u2019ll be limited to Free-tier quotas. Extra deployments beyond the free limit won\u2019t be removed, but you can\u2019t create new ones.",
+  },
+];
 
 interface Subscription {
   plan: string;
@@ -59,7 +86,7 @@ export default function BillingPageWrapper() {
 }
 
 function BillingPage() {
-  const { user, loading: authLoading, isConfigured } = useAuth();
+  const { user, loading: authLoading } = useAuth();
   const searchParams = useSearchParams();
   const [subscription, setSubscription] = useState<Subscription | null>(null);
   const [loadingSub, setLoadingSub] = useState(true);
@@ -67,6 +94,7 @@ function BillingPage() {
   const [portalLoading, setPortalLoading] = useState(false);
   const [showAuthModal, setShowAuthModal] = useState(false);
   const [toast, setToast] = useState<{ type: "success" | "error"; message: string } | null>(null);
+  const [openFaq, setOpenFaq] = useState<number | null>(null);
 
   const success = searchParams.get("success") === "true";
   const canceled = searchParams.get("canceled") === "true";
@@ -89,7 +117,6 @@ function BillingPage() {
         if (error) throw error;
         setSubscription(data ?? null);
       } catch {
-        // No subscription row yet — show as free plan
         setSubscription(null);
       } finally {
         setLoadingSub(false);
@@ -151,18 +178,20 @@ function BillingPage() {
     );
   }
 
+  const usageRatio = subscription ? subscription.credits_remaining / PLANS[currentPlan].credits : 1;
+
   return (
     <div className="min-h-screen bg-[#0a0a0b]">
       {/* Toast */}
       {toast && (
         <div className={`fixed top-4 right-4 z-50 px-4 py-3 rounded-lg text-[13px] font-medium shadow-lg ${
-          toast.type === "success" ? "bg-green-500/90 text-white" : "bg-red-500/90 text-white"
+          toast.type === "success" ? "bg-green-500/90 text-white" : "bg-zinc-700 text-zinc-200"
         }`}>
           {toast.message}
         </div>
       )}
 
-      {/* Success/Cancel banners (persistent) */}
+      {/* Success/Cancel banners */}
       {success && (
         <div className="bg-green-500/10 border-b border-green-500/20 px-4 py-3 text-center text-[13px] font-medium text-green-400">
           &#10003; Welcome to Pro! Your credits have been updated.
@@ -195,23 +224,20 @@ function BillingPage() {
         <UserMenu />
       </header>
 
-      <main className="max-w-5xl mx-auto px-4 md:px-6 py-6 md:py-10">
+      <main className="max-w-3xl mx-auto px-4 md:px-6 py-6 md:py-10">
         <h1 className="text-xl md:text-2xl font-semibold text-zinc-100 mb-2">Billing</h1>
         <p className="text-[14px] text-zinc-500 mb-8">Manage your plan and usage.</p>
 
-        {/* Out of credits banner */}
+        {/* Out of credits alert */}
         {user && currentPlan === "free" && subscription && subscription.credits_remaining <= 0 && (
-          <div className="mb-6 p-4 rounded-xl bg-amber-500/10 border border-amber-500/20 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
-            <div className="flex items-center gap-2">
-              <AlertCircle className="w-4 h-4 text-amber-400 shrink-0" />
-              <span className="text-[13px] font-medium text-amber-300">
-                You&apos;ve used all your credits. Upgrade to continue building.
-              </span>
-            </div>
+          <div className="mb-6 p-4 rounded-xl bg-white/[0.04] border border-white/[0.06] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+            <span className="text-[13px] font-medium text-zinc-300">
+              You&apos;ve used all your credits. Upgrade to continue building.
+            </span>
             <button
               onClick={() => handleUpgrade("pro")}
               disabled={!!upgrading}
-              className="px-4 py-2 text-[13px] font-semibold bg-green-500/80 hover:bg-green-500 text-white rounded-lg transition-colors disabled:opacity-50 shrink-0"
+              className="px-4 py-2 text-[13px] font-semibold bg-green-500 hover:bg-green-400 text-black rounded-lg transition-colors disabled:opacity-50 shrink-0"
             >
               {upgrading === "pro" ? "Redirecting..." : "Upgrade to Pro \u2192"}
             </button>
@@ -226,15 +252,13 @@ function BillingPage() {
                 <div className="flex items-center gap-2 mb-1">
                   <span className="text-[13px] text-zinc-500 uppercase tracking-wider font-medium">Current Plan</span>
                   <span className={`px-2 py-0.5 text-[11px] font-semibold rounded-full ${
-                    currentPlan === "team" ? "bg-purple-500/15 text-purple-400" :
-                    currentPlan === "pro" ? "bg-green-500/15 text-green-400" :
-                    "bg-zinc-500/15 text-zinc-400"
+                    currentPlan === "pro" ? "bg-green-500/15 text-green-400" : "bg-zinc-500/15 text-zinc-400"
                   }`}>
                     {PLANS[currentPlan].name}
                   </span>
                   {subscription.status === "past_due" && (
-                    <span className="flex items-center gap-1 px-2 py-0.5 text-[11px] font-medium bg-amber-500/15 text-amber-400 rounded-full">
-                      <AlertCircle className="w-3 h-3" /> Past Due
+                    <span className="px-2 py-0.5 text-[11px] font-medium bg-zinc-500/15 text-zinc-400 rounded-full">
+                      Past Due
                     </span>
                   )}
                 </div>
@@ -265,94 +289,71 @@ function BillingPage() {
             <div className="mt-4">
               <div className="h-2 bg-white/[0.04] rounded-full overflow-hidden">
                 <div
-                  className={`h-full rounded-full transition-all ${
-                    subscription.credits_remaining / PLANS[currentPlan].credits < 0.1
-                      ? "bg-red-500"
-                      : subscription.credits_remaining / PLANS[currentPlan].credits < 0.3
-                      ? "bg-amber-500"
-                      : "bg-green-500"
-                  }`}
-                  style={{ width: `${Math.min(100, (subscription.credits_remaining / PLANS[currentPlan].credits) * 100)}%` }}
+                  className={`h-full rounded-full transition-all ${usageRatio < 0.1 ? "bg-red-500" : "bg-green-500"}`}
+                  style={{ width: `${Math.min(100, usageRatio * 100)}%` }}
                 />
               </div>
             </div>
           </div>
         )}
 
-        {/* Plan cards */}
+        {/* Plan cards — two columns centered */}
         <h2 className="text-[16px] font-semibold text-zinc-200 mb-4">
           {user ? "Compare Plans" : "Choose a Plan"}
         </h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-2xl mx-auto">
           {(Object.entries(PLANS) as [PlanKey, typeof PLANS[PlanKey]][]).map(([key, plan]) => {
             const isCurrent = user && currentPlan === key;
-            const isDowngrade = user && (
-              (currentPlan === "team") ||
-              (currentPlan === "pro" && key === "free")
-            );
-            const Icon = plan.icon;
+            const isDowngrade = user && currentPlan === "pro" && key === "free";
 
             return (
               <div
                 key={key}
                 className={`relative p-5 rounded-xl border transition-all ${
                   isCurrent
-                    ? "bg-green-500/[0.03] border-green-500/20"
+                    ? "bg-white/[0.02] border-zinc-600"
                     : "bg-white/[0.02] border-white/[0.06] hover:border-white/[0.12]"
                 }`}
               >
                 {isCurrent && (
-                  <span className="absolute top-3 right-3 px-2 py-0.5 text-[10px] font-semibold text-green-400 bg-green-500/10 rounded-full">
-                    CURRENT
+                  <span className="absolute top-3 right-3 text-[11px] font-medium text-zinc-500">
+                    Your current plan
                   </span>
                 )}
-                <div className={`w-9 h-9 rounded-lg flex items-center justify-center mb-3 ${
-                  key === "team" ? "bg-purple-500/15" :
-                  key === "pro" ? "bg-green-500/15" :
-                  "bg-zinc-500/15"
-                }`}>
-                  <Icon className={`w-4.5 h-4.5 ${
-                    key === "team" ? "text-purple-400" :
-                    key === "pro" ? "text-green-400" :
-                    "text-zinc-400"
-                  }`} />
-                </div>
                 <h3 className="text-[16px] font-semibold text-zinc-100 mb-1">{plan.name}</h3>
-                <div className="flex items-baseline gap-1 mb-4">
+                <div className="flex items-baseline gap-1 mb-5">
                   <span className="text-2xl font-bold text-zinc-100">${plan.price}</span>
                   {plan.price > 0 && <span className="text-[13px] text-zinc-500">/month</span>}
                 </div>
-                <ul className="space-y-2 mb-5">
+                <ul className="space-y-2.5 mb-5">
                   {plan.features.map((feature, idx) => (
-                    <li key={idx} className="flex items-start gap-2 text-[13px] text-zinc-400">
-                      <Check className="w-4 h-4 text-green-500 mt-0.5 shrink-0" />
-                      {feature}
+                    <li key={idx} className="flex items-start gap-2 text-[13px]">
+                      {feature.included ? (
+                        <Check className={`w-4 h-4 mt-0.5 shrink-0 ${key === "pro" ? "text-green-500" : "text-zinc-500"}`} />
+                      ) : (
+                        <Minus className="w-4 h-4 mt-0.5 shrink-0 text-zinc-700" />
+                      )}
+                      <span className={feature.included ? "text-zinc-400" : "text-zinc-600"}>
+                        {feature.text}
+                      </span>
                     </li>
                   ))}
                 </ul>
                 {isCurrent ? (
-                  <div className="w-full py-2 text-center text-[13px] font-medium text-zinc-500">
-                    Your current plan
+                  <div className="w-full py-2.5 text-center text-[13px] font-medium text-zinc-600 border border-white/[0.06] rounded-lg">
+                    Current plan
                   </div>
                 ) : key === "free" ? (
-                  <div className="w-full py-2 text-center text-[13px] font-medium text-zinc-600">
-                    {user ? "Downgrade via Manage Subscription" : "Sign up to start"}
-                  </div>
-                ) : isDowngrade && key !== currentPlan ? (
-                  <div className="w-full py-2 text-center text-[13px] font-medium text-zinc-600">
-                    Change via Manage Subscription
+                  <div className="w-full py-2.5 text-center text-[13px] font-medium text-zinc-600">
+                    {user ? (isDowngrade ? "Downgrade via Manage Subscription" : "") : "Sign up to start"}
                   </div>
                 ) : (
                   <button
                     onClick={() => handleUpgrade(key)}
                     disabled={!!upgrading}
-                    className={`w-full py-2.5 text-[13px] font-semibold rounded-lg transition-colors disabled:opacity-50 ${
-                      key === "pro"
-                        ? "bg-green-500/80 hover:bg-green-500 text-white"
-                        : "bg-purple-500/80 hover:bg-purple-500 text-white"
-                    }`}
+                    className="w-full py-2.5 text-[13px] font-semibold rounded-lg transition-colors disabled:opacity-50 bg-green-500 hover:bg-green-400 text-black"
                   >
-                    {upgrading === key ? "Redirecting..." : `Upgrade to ${plan.name}`}
+                    {upgrading === key ? "Redirecting..." : "Upgrade to Pro"}
                   </button>
                 )}
               </div>
@@ -366,12 +367,45 @@ function BillingPage() {
             <p className="text-[14px] text-zinc-500 mb-4">Sign in to view your plan and manage billing.</p>
             <button
               onClick={() => setShowAuthModal(true)}
-              className="px-5 py-2.5 text-[14px] font-medium bg-green-500/80 hover:bg-green-500 text-white rounded-lg transition-colors"
+              className="px-5 py-2.5 text-[14px] font-medium bg-green-500 hover:bg-green-400 text-black rounded-lg transition-colors"
             >
               Sign In
             </button>
           </div>
         )}
+
+        {/* FAQ */}
+        <div className="mt-12">
+          <h2 className="text-[16px] font-semibold text-zinc-200 mb-4">Frequently Asked Questions</h2>
+          <div className="space-y-2">
+            {FAQ.map((item, idx) => (
+              <div
+                key={idx}
+                className="rounded-xl bg-white/[0.02] border border-white/[0.06]"
+              >
+                <button
+                  onClick={() => setOpenFaq(openFaq === idx ? null : idx)}
+                  className="w-full flex items-center justify-between px-4 py-3.5 text-left"
+                >
+                  <span className="text-[13px] font-medium text-zinc-300">{item.q}</span>
+                  <ChevronDown className={`w-4 h-4 text-zinc-600 shrink-0 ml-4 transition-transform ${openFaq === idx ? "rotate-180" : ""}`} />
+                </button>
+                {openFaq === idx && (
+                  <div className="px-4 pb-3.5 -mt-1">
+                    <p className="text-[13px] text-zinc-500 leading-relaxed">{item.a}</p>
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Footer links */}
+        <div className="mt-12 pt-6 border-t border-white/[0.04] flex items-center justify-center gap-6">
+          <a href="/privacy" className="text-[12px] text-zinc-600 hover:text-zinc-400 transition-colors">Privacy</a>
+          <a href="/terms" className="text-[12px] text-zinc-600 hover:text-zinc-400 transition-colors">Terms</a>
+          <a href="mailto:hello@try16s.app" className="text-[12px] text-zinc-600 hover:text-zinc-400 transition-colors">Contact</a>
+        </div>
       </main>
 
       <Footer />

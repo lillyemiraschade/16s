@@ -32,28 +32,19 @@ export const PLANS = {
   free: {
     name: "Free",
     price: 0,
-    credits: 50,
-    projects: 3,
+    credits: 10,
+    projects: 2,
     deployments: 1,
-    features: ["50 AI generations/month", "3 projects", "1 deployment", "Basic support"],
+    features: ["10 generations/month", "2 sites", "1 live deployment", "Community support"],
   },
   pro: {
     name: "Pro",
-    price: 20,
+    price: 24,
     priceId: process.env.STRIPE_PRO_PRICE_ID,
-    credits: 500,
-    projects: -1, // unlimited
+    credits: 75,
+    projects: 25,
     deployments: 10,
-    features: ["500 AI generations/month", "Unlimited projects", "10 deployments", "Custom domains", "Priority support"],
-  },
-  team: {
-    name: "Team",
-    price: 50,
-    priceId: process.env.STRIPE_TEAM_PRICE_ID,
-    credits: 2000,
-    projects: -1,
-    deployments: -1,
-    features: ["2000 AI generations/month", "Unlimited projects", "Unlimited deployments", "Team collaboration", "Analytics", "Dedicated support"],
+    features: ["75 generations/month", "25 sites", "10 live deployments", "Custom domains", "GitHub export", "Form submissions", "Priority support"],
   },
 } as const;
 
@@ -61,6 +52,5 @@ export type PlanType = keyof typeof PLANS;
 
 export function getPlanByPriceId(priceId: string): PlanType | null {
   if (priceId === PLANS.pro.priceId) return "pro";
-  if (priceId === PLANS.team.priceId) return "team";
   return null;
 }
