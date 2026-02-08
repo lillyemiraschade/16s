@@ -400,12 +400,6 @@ function BillingPage() {
           </div>
         </div>
 
-        {/* Footer links */}
-        <div className="mt-12 pt-6 border-t border-white/[0.04] flex items-center justify-center gap-6">
-          <a href="/privacy" className="text-[12px] text-zinc-600 hover:text-zinc-400 transition-colors">Privacy</a>
-          <a href="/terms" className="text-[12px] text-zinc-600 hover:text-zinc-400 transition-colors">Terms</a>
-          <a href="mailto:hello@try16s.app" className="text-[12px] text-zinc-600 hover:text-zinc-400 transition-colors">Contact</a>
-        </div>
       </main>
 
       <Footer />
