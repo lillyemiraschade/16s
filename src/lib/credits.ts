@@ -1,7 +1,11 @@
 import { createClient } from "@/lib/supabase/server";
+import { PLANS } from "@/lib/stripe/config";
+
+const PERIOD_MS = 30 * 24 * 60 * 60 * 1000; // 30 days
 
 /**
  * Check and deduct credits for an authenticated user.
+ * Auto-resets credits when the billing period expires (covers free + paid users).
  * Uses optimistic concurrency control to prevent double-spending.
  * Fail-closed: denies request if credit check fails to prevent abuse.
  */
@@ -16,12 +20,13 @@ export async function checkAndDeductCredits(
 
     const { data: subscription, error: fetchError } = await supabase
       .from("subscriptions")
-      .select("credits_remaining")
+      .select("credits_remaining, plan, current_period_end")
       .eq("user_id", userId)
       .single();
 
     if (fetchError || !subscription) {
       console.debug("[Credits] No subscription found, creating default...");
+      const freePlan = PLANS.free;
       try {
         const { data: created, error: insertError } = await supabase
           .from("subscriptions")
@@ -29,7 +34,8 @@ export async function checkAndDeductCredits(
             user_id: userId,
             plan: "free",
             status: "active",
-            credits_remaining: 50,
+            credits_remaining: freePlan.credits,
+            current_period_end: new Date(Date.now() + PERIOD_MS).toISOString(),
           }, { onConflict: "user_id" })
           .select("credits_remaining")
           .single();
@@ -50,16 +56,50 @@ export async function checkAndDeductCredits(
       }
     }
 
-    if (subscription.credits_remaining < creditsToDeduct) {
-      return { success: false, remaining: subscription.credits_remaining, error: "insufficient_credits" };
+    // Auto-reset credits if the billing period has expired
+    let creditsRemaining = subscription.credits_remaining;
+    const now = Date.now();
+
+    if (subscription.current_period_end) {
+      const periodEnd = new Date(subscription.current_period_end).getTime();
+      if (now >= periodEnd) {
+        const planConfig = PLANS[subscription.plan as keyof typeof PLANS] || PLANS.free;
+        creditsRemaining = planConfig.credits;
+        const newPeriodEnd = new Date(now + PERIOD_MS).toISOString();
+
+        console.debug(`[Credits] Period expired for user ${userId}, resetting to ${creditsRemaining} credits`);
+
+        const { error: resetError } = await supabase
+          .from("subscriptions")
+          .update({
+            credits_remaining: creditsRemaining,
+            current_period_end: newPeriodEnd,
+          })
+          .eq("user_id", userId)
+          .eq("current_period_end", subscription.current_period_end);
+
+        if (resetError) {
+          console.error("[Credits] Failed to reset credits:", resetError);
+        }
+      }
+    } else {
+      // Legacy row with no period end — backfill it
+      await supabase
+        .from("subscriptions")
+        .update({ current_period_end: new Date(now + PERIOD_MS).toISOString() })
+        .eq("user_id", userId);
+    }
+
+    if (creditsRemaining < creditsToDeduct) {
+      return { success: false, remaining: creditsRemaining, error: "insufficient_credits" };
     }
 
     // Deduct with optimistic concurrency control
     const { data: updated, error: updateError } = await supabase
       .from("subscriptions")
-      .update({ credits_remaining: subscription.credits_remaining - creditsToDeduct })
+      .update({ credits_remaining: creditsRemaining - creditsToDeduct })
       .eq("user_id", userId)
-      .eq("credits_remaining", subscription.credits_remaining)
+      .eq("credits_remaining", creditsRemaining)
       .select("credits_remaining");
 
     if (updateError) {
