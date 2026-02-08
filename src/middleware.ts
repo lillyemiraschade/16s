@@ -22,7 +22,8 @@ export async function middleware(request: NextRequest) {
   const origin = request.headers.get("origin");
 
   // CORS check on API routes — reject cross-origin requests from unknown origins
-  if (pathname.startsWith("/api/")) {
+  // /api/forms is exempt — deployed sites on any domain POST form submissions back
+  if (pathname.startsWith("/api/") && !pathname.startsWith("/api/forms")) {
     if (!isAllowedOrigin(origin)) {
       return new NextResponse(JSON.stringify({ error: "Forbidden" }), {
         status: 403,
@@ -47,16 +48,16 @@ export async function middleware(request: NextRequest) {
   // Skip Supabase session handling if not configured
   if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
     const response = NextResponse.next();
-    // Add CORS headers for API routes
-    if (pathname.startsWith("/api/") && origin && isAllowedOrigin(origin)) {
+    // Add CORS headers for API routes (/api/forms handles its own)
+    if (pathname.startsWith("/api/") && !pathname.startsWith("/api/forms") && origin && isAllowedOrigin(origin)) {
       response.headers.set("Access-Control-Allow-Origin", origin);
     }
     return response;
   }
 
   const response = await updateSession(request);
-  // Add CORS headers for API routes
-  if (pathname.startsWith("/api/") && origin && isAllowedOrigin(origin)) {
+  // Add CORS headers for API routes (/api/forms handles its own)
+  if (pathname.startsWith("/api/") && !pathname.startsWith("/api/forms") && origin && isAllowedOrigin(origin)) {
     response.headers.set("Access-Control-Allow-Origin", origin);
   }
   return response;
