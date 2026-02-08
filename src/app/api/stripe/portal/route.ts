@@ -34,7 +34,7 @@ export async function POST(request: NextRequest) {
       return apiError("No billing account found", 400);
     }
 
-    const origin = request.headers.get("origin") || "http://localhost:3000";
+    const origin = request.headers.get("origin") || (process.env.NEXT_PUBLIC_APP_URL || "https://try16s.app");
 
     // Create portal session
     const session = await getStripe().billingPortal.sessions.create({

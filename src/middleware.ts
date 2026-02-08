@@ -5,8 +5,7 @@ import { updateSession } from "@/lib/supabase/middleware";
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL || "https://try16s.app";
 const ALLOWED_ORIGINS = [
   APP_URL,
-  "https://16s.dev",
-  "https://www.16s.dev",
+  "https://www.try16s.app",
 ];
 if (process.env.NODE_ENV === "development") {
   ALLOWED_ORIGINS.push("http://localhost:3000");
