@@ -192,17 +192,7 @@ function BillingPage() {
             </Link>
           </nav>
         </div>
-        <div className="flex items-center gap-2 md:gap-4">
-          {!user && isConfigured && (
-            <button
-              onClick={() => setShowAuthModal(true)}
-              className="px-2 md:px-3 py-1.5 text-[12px] md:text-[13px] font-medium text-zinc-300 hover:text-white transition-colors"
-            >
-              Sign in
-            </button>
-          )}
-          <UserMenu />
-        </div>
+        <UserMenu />
       </header>
 
       <main className="max-w-5xl mx-auto px-4 md:px-6 py-6 md:py-10">

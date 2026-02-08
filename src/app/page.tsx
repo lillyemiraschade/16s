@@ -481,6 +481,12 @@ function HomePageContent() {
                 <span className="hidden sm:inline">My Projects</span>
                 <span className="sm:hidden">Projects</span>
               </Link>
+              <Link
+                href="/billing"
+                className="px-2.5 md:px-3 py-1.5 text-[12px] md:text-[13px] font-medium text-zinc-400 hover:text-zinc-200 rounded-lg transition-colors"
+              >
+                Pricing
+              </Link>
             </nav>
           </div>
           {user ? (
