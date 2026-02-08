@@ -89,13 +89,20 @@ function BillingPage() {
     if (!supabase) { setLoadingSub(false); return; }
 
     (async () => {
-      const { data } = await supabase
-        .from("subscriptions")
-        .select("plan, status, credits_remaining, credits_reset_at, current_period_end, stripe_customer_id")
-        .eq("user_id", user.id)
-        .single();
-      setSubscription(data ?? null);
-      setLoadingSub(false);
+      try {
+        const { data, error } = await supabase
+          .from("subscriptions")
+          .select("plan, status, credits_remaining, credits_reset_at, current_period_end, stripe_customer_id")
+          .eq("user_id", user.id)
+          .single();
+        if (error) throw error;
+        setSubscription(data ?? null);
+      } catch {
+        // No subscription row yet — show as free plan
+        setSubscription(null);
+      } finally {
+        setLoadingSub(false);
+      }
     })();
   }, [authLoading, user]);
 

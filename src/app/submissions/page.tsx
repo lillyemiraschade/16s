@@ -27,6 +27,7 @@ export default function SubmissionsPage() {
   const router = useRouter();
   const [submissions, setSubmissions] = useState<FormSubmission[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const [expandedId, setExpandedId] = useState<string | null>(null);
 
   useEffect(() => {
@@ -38,9 +39,12 @@ export default function SubmissionsPage() {
   useEffect(() => {
     if (!user) return;
     fetch("/api/forms?projectId=all")
-      .then((res) => res.json())
+      .then((res) => {
+        if (!res.ok) throw new Error("Failed to load submissions");
+        return res.json();
+      })
       .then((data) => setSubmissions(data.submissions || []))
-      .catch(() => {})
+      .catch((err) => setError(err.message || "Failed to load submissions"))
       .finally(() => setLoading(false));
   }, [user]);
 
@@ -88,6 +92,16 @@ export default function SubmissionsPage() {
         {loading ? (
           <div className="flex items-center justify-center py-20">
             <div className="w-6 h-6 border-2 border-zinc-700 border-t-green-500 rounded-full animate-spin" />
+          </div>
+        ) : error ? (
+          <div className="text-center py-20">
+            <p className="text-zinc-400 text-[15px] mb-2">{error}</p>
+            <button
+              onClick={() => { setError(null); setLoading(true); window.location.reload(); }}
+              className="text-[13px] text-green-400 hover:text-green-300 transition-colors"
+            >
+              Try again
+            </button>
           </div>
         ) : submissions.length === 0 ? (
           <div className="flex flex-col items-center justify-center py-20 text-center">

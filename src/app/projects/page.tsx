@@ -25,6 +25,7 @@ export default function ProjectsPage() {
   const [deleteConfirm, setDeleteConfirm] = useState<string | null>(null);
   const [showAuthModal, setShowAuthModal] = useState(false);
   const [projectDomains, setProjectDomains] = useState<Record<string, string>>({}); // projectId → domain
+  const [loadError, setLoadError] = useState<string | null>(null);
 
   // Load projects (wait for migration to complete if signed in)
   useEffect(() => {
@@ -33,7 +34,13 @@ export default function ProjectsPage() {
     if (migrationStatus === "migrating") return;
 
     const loadProjects = async () => {
-      const list = await listProjects();
+      let list: SavedProjectMeta[];
+      try {
+        list = await listProjects();
+      } catch {
+        setLoadError("Failed to load projects");
+        return;
+      }
       setProjects(list);
       // Fetch domains for all projects
       if (user) {
@@ -186,7 +193,17 @@ export default function ProjectsPage() {
         </div>
 
         {/* Projects grid */}
-        {filteredProjects.length === 0 ? (
+        {loadError ? (
+          <div className="text-center py-16 md:py-24">
+            <p className="text-zinc-400 text-[15px] mb-2">{loadError}</p>
+            <button
+              onClick={() => { setLoadError(null); window.location.reload(); }}
+              className="text-[13px] text-green-400 hover:text-green-300 transition-colors"
+            >
+              Try again
+            </button>
+          </div>
+        ) : filteredProjects.length === 0 ? (
           <div className="text-center py-16 md:py-24">
             <div className="w-20 h-20 mx-auto mb-6 rounded-2xl bg-white/[0.03] border border-white/[0.06] flex items-center justify-center">
               <Monitor className="w-9 h-9 text-zinc-600" />
