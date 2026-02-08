@@ -86,6 +86,6 @@ test.describe("Smoke tests", () => {
 
   test("projects page loads", async ({ page }) => {
     await page.goto("/projects");
-    await expect(page.locator("h1", { hasText: "My Projects" })).toBeVisible({ timeout: 10_000 });
+    await expect(page.locator("h1", { hasText: "Projects" })).toBeVisible({ timeout: 10_000 });
   });
 });
