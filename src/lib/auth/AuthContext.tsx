@@ -104,6 +104,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       provider,
       options: {
         redirectTo,
+        ...(provider === "google" && {
+          queryParams: {
+            access_type: "offline",
+            prompt: "consent",
+          },
+        }),
       },
     });
 

@@ -12,13 +12,13 @@ export async function GET(request: Request) {
 
   // Handle OAuth provider errors (e.g., user denied access)
   if (errorParam) {
-    console.debug("[Auth Callback] OAuth error:", errorParam, errorDescription);
+    console.error("[Auth Callback] OAuth error:", errorParam, errorDescription);
     const errorMsg = encodeURIComponent(errorDescription || errorParam);
     return NextResponse.redirect(`${origin}/?auth_error=${errorMsg}`);
   }
 
   if (!code) {
-    console.debug("[Auth Callback] No code provided");
+    console.error("[Auth Callback] No code provided");
     return NextResponse.redirect(`${origin}/?auth_error=no_code`);
   }
 
@@ -27,8 +27,14 @@ export async function GET(request: Request) {
     const { error } = await supabase.auth.exchangeCodeForSession(code);
 
     if (error) {
-      console.debug("[Auth Callback] Session exchange error:", error.message);
-      return NextResponse.redirect(`${origin}/?auth_error=${encodeURIComponent(error.message)}`);
+      console.error("[Auth Callback] Session exchange error:", error.message);
+      let userMessage = error.message;
+      if (error.message.includes("code verifier")) {
+        userMessage = "Session expired. Please try signing in again.";
+      } else if (error.message.includes("already used")) {
+        userMessage = "This sign-in link has already been used. Please try again.";
+      }
+      return NextResponse.redirect(`${origin}/?auth_error=${encodeURIComponent(userMessage)}`);
     }
 
     // Send welcome email for new signups (fire-and-forget)
@@ -47,7 +53,7 @@ export async function GET(request: Request) {
     console.debug("[Auth Callback] Success, redirecting to:", next);
     return NextResponse.redirect(`${origin}${next}`);
   } catch (err) {
-    console.debug("[Auth Callback] Exception:", err);
+    console.error("[Auth Callback] Exception:", err);
     const message = err instanceof Error ? err.message : "Unknown error";
     return NextResponse.redirect(`${origin}/?auth_error=${encodeURIComponent(message)}`);
   }
