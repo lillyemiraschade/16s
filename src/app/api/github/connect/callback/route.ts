@@ -31,7 +31,7 @@ export async function GET(request: NextRequest) {
     const tokenData = await tokenRes.json();
 
     if (!tokenData.access_token) {
-      console.debug("[GitHub] Token exchange failed:", tokenData);
+      console.error("[GitHub] Token exchange failed:", tokenData);
       return NextResponse.redirect(`${origin}/?github_error=token_failed`);
     }
 
@@ -42,13 +42,13 @@ export async function GET(request: NextRequest) {
     });
 
     if (error) {
-      console.debug("[GitHub] Failed to store token:", error);
+      console.error("[GitHub] Failed to store token:", error);
       return NextResponse.redirect(`${origin}/?github_error=store_failed`);
     }
 
     return NextResponse.redirect(`${origin}/?github=connected`);
   } catch (err) {
-    console.debug("[GitHub] Callback error:", err);
+    console.error("[GitHub] Callback error:", err);
     return NextResponse.redirect(`${origin}/?github_error=unknown`);
   }
 }

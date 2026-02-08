@@ -76,7 +76,7 @@ export async function POST(request: NextRequest) {
       });
 
     if (insertError) {
-      console.debug("[Forms] Insert error:", insertError);
+      console.error("[Forms] Insert error:", insertError);
       return new Response(JSON.stringify({ error: "Failed to save" }), {
         status: 500,
         headers: { "Content-Type": "application/json", ...CORS_HEADERS },
@@ -130,7 +130,7 @@ export async function GET(request: NextRequest) {
     const { data: submissions, error } = await query;
 
     if (error) {
-      console.debug("[Forms] Query error:", error);
+      console.error("[Forms] Query error:", error);
       return apiError("Failed to fetch submissions", 500);
     }
 

@@ -67,7 +67,7 @@ export async function POST(req: NextRequest) {
 
     if (!response.ok) {
       const errorText = await response.text();
-      console.debug("remove.bg error:", errorText);
+      console.error("remove.bg error:", errorText);
       return apiError("Background removal failed", 500);
     }
 
@@ -78,7 +78,7 @@ export async function POST(req: NextRequest) {
 
     return apiSuccess({ imageData: resultDataUrl });
   } catch (error) {
-    console.debug("remove-bg API error:", error);
+    console.error("remove-bg API error:", error);
     return apiError("Failed to process image", 500);
   }
 }

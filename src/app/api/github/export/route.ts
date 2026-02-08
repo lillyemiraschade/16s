@@ -122,7 +122,7 @@ export async function POST(request: NextRequest) {
     const repoUrl = `https://github.com/${owner}/${repoName}`;
     return apiSuccess({ success: true, repoUrl });
   } catch (error) {
-    console.debug("[GitHub Export] Error:", error);
+    console.error("[GitHub Export] Error:", error);
     return apiError("Export failed", 500);
   }
 }

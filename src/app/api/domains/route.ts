@@ -99,7 +99,7 @@ export async function POST(request: NextRequest) {
     const vercelData = await vercelRes.json();
 
     if (!vercelRes.ok) {
-      console.debug("[Domains] Vercel API error:", vercelData);
+      console.error("[Domains] Vercel API error:", vercelData);
       return apiError(vercelData.error?.message || "Failed to add domain to Vercel", 500);
     }
 
@@ -117,7 +117,7 @@ export async function POST(request: NextRequest) {
       .single();
 
     if (dbError) {
-      console.debug("[Domains] DB error:", dbError);
+      console.error("[Domains] DB error:", dbError);
       return apiError("Failed to save domain", 500);
     }
 

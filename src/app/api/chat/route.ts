@@ -127,7 +127,7 @@ export async function POST(req: Request) {
     if (!parsed.success) {
       const issue = parsed.error.issues[0];
       const errorDetail = issue ? `${issue.path.join(".")}: ${issue.message}` : "Invalid format";
-      console.debug("[Chat API] Validation failed:", errorDetail);
+      console.error("[Chat API] Validation failed:", errorDetail);
       return new Response(
         JSON.stringify({ error: `Invalid request: ${errorDetail}` }),
         { status: 400, headers: { "Content-Type": "application/json" } }
@@ -475,7 +475,7 @@ Use this context to inform your designs. Don't ask about things you already know
               break; // Success — exit retry loop
             } catch (apiError) {
               const errMsg = apiError instanceof Error ? apiError.message : String(apiError);
-              console.debug(`[Chat API] API error (attempt ${attempt + 1}):`, errMsg);
+              console.error(`[Chat API] API error (attempt ${attempt + 1}):`, errMsg);
 
               const isRetryable = !tokensStreamed && (
                 errMsg.includes("overloaded") || errMsg.includes("529") ||
@@ -508,7 +508,7 @@ Use this context to inform your designs. Don't ask about things you already know
           controller.close();
         } catch (error) {
           const errMsg = error instanceof Error ? error.message : String(error);
-          console.debug("[Chat API] Stream error:", errMsg);
+          console.error("[Chat API] Stream error:", errMsg);
 
           const { message: userMessage } = getUserFriendlyError(errMsg);
           sendEvent({ type: "error", message: userMessage });
@@ -526,7 +526,7 @@ Use this context to inform your designs. Don't ask about things you already know
     });
   } catch (error) {
     const errMsg = error instanceof Error ? error.message : String(error);
-    console.debug("[Chat API] Outer error:", errMsg);
+    console.error("[Chat API] Outer error:", errMsg);
 
     const { message: userMessage, statusCode } = getUserFriendlyError(errMsg);
     return new Response(
