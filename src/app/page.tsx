@@ -87,10 +87,10 @@ export default function WaitlistPage() {
         >
           {/* Headline */}
           <div className="text-center mb-12 sm:mb-16">
-            <h1 className="text-[24px] sm:text-[34px] md:text-[40px] font-normal text-zinc-400 tracking-[-0.02em] leading-[1.2]">
+            <h1 className="text-[24px] sm:text-[34px] md:text-[40px] font-normal text-zinc-300 tracking-[-0.02em] leading-[1.2]">
               Your dream website is just a
               <br />
-              <span className="text-white">phone call away</span>
+              phone call away
             </h1>
           </div>
 
