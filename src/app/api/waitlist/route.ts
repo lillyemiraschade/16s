@@ -72,6 +72,7 @@ export async function POST(req: NextRequest) {
   } catch (err) {
     const message = err instanceof Error ? err.message : String(err);
     console.error('Waitlist error:', message);
-    return NextResponse.json({ error: 'Failed to join' }, { status: 500 });
+    // Return the actual error so we can debug remotely
+    return NextResponse.json({ error: message }, { status: 500 });
   }
 }
