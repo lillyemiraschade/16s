@@ -87,14 +87,11 @@ export default function WaitlistPage() {
         >
           {/* Headline */}
           <div className="text-center mb-12 sm:mb-16">
-            <h1 className="text-[28px] sm:text-[38px] md:text-[44px] font-semibold text-white tracking-[-0.03em] leading-[1.15]">
-              try16s.app
-            </h1>
-            <p className="mt-4 sm:mt-5 text-[17px] sm:text-[21px] md:text-[24px] font-normal text-zinc-400 leading-snug tracking-[-0.01em]">
+            <h1 className="text-[24px] sm:text-[34px] md:text-[40px] font-normal text-zinc-400 tracking-[-0.02em] leading-[1.2]">
               Your dream website is just a
               <br />
-              phone call away
-            </p>
+              <span className="text-white">phone call away</span>
+            </h1>
           </div>
 
           {/* Email form */}
