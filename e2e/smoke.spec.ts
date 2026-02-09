@@ -29,12 +29,11 @@ function mockChatRoute(page: import("@playwright/test").Page) {
 }
 
 test.describe("Smoke tests", () => {
-  test("waitlist page loads", async ({ page }) => {
+  test("marketing page loads", async ({ page }) => {
     await page.goto("/");
-    await expect(page.getByText("Your dream website is")).toBeVisible();
-    await expect(page.getByText("just a phone call away")).toBeVisible();
+    await expect(page.getByText("Your dream website is just a text away")).toBeVisible();
     await expect(page.getByPlaceholder("enter your email")).toBeVisible();
-    await expect(page.getByText("Join waitlist")).toBeVisible();
+    await expect(page.getByText("Join waitlist").first()).toBeVisible();
   });
 
   test("app loads with welcome screen", async ({ page }) => {
