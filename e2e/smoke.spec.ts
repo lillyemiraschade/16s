@@ -29,8 +29,16 @@ function mockChatRoute(page: import("@playwright/test").Page) {
 }
 
 test.describe("Smoke tests", () => {
-  test("homepage loads with welcome screen", async ({ page }) => {
+  test("waitlist page loads", async ({ page }) => {
     await page.goto("/");
+    await expect(page.getByText("Your dream website is")).toBeVisible();
+    await expect(page.getByText("just a phone call away")).toBeVisible();
+    await expect(page.getByPlaceholder("enter your email")).toBeVisible();
+    await expect(page.getByText("Join waitlist")).toBeVisible();
+  });
+
+  test("app loads with welcome screen", async ({ page }) => {
+    await page.goto("/app");
     // Welcome headline
     await expect(page.locator("h1")).toBeVisible();
     // Input area
@@ -40,7 +48,7 @@ test.describe("Smoke tests", () => {
   });
 
   test("idea pills are visible and clickable", async ({ page }) => {
-    await page.goto("/");
+    await page.goto("/app");
     // The marquee renders idea suggestion buttons
     const pills = page.locator("button").filter({ hasText: /.{10,}/ });
     // Wait for at least one idea pill to appear (they load from useWelcome)
@@ -49,7 +57,7 @@ test.describe("Smoke tests", () => {
 
   test("send prompt and receive streaming response", async ({ page }) => {
     await mockChatRoute(page);
-    await page.goto("/");
+    await page.goto("/app");
 
     // Type a prompt
     const textarea = page.locator("textarea");
@@ -70,7 +78,7 @@ test.describe("Smoke tests", () => {
 
   test("preview iframe renders HTML from response", async ({ page }) => {
     await mockChatRoute(page);
-    await page.goto("/");
+    await page.goto("/app");
 
     const textarea = page.locator("textarea");
     await textarea.fill("Build me a site");
