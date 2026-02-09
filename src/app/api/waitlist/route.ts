@@ -11,12 +11,17 @@ export async function POST(req: NextRequest) {
     }
 
     const serviceEmail = process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL;
-    const privateKey = process.env.GOOGLE_PRIVATE_KEY?.replace(/\\n/g, '\n');
     const sheetId = process.env.GOOGLE_SHEET_ID;
+    let privateKey = process.env.GOOGLE_PRIVATE_KEY;
 
     if (!serviceEmail || !privateKey || !sheetId) {
-      console.error('Missing Google Sheets env vars');
+      console.error('Missing Google Sheets env vars:', { serviceEmail: !!serviceEmail, privateKey: !!privateKey, sheetId: !!sheetId });
       return NextResponse.json({ error: 'Waitlist not configured' }, { status: 500 });
+    }
+
+    // Handle both literal newlines and escaped \n in the private key
+    if (privateKey.includes('\\n')) {
+      privateKey = privateKey.replace(/\\n/g, '\n');
     }
 
     const auth = new JWT({
@@ -37,7 +42,8 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json({ success: true });
   } catch (err) {
-    console.error('Waitlist error:', err);
+    const message = err instanceof Error ? err.message : String(err);
+    console.error('Waitlist error:', message);
     return NextResponse.json({ error: 'Failed to join' }, { status: 500 });
   }
 }
