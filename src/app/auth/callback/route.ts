@@ -7,19 +7,19 @@ export async function GET(request: Request) {
   const errorParam = searchParams.get("error");
   const errorDescription = searchParams.get("error_description");
   // Sanitize `next` param to prevent open redirect (e.g., next=@evil.com → https://16s.dev@evil.com)
-  const rawNext = searchParams.get("next") ?? "/";
-  const next = rawNext.startsWith("/") && !rawNext.startsWith("//") ? rawNext : "/";
+  const rawNext = searchParams.get("next") ?? "/app";
+  const next = rawNext.startsWith("/") && !rawNext.startsWith("//") ? rawNext : "/app";
 
   // Handle OAuth provider errors (e.g., user denied access)
   if (errorParam) {
     console.error("[Auth Callback] OAuth error:", errorParam, errorDescription);
     const errorMsg = encodeURIComponent(errorDescription || errorParam);
-    return NextResponse.redirect(`${origin}/?auth_error=${errorMsg}`);
+    return NextResponse.redirect(`${origin}/app?auth_error=${errorMsg}`);
   }
 
   if (!code) {
     console.error("[Auth Callback] No code provided");
-    return NextResponse.redirect(`${origin}/?auth_error=no_code`);
+    return NextResponse.redirect(`${origin}/app?auth_error=no_code`);
   }
 
   try {
@@ -34,7 +34,7 @@ export async function GET(request: Request) {
       } else if (error.message.includes("already used")) {
         userMessage = "This sign-in link has already been used. Please try again.";
       }
-      return NextResponse.redirect(`${origin}/?auth_error=${encodeURIComponent(userMessage)}`);
+      return NextResponse.redirect(`${origin}/app?auth_error=${encodeURIComponent(userMessage)}`);
     }
 
     // Send welcome email for new signups (fire-and-forget)
@@ -55,6 +55,6 @@ export async function GET(request: Request) {
   } catch (err) {
     console.error("[Auth Callback] Exception:", err);
     const message = err instanceof Error ? err.message : "Unknown error";
-    return NextResponse.redirect(`${origin}/?auth_error=${encodeURIComponent(message)}`);
+    return NextResponse.redirect(`${origin}/app?auth_error=${encodeURIComponent(message)}`);
   }
 }

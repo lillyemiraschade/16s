@@ -93,7 +93,7 @@ export default function ProjectsPage() {
 
   const handleOpenProject = (id: string) => {
     // Navigate to main page and load project (using URL param)
-    router.push(`/?project=${id}`);
+    router.push(`/app?project=${id}`);
   };
 
   const formatRelativeTime = (ts: number) => {
@@ -124,12 +124,12 @@ export default function ProjectsPage() {
       {/* Header */}
       <header className="h-14 border-b border-white/[0.04] px-4 md:px-6 flex items-center justify-between">
         <div className="flex items-center gap-4 md:gap-6">
-          <Link href="/">
+          <Link href="/app">
             <Image src="/logo.png" alt="16s" width={26} height={26} className="object-contain" />
           </Link>
           <nav className="flex items-center gap-0.5">
             <Link
-              href="/"
+              href="/app"
               className="px-2.5 py-1.5 text-[12px] md:text-[13px] font-medium text-zinc-400 hover:text-zinc-200 rounded-lg transition-colors"
             >
               Home
@@ -150,7 +150,7 @@ export default function ProjectsPage() {
         <div className="flex items-center justify-between mb-6 md:mb-8">
           <h1 className="text-xl md:text-2xl font-semibold text-zinc-100">Projects</h1>
           <Link
-            href="/"
+            href="/app"
             className="flex items-center gap-1.5 md:gap-2 px-3 md:px-4 py-2 bg-green-500/80 hover:bg-green-500 text-white text-[12px] md:text-[13px] font-medium rounded-lg transition-colors"
           >
             <Plus className="w-4 h-4" />
@@ -206,7 +206,7 @@ export default function ProjectsPage() {
             </p>
             {!search && (
               <Link
-                href="/"
+                href="/app"
                 className="inline-flex items-center gap-2 px-5 py-2.5 bg-green-500/80 hover:bg-green-500 text-white text-[14px] font-medium rounded-lg transition-colors glow-green"
               >
                 <Plus className="w-4 h-4" />

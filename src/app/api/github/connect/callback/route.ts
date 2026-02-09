@@ -10,7 +10,7 @@ export async function GET(request: NextRequest) {
   const origin = request.nextUrl.origin;
 
   if (!code || !GITHUB_CLIENT_ID || !GITHUB_CLIENT_SECRET) {
-    return NextResponse.redirect(`${origin}/?github_error=missing_config`);
+    return NextResponse.redirect(`${origin}/app?github_error=missing_config`);
   }
 
   try {
@@ -32,7 +32,7 @@ export async function GET(request: NextRequest) {
 
     if (!tokenData.access_token) {
       console.error("[GitHub] Token exchange failed:", tokenData);
-      return NextResponse.redirect(`${origin}/?github_error=token_failed`);
+      return NextResponse.redirect(`${origin}/app?github_error=token_failed`);
     }
 
     // Store token in user metadata
@@ -43,12 +43,12 @@ export async function GET(request: NextRequest) {
 
     if (error) {
       console.error("[GitHub] Failed to store token:", error);
-      return NextResponse.redirect(`${origin}/?github_error=store_failed`);
+      return NextResponse.redirect(`${origin}/app?github_error=store_failed`);
     }
 
-    return NextResponse.redirect(`${origin}/?github=connected`);
+    return NextResponse.redirect(`${origin}/app?github=connected`);
   } catch (err) {
     console.error("[GitHub] Callback error:", err);
-    return NextResponse.redirect(`${origin}/?github_error=unknown`);
+    return NextResponse.redirect(`${origin}/app?github_error=unknown`);
   }
 }

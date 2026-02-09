@@ -25,6 +25,8 @@
     "axe-core": "^4.11.1",
     "clsx": "^2.1.1",
     "framer-motion": "^11.13.1",
+    "google-auth-library": "^10.5.0",
+    "google-spreadsheet": "^5.0.2",
     "html2canvas": "^1.4.1",
     "jszip": "^3.10.1",
     "lucide-react": "^0.460.0",

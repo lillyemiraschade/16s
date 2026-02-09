@@ -36,7 +36,7 @@ export default function SubmissionsPage() {
 
   useEffect(() => {
     if (!authLoading && !user) {
-      router.push("/");
+      router.push("/app");
     }
   }, [user, authLoading, router]);
 
@@ -80,11 +80,11 @@ export default function SubmissionsPage() {
       {/* Header */}
       <header className="h-14 border-b border-white/[0.04] px-4 md:px-6 flex items-center justify-between">
         <div className="flex items-center gap-4 md:gap-6">
-          <Link href="/">
+          <Link href="/app">
             <Image src="/logo.png" alt="16s" width={26} height={26} className="object-contain" />
           </Link>
           <nav className="flex items-center gap-0.5">
-            <Link href="/" className="px-2.5 py-1.5 text-[12px] md:text-[13px] font-medium text-zinc-400 hover:text-zinc-200 rounded-lg transition-colors">
+            <Link href="/app" className="px-2.5 py-1.5 text-[12px] md:text-[13px] font-medium text-zinc-400 hover:text-zinc-200 rounded-lg transition-colors">
               Home
             </Link>
             <Link href="/submissions" className="px-2.5 py-1.5 text-[12px] md:text-[13px] font-medium text-zinc-100 bg-white/[0.06] rounded-lg">

@@ -46,7 +46,7 @@ export default async function SharePage({ params }: SharePageProps) {
       <header className="h-10 bg-zinc-900 border-b border-zinc-800 flex items-center justify-between px-4 flex-shrink-0">
         <span className="text-zinc-400 text-xs">
           Built with{" "}
-          <a href="/" className="text-green-400 hover:underline font-medium">
+          <a href="/app" className="text-green-400 hover:underline font-medium">
             16s
           </a>
         </span>
@@ -55,7 +55,7 @@ export default async function SharePage({ params }: SharePageProps) {
           <span className="text-[9px] text-zinc-700">&middot;</span>
           <a href="/terms" className="text-[9px] text-zinc-600 hover:text-zinc-400 transition-colors">Terms</a>
           <a
-            href="/"
+            href="/app"
             className="text-xs text-green-400 hover:text-green-300 hover:underline transition-colors ml-2"
           >
             Build your own &rarr;

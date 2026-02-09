@@ -11,20 +11,20 @@ const inter = Inter({
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL || "https://try16s.app";
 
 export const metadata: Metadata = {
-  title: "16s — AI Web Designer",
-  description: "Describe your dream website in plain English. 16s builds it in seconds with AI — live preview, one-click deploy.",
+  title: "16s — Build websites by talking to AI",
+  description: "Your dream website is just a phone call away. Join the waitlist for 16s.",
   metadataBase: new URL(APP_URL),
   openGraph: {
-    title: "16s — AI Web Designer",
-    description: "Describe your dream website in plain English. 16s builds it in seconds with AI.",
+    title: "16s — Build websites by talking to AI",
+    description: "Your dream website is just a phone call away. Join the waitlist for 16s.",
     url: APP_URL,
     siteName: "16s",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "16s — AI Web Designer",
-    description: "Describe your dream website in plain English. 16s builds it in seconds with AI.",
+    title: "16s — Build websites by talking to AI",
+    description: "Your dream website is just a phone call away. Join the waitlist for 16s.",
   },
   alternates: {
     canonical: APP_URL,
