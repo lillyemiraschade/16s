@@ -90,20 +90,20 @@ export default function WaitlistPage() {
           }}
         >
           {/* Headline */}
-          <div className="text-center mb-8">
-            <p className="text-[15px] sm:text-[16px] font-normal text-zinc-400 leading-relaxed">
+          <div className="text-center mb-10">
+            <p className="text-[22px] sm:text-[28px] font-normal text-zinc-400 leading-snug tracking-[-0.01em]">
               Your dream website is
             </p>
-            <p className="text-[15px] sm:text-[16px] font-normal text-zinc-100 leading-relaxed">
+            <p className="text-[22px] sm:text-[28px] font-normal text-zinc-100 leading-snug tracking-[-0.01em]">
               just a phone call away
             </p>
           </div>
 
           {/* Email form */}
           {status === "success" ? (
-            <p className="text-[14px] text-zinc-500">you&apos;re on the list</p>
+            <p className="text-[16px] text-zinc-500">you&apos;re on the list</p>
           ) : (
-            <form onSubmit={handleSubmit} className="flex items-center gap-4">
+            <form onSubmit={handleSubmit} className="flex items-center gap-6">
               <input
                 type="email"
                 value={email}
@@ -113,13 +113,13 @@ export default function WaitlistPage() {
                 }}
                 placeholder="enter your email"
                 required
-                className="bg-transparent border-0 border-b border-white/10 text-[14px] text-zinc-300 placeholder:text-zinc-700 focus:outline-none focus:border-white/20 transition-colors pb-1 w-[220px] sm:w-[260px]"
+                className="bg-transparent border-0 border-b border-white/10 text-[16px] text-zinc-300 placeholder:text-zinc-700 focus:outline-none focus:border-white/20 transition-colors pb-2 w-[240px] sm:w-[300px]"
                 style={{ borderRadius: 0 }}
               />
               <button
                 type="submit"
                 disabled={status === "loading"}
-                className="text-[13px] font-medium text-green-400 hover:text-green-300 transition-colors disabled:opacity-50"
+                className="text-[15px] font-medium text-green-400 hover:text-green-300 transition-colors disabled:opacity-50"
               >
                 {status === "loading" ? "..." : "Join waitlist"}
               </button>
@@ -128,16 +128,16 @@ export default function WaitlistPage() {
 
           {/* Error */}
           {status === "error" && errorMsg && (
-            <p className="text-[11px] text-red-400/60 mt-2">{errorMsg}</p>
+            <p className="text-[12px] text-red-400/60 mt-3">{errorMsg}</p>
           )}
 
           {/* Contact */}
-          <div className="mt-12 flex items-center gap-1 text-[12px]">
+          <div className="mt-16 flex items-center gap-2 text-[14px]">
             <a
               href="mailto:main@try16s.com"
               className="text-zinc-600 hover:text-zinc-400 transition-colors"
             >
-              main@try16s.com
+              Email
             </a>
             <span className="text-zinc-700"> &middot; </span>
             <a
