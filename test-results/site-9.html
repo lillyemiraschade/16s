@@ -1,0 +1,1236 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Summit Wealth | Financial Advisory</title>
+  <meta name="description" content="Summit Wealth provides comprehensive financial planning and investment management for individuals and families seeking long-term wealth preservation.">
+  <meta property="og:title" content="Summit Wealth | Financial Advisory">
+  <meta property="og:description" content="Comprehensive financial planning and investment management for long-term wealth preservation.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@300;600&family=Source+Sans+3:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --space-1: 4px; --space-2: 8px; --space-3: 12px; --space-4: 16px;
+      --space-5: 20px; --space-6: 24px; --space-8: 32px; --space-10: 40px;
+      --space-12: 48px; --space-16: 64px; --space-20: 80px; --space-24: 96px; --space-32: 128px;
+
+      --text-xs: clamp(0.75rem, 0.7rem + 0.25vw, 0.875rem);
+      --text-sm: clamp(0.875rem, 0.8rem + 0.35vw, 1rem);
+      --text-base: clamp(1rem, 0.9rem + 0.5vw, 1.125rem);
+      --text-lg: clamp(1.125rem, 1rem + 0.6vw, 1.25rem);
+      --text-xl: clamp(1.25rem, 1rem + 1vw, 1.5rem);
+      --text-2xl: clamp(1.5rem, 1.2rem + 1.5vw, 2rem);
+      --text-3xl: clamp(1.875rem, 1.4rem + 2.3vw, 2.5rem);
+      --text-4xl: clamp(2.25rem, 1.5rem + 3.5vw, 3.5rem);
+      --text-5xl: clamp(3rem, 2rem + 5vw, 5rem);
+
+      --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
+      --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -2px rgba(0,0,0,0.1);
+      --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -4px rgba(0,0,0,0.1);
+      --shadow-xl: 0 20px 25px -5px rgba(0,0,0,0.1), 0 8px 10px -6px rgba(0,0,0,0.1);
+      --radius-sm: 6px; --radius-md: 8px; --radius-lg: 12px; --radius-xl: 16px;
+      --ease-out: cubic-bezier(0,0,0.2,1);
+      --ease-in: cubic-bezier(0.4,0,1,1);
+      --ease-in-out: cubic-bezier(0.4,0,0.2,1);
+      --ease-bounce: cubic-bezier(0.34,1.56,0.64,1);
+    }
+
+    [data-theme="light"] {
+      --bg: #FAFAFA;
+      --surface: #FFFFFF;
+      --text: #18181B;
+      --text-muted: #52525B;
+      --border: rgba(0,0,0,0.1);
+      --accent: #1E3A5F;
+      --accent-light: rgba(30, 58, 95, 0.05);
+      --accent-medium: rgba(30, 58, 95, 0.15);
+      --footer-bg: #18181B;
+      --footer-text: #FAFAFA;
+    }
+
+    [data-theme="dark"] {
+      --bg: #0D0D0D;
+      --surface: #1C1C1E;
+      --text: #FAFAFA;
+      --text-muted: #A1A1AA;
+      --border: rgba(255,255,255,0.1);
+      --accent: #4A7BA7;
+      --accent-light: rgba(74, 123, 167, 0.1);
+      --accent-medium: rgba(74, 123, 167, 0.2);
+      --footer-bg: #111111;
+      --footer-text: #FAFAFA;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Source Sans 3', sans-serif;
+      font-size: var(--text-base);
+      line-height: 1.6;
+      color: var(--text);
+      background: var(--bg);
+      overflow-x: hidden;
+      transition: background 0.3s var(--ease-out), color 0.3s var(--ease-out);
+    }
+
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 clamp(16px, 5vw, 64px);
+    }
+
+    /* Skip Link */
+    .skip-link {
+      position: absolute;
+      top: -40px;
+      left: 0;
+      background: var(--accent);
+      color: white;
+      padding: var(--space-2) var(--space-4);
+      text-decoration: none;
+      z-index: 100;
+    }
+    .skip-link:focus {
+      top: 0;
+    }
+
+    /* Navigation */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      background: rgba(250, 250, 250, 0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      z-index: 50;
+      transition: background 0.3s var(--ease-out);
+    }
+
+    [data-theme="dark"] nav {
+      background: rgba(13, 13, 13, 0.85);
+    }
+
+    nav .container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: var(--space-5);
+      padding-bottom: var(--space-5);
+    }
+
+    .logo {
+      font-family: 'Fraunces', serif;
+      font-size: var(--text-xl);
+      font-weight: 600;
+      color: var(--text);
+      text-decoration: none;
+      letter-spacing: -0.02em;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: var(--space-8);
+      list-style: none;
+      align-items: center;
+    }
+
+    .nav-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: var(--text-sm);
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      transition: color 0.2s var(--ease-out);
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active {
+      color: var(--accent);
+    }
+
+    .theme-toggle {
+      background: none;
+      border: 1px solid var(--border);
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s var(--ease-out);
+    }
+
+    .theme-toggle:hover {
+      transform: translateY(-2px);
+      border-color: var(--accent);
+    }
+
+    .theme-toggle svg {
+      width: 18px;
+      height: 18px;
+      stroke: var(--text);
+    }
+
+    .menu-toggle {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: var(--space-2);
+    }
+
+    .menu-toggle span {
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: var(--text);
+      margin: 5px 0;
+      transition: 0.3s;
+    }
+
+    @media (max-width: 768px) {
+      .nav-links {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        width: 280px;
+        height: 100vh;
+        background: var(--surface);
+        flex-direction: column;
+        padding: var(--space-24) var(--space-8);
+        gap: var(--space-6);
+        box-shadow: var(--shadow-xl);
+        transition: right 0.3s var(--ease-out);
+        align-items: flex-start;
+      }
+
+      .nav-links.open {
+        right: 0;
+      }
+
+      .menu-toggle {
+        display: block;
+      }
+    }
+
+    /* Page Transitions */
+    .page {
+      display: none;
+      opacity: 0;
+      animation: fadeIn 0.3s var(--ease-out) forwards;
+    }
+
+    .page.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      to { opacity: 1; }
+    }
+
+    /* Scroll Reveal */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.6s var(--ease-out), transform 0.6s var(--ease-out);
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .reveal-stagger > * {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.6s var(--ease-out), transform 0.6s var(--ease-out);
+    }
+
+    .reveal-stagger.visible > *:nth-child(1) { transition-delay: 0s; opacity: 1; transform: translateY(0); }
+    .reveal-stagger.visible > *:nth-child(2) { transition-delay: 0.1s; opacity: 1; transform: translateY(0); }
+    .reveal-stagger.visible > *:nth-child(3) { transition-delay: 0.2s; opacity: 1; transform: translateY(0); }
+    .reveal-stagger.visible > *:nth-child(4) { transition-delay: 0.3s; opacity: 1; transform: translateY(0); }
+
+    @media (prefers-reduced-motion: reduce) {
+      .reveal, .reveal-stagger > * {
+        opacity: 1;
+        transform: none;
+        transition: none;
+      }
+    }
+
+    /* Hero */
+    .hero {
+      margin-top: 80px;
+      padding: var(--space-32) 0;
+      background: var(--bg);
+    }
+
+    .hero .container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-16);
+      align-items: center;
+    }
+
+    .hero-content h1 {
+      font-family: 'Fraunces', serif;
+      font-size: clamp(2.5rem, 6vw, 4.5rem);
+      font-weight: 300;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      margin-bottom: var(--space-6);
+      color: var(--text);
+    }
+
+    .hero-content p {
+      font-size: var(--text-lg);
+      color: var(--text-muted);
+      line-height: 1.7;
+      margin-bottom: var(--space-8);
+      max-width: 540px;
+    }
+
+    .hero-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-8);
+      margin-top: var(--space-12);
+    }
+
+    .stat {
+      border-left: 2px solid var(--accent);
+      padding-left: var(--space-4);
+    }
+
+    .stat-value {
+      font-family: 'Fraunces', serif;
+      font-size: var(--text-3xl);
+      font-weight: 600;
+      color: var(--accent);
+      display: block;
+      line-height: 1;
+      margin-bottom: var(--space-2);
+    }
+
+    .stat-label {
+      font-size: var(--text-sm);
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      font-weight: 500;
+    }
+
+    .hero-image {
+      position: relative;
+      aspect-ratio: 4/5;
+      background: linear-gradient(135deg, var(--accent-light) 0%, var(--accent-medium) 100%);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+    }
+
+    .hero-image::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: 
+        repeating-linear-gradient(0deg, transparent, transparent 63px, var(--border) 63px, var(--border) 64px),
+        repeating-linear-gradient(90deg, transparent, transparent 63px, var(--border) 63px, var(--border) 64px);
+      opacity: 0.3;
+    }
+
+    @media (max-width: 768px) {
+      .hero .container {
+        grid-template-columns: 1fr;
+      }
+      .hero-stats {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Services Section */
+    .services {
+      padding: var(--space-24) 0;
+      background: var(--surface);
+    }
+
+    .section-header {
+      max-width: 640px;
+      margin-bottom: var(--space-16);
+    }
+
+    .section-label {
+      font-size: var(--text-xs);
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      font-weight: 600;
+      margin-bottom: var(--space-3);
+      display: block;
+    }
+
+    .section-title {
+      font-family: 'Fraunces', serif;
+      font-size: var(--text-4xl);
+      font-weight: 600;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      color: var(--text);
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--space-16) var(--space-12);
+    }
+
+    .service-item {
+      position: relative;
+    }
+
+    .service-item h3 {
+      font-family: 'Fraunces', serif;
+      font-size: var(--text-2xl);
+      font-weight: 600;
+      margin-bottom: var(--space-4);
+      color: var(--text);
+      letter-spacing: -0.01em;
+    }
+
+    .service-item p {
+      color: var(--text-muted);
+      line-height: 1.7;
+    }
+
+    .service-item::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 48px;
+      height: 2px;
+      background: var(--accent);
+      margin-bottom: var(--space-6);
+      transform: translateY(-16px);
+    }
+
+    @media (max-width: 768px) {
+      .services-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Approach Section */
+    .approach {
+      padding: var(--space-32) 0;
+      background: var(--bg);
+    }
+
+    .approach-content {
+      display: grid;
+      grid-template-columns: 40% 1fr;
+      gap: var(--space-20);
+      align-items: start;
+    }
+
+    .approach-intro {
+      position: sticky;
+      top: 120px;
+    }
+
+    .approach-intro h2 {
+      font-family: 'Fraunces', serif;
+      font-size: var(--text-4xl);
+      font-weight: 600;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      margin-bottom: var(--space-6);
+      color: var(--text);
+    }
+
+    .approach-intro p {
+      font-size: var(--text-lg);
+      color: var(--text-muted);
+      line-height: 1.7;
+    }
+
+    .approach-steps {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-16);
+    }
+
+    .step {
+      background: var(--surface);
+      padding: var(--space-10);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border);
+    }
+
+    .step-number {
+      font-family: 'Fraunces', serif;
+      font-size: var(--text-sm);
+      color: var(--accent);
+      font-weight: 600;
+      margin-bottom: var(--space-3);
+      display: block;
+      letter-spacing: 0.05em;
+    }
+
+    .step h3 {
+      font-family: 'Fraunces', serif;
+      font-size: var(--text-xl);
+      font-weight: 600;
+      margin-bottom: var(--space-3);
+      color: var(--text);
+    }
+
+    .step p {
+      color: var(--text-muted);
+      line-height: 1.7;
+    }
+
+    @media (max-width: 968px) {
+      .approach-content {
+        grid-template-columns: 1fr;
+      }
+      .approach-intro {
+        position: static;
+      }
+    }
+
+    /* Team Section */
+    .team {
+      padding: var(--space-24) 0;
+      background: var(--accent-light);
+    }
+
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-12);
+      margin-top: var(--space-12);
+    }
+
+    .team-member {
+      text-align: center;
+    }
+
+    .team-photo {
+      width: 100%;
+      aspect-ratio: 3/4;
+      background: linear-gradient(135deg, var(--accent-medium) 0%, var(--accent-light) 100%);
+      border-radius: var(--radius-lg);
+      margin-bottom: var(--space-5);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .team-photo::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.2) 0%, transparent 60%);
+    }
+
+    .team-member h3 {
+      font-family: 'Fraunces', serif;
+      font-size: var(--text-xl);
+      font-weight: 600;
+      margin-bottom: var(--space-2);
+      color: var(--text);
+    }
+
+    .team-member p {
+      font-size: var(--text-sm);
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    @media (max-width: 768px) {
+      .team-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Contact Section */
+    .contact {
+      padding: var(--space-32) 0;
+      background: var(--bg);
+    }
+
+    .contact-content {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-20);
+    }
+
+    .contact-info h2 {
+      font-family: 'Fraunces', serif;
+      font-size: var(--text-4xl);
+      font-weight: 600;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      margin-bottom: var(--space-8);
+      color: var(--text);
+    }
+
+    .contact-details {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-6);
+    }
+
+    .contact-detail {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-2);
+    }
+
+    .contact-detail dt {
+      font-size: var(--text-xs);
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      font-weight: 600;
+    }
+
+    .contact-detail dd {
+      font-size: var(--text-lg);
+      color: var(--text);
+    }
+
+    .contact-detail a {
+      color: var(--accent);
+      text-decoration: none;
+      transition: opacity 0.2s var(--ease-out);
+    }
+
+    .contact-detail a:hover {
+      opacity: 0.7;
+    }
+
+    .contact-form {
+      background: var(--surface);
+      padding: var(--space-10);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border);
+    }
+
+    .form-group {
+      margin-bottom: var(--space-6);
+    }
+
+    .form-group label {
+      display: block;
+      font-size: var(--text-sm);
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: var(--space-2);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+      width: 100%;
+      padding: var(--space-4);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      font-family: 'Source Sans 3', sans-serif;
+      font-size: var(--text-base);
+      background: var(--bg);
+      color: var(--text);
+      transition: border-color 0.2s var(--ease-out), box-shadow 0.2s var(--ease-out);
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus,
+    .form-group select:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-medium);
+    }
+
+    .form-group textarea {
+      resize: vertical;
+      min-height: 120px;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: var(--space-4) var(--space-8);
+      background: var(--accent);
+      color: white;
+      border: none;
+      border-radius: var(--radius-md);
+      font-family: 'Source Sans 3', sans-serif;
+      font-size: var(--text-base);
+      font-weight: 600;
+      text-decoration: none;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      cursor: pointer;
+      transition: all 0.2s var(--ease-out);
+      min-height: 44px;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .btn:active {
+      transform: scale(0.98);
+    }
+
+    .btn:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 2px;
+    }
+
+    .btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .success-message {
+      padding: var(--space-4);
+      background: rgba(34, 197, 94, 0.1);
+      border: 1px solid rgba(34, 197, 94, 0.3);
+      border-radius: var(--radius-md);
+      color: #15803d;
+      margin-top: var(--space-4);
+      display: none;
+    }
+
+    .success-message.show {
+      display: block;
+    }
+
+    @media (max-width: 968px) {
+      .contact-content {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Footer */
+    footer {
+      background: var(--footer-bg);
+      color: var(--footer-text);
+      padding: var(--space-16) 0 var(--space-8) 0;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: var(--space-12);
+      margin-bottom: var(--space-12);
+    }
+
+    .footer-brand h3 {
+      font-family: 'Fraunces', serif;
+      font-size: var(--text-2xl);
+      font-weight: 600;
+      margin-bottom: var(--space-4);
+      color: var(--footer-text);
+    }
+
+    .footer-brand p {
+      color: var(--text-muted);
+      line-height: 1.7;
+      max-width: 320px;
+    }
+
+    .footer-column h4 {
+      font-size: var(--text-sm);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: var(--space-4);
+      color: var(--footer-text);
+    }
+
+    .footer-column ul {
+      list-style: none;
+    }
+
+    .footer-column ul li {
+      margin-bottom: var(--space-3);
+    }
+
+    .footer-column a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: var(--text-sm);
+      transition: color 0.2s var(--ease-out);
+    }
+
+    .footer-column a:hover {
+      color: var(--footer-text);
+    }
+
+    .footer-bottom {
+      padding-top: var(--space-8);
+      border-top: 1px solid rgba(255,255,255,0.1);
+      text-align: center;
+      color: var(--text-muted);
+      font-size: var(--text-sm);
+    }
+
+    @media (max-width: 968px) {
+      .footer-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: var(--space-8);
+      }
+    }
+
+    @media (max-width: 640px) {
+      .footer-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Focus Visible */
+    *:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 2px;
+    }
+  </style>
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to main content</a>
+
+  <nav>
+    <div class="container">
+      <a href="#home" class="logo" onclick="showPage('home'); return false;">Summit Wealth</a>
+      <ul class="nav-links">
+        <li><a href="#home" class="active" onclick="showPage('home'); return false;">Home</a></li>
+        <li><a href="#services" onclick="showPage('services'); return false;">Services</a></li>
+        <li><a href="#approach" onclick="showPage('approach'); return false;">Approach</a></li>
+        <li><a href="#team" onclick="showPage('team'); return false;">Team</a></li>
+        <li><a href="#contact" onclick="showPage('contact'); return false;">Contact</a></li>
+      </ul>
+      <button class="theme-toggle" aria-label="Toggle dark mode">
+        <svg class="sun-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <circle cx="12" cy="12" r="5"/>
+          <line x1="12" y1="1" x2="12" y2="3"/>
+          <line x1="12" y1="21" x2="12" y2="23"/>
+          <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+          <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+          <line x1="1" y1="12" x2="3" y2="12"/>
+          <line x1="21" y1="12" x2="23" y2="12"/>
+          <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+          <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+        </svg>
+      </button>
+      <button class="menu-toggle" aria-label="Toggle menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </nav>
+
+  <main id="main">
+    <!-- Home Page -->
+    <div id="home" class="page active">
+      <section class="hero">
+        <div class="container">
+          <div class="hero-content reveal">
+            <h1>Building wealth with wisdom and discipline</h1>
+            <p>Summit Wealth provides comprehensive financial planning and investment management for individuals and families seeking long-term wealth preservation and growth.</p>
+            <div class="hero-stats reveal-stagger">
+              <div class="stat">
+                <span class="stat-value">$2.4B</span>
+                <span class="stat-label">Assets Under Management</span>
+              </div>
+              <div class="stat">
+                <span class="stat-value">30+</span>
+                <span class="stat-label">Years Experience</span>
+              </div>
+              <div class="stat">
+                <span class="stat-value">850+</span>
+                <span class="stat-label">Client Families</span>
+              </div>
+            </div>
+          </div>
+          <div class="hero-image reveal"></div>
+        </div>
+      </section>
+    </div>
+
+    <!-- Services Page -->
+    <div id="services" class="page">
+      <section class="services">
+        <div class="container">
+          <div class="section-header reveal">
+            <span class="section-label">What We Provide</span>
+            <h2 class="section-title">Comprehensive financial guidance</h2>
+          </div>
+          <div class="services-grid reveal-stagger">
+            <div class="service-item">
+              <h3>Wealth Planning</h3>
+              <p>Develop a holistic financial plan aligned with your goals, values, and timeline. We address every aspect of your financial life — from tax strategy to estate planning.</p>
+            </div>
+            <div class="service-item">
+              <h3>Investment Management</h3>
+              <p>Build and maintain a diversified portfolio tailored to your risk tolerance and objectives. Our approach emphasizes long-term discipline over short-term speculation.</p>
+            </div>
+            <div class="service-item">
+              <h3>Retirement Planning</h3>
+              <p>Design a retirement strategy that provides confidence and clarity. We model income needs, optimize Social Security timing, and plan for healthcare costs.</p>
+            </div>
+            <div class="service-item">
+              <h3>Estate & Legacy</h3>
+              <p>Structure your estate to minimize taxes and ensure your wealth transfers according to your wishes. We coordinate with your legal and tax advisors for seamless execution.</p>
+            </div>
+            <div class="service-item">
+              <h3>Tax Strategy</h3>
+              <p>Reduce your lifetime tax burden through strategic planning. We analyze tax-loss harvesting, Roth conversions, charitable giving, and entity structuring opportunities.</p>
+            </div>
+            <div class="service-item">
+              <h3>Risk Management</h3>
+              <p>Protect your wealth with appropriate insurance coverage. We review life, disability, long-term care, and liability policies to identify gaps and redundancies.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- Approach Page -->
+    <div id="approach" class="page">
+      <section class="approach">
+        <div class="container">
+          <div class="approach-content">
+            <div class="approach-intro reveal">
+              <h2>A disciplined process built on trust</h2>
+              <p>We believe financial planning is a partnership. Our approach emphasizes transparency, clear communication, and alignment with your long-term goals.</p>
+            </div>
+            <div class="approach-steps reveal-stagger">
+              <div class="step">
+                <span class="step-number">STEP 01</span>
+                <h3>Discovery</h3>
+                <p>We begin by understanding your complete financial picture — assets, liabilities, income sources, goals, and concerns. This conversation forms the foundation for everything that follows.</p>
+              </div>
+              <div class="step">
+                <span class="step-number">STEP 02</span>
+                <h3>Strategy Development</h3>
+                <p>Our team analyzes your situation and develops a comprehensive plan addressing investments, taxes, retirement, and estate considerations. We present clear recommendations with rationale.</p>
+              </div>
+              <div class="step">
+                <span class="step-number">STEP 03</span>
+                <h3>Implementation</h3>
+                <p>Once you approve the strategy, we execute with precision — opening accounts, transferring assets, coordinating with your other advisors, and handling all administrative details.</p>
+              </div>
+              <div class="step">
+                <span class="step-number">STEP 04</span>
+                <h3>Ongoing Management</h3>
+                <p>Your life evolves, and your plan should too. We meet regularly to review progress, rebalance portfolios, adjust strategies, and address new opportunities or concerns as they arise.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- Team Page -->
+    <div id="team" class="page">
+      <section class="team">
+        <div class="container">
+          <div class="section-header reveal">
+            <span class="section-label">Our Advisors</span>
+            <h2 class="section-title">Experience you can trust</h2>
+          </div>
+          <div class="team-grid reveal-stagger">
+            <div class="team-member">
+              <div class="team-photo"></div>
+              <h3>[Advisor Name]</h3>
+              <p>Founder & Principal</p>
+            </div>
+            <div class="team-member">
+              <div class="team-photo"></div>
+              <h3>[Advisor Name]</h3>
+              <p>Senior Wealth Advisor</p>
+            </div>
+            <div class="team-member">
+              <div class="team-photo"></div>
+              <h3>[Advisor Name]</h3>
+              <p>Financial Planner</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- Contact Page -->
+    <div id="contact" class="page">
+      <section class="contact">
+        <div class="container">
+          <div class="contact-content">
+            <div class="contact-info reveal">
+              <h2>Let's discuss your financial future</h2>
+              <dl class="contact-details">
+                <div class="contact-detail">
+                  <dt>Phone</dt>
+                  <dd><a href="tel:[Your Phone]">[Your Phone]</a></dd>
+                </div>
+                <div class="contact-detail">
+                  <dt>Email</dt>
+                  <dd><a href="mailto:[Your Email]">[Your Email]</a></dd>
+                </div>
+                <div class="contact-detail">
+                  <dt>Office</dt>
+                  <dd>[Your Address]</dd>
+                </div>
+                <div class="contact-detail">
+                  <dt>Hours</dt>
+                  <dd>Monday – Friday<br>8:00 AM – 5:00 PM</dd>
+                </div>
+              </dl>
+            </div>
+            <form class="contact-form reveal" id="contactForm">
+              <div class="form-group">
+                <label for="name">Full Name</label>
+                <input type="text" id="name" name="name" required>
+              </div>
+              <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" required>
+              </div>
+              <div class="form-group">
+                <label for="phone">Phone</label>
+                <input type="tel" id="phone" name="phone">
+              </div>
+              <div class="form-group">
+                <label for="interest">I'm interested in</label>
+                <select id="interest" name="interest" required>
+                  <option value="">Select a service</option>
+                  <option value="wealth-planning">Wealth Planning</option>
+                  <option value="investment-management">Investment Management</option>
+                  <option value="retirement-planning">Retirement Planning</option>
+                  <option value="estate-legacy">Estate & Legacy</option>
+                  <option value="general-consultation">General Consultation</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="message">Message</label>
+                <textarea id="message" name="message" required></textarea>
+              </div>
+              <button type="submit" class="btn">Request Consultation</button>
+              <div class="success-message" id="successMessage">
+                Thank you for reaching out. We'll be in touch within one business day.
+              </div>
+            </form>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <h3>Summit Wealth</h3>
+          <p>Independent financial advisory serving individuals and families with comprehensive wealth management.</p>
+        </div>
+        <div class="footer-column">
+          <h4>Services</h4>
+          <ul>
+            <li><a href="#services" onclick="showPage('services'); return false;">Wealth Planning</a></li>
+            <li><a href="#services" onclick="showPage('services'); return false;">Investment Management</a></li>
+            <li><a href="#services" onclick="showPage('services'); return false;">Retirement Planning</a></li>
+            <li><a href="#services" onclick="showPage('services'); return false;">Estate & Legacy</a></li>
+          </ul>
+        </div>
+        <div class="footer-column">
+          <h4>Company</h4>
+          <ul>
+            <li><a href="#approach" onclick="showPage('approach'); return false;">Our Approach</a></li>
+            <li><a href="#team" onclick="showPage('team'); return false;">Our Team</a></li>
+            <li><a href="#contact" onclick="showPage('contact'); return false;">Contact</a></li>
+          </ul>
+        </div>
+        <div class="footer-column">
+          <h4>Connect</h4>
+          <ul>
+            <li><a href="#">[LinkedIn]</a></li>
+            <li><a href="mailto:[Your Email]">[Your Email]</a></li>
+            <li><a href="tel:[Your Phone]">[Your Phone]</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2024 Summit Wealth. All rights reserved. Investment advisory services offered through [Firm Name], a registered investment advisor.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Page routing
+    function showPage(pageId) {
+      const pages = document.querySelectorAll('.page');
+      const navLinks = document.querySelectorAll('.nav-links a');
+      
+      pages.forEach(page => {
+        if (page.id === pageId) {
+          page.classList.add('active');
+          // Re-trigger reveal animations
+          page.querySelectorAll('.reveal, .reveal-stagger').forEach(el => {
+            el.classList.remove('visible');
+            setTimeout(() => el.classList.add('visible'), 50);
+          });
+        } else {
+          page.classList.remove('active');
+        }
+      });
+
+      navLinks.forEach(link => {
+        if (link.getAttribute('href') === '#' + pageId) {
+          link.classList.add('active');
+        } else {
+          link.classList.remove('active');
+        }
+      });
+
+      // Close mobile menu if open
+      document.querySelector('.nav-links').classList.remove('open');
+      document.body.style.overflow = '';
+
+      window.location.hash = pageId;
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // Handle browser back/forward
+    window.addEventListener('hashchange', () => {
+      const pageId = window.location.hash.slice(1) || 'home';
+      showPage(pageId);
+    });
+
+    // Load initial page from hash
+    document.addEventListener('DOMContentLoaded', () => {
+      const pageId = window.location.hash.slice(1) || 'home';
+      showPage(pageId);
+    });
+
+    // Mobile menu toggle
+    const menuToggle = document.querySelector('.menu-toggle');
+    const navLinks = document.querySelector('.nav-links');
+
+    if (menuToggle) {
+      menuToggle.addEventListener('click', () => {
+        navLinks.classList.toggle('open');
+        if (navLinks.classList.contains('open')) {
+          document.body.style.overflow = 'hidden';
+        } else {
+          document.body.style.overflow = '';
+        }
+      });
+    }
+
+    // Scroll reveal
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, observerOptions);
+
+    document.querySelectorAll('.reveal, .reveal-stagger').forEach(el => {
+      observer.observe(el);
+    });
+
+    // Theme toggle
+    const themeToggle = document.querySelector('.theme-toggle');
+    const html = document.documentElement;
+
+    // Check for saved theme preference or default to light
+    const currentTheme = localStorage.getItem('theme') || 
+      (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    html.setAttribute('data-theme', currentTheme);
+
+    themeToggle.addEventListener('click', () => {
+      const currentTheme = html.getAttribute('data-theme');
+      const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+      html.setAttribute('data-theme', newTheme);
+      localStorage.setItem('theme', newTheme);
+    });
+
+    // Contact form
+    const contactForm = document.getElementById('contactForm');
+    const successMessage = document.getElementById('successMessage');
+
+    if (contactForm) {
+      contactForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        
+        const submitBtn = contactForm.querySelector('button[type="submit"]');
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Sending...';
+
+        // Simulate form submission
+        setTimeout(() => {
+          // Save to localStorage
+          const formData = {
+            name: contactForm.name.value,
+            email: contactForm.email.value,
+            phone: contactForm.phone.value,
+            interest: contactForm.interest.value,
+            message: contactForm.message.value,
+            timestamp: new Date().toISOString()
+          };
+          
+          const submissions = JSON.parse(localStorage.getItem('contactSubmissions') || '[]');
+          submissions.push(formData);
+          localStorage.setItem('contactSubmissions', JSON.stringify(submissions));
+
+          // Show success message
+          successMessage.classList.add('show');
+          contactForm.reset();
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Request Consultation';
+
+          // Hide success message after 5 seconds
+          setTimeout(() => {
+            successMessage.classList.remove('show');
+          }, 5000);
+        }, 1500);
+      });
+    }
+
+    // Smooth scroll for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        const href = this.getAttribute('href');
+        if (href.length > 1) {
+          const target = document.querySelector(href);
+          if (target && !this.hasAttribute('onclick')) {
+            e.preventDefault();
+            target.scrollIntoView({ behavior: 'smooth' });
+          }
+        }
+      });
+    });
+  </script>
+</body>
+</html>

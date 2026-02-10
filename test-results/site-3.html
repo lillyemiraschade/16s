@@ -1,0 +1,1020 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vance and Wolfe | Criminal Defense Attorneys</title>
+  <meta name="description" content="Aggressive criminal defense representation. Vance and Wolfe fight for your rights with uncompromising dedication.">
+  <meta property="og:title" content="Vance and Wolfe | Criminal Defense Attorneys">
+  <meta property="og:description" content="Aggressive criminal defense representation. Vance and Wolfe fight for your rights with uncompromising dedication.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@300;400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --space-1: 4px; --space-2: 8px; --space-3: 12px; --space-4: 16px;
+      --space-5: 20px; --space-6: 24px; --space-8: 32px; --space-10: 40px;
+      --space-12: 48px; --space-16: 64px; --space-20: 80px; --space-24: 96px; --space-32: 128px;
+      --text-xs: clamp(0.75rem, 0.7rem + 0.25vw, 0.875rem);
+      --text-sm: clamp(0.875rem, 0.8rem + 0.35vw, 1rem);
+      --text-base: clamp(1rem, 0.9rem + 0.5vw, 1.125rem);
+      --text-lg: clamp(1.125rem, 1rem + 0.6vw, 1.25rem);
+      --text-xl: clamp(1.25rem, 1rem + 1vw, 1.5rem);
+      --text-2xl: clamp(1.5rem, 1.2rem + 1.5vw, 2rem);
+      --text-3xl: clamp(1.875rem, 1.4rem + 2.3vw, 2.5rem);
+      --text-4xl: clamp(2.25rem, 1.5rem + 3.5vw, 3.5rem);
+      --text-5xl: clamp(3rem, 2rem + 5vw, 5rem);
+      --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
+      --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -2px rgba(0,0,0,0.1);
+      --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -4px rgba(0,0,0,0.1);
+      --shadow-xl: 0 20px 25px -5px rgba(0,0,0,0.1), 0 8px 10px -6px rgba(0,0,0,0.1);
+      --radius-sm: 6px; --radius-md: 8px; --radius-lg: 12px; --radius-xl: 16px;
+      --ease-out: cubic-bezier(0,0,0.2,1);
+      --ease-in: cubic-bezier(0.4,0,1,1);
+      --ease-in-out: cubic-bezier(0.4,0,0.2,1);
+      --ease-bounce: cubic-bezier(0.34,1.56,0.64,1);
+    }
+
+    [data-theme="dark"] {
+      --bg: #0A0A0B;
+      --surface: #18181B;
+      --text: #FAFAFA;
+      --text-muted: #A1A1AA;
+      --border: rgba(255,255,255,0.1);
+      --accent: #D4AF37;
+      --accent-rgb: 212, 175, 55;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .skip-link {
+      position: absolute;
+      top: -40px;
+      left: 0;
+      background: var(--accent);
+      color: var(--bg);
+      padding: 8px;
+      z-index: 100;
+    }
+
+    .skip-link:focus {
+      top: 0;
+    }
+
+    /* Navigation */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      background: rgba(10, 10, 11, 0.8);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      z-index: 50;
+      transition: all 0.3s var(--ease-out);
+    }
+
+    .nav-container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: var(--space-6) clamp(16px, 5vw, 64px);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-family: 'Fraunces', serif;
+      font-size: var(--text-xl);
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      color: var(--accent);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: var(--space-10);
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: var(--text-sm);
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      transition: color 0.2s var(--ease-out);
+      position: relative;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active {
+      color: var(--accent);
+    }
+
+    .nav-links a.active::after {
+      content: '';
+      position: absolute;
+      bottom: -8px;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: var(--accent);
+    }
+
+    .menu-toggle {
+      display: none;
+      background: none;
+      border: none;
+      color: var(--text);
+      font-size: 24px;
+      cursor: pointer;
+    }
+
+    .mobile-menu {
+      display: none;
+    }
+
+    @media (max-width: 768px) {
+      .nav-links {
+        display: none;
+      }
+
+      .menu-toggle {
+        display: block;
+      }
+
+      .mobile-menu {
+        display: none;
+        position: fixed;
+        top: 0;
+        right: -100%;
+        width: 80%;
+        max-width: 400px;
+        height: 100vh;
+        background: var(--surface);
+        padding: var(--space-24) var(--space-8);
+        transition: right 0.3s var(--ease-out);
+        z-index: 60;
+      }
+
+      .mobile-menu.open {
+        display: block;
+        right: 0;
+      }
+
+      .mobile-menu ul {
+        list-style: none;
+      }
+
+      .mobile-menu ul li {
+        margin-bottom: var(--space-8);
+      }
+
+      .mobile-menu ul li a {
+        font-size: var(--text-lg);
+        font-weight: 500;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        color: var(--text);
+      }
+    }
+
+    /* Container */
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 clamp(16px, 5vw, 64px);
+    }
+
+    /* Page transitions */
+    .page {
+      display: none;
+      animation: fadeIn 0.4s var(--ease-out);
+    }
+
+    .page.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Reveal animations */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.6s var(--ease-out), transform 0.6s var(--ease-out);
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .reveal-stagger > * {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.6s var(--ease-out), transform 0.6s var(--ease-out);
+    }
+
+    .reveal-stagger.visible > *:nth-child(1) { transition-delay: 0s; opacity: 1; transform: translateY(0); }
+    .reveal-stagger.visible > *:nth-child(2) { transition-delay: 0.1s; opacity: 1; transform: translateY(0); }
+    .reveal-stagger.visible > *:nth-child(3) { transition-delay: 0.2s; opacity: 1; transform: translateY(0); }
+    .reveal-stagger.visible > *:nth-child(4) { transition-delay: 0.3s; opacity: 1; transform: translateY(0); }
+    .reveal-stagger.visible > *:nth-child(5) { transition-delay: 0.4s; opacity: 1; transform: translateY(0); }
+    .reveal-stagger.visible > *:nth-child(6) { transition-delay: 0.5s; opacity: 1; transform: translateY(0); }
+
+    @media (prefers-reduced-motion: reduce) {
+      .reveal, .reveal-stagger > * {
+        opacity: 1;
+        transform: none;
+        transition: none;
+      }
+    }
+
+    /* Hero */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: var(--space-32) 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -20%;
+      width: 800px;
+      height: 800px;
+      background: radial-gradient(circle, rgba(var(--accent-rgb), 0.08) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero-label {
+      font-size: var(--text-sm);
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: var(--space-6);
+    }
+
+    .hero h1 {
+      font-family: 'Fraunces', serif;
+      font-size: clamp(3.5rem, 10vw, 7rem);
+      font-weight: 700;
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+      margin-bottom: var(--space-8);
+      max-width: 900px;
+    }
+
+    .hero p {
+      font-size: var(--text-xl);
+      color: var(--text-muted);
+      max-width: 600px;
+      line-height: 1.6;
+      margin-bottom: var(--space-12);
+    }
+
+    .cta-group {
+      display: flex;
+      gap: var(--space-4);
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 16px 32px;
+      font-size: var(--text-base);
+      font-weight: 600;
+      border-radius: var(--radius-md);
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s var(--ease-out);
+      text-align: center;
+      min-height: 44px;
+    }
+
+    .btn:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 2px;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: var(--bg);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(var(--accent-rgb), 0.3);
+    }
+
+    .btn-primary:active {
+      transform: scale(0.98);
+    }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+
+    .btn-ghost:hover {
+      background: rgba(255, 255, 255, 0.05);
+      border-color: var(--accent);
+      transform: translateY(-1px);
+    }
+
+    /* Practice Areas */
+    .practice-areas {
+      padding: var(--space-32) 0;
+      background: var(--surface);
+    }
+
+    .section-header {
+      margin-bottom: var(--space-24);
+    }
+
+    .section-label {
+      font-size: var(--text-xs);
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: var(--space-4);
+    }
+
+    .section-title {
+      font-family: 'Fraunces', serif;
+      font-size: var(--text-4xl);
+      font-weight: 600;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      margin-bottom: var(--space-6);
+    }
+
+    .section-description {
+      font-size: var(--text-lg);
+      color: var(--text-muted);
+      max-width: 700px;
+      line-height: 1.6;
+    }
+
+    .practice-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: var(--space-8);
+      margin-top: var(--space-16);
+    }
+
+    .practice-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: var(--space-10);
+      transition: all 0.3s var(--ease-out);
+      cursor: pointer;
+    }
+
+    .practice-card:hover {
+      background: rgba(255, 255, 255, 0.06);
+      border-color: rgba(var(--accent-rgb), 0.3);
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-xl);
+    }
+
+    .practice-card h3 {
+      font-family: 'Fraunces', serif;
+      font-size: var(--text-2xl);
+      font-weight: 600;
+      margin-bottom: var(--space-4);
+      color: var(--text);
+    }
+
+    .practice-card p {
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin-bottom: var(--space-6);
+    }
+
+    .practice-card .learn-more {
+      color: var(--accent);
+      font-weight: 500;
+      font-size: var(--text-sm);
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2);
+    }
+
+    /* Why Choose Us */
+    .why-choose {
+      padding: var(--space-32) 0;
+    }
+
+    .split-section {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-24);
+      align-items: center;
+    }
+
+    .split-content h2 {
+      font-family: 'Fraunces', serif;
+      font-size: var(--text-4xl);
+      font-weight: 600;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      margin-bottom: var(--space-8);
+    }
+
+    .reason-list {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-8);
+    }
+
+    .reason-item {
+      display: flex;
+      gap: var(--space-6);
+    }
+
+    .reason-number {
+      flex-shrink: 0;
+      width: 48px;
+      height: 48px;
+      background: rgba(var(--accent-rgb), 0.1);
+      border: 1px solid rgba(var(--accent-rgb), 0.2);
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Fraunces', serif;
+      font-size: var(--text-lg);
+      font-weight: 600;
+      color: var(--accent);
+    }
+
+    .reason-content h3 {
+      font-family: 'Fraunces', serif;
+      font-size: var(--text-xl);
+      font-weight: 600;
+      margin-bottom: var(--space-3);
+    }
+
+    .reason-content p {
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    .split-image {
+      position: relative;
+      height: 600px;
+      background: linear-gradient(135deg, rgba(var(--accent-rgb), 0.1) 0%, transparent 50%);
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+
+    /* Attorneys */
+    .attorneys {
+      padding: var(--space-32) 0;
+      background: var(--surface);
+    }
+
+    .attorneys-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: var(--space-12);
+      margin-top: var(--space-16);
+    }
+
+    .attorney-card {
+      text-align: center;
+    }
+
+    .attorney-photo {
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, rgba(var(--accent-rgb), 0.2) 0%, rgba(var(--accent-rgb), 0.05) 100%);
+      margin: 0 auto var(--space-6);
+      border: 2px solid var(--border);
+    }
+
+    .attorney-card h3 {
+      font-family: 'Fraunces', serif;
+      font-size: var(--text-2xl);
+      font-weight: 600;
+      margin-bottom: var(--space-2);
+    }
+
+    .attorney-title {
+      color: var(--accent);
+      font-size: var(--text-sm);
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      margin-bottom: var(--space-4);
+    }
+
+    .attorney-card p {
+      color: var(--text-muted);
+      line-height: 1.6;
+      max-width: 300px;
+      margin: 0 auto;
+    }
+
+    /* Testimonials */
+    .testimonials {
+      padding: var(--space-32) 0;
+    }
+
+    .testimonial-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: var(--space-8);
+      margin-top: var(--space-16);
+    }
+
+    .testimonial-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: var(--space-10);
+    }
+
+    .testimonial-content {
+      font-size: var(--text-lg);
+      line-height: 1.6;
+      color: var(--text);
+      margin-bottom: var(--space-6);
+      font-style: italic;
+    }
+
+    .testimonial-author {
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: var(--space-1);
+    }
+
+    .testimonial-case {
+      font-size: var(--text-sm);
+      color: var(--text-muted);
+    }
+
+    /* Contact CTA */
+    .contact-cta {
+      padding: var(--space-32) 0;
+      background: var(--surface);
+      text-align: center;
+    }
+
+    .contact-cta h2 {
+      font-family: 'Fraunces', serif;
+      font-size: var(--text-5xl);
+      font-weight: 700;
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+      margin-bottom: var(--space-6);
+    }
+
+    .contact-cta p {
+      font-size: var(--text-xl);
+      color: var(--text-muted);
+      max-width: 700px;
+      margin: 0 auto var(--space-12);
+    }
+
+    .contact-info {
+      display: flex;
+      justify-content: center;
+      gap: var(--space-16);
+      flex-wrap: wrap;
+      margin-bottom: var(--space-12);
+    }
+
+    .contact-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--space-3);
+    }
+
+    .contact-item .icon {
+      width: 48px;
+      height: 48px;
+      background: rgba(var(--accent-rgb), 0.1);
+      border: 1px solid rgba(var(--accent-rgb), 0.2);
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .contact-item .label {
+      font-size: var(--text-xs);
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    .contact-item .value {
+      font-size: var(--text-lg);
+      font-weight: 600;
+      color: var(--accent);
+    }
+
+    /* Contact Form */
+    .contact-form {
+      padding: var(--space-32) 0;
+    }
+
+    .form-container {
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    .form-group {
+      margin-bottom: var(--space-6);
+    }
+
+    .form-group label {
+      display: block;
+      font-size: var(--text-sm);
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: var(--space-3);
+    }
+
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+      width: 100%;
+      padding: 14px 16px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      color: var(--text);
+      font-size: var(--text-base);
+      font-family: 'Inter', sans-serif;
+      transition: all 0.2s var(--ease-out);
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus,
+    .form-group select:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(var(--accent-rgb), 0.15);
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .form-group textarea {
+      min-height: 150px;
+      resize: vertical;
+    }
+
+    .form-error {
+      color: #EF4444;
+      font-size: var(--text-sm);
+      margin-top: var(--space-2);
+      display: none;
+    }
+
+    .form-group.error input,
+    .form-group.error textarea,
+    .form-group.error select {
+      border-color: #EF4444;
+    }
+
+    .form-group.error .form-error {
+      display: block;
+    }
+
+    .form-success {
+      padding: var(--space-6);
+      background: rgba(34, 197, 94, 0.1);
+      border: 1px solid rgba(34, 197, 94, 0.3);
+      border-radius: var(--radius-md);
+      color: #22C55E;
+      text-align: center;
+      margin-bottom: var(--space-6);
+      display: none;
+    }
+
+    .form-success.show {
+      display: block;
+    }
+
+    /* Footer */
+    footer {
+      background: var(--bg);
+      border-top: 1px solid var(--border);
+      padding: var(--space-24) 0 var(--space-12);
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: var(--space-16);
+      margin-bottom: var(--space-16);
+    }
+
+    .footer-brand {
+      max-width: 350px;
+    }
+
+    .footer-logo {
+      font-family: 'Fraunces', serif;
+      font-size: var(--text-2xl);
+      font-weight: 600;
+      color: var(--accent);
+      margin-bottom: var(--space-4);
+    }
+
+    .footer-tagline {
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin-bottom: var(--space-6);
+    }
+
+    .footer-section h4 {
+      font-size: var(--text-sm);
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text);
+      margin-bottom: var(--space-6);
+    }
+
+    .footer-links {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-4);
+    }
+
+    .footer-links a {
+      color: var(--text-muted);
+      font-size: var(--text-sm);
+      transition: color 0.2s var(--ease-out);
+    }
+
+    .footer-links a:hover {
+      color: var(--accent);
+    }
+
+    .footer-bottom {
+      padding-top: var(--space-8);
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: var(--space-4);
+    }
+
+    .footer-bottom p {
+      color: var(--text-muted);
+      font-size: var(--text-sm);
+    }
+
+    .footer-legal {
+      display: flex;
+      gap: var(--space-6);
+    }
+
+    .footer-legal a {
+      color: var(--text-muted);
+      font-size: var(--text-sm);
+      transition: color 0.2s var(--ease-out);
+    }
+
+    .footer-legal a:hover {
+      color: var(--accent);
+    }
+
+    /* Responsive */
+    @media (max-width: 1024px) {
+      .split-section {
+        grid-template-columns: 1fr;
+        gap: var(--space-16);
+      }
+
+      .split-image {
+        height: 400px;
+      }
+
+      .footer-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .hero h1 {
+        font-size: clamp(2.5rem, 8vw, 4rem);
+      }
+
+      .cta-group {
+        flex-direction: column;
+      }
+
+      .btn {
+        width: 100%;
+      }
+
+      .practice-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .contact-info {
+        flex-direction: column;
+        gap: var(--space-8);
+      }
+
+      .footer-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .footer-bottom {
+        flex-direction: column;
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to main content</a>
+
+  <nav>
+    <div class="nav-container">
+      <a href="#home" class="logo" onclick="showPage('home')">Vance & Wolfe</a>
+      <ul class="nav-links">
+        <li><a href="#home" class="active" onclick="showPage('home')">Home</a></li>
+        <li><a href="#practice" onclick="showPage('practice')">Practice Areas</a></li>
+        <li><a href="#attorneys" onclick="showPage('attorneys')">Attorneys</a></li>
+        <li><a href="#contact" onclick="showPage('contact')">Contact</a></li>
+      </ul>
+      <button class="menu-toggle" aria-label="Toggle menu">☰</button>
+    </div>
+  </nav>
+
+  <div class="mobile-menu">
+    <ul>
+      <li><a href="#home" onclick="showPage('home')">Home</a></li>
+      <li><a href="#practice" onclick="showPage('practice')">Practice Areas</a></li>
+      <li><a href="#attorneys" onclick="showPage('attorneys')">Attorneys</a></li>
+      <li><a href="#contact" onclick="showPage('contact')">Contact</a></li>
+    </ul>
+  </div>
+
+  <main id="main">
+    <!-- HOME PAGE -->
+    <div id="home" class="page active">
+      <section class="hero">
+        <div class="container">
+          <div class="hero-content reveal">
+            <div class="hero-label">Criminal Defense Attorneys</div>
+            <h1>When Your Future Is on the Line</h1>
+            <p>Aggressive representation. Uncompromising dedication. We fight for your rights with the intensity and strategic precision your case demands.</p>
+            <div class="cta-group">
+              <button class="btn btn-primary" onclick="showPage('contact')">Request Free Consultation</button>
+              <button class="btn btn-ghost" onclick="showPage('practice')">View Practice Areas</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="practice-areas">
+        <div class="container">
+          <div class="section-header reveal">
+            <div class="section-label">Practice Areas</div>
+            <h2 class="section-title">Comprehensive Criminal Defense</h2>
+            <p class="section-description">From misdemeanors to serious felonies, we have the experience and tenacity to defend you at every stage of the legal process.</p>
+          </div>
+          <div class="practice-grid reveal-stagger">
+            <div class="practice-card">
+              <h3>DUI / DWI Defense</h3>
+              <p>Challenging field sobriety tests, breathalyzer results, and procedural errors to protect your driving privileges and record.</p>
+              <span class="learn-more">Learn more →</span>
+            </div>
+            <div class="practice-card">
+              <h3>Drug Crimes</h3>
+              <p>Defending against possession, distribution, and trafficking charges with strategic challenges to search and seizure procedures.</p>
+              <span class="learn-more">Learn more →</span>
+            </div>
+            <div class="practice-card">
+              <h3>Violent Crimes</h3>
+              <p>Aggressive defense for assault, battery, and other violent crime charges requiring immediate and decisive legal action.</p>
+              <span class="learn-more">Learn more →</span>
+            </div>
+            <div class="practice-card">
+              <h3>White Collar Crimes</h3>
+              <p>Complex defense strategies for fraud, embezzlement, and financial crimes requiring sophisticated legal knowledge.</p>
+              <span class="learn-more">Learn more →</span>
+            </div>
+            <div class="practice-card">
+              <h3>Federal Crimes</h3>
+              <p>Experienced representation in federal court for cases involving federal agencies and complex prosecutions.</p>
+              <span class="learn-more">Learn more →</span>
+            </div>
+            <div class="practice-card">
+              <h3>Expungements</h3>
+              <p>Clearing your record to restore your rights and remove barriers to employment, housing, and opportunities.</p>
+              <span class="learn-more">Learn more →</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="why-choose">
+        <div class="container">
+          <div class="split-section reveal">
+            <div class="split-content">
+              <div class="section-label">Why Choose Us</div>
+              <h2>Relentless Advocacy When It Matters Most</h2>
+              <div class="reason-list">
+                <div class="reason-item">
+                  <div class="reason-number">01</div>
+                  <div class="reason-content">
+                    <h3>Trial-Tested Experience</h3>
+                    <p>Over 50 years of combined courtroom experience with a proven track record of successful verdicts and dismissals.</p>
+                  </div>
+                </div>
+                <div class="reason-item">
+                  <div class="reason-number">02</div>
+                  <div class="reason-content">
+                    <h3>Strategic Defense</h3>
+                    <p>We investigate every angle, challenge every piece of evidence, and build comprehensive defense strategies tailored to your case.</p>
+                  </div>
+                </div>
+                <div class="reason-item">
+                  <div class="reason-number">03</div>
+                  <div class="reason-content">
+                    <h3>Client-Focused Representation</h3>
+                    <p>Direct access to your attorney, transparent communication, and personalized attention throughout your case.</p>
+                  </div>
+                </div>
+                <div class="reason-item">
+                  <div class="reason-number">04</div>
+                  <div class="reason-content">
+                    <h3>Available 24/7</h3>
+                    <p>Criminal charges don't wait for business hours. Neither do we. We're here when you need us most.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="split-image"></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="testimonials">
+        <div class="container">
+          <div class="section-header reveal">
+            <div class="section-label">Client Testimonials</div>
+            <h2 class="section-title">Proven Results</h2>
+            <p class="section-description">Our clients' success speaks for itself.</p>
+          </div>
+          <div class="testimonial-grid reveal-stagger">
+            <div class="testimonial-card">
+              <div class="testimonial-content">

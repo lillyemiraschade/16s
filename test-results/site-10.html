@@ -1,0 +1,1390 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ink and Iron — Tattoo Studio</title>
+  <meta name="description" content="Underground tattoo studio specializing in bold custom work. Walk-ins welcome.">
+  <meta property="og:title" content="Ink and Iron — Tattoo Studio">
+  <meta property="og:description" content="Underground tattoo studio specializing in bold custom work.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Work+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --space-1: 4px; --space-2: 8px; --space-3: 12px; --space-4: 16px;
+      --space-5: 20px; --space-6: 24px; --space-8: 32px; --space-10: 40px;
+      --space-12: 48px; --space-16: 64px; --space-20: 80px; --space-24: 96px; --space-32: 128px;
+      
+      --text-xs: clamp(0.75rem, 0.7rem + 0.25vw, 0.875rem);
+      --text-sm: clamp(0.875rem, 0.8rem + 0.35vw, 1rem);
+      --text-base: clamp(1rem, 0.9rem + 0.5vw, 1.125rem);
+      --text-lg: clamp(1.125rem, 1rem + 0.6vw, 1.25rem);
+      --text-xl: clamp(1.25rem, 1rem + 1vw, 1.5rem);
+      --text-2xl: clamp(1.5rem, 1.2rem + 1.5vw, 2rem);
+      --text-3xl: clamp(1.875rem, 1.4rem + 2.3vw, 2.5rem);
+      --text-4xl: clamp(2.25rem, 1.5rem + 3.5vw, 3.5rem);
+      --text-5xl: clamp(3rem, 2rem + 5vw, 5rem);
+      
+      --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
+      --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -2px rgba(0,0,0,0.1);
+      --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -4px rgba(0,0,0,0.1);
+      --shadow-xl: 0 20px 25px -5px rgba(0,0,0,0.1), 0 8px 10px -6px rgba(0,0,0,0.1);
+      --radius-sm: 6px; --radius-md: 8px; --radius-lg: 12px; --radius-xl: 16px;
+      --ease-out: cubic-bezier(0,0,0.2,1); --ease-in: cubic-bezier(0.4,0,1,1);
+      --ease-in-out: cubic-bezier(0.4,0,0.2,1); --ease-bounce: cubic-bezier(0.34,1.56,0.64,1);
+    }
+    
+    [data-theme="dark"] {
+      --bg: #0A0A0B;
+      --surface: #1C1C1E;
+      --text: #FAFAFA;
+      --text-muted: #A1A1AA;
+      --border: rgba(255,255,255,0.1);
+      --accent: #DC2626;
+      --accent-glow: rgba(220, 38, 38, 0.15);
+    }
+    
+    [data-theme="light"] {
+      --bg: #FAFAFA;
+      --surface: #FFFFFF;
+      --text: #18181B;
+      --text-muted: #71717A;
+      --border: rgba(0,0,0,0.1);
+      --accent: #DC2626;
+      --accent-glow: rgba(220, 38, 38, 0.15);
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Work Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+    
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='0.8' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100' height='100' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 1;
+    }
+    
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 clamp(16px, 5vw, 64px);
+      position: relative;
+      z-index: 2;
+    }
+    
+    /* Navigation */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      background: rgba(10, 10, 11, 0.8);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      z-index: 50;
+      transition: background 0.3s var(--ease-out);
+    }
+    
+    [data-theme="light"] nav {
+      background: rgba(250, 250, 250, 0.8);
+    }
+    
+    .nav-content {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 clamp(16px, 5vw, 64px);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 72px;
+    }
+    
+    .logo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: var(--text-2xl);
+      letter-spacing: 0.05em;
+      color: var(--text);
+      text-decoration: none;
+      font-weight: 400;
+    }
+    
+    .nav-links {
+      display: flex;
+      gap: var(--space-8);
+      list-style: none;
+      align-items: center;
+    }
+    
+    .nav-links a {
+      font-size: var(--text-sm);
+      color: var(--text-muted);
+      text-decoration: none;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      font-weight: 500;
+      transition: color 0.2s var(--ease-out);
+      position: relative;
+    }
+    
+    .nav-links a:hover,
+    .nav-links a.active {
+      color: var(--accent);
+    }
+    
+    .theme-toggle {
+      width: 36px;
+      height: 36px;
+      border: 1px solid var(--border);
+      border-radius: 50%;
+      background: transparent;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s var(--ease-out);
+    }
+    
+    .theme-toggle:hover {
+      background: var(--surface);
+      transform: translateY(-1px);
+    }
+    
+    .theme-toggle svg {
+      width: 18px;
+      height: 18px;
+      stroke: var(--text);
+    }
+    
+    .menu-toggle {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      padding: 8px;
+    }
+    
+    .menu-toggle span {
+      width: 24px;
+      height: 2px;
+      background: var(--text);
+      transition: all 0.3s var(--ease-out);
+    }
+    
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      top: 72px;
+      left: 0;
+      right: 0;
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+      padding: var(--space-6);
+      transform: translateY(-100%);
+      opacity: 0;
+      transition: all 0.3s var(--ease-out);
+      z-index: 40;
+    }
+    
+    .mobile-menu.open {
+      transform: translateY(0);
+      opacity: 1;
+    }
+    
+    .mobile-menu a {
+      display: block;
+      padding: var(--space-4) 0;
+      color: var(--text);
+      text-decoration: none;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      font-size: var(--text-sm);
+      border-bottom: 1px solid var(--border);
+    }
+    
+    @media (max-width: 768px) {
+      .nav-links {
+        display: none;
+      }
+      
+      .menu-toggle {
+        display: flex;
+      }
+      
+      .mobile-menu {
+        display: block;
+      }
+    }
+    
+    /* Hero */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      position: relative;
+      padding-top: var(--space-24);
+      overflow: hidden;
+    }
+    
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -20%;
+      width: 800px;
+      height: 800px;
+      background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+    
+    .hero-content {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-16);
+      align-items: center;
+      position: relative;
+      z-index: 2;
+    }
+    
+    .hero-text h1 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(3.5rem, 10vw, 8rem);
+      line-height: 0.95;
+      letter-spacing: -0.02em;
+      margin-bottom: var(--space-6);
+      font-weight: 400;
+    }
+    
+    .hero-text p {
+      font-size: var(--text-lg);
+      color: var(--text-muted);
+      max-width: 480px;
+      margin-bottom: var(--space-10);
+      font-weight: 300;
+    }
+    
+    .hero-cta {
+      display: flex;
+      gap: var(--space-4);
+      flex-wrap: wrap;
+    }
+    
+    .btn-primary {
+      padding: 16px 32px;
+      background: var(--accent);
+      color: white;
+      text-decoration: none;
+      border-radius: var(--radius-md);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      font-size: var(--text-sm);
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s var(--ease-out);
+      display: inline-block;
+    }
+    
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 16px rgba(220, 38, 38, 0.3);
+    }
+    
+    .btn-primary:active {
+      transform: scale(0.98);
+    }
+    
+    .btn-ghost {
+      padding: 16px 32px;
+      background: transparent;
+      color: var(--text);
+      text-decoration: none;
+      border-radius: var(--radius-md);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      font-size: var(--text-sm);
+      border: 1px solid var(--border);
+      cursor: pointer;
+      transition: all 0.2s var(--ease-out);
+      display: inline-block;
+    }
+    
+    .btn-ghost:hover {
+      background: var(--surface);
+      transform: translateY(-2px);
+    }
+    
+    .hero-image {
+      position: relative;
+      aspect-ratio: 3/4;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      overflow: hidden;
+    }
+    
+    .hero-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: grayscale(30%) contrast(1.1);
+    }
+    
+    .hero-image::after {
+      content: '[FEATURED WORK]';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: var(--text-3xl);
+      color: var(--text-muted);
+      letter-spacing: 0.1em;
+      pointer-events: none;
+    }
+    
+    @media (max-width: 968px) {
+      .hero-content {
+        grid-template-columns: 1fr;
+      }
+      
+      .hero-image {
+        max-width: 500px;
+        margin: 0 auto;
+      }
+    }
+    
+    /* Portfolio Grid */
+    .portfolio {
+      padding: var(--space-24) 0;
+      background: var(--bg);
+    }
+    
+    .section-header {
+      text-align: left;
+      margin-bottom: var(--space-16);
+    }
+    
+    .section-label {
+      font-size: var(--text-xs);
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--accent);
+      margin-bottom: var(--space-3);
+      font-weight: 600;
+    }
+    
+    .section-header h2 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: var(--text-4xl);
+      letter-spacing: -0.02em;
+      margin-bottom: var(--space-4);
+      font-weight: 400;
+    }
+    
+    .section-header p {
+      font-size: var(--text-lg);
+      color: var(--text-muted);
+      max-width: 600px;
+    }
+    
+    .filter-tabs {
+      display: flex;
+      gap: var(--space-3);
+      margin-bottom: var(--space-12);
+      flex-wrap: wrap;
+    }
+    
+    .filter-btn {
+      padding: 10px 20px;
+      background: transparent;
+      border: 1px solid var(--border);
+      border-radius: 9999px;
+      color: var(--text-muted);
+      font-size: var(--text-sm);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      cursor: pointer;
+      transition: all 0.2s var(--ease-out);
+      font-weight: 500;
+    }
+    
+    .filter-btn:hover,
+    .filter-btn.active {
+      background: var(--accent-glow);
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+    
+    .portfolio-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: var(--space-6);
+    }
+    
+    .portfolio-item {
+      position: relative;
+      aspect-ratio: 4/5;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      overflow: hidden;
+      cursor: pointer;
+      transition: all 0.3s var(--ease-out);
+    }
+    
+    .portfolio-item:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-xl);
+    }
+    
+    .portfolio-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: grayscale(20%);
+      transition: all 0.3s var(--ease-out);
+    }
+    
+    .portfolio-item:hover img {
+      filter: grayscale(0%);
+      transform: scale(1.05);
+    }
+    
+    .portfolio-item::after {
+      content: '[TATTOO WORK]';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: var(--text-2xl);
+      color: var(--text-muted);
+      letter-spacing: 0.1em;
+      pointer-events: none;
+    }
+    
+    .portfolio-item-overlay {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: linear-gradient(to top, rgba(10,10,11,0.95), transparent);
+      padding: var(--space-6);
+      transform: translateY(100%);
+      transition: transform 0.3s var(--ease-out);
+    }
+    
+    .portfolio-item:hover .portfolio-item-overlay {
+      transform: translateY(0);
+    }
+    
+    .portfolio-item-overlay h3 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: var(--text-xl);
+      margin-bottom: var(--space-2);
+      letter-spacing: 0.05em;
+    }
+    
+    .portfolio-item-overlay p {
+      font-size: var(--text-sm);
+      color: var(--text-muted);
+    }
+    
+    /* Artists Section */
+    .artists {
+      padding: var(--space-24) 0;
+      background: var(--surface);
+    }
+    
+    .artists-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: var(--space-10);
+      margin-top: var(--space-12);
+    }
+    
+    .artist-card {
+      text-align: center;
+    }
+    
+    .artist-image {
+      width: 100%;
+      aspect-ratio: 1;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      margin-bottom: var(--space-6);
+      overflow: hidden;
+      position: relative;
+    }
+    
+    .artist-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: grayscale(40%);
+    }
+    
+    .artist-image::after {
+      content: '[ARTIST PHOTO]';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: var(--text-xl);
+      color: var(--text-muted);
+      letter-spacing: 0.1em;
+    }
+    
+    .artist-card h3 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: var(--text-2xl);
+      margin-bottom: var(--space-2);
+      letter-spacing: 0.05em;
+    }
+    
+    .artist-card .specialty {
+      font-size: var(--text-sm);
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: var(--space-4);
+      font-weight: 600;
+    }
+    
+    .artist-card p {
+      font-size: var(--text-base);
+      color: var(--text-muted);
+      line-height: 1.7;
+    }
+    
+    /* Booking Section */
+    .booking {
+      padding: var(--space-32) 0;
+      background: var(--bg);
+      position: relative;
+    }
+    
+    .booking::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    
+    .booking-content {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-16);
+      align-items: start;
+      position: relative;
+      z-index: 2;
+    }
+    
+    .booking-info h2 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: var(--text-4xl);
+      margin-bottom: var(--space-6);
+      letter-spacing: -0.02em;
+    }
+    
+    .booking-info p {
+      font-size: var(--text-lg);
+      color: var(--text-muted);
+      margin-bottom: var(--space-8);
+      line-height: 1.7;
+    }
+    
+    .booking-details {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-6);
+      margin-bottom: var(--space-10);
+    }
+    
+    .booking-detail {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--space-4);
+    }
+    
+    .booking-detail svg {
+      width: 24px;
+      height: 24px;
+      stroke: var(--accent);
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    
+    .booking-detail div h3 {
+      font-size: var(--text-lg);
+      margin-bottom: var(--space-2);
+      font-weight: 600;
+    }
+    
+    .booking-detail div p {
+      font-size: var(--text-base);
+      color: var(--text-muted);
+      margin: 0;
+    }
+    
+    .booking-form {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: var(--space-10);
+      border-radius: var(--radius-lg);
+    }
+    
+    .booking-form h3 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: var(--text-2xl);
+      margin-bottom: var(--space-8);
+      letter-spacing: 0.05em;
+    }
+    
+    .form-group {
+      margin-bottom: var(--space-6);
+    }
+    
+    .form-group label {
+      display: block;
+      font-size: var(--text-sm);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: var(--space-3);
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+    
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+      width: 100%;
+      padding: var(--space-4);
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      color: var(--text);
+      font-size: var(--text-base);
+      font-family: 'Work Sans', sans-serif;
+      transition: all 0.2s var(--ease-out);
+    }
+    
+    .form-group input:focus,
+    .form-group textarea:focus,
+    .form-group select:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-glow);
+    }
+    
+    .form-group textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+    
+    .form-success {
+      display: none;
+      padding: var(--space-4);
+      background: rgba(34, 197, 94, 0.15);
+      border: 1px solid rgba(34, 197, 94, 0.3);
+      border-radius: var(--radius-md);
+      color: #22C55E;
+      margin-top: var(--space-6);
+      text-align: center;
+    }
+    
+    @media (max-width: 968px) {
+      .booking-content {
+        grid-template-columns: 1fr;
+      }
+    }
+    
+    /* Footer */
+    footer {
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      padding: var(--space-16) 0 var(--space-8) 0;
+    }
+    
+    .footer-content {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: var(--space-12);
+      margin-bottom: var(--space-12);
+    }
+    
+    .footer-brand h3 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: var(--text-2xl);
+      margin-bottom: var(--space-4);
+      letter-spacing: 0.05em;
+    }
+    
+    .footer-brand p {
+      color: var(--text-muted);
+      font-size: var(--text-base);
+      line-height: 1.7;
+    }
+    
+    .footer-section h4 {
+      font-size: var(--text-sm);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: var(--space-4);
+      font-weight: 600;
+    }
+    
+    .footer-section ul {
+      list-style: none;
+    }
+    
+    .footer-section ul li {
+      margin-bottom: var(--space-3);
+    }
+    
+    .footer-section ul li a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: var(--text-sm);
+      transition: color 0.2s var(--ease-out);
+    }
+    
+    .footer-section ul li a:hover {
+      color: var(--accent);
+    }
+    
+    .social-links {
+      display: flex;
+      gap: var(--space-4);
+      margin-top: var(--space-4);
+    }
+    
+    .social-links a {
+      width: 40px;
+      height: 40px;
+      border: 1px solid var(--border);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s var(--ease-out);
+    }
+    
+    .social-links a:hover {
+      border-color: var(--accent);
+      background: var(--accent-glow);
+      transform: translateY(-2px);
+    }
+    
+    .social-links svg {
+      width: 18px;
+      height: 18px;
+      stroke: var(--text);
+    }
+    
+    .footer-bottom {
+      padding-top: var(--space-8);
+      border-top: 1px solid var(--border);
+      text-align: center;
+      color: var(--text-muted);
+      font-size: var(--text-sm);
+    }
+    
+    @media (max-width: 968px) {
+      .footer-content {
+        grid-template-columns: 1fr;
+        gap: var(--space-8);
+      }
+    }
+    
+    /* Lightbox */
+    .lightbox {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.95);
+      z-index: 9999;
+      align-items: center;
+      justify-content: center;
+      padding: var(--space-6);
+    }
+    
+    .lightbox.active {
+      display: flex;
+    }
+    
+    .lightbox-content {
+      max-width: 90%;
+      max-height: 90%;
+      position: relative;
+    }
+    
+    .lightbox-content img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+    
+    .lightbox-close {
+      position: absolute;
+      top: -50px;
+      right: 0;
+      background: transparent;
+      border: none;
+      color: white;
+      font-size: 32px;
+      cursor: pointer;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    /* Reveal animations */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 0.6s var(--ease-out);
+    }
+    
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    
+    .reveal-stagger > * {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 0.6s var(--ease-out);
+    }
+    
+    .reveal-stagger.visible > *:nth-child(1) { transition-delay: 0.05s; opacity: 1; transform: translateY(0); }
+    .reveal-stagger.visible > *:nth-child(2) { transition-delay: 0.1s; opacity: 1; transform: translateY(0); }
+    .reveal-stagger.visible > *:nth-child(3) { transition-delay: 0.15s; opacity: 1; transform: translateY(0); }
+    .reveal-stagger.visible > *:nth-child(4) { transition-delay: 0.2s; opacity: 1; transform: translateY(0); }
+    .reveal-stagger.visible > *:nth-child(5) { transition-delay: 0.25s; opacity: 1; transform: translateY(0); }
+    .reveal-stagger.visible > *:nth-child(6) { transition-delay: 0.3s; opacity: 1; transform: translateY(0); }
+    
+    @media (prefers-reduced-motion: reduce) {
+      .reveal,
+      .reveal-stagger > * {
+        opacity: 1;
+        transform: none;
+        transition: none;
+      }
+    }
+    
+    .skip-link {
+      position: absolute;
+      top: -40px;
+      left: 0;
+      background: var(--accent);
+      color: white;
+      padding: 8px 16px;
+      text-decoration: none;
+      z-index: 100;
+    }
+    
+    .skip-link:focus {
+      top: 0;
+    }
+  </style>
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to main content</a>
+  
+  <nav>
+    <div class="nav-content">
+      <a href="#" class="logo">INK AND IRON</a>
+      <ul class="nav-links">
+        <li><a href="#portfolio" class="active">Portfolio</a></li>
+        <li><a href="#artists">Artists</a></li>
+        <li><a href="#booking">Book Now</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+      <button class="theme-toggle" aria-label="Toggle theme">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2.25m6.364.386l-1.591 1.591M21 12h-2.25m-.386 6.364l-1.591-1.591M12 18.75V21m-4.773-4.227l-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z" />
+        </svg>
+      </button>
+      <button class="menu-toggle" aria-label="Toggle menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </nav>
+  
+  <div class="mobile-menu">
+    <a href="#portfolio">Portfolio</a>
+    <a href="#artists">Artists</a>
+    <a href="#booking">Book Now</a>
+    <a href="#contact">Contact</a>
+  </div>
+  
+  <main id="main">
+    <section class="hero">
+      <div class="container">
+        <div class="hero-content">
+          <div class="hero-text reveal">
+            <h1>INK AND<br>IRON</h1>
+            <p>Underground custom tattoo studio. Bold work, no compromises. Walk-ins welcome daily.</p>
+            <div class="hero-cta">
+              <a href="#booking" class="btn-primary">Book Your Session</a>
+              <a href="#portfolio" class="btn-ghost">View Portfolio</a>
+            </div>
+          </div>
+          <div class="hero-image reveal">
+            <img src="" alt="Featured tattoo work" loading="lazy">
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <section id="portfolio" class="portfolio">
+      <div class="container">
+        <div class="section-header reveal">
+          <div class="section-label">OUR WORK</div>
+          <h2>Portfolio</h2>
+          <p>Custom pieces across every style. From blackwork to color realism, we bring your vision to skin.</p>
+        </div>
+        
+        <div class="filter-tabs reveal">
+          <button class="filter-btn active" data-filter="all">All</button>
+          <button class="filter-btn" data-filter="blackwork">Blackwork</button>
+          <button class="filter-btn" data-filter="traditional">Traditional</button>
+          <button class="filter-btn" data-filter="realism">Realism</button>
+          <button class="filter-btn" data-filter="neo-traditional">Neo-Traditional</button>
+        </div>
+        
+        <div class="portfolio-grid reveal-stagger">
+          <div class="portfolio-item filterable-item" data-category="blackwork">
+            <img src="" alt="Blackwork tattoo" loading="lazy">
+            <div class="portfolio-item-overlay">
+              <h3>Geometric Blackwork</h3>
+              <p>Sacred geometry sleeve</p>
+            </div>
+          </div>
+          <div class="portfolio-item filterable-item" data-category="traditional">
+            <img src="" alt="Traditional tattoo" loading="lazy">
+            <div class="portfolio-item-overlay">
+              <h3>Bold Traditional</h3>
+              <p>Classic American style</p>
+            </div>
+          </div>
+          <div class="portfolio-item filterable-item" data-category="realism">
+            <img src="" alt="Realism tattoo" loading="lazy">
+            <div class="portfolio-item-overlay">
+              <h3>Portrait Realism</h3>
+              <p>Black and grey portrait</p>
+            </div>
+          </div>
+          <div class="portfolio-item filterable-item" data-category="neo-traditional">
+            <img src="" alt="Neo-traditional tattoo" loading="lazy">
+            <div class="portfolio-item-overlay">
+              <h3>Neo-Traditional</h3>
+              <p>Modern twist on classic</p>
+            </div>
+          </div>
+          <div class="portfolio-item filterable-item" data-category="blackwork">
+            <img src="" alt="Blackwork tattoo" loading="lazy">
+            <div class="portfolio-item-overlay">
+              <h3>Dark Illustrative</h3>
+              <p>Fine line blackwork</p>
+            </div>
+          </div>
+          <div class="portfolio-item filterable-item" data-category="realism">
+            <img src="" alt="Realism tattoo" loading="lazy">
+            <div class="portfolio-item-overlay">
+              <h3>Color Realism</h3>
+              <p>Vibrant portrait work</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <section id="artists" class="artists">
+      <div class="container">
+        <div class="section-header reveal">
+          <div class="section-label">THE TEAM</div>
+          <h2>Artists</h2>
+          <p>Every artist brings their own style and specialty. Find the right match for your vision.</p>
+        </div>
+        
+        <div class="artists-grid reveal-stagger">
+          <div class="artist-card">
+            <div class="artist-image">
+              <img src="" alt="Artist name" loading="lazy">
+            </div>
+            <h3>[ARTIST NAME]</h3>
+            <p class="specialty">Blackwork & Geometric</p>
+            <p>10+ years specializing in sacred geometry, dotwork, and bold blackwork compositions.</p>
+          </div>
+          <div class="artist-card">
+            <div class="artist-image">
+              <img src="" alt="Artist name" loading="lazy">
+            </div>
+            <h3>[ARTIST NAME]</h3>
+            <p class="specialty">Traditional & Neo-Traditional</p>
+            <p>Bold lines and vibrant colors. Classic American traditional with a modern edge.</p>
+          </div>
+          <div class="artist-card">
+            <div class="artist-image">
+              <img src="" alt="Artist name" loading="lazy">
+            </div>
+            <h3>[ARTIST NAME]</h3>
+            <p class="specialty">Realism & Portraits</p>
+            <p>Photorealistic portraits and fine detail work. Black and grey specialist.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <section id="booking" class="booking">
+      <div class="container">
+        <div class="booking-content">
+          <div class="booking-info reveal">
+            <h2>Book Your Session</h2>
+            <p>Ready to get inked? Fill out the form and we'll get back to you within 24 hours. Walk-ins welcome daily — check availability below.</p>
+            
+            <div class="booking-details">
+              <div class="booking-detail">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
+                </svg>
+                <div>
+                  <h3>Location</h3>
+                  <p>[YOUR ADDRESS]<br>[CITY, STATE ZIP]</p>
+                </div>
+              </div>
+              
+              <div class="booking-detail">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                <div>
+                  <h3>Hours</h3>
+                  <p>Tue–Sat: 12pm–8pm<br>Sun–Mon: Closed</p>
+                </div>
+              </div>
+              
+              <div class="booking-detail">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z" />
+                </svg>
+                <div>
+                  <h3>Contact</h3>
+                  <p>[YOUR PHONE]<br>[YOUR EMAIL]</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="booking-form reveal">
+            <h3>Request Appointment</h3>
+            <form id="bookingForm">
+              <div class="form-group">
+                <label for="name">Full Name</label>
+                <input type="text" id="name" name="name" required>
+              </div>
+              
+              <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" required>
+              </div>
+              
+              <div class="form-group">
+                <label for="phone">Phone</label>
+                <input type="tel" id="phone" name="phone" required>
+              </div>
+              
+              <div class="form-group">
+                <label for="artist">Preferred Artist</label>
+                <select id="artist" name="artist">
+                  <option value="">No preference</option>
+                  <option value="artist1">Artist 1</option>
+                  <option value="artist2">Artist 2</option>
+                  <option value="artist3">Artist 3</option>
+                </select>
+              </div>
+              
+              <div class="form-group">
+                <label for="placement">Tattoo Placement</label>
+                <input type="text" id="placement" name="placement" placeholder="e.g. forearm, shoulder" required>
+              </div>
+              
+              <div class="form-group">
+                <label for="description">Describe Your Idea</label>
+                <textarea id="description" name="description" placeholder="Tell us about your tattoo vision..." required></textarea>
+              </div>
+              
+              <button type="submit" class="btn-primary" style="width: 100%;">Submit Request</button>
+              
+              <div class="form-success" id="formSuccess">
+                Request submitted! We'll contact you within 24 hours.
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+  
+  <footer id="contact">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-brand">
+          <h3>INK AND IRON</h3>
+          <p>Underground custom tattoo studio crafting bold work since day one. No compromises.</p>
+          <div class="social-links">
+            <a href="#" aria-label="Instagram">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 3h-9A4.5 4.5 0 003 7.5v9A4.5 4.5 0 007.5 21h9a4.5 4.5 0 004.5-4.5v-9A4.5 4.5 0 0016.5 3z" />
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 15.75a3.75 3.75 0 100-7.5 3.75 3.75 0 000 7.5z" />
+                <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 6.75h.008v.008h-.008V6.75z" />
+              </svg>
+            </a>
+            <a href="#" aria-label="Facebook">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z" />
+              </svg>
+            </a>
+          </div>
+        </div>
+        
+        <div class="footer-section">
+          <h4>Navigate</h4>
+          <ul>
+            <li><a href="#portfolio">Portfolio</a></li>
+            <li><a href="#artists">Artists</a></li>
+            <li><a href="#booking">Book Now</a></li>
+            <li><a href="#contact">Contact</a></li>
+          </ul>
+        </div>
+        
+        <div class="footer-section">
+          <h4>Services</h4>
+          <ul>
+            <li><a href="#">Custom Tattoos</a></li>
+            <li><a href="#">Walk-Ins</a></li>
+            <li><a href="#">Cover-Ups</a></li>
+            <li><a href="#">Consultations</a></li>
+          </ul>
+        </div>
+        
+        <div class="footer-section">
+          <h4>Info</h4>
+          <ul>
+            <li><a href="#">Aftercare</a></li>
+            <li><a href="#">Pricing</a></li>
+            <li><a href="#">FAQ</a></li>
+            <li><a href="#">Policies</a></li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="footer-bottom">
+        <p>&copy; 2024 Ink and Iron. Underground tattoo studio.</p>
+      </div>
+    </div>
+  </footer>
+  
+  <div class="lightbox" id="lightbox">
+    <div class="lightbox-content">
+      <button class="lightbox-close" aria-label="Close">&times;</button>
+      <img src="" alt="Portfolio item" id="lightboxImg">
+    </div>
+  </div>
+  
+  <script>
+    // Theme toggle
+    const themeToggle = document.querySelector('.theme-toggle');
+    const html = document.documentElement;
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    html.setAttribute('data-theme', savedTheme);
+    
+    themeToggle.addEventListener('click', () => {
+      const currentTheme = html.getAttribute('data-theme');
+      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+      html.setAttribute('data-theme', newTheme);
+      localStorage.setItem('theme', newTheme);
+    });
+    
+    // Mobile menu
+    const menuToggle = document.querySelector('.menu-toggle');
+    const mobileMenu = document.querySelector('.mobile-menu');
+    
+    if (menuToggle && mobileMenu) {
+      menuToggle.addEventListener('click', () => {
+        mobileMenu.classList.toggle('open');
+        document.body.style.overflow = mobileMenu.classList.contains('open') ? 'hidden' : '';
+      });
+      
+      mobileMenu.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+          mobileMenu.classList.remove('open');
+          document.body.style.overflow = '';
+        });
+      });
+    }
+    
+    // Smooth scroll
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    });
+    
+    // Active nav state
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('.nav-links a');
+    
+    window.addEventListener('scroll', () => {
+      let current = '';
+      sections.forEach(section => {
+        const sectionTop = section.offsetTop;
+        const sectionHeight = section.clientHeight;
+        if (scrollY >= sectionTop - 200) {
+          current = section.getAttribute('id');
+        }
+      });
+      
+      navLinks.forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('href') === `#${current}`) {
+          link.classList.add('active');
+        }
+      });
+    });
+    
+    // Portfolio filter
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    const portfolioItems = document.querySelectorAll('.portfolio-item');
+    
+    filterBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const filter = btn.dataset.filter;
+        
+        filterBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        
+        portfolioItems.forEach(item => {
+          if (filter === 'all' || item.dataset.category === filter) {
+            item.style.display = 'block';
+          } else {
+            item.style.display = 'none';
+          }
+        });
+      });
+    });
+    
+    // Lightbox
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightboxImg');
+    const lightboxClose = document.querySelector('.lightbox-close');
+    
+    portfolioItems.forEach(item => {
+      item.addEventListener('click', () => {
+        const img = item.querySelector('img');
+        if (img && img.src) {
+          lightboxImg.src = img.src;
+          lightbox.classList.add('active');
+        }
+      });
+    });
+    
+    if (lightboxClose) {
+      lightboxClose.addEventListener('click', () => {
+        lightbox.classList.remove('active');
+      });
+    }
+    
+    lightbox.addEventListener('click', (e) => {
+      if (e.target === lightbox) {
+        lightbox.classList.remove('active');
+      }
+    });
+    
+    // Form handling
+    const bookingForm = document.getElementById('bookingForm');
+    const formSuccess = document.getElementById('formSuccess');
+    
+    if (bookingForm) {
+      bookingForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        
+        const formData = {
+          name: bookingForm.name.value,
+          email: bookingForm.email.value,
+          phone: bookingForm.phone.value,
+          artist: bookingForm.artist.value,
+          placement: bookingForm.placement.value,
+          description: bookingForm.description.value,
+          timestamp: new Date().toISOString()
+        };
+        
+        // Save to localStorage
+        const bookings = JSON.parse(localStorage.getItem('bookings') || '[]');
+        bookings.push(formData);
+        localStorage.setItem('bookings', JSON.stringify(bookings));
+        
+        // Show success message
+        formSuccess.style.display = 'block';
+        bookingForm.reset();
+        
+        setTimeout(() => {
+          formSuccess.style.display = 'none';
+        }, 5000);
+      });
+    }
+    
+    // Scroll reveal
+    const revealElements = document.querySelectorAll('.reveal, .reveal-stagger');
+    
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.1 });
+    
+    revealElements.forEach(el => revealObserver.observe(el));
+  </script>
+</body>
+</html>

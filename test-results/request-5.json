@@ -1,0 +1,12 @@
+{
+  "messages": [
+    {
+      "id": "test-5",
+      "role": "user",
+      "content": "A Nashville honky-tonk bar called The Rusty Spur -- gritty, warm, live music focus. Surprise me with a style, just build it."
+    }
+  ],
+  "isFirstMessage": true,
+  "outputFormat": "html",
+  "currentPreview": null
+}

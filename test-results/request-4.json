@@ -1,0 +1,12 @@
+{
+  "messages": [
+    {
+      "id": "test-4",
+      "role": "user",
+      "content": "A yoga and meditation studio called Still Point -- serene, minimal, light. Surprise me with a style, just build it."
+    }
+  ],
+  "isFirstMessage": true,
+  "outputFormat": "html",
+  "currentPreview": null
+}

@@ -1,0 +1,12 @@
+{
+  "messages": [
+    {
+      "role": "user",
+      "content": "A financial advisor practice called Summit Wealth — trustworthy, conservative, clean"
+    }
+  ],
+  "currentPreview": null,
+  "outputFormat": "html",
+  "isFirstMessage": true,
+  "context": null
+}

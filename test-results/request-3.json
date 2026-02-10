@@ -1,0 +1,12 @@
+{
+  "messages": [
+    {
+      "id": "test-3",
+      "role": "user",
+      "content": "A criminal defense law firm called Vance and Wolfe -- authoritative, dark, serious. Surprise me with a style, just build it."
+    }
+  ],
+  "isFirstMessage": true,
+  "outputFormat": "html",
+  "currentPreview": null
+}

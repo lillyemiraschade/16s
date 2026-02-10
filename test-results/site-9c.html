@@ -1,0 +1,1373 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Summit Wealth | Financial Advisory</title>
+  <meta name="description" content="Comprehensive wealth management and financial planning services built on trust, transparency, and decades of experience.">
+  <meta property="og:title" content="Summit Wealth | Financial Advisory">
+  <meta property="og:description" content="Comprehensive wealth management and financial planning services built on trust, transparency, and decades of experience.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Source+Sans+3:wght@300;400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --space-1: 4px; --space-2: 8px; --space-3: 12px; --space-4: 16px;
+      --space-5: 20px; --space-6: 24px; --space-8: 32px; --space-10: 40px;
+      --space-12: 48px; --space-16: 64px; --space-20: 80px; --space-24: 96px; --space-32: 128px;
+      
+      --text-xs: clamp(0.75rem, 0.7rem + 0.25vw, 0.875rem);
+      --text-sm: clamp(0.875rem, 0.8rem + 0.35vw, 1rem);
+      --text-base: clamp(1rem, 0.9rem + 0.5vw, 1.125rem);
+      --text-lg: clamp(1.125rem, 1rem + 0.6vw, 1.25rem);
+      --text-xl: clamp(1.25rem, 1rem + 1vw, 1.5rem);
+      --text-2xl: clamp(1.5rem, 1.2rem + 1.5vw, 2rem);
+      --text-3xl: clamp(1.875rem, 1.4rem + 2.3vw, 2.5rem);
+      --text-4xl: clamp(2.25rem, 1.5rem + 3.5vw, 3.5rem);
+      --text-5xl: clamp(3rem, 2rem + 5vw, 5rem);
+      
+      --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
+      --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -2px rgba(0,0,0,0.1);
+      --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -4px rgba(0,0,0,0.1);
+      --shadow-xl: 0 20px 25px -5px rgba(0,0,0,0.1), 0 8px 10px -6px rgba(0,0,0,0.1);
+      
+      --radius-sm: 6px; --radius-md: 8px; --radius-lg: 12px; --radius-xl: 16px;
+      --ease-out: cubic-bezier(0,0,0.2,1); --ease-in: cubic-bezier(0.4,0,1,1);
+      --ease-in-out: cubic-bezier(0.4,0,0.2,1); --ease-bounce: cubic-bezier(0.34,1.56,0.64,1);
+    }
+
+    [data-theme="light"] {
+      --bg: #FFFFFF;
+      --bg-secondary: #FAF9F7;
+      --bg-accent: #F0F4F8;
+      --surface: #FFFFFF;
+      --text: #1E3A5F;
+      --text-muted: #52525B;
+      --accent: #1E3A5F;
+      --accent-light: #3B5F8A;
+      --border: rgba(30, 58, 95, 0.1);
+    }
+
+    [data-theme="dark"] {
+      --bg: #0D0D0D;
+      --bg-secondary: #1C1C1E;
+      --bg-accent: #27272A;
+      --surface: #1C1C1E;
+      --text: #FAFAFA;
+      --text-muted: #A1A1AA;
+      --accent: #3B82F6;
+      --accent-light: #60A5FA;
+      --border: rgba(255, 255, 255, 0.1);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Source Sans 3', sans-serif;
+      font-weight: 400;
+      line-height: 1.6;
+      color: var(--text);
+      background: var(--bg);
+      overflow-x: hidden;
+      transition: background 0.3s var(--ease-out), color 0.3s var(--ease-out);
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+      font-family: 'Playfair Display', serif;
+      font-weight: 600;
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 clamp(16px, 5vw, 64px);
+    }
+
+    /* Skip Link */
+    .skip-link {
+      position: absolute;
+      top: -40px;
+      left: 0;
+      background: var(--accent);
+      color: white;
+      padding: 8px 16px;
+      z-index: 100;
+      border-radius: 0 0 var(--radius-sm) 0;
+    }
+
+    .skip-link:focus {
+      top: 0;
+    }
+
+    /* Navigation */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 50;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      transition: background 0.3s var(--ease-out);
+    }
+
+    [data-theme="dark"] nav {
+      background: rgba(13, 13, 13, 0.95);
+    }
+
+    nav .container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 80px;
+    }
+
+    .logo {
+      font-family: 'Playfair Display', serif;
+      font-size: var(--text-xl);
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      color: var(--accent);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: var(--space-8);
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: var(--text-sm);
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      transition: color 0.2s var(--ease-out);
+      position: relative;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active {
+      color: var(--accent);
+    }
+
+    .nav-links a.active::after {
+      content: '';
+      position: absolute;
+      bottom: -8px;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: var(--accent);
+    }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: var(--space-4);
+    }
+
+    .theme-toggle {
+      width: 36px;
+      height: 36px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      background: transparent;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s var(--ease-out);
+    }
+
+    .theme-toggle:hover {
+      background: var(--bg-secondary);
+      transform: translateY(-1px);
+    }
+
+    .theme-toggle svg {
+      width: 18px;
+      height: 18px;
+      stroke: var(--text);
+    }
+
+    .menu-toggle {
+      display: none;
+      width: 36px;
+      height: 36px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      background: transparent;
+      cursor: pointer;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+    }
+
+    .menu-toggle span {
+      width: 18px;
+      height: 2px;
+      background: var(--text);
+      transition: all 0.3s var(--ease-out);
+    }
+
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      top: 80px;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: var(--bg);
+      padding: var(--space-8);
+      z-index: 40;
+      transform: translateX(100%);
+      transition: transform 0.3s var(--ease-out);
+    }
+
+    .mobile-menu.open {
+      transform: translateX(0);
+    }
+
+    .mobile-menu ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-6);
+    }
+
+    .mobile-menu a {
+      font-size: var(--text-lg);
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--text);
+    }
+
+    @media (max-width: 768px) {
+      .nav-links {
+        display: none;
+      }
+      .menu-toggle {
+        display: flex;
+      }
+      .mobile-menu {
+        display: block;
+      }
+    }
+
+    /* Main Content */
+    main {
+      padding-top: 80px;
+    }
+
+    .page {
+      display: none;
+      opacity: 0;
+      transition: opacity 0.3s var(--ease-out);
+    }
+
+    .page.active {
+      display: block;
+      opacity: 1;
+    }
+
+    /* Hero Section */
+    .hero {
+      padding: var(--space-32) 0 var(--space-24);
+      background: var(--bg);
+    }
+
+    .hero .container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-16);
+      align-items: center;
+    }
+
+    .hero-content h1 {
+      font-size: var(--text-5xl);
+      margin-bottom: var(--space-6);
+      color: var(--accent);
+    }
+
+    .hero-content p {
+      font-size: var(--text-xl);
+      color: var(--text-muted);
+      line-height: 1.7;
+      margin-bottom: var(--space-8);
+    }
+
+    .hero-image {
+      position: relative;
+      aspect-ratio: 4/3;
+      background: linear-gradient(135deg, var(--bg-accent) 0%, var(--bg-secondary) 100%);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+    }
+
+    .hero-image::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: 
+        linear-gradient(90deg, rgba(30, 58, 95, 0.03) 1px, transparent 1px),
+        linear-gradient(rgba(30, 58, 95, 0.03) 1px, transparent 1px);
+      background-size: 64px 64px;
+      opacity: 0.5;
+    }
+
+    @media (max-width: 768px) {
+      .hero .container {
+        grid-template-columns: 1fr;
+      }
+      .hero {
+        padding: var(--space-20) 0;
+      }
+    }
+
+    /* Buttons */
+    .btn {
+      display: inline-block;
+      padding: 14px 32px;
+      font-size: var(--text-base);
+      font-weight: 600;
+      text-align: center;
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      transition: all 0.2s var(--ease-out);
+      border: none;
+      min-height: 44px;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: white;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .btn-primary:hover {
+      background: var(--accent-light);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .btn-primary:active {
+      transform: translateY(0) scale(0.98);
+    }
+
+    .btn-primary:focus-visible {
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(30, 58, 95, 0.15);
+    }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--accent);
+      border: 1px solid var(--accent);
+    }
+
+    .btn-ghost:hover {
+      background: var(--bg-accent);
+      transform: translateY(-2px);
+    }
+
+    /* Trust Section */
+    .trust-section {
+      padding: var(--space-24) 0;
+      background: var(--bg-secondary);
+    }
+
+    .trust-section .container {
+      max-width: 900px;
+    }
+
+    .trust-section h2 {
+      font-size: var(--text-4xl);
+      margin-bottom: var(--space-12);
+      text-align: center;
+    }
+
+    .trust-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-12);
+      margin-top: var(--space-12);
+    }
+
+    .trust-item {
+      text-align: center;
+    }
+
+    .trust-number {
+      font-family: 'Playfair Display', serif;
+      font-size: var(--text-4xl);
+      font-weight: 600;
+      color: var(--accent);
+      margin-bottom: var(--space-3);
+    }
+
+    .trust-label {
+      font-size: var(--text-sm);
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    @media (max-width: 768px) {
+      .trust-grid {
+        grid-template-columns: 1fr;
+        gap: var(--space-8);
+      }
+    }
+
+    /* Services Section */
+    .services-section {
+      padding: var(--space-24) 0;
+      background: var(--bg);
+    }
+
+    .services-intro {
+      max-width: 800px;
+      margin: 0 auto var(--space-16);
+      text-align: left;
+    }
+
+    .services-intro h2 {
+      font-size: var(--text-4xl);
+      margin-bottom: var(--space-6);
+    }
+
+    .services-intro p {
+      font-size: var(--text-lg);
+      color: var(--text-muted);
+      line-height: 1.7;
+    }
+
+    .services-list {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-12);
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .service-item {
+      display: grid;
+      grid-template-columns: 200px 1fr;
+      gap: var(--space-8);
+      padding: var(--space-8) 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .service-item:last-child {
+      border-bottom: none;
+    }
+
+    .service-name {
+      font-family: 'Playfair Display', serif;
+      font-size: var(--text-xl);
+      font-weight: 600;
+      color: var(--accent);
+    }
+
+    .service-description {
+      font-size: var(--text-base);
+      color: var(--text-muted);
+      line-height: 1.7;
+    }
+
+    @media (max-width: 768px) {
+      .service-item {
+        grid-template-columns: 1fr;
+        gap: var(--space-4);
+      }
+    }
+
+    /* Philosophy Section */
+    .philosophy-section {
+      padding: var(--space-24) 0;
+      background: var(--bg-accent);
+    }
+
+    .philosophy-content {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .philosophy-content h2 {
+      font-size: var(--text-4xl);
+      margin-bottom: var(--space-8);
+    }
+
+    .philosophy-quote {
+      font-size: var(--text-2xl);
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      line-height: 1.5;
+      color: var(--accent);
+      margin: var(--space-8) 0;
+      padding-left: var(--space-8);
+      border-left: 3px solid var(--accent);
+    }
+
+    .philosophy-text {
+      font-size: var(--text-lg);
+      color: var(--text-muted);
+      line-height: 1.7;
+      margin-bottom: var(--space-6);
+    }
+
+    /* CTA Section */
+    .cta-section {
+      padding: var(--space-24) 0;
+      background: var(--bg);
+    }
+
+    .cta-content {
+      max-width: 700px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .cta-content h2 {
+      font-size: var(--text-4xl);
+      margin-bottom: var(--space-6);
+    }
+
+    .cta-content p {
+      font-size: var(--text-lg);
+      color: var(--text-muted);
+      margin-bottom: var(--space-8);
+    }
+
+    /* About Page */
+    .about-hero {
+      padding: var(--space-24) 0;
+      background: var(--bg-secondary);
+    }
+
+    .about-hero h1 {
+      font-size: var(--text-5xl);
+      margin-bottom: var(--space-6);
+      max-width: 800px;
+    }
+
+    .about-hero p {
+      font-size: var(--text-xl);
+      color: var(--text-muted);
+      line-height: 1.7;
+      max-width: 700px;
+    }
+
+    .about-content {
+      padding: var(--space-20) 0;
+      background: var(--bg);
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-16);
+      margin-bottom: var(--space-16);
+    }
+
+    .about-text h3 {
+      font-size: var(--text-2xl);
+      margin-bottom: var(--space-4);
+    }
+
+    .about-text p {
+      font-size: var(--text-base);
+      color: var(--text-muted);
+      line-height: 1.7;
+      margin-bottom: var(--space-6);
+    }
+
+    @media (max-width: 768px) {
+      .about-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Contact Page */
+    .contact-section {
+      padding: var(--space-24) 0;
+      background: var(--bg);
+    }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-16);
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .contact-info h1 {
+      font-size: var(--text-4xl);
+      margin-bottom: var(--space-6);
+    }
+
+    .contact-info p {
+      font-size: var(--text-lg);
+      color: var(--text-muted);
+      line-height: 1.7;
+      margin-bottom: var(--space-8);
+    }
+
+    .contact-detail {
+      margin-bottom: var(--space-6);
+    }
+
+    .contact-detail-label {
+      font-size: var(--text-sm);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+      margin-bottom: var(--space-2);
+    }
+
+    .contact-detail-value {
+      font-size: var(--text-lg);
+      color: var(--text);
+    }
+
+    .contact-form {
+      background: var(--bg-secondary);
+      padding: var(--space-10);
+      border-radius: var(--radius-lg);
+    }
+
+    .form-group {
+      margin-bottom: var(--space-6);
+    }
+
+    .form-group label {
+      display: block;
+      font-size: var(--text-sm);
+      font-weight: 600;
+      margin-bottom: var(--space-2);
+      color: var(--text);
+    }
+
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+      width: 100%;
+      padding: 12px 16px;
+      font-size: var(--text-base);
+      font-family: 'Source Sans 3', sans-serif;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      background: var(--bg);
+      color: var(--text);
+      transition: all 0.2s var(--ease-out);
+      min-height: 44px;
+    }
+
+    .form-group textarea {
+      resize: vertical;
+      min-height: 120px;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus,
+    .form-group select:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(30, 58, 95, 0.15);
+    }
+
+    .form-error {
+      color: #DC2626;
+      font-size: var(--text-sm);
+      margin-top: var(--space-2);
+      display: none;
+    }
+
+    .form-group.error input,
+    .form-group.error textarea,
+    .form-group.error select {
+      border-color: #DC2626;
+    }
+
+    .form-group.error .form-error {
+      display: block;
+    }
+
+    .form-success {
+      background: #DCFCE7;
+      color: #166534;
+      padding: var(--space-4);
+      border-radius: var(--radius-md);
+      margin-top: var(--space-6);
+      display: none;
+    }
+
+    [data-theme="dark"] .form-success {
+      background: rgba(22, 101, 52, 0.2);
+      color: #86EFAC;
+    }
+
+    @media (max-width: 768px) {
+      .contact-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Footer */
+    footer {
+      background: var(--accent);
+      color: white;
+      padding: var(--space-16) 0 var(--space-8);
+      margin-top: var(--space-24);
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: var(--space-12);
+      margin-bottom: var(--space-12);
+    }
+
+    .footer-brand h3 {
+      font-size: var(--text-2xl);
+      margin-bottom: var(--space-4);
+      color: white;
+    }
+
+    .footer-brand p {
+      font-size: var(--text-base);
+      opacity: 0.9;
+      line-height: 1.6;
+    }
+
+    .footer-column h4 {
+      font-size: var(--text-lg);
+      margin-bottom: var(--space-4);
+      font-weight: 600;
+      color: white;
+    }
+
+    .footer-links {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-3);
+    }
+
+    .footer-links a {
+      font-size: var(--text-base);
+      opacity: 0.9;
+      transition: opacity 0.2s var(--ease-out);
+      color: white;
+    }
+
+    .footer-links a:hover {
+      opacity: 1;
+    }
+
+    .footer-bottom {
+      padding-top: var(--space-8);
+      border-top: 1px solid rgba(255, 255, 255, 0.2);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: var(--text-sm);
+      opacity: 0.9;
+    }
+
+    @media (max-width: 768px) {
+      .footer-grid {
+        grid-template-columns: 1fr;
+        gap: var(--space-8);
+      }
+      .footer-bottom {
+        flex-direction: column;
+        gap: var(--space-4);
+        text-align: center;
+      }
+    }
+
+    /* Reveal Animations */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.6s var(--ease-out), transform 0.6s var(--ease-out);
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .reveal-stagger > * {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.6s var(--ease-out), transform 0.6s var(--ease-out);
+    }
+
+    .reveal-stagger.visible > *:nth-child(1) { transition-delay: 0s; opacity: 1; transform: translateY(0); }
+    .reveal-stagger.visible > *:nth-child(2) { transition-delay: 0.1s; opacity: 1; transform: translateY(0); }
+    .reveal-stagger.visible > *:nth-child(3) { transition-delay: 0.2s; opacity: 1; transform: translateY(0); }
+    .reveal-stagger.visible > *:nth-child(4) { transition-delay: 0.3s; opacity: 1; transform: translateY(0); }
+    .reveal-stagger.visible > *:nth-child(5) { transition-delay: 0.4s; opacity: 1; transform: translateY(0); }
+    .reveal-stagger.visible > *:nth-child(6) { transition-delay: 0.5s; opacity: 1; transform: translateY(0); }
+
+    @media (prefers-reduced-motion: reduce) {
+      .reveal,
+      .reveal-stagger > * {
+        opacity: 1;
+        transform: none;
+        transition: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to main content</a>
+  
+  <nav>
+    <div class="container">
+      <a href="#home" class="logo" onclick="showPage('home')">Summit Wealth</a>
+      <ul class="nav-links">
+        <li><a href="#home" class="active" onclick="showPage('home')">Home</a></li>
+        <li><a href="#services" onclick="showPage('services')">Services</a></li>
+        <li><a href="#about" onclick="showPage('about')">About</a></li>
+        <li><a href="#contact" onclick="showPage('contact')">Contact</a></li>
+      </ul>
+      <div class="nav-right">
+        <button class="theme-toggle" aria-label="Toggle theme">
+          <svg class="sun-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <circle cx="12" cy="12" r="5"/>
+            <line x1="12" y1="1" x2="12" y2="3"/>
+            <line x1="12" y1="21" x2="12" y2="23"/>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+            <line x1="1" y1="12" x2="3" y2="12"/>
+            <line x1="21" y1="12" x2="23" y2="12"/>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+          </svg>
+        </button>
+        <button class="menu-toggle" aria-label="Open menu">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <div class="mobile-menu">
+    <ul>
+      <li><a href="#home" onclick="showPage('home'); closeMobileMenu()">Home</a></li>
+      <li><a href="#services" onclick="showPage('services'); closeMobileMenu()">Services</a></li>
+      <li><a href="#about" onclick="showPage('about'); closeMobileMenu()">About</a></li>
+      <li><a href="#contact" onclick="showPage('contact'); closeMobileMenu()">Contact</a></li>
+    </ul>
+  </div>
+
+  <main id="main">
+    <!-- Home Page -->
+    <div class="page active" id="home">
+      <section class="hero">
+        <div class="container">
+          <div class="hero-content reveal">
+            <h1>Summit Wealth</h1>
+            <p>Comprehensive financial planning built on trust, transparency, and decades of experience guiding families toward their goals.</p>
+            <button class="btn btn-primary" onclick="showPage('contact')">Schedule a Consultation</button>
+          </div>
+          <div class="hero-image reveal"></div>
+        </div>
+      </section>
+
+      <section class="trust-section">
+        <div class="container">
+          <h2 class="reveal">Built on Trust</h2>
+          <div class="trust-grid reveal-stagger">
+            <div class="trust-item">
+              <div class="trust-number">[30+]</div>
+              <div class="trust-label">Years Experience</div>
+            </div>
+            <div class="trust-item">
+              <div class="trust-number">[200+]</div>
+              <div class="trust-label">Families Served</div>
+            </div>
+            <div class="trust-item">
+              <div class="trust-number">[Fiduciary]</div>
+              <div class="trust-label">Standard</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="services-section">
+        <div class="container">
+          <div class="services-intro reveal">
+            <h2>Comprehensive Planning</h2>
+            <p>We take a holistic approach to wealth management, ensuring every aspect of your financial life works together toward your long-term objectives.</p>
+          </div>
+          <div class="services-list reveal-stagger">
+            <div class="service-item">
+              <div class="service-name">Retirement Planning</div>
+              <div class="service-description">Strategic planning to help you retire with confidence, covering income needs, tax efficiency, and lifestyle goals throughout your retirement years.</div>
+            </div>
+            <div class="service-item">
+              <div class="service-name">Investment Management</div>
+              <div class="service-description">Disciplined portfolio construction aligned with your risk tolerance and time horizon, with ongoing monitoring and rebalancing to keep you on track.</div>
+            </div>
+            <div class="service-item">
+              <div class="service-name">Tax Planning</div>
+              <div class="service-description">Proactive strategies to minimize your tax burden across all areas of your financial life, from retirement accounts to investment income and estate transfers.</div>
+            </div>
+            <div class="service-item">
+              <div class="service-name">Estate Planning</div>
+              <div class="service-description">Coordinated planning to ensure your assets transfer according to your wishes while minimizing taxes and administrative burdens for your heirs.</div>
+            </div>
+            <div class="service-item">
+              <div class="service-name">Insurance Review</div>
+              <div class="service-description">Comprehensive analysis of your life, disability, and long-term care insurance to protect your family and assets from unexpected events.</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="philosophy-section">
+        <div class="container">
+          <div class="philosophy-content reveal">
+            <h2>Our Philosophy</h2>
+            <blockquote class="philosophy-quote">
+              "Financial planning isn't about predicting the future—it's about preparing for it."
+            </blockquote>
+            <p class="philosophy-text">We believe in building long-term relationships based on trust, transparency, and honest communication. Our fiduciary duty means we always act in your best interest, never recommending products or strategies that don't align with your goals.</p>
+            <p class="philosophy-text">Every client's situation is unique, which is why we take the time to truly understand your values, concerns, and aspirations before making any recommendations. Your financial plan should reflect your life—not a template.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="cta-section">
+        <div class="container">
+          <div class="cta-content reveal">
+            <h2>Let's Start Planning</h2>
+            <p>Schedule a complimentary consultation to discuss your financial goals and learn how we can help you reach them.</p>
+            <button class="btn btn-primary" onclick="showPage('contact')">Schedule a Consultation</button>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- Services Page -->
+    <div class="page" id="services">
+      <section class="about-hero">
+        <div class="container">
+          <h1 class="reveal">Services</h1>
+          <p class="reveal">Comprehensive wealth management tailored to your unique situation, goals, and values.</p>
+        </div>
+      </section>
+
+      <section class="about-content">
+        <div class="container">
+          <div class="services-list reveal-stagger">
+            <div class="service-item">
+              <div class="service-name">Retirement Planning</div>
+              <div class="service-description">We help you answer the critical questions: When can I retire? How much do I need? What's the best withdrawal strategy? Our retirement planning process covers income projections, Social Security optimization, Medicare planning, and tax-efficient withdrawal strategies to help you retire with confidence and maintain your lifestyle throughout retirement.</div>
+            </div>
+            <div class="service-item">
+              <div class="service-name">Investment Management</div>
+              <div class="service-description">Our investment philosophy emphasizes diversification, cost efficiency, and discipline. We construct portfolios aligned with your risk tolerance and time horizon, using low-cost index funds and strategic asset allocation. Regular rebalancing and ongoing monitoring ensure your portfolio stays on track as markets shift and your needs evolve.</div>
+            </div>
+            <div class="service-item">
+              <div class="service-name">Tax Planning</div>
+              <div class="service-description">Taxes are often one of the largest expenses you'll face. We work proactively to minimize your tax burden through strategic planning around retirement account withdrawals, Roth conversions, tax-loss harvesting, charitable giving strategies, and coordination with your CPA to ensure every aspect of your financial life is tax-efficient.</div>
+            </div>
+            <div class="service-item">
+              <div class="service-name">Estate Planning</div>
+              <div class="service-description">Estate planning ensures your assets transfer according to your wishes while minimizing taxes and complications. We coordinate with your attorney to review beneficiary designations, trust structures, gifting strategies, and legacy goals. Our focus is on creating a plan that protects your family and reflects your values.</div>
+            </div>
+            <div class="service-item">
+              <div class="service-name">Insurance Analysis</div>
+              <div class="service-description">Insurance is a critical component of financial planning, protecting your family and assets from unexpected events. We conduct comprehensive reviews of your life, disability, and long-term care insurance to ensure you have appropriate coverage at competitive rates, with regular reviews as your needs change.</div>
+            </div>
+            <div class="service-item">
+              <div class="service-name">College Planning</div>
+              <div class="service-description">Funding education is one of the largest expenses families face. We help you evaluate savings strategies, compare 529 plans, understand financial aid implications, and balance education funding with other financial goals to ensure you're prepared without sacrificing your retirement security.</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="cta-section">
+        <div class="container">
+          <div class="cta-content reveal">
+            <h2>Ready to Get Started?</h2>
+            <p>Schedule a complimentary consultation to discuss your financial goals and learn how we can help.</p>
+            <button class="btn btn-primary" onclick="showPage('contact')">Schedule a Consultation</button>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- About Page -->
+    <div class="page" id="about">
+      <section class="about-hero">
+        <div class="container">
+          <h1 class="reveal">About Summit Wealth</h1>
+          <p class="reveal">Independent financial planning built on trust, transparency, and a fiduciary commitment to always act in your best interest.</p>
+        </div>
+      </section>
+
+      <section class="about-content">
+        <div class="container">
+          <div class="about-grid reveal">
+            <div class="about-text">
+              <h3>Our Story</h3>
+              <p>Summit Wealth was founded on a simple belief: financial planning should be transparent, conflict-free, and always focused on the client's best interest. After years of working in larger firms where product sales often took priority over planning, we decided to build a different kind of practice.</p>
+              <p>As an independent, fee-only firm, we have no ties to banks, insurance companies, or investment product manufacturers. This means our recommendations are based solely on what's best for you—not what earns us the highest commission.</p>
+            </div>
+            <div class="about-text">
+              <h3>Our Approach</h3>
+              <p>We believe in building long-term relationships. Most of our clients have been with us for years, and many have referred their family members and friends. This loyalty comes from our commitment to honest communication, proactive planning, and always being available when you need us.</p>
+              <p>Financial planning isn't a one-time event—it's an ongoing relationship. Markets change, life circumstances evolve, and tax laws shift. We're here to help you navigate all of it with confidence and clarity.</p>
+            </div>
+          </div>
+
+          <div class="philosophy-content reveal" style="margin-top: var(--space-16);">
+            <h2>Fiduciary Commitment</h2>
+            <p class="philosophy-text">As a fiduciary, we are legally and ethically bound to act in your best interest at all times. This means:</p>
+            <ul style="font-size: var(--text-lg); color: var(--text-muted); line-height: 1.7; margin-left: var(--space-6); margin-top: var(--space-4);">
+              <li style="margin-bottom: var(--space-3);">We never accept commissions or payments from investment products</li>
+              <li style="margin-bottom: var(--space-3);">Our recommendations are based solely on your needs, not our compensation</li>
+              <li style="margin-bottom: var(--space-3);">We disclose all fees and potential conflicts of interest upfront</li>
+              <li style="margin-bottom: var(--space-3);">We prioritize your financial goals over our business growth</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="cta-section">
+        <div class="container">
+          <div class="cta-content reveal">
+            <h2>Let's Work Together</h2>
+            <p>Schedule a complimentary consultation to learn more about our approach and how we can help you reach your financial goals.</p>
+            <button class="btn btn-primary" onclick="showPage('contact')">Schedule a Consultation</button>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- Contact Page -->
+    <div class="page" id="contact">
+      <section class="contact-section">
+        <div class="container">
+          <div class="contact-grid">
+            <div class="contact-info reveal">
+              <h1>Get in Touch</h1>
+              <p>Schedule a complimentary consultation to discuss your financial goals and learn how we can help you reach them. We're here to answer your questions and provide the clarity you need to make confident decisions.</p>
+              
+              <div class="contact-detail">
+                <div class="contact-detail-label">Phone</div>
+                <div class="contact-detail-value">[Your Phone]</div>
+              </div>
+              
+              <div class="contact-detail">
+                <div class="contact-detail-label">Email</div>
+                <div class="contact-detail-value">[Your Email]</div>
+              </div>
+              
+              <div class="contact-detail">
+                <div class="contact-detail-label">Office</div>
+                <div class="contact-detail-value">[Your Address]</div>
+              </div>
+              
+              <div class="contact-detail">
+                <div class="contact-detail-label">Hours</div>
+                <div class="contact-detail-value">[Your Hours]</div>
+              </div>
+            </div>
+
+            <form class="contact-form reveal" id="contactForm">
+              <div class="form-group">
+                <label for="name">Name *</label>
+                <input type="text" id="name" name="name" required>
+                <span class="form-error">Please enter your name</span>
+              </div>
+
+              <div class="form-group">
+                <label for="email">Email *</label>
+                <input type="email" id="email" name="email" required>
+                <span class="form-error">Please enter a valid email</span>
+              </div>
+
+              <div class="form-group">
+                <label for="phone">Phone</label>
+                <input type="tel" id="phone" name="phone">
+              </div>
+
+              <div class="form-group">
+                <label for="interest">I'm interested in *</label>
+                <select id="interest" name="interest" required>
+                  <option value="">Select a service</option>
+                  <option value="retirement">Retirement Planning</option>
+                  <option value="investment">Investment Management</option>
+                  <option value="tax">Tax Planning</option>
+                  <option value="estate">Estate Planning</option>
+                  <option value="comprehensive">Comprehensive Planning</option>
+                  <option value="other">Other</option>
+                </select>
+                <span class="form-error">Please select a service</span>
+              </div>
+
+              <div class="form-group">
+                <label for="message">Message</label>
+                <textarea id="message" name="message" rows="4" placeholder="Tell us a bit about your situation and goals..."></textarea>
+              </div>
+
+              <button type="submit" class="btn btn-primary">Send Message</button>
+              <div class="form-success" id="formSuccess">Thank you for reaching out! We'll be in touch within 1-2 business days to schedule your consultation.</div>
+            </form>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <h3>Summit Wealth</h3>
+          <p>Independent financial planning built on trust, transparency, and a fiduciary commitment to always act in your best interest.</p>
+        </div>
+        <div class="footer-column">
+          <h4>Services</h4>
+          <ul class="footer-links">
+            <li><a href="#services" onclick="showPage('services')">Retirement Planning</a></li>
+            <li><a href="#services" onclick="showPage('services')">Investment Management</a></li>
+            <li><a href="#services" onclick="showPage('services')">Tax Planning</a></li>
+            <li><a href="#services" onclick="showPage('services')">Estate Planning</a></li>
+          </ul>
+        </div>
+        <div class="footer-column">
+          <h4>Company</h4>
+          <ul class="footer-links">
+            <li><a href="#about" onclick="showPage('about')">About</a></li>
+            <li><a href="#contact" onclick="showPage('contact')">Contact</a></li>
+          </ul>
+        </div>
+        <div class="footer-column">
+          <h4>Contact</h4>
+          <ul class="footer-links">
+            <li>[Your Phone]</li>
+            <li>[Your Email]</li>
+            <li>[Your Address]</li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2024 Summit Wealth. All rights reserved.</p>
+        <p>Fee-only fiduciary financial planning</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Page Routing
+    function showPage(pageId) {
+      const pages = document.querySelectorAll('.page');
+      const navLinks = document.querySelectorAll('.nav-links a');
+      
+      pages.forEach(page => {
+        page.classList.remove('active');
+      });
+      
+      const targetPage = document.getElementById(pageId);
+      if (targetPage) {
+        targetPage.classList.add('active');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        
+        navLinks.forEach(link => {
+          link.classList.remove('active');
+          if (link.getAttribute('href') === '#' + pageId) {
+            link.classList.add('active');
+          }
+        });
+        
+        location.hash = pageId;
+      }
+    }
+
+    // Handle hash on load
+    window.addEventListener('DOMContentLoaded', () => {
+      const hash = location.hash.slice(1);
+      if (hash) {
+        showPage(hash);
+      }
+    });
+
+    window.addEventListener('hashchange', () => {
+      const hash = location.hash.slice(1);
+      if (hash) {
+        showPage(hash);
+      }
+    });
+
+    // Mobile Menu
+    const menuToggle = document.querySelector('.menu-toggle');
+    const mobileMenu = document.querySelector('.mobile-menu');
+    
+    if (menuToggle && mobileMenu) {
+      menuToggle.addEventListener('click', () => {
+        mobileMenu.classList.toggle('open');
+        document.body.style.overflow = mobileMenu.classList.contains('open') ? 'hidden' : '';
+      });
+    }
+
+    function closeMobileMenu() {
+      if (mobileMenu) {
+        mobileMenu.classList.remove('open');
+        document.body.style.overflow = '';
+      }
+    }
+
+    // Theme Toggle
+    const themeToggle = document.querySelector('.theme-toggle');
+    const html = document.documentElement;
+    
+    // Check for saved theme or default to light
+    const savedTheme = localStorage.getItem('theme') || 'light';
+    html.setAttribute('data-theme', savedTheme);
+    
+    if (themeToggle) {
+      themeToggle.addEventListener('click', () => {
+        const currentTheme = html.getAttribute('data-theme');
+        const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+        html.setAttribute('data-theme', newTheme);
+        localStorage.setItem('theme', newTheme);
+      });
+    }
+
+    // Form Handling
+    const contactForm = document.getElementById('contactForm');
+    if (contactForm) {
+      contactForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        // Clear previous errors
+        document.querySelectorAll('.form-group').forEach(group => {
+          group.classList.remove('error');
+        });
+        
+        // Validate
+        let isValid = true;
+        const name = document.getElementById('name');
+        const email = document.getElementById('email');
+        const interest = document.getElementById('interest');
+        
+        if (!name || !name.value.trim()) {
+          name?.closest('.form-group')?.classList.add('error');
+          isValid = false;
+        }
+        
+        if (!email || !email.value.trim() || !email.value.includes('@')) {
+          email?.closest('.form-group')?.classList.add('error');
+          isValid = false;
+        }
+        
+        if (!interest || !interest.value) {
+          interest?.closest('.form-group')?.classList.add('error');
+          isValid = false;
+        }
+        
+        if (!isValid) return;
+        
+        // Disable button and show loading
+        const submitBtn = contactForm.querySelector('button[type="submit"]');
+        if (submitBtn) {
+          submitBtn.disabled = true;
+          submitBtn.textContent = 'Sending...';
+        }
+        
+        // Simulate sending
+        await new Promise(resolve => setTimeout(resolve, 1500));
+        
+        // Save to localStorage
+        const formData = {
+          name: name?.value,
+          email: email?.value,
+          phone: document.getElementById('phone')?.value,
+          interest: interest?.value,
+          message: document.getElementById('message')?.value,
+          timestamp: new Date().toISOString()
+        };
+        
+        const submissions = JSON.parse(localStorage.getItem('contactSubmissions') || '[]');
+        submissions.push(formData);
+        if (submissions.length > 20) submissions.shift();
+        localStorage.setItem('contactSubmissions', JSON.stringify(submissions));
+        
+        // Show success
+        const successMsg = document.getElementById('formSuccess');
+        if (successMsg) {
+          successMsg.style.display = 'block';
+        }
+        contactForm.reset();
+        
+        // Re-enable button
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Send Message';
+        }
+      });
+    }
+
+    // Scroll Reveal
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, observerOptions);
+
+    document.querySelectorAll('.reveal, .reveal-stagger').forEach(el => {
+      observer.observe(el);
+    });
+
+    // Smooth Scroll
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        const href = this.getAttribute('href');
+        if (href.length > 1) {
+          const target = document.querySelector(href);
+          if (target && !href.includes('#home') && !href.includes('#about') && !href.includes('#services') && !href.includes('#contact')) {
+            e.preventDefault();
+            target.scrollIntoView({ behavior: 'smooth' });
+          }
+        }
+      });
+    });
+  </script>
+</body>
+</html>

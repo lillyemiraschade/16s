@@ -1,0 +1,12 @@
+{
+  "messages": [
+    {
+      "id": "test-2",
+      "role": "user",
+      "content": "A plant-based meal delivery startup called Sprout -- modern, clean, trustworthy. Surprise me with a style, just build it."
+    }
+  ],
+  "isFirstMessage": true,
+  "outputFormat": "html",
+  "currentPreview": null
+}

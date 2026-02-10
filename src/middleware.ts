@@ -34,7 +34,8 @@ export async function middleware(request: NextRequest) {
 
   // CORS check on API routes — reject cross-origin requests from unknown origins
   // /api/forms is exempt — deployed sites on any domain POST form submissions back
-  if (pathname.startsWith("/api/") && !pathname.startsWith("/api/forms")) {
+  // /api/sms is exempt — Twilio webhooks POST from Twilio's servers
+  if (pathname.startsWith("/api/") && !pathname.startsWith("/api/forms") && !pathname.startsWith("/api/sms")) {
     if (!isAllowedOrigin(origin, request)) {
       return new NextResponse(JSON.stringify({ error: "Forbidden" }), {
         status: 403,
@@ -60,7 +61,7 @@ export async function middleware(request: NextRequest) {
   if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
     const response = NextResponse.next();
     // Add CORS headers for API routes (/api/forms handles its own)
-    if (pathname.startsWith("/api/") && !pathname.startsWith("/api/forms") && origin && isAllowedOrigin(origin, request)) {
+    if (pathname.startsWith("/api/") && !pathname.startsWith("/api/forms") && !pathname.startsWith("/api/sms") && origin && isAllowedOrigin(origin, request)) {
       response.headers.set("Access-Control-Allow-Origin", origin);
     }
     return response;
@@ -74,7 +75,7 @@ export async function middleware(request: NextRequest) {
     response = NextResponse.next();
   }
   // Add CORS headers for API routes (/api/forms handles its own)
-  if (pathname.startsWith("/api/") && !pathname.startsWith("/api/forms") && origin && isAllowedOrigin(origin, request)) {
+  if (pathname.startsWith("/api/") && !pathname.startsWith("/api/forms") && !pathname.startsWith("/api/sms") && origin && isAllowedOrigin(origin, request)) {
     response.headers.set("Access-Control-Allow-Origin", origin);
   }
   return response;

@@ -1,0 +1,12 @@
+{
+  "messages": [
+    {
+      "id": "test-6",
+      "role": "user",
+      "content": "An AI code review tool called Sentinel -- dark SaaS landing page, developer-focused. Surprise me with a style, just build it."
+    }
+  ],
+  "isFirstMessage": true,
+  "outputFormat": "html",
+  "currentPreview": null
+}

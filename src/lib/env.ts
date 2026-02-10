@@ -36,6 +36,11 @@ export const env = {
   blobReadWriteToken: optionalEnv("BLOB_READ_WRITE_TOKEN"),
   removeBgApiKey: optionalEnv("REMOVE_BG_API_KEY"),
 
+  // Twilio (optional — SMS feature disabled without these)
+  twilioAccountSid: optionalEnv("TWILIO_ACCOUNT_SID"),
+  twilioAuthToken: optionalEnv("TWILIO_AUTH_TOKEN"),
+  twilioPhoneNumber: optionalEnv("TWILIO_PHONE_NUMBER"),
+
   // App URL (for metadata, CORS, emails — defaults to try16s.app)
   appUrl: process.env.NEXT_PUBLIC_APP_URL || "https://try16s.app",
 } as const;

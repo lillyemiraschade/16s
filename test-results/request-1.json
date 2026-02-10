@@ -1,0 +1,12 @@
+{
+  "messages": [
+    {
+      "id": "test-1",
+      "role": "user",
+      "content": "A Brooklyn barbershop called Fade and Fortune with a vintage Americana vibe. Surprise me with a style — just go ahead and build it."
+    }
+  ],
+  "isFirstMessage": true,
+  "outputFormat": "html",
+  "currentPreview": null
+}

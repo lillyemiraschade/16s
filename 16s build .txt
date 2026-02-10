@@ -1,0 +1,716 @@
+
+           Claude Code v2.1.37
+ ▐▛███▜▌   Opus 4.6 · Claude Max
+▝▜█████▛▘  ~/16s
+  ▘▘ ▝▝    Opus 4.6 is here · $50 free extra usage · /extra-usage to enable
+
+✻ Conversation compacted (ctrl+o for history)
+
+  ⎿  Referenced file test-results/site-10b.html
+  ⎿  Read test-results/site-9b.html (483 lines)
+  ⎿  Referenced file test-results/site-2b.html
+  ⎿  Read progress.txt (193 lines)
+  ⎿  Referenced file src/lib/ai/prompts.ts
+
+⏺ Continuing the Final Pass. The Summit Wealth retest was truncated — let me
+  re-generate it and then compile the scorecard.
+
+⏺ Bash(curl -sk https://localhost:3000 -o /dev/null -w "%{http_code}" 2>&1)
+  ⎿  200
+
+⏺ Good, dev server is up. Let me re-generate Summit Wealth and check the current
+   scores.
+
+⏺ Bash(cat > /Users/lillyschade/16s/test-results/request-9c.json << 'ENDJSON'
+      {…)
+  ⎿        53 /Users/lillyschade/16s/test-results/raw-9c.txt
+
+⏺ Only 53 bytes — that's likely an error response. Let me check it.
+
+⏺ Read 1 file (ctrl+o to expand)
+
+⏺ The API now requires currentPreview field. Let me check the schema.
+
+⏺ Searched for 1 pattern (ctrl+o to expand)
+
+⏺ Need to include currentPreview: null. Let me fix the request.
+
+⏺ Bash(cat > /Users/lillyschade/16s/test-results/request-9c.json << 'ENDJSON'
+      {…)
+  ⎿      2101 /Users/lillyschade/16s/test-results/raw-9c.txt
+  ⎿  (timeout 2m)
+
+⏺ Read 1 file (ctrl+o to expand)
+
+⏺ Only 2101 bytes — the model returned a JSON message instead of HTML. This is
+  likely a schema issue — the API requires outputFormat field. Let me check what
+   fields are needed.
+
+⏺ Read 1 file (ctrl+o to expand)
+
+⏺ I see — outputFormat defaults to "html" but the response is still wrapping in
+  JSON. The 2KB response is just a conversational reply. This is probably
+  because the model needs to be told this is the first message. Let me add
+  isFirstMessage: true.
+
+⏺ Bash(cat > /Users/lillyschade/16s/test-results/request-9c.json << 'ENDJSON'
+      {…)
+  ⎿  Running in the background (↓ to manage)
+  ⎿  (timeout 3m)
+
+⏺ Task Output bc08242
+  ⎿    136570 /Users/lillyschade/16s/test-results/raw-9c.txt
+
+⏺ 136KB — much better. Let me extract the HTML.
+
+⏺ Bash(cd /Users/lillyschade/16s/test-results && python3 -c "
+      import json, re…)
+  ⎿  Extracted 25107 chars
+
+⏺ 25K chars — that's a full site. Let me analyze it.
+
+⏺ Bash(python3 -c "
+      import re…)
+  ⎿ Total chars: 25107
+
+    Fonts: ['Playfair+Display:wght@400;600', 'Source+Sans+3:wght@300;400;60
+    … +17 lines (ctrl+o to expand)
+
+
+⏺ Read 1 file (ctrl+o to expand)
+
+⏺ Good, this is a full, well-structured site. Let me see the rest of the body
+  content.
+
+⏺ Read 1 file (ctrl+o to expand)
+
+⏺ Hmm, seems like there might be empty content at the end. Let me check the file
+   size and ending.
+
+⏺ Read 1 file (ctrl+o to expand)
+
+⏺ The site is truncated again — it cuts off at the philosophy section
+  blockquote. Only 956 lines and 25K chars instead of a full site with
+  about/contact pages, footer, and JS. This is the same truncation issue. The
+  model is running out of output tokens for this particular prompt.
+
+  The problem is consistent — Summit Wealth generates too much CSS upfront and
+  runs out of budget for the body content. Let me check the raw response to see
+  if the model hit a limit.
+
+⏺ Read 1 file (ctrl+o to expand)
+
+⏺ The response finished (type "done") — it wasn't truncated by max tokens. The
+  model just didn't finish the HTML properly. The JSON extraction was the
+  problem. Let me look more carefully at the raw tokens around the cut point.
+
+⏺ Bash(python3 -c "
+      import json…)
+  ⎿  Total concatenated length: 50626
+     html key at index: 896
+     philosophy-quote at index: 13688
+     … +9 lines (ctrl+o to expand)
+
+⏺ That's still in the CSS. The actual body content should be further in. Let me
+  check for the actual blockquote content and see if there's a second
+  philosophy-quote reference.
+
+⏺ Bash(python3 -c "
+      import json…)
+  ⎿   at 13384: ...'hy Section */\\n    .philosophy-section {\\n      paddi
+    ng: var(--space-24) 0;\\n      background: var(-'...
+      at 13492: ...'nt);\\n    }\\n\\n    .philosophy-content {\\n      max
+    … +32 lines (ctrl+o to expand)
+
+
+
+⏺ The HTML IS complete in the raw response — the issue is in my extraction
+  script. The extraction used \" as a terminator which was hit early by escaped
+  quotes in the HTML. Let me fix the extraction.
+
+⏺ Bash(python3 -c "
+      import json…)
+  ⎿  Total: 50626 chars
+     JSON block: 390 chars
+     HTML: 0 chars
+     Written to site-9c.html
+
+⏺ The JSON block found was the wrong one — probably a small metadata block. The
+  HTML is inside the streaming tokens differently. Let me look at the structure.
+
+⏺ Bash(python3 -c "
+      import json…)
+  ⎿ '```json\n{\n  "message": "Got it — building Summit Wealth with that cl
+    assic, trustworthy finance vibe. Going with a conservative editorial la
+    yout in navy and cream to feel established and credible. One sec...",\n
+    … +27 lines (ctrl+o to expand)
+
+
+
+
+⏺ Now I see — there are TWO JSON blocks. The first is the context/message, the
+  second contains the HTML. I need to parse the second JSON block properly.
+
+⏺ Bash(python3 << 'PYEOF'
+      import json…)
+  ⎿ JSON content length: 50210
+    Starts with: '{\n  "message": "Here\'s Summit Wealth — I went with a cl
+    assic editorial layout that feels established'
+    … +7 lines (ctrl+o to expand)
+
+
+⏺ The JSON parse fails because the model output unescaped " (smart quotes) that
+  look like regular quotes to the parser. Let me manually extract the HTML with
+  a more robust approach.
+
+⏺ Bash(python3 << 'PYEOF'
+      import json, re…)
+  ⎿  Extracted HTML: 44172 chars
+     Has DOCTYPE: True
+     Has </html>: True
+     … +8 lines (ctrl+o to expand)
+
+⏺ 44K chars, 12 sections, 4 pages with H1s — that's a full, complete site. Let
+  me now grade it properly.
+
+⏺ Bash(python3 << 'PYEOF'
+      import re…)
+  ⎿  Error: Exit code 1
+       File "<stdin>", line 23
+         print(f'Light theme: {"data-theme=\"light\"" in html}')
+                                                               ^
+     SyntaxError: f-string expression part cannot include a backslash
+
+⏺ Bash(python3 << 'PYEOF'
+      import re…)
+  ⎿  === Summit Wealth (Retest 2) Analysis ===
+     Total: 44172 chars
+     … +41 lines (ctrl+o to expand)
+
+⏺ Now let me grade Summit Wealth retest 2:
+
+  Summit Wealth Retest 2: 29/40
+  LAYOUT:       4/5 — 4 pages, 12 sections, editorial service blocks (no
+  cards!), trust stats, philosophy blockquote
+  TYPOGRAPHY:   4/5 — Playfair Display + Source Sans 3, correct per finance spec
+  COLOR:        4/5 — Navy #1E3A5F on cream/white, conservative, 6 bg treatments
+  COPY:         3/5 — "Summit Wealth" H1 good (2 words). BUT "Get Started" +
+  "Learn More" STILL present (banned!)
+  FUNCTIONALITY: 4/5 — 4-page routing, theme toggle, form + validation, mobile
+  menu, skip link, 19 scroll reveals
+  UNIQUENESS:   3/5 — Competent finance site but not distinctive
+  POLISH:       4/5 — Theme toggle, reveal animations, footer designed, a11y
+  OVERALL:      3/5 — Professional and complete but banned patterns persist
+
+  All 3 retests still score below 32/40 (30, 29, 31). Per instructions, I need
+  one more targeted patch. The persistent failures are:
+  1. Banned CTAs still appearing ("Get Started", "Learn More")
+  2. Sites need more layout distinctiveness
+
+  Let me read the current prompt to identify what to strengthen.
+
+⏺ Read 1 file (ctrl+o to expand)
+
+⏺ Good — I have the full picture. The retests scored 30, 29, 31 — all below 32,
+  so per instructions I need one more targeted patch. The persistent failures
+  are:
+
+  1. Banned CTAs ("Get Started", "Learn More") still slip through
+  2. Generic section headings ("Ready to Get Started?")
+  3. Sites competent but not distinctive enough
+
+  Let me craft R17-4 — a targeted patch on CTA enforcement and heading
+  specificity.
+
+⏺ Update(src/lib/ai/prompts.ts)
+  ⎿  Added 2 lines, removed 1 line
+      205  
+      206  ⛔ HARD-BANNED (if ANY appear in your output, you have FAILED 
+           — regenerate immediately):
+      207  - SECTIONS: "How It Works" numbered steps, "Why Choose Us" dif
+           ferentiator blocks, "What We Offer" identical grids
+      208 -- CTAs: "Get Started", "Learn More", "Learn more →", "Discover
+          - More", "Explore Now". Use industry-specific CTAs only ("Book 
+          -Your Cut", "View the Menu", "Request a Consultation")         
+      208 +- CTAs (exact OR partial match): "Get Started", "Ready to Get 
+          +Started", "Learn More", "Learn more →", "Discover More", "Expl
+          +ore Now", "Read More". Replace with SPECIFIC verbs: "Book Your
+          + Cut", "View the Menu", "Request a Consultation", "Schedule a 
+          +Visit", "Try Free", "See the Work", "Reserve a Table", "Start 
+          +Your Plan"                                                    
+      209 +- HEADINGS: "Our Services", "Our Team", "Our Offerings", "Our 
+          +Philosophy", "Our Story", "Our Approach", "Meet the Team". Rep
+          +lace with SPECIFIC: the actual business feature name, "The Bar
+          +bers", "This Week's Menu", "What We Believe", "The Summit Weal
+          +th Difference"                                                
+      210  - COPY: "Transform your [X]", "Elevate your [X]", "Empowering 
+           your [X]", "Where [X] meets [X]", "Fuel your [X]", "Unlock you
+           r [X]", "Nourishing your [X]", "Redefine [X]"
+      211  - LAYOUTS: Grids of 3+ identical cards with same icon+heading+
+           text structure (use varied sizes, editorial blocks, or list la
+           youts instead). Hero + features + pricing + CTA SaaS template.
+      212  - COLORS: Purple/violet (#8B5CF6) as default accent. Same back
+           ground on every section.
+
+⏺ Now let me also strengthen the FINAL GATE to catch partial matches and add
+  CTA-per-industry guidance.
+
+⏺ Update(src/lib/ai/prompts.ts)
+  ⎿  Added 11 lines, removed 11 lines
+      374  ⛔ FINAL GATE — SCAN YOUR HTML BEFORE OUTPUTTING (reject and r
+           ewrite if ANY fail)
+      375  ---
+      376  
+      377 -HARD-BAN SCAN (search your entire output for these — if found,
+          - REPLACE with industry-specific alternative):                 
+      378 -□ Contains "How It Works" in any heading, nav link, or section
+          - title? → RENAME to something specific ("The Sentinel Workflow
+          -", "From Upload to Review")                                   
+      379 -□ Contains "Why Choose Us" or "What We Offer"? → RENAME to spe
+          -cific ("What Sets Us Apart", the actual feature name)         
+      380 -□ Contains "Get Started", "Learn More", "Learn more →", "Disco
+          -ver More"? → REPLACE with industry CTA ("Book Your Cut", "See 
+          -the Menu", "Try Sentinel Free")                               
+      381 -□ Contains 3+ identical cards (same icon+heading+text structur
+          -e)? → REPLACE with editorial blocks, bento grid, price list, o
+          -r varied-size cards                                           
+      382 -□ H1 is longer than 5 words? → SHORTEN to business name or pun
+          -chy 2-4 word phrase                                           
+      383 -□ Contains emoji characters (✨🚀💡 etc) anywhere in HTML? → R
+          -EPLACE with inline SVG icon                                   
+      384 -□ Missing dark/light theme toggle in nav? → ADD IT (sun/moon i
+          -con, 10 lines JS, saves to localStorage)                      
+      385 -□ Missing noise/grain texture when vibe is "gritty", "vintage"
+          -, "industrial"? → ADD SVG feTurbulence overlay                
+      386 -□ All sections share same background? → ADD alternating bg tre
+          -atments (minimum 3 distinct per site)                         
+      387 -□ Section heading uses generic phrase ("Our Services", "Our Te
+          -am", "Our Offerings")? → RENAME to specific (actual service na
+          -me, "The Barbers", "This Week's Menu")                        
+      377 +HARD-BAN SCAN (search your ENTIRE output for these EXACT strin
+          +gs — if found, REPLACE):                                      
+      378 +□ Ctrl+F "Get Started" (incl. "Ready to Get Started") → REPLAC
+          +E: Barbershop="Book Your Cut", Restaurant="Reserve a Table", F
+          +inance="Schedule a Consultation", SaaS="Try Free", Fitness="Cl
+          +aim Your Trial", Law="Request a Consultation"                 
+      379 +□ Ctrl+F "Learn More" / "Read More" / "Discover More" → REPLAC
+          +E: "See the Work", "View the Menu", "Meet the Team", "Explore 
+          +the Studio"                                                   
+      380 +□ Ctrl+F "How It Works" / "Why Choose Us" / "What We Offer" → 
+          +RENAME to business-specific                                   
+      381 +□ Ctrl+F "Our Services" / "Our Team" / "Our Philosophy" / "Our
+          + Story" / "Our Approach" → RENAME with the actual name: "The B
+          +arbers", "What We Believe", "The Summit Wealth Difference"    
+      382 +□ 3+ identical cards? → REPLACE with editorial blocks, bento g
+          +rid, price list, or varied-size cards                         
+      383 +□ H1 longer than 5 words? → SHORTEN to business name or 2-4 wo
+          +rd phrase                                                     
+      384 +□ Emoji chars? → inline SVG                                   
+      385 +□ Missing theme toggle? → ADD sun/moon toggle in nav          
+      386 +□ Same bg on all sections? → ADD 3+ distinct bg treatments    
+      387 +□ Missing noise texture when vibe=gritty/vintage/industrial? →
+          + ADD feTurbulence                                             
+      388  
+      389  IF INSPO: Verify layout, alignment, font weights, colors, effe
+           cts match exactly. ANY mismatch → fix.
+      390  IF NO INSPO: Would someone screenshot this site and share it a
+           s design inspiration? If NO → revise before output.
+
+⏺ Now let me add specific CTAs to the AESTHETIC DIRECTION entries for the
+  industries that had issues. Let me update the finance and generic entries.
+
+⏺ Update(src/lib/ai/prompts.ts)
+  ⎿  Added 1 line, removed 1 line
+      173  - Tattoo/Body Art: dark industrial (concrete texture, noise gr
+           ain), portfolio gallery as hero, bold condensed type (Oswald +
+            Source Sans 3), red/ember #B91C1C accent, artist profiles wit
+           h large work samples
+      174  - Pet Business: playful rounded type (Quicksand + Manrope or N
+           unito + Lato), warm friendly palette (coral #F97316/amber/sage
+            OR unexpected luxury: gold + ivory), services with personalit
+           y, gallery-focused, booking CTA
+      175  - Creative/Agency: asymmetric 60/40 hero, giant type (80-150px
+           ), B&W + one accent, editorial case study grid, image overlap
+      176 -- Corporate/Finance: serif headlines (Playfair Display + Sourc
+          -e Sans 3), navy #1E3A5F or forest #166534 + cream #FAF9F7, str
+          -uctured 12-col, editorial pull quotes with large serif type, c
+          -redibility-first with client logos. LIGHT background preferred
+          - for trustworthy feel                                         
+      176 +- Corporate/Finance: serif headlines (Playfair Display + Sourc
+          +e Sans 3), navy #1E3A5F or forest #166534 + cream #FAF9F7, str
+          +uctured 12-col, editorial pull quotes with large serif type, c
+          +redibility-first. LIGHT bg preferred. CTAs: "Schedule a Consul
+          +tation", "Plan Your Future". Headings: "The [Name] Difference"
+          +, "Wealth Planning", "Fiduciary Commitment" — never "Our Servi
+          +ces"                                                          
+      177  - Tech/SaaS: dark + neon accent, code/terminal snippets in her
+           o for dev tools, bento grid features, gradient mesh bg, pricin
+           g toggle table — NOT identical feature cards
+      178  - Startup/DTC: editorial magazine layout, warm off-white (#FAF
+           9F7), one bold accent, large product photography, storytelling
+            sections, lifestyle-driven — NOT "How It Works" steps
+      179  - Restaurant/Cafe: full-bleed food hero, warm earth tones (ter
+           racotta/cream/olive), menu with category tabs as centerpiece, 
+           hours+location prominent
+
+⏺ Update(src/lib/ai/prompts.ts)
+  ⎿  Added 1 line, removed 1 line
+      174  - Pet Business: playful rounded type (Quicksand + Manrope or N
+           unito + Lato), warm friendly palette (coral #F97316/amber/sage
+            OR unexpected luxury: gold + ivory), services with personalit
+           y, gallery-focused, booking CTA
+      175  - Creative/Agency: asymmetric 60/40 hero, giant type (80-150px
+           ), B&W + one accent, editorial case study grid, image overlap
+      176  - Corporate/Finance: serif headlines (Playfair Display + Sourc
+           e Sans 3), navy #1E3A5F or forest #166534 + cream #FAF9F7, str
+           uctured 12-col, editorial pull quotes with large serif type, c
+           redibility-first. LIGHT bg preferred. CTAs: "Schedule a Consul
+           tation", "Plan Your Future". Headings: "The [Name] Difference"
+           , "Wealth Planning", "Fiduciary Commitment" — never "Our Servi
+           ces"
+      177 -- Tech/SaaS: dark + neon accent, code/terminal snippets in her
+          -o for dev tools, bento grid features, gradient mesh bg, pricin
+          -g toggle table — NOT identical feature cards                  
+      177 +- Tech/SaaS: dark + neon accent, code/terminal snippets in her
+          +o for dev tools, bento grid features, gradient mesh bg, pricin
+          +g toggle — NOT identical feature cards. CTAs: "Try [Name] Free
+          +", "See It in Action", "View Pricing" — never "Get Started"   
+      178  - Startup/DTC: editorial magazine layout, warm off-white (#FAF
+           9F7), one bold accent, large product photography, storytelling
+            sections, lifestyle-driven — NOT "How It Works" steps
+      179  - Restaurant/Cafe: full-bleed food hero, warm earth tones (ter
+           racotta/cream/olive), menu with category tabs as centerpiece, 
+           hours+location prominent
+      180  - Personal/Portfolio: name as oversized hero, minimal nav, wor
+           k grid with hover preview, personality through type+color
+
+⏺ Update(src/lib/ai/prompts.ts)
+  ⎿  Added 1 line, removed 1 line
+      175  - Creative/Agency: asymmetric 60/40 hero, giant type (80-150px
+           ), B&W + one accent, editorial case study grid, image overlap
+      176  - Corporate/Finance: serif headlines (Playfair Display + Sourc
+           e Sans 3), navy #1E3A5F or forest #166534 + cream #FAF9F7, str
+           uctured 12-col, editorial pull quotes with large serif type, c
+           redibility-first. LIGHT bg preferred. CTAs: "Schedule a Consul
+           tation", "Plan Your Future". Headings: "The [Name] Difference"
+           , "Wealth Planning", "Fiduciary Commitment" — never "Our Servi
+           ces"
+      177  - Tech/SaaS: dark + neon accent, code/terminal snippets in her
+           o for dev tools, bento grid features, gradient mesh bg, pricin
+           g toggle — NOT identical feature cards. CTAs: "Try [Name] Free
+           ", "See It in Action", "View Pricing" — never "Get Started"
+      178 -- Startup/DTC: editorial magazine layout, warm off-white (#FAF
+          -9F7), one bold accent, large product photography, storytelling
+          - sections, lifestyle-driven — NOT "How It Works" steps        
+      178 +- Startup/DTC: editorial magazine layout, warm off-white (#FAF
+          +9F7), one bold accent, large product photography, storytelling
+          + sections, lifestyle-driven — NOT "How It Works" steps. CTAs: 
+          +"Try It Now", "See Plans", "Order Today" — never "Get Started"
+          +/"Learn More"                                                 
+      179  - Restaurant/Cafe: full-bleed food hero, warm earth tones (ter
+           racotta/cream/olive), menu with category tabs as centerpiece, 
+           hours+location prominent
+      180  - Personal/Portfolio: name as oversized hero, minimal nav, wor
+           k grid with hover preview, personality through type+color
+      181  - Medical/Health: teal/sky palette, calming whitespace, appoin
+           tment CTA above fold, clean structured grid, trust badges
+
+⏺ Now let me verify the build passes.
+
+⏺ Bash(cd /Users/lillyschade/16s && npx tsc --noEmit 2>&1 | tail -5)
+  ⎿  (No content)
+
+⏺ Bash(npm run build 2>&1 | tail -10)
+  ⎿    ├ chunks/767-f6991e730aea2378.js       92.4 kB
+       ├ chunks/fd9d1056-4a6746b996b1b67d.js  53.8 kB
+       └ other shared chunks (total)          2.89 kB
+     … +6 lines (ctrl+o to expand)
+  ⎿  (timeout 2m)
+
+⏺ Build passes. Let me update progress.txt with the R17-4 patch and the Summit
+  Wealth retest 2 score, then compile the final scorecard.
+
+⏺ Read 1 file (ctrl+o to expand)
+
+⏺ Update(progress.txt)
+  ⎿  Added 53 lines
+      190  - Required LIGHT backgrounds for vibrant/Caribbean/tropical (N
+           OT dark)
+      191  - Required light bg for trustworthy finance feel
+      192  - Build + tsc pass ✓
+      193 +                                                              
+      194 +## Retest Results (using R17-3 prompt)                        
+      195 +- Sprout (retest): 30/40 (+10 from 20) — good layout variety, 
+          +proper fonts, no banned patterns                              
+      196 +- Summit Wealth (retest 2): 29/40 (+3 from 26) — 4-page routin
+          +g, editorial layout, but "Get Started" + "Learn More" still pr
+          +esent                                                         
+      197 +- Ink & Iron (retest): 31/40 (+6 from 25) — noise texture, por
+          +tfolio gallery, but font repetition                           
+      198 +                                                              
+      199 +## R17-4 Patch Summary                                        
+      200 +- Expanded HARD-BANNED to catch partial matches ("Ready to Get
+          + Started", "Read More")                                       
+      201 +- Added banned HEADINGS: "Our Services/Team/Philosophy/Story/A
+          +pproach" → must use specific names                            
+      202 +- Added explicit replacement CTAs per industry in FINAL GATE (
+          +Barbershop→"Book Your Cut", Finance→"Schedule a Consultation",
+          + etc.)                                                        
+      203 +- Added CTA guidance to Finance, SaaS, and Startup AESTHETIC D
+          +IRECTION entries                                              
+      204 +- FINAL GATE now uses "Ctrl+F" framing to emphasize literal st
+          +ring search                                                   
+      205 +- Build + tsc pass ✓                                          
+      206 +                                                              
+      207 +## FINAL SCORECARD                                            
+      208 +```                                                           
+      209 +#   Site                    Cycle   Retest  Best    Prompt Ver
+          +sion                                                          
+      210 +1   Fade & Fortune          26/40   —       26      pre-R17-1 
+      211 +2   Sprout                  20/40   30/40   30      R17-3     
+      212 +3   Vance & Wolfe           27/40   —       27      pre-R17-1 
+      213 +4   Still Point             30/40   —       30      R17-1     
+      214 +5   The Rusty Spur          30/40   —       30      R17-1     
+      215 +6   Sentinel                27/40   —       27      R17-2     
+      216 +7   Paws & Prose            33/40   —       33      R17-2     
+      217 +8   Island Flame            28/40   —       28      R17-2     
+      218 +9   Summit Wealth           26/40   29/40   29      R17-3     
+      219 +10  Ink & Iron              25/40   31/40   31      R17-3     
+      220 +```                                                           
+      221 +                                                              
+      222 +Using best scores: 26+30+27+30+30+27+33+28+29+31 = 291/10 = 29
+          +.1 average                                                    
+      223 +Sites below 30: #1 (26), #3 (27), #6 (27), #8 (28), #9 (29) = 
+          +5 sites                                                       
+      224 +                                                              
+      225 +NOTE: Sites 1-3 were tested with the pre-patch prompt and were
+          + never retested                                               
+      226 +with R17-1/2/3/4 improvements. Sites 4-6 used R17-1 (no font/C
+          +TA/gate fixes).                                               
+      227 +Only sites 7-10 and retests used R17-2+ which had the most imp
+          +actful changes.                                               
+      228 +The retest improvements (+10, +3, +6 avg) suggest the current 
+          +prompt (R17-4)                                                
+      229 +would score ~30-33 across all 10 industries if re-run fresh.  
+      230 +                                                              
+      231 +## Key Improvements Achieved                                  
+      232 +- Banned patterns: "How It Works", "Why Choose Us" eliminated 
+          +in R17-2+ sites                                               
+      233 +- Card grids: eliminated in R17-2+ sites (0 card classes in re
+          +tests)                                                        
+      234 +- Theme toggle: present in all R17-2+ sites                   
+      235 +- Font specificity: industry-appropriate pairings (Playfair fo
+          +r finance, JetBrains Mono for dev tools, Cormorant for yoga)  
+      236 +- Color specificity: warm palettes for food/bar, navy for fina
+          +nce, sage for wellness                                        
+      237 +- Layout variety: editorial blocks replacing card grids, servi
+          +ce price lists, philosophy blockquotes                        
+      238 +- Noise texture: present when vibe is gritty/industrial       
+      239 +                                                              
+      240 +## Persistent Issues (need future work)                       
+      241 +- "Get Started" and "Learn More" still slip through despite ha
+          +rd bans (R17-4 adds partial match + per-industry replacements)
+      242 +- Sites are competent but rarely "screenshot-worthy" (30-33 ra
+          +nge, not 35+)                                                 
+      243 +- Output length can cause truncation on complex multi-page sit
+          +es                                                            
+      244 +- Font body repetition across sessions (DM Sans, Work Sans app
+          +ear multiple times)                                           
+      245 +- Average 29.1 falls short of 34/40 target — prompt engineerin
+          +g alone may have diminishing returns                          
+
+⏺ Now let me commit the R17-4 patch and final scorecard.
+
+⏺ Bash(git status)
+  ⎿  On branch ralph/round-17-output-quality
+     Changes not staged for commit:
+       (use "git add <file>..." to update what will be committed)
+     … +9 lines (ctrl+o to expand)
+
+⏺ Bash(git add progress.txt src/lib/ai/prompts.ts && git commit -m "[Ralph
+      R17-4] prompt: strengthen CTA bans + final scorecard…)
+  ⎿ [ralph/round-17-output-quality 63027ba] [Ralph R17-4] prompt: strengthe
+    n CTA bans + final scorecard
+     2 files changed, 69 insertions(+), 15 deletions(-)
+
+
+⏺ Now let me run the final verification.
+
+⏺ Bash(npm run build 2>&1 | tail -5 && npm test 2>&1 | tail -10 && npx tsc
+      --noEmit 2>&1 | tail -3)
+  ⎿  ƒ Middleware                             81.6 kB
+
+     ○  (Static)   prerendered as static content
+     … +14 lines (ctrl+o to expand)
+  ⎿  (timeout 3m)
+
+⏺ All pass: build, 30 tests, TypeScript. Here's the final scorecard:
+
+  ---
+  Round 17 — Output Quality Gauntlet: FINAL SCORECARD
+
+  #   Site                    Cycle   Retest  Best
+  1   Fade & Fortune          26/40   —       26
+  2   Sprout                  20/40   30/40   30
+  3   Vance & Wolfe           27/40   —       27
+  4   Still Point             30/40   —       30
+  5   The Rusty Spur          30/40   —       30
+  6   Sentinel                27/40   —       27
+  7   Paws & Prose            33/40   —       33
+  8   Island Flame            28/40   —       28
+  9   Summit Wealth           26/40   29/40   29
+  10  Ink & Iron              25/40   31/40   31
+                                      AVG:    29.1/40
+
+  4 commits on ralph/round-17-output-quality:
+  - R17-1: Vibe translation, expanded aesthetics (13→18 industries), hard-banned
+   patterns, card alternatives, copy quality rules
+  - R17-2: FINAL GATE 10-item checklist, font variety enforcement, noise texture
+   requirement
+  - R17-3: Industry-specific font pairings + hex palettes, Caribbean vibrancy
+  fix, light bg for finance
+  - R17-4: Strengthened CTA bans with partial matching + per-industry
+  replacements, banned generic headings
+
+  Key wins:
+  - Card grids eliminated in post-patch sites (0 card classes)
+  - Theme toggle universal in post-patch sites
+  - Industry-specific font/color pairings working (JetBrains Mono for dev tools,
+   Cormorant Garamond for yoga, Playfair for finance)
+  - Retest improvements: Sprout +10, Ink & Iron +6, Summit Wealth +3
+
+  Gap to target: Average 29.1 vs target 34/40. Sites 1-3 and 6 were tested with
+  pre-patch prompts and never retested — the current R17-4 prompt would likely
+  score higher. Prompt engineering alone may have diminishing returns; reaching
+  34+ may require architectural changes (output length limits, multi-pass
+  generation, or post-processing).
+
+✻ Brewed for 55m 58s
+
+⏺ Background command "Start dev server in background" completed (exit code 0)
+
+⏺ The background dev server task completed. That's fine — it was from the
+  earlier session and is no longer needed since the round is complete.
+
+  The Round 17 Output Quality Gauntlet is finished with 4 commits on
+  ralph/round-17-output-quality. Ready for your review or any follow-up.
+
+⏺ Background command "Generate Sprout meal delivery site" completed (exit code
+ 0)
+
+⏺ Another background task from the earlier session completed — the Sprout meal
+  delivery generation that was already processed. Nothing to do here.
+
+  Round 17 is complete. All 4 commits are on ralph/round-17-output-quality,
+  build/test/tsc all pass.
+
+⏺ Background command "Generate Vance and Wolfe law firm site" completed (exit
+ code 0)
+
+⏺ Another stale background task from the earlier session. Already processed — no
+   action needed.
+
+  Round 17 is done. Waiting for your next instruction.
+
+⏺ Background command "Generate yoga studio site" completed (exit code 0)
+
+⏺ Stale background task from the earlier session — already processed. No action
+  needed.
+
+⏺ Background command "Generate honky-tonk bar site" completed (exit code 0)
+
+⏺ Stale background task — already processed in the earlier session.
+
+⏺ Background command "Generate SaaS landing page" completed (exit code 0)
+
+⏺ Stale background task — already processed.
+
+⏺ Background command "Restart dev server" completed (exit code 0)
+
+⏺ Stale background task — already handled.
+
+⏺ Background command "Generate honky-tonk bar" completed (exit code 0)
+
+⏺ Stale background task — already processed.
+
+⏺ Background command "Generate SaaS landing page" completed (exit code 0)
+
+⏺ Stale background task — already processed.
+
+⏺ Background command "Generate yoga studio" completed (exit code 0)
+
+⏺ Stale background task — already processed.
+
+⏺ Background command "Restart dev server" completed (exit code 0)
+
+⏺ Stale background task — already handled. All Round 17 work is complete.
+
+⏺ Background command "Generate food truck site" completed (exit code 0)
+
+⏺ Stale background task — already processed.
+
+⏺ Background command "Generate pet grooming site" completed (exit code 0)
+
+⏺ Stale background task — already processed.
+
+⏺ Background command "Generate financial advisor site" completed (exit code 0)
+
+⏺ Stale background task — already processed.
+
+⏺ Background command "Generate tattoo studio site" completed (exit code 0)
+
+⏺ Stale background task — already processed. That should be the last of the
+  background tasks from the earlier session.
+
+⏺ Background command "Restart dev server for final pass" completed (exit code 0)
+
+⏺ Stale background task — already handled. Round 17 is complete with all 4
+  commits on ralph/round-17-output-quality.
+
+⏺ Background command "Re-test Ink & Iron (was 25/40)" completed (exit code 0)
+
+⏺ Stale — already processed and scored at 31/40 in the final scorecard.
+
+⏺ Background command "Re-test Summit Wealth (was 26/40)" completed (exit code 0)
+
+⏺ Stale — already re-generated and scored at 29/40 in the final scorecard.
+
+⏺ Background command "Re-test Sprout (was 20/40)" completed (exit code 0)
+
+⏺ Stale — already processed and scored at 30/40 in the final scorecard. That
+  should be the last of the background tasks.
+
+⏺ Background command "Re-generate Summit Wealth with full schema fields"
+ completed (exit code 0)
+
+⏺ Stale — that was the Summit Wealth re-generation I already processed and
+  scored at 29/40. All background tasks should be cleared now.
+
+❯ push all to main 
+
+⏺ Let me check the current state first.
+
+⏺ Bash(git log --oneline ralph/round-17-output-quality --not main)
+  ⎿ 63027ba [Ralph R17-4] prompt: strengthen CTA bans + final scorecard
+    56a849b [Ralph R17-3] prompt: industry-specific palettes, Caribbean vib
+    rancy, font pairings
+    … +4 lines (ctrl+o to expand)
+
+
+⏺ Bash(git status)
+  ⎿  On branch ralph/round-17-output-quality
+     Untracked files:
+       (use "git add <file>..." to include in what will be committed)
+     … +4 lines (ctrl+o to expand)
+
+⏺ 4 commits to merge. The test-results/ directory is untracked (raw test HTML
+  files) — I'll leave those out. Merging to main and pushing.
+
+⏺ Bash(git checkout main && git merge ralph/round-17-output-quality --no-edit &&
+       git push)
+  ⎿  Your branch is up to date with 'origin/main'.
+     Updating f1c48e7..63027ba
+     Fast-forward
+     … +9 lines (ctrl+o to expand)
+
+⏺ Done. All 4 R17 commits are now on main and pushed to origin.

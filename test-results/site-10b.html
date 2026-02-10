@@ -1,0 +1,1245 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ink and Iron | Tattoo Studio</title>
+  <meta name="description" content="Bold custom tattoos in a dark industrial space. Walk-ins welcome.">
+  <meta property="og:title" content="Ink and Iron | Tattoo Studio">
+  <meta property="og:description" content="Bold custom tattoos in a dark industrial space. Walk-ins welcome.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600&family=Source+Sans+3:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --space-1: 4px; --space-2: 8px; --space-3: 12px; --space-4: 16px;
+      --space-5: 20px; --space-6: 24px; --space-8: 32px; --space-10: 40px;
+      --space-12: 48px; --space-16: 64px; --space-20: 80px; --space-24: 96px; --space-32: 128px;
+
+      --text-xs: clamp(0.75rem, 0.7rem + 0.25vw, 0.875rem);
+      --text-sm: clamp(0.875rem, 0.8rem + 0.35vw, 1rem);
+      --text-base: clamp(1rem, 0.9rem + 0.5vw, 1.125rem);
+      --text-lg: clamp(1.125rem, 1rem + 0.6vw, 1.25rem);
+      --text-xl: clamp(1.25rem, 1rem + 1vw, 1.5rem);
+      --text-2xl: clamp(1.5rem, 1.2rem + 1.5vw, 2rem);
+      --text-3xl: clamp(1.875rem, 1.4rem + 2.3vw, 2.5rem);
+      --text-4xl: clamp(2.25rem, 1.5rem + 3.5vw, 3.5rem);
+      --text-5xl: clamp(3rem, 2rem + 5vw, 5rem);
+
+      --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
+      --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -2px rgba(0,0,0,0.1);
+      --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -4px rgba(0,0,0,0.1);
+      --shadow-xl: 0 20px 25px -5px rgba(0,0,0,0.1), 0 8px 10px -6px rgba(0,0,0,0.1);
+      
+      --radius-sm: 6px; --radius-md: 8px; --radius-lg: 12px; --radius-xl: 16px;
+      --ease-out: cubic-bezier(0,0,0.2,1); --ease-in: cubic-bezier(0.4,0,1,1);
+      --ease-in-out: cubic-bezier(0.4,0,0.2,1); --ease-bounce: cubic-bezier(0.34,1.56,0.64,1);
+    }
+
+    [data-theme="dark"] {
+      --bg: #0A0A0B;
+      --surface: #1C1C1E;
+      --text: #FAFAFA;
+      --text-muted: #A1A1AA;
+      --border: rgba(255,255,255,0.1);
+      --accent: #B91C1C;
+      --accent-hover: #DC2626;
+    }
+
+    [data-theme="light"] {
+      --bg: #FAFAFA;
+      --surface: #FFFFFF;
+      --text: #18181B;
+      --text-muted: #52525B;
+      --border: rgba(0,0,0,0.1);
+      --accent: #B91C1C;
+      --accent-hover: #DC2626;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Source Sans 3', sans-serif;
+      font-weight: 300;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' /%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    body::after {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: 
+        radial-gradient(circle at 20% 20%, rgba(185, 28, 28, 0.08), transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(185, 28, 28, 0.05), transparent 50%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 clamp(16px, 5vw, 64px);
+      position: relative;
+      z-index: 2;
+    }
+
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 50;
+      background: rgba(10, 10, 11, 0.8);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    nav .container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: var(--space-5);
+      padding-bottom: var(--space-5);
+    }
+
+    .logo {
+      font-family: 'Oswald', sans-serif;
+      font-size: var(--text-2xl);
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: var(--space-8);
+      list-style: none;
+      align-items: center;
+    }
+
+    .nav-links a {
+      font-family: 'Oswald', sans-serif;
+      font-size: var(--text-sm);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color 0.2s var(--ease-out);
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active {
+      color: var(--accent);
+    }
+
+    .theme-toggle {
+      background: none;
+      border: 1px solid var(--border);
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s var(--ease-out);
+    }
+
+    .theme-toggle:hover {
+      border-color: var(--accent);
+      transform: scale(1.05);
+    }
+
+    .theme-toggle svg {
+      width: 18px;
+      height: 18px;
+      stroke: var(--text-muted);
+      transition: stroke 0.2s var(--ease-out);
+    }
+
+    .theme-toggle:hover svg {
+      stroke: var(--accent);
+    }
+
+    .menu-toggle {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .menu-toggle span {
+      width: 24px;
+      height: 2px;
+      background: var(--text);
+      transition: all 0.3s var(--ease-out);
+    }
+
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      top: 73px;
+      left: 0;
+      width: 100%;
+      height: calc(100vh - 73px);
+      background: rgba(10, 10, 11, 0.98);
+      backdrop-filter: blur(12px);
+      padding: var(--space-8);
+      z-index: 49;
+      opacity: 0;
+      transform: translateY(-20px);
+      transition: all 0.3s var(--ease-out);
+    }
+
+    .mobile-menu.open {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .mobile-menu ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-6);
+    }
+
+    .mobile-menu a {
+      font-family: 'Oswald', sans-serif;
+      font-size: var(--text-xl);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color 0.2s var(--ease-out);
+    }
+
+    .mobile-menu a:hover {
+      color: var(--accent);
+    }
+
+    .page {
+      display: none;
+      opacity: 0;
+      transition: opacity 0.3s var(--ease-out);
+    }
+
+    .page.active {
+      display: block;
+      opacity: 1;
+    }
+
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding-top: 80px;
+      position: relative;
+    }
+
+    .hero-content {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-16);
+      align-items: center;
+    }
+
+    .hero-text h1 {
+      font-family: 'Oswald', sans-serif;
+      font-size: clamp(3.5rem, 10vw, 7rem);
+      font-weight: 600;
+      line-height: 0.95;
+      letter-spacing: -0.03em;
+      margin-bottom: var(--space-6);
+      text-transform: uppercase;
+    }
+
+    .hero-text p {
+      font-size: var(--text-xl);
+      color: var(--text-muted);
+      margin-bottom: var(--space-10);
+      max-width: 500px;
+      line-height: 1.6;
+    }
+
+    .hero-image {
+      position: relative;
+      aspect-ratio: 3/4;
+      background: linear-gradient(135deg, rgba(185, 28, 28, 0.1), transparent);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+    }
+
+    .hero-image::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(255,255,255,0.02) 2px,
+        rgba(255,255,255,0.02) 4px
+      );
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 14px 32px;
+      font-family: 'Oswald', sans-serif;
+      font-size: var(--text-base);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      text-decoration: none;
+      border-radius: var(--radius-md);
+      transition: all 0.2s var(--ease-out);
+      cursor: pointer;
+      border: none;
+      min-height: 44px;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--accent), var(--accent-hover));
+      color: white;
+      box-shadow: 0 0 20px rgba(185, 28, 28, 0.3);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 30px rgba(185, 28, 28, 0.5), var(--shadow-xl);
+    }
+
+    .btn-primary:active {
+      transform: scale(0.98);
+    }
+
+    .btn-ghost {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text);
+    }
+
+    .btn-ghost:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      transform: translateY(-2px);
+    }
+
+    section {
+      padding: var(--space-24) 0;
+    }
+
+    .section-header {
+      margin-bottom: var(--space-16);
+    }
+
+    .section-header h2 {
+      font-family: 'Oswald', sans-serif;
+      font-size: var(--text-4xl);
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      text-transform: uppercase;
+      margin-bottom: var(--space-4);
+    }
+
+    .section-header p {
+      font-size: var(--text-lg);
+      color: var(--text-muted);
+      max-width: 600px;
+    }
+
+    .portfolio-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: var(--space-6);
+    }
+
+    .portfolio-item {
+      position: relative;
+      aspect-ratio: 3/4;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      cursor: pointer;
+      transition: all 0.3s var(--ease-out);
+    }
+
+    .portfolio-item:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-xl);
+      border-color: var(--accent);
+    }
+
+    .portfolio-item::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, transparent 50%, rgba(10, 10, 11, 0.9));
+      opacity: 0;
+      transition: opacity 0.3s var(--ease-out);
+    }
+
+    .portfolio-item:hover::before {
+      opacity: 1;
+    }
+
+    .portfolio-item-overlay {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: var(--space-6);
+      transform: translateY(100%);
+      transition: transform 0.3s var(--ease-out);
+      z-index: 2;
+    }
+
+    .portfolio-item:hover .portfolio-item-overlay {
+      transform: translateY(0);
+    }
+
+    .portfolio-item-overlay h3 {
+      font-family: 'Oswald', sans-serif;
+      font-size: var(--text-xl);
+      font-weight: 600;
+      margin-bottom: var(--space-2);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .portfolio-item-overlay p {
+      font-size: var(--text-sm);
+      color: var(--text-muted);
+    }
+
+    .portfolio-placeholder {
+      width: 100%;
+      height: 100%;
+      background: 
+        linear-gradient(135deg, rgba(185, 28, 28, 0.1), transparent),
+        repeating-linear-gradient(
+          45deg,
+          transparent,
+          transparent 20px,
+          rgba(255,255,255,0.02) 20px,
+          rgba(255,255,255,0.02) 40px
+        );
+    }
+
+    .artists-section {
+      background: rgba(28, 28, 30, 0.5);
+    }
+
+    .artists-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: var(--space-8);
+    }
+
+    .artist-card {
+      text-align: center;
+      padding: var(--space-8);
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      transition: all 0.3s var(--ease-out);
+    }
+
+    .artist-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-xl);
+      border-color: var(--accent);
+    }
+
+    .artist-image {
+      width: 120px;
+      height: 120px;
+      margin: 0 auto var(--space-4);
+      border-radius: 50%;
+      background: linear-gradient(135deg, rgba(185, 28, 28, 0.2), transparent);
+      border: 2px solid var(--border);
+    }
+
+    .artist-card h3 {
+      font-family: 'Oswald', sans-serif;
+      font-size: var(--text-xl);
+      font-weight: 600;
+      margin-bottom: var(--space-2);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .artist-card p {
+      font-size: var(--text-sm);
+      color: var(--text-muted);
+      margin-bottom: var(--space-4);
+    }
+
+    .artist-specialty {
+      display: inline-block;
+      padding: var(--space-2) var(--space-4);
+      background: rgba(185, 28, 28, 0.1);
+      color: var(--accent);
+      border: 1px solid rgba(185, 28, 28, 0.3);
+      border-radius: 9999px;
+      font-size: var(--text-xs);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .contact-section {
+      background: linear-gradient(135deg, rgba(185, 28, 28, 0.05), transparent);
+    }
+
+    .contact-content {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-16);
+    }
+
+    .contact-form {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-6);
+    }
+
+    .form-group {
+      position: relative;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: var(--space-2);
+      font-size: var(--text-sm);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+    }
+
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+      width: 100%;
+      padding: var(--space-4);
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      color: var(--text);
+      font-family: 'Source Sans 3', sans-serif;
+      font-size: var(--text-base);
+      transition: all 0.2s var(--ease-out);
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus,
+    .form-group select:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(185, 28, 28, 0.15);
+    }
+
+    .form-group textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    .form-error {
+      color: var(--accent);
+      font-size: var(--text-xs);
+      margin-top: var(--space-2);
+      display: none;
+    }
+
+    .form-success {
+      padding: var(--space-4);
+      background: rgba(16, 185, 129, 0.1);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      border-radius: var(--radius-md);
+      color: #10B981;
+      text-align: center;
+      display: none;
+    }
+
+    .contact-info h3 {
+      font-family: 'Oswald', sans-serif;
+      font-size: var(--text-2xl);
+      font-weight: 600;
+      margin-bottom: var(--space-6);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .info-item {
+      display: flex;
+      gap: var(--space-4);
+      margin-bottom: var(--space-6);
+    }
+
+    .info-item svg {
+      width: 24px;
+      height: 24px;
+      stroke: var(--accent);
+      flex-shrink: 0;
+    }
+
+    .info-item div h4 {
+      font-family: 'Oswald', sans-serif;
+      font-size: var(--text-base);
+      font-weight: 600;
+      margin-bottom: var(--space-1);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .info-item div p {
+      color: var(--text-muted);
+      font-size: var(--text-base);
+    }
+
+    footer {
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      padding: var(--space-16) 0 var(--space-8);
+    }
+
+    .footer-content {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: var(--space-12);
+      margin-bottom: var(--space-12);
+    }
+
+    .footer-brand h3 {
+      font-family: 'Oswald', sans-serif;
+      font-size: var(--text-2xl);
+      font-weight: 600;
+      margin-bottom: var(--space-4);
+      letter-spacing: 0.02em;
+    }
+
+    .footer-brand p {
+      color: var(--text-muted);
+      margin-bottom: var(--space-6);
+    }
+
+    .footer-column h4 {
+      font-family: 'Oswald', sans-serif;
+      font-size: var(--text-base);
+      font-weight: 600;
+      margin-bottom: var(--space-4);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .footer-column ul {
+      list-style: none;
+    }
+
+    .footer-column ul li {
+      margin-bottom: var(--space-3);
+    }
+
+    .footer-column ul li a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: var(--text-sm);
+      transition: color 0.2s var(--ease-out);
+    }
+
+    .footer-column ul li a:hover {
+      color: var(--accent);
+    }
+
+    .social-links {
+      display: flex;
+      gap: var(--space-4);
+    }
+
+    .social-links a {
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      transition: all 0.2s var(--ease-out);
+    }
+
+    .social-links a:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+    }
+
+    .social-links svg {
+      width: 20px;
+      height: 20px;
+      stroke: var(--text-muted);
+      transition: stroke 0.2s var(--ease-out);
+    }
+
+    .social-links a:hover svg {
+      stroke: var(--accent);
+    }
+
+    .footer-bottom {
+      text-align: center;
+      padding-top: var(--space-8);
+      border-top: 1px solid var(--border);
+      color: var(--text-muted);
+      font-size: var(--text-sm);
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.6s var(--ease-out), transform 0.6s var(--ease-out);
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .reveal-stagger > * {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.6s var(--ease-out), transform 0.6s var(--ease-out);
+    }
+
+    .reveal-stagger.visible > *:nth-child(1) { transition-delay: 0s; opacity: 1; transform: translateY(0); }
+    .reveal-stagger.visible > *:nth-child(2) { transition-delay: 0.1s; opacity: 1; transform: translateY(0); }
+    .reveal-stagger.visible > *:nth-child(3) { transition-delay: 0.2s; opacity: 1; transform: translateY(0); }
+    .reveal-stagger.visible > *:nth-child(4) { transition-delay: 0.3s; opacity: 1; transform: translateY(0); }
+    .reveal-stagger.visible > *:nth-child(5) { transition-delay: 0.4s; opacity: 1; transform: translateY(0); }
+    .reveal-stagger.visible > *:nth-child(6) { transition-delay: 0.5s; opacity: 1; transform: translateY(0); }
+
+    @media (prefers-reduced-motion: reduce) {
+      * {
+        animation: none !important;
+        transition: none !important;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .nav-links {
+        display: none;
+      }
+
+      .menu-toggle {
+        display: flex;
+      }
+
+      .mobile-menu {
+        display: block;
+      }
+
+      .hero-content {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-image {
+        order: -1;
+        max-height: 400px;
+      }
+
+      .contact-content,
+      .footer-content {
+        grid-template-columns: 1fr;
+      }
+
+      section {
+        padding: var(--space-16) 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="container">
+      <a href="#home" class="logo" onclick="showPage('home')">INK AND IRON</a>
+      <ul class="nav-links">
+        <li><a href="#home" class="active" onclick="showPage('home')">Home</a></li>
+        <li><a href="#portfolio" onclick="showPage('portfolio')">Portfolio</a></li>
+        <li><a href="#artists" onclick="showPage('artists')">Artists</a></li>
+        <li><a href="#contact" onclick="showPage('contact')">Book Now</a></li>
+      </ul>
+      <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2.25m6.364.386l-1.591 1.591M21 12h-2.25m-.386 6.364l-1.591-1.591M12 18.75V21m-4.773-4.227l-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z" />
+        </svg>
+      </button>
+      <button class="menu-toggle" onclick="toggleMenu()" aria-label="Toggle menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </nav>
+
+  <div class="mobile-menu" id="mobileMenu">
+    <ul>
+      <li><a href="#home" onclick="showPage('home'); toggleMenu()">Home</a></li>
+      <li><a href="#portfolio" onclick="showPage('portfolio'); toggleMenu()">Portfolio</a></li>
+      <li><a href="#artists" onclick="showPage('artists'); toggleMenu()">Artists</a></li>
+      <li><a href="#contact" onclick="showPage('contact'); toggleMenu()">Book Now</a></li>
+    </ul>
+  </div>
+
+  <div class="page active" id="home">
+    <section class="hero">
+      <div class="container">
+        <div class="hero-content reveal">
+          <div class="hero-text">
+            <h1>BOLD<br>CUSTOM<br>WORK</h1>
+            <p>Where traditional craftsmanship meets modern edge. Each piece tells a story, permanently etched with precision and artistry.</p>
+            <div style="display: flex; gap: var(--space-4); flex-wrap: wrap;">
+              <a href="#portfolio" class="btn btn-primary" onclick="showPage('portfolio')">View Our Work</a>
+              <a href="#contact" class="btn btn-ghost" onclick="showPage('contact')">Book a Session</a>
+            </div>
+          </div>
+          <div class="hero-image">
+            <div class="portfolio-placeholder"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="container">
+        <div class="section-header reveal">
+          <h2>WALK-INS WELCOME</h2>
+          <p>Or book ahead to guarantee your spot. We specialize in blackwork, traditional, and custom pieces designed just for you.</p>
+        </div>
+        <div class="reveal-stagger" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: var(--space-8); margin-top: var(--space-12);">
+          <div>
+            <h3 style="font-family: 'Oswald', sans-serif; font-size: var(--text-xl); font-weight: 600; text-transform: uppercase; margin-bottom: var(--space-2); letter-spacing: 0.05em;">CUSTOM DESIGN</h3>
+            <p style="color: var(--text-muted); font-size: var(--text-base);">Collaborate with our artists to create something completely unique</p>
+          </div>
+          <div>
+            <h3 style="font-family: 'Oswald', sans-serif; font-size: var(--text-xl); font-weight: 600; text-transform: uppercase; margin-bottom: var(--space-2); letter-spacing: 0.05em;">COVER-UPS</h3>
+            <p style="color: var(--text-muted); font-size: var(--text-base);">Transform old work into bold new art with expert cover-up techniques</p>
+          </div>
+          <div>
+            <h3 style="font-family: 'Oswald', sans-serif; font-size: var(--text-xl); font-weight: 600; text-transform: uppercase; margin-bottom: var(--space-2); letter-spacing: 0.05em;">FLASH PIECES</h3>
+            <p style="color: var(--text-muted); font-size: var(--text-base);">Pre-drawn designs ready to go — perfect for first-timers or quick sessions</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <div class="page" id="portfolio">
+    <section style="padding-top: 120px;">
+      <div class="container">
+        <div class="section-header reveal">
+          <h2>THE WORK</h2>
+          <p>A collection of custom pieces, blackwork, traditional designs, and cover-ups from our studio.</p>
+        </div>
+        <div class="portfolio-grid reveal-stagger">
+          <div class="portfolio-item">
+            <div class="portfolio-placeholder"></div>
+            <div class="portfolio-item-overlay">
+              <h3>Blackwork Sleeve</h3>
+              <p>Geometric patterns with bold linework</p>
+            </div>
+          </div>
+          <div class="portfolio-item">
+            <div class="portfolio-placeholder"></div>
+            <div class="portfolio-item-overlay">
+              <h3>Traditional Rose</h3>
+              <p>Classic American traditional style</p>
+            </div>
+          </div>
+          <div class="portfolio-item">
+            <div class="portfolio-placeholder"></div>
+            <div class="portfolio-item-overlay">
+              <h3>Cover-Up Work</h3>
+              <p>Transforming old ink into bold new art</p>
+            </div>
+          </div>
+          <div class="portfolio-item">
+            <div class="portfolio-placeholder"></div>
+            <div class="portfolio-item-overlay">
+              <h3>Custom Script</h3>
+              <p>Hand-drawn lettering with flourishes</p>
+            </div>
+          </div>
+          <div class="portfolio-item">
+            <div class="portfolio-placeholder"></div>
+            <div class="portfolio-item-overlay">
+              <h3>Neo-Traditional</h3>
+              <p>Modern take on classic tattoo styles</p>
+            </div>
+          </div>
+          <div class="portfolio-item">
+            <div class="portfolio-placeholder"></div>
+            <div class="portfolio-item-overlay">
+              <h3>Fine Line Work</h3>
+              <p>Delicate details with precision</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <div class="page" id="artists">
+    <section class="artists-section" style="padding-top: 120px;">
+      <div class="container">
+        <div class="section-header reveal">
+          <h2>THE ARTISTS</h2>
+          <p>Meet the crew behind the ink — each bringing their own style and specialty to the studio.</p>
+        </div>
+        <div class="artists-grid reveal-stagger">
+          <div class="artist-card">
+            <div class="artist-image"></div>
+            <h3>[Artist Name]</h3>
+            <p>[Years] of experience specializing in bold, clean designs</p>
+            <span class="artist-specialty">Blackwork</span>
+          </div>
+          <div class="artist-card">
+            <div class="artist-image"></div>
+            <h3>[Artist Name]</h3>
+            <p>Master of traditional American and neo-traditional styles</p>
+            <span class="artist-specialty">Traditional</span>
+          </div>
+          <div class="artist-card">
+            <div class="artist-image"></div>
+            <h3>[Artist Name]</h3>
+            <p>Precision and detail in every fine line piece</p>
+            <span class="artist-specialty">Fine Line</span>
+          </div>
+          <div class="artist-card">
+            <div class="artist-image"></div>
+            <h3>[Artist Name]</h3>
+            <p>Expert cover-up work and custom designs</p>
+            <span class="artist-specialty">Cover-Ups</span>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <div class="page" id="contact">
+    <section class="contact-section" style="padding-top: 120px;">
+      <div class="container">
+        <div class="section-header reveal">
+          <h2>BOOK A SESSION</h2>
+          <p>Walk-ins welcome, or fill out the form below to secure your spot. Include reference images or design ideas if you have them.</p>
+        </div>
+        <div class="contact-content reveal">
+          <form class="contact-form" id="contactForm">
+            <div class="form-group">
+              <label for="name">Name</label>
+              <input type="text" id="name" name="name" required>
+              <span class="form-error" id="nameError">Please enter your name</span>
+            </div>
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input type="email" id="email" name="email" required>
+              <span class="form-error" id="emailError">Please enter a valid email</span>
+            </div>
+            <div class="form-group">
+              <label for="phone">Phone</label>
+              <input type="tel" id="phone" name="phone" required>
+              <span class="form-error" id="phoneError">Please enter your phone number</span>
+            </div>
+            <div class="form-group">
+              <label for="tattooType">What are you looking for?</label>
+              <select id="tattooType" name="tattooType" required>
+                <option value="">Select an option</option>
+                <option value="custom">Custom Design</option>
+                <option value="flash">Flash Piece</option>
+                <option value="coverup">Cover-Up</option>
+                <option value="consultation">Design Consultation</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="message">Details & Ideas</label>
+              <textarea id="message" name="message" placeholder="Tell us about your design idea, size, placement, and any reference images you have..." required></textarea>
+              <span class="form-error" id="messageError">Please provide some details</span>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit Request</button>
+            <div class="form-success" id="formSuccess">Thanks! We'll get back to you within 24 hours to schedule your session.</div>
+          </form>
+
+          <div class="contact-info">
+            <h3>FIND US</h3>
+            <div class="info-item">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
+                <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
+              </svg>
+              <div>
+                <h4>Location</h4>
+                <p>[Your Address]<br>[City, State ZIP]</p>
+              </div>
+            </div>
+            <div class="info-item">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z" />
+              </svg>
+              <div>
+                <h4>Phone</h4>
+                <p>[Your Phone]</p>
+              </div>
+            </div>
+            <div class="info-item">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              <div>
+                <h4>Hours</h4>
+                <p>Tue-Sat: 12pm - 8pm<br>Sun-Mon: Closed</p>
+              </div>
+            </div>
+            <div class="info-item">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
+              </svg>
+              <div>
+                <h4>Email</h4>
+                <p>[Your Email]</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <footer>
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-brand">
+          <h3>INK AND IRON</h3>
+          <p>Bold custom tattoos in a dark industrial space. Each piece crafted with precision and artistry.</p>
+          <div class="social-links">
+            <a href="https://instagram.com/[YourHandle]" target="_blank" rel="noopener" aria-label="Instagram">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M7.5 7.5h.008v.008H7.5V7.5zm9 0h.008v.008H16.5V7.5zm-4.5 4.5a3 3 0 100-6 3 3 0 000 6zm0 0v6m-3-3h6m-9 3.75h12a2.25 2.25 0 002.25-2.25V6.75A2.25 2.25 0 0018.75 4.5h-12A2.25 2.25 0 004.5 6.75v10.5A2.25 2.25 0 006.75 19.5z" />
+              </svg>
+            </a>
+            <a href="https://facebook.com/[YourPage]" target="_blank" rel="noopener" aria-label="Facebook">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z" />
+              </svg>
+            </a>
+          </div>
+        </div>
+        <div class="footer-column">
+          <h4>Navigate</h4>
+          <ul>
+            <li><a href="#home" onclick="showPage('home')">Home</a></li>
+            <li><a href="#portfolio" onclick="showPage('portfolio')">Portfolio</a></li>
+            <li><a href="#artists" onclick="showPage('artists')">Artists</a></li>
+            <li><a href="#contact" onclick="showPage('contact')">Book Now</a></li>
+          </ul>
+        </div>
+        <div class="footer-column">
+          <h4>Services</h4>
+          <ul>
+            <li><a href="#portfolio" onclick="showPage('portfolio')">Custom Designs</a></li>
+            <li><a href="#portfolio" onclick="showPage('portfolio')">Cover-Ups</a></li>
+            <li><a href="#portfolio" onclick="showPage('portfolio')">Flash Pieces</a></li>
+            <li><a href="#contact" onclick="showPage('contact')">Consultations</a></li>
+          </ul>
+        </div>
+        <div class="footer-column">
+          <h4>Contact</h4>
+          <ul>
+            <li><a href="tel:[YourPhone]">[Your Phone]</a></li>
+            <li><a href="mailto:[YourEmail]">[Your Email]</a></li>
+            <li>[Your Address]</li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2024 Ink and Iron. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    function showPage(pageId) {
+      const pages = document.querySelectorAll('.page');
+      const navLinks = document.querySelectorAll('.nav-links a');
+      
+      pages.forEach(page => {
+        page.classList.remove('active');
+      });
+      
+      const targetPage = document.getElementById(pageId);
+      if (targetPage) {
+        targetPage.classList.add('active');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+      
+      navLinks.forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('href') === '#' + pageId) {
+          link.classList.add('active');
+        }
+      });
+      
+      window.location.hash = pageId;
+    }
+
+    function toggleMenu() {
+      const menu = document.getElementById('mobileMenu');
+      menu.classList.toggle('open');
+      document.body.style.overflow = menu.classList.contains('open') ? 'hidden' : '';
+    }
+
+    function toggleTheme() {
+      const html = document.documentElement;
+      const currentTheme = html.getAttribute('data-theme');
+      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+      html.setAttribute('data-theme', newTheme);
+      localStorage.setItem('theme', newTheme);
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const savedTheme = localStorage.getItem('theme');
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const theme = savedTheme || (prefersDark ? 'dark' : 'dark');
+      document.documentElement.setAttribute('data-theme', theme);
+
+      const hash = window.location.hash.substring(1);
+      if (hash) {
+        showPage(hash);
+      }
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+          }
+        });
+      }, { threshold: 0.1 });
+
+      document.querySelectorAll('.reveal, .reveal-stagger').forEach(el => {
+        observer.observe(el);
+      });
+
+      const form = document.getElementById('contactForm');
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        
+        const name = document.getElementById('name').value.trim();
+        const email = document.getElementById('email').value.trim();
+        const phone = document.getElementById('phone').value.trim();
+        const message = document.getElementById('message').value.trim();
+        
+        let valid = true;
+        
+        if (!name) {
+          document.getElementById('nameError').style.display = 'block';
+          valid = false;
+        } else {
+          document.getElementById('nameError').style.display = 'none';
+        }
+        
+        if (!email || !email.includes('@')) {
+          document.getElementById('emailError').style.display = 'block';
+          valid = false;
+        } else {
+          document.getElementById('emailError').style.display = 'none';
+        }
+        
+        if (!phone) {
+          document.getElementById('phoneError').style.display = 'block';
+          valid = false;
+        } else {
+          document.getElementById('phoneError').style.display = 'none';
+        }
+        
+        if (!message) {
+          document.getElementById('messageError').style.display = 'block';
+          valid = false;
+        } else {
+          document.getElementById('messageError').style.display = 'none';
+        }
+        
+        if (valid) {
+          const submitBtn = form.querySelector('button[type="submit"]');
+          submitBtn.disabled = true;
+          submitBtn.textContent = 'Sending...';
+          
+          const formData = {
+            name,
+            email,
+            phone,
+            tattooType: document.getElementById('tattooType').value,
+            message,
+            timestamp: new Date().toISOString()
+          };
+          
+          const submissions = JSON.parse(localStorage.getItem('tattooSubmissions') || '[]');
+          submissions.push(formData);
+          localStorage.setItem('tattooSubmissions', JSON.stringify(submissions));
+          
+          setTimeout(() => {
+            form.style.display = 'none';
+            document.getElementById('formSuccess').style.display = 'block';
+            
+            setTimeout(() => {
+              form.style.display = 'flex';
+              document.getElementById('formSuccess').style.display = 'none';
+              form.reset();
+              submitBtn.disabled = false;
+              submitBtn.textContent = 'Submit Request';
+            }, 5000);
+          }, 1500);
+        }
+      });
+    });
+
+    window.addEventListener('hashchange', () => {
+      const hash = window.location.hash.substring(1);
+      if (hash) {
+        showPage(hash);
+      }
+    });
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        const href = this.getAttribute('href');
+        if (href.startsWith('#') && href.length > 1) {
+          e.preventDefault();
+          const pageId = href.substring(1);
+          showPage(pageId);
+        }
+      });
+    });
+  </script>
+</body>
+</html>

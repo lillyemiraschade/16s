@@ -1,0 +1,3066 @@
+{"type":"token","text":"```"}
+{"type":"token","text":"json"}
+{"type":"token","text":"\n{\n  \"message"}
+{"type":"token","text":"\": \"Got"}
+{"type":"token","text":" it —"}
+{"type":"token","text":" building"}
+{"type":"token","text":" Summit"}
+{"type":"token","text":" Wealth with"}
+{"type":"token","text":" that"}
+{"type":"token","text":" classic"}
+{"type":"token","text":", trustworthy finance"}
+{"type":"token","text":" vibe. Going"}
+{"type":"token","text":" with"}
+{"type":"token","text":" a conservative editorial"}
+{"type":"token","text":" layout"}
+{"type":"token","text":" in"}
+{"type":"token","text":" navy"}
+{"type":"token","text":" and cream"}
+{"type":"token","text":" to feel"}
+{"type":"token","text":" established"}
+{"type":"token","text":" and"}
+{"type":"token","text":" cred"}
+{"type":"token","text":"ible. One"}
+{"type":"token","text":" sec"}
+{"type":"token","text":".."}
+{"type":"token","text":".\",\n  \"context"}
+{"type":"token","text":"\": {\n    \"brand"}
+{"type":"token","text":"Name\": \"Summit Wealth\","}
+{"type":"token","text":"\n    \"industry"}
+{"type":"token","text":"\": \"finance"}
+{"type":"token","text":"\",\n    \"style"}
+{"type":"token","text":"Pre"}
+{"type":"token","text":"ferences"}
+{"type":"token","text":"\": [\""}
+{"type":"token","text":"trust"}
+{"type":"token","text":"worthy\", \"conservative\", \"clean"}
+{"type":"token","text":"\"],\n    \"color"}
+{"type":"token","text":"Pre"}
+{"type":"token","text":"ferences\": [\"navy\", \"cream\"]"}
+{"type":"token","text":"\n  }\n}\n```"}
+{"type":"token","text":"\n\n```"}
+{"type":"token","text":"json"}
+{"type":"token","text":"\n{\n  \"message\": \""}
+{"type":"token","text":"Here"}
+{"type":"token","text":"'s Summit"}
+{"type":"token","text":" Wealth — I"}
+{"type":"token","text":" went"}
+{"type":"token","text":" with a classic editorial"}
+{"type":"token","text":" layout that feels"}
+{"type":"token","text":" established"}
+{"type":"token","text":" and cred"}
+{"type":"token","text":"ible. Navy"}
+{"type":"token","text":" and cream palette"}
+{"type":"token","text":" with"}
+{"type":"token","text":" serif"}
+{"type":"token","text":" headlines"}
+{"type":"token","text":" for"}
+{"type":"token","text":" that"}
+{"type":"token","text":" traditional finance trust"}
+{"type":"token","text":" factor"}
+{"type":"token","text":". The"}
+{"type":"token","text":" layout"}
+{"type":"token","text":" uses asym"}
+{"type":"token","text":"metric columns"}
+{"type":"token","text":" and"}
+{"type":"token","text":" generous"}
+{"type":"token","text":" whit"}
+{"type":"token","text":"espace to feel"}
+{"type":"token","text":" premium"}
+{"type":"token","text":" without being flash"}
+{"type":"token","text":"y. Added"}
+{"type":"token","text":" a"}
+{"type":"token","text":" consultation"}
+{"type":"token","text":" C"}
+{"type":"token","text":"TA and"}
+{"type":"token","text":" service"}
+{"type":"token","text":" breakdown"}
+{"type":"token","text":" that"}
+{"type":"token","text":" feels more"}
+{"type":"token","text":" like"}
+{"type":"token","text":" a conversation"}
+{"type":"token","text":" than a sales pitch.\","}
+{"type":"token","text":"\n  \"pills"}
+{"type":"token","text":"\": [\""}
+{"type":"token","text":"Perfect"}
+{"type":"token","text":","}
+{"type":"token","text":" keep"}
+{"type":"token","text":" going"}
+{"type":"token","text":"\","}
+{"type":"token","text":" \"Different"}
+{"type":"token","text":" direction"}
+{"type":"token","text":"\", \"Show"}
+{"type":"token","text":" me options"}
+{"type":"token","text":"\"],\n  \"html"}
+{"type":"token","text":"\": \""}
+{"type":"token","text":"<!DOCTYPE html>\\n<html lang"}
+{"type":"token","text":"=\\\"en\\\""}
+{"type":"token","text":" data"}
+{"type":"token","text":"-theme=\\\"light\\\">\\n"}
+{"type":"token","text":"<head>\\n  <meta charset=\\\""}
+{"type":"token","text":"UTF-8\\\">\\n  "}
+{"type":"token","text":"<meta name=\\\"viewport\\\" content=\\\"width"}
+{"type":"token","text":"=device-width, initial-scale"}
+{"type":"token","text":"=1.0\\\">\\n  "}
+{"type":"token","text":"<title>Summit Wealth |"}
+{"type":"token","text":" Financial Advisory"}
+{"type":"token","text":"</title>\\n  <meta"}
+{"type":"token","text":" name=\\\"description\\\" content=\\\"Comprehensive"}
+{"type":"token","text":" wealth"}
+{"type":"token","text":" management and"}
+{"type":"token","text":" financial planning services built"}
+{"type":"token","text":" on"}
+{"type":"token","text":" trust,"}
+{"type":"token","text":" transparency"}
+{"type":"token","text":", and decades"}
+{"type":"token","text":" of experience."}
+{"type":"token","text":"\\\">\\n  <meta property"}
+{"type":"token","text":"=\\\"og:title\\\" content=\\\"Summit"}
+{"type":"token","text":" Wealth |"}
+{"type":"token","text":" Financial Advisory\\\">\\n  <meta"}
+{"type":"token","text":" property=\\\"og:description\\\" content=\\\""}
+{"type":"token","text":"Comprehensive wealth management and financial planning services"}
+{"type":"token","text":" built on trust, transparency, and decades"}
+{"type":"token","text":" of experience.\\\">\\n  "}
+{"type":"token","text":"<link"}
+{"type":"token","text":" rel"}
+{"type":"token","text":"=\\\"pre"}
+{"type":"token","text":"connect\\\" href=\\\"https://fonts"}
+{"type":"token","text":".googleapis.com\\\">\\n  "}
+{"type":"token","text":"<link rel=\\\"preconnect\\\""}
+{"type":"token","text":" href=\\\"https://fonts.gst"}
+{"type":"token","text":"atic.com\\\" crossorigin>\\n"}
+{"type":"token","text":"  <link href=\\\"https://fonts"}
+{"type":"token","text":".googleapis.com/css2?"}
+{"type":"token","text":"family=Playfair+Display"}
+{"type":"token","text":":wght@400;600"}
+{"type":"token","text":"&"}
+{"type":"token","text":"family=Source"}
+{"type":"token","text":"+Sans+3"}
+{"type":"token","text":":wght@300;400;"}
+{"type":"token","text":"600&"}
+{"type":"token","text":"display=swap\\\" rel=\\\"stylesheet\\\""}
+{"type":"token","text":">\\n  <style>\\n    "}
+{"type":"token","text":":root {\\n      --space"}
+{"type":"token","text":"-1: 4px; --"}
+{"type":"token","text":"space-2: 8px;"}
+{"type":"token","text":" --space-3: 12px"}
+{"type":"token","text":"; --space-4: 16"}
+{"type":"token","text":"px;\\n      --space-5"}
+{"type":"token","text":": 20px; --space-"}
+{"type":"token","text":"6: 24px; --space"}
+{"type":"token","text":"-8: 32px; --"}
+{"type":"token","text":"space-10: 40px;\\"}
+{"type":"token","text":"n      --space-12: "}
+{"type":"token","text":"48px; --space-16:"}
+{"type":"token","text":" 64px; --space-20"}
+{"type":"token","text":": 80px; --space-"}
+{"type":"token","text":"24: 96px; --space"}
+{"type":"token","text":"-32: 128px;\\n"}
+{"type":"token","text":"      \\"}
+{"type":"token","text":"n      --text-xs: cl"}
+{"type":"token","text":"amp(0.75rem, "}
+{"type":"token","text":"0.7rem + 0."}
+{"type":"token","text":"25vw, 0.875"}
+{"type":"token","text":"rem);\\n      --text-"}
+{"type":"token","text":"sm: clamp(0.875"}
+{"type":"token","text":"rem, 0.8rem +"}
+{"type":"token","text":" 0.35vw, "}
+{"type":"token","text":"1rem);\\n      --text"}
+{"type":"token","text":"-base: clamp(1rem"}
+{"type":"token","text":", 0.9rem + "}
+{"type":"token","text":"0.5vw, 1"}
+{"type":"token","text":".125rem);\\n      --"}
+{"type":"token","text":"text-lg: clamp(1"}
+{"type":"token","text":".125rem, 1rem +"}
+{"type":"token","text":" 0.6vw, "}
+{"type":"token","text":"1.25rem);\\n      "}
+{"type":"token","text":"--text-xl: clamp("}
+{"type":"token","text":"1.25rem, 1rem"}
+{"type":"token","text":" + 1vw, 1"}
+{"type":"token","text":".5rem);\\n      --"}
+{"type":"token","text":"text-2xl: clamp("}
+{"type":"token","text":"1.5rem, 1."}
+{"type":"token","text":"2rem + 1.5v"}
+{"type":"token","text":"w, 2rem);\\n"}
+{"type":"token","text":"      --text-3xl: cl"}
+{"type":"token","text":"amp(1.875rem, "}
+{"type":"token","text":"1.4rem + 2."}
+{"type":"token","text":"3vw, 2.5"}
+{"type":"token","text":"rem);\\n      --text-"}
+{"type":"token","text":"4xl: clamp(2."}
+{"type":"token","text":"25rem, 1.5rem"}
+{"type":"token","text":" + 3.5vw,"}
+{"type":"token","text":" 3.5rem);\\n"}
+{"type":"token","text":"      --text-5xl: cl"}
+{"type":"token","text":"amp(3rem, 2rem"}
+{"type":"token","text":" + 5vw, 5"}
+{"type":"token","text":"rem);\\n      \\n      "}
+{"type":"token","text":"--shadow-sm: 0 "}
+{"type":"token","text":"1px 2px rgba(0"}
+{"type":"token","text":",0,0,0.05"}
+{"type":"token","text":");\\n      --shadow-md"}
+{"type":"token","text":": 0 4px 6"}
+{"type":"token","text":"px -1px rgba(0,"}
+{"type":"token","text":"0,0,0.1),"}
+{"type":"token","text":" 0 2px 4px"}
+{"type":"token","text":" -2px rgba(0,0"}
+{"type":"token","text":",0,0.1);\\"}
+{"type":"token","text":"n      --shadow-lg: "}
+{"type":"token","text":"0 10px 15px -"}
+{"type":"token","text":"3px rgba(0,0,"}
+{"type":"token","text":"0,0.1), 0"}
+{"type":"token","text":" 4px 6px -4"}
+{"type":"token","text":"px rgba(0,0,0"}
+{"type":"token","text":",0.1);\\n      "}
+{"type":"token","text":"--shadow"}
+{"type":"token","text":"-xl: 0 20px"}
+{"type":"token","text":" 25px -5px rgba("}
+{"type":"token","text":"0,0,0,0."}
+{"type":"token","text":"1), 0 8px "}
+{"type":"token","text":"10px -6px rgba(0"}
+{"type":"token","text":",0,0,0.1"}
+{"type":"token","text":");\\n      \\"}
+{"type":"token","text":"n      --radius-sm: "}
+{"type":"token","text":"6px;"}
+{"type":"token","text":" --radius-md: 8px"}
+{"type":"token","text":"; --radius-lg: 12"}
+{"type":"token","text":"px; --radius-xl: "}
+{"type":"token","text":"16px;\\n      --ease-"}
+{"type":"token","text":"out: cubic-bezier(0"}
+{"type":"token","text":",0,0.2,1"}
+{"type":"token","text":");"}
+{"type":"token","text":" --ease-in: cubic-bez"}
+{"type":"token","text":"ier(0.4,0,"}
+{"type":"token","text":"1,1)"}
+{"type":"token","text":";\\n      --ease-in-"}
+{"type":"token","text":"out: cubic-bezier(0"}
+{"type":"token","text":".4,0,0.2"}
+{"type":"token","text":",1);"}
+{"type":"token","text":" --ease-bounce: cubic-bez"}
+{"type":"token","text":"ier(0.34,1."}
+{"type":"token","text":"56,0.64,1)"}
+{"type":"token","text":";\\n    }\\n\\"}
+{"type":"token","text":"n    ["}
+{"type":"token","text":"data-theme=\\\"light\\\"] "}
+{"type":"token","text":"{\\n      --bg:"}
+{"type":"token","text":" #"}
+{"type":"token","text":"FFFFFF;\\n      --bg"}
+{"type":"token","text":"-secondary: #FA"}
+{"type":"token","text":"F9F7"}
+{"type":"token","text":";\\n      --bg-accent"}
+{"type":"token","text":": #F"}
+{"type":"token","text":"0"}
+{"type":"token","text":"F4"}
+{"type":"token","text":"F8;\\n      --surface"}
+{"type":"token","text":": #FFFFFF;\\n      --"}
+{"type":"token","text":"text"}
+{"type":"token","text":": #1E"}
+{"type":"token","text":"3"}
+{"type":"token","text":"A5"}
+{"type":"token","text":"F"}
+{"type":"token","text":";\\n      --text-m"}
+{"type":"token","text":"uted: #52"}
+{"type":"token","text":"525B;\\n      --accent"}
+{"type":"token","text":": #1"}
+{"type":"token","text":"E3A5F;\\n      "}
+{"type":"token","text":"--accent-light"}
+{"type":"token","text":": #3"}
+{"type":"token","text":"B5"}
+{"type":"token","text":"F"}
+{"type":"token","text":"8"}
+{"type":"token","text":"A;\\n      --border: rgba"}
+{"type":"token","text":"(30"}
+{"type":"token","text":", 58"}
+{"type":"token","text":", 95, 0.1"}
+{"type":"token","text":");\\n    "}
+{"type":"token","text":"}\\n\\n    [data"}
+{"type":"token","text":"-theme=\\\"dark\\\"] {\\"}
+{"type":"token","text":"n      --bg: #0D"}
+{"type":"token","text":"0"}
+{"type":"token","text":"D0D;\\n      --bg"}
+{"type":"token","text":"-secondary: #1C"}
+{"type":"token","text":"1C1E"}
+{"type":"token","text":";\\n      --bg-accent:"}
+{"type":"token","text":" #27"}
+{"type":"token","text":"272A;\\n      --surface:"}
+{"type":"token","text":" #1"}
+{"type":"token","text":"C1C1E;\\n      "}
+{"type":"token","text":"--text: #F"}
+{"type":"token","text":"AFAFA;\\n      --text-"}
+{"type":"token","text":"muted: #A"}
+{"type":"token","text":"1A1AA;\\n      --"}
+{"type":"token","text":"accent: #3"}
+{"type":"token","text":"B82"}
+{"type":"token","text":"F6;\\n      --accent-"}
+{"type":"token","text":"light: #60"}
+{"type":"token","text":"A5FA;\\n      --border"}
+{"type":"token","text":": rgba(255, 255,"}
+{"type":"token","text":" 255, 0.1)"}
+{"type":"token","text":";\\n    }\\n\\n"}
+{"type":"token","text":"    * {\\n      margin:"}
+{"type":"token","text":" 0;\\n      padding: "}
+{"type":"token","text":"0;\\n      box-sizing:"}
+{"type":"token","text":" border-box;\\n    }\\"}
+{"type":"token","text":"n\\n    body {\\n"}
+{"type":"token","text":"      font-family: 'Source"}
+{"type":"token","text":" Sans 3', sans"}
+{"type":"token","text":"-serif;\\n      font"}
+{"type":"token","text":"-weight"}
+{"type":"token","text":": 400;\\n      line-"}
+{"type":"token","text":"height: 1.6;\\n"}
+{"type":"token","text":"      color: var(--text)"}
+{"type":"token","text":";\\n      background:"}
+{"type":"token","text":" var(--bg);\\n      "}
+{"type":"token","text":"overflow-x: hidden;\\n      "}
+{"type":"token","text":"transition"}
+{"type":"token","text":": background"}
+{"type":"token","text":" 0.3s var"}
+{"type":"token","text":"(--ease-out),"}
+{"type":"token","text":" color 0.3s var("}
+{"type":"token","text":"--ease-out);\\n    "}
+{"type":"token","text":"}\\n\\n    h"}
+{"type":"token","text":"1, h2, h3,"}
+{"type":"token","text":" h4, h5, h6"}
+{"type":"token","text":" {\\n      font-family"}
+{"type":"token","text":": 'Playfair Display"}
+{"type":"token","text":"', serif;\\n      font-weight"}
+{"type":"token","text":": 600;\\n      line"}
+{"type":"token","text":"-height: 1.2;\\"}
+{"type":"token","text":"n      letter"}
+{"type":"token","text":"-spacing: -"}
+{"type":"token","text":"0.02"}
+{"type":"token","text":"em;\\n    "}
+{"type":"token","text":"}\\n\\n    a"}
+{"type":"token","text":" "}
+{"type":"token","text":"{\\n      text"}
+{"type":"token","text":"-decoration: none;\\n      color"}
+{"type":"token","text":": inherit"}
+{"type":"token","text":";\\n    "}
+{"type":"token","text":"}\\n\\n    .container"}
+{"type":"token","text":" {\\n      max-width:"}
+{"type":"token","text":" 1280px;\\n      margin"}
+{"type":"token","text":": 0 auto;\\n      "}
+{"type":"token","text":"padding: "}
+{"type":"token","text":"0 cl"}
+{"type":"token","text":"amp(16px, 5v"}
+{"type":"token","text":"w, 64px);\\n"}
+{"type":"token","text":"    }\\n\\n    /*"}
+{"type":"token","text":" Skip"}
+{"type":"token","text":" Link"}
+{"type":"token","text":" */\\n    .skip-link"}
+{"type":"token","text":" {\\n      position: absolute;\\"}
+{"type":"token","text":"n      top"}
+{"type":"token","text":": -40px;\\n      left"}
+{"type":"token","text":": 0;\\n      background:"}
+{"type":"token","text":" var(--accent"}
+{"type":"token","text":")"}
+{"type":"token","text":";\\n      color: white"}
+{"type":"token","text":";\\n      padding: 8px"}
+{"type":"token","text":" 16px;\\n      z"}
+{"type":"token","text":"-index: 100;\\n      "}
+{"type":"token","text":"border"}
+{"type":"token","text":"-"}
+{"type":"token","text":"radius: 0"}
+{"type":"token","text":" 0 var"}
+{"type":"token","text":"(--radius-sm) "}
+{"type":"token","text":"0;\\n    "}
+{"type":"token","text":"}\\n\\n    .skip"}
+{"type":"token","text":"-link:focus {\\n      "}
+{"type":"token","text":"top: 0;\\n    "}
+{"type":"token","text":"}\\n\\n    /* Navigation"}
+{"type":"token","text":" */\\n    nav"}
+{"type":"token","text":" {\\n      position: fixed;\\"}
+{"type":"token","text":"n      top: 0;\\n"}
+{"type":"token","text":"      left: 0;\\n      "}
+{"type":"token","text":"right: 0;\\n      z"}
+{"type":"token","text":"-index: 50"}
+{"type":"token","text":";\\n      background"}
+{"type":"token","text":": rgba"}
+{"type":"token","text":"(255"}
+{"type":"token","text":", 255, 255, "}
+{"type":"token","text":"0.95);\\n      backdrop"}
+{"type":"token","text":"-filter: blur(12"}
+{"type":"token","text":"px);\\n      -webkit-"}
+{"type":"token","text":"backdrop-filter: blur(12px"}
+{"type":"token","text":");\\n      "}
+{"type":"token","text":"border-"}
+{"type":"token","text":"bottom: 1px solid var("}
+{"type":"token","text":"--border);\\n      transition"}
+{"type":"token","text":": background"}
+{"type":"token","text":" 0.3s var(--"}
+{"type":"token","text":"ease-out)"}
+{"type":"token","text":";\\n    }\\n\\n"}
+{"type":"token","text":"    ["}
+{"type":"token","text":"data-theme=\\\"dark"}
+{"type":"token","text":"\\\"] nav {\\n      background"}
+{"type":"token","text":": rgba(13"}
+{"type":"token","text":", 13"}
+{"type":"token","text":", 13, 0.95"}
+{"type":"token","text":");\\n    }\\n\\"}
+{"type":"token","text":"n    nav"}
+{"type":"token","text":" ."}
+{"type":"token","text":"container {\\n      display"}
+{"type":"token","text":": flex;\\n      align"}
+{"type":"token","text":"-items: center;\\n      justify"}
+{"type":"token","text":"-content: space-between;\\n"}
+{"type":"token","text":"      height"}
+{"type":"token","text":": 80px;\\n    "}
+{"type":"token","text":"}\\n\\n    .logo"}
+{"type":"token","text":" {\\n      font-family"}
+{"type":"token","text":": 'Playfair Display"}
+{"type":"token","text":"', serif;\\n      font-size"}
+{"type":"token","text":": var"}
+{"type":"token","text":"(--text-xl"}
+{"type":"token","text":");\\n      font-weight:"}
+{"type":"token","text":" 600"}
+{"type":"token","text":";\\n      letter-spacing: -"}
+{"type":"token","text":"0.01"}
+{"type":"token","text":"em;\\n      color: var("}
+{"type":"token","text":"--accent"}
+{"type":"token","text":");\\n    }\\n\\"}
+{"type":"token","text":"n    .nav-links {\\"}
+{"type":"token","text":"n      display: flex;\\n      "}
+{"type":"token","text":"gap"}
+{"type":"token","text":": var"}
+{"type":"token","text":"(--space-8);\\n"}
+{"type":"token","text":"      "}
+{"type":"token","text":"list-style: none;\\n    "}
+{"type":"token","text":"}\\n\\n    .nav"}
+{"type":"token","text":"-links a {\\n      font"}
+{"type":"token","text":"-size"}
+{"type":"token","text":": var(--text-sm)"}
+{"type":"token","text":";\\n      font"}
+{"type":"token","text":"-weight: 600;\\n      "}
+{"type":"token","text":"letter-spacing: "}
+{"type":"token","text":"0.05"}
+{"type":"token","text":"em;\\n      text"}
+{"type":"token","text":"-transform: uppercase;\\n      color"}
+{"type":"token","text":": var(--text-muted"}
+{"type":"token","text":");\\n      transition: color "}
+{"type":"token","text":"0.2"}
+{"type":"token","text":"s var(--ease-out"}
+{"type":"token","text":");\\n      "}
+{"type":"token","text":"position: relative;\\n    }\\"}
+{"type":"token","text":"n\\n    .nav-links"}
+{"type":"token","text":" a:"}
+{"type":"token","text":"hover,"}
+{"type":"token","text":"\\n    .nav-links a"}
+{"type":"token","text":".active {\\n      color:"}
+{"type":"token","text":" var(--accent);\\n    "}
+{"type":"token","text":"}\\n\\n    .nav"}
+{"type":"token","text":"-links a."}
+{"type":"token","text":"active::after {\\n      content"}
+{"type":"token","text":": '';\\n      position: absolute"}
+{"type":"token","text":";\\n      bottom: -8"}
+{"type":"token","text":"px;\\n      left: 0"}
+{"type":"token","text":";\\n      right"}
+{"type":"token","text":": 0;\\n      height:"}
+{"type":"token","text":" 2px;\\n      background:"}
+{"type":"token","text":" var(--accent);\\n    "}
+{"type":"token","text":"}\\n\\n    .nav"}
+{"type":"token","text":"-right"}
+{"type":"token","text":" {\\n      display: flex;\\"}
+{"type":"token","text":"n      align-items: center;\\"}
+{"type":"token","text":"n      gap: var(--space"}
+{"type":"token","text":"-4);\\n    }\\"}
+{"type":"token","text":"n\\n    .theme"}
+{"type":"token","text":"-toggle {\\n      width"}
+{"type":"token","text":": 36"}
+{"type":"token","text":"px;\\n      height: 36"}
+{"type":"token","text":"px;\\n      border: 1"}
+{"type":"token","text":"px solid var(--border);\\"}
+{"type":"token","text":"n      border-radius: var"}
+{"type":"token","text":"(--radius-sm);\\n"}
+{"type":"token","text":"      background: transparent"}
+{"type":"token","text":";\\n      cursor: pointer;\\n"}
+{"type":"token","text":"      display: flex;\\n      align"}
+{"type":"token","text":"-items: center;\\n      justify"}
+{"type":"token","text":"-content: center;\\n      transition"}
+{"type":"token","text":": all 0.2s var"}
+{"type":"token","text":"(--ease-out);\\n"}
+{"type":"token","text":"    }\\n\\n    ."}
+{"type":"token","text":"theme-toggle:hover {\\n"}
+{"type":"token","text":"      background: var(--bg"}
+{"type":"token","text":"-secondary"}
+{"type":"token","text":");\\n      "}
+{"type":"token","text":"transform"}
+{"type":"token","text":": translate"}
+{"type":"token","text":"Y(-1"}
+{"type":"token","text":"px);\\n    }\\n"}
+{"type":"token","text":"\\n    .theme-toggle svg"}
+{"type":"token","text":" {\\n      width: 18"}
+{"type":"token","text":"px;\\n      height: 18"}
+{"type":"token","text":"px;\\n      stroke"}
+{"type":"token","text":": var(--text);\\n"}
+{"type":"token","text":"    }\\n\\n    ."}
+{"type":"token","text":"menu"}
+{"type":"token","text":"-toggle {\\n      display:"}
+{"type":"token","text":" none;\\n      "}
+{"type":"token","text":"width"}
+{"type":"token","text":": 36"}
+{"type":"token","text":"px;\\n      height: 36"}
+{"type":"token","text":"px;\\n      border"}
+{"type":"token","text":": 1px solid var(--"}
+{"type":"token","text":"border);\\n      border-radius"}
+{"type":"token","text":": var(--radius-sm)"}
+{"type":"token","text":";\\n      background: transparent;\\n"}
+{"type":"token","text":"      cursor: pointer;\\n      flex"}
+{"type":"token","text":"-direction: column;\\n      align"}
+{"type":"token","text":"-items: center;\\n      justify"}
+{"type":"token","text":"-content: center;\\n      gap"}
+{"type":"token","text":": "}
+{"type":"token","text":"4px;\\n    "}
+{"type":"token","text":"}\\n\\n    .menu"}
+{"type":"token","text":"-toggle span"}
+{"type":"token","text":" {\\n      width: 18"}
+{"type":"token","text":"px;\\n      height: 2"}
+{"type":"token","text":"px;\\n      background: var("}
+{"type":"token","text":"--text);\\n      transition:"}
+{"type":"token","text":" all 0.3"}
+{"type":"token","text":"s var(--ease-out)"}
+{"type":"token","text":";\\n    }\\n\\n"}
+{"type":"token","text":"    .mobile"}
+{"type":"token","text":"-menu {\\n      display"}
+{"type":"token","text":": none;\\n      position"}
+{"type":"token","text":": fixed;\\n      top: "}
+{"type":"token","text":"80px;\\n      left"}
+{"type":"token","text":": 0;\\n      right:"}
+{"type":"token","text":" 0;\\n      bottom: "}
+{"type":"token","text":"0;\\n      background: var"}
+{"type":"token","text":"(--bg"}
+{"type":"token","text":")"}
+{"type":"token","text":";\\n      padding"}
+{"type":"token","text":": var(--space-8"}
+{"type":"token","text":");\\n      z-index:"}
+{"type":"token","text":" 40"}
+{"type":"token","text":";\\n      transform: translateX("}
+{"type":"token","text":"100%);\\n      transition: transform"}
+{"type":"token","text":" 0.3s var(--"}
+{"type":"token","text":"ease-out);\\n    "}
+{"type":"token","text":"}\\n\\n    .mobile-"}
+{"type":"token","text":"menu.open"}
+{"type":"token","text":" {\\n      transform: translateX"}
+{"type":"token","text":"(0);\\n    }\\"}
+{"type":"token","text":"n\\n    .mobile-menu"}
+{"type":"token","text":" ul {\\n      list-style"}
+{"type":"token","text":": none;\\n      display: flex"}
+{"type":"token","text":";\\n      flex-direction: column"}
+{"type":"token","text":";\\n      gap: var(--"}
+{"type":"token","text":"space-6"}
+{"type":"token","text":");\\n    }\\n\\"}
+{"type":"token","text":"n    .mobile-menu a"}
+{"type":"token","text":" {\\n      font"}
+{"type":"token","text":"-size: var(--text-"}
+{"type":"token","text":"lg"}
+{"type":"token","text":");\\n      font-weight:"}
+{"type":"token","text":" 600;\\n      letter-spacing"}
+{"type":"token","text":": 0.05em;\\n"}
+{"type":"token","text":"      text"}
+{"type":"token","text":"-transform: uppercase;\\n      color"}
+{"type":"token","text":": var(--text)"}
+{"type":"token","text":";\\n    "}
+{"type":"token","text":"}\\n\\n    @"}
+{"type":"token","text":"media (max-width: 768"}
+{"type":"token","text":"px) {\\n      .nav"}
+{"type":"token","text":"-links {\\n        display"}
+{"type":"token","text":": none;\\n      }\\n"}
+{"type":"token","text":"      .menu-toggle {\\n"}
+{"type":"token","text":"        display: flex;\\n      "}
+{"type":"token","text":"}\\n      "}
+{"type":"token","text":".mobile-menu {\\n        "}
+{"type":"token","text":"display: block;\\n      }\\"}
+{"type":"token","text":"n    }\\n\\n    "}
+{"type":"token","text":"/* Main"}
+{"type":"token","text":" Content */\\n    main {\\"}
+{"type":"token","text":"n      padding"}
+{"type":"token","text":"-"}
+{"type":"token","text":"top: 80px;\\n    "}
+{"type":"token","text":"}\\n\\n    ."}
+{"type":"token","text":"page"}
+{"type":"token","text":" "}
+{"type":"token","text":"{\\n      display"}
+{"type":"token","text":": none"}
+{"type":"token","text":";\\n      opacity"}
+{"type":"token","text":": 0;\\n      transition:"}
+{"type":"token","text":" opacity 0.3s var("}
+{"type":"token","text":"--ease-out);\\n    "}
+{"type":"token","text":"}\\n\\n    .page"}
+{"type":"token","text":".active {\\n      display:"}
+{"type":"token","text":" block;\\n      opacity: 1"}
+{"type":"token","text":";\\n    }\\n\\n"}
+{"type":"token","text":"    /* Hero Section */\\n    "}
+{"type":"token","text":".hero {\\n      padding"}
+{"type":"token","text":": var(--space-32"}
+{"type":"token","text":") 0 "}
+{"type":"token","text":"var(--space-24"}
+{"type":"token","text":")"}
+{"type":"token","text":";\\n      background"}
+{"type":"token","text":": var"}
+{"type":"token","text":"(--bg)"}
+{"type":"token","text":";\\n    "}
+{"type":"token","text":"}\\n\\n    .hero"}
+{"type":"token","text":" ."}
+{"type":"token","text":"container {\\n      display: grid"}
+{"type":"token","text":";\\n      grid-template-columns"}
+{"type":"token","text":": 1fr 1fr;\\"}
+{"type":"token","text":"n      gap: var(--space"}
+{"type":"token","text":"-16"}
+{"type":"token","text":");\\n      align-items:"}
+{"type":"token","text":" center;\\n    }\\n\\"}
+{"type":"token","text":"n    .hero-content h"}
+{"type":"token","text":"1 {\\n      font-"}
+{"type":"token","text":"size: var(--text-5"}
+{"type":"token","text":"xl);\\n      margin"}
+{"type":"token","text":"-bottom: var(--space-"}
+{"type":"token","text":"6"}
+{"type":"token","text":");\\n      color: var("}
+{"type":"token","text":"--accent);\\n    }\\"}
+{"type":"token","text":"n\\n    .hero-content"}
+{"type":"token","text":" p {\\n      font-size"}
+{"type":"token","text":": var(--text-xl)"}
+{"type":"token","text":";\\n      color"}
+{"type":"token","text":": var(--text-muted"}
+{"type":"token","text":");\\n      line"}
+{"type":"token","text":"-height: 1.7"}
+{"type":"token","text":";\\n      "}
+{"type":"token","text":"margin-bottom: var(--space"}
+{"type":"token","text":"-8"}
+{"type":"token","text":");\\n    }\\n\\"}
+{"type":"token","text":"n    .hero-image"}
+{"type":"token","text":" {\\n      position"}
+{"type":"token","text":": relative;\\n      aspect"}
+{"type":"token","text":"-ratio: 4/3;\\"}
+{"type":"token","text":"n      background"}
+{"type":"token","text":": linear-gradient(135deg,"}
+{"type":"token","text":" var(--bg-accent"}
+{"type":"token","text":") 0%, var(--bg"}
+{"type":"token","text":"-secondary) 100%);\\n"}
+{"type":"token","text":"      border"}
+{"type":"token","text":"-radius: var(--radius-"}
+{"type":"token","text":"lg);\\n      overflow: hidden"}
+{"type":"token","text":";\\n    }\\n\\n"}
+{"type":"token","text":"    .hero-image::before "}
+{"type":"token","text":"{\\n      content: '';\\n"}
+{"type":"token","text":"      position: absolute;\\n      in"}
+{"type":"token","text":"set: 0;\\n      background"}
+{"type":"token","text":": \\"}
+{"type":"token","text":"n        linear-gradient(90"}
+{"type":"token","text":"deg, rgba"}
+{"type":"token","text":"(30"}
+{"type":"token","text":", 58, 95, "}
+{"type":"token","text":"0.03"}
+{"type":"token","text":") 1"}
+{"type":"token","text":"px"}
+{"type":"token","text":", transparent 1px),\\n"}
+{"type":"token","text":"        linear-gradient(rgba"}
+{"type":"token","text":"(30, 58, 95"}
+{"type":"token","text":", 0.03) 1"}
+{"type":"token","text":"px, transparent 1px);\\"}
+{"type":"token","text":"n      "}
+{"type":"token","text":"background"}
+{"type":"token","text":"-size: 64"}
+{"type":"token","text":"px 64px;\\n      opacity"}
+{"type":"token","text":": 0."}
+{"type":"token","text":"5"}
+{"type":"token","text":";\\n    }\\n\\n"}
+{"type":"token","text":"    @"}
+{"type":"token","text":"media (max-width: 768"}
+{"type":"token","text":"px) {\\n      .hero"}
+{"type":"token","text":" ."}
+{"type":"token","text":"container {\\n        grid-template"}
+{"type":"token","text":"-columns: 1fr;\\n"}
+{"type":"token","text":"      }\\n      "}
+{"type":"token","text":".hero "}
+{"type":"token","text":"{\\n        padding: var(--"}
+{"type":"token","text":"space-20"}
+{"type":"token","text":") 0;\\"}
+{"type":"token","text":"n      }\\n    "}
+{"type":"token","text":"}\\n\\n    /*"}
+{"type":"token","text":" Buttons"}
+{"type":"token","text":" */\\n    .btn"}
+{"type":"token","text":" {\\n      display: inline-"}
+{"type":"token","text":"block;\\n      padding: "}
+{"type":"token","text":"14"}
+{"type":"token","text":"px 32px;\\n      font"}
+{"type":"token","text":"-size: var(--text-"}
+{"type":"token","text":"base);\\n      font-weight"}
+{"type":"token","text":": 600;\\n      text"}
+{"type":"token","text":"-align"}
+{"type":"token","text":": center;\\n      border"}
+{"type":"token","text":"-radius: var(--radius-"}
+{"type":"token","text":"md"}
+{"type":"token","text":");\\n      cursor"}
+{"type":"token","text":": pointer;\\n      transition: all"}
+{"type":"token","text":" 0.2s var(--"}
+{"type":"token","text":"ease-out);\\n      border"}
+{"type":"token","text":": none"}
+{"type":"token","text":";\\n      min"}
+{"type":"token","text":"-height"}
+{"type":"token","text":": 44"}
+{"type":"token","text":"px;\\n    "}
+{"type":"token","text":"}\\n\\n    .btn"}
+{"type":"token","text":"-"}
+{"type":"token","text":"primary {\\n      background: var"}
+{"type":"token","text":"(--accent);\\n      color"}
+{"type":"token","text":": white"}
+{"type":"token","text":";\\n      "}
+{"type":"token","text":"box"}
+{"type":"token","text":"-shadow: var"}
+{"type":"token","text":"(--shadow-sm"}
+{"type":"token","text":");\\n    }\\n\\"}
+{"type":"token","text":"n    .btn-primary:hover"}
+{"type":"token","text":" {\\n      background"}
+{"type":"token","text":": var(--accent-light)"}
+{"type":"token","text":";\\n      "}
+{"type":"token","text":"transform: translateY(-2"}
+{"type":"token","text":"px);\\n      "}
+{"type":"token","text":"box-shadow: var(--shadow"}
+{"type":"token","text":"-lg"}
+{"type":"token","text":");\\n    }\\n\\"}
+{"type":"token","text":"n    .btn-primary"}
+{"type":"token","text":":active"}
+{"type":"token","text":" {\\n      transform: translateY"}
+{"type":"token","text":"(0)"}
+{"type":"token","text":" scale"}
+{"type":"token","text":"(0.98"}
+{"type":"token","text":");\\n    }\\n\\"}
+{"type":"token","text":"n    .btn-primary"}
+{"type":"token","text":":focus"}
+{"type":"token","text":"-"}
+{"type":"token","text":"visible {\\n      outline: none"}
+{"type":"token","text":";\\n      "}
+{"type":"token","text":"box-shadow: "}
+{"type":"token","text":"0 0 0 3px"}
+{"type":"token","text":" rgba"}
+{"type":"token","text":"(30"}
+{"type":"token","text":", 58, 95, "}
+{"type":"token","text":"0.15"}
+{"type":"token","text":");\\n    }\\n\\"}
+{"type":"token","text":"n    .btn-ghost"}
+{"type":"token","text":" {\\n      background: transparent;\\"}
+{"type":"token","text":"n      color: var(--accent"}
+{"type":"token","text":");\\n      border: 1"}
+{"type":"token","text":"px solid var(--accent);\\"}
+{"type":"token","text":"n    "}
+{"type":"token","text":"}\\n\\n    .btn"}
+{"type":"token","text":"-ghost:hover {\\n      "}
+{"type":"token","text":"background: var(--bg"}
+{"type":"token","text":"-accent"}
+{"type":"token","text":");\\n      transform"}
+{"type":"token","text":": translateY(-2"}
+{"type":"token","text":"px);\\n    }\\n"}
+{"type":"token","text":"\\n    /*"}
+{"type":"token","text":" Trust"}
+{"type":"token","text":" Section */\\n    .trust-"}
+{"type":"token","text":"section {\\n      padding: var"}
+{"type":"token","text":"(--space-24"}
+{"type":"token","text":") 0;\\n      background:"}
+{"type":"token","text":" var(--bg-"}
+{"type":"token","text":"secondary);\\n    }\\n"}
+{"type":"token","text":"\\n    .trust-section ."}
+{"type":"token","text":"container {\\n      max"}
+{"type":"token","text":"-width: 900"}
+{"type":"token","text":"px;\\n    "}
+{"type":"token","text":"}\\n\\n    .trust"}
+{"type":"token","text":"-section h2 {\\n"}
+{"type":"token","text":"      font-size: var(--"}
+{"type":"token","text":"text-4"}
+{"type":"token","text":"xl);\\n      margin-bottom"}
+{"type":"token","text":": var(--space-12)"}
+{"type":"token","text":";\\n      text"}
+{"type":"token","text":"-align: center;\\n    "}
+{"type":"token","text":"}\\n\\n    .trust"}
+{"type":"token","text":"-grid"}
+{"type":"token","text":" {\\n      display: grid;\\"}
+{"type":"token","text":"n      grid-template-columns:"}
+{"type":"token","text":" repeat(3"}
+{"type":"token","text":", 1fr);\\n      "}
+{"type":"token","text":"gap: var(--space-12"}
+{"type":"token","text":");\\n      "}
+{"type":"token","text":"margin-top: var(--space"}
+{"type":"token","text":"-12"}
+{"type":"token","text":");\\n    }\\n\\"}
+{"type":"token","text":"n    .trust-item {\\"}
+{"type":"token","text":"n      text-align: center;\\"}
+{"type":"token","text":"n    "}
+{"type":"token","text":"}\\n\\n    .trust"}
+{"type":"token","text":"-number"}
+{"type":"token","text":" {\\n      font-family"}
+{"type":"token","text":": 'Playfair Display"}
+{"type":"token","text":"', serif;\\n      font-size"}
+{"type":"token","text":": var(--text-4"}
+{"type":"token","text":"xl);\\n      font-weight"}
+{"type":"token","text":": 600;\\n      color"}
+{"type":"token","text":": var(--accent);\\n"}
+{"type":"token","text":"      margin-bottom: var(--"}
+{"type":"token","text":"space-3"}
+{"type":"token","text":");\\n    }\\n\\"}
+{"type":"token","text":"n    .trust-label"}
+{"type":"token","text":" {\\n      font-size:"}
+{"type":"token","text":" var(--text-sm"}
+{"type":"token","text":");\\n      color: var("}
+{"type":"token","text":"--text-muted);\\n"}
+{"type":"token","text":"      "}
+{"type":"token","text":"text"}
+{"type":"token","text":"-transform: uppercase;\\n      letter"}
+{"type":"token","text":"-spacing: 0.05em"}
+{"type":"token","text":";\\n    "}
+{"type":"token","text":"}\\n\\n    @"}
+{"type":"token","text":"media (max-width: 768"}
+{"type":"token","text":"px) {\\n      .trust"}
+{"type":"token","text":"-grid {\\n        grid-"}
+{"type":"token","text":"template-columns: 1fr;\\"}
+{"type":"token","text":"n        "}
+{"type":"token","text":"gap: var(--space-8"}
+{"type":"token","text":");\\n      }\\n    "}
+{"type":"token","text":"}\\n\\n    /* Services"}
+{"type":"token","text":" Section */\\n    .services-"}
+{"type":"token","text":"section {\\n      padding: var"}
+{"type":"token","text":"(--space-24) 0"}
+{"type":"token","text":";\\n      background: var(--"}
+{"type":"token","text":"bg)"}
+{"type":"token","text":";\\n    }\\n\\n"}
+{"type":"token","text":"    .services-intro"}
+{"type":"token","text":" {\\n      max"}
+{"type":"token","text":"-width: 800px;\\n"}
+{"type":"token","text":"      margin: 0 auto var"}
+{"type":"token","text":"(--space-16"}
+{"type":"token","text":");\\n      "}
+{"type":"token","text":"text-align: left"}
+{"type":"token","text":";\\n    }\\n\\n"}
+{"type":"token","text":"    .services-intro h2 "}
+{"type":"token","text":"{\\n      font-size:"}
+{"type":"token","text":" var(--text-4xl)"}
+{"type":"token","text":";\\n      margin-bottom: var"}
+{"type":"token","text":"(--space-6"}
+{"type":"token","text":");\\n    "}
+{"type":"token","text":"}\\n\\n    .services"}
+{"type":"token","text":"-intro"}
+{"type":"token","text":" p {\\n      font-size"}
+{"type":"token","text":": var(--text-lg)"}
+{"type":"token","text":";\\n      color"}
+{"type":"token","text":": var(--text-muted"}
+{"type":"token","text":");\\n      line"}
+{"type":"token","text":"-height: 1.7"}
+{"type":"token","text":";\\n    }\\n\\n"}
+{"type":"token","text":"    .services-list"}
+{"type":"token","text":" {\\n      display: flex"}
+{"type":"token","text":";\\n      flex-direction"}
+{"type":"token","text":": column;\\n      gap: var"}
+{"type":"token","text":"(--space-12"}
+{"type":"token","text":");\\n      "}
+{"type":"token","text":"max"}
+{"type":"token","text":"-width: 1000px;\\"}
+{"type":"token","text":"n      "}
+{"type":"token","text":"margin: 0 auto;\\n"}
+{"type":"token","text":"    }\\n\\n    ."}
+{"type":"token","text":"service"}
+{"type":"token","text":"-item"}
+{"type":"token","text":" {\\n      display: grid"}
+{"type":"token","text":";\\n      grid-template-columns"}
+{"type":"token","text":": 200"}
+{"type":"token","text":"px 1fr;\\n      gap"}
+{"type":"token","text":": var(--space-8)"}
+{"type":"token","text":";\\n      padding"}
+{"type":"token","text":": var(--space-8)"}
+{"type":"token","text":" 0;\\n      border-bottom"}
+{"type":"token","text":": 1px solid var(--"}
+{"type":"token","text":"border);\\n    }\\n"}
+{"type":"token","text":"\\n    .service-item"}
+{"type":"token","text":":last-child {\\n      "}
+{"type":"token","text":"border-bottom: none;\\n    "}
+{"type":"token","text":"}\\n\\n    .service"}
+{"type":"token","text":"-name"}
+{"type":"token","text":" {\\n      font-family"}
+{"type":"token","text":": 'Playfair Display"}
+{"type":"token","text":"', serif;\\n      font-size"}
+{"type":"token","text":": var(--text-xl)"}
+{"type":"token","text":";\\n      font-weight: "}
+{"type":"token","text":"600;\\n      color: var("}
+{"type":"token","text":"--accent);\\n    "}
+{"type":"token","text":"}\\n\\n    .service"}
+{"type":"token","text":"-description {\\n      font-"}
+{"type":"token","text":"size: var(--text-base"}
+{"type":"token","text":");\\n      color: var("}
+{"type":"token","text":"--text-muted);\\n"}
+{"type":"token","text":"      line-height: 1."}
+{"type":"token","text":"7"}
+{"type":"token","text":";\\n    }\\n\\n"}
+{"type":"token","text":"    @"}
+{"type":"token","text":"media (max-width: 768"}
+{"type":"token","text":"px) {\\n      .service"}
+{"type":"token","text":"-item {\\n        grid-"}
+{"type":"token","text":"template-columns: 1fr;\\"}
+{"type":"token","text":"n        "}
+{"type":"token","text":"gap: var(--space-4"}
+{"type":"token","text":");\\n      }\\n    "}
+{"type":"token","text":"}\\n\\n    /* Philosophy"}
+{"type":"token","text":" Section */\\n    .philosophy-"}
+{"type":"token","text":"section {\\n      padding: var"}
+{"type":"token","text":"(--space-24) 0"}
+{"type":"token","text":";\\n      background: var(--"}
+{"type":"token","text":"bg-accent"}
+{"type":"token","text":");\\n    }\\n\\"}
+{"type":"token","text":"n    .philosophy-content"}
+{"type":"token","text":" {\\n      max-width:"}
+{"type":"token","text":" 800"}
+{"type":"token","text":"px;\\n      margin: 0"}
+{"type":"token","text":" auto;\\"}
+{"type":"token","text":"n    "}
+{"type":"token","text":"}\\n\\n    .philosophy"}
+{"type":"token","text":"-content h2 {\\n"}
+{"type":"token","text":"      font-size: var(--"}
+{"type":"token","text":"text-4xl);\\n      "}
+{"type":"token","text":"margin-bottom: var(--space"}
+{"type":"token","text":"-8"}
+{"type":"token","text":");\\n    }\\n\\"}
+{"type":"token","text":"n    .philosophy-quote"}
+{"type":"token","text":" {\\n      font-size:"}
+{"type":"token","text":" var(--text-2"}
+{"type":"token","text":"xl);\\n      font-family"}
+{"type":"token","text":": 'Playfair Display"}
+{"type":"token","text":"', serif;\\n      font-style"}
+{"type":"token","text":": italic;\\n      line"}
+{"type":"token","text":"-height: 1.5"}
+{"type":"token","text":";\\n      color: var(--"}
+{"type":"token","text":"accent"}
+{"type":"token","text":");\\n      margin:"}
+{"type":"token","text":" var(--space-8) "}
+{"type":"token","text":"0;\\n      "}
+{"type":"token","text":"padding"}
+{"type":"token","text":"-left: var(--space-"}
+{"type":"token","text":"8);\\n      "}
+{"type":"token","text":"border"}
+{"type":"token","text":"-left: 3"}
+{"type":"token","text":"px solid var(--accent);\\"}
+{"type":"token","text":"n    }\\n\\n    "}
+{"type":"token","text":".philosophy-text {\\n      "}
+{"type":"token","text":"font-size: var(--text"}
+{"type":"token","text":"-lg);\\n      color"}
+{"type":"token","text":": var(--text-muted"}
+{"type":"token","text":");\\n      line-height:"}
+{"type":"token","text":" 1.7;\\n      margin"}
+{"type":"token","text":"-bottom: var(--space-"}
+{"type":"token","text":"6"}
+{"type":"token","text":");\\n    }\\n\\"}
+{"type":"token","text":"n    /*"}
+{"type":"token","text":" C"}
+{"type":"token","text":"TA Section */\\n    .c"}
+{"type":"token","text":"ta-section {\\n      padding"}
+{"type":"token","text":": var(--space-24)"}
+{"type":"token","text":" 0;\\n      background: var"}
+{"type":"token","text":"(--bg)"}
+{"type":"token","text":";\\n    }\\n\\n"}
+{"type":"token","text":"    .cta-content {\\"}
+{"type":"token","text":"n      max-width: 700"}
+{"type":"token","text":"px;\\n      margin: 0"}
+{"type":"token","text":" auto;\\n      "}
+{"type":"token","text":"text-align: center;\\n    "}
+{"type":"token","text":"}\\n\\n    .c"}
+{"type":"token","text":"ta-content"}
+{"type":"token","text":" h2 {\\n      font"}
+{"type":"token","text":"-size: var(--text-"}
+{"type":"token","text":"4xl);\\n      margin-"}
+{"type":"token","text":"bottom: var(--space-6"}
+{"type":"token","text":");\\n    }\\n\\"}
+{"type":"token","text":"n    .cta-content p"}
+{"type":"token","text":" {\\n      font-size:"}
+{"type":"token","text":" var(--text-lg);\\"}
+{"type":"token","text":"n      color: var(--text"}
+{"type":"token","text":"-muted);\\n      margin"}
+{"type":"token","text":"-bottom: var(--space-"}
+{"type":"token","text":"8"}
+{"type":"token","text":");\\n    }\\n\\"}
+{"type":"token","text":"n    /*"}
+{"type":"token","text":" About"}
+{"type":"token","text":" Page"}
+{"type":"token","text":" */\\n    .about-hero"}
+{"type":"token","text":" {\\n      padding: var("}
+{"type":"token","text":"--space-24"}
+{"type":"token","text":") 0;\\n      background:"}
+{"type":"token","text":" var(--bg-"}
+{"type":"token","text":"secondary);\\n    }\\n"}
+{"type":"token","text":"\\n    .about-hero h"}
+{"type":"token","text":"1 {\\n      font-"}
+{"type":"token","text":"size: var(--text-5"}
+{"type":"token","text":"xl);\\n      margin-bottom"}
+{"type":"token","text":": var(--space-6)"}
+{"type":"token","text":";\\n      max"}
+{"type":"token","text":"-width: 800px;\\n"}
+{"type":"token","text":"    }\\n\\n    ."}
+{"type":"token","text":"about-hero p {\\n      "}
+{"type":"token","text":"font-size: var(--text"}
+{"type":"token","text":"-xl);\\n      color:"}
+{"type":"token","text":" var(--text-muted)"}
+{"type":"token","text":";\\n      line-height: "}
+{"type":"token","text":"1.7;\\n      max"}
+{"type":"token","text":"-width: 700"}
+{"type":"token","text":"px;\\n    }\\n\\"}
+{"type":"token","text":"n    .about-content"}
+{"type":"token","text":" {\\n      padding"}
+{"type":"token","text":": var(--space-20"}
+{"type":"token","text":") 0;\\n      background"}
+{"type":"token","text":": var(--bg)"}
+{"type":"token","text":";\\n    }\\n\\n"}
+{"type":"token","text":"    .about-grid"}
+{"type":"token","text":" {\\n      display: grid;\\"}
+{"type":"token","text":"n      grid-template-columns:"}
+{"type":"token","text":" 1fr 1fr;\\n"}
+{"type":"token","text":"      gap: var(--space-"}
+{"type":"token","text":"16"}
+{"type":"token","text":");\\n      "}
+{"type":"token","text":"margin-bottom"}
+{"type":"token","text":": var(--space-16)"}
+{"type":"token","text":";\\n    }\\n\\n"}
+{"type":"token","text":"    .about-text"}
+{"type":"token","text":" h"}
+{"type":"token","text":"3"}
+{"type":"token","text":" {\\n      font-size"}
+{"type":"token","text":": var(--text-2"}
+{"type":"token","text":"xl);\\n      margin-bottom"}
+{"type":"token","text":": var(--space-4)"}
+{"type":"token","text":";\\n    }\\n\\n"}
+{"type":"token","text":"    .about-text p {\\"}
+{"type":"token","text":"n      font-size: var("}
+{"type":"token","text":"--text-base"}
+{"type":"token","text":");\\n      color"}
+{"type":"token","text":": var(--text-muted"}
+{"type":"token","text":");\\n      line-height:"}
+{"type":"token","text":" 1.7;\\n      "}
+{"type":"token","text":"margin-bottom: var(--space"}
+{"type":"token","text":"-6);\\n    }\\"}
+{"type":"token","text":"n\\n    @"}
+{"type":"token","text":"media (max-width: 768"}
+{"type":"token","text":"px) {\\n      .about"}
+{"type":"token","text":"-grid {\\n        grid-"}
+{"type":"token","text":"template-columns: 1fr;\\"}
+{"type":"token","text":"n      }\\n    }\\"}
+{"type":"token","text":"n\\n    /* Contact Page"}
+{"type":"token","text":" */\\n    .contact-section"}
+{"type":"token","text":" {\\n      padding: var("}
+{"type":"token","text":"--space-24) 0;\\"}
+{"type":"token","text":"n      background: var(--bg"}
+{"type":"token","text":")"}
+{"type":"token","text":";\\n    }\\n\\n"}
+{"type":"token","text":"    .contact-grid"}
+{"type":"token","text":" {\\n      display: grid;\\"}
+{"type":"token","text":"n      grid-template-columns:"}
+{"type":"token","text":" 1fr 1fr;\\n"}
+{"type":"token","text":"      gap: var(--space-"}
+{"type":"token","text":"16);\\n      max"}
+{"type":"token","text":"-width: 1100"}
+{"type":"token","text":"px;\\n      margin: 0"}
+{"type":"token","text":" auto;\\n    }\\n"}
+{"type":"token","text":"\\n    .contact-info"}
+{"type":"token","text":" h"}
+{"type":"token","text":"1"}
+{"type":"token","text":" {\\n      font-size"}
+{"type":"token","text":": var(--text-4"}
+{"type":"token","text":"xl);\\n      margin-bottom"}
+{"type":"token","text":": var(--space-6)"}
+{"type":"token","text":";\\n    }\\n\\n"}
+{"type":"token","text":"    .contact-info p {\\"}
+{"type":"token","text":"n      font-size: var("}
+{"type":"token","text":"--text-lg);\\n      "}
+{"type":"token","text":"color: var(--text-m"}
+{"type":"token","text":"uted);\\n      line-height"}
+{"type":"token","text":": 1.7;\\n      "}
+{"type":"token","text":"margin-bottom: var(--space"}
+{"type":"token","text":"-8"}
+{"type":"token","text":");\\n    }\\n\\"}
+{"type":"token","text":"n    .contact-detail"}
+{"type":"token","text":" {\\n      margin"}
+{"type":"token","text":"-bottom: var(--space-"}
+{"type":"token","text":"6"}
+{"type":"token","text":");\\n    }\\n\\"}
+{"type":"token","text":"n    .contact-detail-"}
+{"type":"token","text":"label"}
+{"type":"token","text":" {\\n      font-size"}
+{"type":"token","text":": var(--text-sm)"}
+{"type":"token","text":";\\n      font"}
+{"type":"token","text":"-weight: 600;\\n      "}
+{"type":"token","text":"text"}
+{"type":"token","text":"-transform: uppercase;\\n      letter"}
+{"type":"token","text":"-spacing: 0.05em"}
+{"type":"token","text":";\\n      color: var(--"}
+{"type":"token","text":"text-muted);\\n      "}
+{"type":"token","text":"margin-bottom: var(--space"}
+{"type":"token","text":"-2"}
+{"type":"token","text":");\\n    }\\n\\"}
+{"type":"token","text":"n    .contact-detail-value"}
+{"type":"token","text":" {\\n      font-size:"}
+{"type":"token","text":" var(--text-lg"}
+{"type":"token","text":");\\n      color: var("}
+{"type":"token","text":"--text"}
+{"type":"token","text":")"}
+{"type":"token","text":";\\n    }\\n\\n"}
+{"type":"token","text":"    .contact-form {\\n"}
+{"type":"token","text":"      background: var(--bg-"}
+{"type":"token","text":"secondary);\\n      padding: var"}
+{"type":"token","text":"(--space-10"}
+{"type":"token","text":");\\n      border-radius:"}
+{"type":"token","text":" var(--radius-lg"}
+{"type":"token","text":");\\n    }\\n\\"}
+{"type":"token","text":"n    .form-group {\\"}
+{"type":"token","text":"n      margin-bottom: var("}
+{"type":"token","text":"--space-6);\\n    "}
+{"type":"token","text":"}\\n\\n    .form"}
+{"type":"token","text":"-group label {\\n      display"}
+{"type":"token","text":": block;\\n      font-size"}
+{"type":"token","text":": var(--text-sm"}
+{"type":"token","text":");\\n      font-weight:"}
+{"type":"token","text":" 600;\\n      margin-bottom"}
+{"type":"token","text":": var(--space-2)"}
+{"type":"token","text":";\\n      "}
+{"type":"token","text":"color: var(--text)"}
+{"type":"token","text":";\\n    }\\n\\n"}
+{"type":"token","text":"    .form-group input,\\"}
+{"type":"token","text":"n    .form-group textarea,"}
+{"type":"token","text":"\\n    .form-group select"}
+{"type":"token","text":" {\\n      width: 100"}
+{"type":"token","text":"%;\\n      padding: "}
+{"type":"token","text":"12"}
+{"type":"token","text":"px "}
+{"type":"token","text":"16px;\\n      font"}
+{"type":"token","text":"-size: var(--text-"}
+{"type":"token","text":"base);\\n      font"}
+{"type":"token","text":"-family"}
+{"type":"token","text":": 'Source"}
+{"type":"token","text":" Sans "}
+{"type":"token","text":"3', sans-serif;\\n      "}
+{"type":"token","text":"border: 1px solid var("}
+{"type":"token","text":"--border);\\n      border-"}
+{"type":"token","text":"radius: var(--radius-md"}
+{"type":"token","text":");\\n      background: var("}
+{"type":"token","text":"--bg)"}
+{"type":"token","text":";\\n      color: var(--"}
+{"type":"token","text":"text);\\n      transition: all"}
+{"type":"token","text":" 0.2s var(--"}
+{"type":"token","text":"ease-out);\\n      "}
+{"type":"token","text":"min"}
+{"type":"token","text":"-height: 44"}
+{"type":"token","text":"px;\\n    }\\n\\"}
+{"type":"token","text":"n    .form-group textarea"}
+{"type":"token","text":" {\\n      resize: vertical;\\"}
+{"type":"token","text":"n      min-height: 120"}
+{"type":"token","text":"px;\\n    }\\n\\"}
+{"type":"token","text":"n    .form-group input:"}
+{"type":"token","text":"focus,\\n    .form-"}
+{"type":"token","text":"group textarea:focus,"}
+{"type":"token","text":"\\n    .form-group select"}
+{"type":"token","text":":focus {\\n      outline:"}
+{"type":"token","text":" none;\\n      border"}
+{"type":"token","text":"-color: var(--accent)"}
+{"type":"token","text":";\\n      box-shadow: "}
+{"type":"token","text":"0 0 0 3px"}
+{"type":"token","text":" rgba(30, 58, "}
+{"type":"token","text":"95, 0.15);\\"}
+{"type":"token","text":"n    }\\n\\n    "}
+{"type":"token","text":".form-error"}
+{"type":"token","text":" {\\n      color"}
+{"type":"token","text":": #"}
+{"type":"token","text":"DC"}
+{"type":"token","text":"2"}
+{"type":"token","text":"626;\\n      font-size:"}
+{"type":"token","text":" var(--text-sm);\\"}
+{"type":"token","text":"n      margin-top: var("}
+{"type":"token","text":"--space-2);\\n      "}
+{"type":"token","text":"display: none;\\n    }\\"}
+{"type":"token","text":"n\\n    .form-group"}
+{"type":"token","text":"."}
+{"type":"token","text":"error input"}
+{"type":"token","text":",\\n    .form-group"}
+{"type":"token","text":".error textarea,\\n    ."}
+{"type":"token","text":"form-group.error select {\\"}
+{"type":"token","text":"n      border-color: #DC"}
+{"type":"token","text":"2626;\\n    }\\n"}
+{"type":"token","text":"\\n    .form-group."}
+{"type":"token","text":"error .form-error {\\n"}
+{"type":"token","text":"      display: block;\\n    "}
+{"type":"token","text":"}\\n\\n    .form-"}
+{"type":"token","text":"success"}
+{"type":"token","text":" {\\n      background"}
+{"type":"token","text":": #"}
+{"type":"token","text":"DCF"}
+{"type":"token","text":"CE7;\\n      color: #"}
+{"type":"token","text":"166"}
+{"type":"token","text":"534;\\n      padding"}
+{"type":"token","text":": var(--space-4"}
+{"type":"token","text":");\\n      border-radius:"}
+{"type":"token","text":" var(--radius-md);\\"}
+{"type":"token","text":"n      margin-top: var("}
+{"type":"token","text":"--space-6"}
+{"type":"token","text":");\\n      display: none;\\"}
+{"type":"token","text":"n    }\\n\\n    "}
+{"type":"token","text":"["}
+{"type":"token","text":"data"}
+{"type":"token","text":"-theme"}
+{"type":"token","text":"=\\\""}
+{"type":"token","text":"dark\\\"] .form-success"}
+{"type":"token","text":" {\\n      background: rgba"}
+{"type":"token","text":"(22"}
+{"type":"token","text":", 101"}
+{"type":"token","text":", 52, 0.2"}
+{"type":"token","text":");\\n      color: #86"}
+{"type":"token","text":"EF"}
+{"type":"token","text":"AC;\\n    }\\n\\"}
+{"type":"token","text":"n    @"}
+{"type":"token","text":"media (max-width: 768"}
+{"type":"token","text":"px) {\\n      .contact"}
+{"type":"token","text":"-grid {\\n        grid-"}
+{"type":"token","text":"template-columns: 1fr;\\"}
+{"type":"token","text":"n      }\\n    }\\"}
+{"type":"token","text":"n\\n    /* Footer */\\"}
+{"type":"token","text":"n    footer"}
+{"type":"token","text":" {\\n      background"}
+{"type":"token","text":": var(--accent"}
+{"type":"token","text":");\\n      color: white;\\"}
+{"type":"token","text":"n      padding: var(--space"}
+{"type":"token","text":"-16"}
+{"type":"token","text":")"}
+{"type":"token","text":" 0 "}
+{"type":"token","text":"var(--space-8"}
+{"type":"token","text":");\\n      margin"}
+{"type":"token","text":"-top: var(--space-"}
+{"type":"token","text":"24"}
+{"type":"token","text":");\\n    }\\n\\"}
+{"type":"token","text":"n    .footer-grid"}
+{"type":"token","text":" {\\n      display: grid;\\"}
+{"type":"token","text":"n      grid-template-columns:"}
+{"type":"token","text":" "}
+{"type":"token","text":"2"}
+{"type":"token","text":"fr 1fr "}
+{"type":"token","text":"1fr "}
+{"type":"token","text":"1fr;\\n      gap: var"}
+{"type":"token","text":"(--space-12"}
+{"type":"token","text":");\\n      margin-bottom:"}
+{"type":"token","text":" var(--space-12);\\"}
+{"type":"token","text":"n    }\\n\\n    "}
+{"type":"token","text":".footer-brand"}
+{"type":"token","text":" h"}
+{"type":"token","text":"3"}
+{"type":"token","text":" {\\n      font-size"}
+{"type":"token","text":": var(--text-2xl"}
+{"type":"token","text":");\\n      margin-bottom:"}
+{"type":"token","text":" var(--space-4"}
+{"type":"token","text":");\\n      "}
+{"type":"token","text":"color: white;\\n    }\\"}
+{"type":"token","text":"n\\n    .footer-brand"}
+{"type":"token","text":" p {\\n      font-size"}
+{"type":"token","text":": var(--text-base)"}
+{"type":"token","text":";\\n      opacity"}
+{"type":"token","text":": 0.9"}
+{"type":"token","text":";\\n      "}
+{"type":"token","text":"line"}
+{"type":"token","text":"-height: 1.6"}
+{"type":"token","text":";\\n    }\\n\\n"}
+{"type":"token","text":"    .footer-column"}
+{"type":"token","text":" h"}
+{"type":"token","text":"4 {\\n      font-"}
+{"type":"token","text":"size: var(--text-lg"}
+{"type":"token","text":");\\n      margin-bottom:"}
+{"type":"token","text":" var(--space-4);\\"}
+{"type":"token","text":"n      "}
+{"type":"token","text":"font"}
+{"type":"token","text":"-weight: 600;\\n      "}
+{"type":"token","text":"color: white;\\n    }\\"}
+{"type":"token","text":"n\\n    .footer-links"}
+{"type":"token","text":" {\\n      list"}
+{"type":"token","text":"-style: none;\\n      display"}
+{"type":"token","text":": flex;\\n      flex-direction"}
+{"type":"token","text":": column;\\n      gap: var"}
+{"type":"token","text":"(--space-3"}
+{"type":"token","text":");\\n    }\\n\\"}
+{"type":"token","text":"n    .footer-links a "}
+{"type":"token","text":"{\\n      font"}
+{"type":"token","text":"-size: var(--text-"}
+{"type":"token","text":"base);\\n      opacity"}
+{"type":"token","text":": 0.9;\\n      "}
+{"type":"token","text":"transition: opacity"}
+{"type":"token","text":" 0.2s var(--"}
+{"type":"token","text":"ease-out);\\n      "}
+{"type":"token","text":"color: white;\\n    }\\"}
+{"type":"token","text":"n\\n    .footer-links"}
+{"type":"token","text":" a:hover {\\n      opacity"}
+{"type":"token","text":": 1;\\n    }\\"}
+{"type":"token","text":"n\\n    .footer-bottom"}
+{"type":"token","text":" {\\n      padding"}
+{"type":"token","text":"-top: var(--space-"}
+{"type":"token","text":"8"}
+{"type":"token","text":");\\n      border-top:"}
+{"type":"token","text":" 1px solid rgba"}
+{"type":"token","text":"(255, 255, 255"}
+{"type":"token","text":", 0.2"}
+{"type":"token","text":");\\n      "}
+{"type":"token","text":"display"}
+{"type":"token","text":": flex;\\n      justify-content"}
+{"type":"token","text":": space-between;\\n      align"}
+{"type":"token","text":"-items: center;\\n      "}
+{"type":"token","text":"font"}
+{"type":"token","text":"-size: var(--text-"}
+{"type":"token","text":"sm);\\n      opacity"}
+{"type":"token","text":": 0.9;\\n    "}
+{"type":"token","text":"}\\n\\n    @"}
+{"type":"token","text":"media (max-width: 768"}
+{"type":"token","text":"px) {\\n      .footer"}
+{"type":"token","text":"-grid {\\n        grid-"}
+{"type":"token","text":"template-columns: 1fr;\\"}
+{"type":"token","text":"n        "}
+{"type":"token","text":"gap: var(--space-8"}
+{"type":"token","text":");\\n      }\\n      "}
+{"type":"token","text":".footer-bottom"}
+{"type":"token","text":" {\\n        flex-direction:"}
+{"type":"token","text":" column;\\n        gap"}
+{"type":"token","text":": var(--space-4)"}
+{"type":"token","text":";\\n        "}
+{"type":"token","text":"text-align: center;\\n      "}
+{"type":"token","text":"}\\n    }\\n\\"}
+{"type":"token","text":"n    /* Reveal"}
+{"type":"token","text":" Animations */\\n    .reveal "}
+{"type":"token","text":"{\\n      opacity: 0;\\"}
+{"type":"token","text":"n      transform: translateY"}
+{"type":"token","text":"(30"}
+{"type":"token","text":"px);\\n      transition: opacity"}
+{"type":"token","text":" 0.6"}
+{"type":"token","text":"s var(--ease-out),"}
+{"type":"token","text":" transform 0.6s var("}
+{"type":"token","text":"--ease-out);\\n    "}
+{"type":"token","text":"}\\n\\n    .reveal"}
+{"type":"token","text":".visible"}
+{"type":"token","text":" {\\n      opacity: 1"}
+{"type":"token","text":";\\n      transform: translateY("}
+{"type":"token","text":"0);\\n    }\\n"}
+{"type":"token","text":"\\n    .reveal-"}
+{"type":"token","text":"st"}
+{"type":"token","text":"agger >"}
+{"type":"token","text":" *"}
+{"type":"token","text":" {\\n      opacity"}
+{"type":"token","text":": 0;\\n      transform:"}
+{"type":"token","text":" translateY(30"}
+{"type":"token","text":"px);\\n      transition: opacity"}
+{"type":"token","text":" 0.6s var(--"}
+{"type":"token","text":"ease-out), transform 0."}
+{"type":"token","text":"6s var(--ease-out"}
+{"type":"token","text":");\\n    }\\n\\"}
+{"type":"token","text":"n    .reveal-stagger."}
+{"type":"token","text":"visible > *"}
+{"type":"token","text":":"}
+{"type":"token","text":"nth-child(1) {"}
+{"type":"token","text":" transition-delay: 0s"}
+{"type":"token","text":"; opacity"}
+{"type":"token","text":": 1; transform: translateY"}
+{"type":"token","text":"(0);"}
+{"type":"token","text":" }\\n    .reveal-st"}
+{"type":"token","text":"agger.visible > *:nth-"}
+{"type":"token","text":"child(2) { transition-delay"}
+{"type":"token","text":": 0.1"}
+{"type":"token","text":"s; opacity: 1; transform"}
+{"type":"token","text":": translateY(0); }\\"}
+{"type":"token","text":"n    .reveal-stagger."}
+{"type":"token","text":"visible > *:nth-child("}
+{"type":"token","text":"3) { transition-delay: "}
+{"type":"token","text":"0.2s; opacity: "}
+{"type":"token","text":"1; transform: translateY(0"}
+{"type":"token","text":"); }\\n    .reveal-"}
+{"type":"token","text":"stagger.visible > *:nth"}
+{"type":"token","text":"-child(4) { transition-"}
+{"type":"token","text":"delay: 0.3s;"}
+{"type":"token","text":" opacity: 1; transform: translate"}
+{"type":"token","text":"Y(0); }\\n    "}
+{"type":"token","text":".reveal-stagger.visible >"}
+{"type":"token","text":" *:nth-child(5)"}
+{"type":"token","text":" { transition-delay: 0."}
+{"type":"token","text":"4s; opacity: 1;"}
+{"type":"token","text":" transform: translateY(0); "}
+{"type":"token","text":"}\\n    .reveal-stagger"}
+{"type":"token","text":".visible > *:nth-child"}
+{"type":"token","text":"(6) { transition-delay:"}
+{"type":"token","text":" 0.5s; opacity:"}
+{"type":"token","text":" 1; transform: translateY("}
+{"type":"token","text":"0); }\\n\\"}
+{"type":"token","text":"n    @"}
+{"type":"token","text":"media (pre"}
+{"type":"token","text":"fers-reduced-motion: reduce)"}
+{"type":"token","text":" {\\n      .reveal,"}
+{"type":"token","text":"\\n      .reveal-stagger"}
+{"type":"token","text":" >"}
+{"type":"token","text":" * {\\n        opacity"}
+{"type":"token","text":": 1;\\n        transform:"}
+{"type":"token","text":" none;\\n        "}
+{"type":"token","text":"transition: none;\\n      }\\"}
+{"type":"token","text":"n    }\\n  "}
+{"type":"token","text":"</style>\\n</head>\\n"}
+{"type":"token","text":"<body>\\n  "}
+{"type":"token","text":"<a href=\\\"#main"}
+{"type":"token","text":"\\\""}
+{"type":"token","text":" class=\\\"skip-link\\\">Skip"}
+{"type":"token","text":" to main content</a>\\n  "}
+{"type":"token","text":"\\n  <nav"}
+{"type":"token","text":">\\"}
+{"type":"token","text":"n    <div class=\\\"container\\\""}
+{"type":"token","text":">\\n      "}
+{"type":"token","text":"<a href=\\\"#home"}
+{"type":"token","text":"\\\" class=\\\"logo\\\""}
+{"type":"token","text":" onclick"}
+{"type":"token","text":"=\\\"show"}
+{"type":"token","text":"Page"}
+{"type":"token","text":"('home'"}
+{"type":"token","text":")\\\">Summit"}
+{"type":"token","text":" Wealth"}
+{"type":"token","text":"</a>\\n      <ul"}
+{"type":"token","text":" class=\\\"nav-links\\\">\\n"}
+{"type":"token","text":"        <li><a href=\\\"#"}
+{"type":"token","text":"home\\\""}
+{"type":"token","text":" class"}
+{"type":"token","text":"=\\\"active"}
+{"type":"token","text":"\\\""}
+{"type":"token","text":" onclick=\\\"showPage('home')\\"}
+{"type":"token","text":"\">Home</a></li>\\n"}
+{"type":"token","text":"        <li><a href=\\\"#"}
+{"type":"token","text":"services"}
+{"type":"token","text":"\\\" onclick=\\\"showPage('services'"}
+{"type":"token","text":")\\\">Services</a></li>\\"}
+{"type":"token","text":"n        <li><a href=\\\""}
+{"type":"token","text":"#about\\\" onclick=\\\"showPage('"}
+{"type":"token","text":"about')\\\">About</a>"}
+{"type":"token","text":"</li>\\n        <li>"}
+{"type":"token","text":"<a href=\\\"#contact\\\" onclick=\\\"show"}
+{"type":"token","text":"Page('contact')\\\">Contact"}
+{"type":"token","text":"</a></li>\\n      </ul"}
+{"type":"token","text":">\\n      "}
+{"type":"token","text":"<div class=\\\"nav"}
+{"type":"token","text":"-right"}
+{"type":"token","text":"\\\">\\n        <button"}
+{"type":"token","text":" class=\\\"theme"}
+{"type":"token","text":"-toggle\\\" aria"}
+{"type":"token","text":"-label=\\\"Toggle theme\\\">\\n"}
+{"type":"token","text":"          <svg"}
+{"type":"token","text":" class=\\\"sun"}
+{"type":"token","text":"-"}
+{"type":"token","text":"icon\\\" fill"}
+{"type":"token","text":"=\\\"none"}
+{"type":"token","text":"\\\" view"}
+{"type":"token","text":"Box=\\\"0 0 24 "}
+{"type":"token","text":"24\\\""}
+{"type":"token","text":" stroke=\\\"currentColor\\\">\\n            "}
+{"type":"token","text":"<circle"}
+{"type":"token","text":" cx=\\\"12\\\" cy=\\\"12\\\""}
+{"type":"token","text":" r=\\\"5\\\"/>\\n            "}
+{"type":"token","text":"<line"}
+{"type":"token","text":" x1=\\\"12\\\" y1=\\\""}
+{"type":"token","text":"1\\\" x2=\\\"12\\\" y"}
+{"type":"token","text":"2=\\\"3"}
+{"type":"token","text":"\\\"/>\\n            <line x"}
+{"type":"token","text":"1=\\\"12\\\" y1=\\\"21"}
+{"type":"token","text":"\\\" x2=\\\""}
+{"type":"token","text":"12\\\" y2=\\\"23\\\"/"}
+{"type":"token","text":">\\n            "}
+{"type":"token","text":"<line x1=\\\"4.22"}
+{"type":"token","text":"\\\""}
+{"type":"token","text":" y1=\\\"4.22\\\""}
+{"type":"token","text":" x2=\\\"5.64"}
+{"type":"token","text":"\\\" y2=\\\"5.64\\"}
+{"type":"token","text":"\"/>\\n            <line x1"}
+{"type":"token","text":"=\\\"18.36\\\" y1=\\\""}
+{"type":"token","text":"18.36\\\" x2=\\\"19"}
+{"type":"token","text":".78\\\" y2=\\\"19."}
+{"type":"token","text":"78\\\"/>\\n            <line"}
+{"type":"token","text":" x1=\\\"1\\\" y1=\\\""}
+{"type":"token","text":"12\\\" x2=\\\"3\\\" y"}
+{"type":"token","text":"2=\\\"12\\\"/>\\n            "}
+{"type":"token","text":"<line x1=\\\"21\\\" y"}
+{"type":"token","text":"1=\\\"12\\\" x2=\\\"23"}
+{"type":"token","text":"\\\" y2=\\\"12\\\"/>\\"}
+{"type":"token","text":"n            "}
+{"type":"token","text":"<line x1=\\\"4.22"}
+{"type":"token","text":"\\\" y1=\\\"19.78\\\""}
+{"type":"token","text":" x2=\\\"5.64\\\" y"}
+{"type":"token","text":"2=\\\"18.36\\\"/>\\"}
+{"type":"token","text":"n            <line x1=\\\"18"}
+{"type":"token","text":".36\\\" y1=\\\"5."}
+{"type":"token","text":"64\\\" x2=\\\"19.78"}
+{"type":"token","text":"\\\" y2=\\\"4.22\\"}
+{"type":"token","text":"\"/>\\n          </svg>\\n"}
+{"type":"token","text":"        </button>\\n        "}
+{"type":"token","text":"<button"}
+{"type":"token","text":" class=\\\"menu-toggle\\\" aria-"}
+{"type":"token","text":"label=\\\"Open"}
+{"type":"token","text":" menu"}
+{"type":"token","text":"\\\">\\n          <span"}
+{"type":"token","text":"></span>\\n          <span>"}
+{"type":"token","text":"</span>\\n          <span></span"}
+{"type":"token","text":">\\n        </button>\\n      "}
+{"type":"token","text":"</div>\\n    </div>\\"}
+{"type":"token","text":"n  </nav>\\n\\"}
+{"type":"token","text":"n  <div"}
+{"type":"token","text":" class=\\\"mobile"}
+{"type":"token","text":"-menu\\\">\\n    <ul"}
+{"type":"token","text":">\\"}
+{"type":"token","text":"n      <li><a href=\\\""}
+{"type":"token","text":"#home\\\" onclick"}
+{"type":"token","text":"=\\\"showPage('home');"}
+{"type":"token","text":" clos"}
+{"type":"token","text":"eMobileMenu()\\\">Home"}
+{"type":"token","text":"</a></li>\\n      <li"}
+{"type":"token","text":"><a href=\\\"#services\\\" onclick"}
+{"type":"token","text":"=\\\"showPage('services'); closeM"}
+{"type":"token","text":"obileMenu()\\\">Services"}
+{"type":"token","text":"</a></li>\\n      <li>"}
+{"type":"token","text":"<a href=\\\"#about\\\" onclick=\\\""}
+{"type":"token","text":"showPage('about'); closeMobile"}
+{"type":"token","text":"Menu()\\\">About</a>"}
+{"type":"token","text":"</li>\\n      <li>"}
+{"type":"token","text":"<a href=\\\"#contact\\\" onclick=\\\"show"}
+{"type":"token","text":"Page('contact'); closeMobileMenu"}
+{"type":"token","text":"()\\\">Contact</a></li"}
+{"type":"token","text":">\\n    </ul>\\n  "}
+{"type":"token","text":"</div>\\n\\n  "}
+{"type":"token","text":"<main"}
+{"type":"token","text":" id=\\\"main\\\">\\n    <!--"}
+{"type":"token","text":" Home Page -->\\n    <div"}
+{"type":"token","text":" class=\\\"page"}
+{"type":"token","text":" active"}
+{"type":"token","text":"\\\" id=\\\"home\\\">\\n      "}
+{"type":"token","text":"<section"}
+{"type":"token","text":" class=\\\"hero\\\""}
+{"type":"token","text":">\\n        <div class=\\\"container"}
+{"type":"token","text":"\\\">\\n          <div class=\\\""}
+{"type":"token","text":"hero-content reveal"}
+{"type":"token","text":"\\\">\\n            <h1>"}
+{"type":"token","text":"Summit"}
+{"type":"token","text":" Wealth</h1>\\n            "}
+{"type":"token","text":"<p>"}
+{"type":"token","text":"Comprehensive"}
+{"type":"token","text":" financial planning built"}
+{"type":"token","text":" on"}
+{"type":"token","text":" trust"}
+{"type":"token","text":","}
+{"type":"token","text":" transparency"}
+{"type":"token","text":", and decades"}
+{"type":"token","text":" of experience gu"}
+{"type":"token","text":"iding families toward"}
+{"type":"token","text":" their goals.</p>\\n            "}
+{"type":"token","text":"<button"}
+{"type":"token","text":" class=\\\"btn"}
+{"type":"token","text":" btn"}
+{"type":"token","text":"-primary\\\" onclick=\\\"showPage('"}
+{"type":"token","text":"contact"}
+{"type":"token","text":"'"}
+{"type":"token","text":")\\\">Schedule"}
+{"type":"token","text":" a"}
+{"type":"token","text":" Consultation</button>\\n          "}
+{"type":"token","text":"</div>\\n          <div class=\\\""}
+{"type":"token","text":"hero-image reveal\\"}
+{"type":"token","text":"\"></div>\\n        </div>\\"}
+{"type":"token","text":"n      </section>\\n\\n"}
+{"type":"token","text":"      <section class=\\\"trust"}
+{"type":"token","text":"-section\\\">\\n        <div"}
+{"type":"token","text":" class=\\\"container\\\">\\n          "}
+{"type":"token","text":"<h2 "}
+{"type":"token","text":"class=\\\"reveal"}
+{"type":"token","text":"\\"}
+{"type":"token","text":"\">Built"}
+{"type":"token","text":" on Trust</h2>\\n          "}
+{"type":"token","text":"<div"}
+{"type":"token","text":" class=\\\"trust-grid reveal"}
+{"type":"token","text":"-"}
+{"type":"token","text":"stagger\\\">\\n            <div"}
+{"type":"token","text":" class=\\\"trust-item\\\">\\n"}
+{"type":"token","text":"              <div"}
+{"type":"token","text":" class=\\\"trust-number"}
+{"type":"token","text":"\\\""}
+{"type":"token","text":">["}
+{"type":"token","text":"30"}
+{"type":"token","text":"+"}
+{"type":"token","text":"]</div>\\n              <div"}
+{"type":"token","text":" class=\\\"trust-label"}
+{"type":"token","text":"\\\">Years Experience"}
+{"type":"token","text":"</div>\\n            "}
+{"type":"token","text":"</div>\\n            <div class"}
+{"type":"token","text":"=\\\"trust-item\\\">\\n              "}
+{"type":"token","text":"<div class=\\\"trust-number\\\""}
+{"type":"token","text":">[200"}
+{"type":"token","text":"+]</div>\\n              "}
+{"type":"token","text":"<div class=\\\"trust-label\\\">"}
+{"type":"token","text":"Families"}
+{"type":"token","text":" Served</div>\\n            "}
+{"type":"token","text":"</div>\\n            <div class=\\\""}
+{"type":"token","text":"trust-item\\\">\\n              "}
+{"type":"token","text":"<div class=\\\"trust-number\\\">["}
+{"type":"token","text":"Fi"}
+{"type":"token","text":"duciary]</div>\\n              "}
+{"type":"token","text":"<div class=\\\"trust-label\\"}
+{"type":"token","text":"\">Standard"}
+{"type":"token","text":"</div>\\n            </div>\\n"}
+{"type":"token","text":"          "}
+{"type":"token","text":"</div>\\n        </div>\\"}
+{"type":"token","text":"n      </section>\\n\\n"}
+{"type":"token","text":"      <section class=\\\"services-section"}
+{"type":"token","text":"\\\">\\n        <div class=\\\""}
+{"type":"token","text":"container\\\">\\n          <div"}
+{"type":"token","text":" class=\\\"services-intro"}
+{"type":"token","text":" reveal\\\">\\n            <h2"}
+{"type":"token","text":">"}
+{"type":"token","text":"Comprehensive Planning"}
+{"type":"token","text":"</h2>\\n            <p>"}
+{"type":"token","text":"We take"}
+{"type":"token","text":" a"}
+{"type":"token","text":" holistic approach to wealth"}
+{"type":"token","text":" management, ensuring"}
+{"type":"token","text":" every aspect of your financial life works"}
+{"type":"token","text":" together toward"}
+{"type":"token","text":" your long"}
+{"type":"token","text":"-term objectives"}
+{"type":"token","text":".</p>\\n          </div>\\"}
+{"type":"token","text":"n          "}
+{"type":"token","text":"<div class=\\\"services-list"}
+{"type":"token","text":" reveal-"}
+{"type":"token","text":"stagger\\\">\\n            <div"}
+{"type":"token","text":" class=\\\"service-item"}
+{"type":"token","text":"\\\">\\n              <div class=\\\""}
+{"type":"token","text":"service-name"}
+{"type":"token","text":"\\\">Retirement"}
+{"type":"token","text":" Planning</div>\\n              <div"}
+{"type":"token","text":" class=\\\"service-description\\\">Strategic"}
+{"type":"token","text":" planning"}
+{"type":"token","text":" to"}
+{"type":"token","text":" help"}
+{"type":"token","text":" you retire"}
+{"type":"token","text":" with"}
+{"type":"token","text":" confidence,"}
+{"type":"token","text":" covering"}
+{"type":"token","text":" income"}
+{"type":"token","text":" needs"}
+{"type":"token","text":", tax"}
+{"type":"token","text":" efficiency"}
+{"type":"token","text":", and lifestyle goals"}
+{"type":"token","text":" throughout"}
+{"type":"token","text":" your retirement years.</div>\\n            "}
+{"type":"token","text":"</div>\\n            <div class"}
+{"type":"token","text":"=\\\"service-item\\\">\\n              "}
+{"type":"token","text":"<div class=\\\"service-name\\"}
+{"type":"token","text":"\">Investment"}
+{"type":"token","text":" Management</div>\\n              <div"}
+{"type":"token","text":" class=\\\"service-description\\\">"}
+{"type":"token","text":"Discipl"}
+{"type":"token","text":"ined portfolio"}
+{"type":"token","text":" construction"}
+{"type":"token","text":" aligned"}
+{"type":"token","text":" with your risk tolerance and time"}
+{"type":"token","text":" horizon, with ongoing"}
+{"type":"token","text":" monitoring"}
+{"type":"token","text":" and rebalancing to keep"}
+{"type":"token","text":" you"}
+{"type":"token","text":" on track.</div>\\n            "}
+{"type":"token","text":"</div>\\n            <div class=\\\""}
+{"type":"token","text":"service-item\\\">\\n              "}
+{"type":"token","text":"<div class=\\\"service-name\\\">"}
+{"type":"token","text":"Tax"}
+{"type":"token","text":" Planning</div>\\n              <div"}
+{"type":"token","text":" class=\\\"service-description\\\">"}
+{"type":"token","text":"Pro"}
+{"type":"token","text":"active strategies"}
+{"type":"token","text":" to minimize your tax burden across"}
+{"type":"token","text":" all areas"}
+{"type":"token","text":" of your financial life, from retirement accounts"}
+{"type":"token","text":" to investment"}
+{"type":"token","text":" income and"}
+{"type":"token","text":" estate transfers"}
+{"type":"token","text":".</div>\\n            </div>\\"}
+{"type":"token","text":"n            <div class=\\\"service-"}
+{"type":"token","text":"item\\\">\\n              <div class"}
+{"type":"token","text":"=\\\"service-name\\\">Estate Planning"}
+{"type":"token","text":"</div>\\n              <div class"}
+{"type":"token","text":"=\\\"service-description\\\">Coord"}
+{"type":"token","text":"inated planning to"}
+{"type":"token","text":" ensure your assets transfer"}
+{"type":"token","text":" according"}
+{"type":"token","text":" to your wishes while"}
+{"type":"token","text":" minimizing taxes and administrative bur"}
+{"type":"token","text":"dens for"}
+{"type":"token","text":" your heirs.</div>\\n            "}
+{"type":"token","text":"</div>\\n            "}
+{"type":"token","text":"<div class=\\\"service-item\\\""}
+{"type":"token","text":">\\n              <div class=\\\"service"}
+{"type":"token","text":"-name\\\">Insurance Review"}
+{"type":"token","text":"</div>\\n              <div class"}
+{"type":"token","text":"=\\\"service-description\\\">Comprehensive"}
+{"type":"token","text":" analysis"}
+{"type":"token","text":" of your life"}
+{"type":"token","text":","}
+{"type":"token","text":" disability"}
+{"type":"token","text":", and long"}
+{"type":"token","text":"-term care insurance to"}
+{"type":"token","text":" protect"}
+{"type":"token","text":" your family"}
+{"type":"token","text":" and assets from"}
+{"type":"token","text":" unexpected"}
+{"type":"token","text":" events"}
+{"type":"token","text":".</div>\\n            </div>\\"}
+{"type":"token","text":"n          </div>\\n        "}
+{"type":"token","text":"</div>\\n      </section>\\n"}
+{"type":"token","text":"\\n      <section class=\\\"philosophy"}
+{"type":"token","text":"-section\\\">\\n        <div"}
+{"type":"token","text":" class=\\\"container\\\">\\n          "}
+{"type":"token","text":"<div"}
+{"type":"token","text":" class=\\\"philosophy-content reveal\\\">\\"}
+{"type":"token","text":"n            <h2>Our Philosophy"}
+{"type":"token","text":"</h2>\\n            <block"}
+{"type":"token","text":"quote class"}
+{"type":"token","text":"=\\\"philosophy-quote\\\">\\n              "}
+{"type":"token","text":"\""}
+{"type":"token","text":"Financial"}
+{"type":"token","text":" planning isn"}
+{"type":"token","text":"'t about predicting the future—it"}
+{"type":"token","text":"'s about preparing"}
+{"type":"token","text":" for it.\"\\n            </block"}
+{"type":"token","text":"quote>\\n            <p class"}
+{"type":"token","text":"=\\\"philosophy-text\\"}
+{"type":"token","text":"\">We believe in building"}
+{"type":"token","text":" long"}
+{"type":"token","text":"-term relationships based"}
+{"type":"token","text":" on trust, transparency, and honest communication"}
+{"type":"token","text":". Our"}
+{"type":"token","text":" fi"}
+{"type":"token","text":"duciary duty"}
+{"type":"token","text":" means we always act in your best interest"}
+{"type":"token","text":", never"}
+{"type":"token","text":" recomm"}
+{"type":"token","text":"ending products"}
+{"type":"token","text":" or"}
+{"type":"token","text":" strategies that don"}
+{"type":"token","text":"'t align with your goals.</p>\\"}
+{"type":"token","text":"n            "}
+{"type":"token","text":"<p"}
+{"type":"token","text":" class=\\\"philosophy-text\\\">Every"}
+{"type":"token","text":" client"}
+{"type":"token","text":"'s situation is unique, which"}
+{"type":"token","text":" is why we take the"}
+{"type":"token","text":" time to truly"}
+{"type":"token","text":" understand your values"}
+{"type":"token","text":", concerns"}
+{"type":"token","text":", and aspir"}
+{"type":"token","text":"ations before"}
+{"type":"token","text":" making"}
+{"type":"token","text":" any recommendations. Your"}
+{"type":"token","text":" financial plan"}
+{"type":"token","text":" should reflect your life"}
+{"type":"token","text":"—"}
+{"type":"token","text":"not a"}
+{"type":"token","text":" template"}
+{"type":"token","text":"."}
+{"type":"token","text":"</p>\\n          </div>\\n"}
+{"type":"token","text":"        </div>\\n      </section"}
+{"type":"token","text":">\\n\\n      <section class"}
+{"type":"token","text":"=\\\"c"}
+{"type":"token","text":"ta-section\\\">\\n        "}
+{"type":"token","text":"<div class=\\\"container\\\">\\n          "}
+{"type":"token","text":"<div"}
+{"type":"token","text":" class=\\\"cta-content reveal\\\""}
+{"type":"token","text":">\\n            <h2>Let"}
+{"type":"token","text":"'s Start"}
+{"type":"token","text":" Planning"}
+{"type":"token","text":"</h2>\\n            <p"}
+{"type":"token","text":">Schedule a"}
+{"type":"token","text":" compl"}
+{"type":"token","text":"imentary consultation to discuss your financial"}
+{"type":"token","text":" goals and learn"}
+{"type":"token","text":" how"}
+{"type":"token","text":" we"}
+{"type":"token","text":" can help you reach them.</p>\\"}
+{"type":"token","text":"n            <button class=\\\"btn btn"}
+{"type":"token","text":"-primary\\\" onclick=\\\"showPage('"}
+{"type":"token","text":"contact')\\\">Schedule a"}
+{"type":"token","text":" Consultation</button>\\n          "}
+{"type":"token","text":"</div>\\n        "}
+{"type":"token","text":"</div>\\n      </section>\\"}
+{"type":"token","text":"n    </div>\\n\\n"}
+{"type":"token","text":"    <!-- Services Page -->\\n    "}
+{"type":"token","text":"<div class=\\\"page\\\" id=\\\""}
+{"type":"token","text":"services\\\">\\n      <section class"}
+{"type":"token","text":"=\\\"about"}
+{"type":"token","text":"-hero"}
+{"type":"token","text":"\\\">\\n        <div class=\\\""}
+{"type":"token","text":"container\\\">\\n          <h"}
+{"type":"token","text":"1 "}
+{"type":"token","text":"class=\\\"reveal\\\">Services"}
+{"type":"token","text":"</h1>\\n          <p"}
+{"type":"token","text":" class=\\\"reveal\\"}
+{"type":"token","text":"\">"}
+{"type":"token","text":"Comprehensive wealth"}
+{"type":"token","text":" management tail"}
+{"type":"token","text":"ored to your unique situation"}
+{"type":"token","text":","}
+{"type":"token","text":" goals, and values"}
+{"type":"token","text":".</p>\\n        </div>\\"}
+{"type":"token","text":"n      </section>\\n\\n"}
+{"type":"token","text":"      <section class=\\\"about"}
+{"type":"token","text":"-content"}
+{"type":"token","text":"\\\">\\n        <div class=\\\""}
+{"type":"token","text":"container\\\">\\n          <div class"}
+{"type":"token","text":"=\\\"services"}
+{"type":"token","text":"-list"}
+{"type":"token","text":" reveal-stagger\\\">\\n            "}
+{"type":"token","text":"<div class=\\\"service-item\\\""}
+{"type":"token","text":">\\n              <div class=\\\"service"}
+{"type":"token","text":"-name"}
+{"type":"token","text":"\\\">Retirement Planning</div>\\"}
+{"type":"token","text":"n              <div class=\\\"service-"}
+{"type":"token","text":"description\\\">We"}
+{"type":"token","text":" help you answer"}
+{"type":"token","text":" the critical"}
+{"type":"token","text":" questions"}
+{"type":"token","text":": When"}
+{"type":"token","text":" can"}
+{"type":"token","text":" I"}
+{"type":"token","text":" retire?"}
+{"type":"token","text":" How much do I need?"}
+{"type":"token","text":" What's the"}
+{"type":"token","text":" best withdrawal"}
+{"type":"token","text":" strategy?"}
+{"type":"token","text":" Our"}
+{"type":"token","text":" retirement"}
+{"type":"token","text":" planning process"}
+{"type":"token","text":" covers"}
+{"type":"token","text":" income"}
+{"type":"token","text":" proj"}
+{"type":"token","text":"ections, Social"}
+{"type":"token","text":" Security optimization, Medicare"}
+{"type":"token","text":" planning, and tax"}
+{"type":"token","text":"-efficient withdrawal strategies to"}
+{"type":"token","text":" help you retire with confidence and"}
+{"type":"token","text":" maintain"}
+{"type":"token","text":" your lifestyle"}
+{"type":"token","text":" throughout"}
+{"type":"token","text":" retirement"}
+{"type":"token","text":".</div>\\n            </div>\\"}
+{"type":"token","text":"n            <div class=\\\"service-"}
+{"type":"token","text":"item\\\">\\n              <div class"}
+{"type":"token","text":"=\\\"service-name\\\">Investment Management"}
+{"type":"token","text":"</div>\\n              <div class"}
+{"type":"token","text":"=\\\"service-description\\\">Our"}
+{"type":"token","text":" investment"}
+{"type":"token","text":" philosophy"}
+{"type":"token","text":" emphas"}
+{"type":"token","text":"izes diversification, cost"}
+{"type":"token","text":" efficiency"}
+{"type":"token","text":", and discipline"}
+{"type":"token","text":". We construct"}
+{"type":"token","text":" portfolios aligned with your risk tolerance and"}
+{"type":"token","text":" time horizon, using"}
+{"type":"token","text":" low"}
+{"type":"token","text":"-cost index funds and strategic"}
+{"type":"token","text":" asset allocation."}
+{"type":"token","text":" Regular"}
+{"type":"token","text":" rebalancing and"}
+{"type":"token","text":" ongoing"}
+{"type":"token","text":" monitoring ensure your portfolio stays on track as"}
+{"type":"token","text":" markets"}
+{"type":"token","text":" shift"}
+{"type":"token","text":" and"}
+{"type":"token","text":" your needs"}
+{"type":"token","text":" evol"}
+{"type":"token","text":"ve.</div>\\n            </div"}
+{"type":"token","text":">\\n            <div class=\\\"service"}
+{"type":"token","text":"-item\\\">\\n              <div"}
+{"type":"token","text":" class=\\\"service-name\\\">Tax"}
+{"type":"token","text":" Planning</div>\\n              <div"}
+{"type":"token","text":" class=\\\"service-description\\\">"}
+{"type":"token","text":"Taxes"}
+{"type":"token","text":" are often"}
+{"type":"token","text":" one"}
+{"type":"token","text":" of the largest expenses you"}
+{"type":"token","text":"'ll face. We work"}
+{"type":"token","text":" pro"}
+{"type":"token","text":"actively to minimize your tax burden through"}
+{"type":"token","text":" strategic planning around"}
+{"type":"token","text":" retirement account"}
+{"type":"token","text":" withdraw"}
+{"type":"token","text":"als,"}
+{"type":"token","text":" Roth conversions, tax"}
+{"type":"token","text":"-loss harvesting, charitable"}
+{"type":"token","text":" giving strategies"}
+{"type":"token","text":", and coordination"}
+{"type":"token","text":" with your"}
+{"type":"token","text":" C"}
+{"type":"token","text":"PA to"}
+{"type":"token","text":" ensure"}
+{"type":"token","text":" every"}
+{"type":"token","text":" aspect"}
+{"type":"token","text":" of your financial"}
+{"type":"token","text":" life is"}
+{"type":"token","text":" tax"}
+{"type":"token","text":"-efficient.</div>\\n            "}
+{"type":"token","text":"</div>\\n            <div class=\\\""}
+{"type":"token","text":"service-item\\\">\\n              "}
+{"type":"token","text":"<div class=\\\"service-name\\\">"}
+{"type":"token","text":"Estate Planning</div>\\n              "}
+{"type":"token","text":"<div class=\\\"service-description\\\">"}
+{"type":"token","text":"Estate"}
+{"type":"token","text":" planning ensures"}
+{"type":"token","text":" your assets transfer according to your wishes while"}
+{"type":"token","text":" minimizing taxes and complications"}
+{"type":"token","text":". We coordinate with your attorney"}
+{"type":"token","text":" to review"}
+{"type":"token","text":" benef"}
+{"type":"token","text":"iciary"}
+{"type":"token","text":" designations, trust"}
+{"type":"token","text":" structures, gif"}
+{"type":"token","text":"ting strategies, and legacy"}
+{"type":"token","text":" goals"}
+{"type":"token","text":". Our focus"}
+{"type":"token","text":" is on creating"}
+{"type":"token","text":" a plan"}
+{"type":"token","text":" that protects your family and"}
+{"type":"token","text":" reflects"}
+{"type":"token","text":" your values.</div>\\n            "}
+{"type":"token","text":"</div>\\n            <div class=\\\""}
+{"type":"token","text":"service-item\\\">\\n              "}
+{"type":"token","text":"<div class=\\\"service-name\\\">"}
+{"type":"token","text":"Insurance Analysis"}
+{"type":"token","text":"</div>\\n              <div class"}
+{"type":"token","text":"=\\\"service-description\\\">Insurance"}
+{"type":"token","text":" is"}
+{"type":"token","text":" a critical component of financial"}
+{"type":"token","text":" planning,"}
+{"type":"token","text":" protecting your"}
+{"type":"token","text":" family and assets from unexpected events. We"}
+{"type":"token","text":" conduct"}
+{"type":"token","text":" comprehensive reviews"}
+{"type":"token","text":" of your life, disability, and long"}
+{"type":"token","text":"-term care insurance to ensure you have"}
+{"type":"token","text":" appropriate"}
+{"type":"token","text":" coverage at"}
+{"type":"token","text":" competitive"}
+{"type":"token","text":" rates,"}
+{"type":"token","text":" with regular reviews as"}
+{"type":"token","text":" your needs change.</div>\\n            "}
+{"type":"token","text":"</div>\\n            "}
+{"type":"token","text":"<div class=\\\"service-item\\\""}
+{"type":"token","text":">\\n              <div class=\\\"service"}
+{"type":"token","text":"-name\\\">College"}
+{"type":"token","text":" Planning</div>\\n              <div"}
+{"type":"token","text":" class=\\\"service-description\\\">"}
+{"type":"token","text":"Funding"}
+{"type":"token","text":" education"}
+{"type":"token","text":" is one of the largest"}
+{"type":"token","text":" expenses families"}
+{"type":"token","text":" face. We help"}
+{"type":"token","text":" you evaluate"}
+{"type":"token","text":" savings"}
+{"type":"token","text":" strategies"}
+{"type":"token","text":", compare"}
+{"type":"token","text":" "}
+{"type":"token","text":"529 plans, understand"}
+{"type":"token","text":" financial"}
+{"type":"token","text":" aid implications"}
+{"type":"token","text":", and balance"}
+{"type":"token","text":" education"}
+{"type":"token","text":" funding"}
+{"type":"token","text":" with other financial goals to"}
+{"type":"token","text":" ensure you're"}
+{"type":"token","text":" prepared without"}
+{"type":"token","text":" sacrif"}
+{"type":"token","text":"icing your retirement security"}
+{"type":"token","text":".</div>\\n            </div>\\"}
+{"type":"token","text":"n          </div>\\n        "}
+{"type":"token","text":"</div>\\n      </section>\\n"}
+{"type":"token","text":"\\n      <section class=\\\"c"}
+{"type":"token","text":"ta-section\\\">\\n        "}
+{"type":"token","text":"<div class=\\\"container\\\">\\n          "}
+{"type":"token","text":"<div class=\\\"cta-content"}
+{"type":"token","text":" reveal\\\">\\n            <h2"}
+{"type":"token","text":">Ready"}
+{"type":"token","text":" to Get"}
+{"type":"token","text":" Started?</h2>\\n            "}
+{"type":"token","text":"<p>Schedule a complimentary"}
+{"type":"token","text":" consultation to discuss your financial goals and learn"}
+{"type":"token","text":" how we can help."}
+{"type":"token","text":"</p>\\n            <button class=\\\""}
+{"type":"token","text":"btn btn-primary\\\" onclick=\\\"show"}
+{"type":"token","text":"Page('contact')\\\">Schedule a"}
+{"type":"token","text":" Consultation</button>\\n          "}
+{"type":"token","text":"</div>\\n        </div>\\n"}
+{"type":"token","text":"      </section>\\n    </div"}
+{"type":"token","text":">\\n\\"}
+{"type":"token","text":"n    <!-- About Page -->\\n"}
+{"type":"token","text":"    <div class=\\\"page\\\" id"}
+{"type":"token","text":"=\\\"about\\\">\\n      <section"}
+{"type":"token","text":" class=\\\"about-hero\\\">\\n"}
+{"type":"token","text":"        <div class=\\\"container\\\">\\"}
+{"type":"token","text":"n          <h1 class=\\\""}
+{"type":"token","text":"reveal\\\">About Summit"}
+{"type":"token","text":" Wealth</h1>\\n          "}
+{"type":"token","text":"<p class=\\\"reveal\\\">Independent"}
+{"type":"token","text":" financial planning built"}
+{"type":"token","text":" on trust, transparency, and a"}
+{"type":"token","text":" fi"}
+{"type":"token","text":"duciary commitment"}
+{"type":"token","text":" to always"}
+{"type":"token","text":" act"}
+{"type":"token","text":" in your best interest.</p>\\n"}
+{"type":"token","text":"        </div>\\n      </section"}
+{"type":"token","text":">\\n\\n      <section class"}
+{"type":"token","text":"=\\\"about-content\\\">\\n        "}
+{"type":"token","text":"<div class=\\\"container\\\">\\n"}
+{"type":"token","text":"          <div class=\\\"about-grid"}
+{"type":"token","text":" reveal\\\""}
+{"type":"token","text":">\\n            <div class=\\\"about"}
+{"type":"token","text":"-text"}
+{"type":"token","text":"\\\">\\n              <h3"}
+{"type":"token","text":">Our Story</h3>\\n"}
+{"type":"token","text":"              <p>Summit Wealth was"}
+{"type":"token","text":" founded on"}
+{"type":"token","text":" a"}
+{"type":"token","text":" simple belief"}
+{"type":"token","text":": financial"}
+{"type":"token","text":" planning should"}
+{"type":"token","text":" be transparent"}
+{"type":"token","text":", conflict"}
+{"type":"token","text":"-free, and always focused on the"}
+{"type":"token","text":" client's best interest"}
+{"type":"token","text":". After"}
+{"type":"token","text":" years of working"}
+{"type":"token","text":" in"}
+{"type":"token","text":" larger"}
+{"type":"token","text":" firms"}
+{"type":"token","text":" where"}
+{"type":"token","text":" product"}
+{"type":"token","text":" sales often"}
+{"type":"token","text":" took"}
+{"type":"token","text":" priority"}
+{"type":"token","text":" over planning"}
+{"type":"token","text":", we decided to build a different"}
+{"type":"token","text":" kind of practice."}
+{"type":"token","text":"</p>\\n              <p>As"}
+{"type":"token","text":" an"}
+{"type":"token","text":" independent,"}
+{"type":"token","text":" fee-only firm"}
+{"type":"token","text":", we have"}
+{"type":"token","text":" no"}
+{"type":"token","text":" ties to banks, insurance"}
+{"type":"token","text":" companies, or investment"}
+{"type":"token","text":" product"}
+{"type":"token","text":" manufacturers"}
+{"type":"token","text":". This means our"}
+{"type":"token","text":" recommendations"}
+{"type":"token","text":" are based solely on what"}
+{"type":"token","text":"'s best for you—"}
+{"type":"token","text":"not what ear"}
+{"type":"token","text":"ns us the highest"}
+{"type":"token","text":" commission"}
+{"type":"token","text":".</p>\\n            "}
+{"type":"token","text":"</div>\\n            <div class"}
+{"type":"token","text":"=\\\"about-text"}
+{"type":"token","text":"\\\">\\n              <h3>"}
+{"type":"token","text":"Our Approach</h3>\\n"}
+{"type":"token","text":"              <p>We believe"}
+{"type":"token","text":" in building long-term relationships."}
+{"type":"token","text":" Most"}
+{"type":"token","text":" of our clients have"}
+{"type":"token","text":" been with us for years, and many"}
+{"type":"token","text":" have referred"}
+{"type":"token","text":" their"}
+{"type":"token","text":" family"}
+{"type":"token","text":" members and"}
+{"type":"token","text":" friends."}
+{"type":"token","text":" This loyalty"}
+{"type":"token","text":" comes"}
+{"type":"token","text":" from our commitment to honest"}
+{"type":"token","text":" communication, pro"}
+{"type":"token","text":"active planning, and always being"}
+{"type":"token","text":" available when"}
+{"type":"token","text":" you"}
+{"type":"token","text":" need us.</p>\\n              "}
+{"type":"token","text":"<p>Financial"}
+{"type":"token","text":" planning isn't a"}
+{"type":"token","text":" one-time event—it's an"}
+{"type":"token","text":" ongoing relationship"}
+{"type":"token","text":". Markets"}
+{"type":"token","text":" change, life"}
+{"type":"token","text":" circumstances evolve, and tax"}
+{"type":"token","text":" laws shift. We're here to help"}
+{"type":"token","text":" you navigate all"}
+{"type":"token","text":" of it"}
+{"type":"token","text":" with confidence and clarity"}
+{"type":"token","text":".</p>\\n            </div>\\"}
+{"type":"token","text":"n          "}
+{"type":"token","text":"</div>\\n\\"}
+{"type":"token","text":"n          <div class=\\\"philosophy"}
+{"type":"token","text":"-content"}
+{"type":"token","text":" reveal\\\""}
+{"type":"token","text":" style=\\\"margin"}
+{"type":"token","text":"-top: var"}
+{"type":"token","text":"(--space-16"}
+{"type":"token","text":");\\\">\\n            <h2"}
+{"type":"token","text":">"}
+{"type":"token","text":"Fiduciary Commitment"}
+{"type":"token","text":"</h2>\\n            <p"}
+{"type":"token","text":" class"}
+{"type":"token","text":"=\\\"philosophy-text\\\">As"}
+{"type":"token","text":" a fiduciary, we are"}
+{"type":"token","text":" legally and"}
+{"type":"token","text":" ethically bound to act"}
+{"type":"token","text":" in your best interest at"}
+{"type":"token","text":" all times. This means:"}
+{"type":"token","text":"</p>\\n            <ul style"}
+{"type":"token","text":"=\\\"font"}
+{"type":"token","text":"-size: var"}
+{"type":"token","text":"(--text"}
+{"type":"token","text":"-lg"}
+{"type":"token","text":");"}
+{"type":"token","text":" color"}
+{"type":"token","text":": var(--text"}
+{"type":"token","text":"-m"}
+{"type":"token","text":"uted); line"}
+{"type":"token","text":"-height: 1.7"}
+{"type":"token","text":";"}
+{"type":"token","text":" margin-left"}
+{"type":"token","text":": var(--space-6"}
+{"type":"token","text":");"}
+{"type":"token","text":" margin-top: var(--space"}
+{"type":"token","text":"-4"}
+{"type":"token","text":");\\\">\\n              <li style"}
+{"type":"token","text":"=\\\"margin-bottom: var(--"}
+{"type":"token","text":"space-3"}
+{"type":"token","text":")"}
+{"type":"token","text":";\\\">We never accept"}
+{"type":"token","text":" comm"}
+{"type":"token","text":"issions or"}
+{"type":"token","text":" payments"}
+{"type":"token","text":" from investment"}
+{"type":"token","text":" products</li>\\n              <li"}
+{"type":"token","text":" style=\\\"margin-bottom: var("}
+{"type":"token","text":"--space-3);\\\">Our"}
+{"type":"token","text":" recommendations are based"}
+{"type":"token","text":" solely"}
+{"type":"token","text":" on your needs, not our"}
+{"type":"token","text":" compensation"}
+{"type":"token","text":"</li>\\n              <li style"}
+{"type":"token","text":"=\\\"margin-bottom: var(--"}
+{"type":"token","text":"space-3);\\\">We dis"}
+{"type":"token","text":"close all fees and potential"}
+{"type":"token","text":" conflicts of interest up"}
+{"type":"token","text":"front</li>\\n              <li"}
+{"type":"token","text":" style=\\\"margin-bottom: var("}
+{"type":"token","text":"--space-3);\\\">We"}
+{"type":"token","text":" priorit"}
+{"type":"token","text":"ize your financial"}
+{"type":"token","text":" goals over our business"}
+{"type":"token","text":" growth"}
+{"type":"token","text":"</li>\\n            </ul>\\"}
+{"type":"token","text":"n          </div>\\n        "}
+{"type":"token","text":"</div>\\n      </section>\\n"}
+{"type":"token","text":"\\n      <section class=\\\"c"}
+{"type":"token","text":"ta-section\\\">\\n        "}
+{"type":"token","text":"<div class=\\\"container\\\">\\n          "}
+{"type":"token","text":"<div class=\\\"cta-content"}
+{"type":"token","text":" reveal\\\">\\n            <h2"}
+{"type":"token","text":">Let's Work"}
+{"type":"token","text":" Together</h2>\\n            "}
+{"type":"token","text":"<p>Schedule a complimentary consultation"}
+{"type":"token","text":" to learn"}
+{"type":"token","text":" more about our"}
+{"type":"token","text":" approach and how we can help you reach"}
+{"type":"token","text":" your financial goals.</p>\\n            "}
+{"type":"token","text":"<button class=\\\"btn btn-primary"}
+{"type":"token","text":"\\\" onclick=\\\"showPage('contact'"}
+{"type":"token","text":")\\\">Schedule a Consultation</button"}
+{"type":"token","text":">\\n          </div>\\n        "}
+{"type":"token","text":"</div>\\n      </section>\\"}
+{"type":"token","text":"n    </div>\\n\\n"}
+{"type":"token","text":"    <!-- Contact Page -->\\n    "}
+{"type":"token","text":"<div class=\\\"page\\\" id=\\\""}
+{"type":"token","text":"contact\\\">\\n      <section class"}
+{"type":"token","text":"=\\\"contact-section"}
+{"type":"token","text":"\\\">\\n        <div class=\\\""}
+{"type":"token","text":"container\\\">\\n          <div class"}
+{"type":"token","text":"=\\\"contact-grid"}
+{"type":"token","text":"\\\""}
+{"type":"token","text":">\\n            <div class=\\\"contact"}
+{"type":"token","text":"-info"}
+{"type":"token","text":" reveal\\\">\\n              <h1"}
+{"type":"token","text":">Get"}
+{"type":"token","text":" in Touch</h1>\\n              "}
+{"type":"token","text":"<p"}
+{"type":"token","text":">Schedule"}
+{"type":"token","text":" a complimentary consultation to discuss your"}
+{"type":"token","text":" financial goals and learn how we can help"}
+{"type":"token","text":" you reach them."}
+{"type":"token","text":" We're here to answer"}
+{"type":"token","text":" your questions and provide"}
+{"type":"token","text":" the"}
+{"type":"token","text":" clarity"}
+{"type":"token","text":" you need to make confident"}
+{"type":"token","text":" decisions"}
+{"type":"token","text":"."}
+{"type":"token","text":"</p>\\n              \\"}
+{"type":"token","text":"n              <div class=\\\"contact-"}
+{"type":"token","text":"detail"}
+{"type":"token","text":"\\\">\\n                <div class=\\\""}
+{"type":"token","text":"contact-detail"}
+{"type":"token","text":"-label"}
+{"type":"token","text":"\\\">Phone"}
+{"type":"token","text":"</div>\\n                <div class"}
+{"type":"token","text":"=\\\"contact-detail-value\\\""}
+{"type":"token","text":">["}
+{"type":"token","text":"Your"}
+{"type":"token","text":" Phone"}
+{"type":"token","text":"]"}
+{"type":"token","text":"</div>\\n              </div>\\"}
+{"type":"token","text":"n              \\n              <div class"}
+{"type":"token","text":"=\\\"contact-detail\\\">\\n                "}
+{"type":"token","text":"<div class=\\\"contact-detail-"}
+{"type":"token","text":"label\\\">Email</div>\\n"}
+{"type":"token","text":"                <div class=\\\"contact-detail"}
+{"type":"token","text":"-value\\\">[Your Email]"}
+{"type":"token","text":"</div>\\n              </div>\\n"}
+{"type":"token","text":"              \\n              <div class=\\\""}
+{"type":"token","text":"contact-detail\\\">\\n                "}
+{"type":"token","text":"<div class=\\\"contact-detail-label"}
+{"type":"token","text":"\\\">Office"}
+{"type":"token","text":"</div>\\n                <div class"}
+{"type":"token","text":"=\\\"contact-detail-value\\\">["}
+{"type":"token","text":"Your Address"}
+{"type":"token","text":"]</div>\\n              </div"}
+{"type":"token","text":">\\n              \\n              <div"}
+{"type":"token","text":" class=\\\"contact-detail\\\">\\n"}
+{"type":"token","text":"                <div class=\\\"contact-detail"}
+{"type":"token","text":"-label\\\">Hours"}
+{"type":"token","text":"</div>\\n                <div class"}
+{"type":"token","text":"=\\\"contact-detail-value\\\">["}
+{"type":"token","text":"Your Hours]</div>\\n              "}
+{"type":"token","text":"</div>\\n            "}
+{"type":"token","text":"</div>\\n\\n            "}
+{"type":"token","text":"<form"}
+{"type":"token","text":" class=\\\"contact-form reveal\\\" id"}
+{"type":"token","text":"=\\\"contact"}
+{"type":"token","text":"Form\\\">\\n              <div class"}
+{"type":"token","text":"=\\\"form-group\\\">\\n                "}
+{"type":"token","text":"<label for=\\\"name\\\">Name"}
+{"type":"token","text":" *"}
+{"type":"token","text":"</label>\\n                <input type"}
+{"type":"token","text":"=\\\"text\\\" id=\\\"name\\\" name"}
+{"type":"token","text":"=\\\"name\\\" required>\\n                "}
+{"type":"token","text":"<span class=\\\"form-error\\"}
+{"type":"token","text":"\">Please enter your name</span>\\"}
+{"type":"token","text":"n              </div>\\n\\"}
+{"type":"token","text":"n              <div class=\\\"form-"}
+{"type":"token","text":"group\\\">\\n                <label for"}
+{"type":"token","text":"=\\\"email\\\">Email *</label"}
+{"type":"token","text":">\\n                <input type=\\\"email"}
+{"type":"token","text":"\\\" id=\\\"email\\\" name=\\\"email"}
+{"type":"token","text":"\\\" required>\\n                <span class"}
+{"type":"token","text":"=\\\"form-error\\\">Please enter"}
+{"type":"token","text":" a valid email"}
+{"type":"token","text":"</span>\\n              </div>\\n"}
+{"type":"token","text":"\\n              <div class=\\\"form"}
+{"type":"token","text":"-group\\\">\\n                <label"}
+{"type":"token","text":" for=\\\"phone\\\">Phone"}
+{"type":"token","text":"</label>\\n                <input type=\\\""}
+{"type":"token","text":"tel\\\" id=\\\"phone\\\" name=\\\""}
+{"type":"token","text":"phone\\\""}
+{"type":"token","text":">\\n              "}
+{"type":"token","text":"</div>\\n\\n              "}
+{"type":"token","text":"<div class=\\\"form-group\\\">\\"}
+{"type":"token","text":"n                <label for=\\\"interest"}
+{"type":"token","text":"\\\">I"}
+{"type":"token","text":"'m interested in *</label>\\n"}
+{"type":"token","text":"                <select id=\\\"interest\\\" name"}
+{"type":"token","text":"=\\\"interest\\\" required>\\n                  "}
+{"type":"token","text":"<option value=\\\"\\\">Select a"}
+{"type":"token","text":" service"}
+{"type":"token","text":"</option>\\n                  <option value"}
+{"type":"token","text":"=\\\"retirement\\\">Retirement Planning"}
+{"type":"token","text":"</option>\\n                  <option value"}
+{"type":"token","text":"=\\\"investment\\\">Investment Management</option"}
+{"type":"token","text":">\\n                  <option value=\\\""}
+{"type":"token","text":"tax\\\">Tax Planning</option>\\"}
+{"type":"token","text":"n                  <option value=\\\"estate"}
+{"type":"token","text":"\\\">Estate Planning</option>\\n"}
+{"type":"token","text":"                  <option value=\\\"comprehensive"}
+{"type":"token","text":"\\\">Comprehensive Planning</option>\\"}
+{"type":"token","text":"n                  <option value=\\\"other"}
+{"type":"token","text":"\\\">Other</option>\\n                "}
+{"type":"token","text":"</select>\\n                "}
+{"type":"token","text":"<span class=\\\"form-error\\"}
+{"type":"token","text":"\">Please select a"}
+{"type":"token","text":" service</span>\\n              </div"}
+{"type":"token","text":">\\n\\n              <div class"}
+{"type":"token","text":"=\\\"form-group\\\">\\n                "}
+{"type":"token","text":"<label for=\\\"message\\\">Message"}
+{"type":"token","text":"</label>\\n                <textarea id=\\\""}
+{"type":"token","text":"message\\\" name=\\\"message\\\" rows=\\\""}
+{"type":"token","text":"4\\\" placeholder"}
+{"type":"token","text":"=\\\"Tell us a"}
+{"type":"token","text":" bit about your situation and"}
+{"type":"token","text":" goals...\\\"></textarea>\\n              "}
+{"type":"token","text":"</div>\\n\\n              "}
+{"type":"token","text":"<button"}
+{"type":"token","text":" type=\\\"submit\\\" class=\\\"btn btn"}
+{"type":"token","text":"-primary\\"}
+{"type":"token","text":"\">Send Message</button>\\n              "}
+{"type":"token","text":"<div"}
+{"type":"token","text":" class=\\\"form-success"}
+{"type":"token","text":"\\\" id=\\\"form"}
+{"type":"token","text":"Success\\\">Thank you for reaching"}
+{"type":"token","text":" out! We'll be"}
+{"type":"token","text":" in touch within"}
+{"type":"token","text":" 1"}
+{"type":"token","text":"-2 business days to"}
+{"type":"token","text":" schedule"}
+{"type":"token","text":" your consultation.</div>\\n            "}
+{"type":"token","text":"</form>\\n          </div>\\n"}
+{"type":"token","text":"        </div>\\n      </section"}
+{"type":"token","text":">\\n    </div>\\n  "}
+{"type":"token","text":"</main>\\n\\n  "}
+{"type":"token","text":"<footer>\\"}
+{"type":"token","text":"n    <div class=\\\"container\\\""}
+{"type":"token","text":">\\n      <div class=\\\"footer"}
+{"type":"token","text":"-grid"}
+{"type":"token","text":"\\\""}
+{"type":"token","text":">\\n        <div class=\\\"footer"}
+{"type":"token","text":"-brand"}
+{"type":"token","text":"\\\""}
+{"type":"token","text":">\\n          <h3>Summit"}
+{"type":"token","text":" Wealth</h3>\\n          "}
+{"type":"token","text":"<p>Independent financial planning built on"}
+{"type":"token","text":" trust, transparency, and a fiduc"}
+{"type":"token","text":"iary commitment to always act in your best"}
+{"type":"token","text":" interest.</p>\\n        </div"}
+{"type":"token","text":">\\n        <div class=\\\"footer"}
+{"type":"token","text":"-column"}
+{"type":"token","text":"\\\">\\n          <h4>"}
+{"type":"token","text":"Services"}
+{"type":"token","text":"</h4>\\n          <ul"}
+{"type":"token","text":" class"}
+{"type":"token","text":"=\\\"footer-links\\\">\\n            "}
+{"type":"token","text":"<li><a href=\\\"#services"}
+{"type":"token","text":"\\\""}
+{"type":"token","text":" onclick"}
+{"type":"token","text":"=\\\"showPage('services'"}
+{"type":"token","text":")\\\">Retirement Planning</a>"}
+{"type":"token","text":"</li>\\n            <li>"}
+{"type":"token","text":"<a href=\\\"#services\\\" onclick=\\\"show"}
+{"type":"token","text":"Page('services')\\\">Investment Management"}
+{"type":"token","text":"</a></li>\\n            "}
+{"type":"token","text":"<li><a href=\\\"#services\\\""}
+{"type":"token","text":" onclick=\\\"showPage('services')\\"}
+{"type":"token","text":"\">Tax Planning</a></li>\\"}
+{"type":"token","text":"n            <li><a href=\\\""}
+{"type":"token","text":"#services\\\" onclick=\\\"showPage('"}
+{"type":"token","text":"services')\\\">Estate Planning"}
+{"type":"token","text":"</a></li>\\n          "}
+{"type":"token","text":"</ul>\\n        </div>\\"}
+{"type":"token","text":"n        <div class=\\\"footer-"}
+{"type":"token","text":"column\\\">\\n          <h4"}
+{"type":"token","text":">Company"}
+{"type":"token","text":"</h4>\\n          <ul"}
+{"type":"token","text":" class=\\\"footer-links\\\">\\n"}
+{"type":"token","text":"            <li><a href=\\\"#"}
+{"type":"token","text":"about\\\" onclick=\\\"showPage('about"}
+{"type":"token","text":"')\\\">About</a></li"}
+{"type":"token","text":">\\n            <li><a href"}
+{"type":"token","text":"=\\\"#contact\\\" onclick=\\\"showPage"}
+{"type":"token","text":"('contact')\\\">Contact"}
+{"type":"token","text":"</a></li>\\n          "}
+{"type":"token","text":"</ul>\\n        </div>\\"}
+{"type":"token","text":"n        <div class=\\\"footer-"}
+{"type":"token","text":"column\\\">\\n          <h4"}
+{"type":"token","text":">Contact"}
+{"type":"token","text":"</h4>\\n          <ul"}
+{"type":"token","text":" class=\\\"footer-links\\\">\\n"}
+{"type":"token","text":"            <li>["}
+{"type":"token","text":"Your Phone]</li>\\n            "}
+{"type":"token","text":"<li>[Your Email]</li"}
+{"type":"token","text":">\\n            <li>[Your Address"}
+{"type":"token","text":"]</li>\\n          "}
+{"type":"token","text":"</ul>\\n        </div>\\"}
+{"type":"token","text":"n      </div>\\n      "}
+{"type":"token","text":"<div class=\\\"footer-bottom\\\">\\"}
+{"type":"token","text":"n        <p>&copy; "}
+{"type":"token","text":"2024 Summit Wealth. All"}
+{"type":"token","text":" rights reserved.</p>\\n        "}
+{"type":"token","text":"<p>Fee"}
+{"type":"token","text":"-only fi"}
+{"type":"token","text":"duciary financial"}
+{"type":"token","text":" planning"}
+{"type":"token","text":"</p>\\n      </div>\\n"}
+{"type":"token","text":"    </div>\\n  </footer"}
+{"type":"token","text":">\\n\\n  <script>\\"}
+{"type":"token","text":"n    //"}
+{"type":"token","text":" Page"}
+{"type":"token","text":" Routing"}
+{"type":"token","text":"\\n    function showPage(page"}
+{"type":"token","text":"Id) {\\n      const pages"}
+{"type":"token","text":" = document"}
+{"type":"token","text":".querySelectorAll('.page')"}
+{"type":"token","text":";\\n      const"}
+{"type":"token","text":" nav"}
+{"type":"token","text":"Links"}
+{"type":"token","text":" = document.querySelectorAll('."}
+{"type":"token","text":"nav-links"}
+{"type":"token","text":" a');\\n      \\n      "}
+{"type":"token","text":"pages.forEach(page => {\\"}
+{"type":"token","text":"n        page.classList.remove('"}
+{"type":"token","text":"active');\\n      });\\n"}
+{"type":"token","text":"      \\n      const"}
+{"type":"token","text":" target"}
+{"type":"token","text":"Page = document.getElementById(pageId"}
+{"type":"token","text":");\\n      if (targetPage"}
+{"type":"token","text":") {\\n        targetPage."}
+{"type":"token","text":"classList.add('active');\\n"}
+{"type":"token","text":"        window"}
+{"type":"token","text":".scrollTo({"}
+{"type":"token","text":" top: "}
+{"type":"token","text":"0, behavior: 'smooth'"}
+{"type":"token","text":" });\\n        "}
+{"type":"token","text":"\\n        nav"}
+{"type":"token","text":"Links.forEach(link => {\\"}
+{"type":"token","text":"n          link.classList.remove('"}
+{"type":"token","text":"active');\\n          "}
+{"type":"token","text":"if (link.getAttribute('href"}
+{"type":"token","text":"') === '#"}
+{"type":"token","text":"' + pageId) {\\n"}
+{"type":"token","text":"            link.classList.add('active"}
+{"type":"token","text":"');\\n          }\\n        "}
+{"type":"token","text":"});\\n        "}
+{"type":"token","text":"\\n        location"}
+{"type":"token","text":".hash = pageId;\\n      "}
+{"type":"token","text":"}\\n    }\\n\\"}
+{"type":"token","text":"n    // Handle"}
+{"type":"token","text":" hash on"}
+{"type":"token","text":" load"}
+{"type":"token","text":"\\n    window.addEventListener('D"}
+{"type":"token","text":"OMContentLoaded', ()"}
+{"type":"token","text":" => {\\n      const hash ="}
+{"type":"token","text":" location"}
+{"type":"token","text":".hash."}
+{"type":"token","text":"slice"}
+{"type":"token","text":"(1);\\n      if ("}
+{"type":"token","text":"hash) {\\n        showPage"}
+{"type":"token","text":"(hash);\\n      }\\"}
+{"type":"token","text":"n    });\\n\\"}
+{"type":"token","text":"n    window"}
+{"type":"token","text":".addEventListener('hashchange', () =>"}
+{"type":"token","text":" {\\n      const hash = location"}
+{"type":"token","text":".hash.slice(1);\\"}
+{"type":"token","text":"n      if (hash) {\\"}
+{"type":"token","text":"n        showPage(hash);\\"}
+{"type":"token","text":"n      }\\n    });\\"}
+{"type":"token","text":"n\\"}
+{"type":"token","text":"n    // Mobile"}
+{"type":"token","text":" Menu"}
+{"type":"token","text":"\\n    const menu"}
+{"type":"token","text":"Toggle = document.querySelector('.menu"}
+{"type":"token","text":"-toggle');\\n    const m"}
+{"type":"token","text":"obileMenu = document.querySelector('.mobile"}
+{"type":"token","text":"-menu');\\n    \\"}
+{"type":"token","text":"n    if"}
+{"type":"token","text":" (menuToggle &&"}
+{"type":"token","text":" mobileMenu) {\\n      "}
+{"type":"token","text":"menuToggle.addEventListener('click',"}
+{"type":"token","text":" () => {\\n        mobile"}
+{"type":"token","text":"Menu.classList.toggle('open"}
+{"type":"token","text":"');\\n        "}
+{"type":"token","text":"document.body.style"}
+{"type":"token","text":".overflow = mobileMenu.classList"}
+{"type":"token","text":".contains('open') ? '"}
+{"type":"token","text":"hidden' : ''"}
+{"type":"token","text":";\\n      });\\n    "}
+{"type":"token","text":"}\\n\\"}
+{"type":"token","text":"n    function"}
+{"type":"token","text":" clos"}
+{"type":"token","text":"eMobileMenu() {\\n      "}
+{"type":"token","text":"if"}
+{"type":"token","text":" (mobileMenu) {\\n"}
+{"type":"token","text":"        mobileMenu.classList.remove"}
+{"type":"token","text":"('open');\\n        document."}
+{"type":"token","text":"body.style.overflow = '';\\"}
+{"type":"token","text":"n      }\\n    }\\"}
+{"type":"token","text":"n\\"}
+{"type":"token","text":"n    // Theme"}
+{"type":"token","text":" Toggle\\n    const themeTog"}
+{"type":"token","text":"gle = document.querySelector('.theme-"}
+{"type":"token","text":"toggle');\\n    const"}
+{"type":"token","text":" html"}
+{"type":"token","text":" = document.documentElement;\\n    "}
+{"type":"token","text":"\\"}
+{"type":"token","text":"n    //"}
+{"type":"token","text":" Check for"}
+{"type":"token","text":" saved"}
+{"type":"token","text":" theme or"}
+{"type":"token","text":" default to"}
+{"type":"token","text":" light\\n    const savedTheme"}
+{"type":"token","text":" = localStorage.getItem('theme')"}
+{"type":"token","text":" || 'light';\\n    "}
+{"type":"token","text":"html.setAttribute('data-theme',"}
+{"type":"token","text":" savedTheme);\\n    \\"}
+{"type":"token","text":"n    if"}
+{"type":"token","text":" (themeToggle) {\\"}
+{"type":"token","text":"n      themeToggle.addEventListener"}
+{"type":"token","text":"('click', () => {\\n"}
+{"type":"token","text":"        const currentTheme = html."}
+{"type":"token","text":"getAttribute('data-theme')"}
+{"type":"token","text":";\\n        const newTheme ="}
+{"type":"token","text":" currentTheme === 'light'"}
+{"type":"token","text":" ? 'dark' : '"}
+{"type":"token","text":"light';\\n        html.setAttribute"}
+{"type":"token","text":"('data-theme', newTheme"}
+{"type":"token","text":");\\n        localStorage.setItem"}
+{"type":"token","text":"('theme', newTheme);\\"}
+{"type":"token","text":"n      });\\n    }\\"}
+{"type":"token","text":"n\\"}
+{"type":"token","text":"n    // Form"}
+{"type":"token","text":" Handling"}
+{"type":"token","text":"\\n    const contactForm = document"}
+{"type":"token","text":".getElementById('contactForm');\\n"}
+{"type":"token","text":"    if (contactForm) {\\"}
+{"type":"token","text":"n      contactForm.addEventListener('submit"}
+{"type":"token","text":"', async"}
+{"type":"token","text":" (e) => {\\n        "}
+{"type":"token","text":"e.preventDefault();\\n        \\"}
+{"type":"token","text":"n        //"}
+{"type":"token","text":" Clear"}
+{"type":"token","text":" previous errors\\n        document"}
+{"type":"token","text":".querySelectorAll('.form-"}
+{"type":"token","text":"group"}
+{"type":"token","text":"').forEach(group => {\\n"}
+{"type":"token","text":"          group.classList.remove('error"}
+{"type":"token","text":"');\\n        });\\n        "}
+{"type":"token","text":"\\n        //"}
+{"type":"token","text":" Validate\\"}
+{"type":"token","text":"n        let"}
+{"type":"token","text":" isValid = true;\\n        const"}
+{"type":"token","text":" name"}
+{"type":"token","text":" = document.getElementById('name')"}
+{"type":"token","text":";\\n        const email = document."}
+{"type":"token","text":"getElementById('email');\\n        const"}
+{"type":"token","text":" interest"}
+{"type":"token","text":" = document.getElementById('interest');\\"}
+{"type":"token","text":"n        \\"}
+{"type":"token","text":"n        if (!name ||"}
+{"type":"token","text":" !name"}
+{"type":"token","text":".value.trim()) {\\n"}
+{"type":"token","text":"          name"}
+{"type":"token","text":"?."}
+{"type":"token","text":"closest"}
+{"type":"token","text":"('.form-group')"}
+{"type":"token","text":"?.classList.add('error');\\"}
+{"type":"token","text":"n          isValid = false;\\n"}
+{"type":"token","text":"        }\\n        \\n        "}
+{"type":"token","text":"if (!email || !email.value"}
+{"type":"token","text":".trim() || !email"}
+{"type":"token","text":".value.includes('@')) {\\"}
+{"type":"token","text":"n          email?.closest('.form-"}
+{"type":"token","text":"group')?.classList.add('error"}
+{"type":"token","text":"');\\n          isValid = false"}
+{"type":"token","text":";\\n        }\\n        \\"}
+{"type":"token","text":"n        if (!interest || !"}
+{"type":"token","text":"interest.value)"}
+{"type":"token","text":" {\\n          interest?.closest('."}
+{"type":"token","text":"form-group')?.classList.add"}
+{"type":"token","text":"('error');\\n          isValid"}
+{"type":"token","text":" = false;\\n        }\\n"}
+{"type":"token","text":"        \\n        if (!isValid"}
+{"type":"token","text":") return;\\n        \\n        "}
+{"type":"token","text":"//"}
+{"type":"token","text":" Disable"}
+{"type":"token","text":" button"}
+{"type":"token","text":" and"}
+{"type":"token","text":" show loading\\n        const"}
+{"type":"token","text":" submit"}
+{"type":"token","text":"Btn"}
+{"type":"token","text":" = contact"}
+{"type":"token","text":"Form.querySelector('button[type=\\\""}
+{"type":"token","text":"submit\\\"]');\\n        if"}
+{"type":"token","text":" (submitBtn) {\\n          "}
+{"type":"token","text":"submitBtn.disabled = true;\\n"}
+{"type":"token","text":"          submitBtn.text"}
+{"type":"token","text":"Content = 'Sending...'"}
+{"type":"token","text":";\\n        "}
+{"type":"token","text":"}\\n        \\n        //"}
+{"type":"token","text":" Simulate sending\\n        await"}
+{"type":"token","text":" new Promise(resolve => setTimeout(resolve"}
+{"type":"token","text":", 1500"}
+{"type":"token","text":"));\\n        \\n        //"}
+{"type":"token","text":" Save"}
+{"type":"token","text":" to localStorage\\n        const"}
+{"type":"token","text":" formData = "}
+{"type":"token","text":"{\\n          name: name?."}
+{"type":"token","text":"value,"}
+{"type":"token","text":"\\n          email: email?.value"}
+{"type":"token","text":",\\n          phone"}
+{"type":"token","text":": document.getElementById('phone')"}
+{"type":"token","text":"?.value,\\n          interest:"}
+{"type":"token","text":" interest?.value,\\n          message"}
+{"type":"token","text":": document.getElementById('message')?."}
+{"type":"token","text":"value,"}
+{"type":"token","text":"\\n          "}
+{"type":"token","text":"timestamp: new Date().toISO"}
+{"type":"token","text":"String("}
+{"type":"token","text":")\\n        };\\n        \\"}
+{"type":"token","text":"n        const"}
+{"type":"token","text":" submissions"}
+{"type":"token","text":" = JSON.parse(localStorage.get"}
+{"type":"token","text":"Item('contact"}
+{"type":"token","text":"Submissions') || '[]');\\"}
+{"type":"token","text":"n        submissions.push(formData"}
+{"type":"token","text":");\\n        if"}
+{"type":"token","text":" (submissions.length > 20"}
+{"type":"token","text":") submissions.shift();\\n        "}
+{"type":"token","text":"localStorage.setItem('contactSubmissions"}
+{"type":"token","text":"', JSON.stringify(submissions));\\"}
+{"type":"token","text":"n        \\n        //"}
+{"type":"token","text":" Show"}
+{"type":"token","text":" success\\"}
+{"type":"token","text":"n        const success"}
+{"type":"token","text":"Msg"}
+{"type":"token","text":" = document.getElementById('formSuccess')"}
+{"type":"token","text":";\\n        if (successMsg)"}
+{"type":"token","text":" {\\n          successMsg.style"}
+{"type":"token","text":".display = 'block';\\"}
+{"type":"token","text":"n        "}
+{"type":"token","text":"}\\n        contact"}
+{"type":"token","text":"Form.reset();\\n        \\"}
+{"type":"token","text":"n        // Re"}
+{"type":"token","text":"-enable button\\n        if ("}
+{"type":"token","text":"submitBtn) {\\n          submit"}
+{"type":"token","text":"Btn.disabled = false;\\n          "}
+{"type":"token","text":"submitBtn.textContent = '"}
+{"type":"token","text":"Send Message';\\n        }\\"}
+{"type":"token","text":"n      });\\n    }\\"}
+{"type":"token","text":"n\\"}
+{"type":"token","text":"n    // Scroll"}
+{"type":"token","text":" Reveal"}
+{"type":"token","text":"\\n    const observ"}
+{"type":"token","text":"erOptions = {\\n      threshold"}
+{"type":"token","text":": 0.1,\\n"}
+{"type":"token","text":"      rootMargin: '0px"}
+{"type":"token","text":" 0px -50"}
+{"type":"token","text":"px 0px'\\n    }"}
+{"type":"token","text":";\\n\\n    const observer ="}
+{"type":"token","text":" new IntersectionObserver((entries"}
+{"type":"token","text":") => {\\n      entries."}
+{"type":"token","text":"forEach(entry => {\\n        "}
+{"type":"token","text":"if (entry.isIntersecting"}
+{"type":"token","text":") {\\n          entry.target"}
+{"type":"token","text":".classList.add('visible"}
+{"type":"token","text":"');\\n        }\\n      "}
+{"type":"token","text":"});\\n    }, observerOptions"}
+{"type":"token","text":");\\n\\n    document."}
+{"type":"token","text":"querySelectorAll('.reveal"}
+{"type":"token","text":","}
+{"type":"token","text":" .reveal"}
+{"type":"token","text":"-st"}
+{"type":"token","text":"agger').forEach(el"}
+{"type":"token","text":" => {\\n      observer.observe"}
+{"type":"token","text":"(el);\\n    });\\"}
+{"type":"token","text":"n\\"}
+{"type":"token","text":"n    // Smooth"}
+{"type":"token","text":" Scroll\\n    document.queryS"}
+{"type":"token","text":"electorAll('a[href^=\\\""}
+{"type":"token","text":"#\\\"]').forEach(anchor =>"}
+{"type":"token","text":" {\\n      anchor.addEventListener('"}
+{"type":"token","text":"click', function("}
+{"type":"token","text":"e) {\\n        const"}
+{"type":"token","text":" href"}
+{"type":"token","text":" = this"}
+{"type":"token","text":".getAttribute('href')"}
+{"type":"token","text":";\\n        if (href.length"}
+{"type":"token","text":" > 1"}
+{"type":"token","text":") {\\n          const"}
+{"type":"token","text":" target"}
+{"type":"token","text":" = document.querySelector(href);\\"}
+{"type":"token","text":"n          if (target &&"}
+{"type":"token","text":" !"}
+{"type":"token","text":"href"}
+{"type":"token","text":".includes('#home"}
+{"type":"token","text":"') && !href.includes('#about"}
+{"type":"token","text":"') && !href.includes('#services"}
+{"type":"token","text":"') && !href.includes('#contact"}
+{"type":"token","text":"')) {\\n            e"}
+{"type":"token","text":".preventDefault();\\n            target."}
+{"type":"token","text":"scrollIntoView({ behavior: "}
+{"type":"token","text":"'smooth' });\\n          "}
+{"type":"token","text":"}\\n        }\\n      })"}
+{"type":"token","text":";\\n    });\\n  "}
+{"type":"token","text":"</script>\\n</body>\\n"}
+{"type":"token","text":"</html>"}
+{"type":"token","text":"\","}
+{"type":"token","text":"\n  \"qa"}
+{"type":"token","text":"Report"}
+{"type":"token","text":"\": {"}
+{"type":"token","text":"\n    \"status"}
+{"type":"token","text":"\": \"minor"}
+{"type":"token","text":"_"}
+{"type":"token","text":"notes"}
+{"type":"token","text":"\",\n    \"checks"}
+{"type":"token","text":"\": [\n      {"}
+{"type":"token","text":"\n        \"name"}
+{"type":"token","text":"\": \"Visual"}
+{"type":"token","text":" match"}
+{"type":"token","text":"\",\n        \"passed"}
+{"type":"token","text":"\": true,\n        \"note"}
+{"type":"token","text":"\": \"Layout"}
+{"type":"token","text":" displays"}
+{"type":"token","text":" correctly with"}
+{"type":"token","text":" asym"}
+{"type":"token","text":"metric editorial"}
+{"type":"token","text":" structure"}
+{"type":"token","text":","}
+{"type":"token","text":" navy"}
+{"type":"token","text":"/"}
+{"type":"token","text":"cream"}
+{"type":"token","text":" palette"}
+{"type":"token","text":" consistent"}
+{"type":"token","text":","}
+{"type":"token","text":" serif"}
+{"type":"token","text":" headlines"}
+{"type":"token","text":" render"}
+{"type":"token","text":" properly, whit"}
+{"type":"token","text":"espace distribution"}
+{"type":"token","text":" appropriate"}
+{"type":"token","text":" for"}
+{"type":"token","text":" conservative"}
+{"type":"token","text":" finance"}
+{"type":"token","text":" aesthetic"}
+{"type":"token","text":"\""}
+{"type":"token","text":"\n      },\n      {\n        "}
+{"type":"token","text":"\"name\": \"Buttons"}
+{"type":"token","text":" hover"}
+{"type":"token","text":" states\",\n        \"passed\": true"}
+{"type":"token","text":",\n        \"note\": \"Primary"}
+{"type":"token","text":" button"}
+{"type":"token","text":" has translate"}
+{"type":"token","text":"Y"}
+{"type":"token","text":"(-"}
+{"type":"token","text":"2px) +"}
+{"type":"token","text":" shadow"}
+{"type":"token","text":"-"}
+{"type":"token","text":"lg"}
+{"type":"token","text":" on"}
+{"type":"token","text":" hover, ghost"}
+{"type":"token","text":" button has bg"}
+{"type":"token","text":"-accent"}
+{"type":"token","text":" fill"}
+{"type":"token","text":","}
+{"type":"token","text":" theme"}
+{"type":"token","text":" toggle has bg"}
+{"type":"token","text":"-secondary"}
+{"type":"token","text":" +"}
+{"type":"token","text":" lift"}
+{"type":"token","text":"\"\n      },\n      {"}
+{"type":"token","text":"\n        \"name\": \"Form validation\","}
+{"type":"token","text":"\n        \"passed\": true,"}
+{"type":"token","text":"\n        \"note\": \"Contact"}
+{"type":"token","text":" form validates"}
+{"type":"token","text":" name"}
+{"type":"token","text":", email format"}
+{"type":"token","text":", service"}
+{"type":"token","text":" selection with"}
+{"type":"token","text":" inline"}
+{"type":"token","text":" error"}
+{"type":"token","text":" messages ("}
+{"type":"token","text":"red"}
+{"type":"token","text":" border"}
+{"type":"token","text":" +"}
+{"type":"token","text":" text"}
+{"type":"token","text":"), no"}
+{"type":"token","text":" alert"}
+{"type":"token","text":"()"}
+{"type":"token","text":" boxes"}
+{"type":"token","text":" used"}
+{"type":"token","text":"\"\n      },\n      {"}
+{"type":"token","text":"\n        \"name\": \"Touch"}
+{"type":"token","text":" targets"}
+{"type":"token","text":"\",\n        \"passed\": true,"}
+{"type":"token","text":"\n        \"note\": \"All"}
+{"type":"token","text":" buttons"}
+{"type":"token","text":" min"}
+{"type":"token","text":"-height"}
+{"type":"token","text":" 44"}
+{"type":"token","text":"px, nav"}
+{"type":"token","text":" links adequate"}
+{"type":"token","text":" spacing, mobile menu toggle"}
+{"type":"token","text":" "}
+{"type":"token","text":"36"}
+{"type":"token","text":"x"}
+{"type":"token","text":"36px\""}
+{"type":"token","text":"\n      },"}
+{"type":"token","text":"\n      {\n        \"name\":"}
+{"type":"token","text":" \"Images"}
+{"type":"token","text":" width"}
+{"type":"token","text":"+"}
+{"type":"token","text":"height\",\n        \"passed\": true"}
+{"type":"token","text":",\n        \"note\": \"No"}
+{"type":"token","text":" user"}
+{"type":"token","text":"-uploaded"}
+{"type":"token","text":" images present"}
+{"type":"token","text":", placeholder"}
+{"type":"token","text":" uses"}
+{"type":"token","text":" aspect"}
+{"type":"token","text":"-ratio for"}
+{"type":"token","text":" C"}
+{"type":"token","text":"LS"}
+{"type":"token","text":" prevention"}
+{"type":"token","text":", hero"}
+{"type":"token","text":" image uses CSS"}
+{"type":"token","text":" gradient"}
+{"type":"token","text":" placeholder"}
+{"type":"token","text":" with"}
+{"type":"token","text":" grid"}
+{"type":"token","text":" pattern"}
+{"type":"token","text":"\"\n      },"}
+{"type":"token","text":"\n      {\n        \"name\":"}
+{"type":"token","text":" \"External"}
+{"type":"token","text":" links\",\n        \"passed\": true"}
+{"type":"token","text":",\n        \"note\": \"No"}
+{"type":"token","text":" external links present in"}
+{"type":"token","text":" this"}
+{"type":"token","text":" implementation"}
+{"type":"token","text":","}
+{"type":"token","text":" all navigation"}
+{"type":"token","text":" internal"}
+{"type":"token","text":"\"\n      },"}
+{"type":"token","text":"\n      {\n        \"name\":"}
+{"type":"token","text":" \"Mobile"}
+{"type":"token","text":" respons"}
+{"type":"token","text":"iveness\",\n        \"passed\": true"}
+{"type":"token","text":",\n        \"note\": \"Grid"}
+{"type":"token","text":" switches"}
+{"type":"token","text":" to single"}
+{"type":"token","text":" column below"}
+{"type":"token","text":" 768"}
+{"type":"token","text":"px, nav"}
+{"type":"token","text":" col"}
+{"type":"token","text":"lapses to hamburger,"}
+{"type":"token","text":" no"}
+{"type":"token","text":" horizontal"}
+{"type":"token","text":" scroll"}
+{"type":"token","text":","}
+{"type":"token","text":" padding"}
+{"type":"token","text":" scales"}
+{"type":"token","text":" with cl"}
+{"type":"token","text":"amp()\""}
+{"type":"token","text":"\n      },"}
+{"type":"token","text":"\n      {\n        \"name\":"}
+{"type":"token","text":" \"Placeholder"}
+{"type":"token","text":" text\",\n        \"passed\": true"}
+{"type":"token","text":",\n        \"note\": \"All"}
+{"type":"token","text":" missing"}
+{"type":"token","text":" business"}
+{"type":"token","text":" info"}
+{"type":"token","text":" uses"}
+{"type":"token","text":" ["}
+{"type":"token","text":"bracket"}
+{"type":"token","text":"] format"}
+{"type":"token","text":":"}
+{"type":"token","text":" [Your Phone"}
+{"type":"token","text":"],"}
+{"type":"token","text":" [Your Email], [Your Address],"}
+{"type":"token","text":" [Your Hours],"}
+{"type":"token","text":" [30"}
+{"type":"token","text":"+] years"}
+{"type":"token","text":","}
+{"type":"token","text":" no invented"}
+{"type":"token","text":" contact"}
+{"type":"token","text":" details\"\n      },"}
+{"type":"token","text":"\n      {\n        \"name\":"}
+{"type":"token","text":" \"Contrast"}
+{"type":"token","text":"\",\n        \"passed\": true,"}
+{"type":"token","text":"\n        \"note\": \"Navy"}
+{"type":"token","text":" #"}
+{"type":"token","text":"1"}
+{"type":"token","text":"E"}
+{"type":"token","text":"3A5"}
+{"type":"token","text":"F"}
+{"type":"token","text":" on"}
+{"type":"token","text":" white"}
+{"type":"token","text":" exce"}
+{"type":"token","text":"eds "}
+{"type":"token","text":"4.5:1,"}
+{"type":"token","text":" m"}
+{"type":"token","text":"uted text"}
+{"type":"token","text":" #52"}
+{"type":"token","text":"525"}
+{"type":"token","text":"B"}
+{"type":"token","text":" on white "}
+{"type":"token","text":"7"}
+{"type":"token","text":".2"}
+{"type":"token","text":":1, dark theme"}
+{"type":"token","text":" white"}
+{"type":"token","text":" on"}
+{"type":"token","text":" #"}
+{"type":"token","text":"0"}
+{"type":"token","text":"D"}
+{"type":"token","text":"0"}
+{"type":"token","text":"D"}
+{"type":"token","text":"0D 19"}
+{"type":"token","text":".4:1, footer"}
+{"type":"token","text":" white"}
+{"type":"token","text":" on navy"}
+{"type":"token","text":" 8"}
+{"type":"token","text":".7"}
+{"type":"token","text":":1\"\n      },"}
+{"type":"token","text":"\n      {\n        \"name\":"}
+{"type":"token","text":" \"Heading"}
+{"type":"token","text":" hierarchy\",\n        \"passed\": true"}
+{"type":"token","text":",\n        \"note\": \""}
+{"type":"token","text":"Proper"}
+{"type":"token","text":" progression"}
+{"type":"token","text":":"}
+{"type":"token","text":" h1 page"}
+{"type":"token","text":" titles"}
+{"type":"token","text":", h2 section head"}
+{"type":"token","text":"ings, h3 subsections"}
+{"type":"token","text":", h4 footer"}
+{"type":"token","text":" columns"}
+{"type":"token","text":", no"}
+{"type":"token","text":" sk"}
+{"type":"token","text":"ipped"}
+{"type":"token","text":" levels\"\n      },\n      {"}
+{"type":"token","text":"\n        \"name\": \"Fall"}
+{"type":"token","text":"back"}
+{"type":"token","text":" fonts"}
+{"type":"token","text":"\",\n        \"passed\": true,"}
+{"type":"token","text":"\n        \"note\": \"Pla"}
+{"type":"token","text":"yfair Display has"}
+{"type":"token","text":" serif"}
+{"type":"token","text":" fallback, Source"}
+{"type":"token","text":" Sans "}
+{"type":"token","text":"3 has sans-"}
+{"type":"token","text":"serif fallback\""}
+{"type":"token","text":"\n      },"}
+{"type":"token","text":"\n      {\n        \"name\":"}
+{"type":"token","text":" \"Layout"}
+{"type":"token","text":" diversity"}
+{"type":"token","text":"\",\n        \"passed\": true,"}
+{"type":"token","text":"\n        \"note\": \"Uses"}
+{"type":"token","text":" asym"}
+{"type":"token","text":"metric hero"}
+{"type":"token","text":" ("}
+{"type":"token","text":"60"}
+{"type":"token","text":"/"}
+{"type":"token","text":"40 grid"}
+{"type":"token","text":"), service"}
+{"type":"token","text":" list"}
+{"type":"token","text":" with side"}
+{"type":"token","text":"-by-side name"}
+{"type":"token","text":"/description columns"}
+{"type":"token","text":" ("}
+{"type":"token","text":"not"}
+{"type":"token","text":" cards"}
+{"type":"token","text":"), altern"}
+{"type":"token","text":"ating section"}
+{"type":"token","text":" backgrounds"}
+{"type":"token","text":" ("}
+{"type":"token","text":"white"}
+{"type":"token","text":"→"}
+{"type":"token","text":"cream"}
+{"type":"token","text":"→accent"}
+{"type":"token","text":" t"}
+{"type":"token","text":"int"}
+{"type":"token","text":"→"}
+{"type":"token","text":"white"}
+{"type":"token","text":"),"}
+{"type":"token","text":" quote"}
+{"type":"token","text":" call"}
+{"type":"token","text":"out"}
+{"type":"token","text":" with"}
+{"type":"token","text":" left"}
+{"type":"token","text":" border"}
+{"type":"token","text":","}
+{"type":"token","text":" editorial"}
+{"type":"token","text":" two"}
+{"type":"token","text":"-column about"}
+{"type":"token","text":" section"}
+{"type":"token","text":" —"}
+{"type":"token","text":" av"}
+{"type":"token","text":"oids banned"}
+{"type":"token","text":" template"}
+{"type":"token","text":" patterns"}
+{"type":"token","text":"\"\n      },"}
+{"type":"token","text":"\n      {\n        \"name\":"}
+{"type":"token","text":" \"Theme"}
+{"type":"token","text":" toggle\",\n        \"passed\": true"}
+{"type":"token","text":",\n        \"note\": \"Sun"}
+{"type":"token","text":"/moon icon toggle in"}
+{"type":"token","text":" nav"}
+{"type":"token","text":" ("}
+{"type":"token","text":"36"}
+{"type":"token","text":"px"}
+{"type":"token","text":"),"}
+{"type":"token","text":" switches"}
+{"type":"token","text":" data"}
+{"type":"token","text":"-theme attribute on"}
+{"type":"token","text":" html"}
+{"type":"token","text":","}
+{"type":"token","text":" saves to"}
+{"type":"token","text":" localStorage,"}
+{"type":"token","text":" resp"}
+{"type":"token","text":"ects light"}
+{"type":"token","text":" default"}
+{"type":"token","text":" for"}
+{"type":"token","text":" finance"}
+{"type":"token","text":" industry"}
+{"type":"token","text":"\"\n      },\n      {"}
+{"type":"token","text":"\n        \"name\": \"Copy"}
+{"type":"token","text":" quality"}
+{"type":"token","text":"\",\n        \"passed\": true,"}
+{"type":"token","text":"\n        \"note\": \"Hero"}
+{"type":"token","text":" h"}
+{"type":"token","text":"1 is"}
+{"type":"token","text":" brand"}
+{"type":"token","text":" name only"}
+{"type":"token","text":" ("}
+{"type":"token","text":"2"}
+{"type":"token","text":" "}
+{"type":"token","text":"words), section"}
+{"type":"token","text":" headings specific"}
+{"type":"token","text":" ('"}
+{"type":"token","text":"Comprehensive"}
+{"type":"token","text":" Planning',"}
+{"type":"token","text":" 'Built"}
+{"type":"token","text":" on Trust'"}
+{"type":"token","text":" not"}
+{"type":"token","text":" 'What"}
+{"type":"token","text":" We Offer'), body"}
+{"type":"token","text":" copy written"}
+{"type":"token","text":" for"}
+{"type":"token","text":" financial"}
+{"type":"token","text":" advisory"}
+{"type":"token","text":" context"}
+{"type":"token","text":" with"}
+{"type":"token","text":" industry"}
+{"type":"token","text":"-appropriate"}
+{"type":"token","text":" language, no generic"}
+{"type":"token","text":" marketing"}
+{"type":"token","text":" fl"}
+{"type":"token","text":"uff\"\n      }"}
+{"type":"token","text":"\n    ],"}
+{"type":"token","text":"\n    \"summary"}
+{"type":"token","text":"\": \"Professional"}
+{"type":"token","text":" finance"}
+{"type":"token","text":" site"}
+{"type":"token","text":" with editorial"}
+{"type":"token","text":" layout"}
+{"type":"token","text":", proper"}
+{"type":"token","text":" contrast"}
+{"type":"token","text":" and"}
+{"type":"token","text":" accessibility"}
+{"type":"token","text":", industry"}
+{"type":"token","text":"-appropriate copy, and complete"}
+{"type":"token","text":" dark"}
+{"type":"token","text":"/"}
+{"type":"token","text":"light theme system"}
+{"type":"token","text":". All"}
+{"type":"token","text":" placeholder"}
+{"type":"token","text":" fields"}
+{"type":"token","text":" brack"}
+{"type":"token","text":"eted for"}
+{"type":"token","text":" user"}
+{"type":"token","text":" completion"}
+{"type":"token","text":".\"\n  }\n}\n```"}
+{"type":"done","response":{"message":"Got it — building Summit Wealth with that classic, trustworthy finance vibe. Going with a conservative editorial layout in navy and cream to feel established and credible. One sec...","context":{"brandName":"Summit Wealth","industry":"finance","stylePreferences":["trustworthy","conservative","clean"],"colorPreferences":["navy","cream"]}}}

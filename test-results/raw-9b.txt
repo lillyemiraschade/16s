@@ -1,0 +1,3001 @@
+{"type":"token","text":"```"}
+{"type":"token","text":"json"}
+{"type":"token","text":"\n{\n  \"context"}
+{"type":"token","text":"\": {"}
+{"type":"token","text":"\n    \"brand"}
+{"type":"token","text":"Name\": \"Summit Wealth\","}
+{"type":"token","text":"\n    \"industry"}
+{"type":"token","text":"\": \"finance"}
+{"type":"token","text":"\",\n    \"style"}
+{"type":"token","text":"Pre"}
+{"type":"token","text":"ferences"}
+{"type":"token","text":"\": [\""}
+{"type":"token","text":"trust"}
+{"type":"token","text":"worthy\", \"conservative\", \"clean"}
+{"type":"token","text":"\"],\n    \"target"}
+{"type":"token","text":"Audience\": [\""}
+{"type":"token","text":"individuals"}
+{"type":"token","text":" seeking"}
+{"type":"token","text":" financial advice\"]"}
+{"type":"token","text":"\n  },\n  \"message"}
+{"type":"token","text":"\": \"I went"}
+{"type":"token","text":" with"}
+{"type":"token","text":" a"}
+{"type":"token","text":" classic"}
+{"type":"token","text":" editorial"}
+{"type":"token","text":" approach —"}
+{"type":"token","text":" navy"}
+{"type":"token","text":" and"}
+{"type":"token","text":" cream"}
+{"type":"token","text":" palette"}
+{"type":"token","text":", serif headlines"}
+{"type":"token","text":" for"}
+{"type":"token","text":" grav"}
+{"type":"token","text":"itas, and generous"}
+{"type":"token","text":" whit"}
+{"type":"token","text":"espace to"}
+{"type":"token","text":" feel"}
+{"type":"token","text":" premium"}
+{"type":"token","text":" and"}
+{"type":"token","text":" unh"}
+{"type":"token","text":"urried. The layout"}
+{"type":"token","text":" has that"}
+{"type":"token","text":" tim"}
+{"type":"token","text":"eless financial"}
+{"type":"token","text":" journal"}
+{"type":"token","text":" feel.\","}
+{"type":"token","text":"\n  \"pills"}
+{"type":"token","text":"\": [\""}
+{"type":"token","text":"Perfect"}
+{"type":"token","text":","}
+{"type":"token","text":" keep"}
+{"type":"token","text":" going"}
+{"type":"token","text":"\","}
+{"type":"token","text":" \"Try"}
+{"type":"token","text":" a"}
+{"type":"token","text":" different direction"}
+{"type":"token","text":"\", \"Add"}
+{"type":"token","text":" content"}
+{"type":"token","text":"\"],\n  \"html"}
+{"type":"token","text":"\": \""}
+{"type":"token","text":"<!DOCTYPE html>\\n<html lang"}
+{"type":"token","text":"=\\\"en\\\""}
+{"type":"token","text":" data"}
+{"type":"token","text":"-theme=\\\"light\\\">\\n"}
+{"type":"token","text":"<head>\\n  <meta charset=\\\""}
+{"type":"token","text":"UTF-8\\\">\\n  "}
+{"type":"token","text":"<meta name=\\\"viewport\\\" content=\\\"width"}
+{"type":"token","text":"=device-width, initial-scale"}
+{"type":"token","text":"=1.0\\\">\\n  "}
+{"type":"token","text":"<title>Summit Wealth –"}
+{"type":"token","text":" Trusted Financial Advisory"}
+{"type":"token","text":"</title>\\n  <meta"}
+{"type":"token","text":" name=\\\"description\\\" content=\\\"Summit"}
+{"type":"token","text":" Wealth provides"}
+{"type":"token","text":" comprehensive financial planning and"}
+{"type":"token","text":" investment management"}
+{"type":"token","text":" with"}
+{"type":"token","text":" integrity"}
+{"type":"token","text":" and expertise.\\\">\\n  "}
+{"type":"token","text":"<meta property"}
+{"type":"token","text":"=\\\"og:title\\\" content=\\\"Summit"}
+{"type":"token","text":" Wealth –"}
+{"type":"token","text":" Trusted Financial Advisory\\\">\\n  "}
+{"type":"token","text":"<meta property=\\\"og:description\\\""}
+{"type":"token","text":" content=\\\"Summit Wealth provides comprehensive financial"}
+{"type":"token","text":" planning and investment management with integrity and expertise"}
+{"type":"token","text":".\\\">\\n  <link"}
+{"type":"token","text":" rel"}
+{"type":"token","text":"=\\\"preconnect\\\" href=\\\"https"}
+{"type":"token","text":"://fonts.googleapis.com\\\">\\"}
+{"type":"token","text":"n  <link rel"}
+{"type":"token","text":"=\\\"preconnect\\\" href=\\\"https"}
+{"type":"token","text":"://fonts.gstatic.com"}
+{"type":"token","text":"\\\" crossorigin>\\n  <link"}
+{"type":"token","text":" href=\\\"https://fonts.googleapis."}
+{"type":"token","text":"com/css2?family="}
+{"type":"token","text":"Playfair+Display:wght"}
+{"type":"token","text":"@400;600"}
+{"type":"token","text":";700&family=Source"}
+{"type":"token","text":"+Sans+3"}
+{"type":"token","text":":wght@300;400;"}
+{"type":"token","text":"500;600&"}
+{"type":"token","text":"display=swap\\\" rel=\\\"stylesheet\\\""}
+{"type":"token","text":">\\n  <style>\\n    "}
+{"type":"token","text":":root {\\n      --space"}
+{"type":"token","text":"-1: 4px;"}
+{"type":"token","text":" --space-2: 8px"}
+{"type":"token","text":"; --space-3: 12"}
+{"type":"token","text":"px; --space-4: "}
+{"type":"token","text":"16px;\\n      --space-"}
+{"type":"token","text":"5: 20px; --space"}
+{"type":"token","text":"-6: 24px; --"}
+{"type":"token","text":"space-8: 32px;"}
+{"type":"token","text":" --space-10: 40px"}
+{"type":"token","text":";\\n      --space-12:"}
+{"type":"token","text":" 48px; --space-16"}
+{"type":"token","text":": 64px; --space-"}
+{"type":"token","text":"20: 80px; --space"}
+{"type":"token","text":"-24: 96px; --"}
+{"type":"token","text":"space-32: 128px;\\"}
+{"type":"token","text":"n      --text-xs: cl"}
+{"type":"token","text":"amp(0.75rem, "}
+{"type":"token","text":"0.7rem + 0."}
+{"type":"token","text":"25vw, 0.875"}
+{"type":"token","text":"rem);\\n      --text-"}
+{"type":"token","text":"sm: clamp(0.875"}
+{"type":"token","text":"rem, 0.8rem +"}
+{"type":"token","text":" 0.35vw, "}
+{"type":"token","text":"1rem);\\n      --text"}
+{"type":"token","text":"-base: clamp(1rem"}
+{"type":"token","text":", 0.9rem + "}
+{"type":"token","text":"0.5vw, 1"}
+{"type":"token","text":".125rem);\\n      --"}
+{"type":"token","text":"text-lg: clamp(1"}
+{"type":"token","text":".125rem, 1rem +"}
+{"type":"token","text":" 0.6vw, "}
+{"type":"token","text":"1.25rem);\\n      "}
+{"type":"token","text":"--text-xl: clamp("}
+{"type":"token","text":"1.25rem, 1rem"}
+{"type":"token","text":" + 1vw, 1"}
+{"type":"token","text":".5rem);\\n      --"}
+{"type":"token","text":"text-2xl: clamp("}
+{"type":"token","text":"1.5rem, 1."}
+{"type":"token","text":"2rem + 1.5v"}
+{"type":"token","text":"w, 2rem);\\n"}
+{"type":"token","text":"      --text-3xl: cl"}
+{"type":"token","text":"amp(1.875rem, "}
+{"type":"token","text":"1.4rem + 2."}
+{"type":"token","text":"3vw, 2.5"}
+{"type":"token","text":"rem);\\n      --text-"}
+{"type":"token","text":"4xl: clamp(2."}
+{"type":"token","text":"25rem, 1.5rem"}
+{"type":"token","text":" + 3.5vw,"}
+{"type":"token","text":" 3.5rem);\\n"}
+{"type":"token","text":"      --text-5xl: cl"}
+{"type":"token","text":"amp(3rem, 2rem"}
+{"type":"token","text":" + 5vw, 5"}
+{"type":"token","text":"rem);\\n      --shadow-"}
+{"type":"token","text":"sm: 0 1px "}
+{"type":"token","text":"2px rgba(0,0,"}
+{"type":"token","text":"0,0.05); --shadow"}
+{"type":"token","text":"-md: 0 4px"}
+{"type":"token","text":" 6px -1px rgba("}
+{"type":"token","text":"0,0,0,0."}
+{"type":"token","text":"1), 0 2px "}
+{"type":"token","text":"4px -2px rgba(0"}
+{"type":"token","text":",0,0,0.1"}
+{"type":"token","text":");\\n      --shadow-lg"}
+{"type":"token","text":": 0 10px 15"}
+{"type":"token","text":"px -3px rgba(0,"}
+{"type":"token","text":"0,0,0.1),"}
+{"type":"token","text":" 0 4px 6px"}
+{"type":"token","text":" -4px rgba(0,0"}
+{"type":"token","text":",0,0.1); --"}
+{"type":"token","text":"shadow-xl: 0 20"}
+{"type":"token","text":"px 25px -5px rgba"}
+{"type":"token","text":"(0,0,0,0"}
+{"type":"token","text":".1), 0 8px"}
+{"type":"token","text":" 10px -6px rgba("}
+{"type":"token","text":"0,0,0,0."}
+{"type":"token","text":"1);\\n      --radius-"}
+{"type":"token","text":"sm: 6px; --radius"}
+{"type":"token","text":"-md: 8px; --"}
+{"type":"token","text":"radius-lg: 12px;"}
+{"type":"token","text":" --radius-xl: 16px"}
+{"type":"token","text":";\\n      --ease-out:"}
+{"type":"token","text":" cubic-bezier(0,0"}
+{"type":"token","text":",0.2,1); --"}
+{"type":"token","text":"ease-in: cubic-bezier"}
+{"type":"token","text":"(0.4,0,1"}
+{"type":"token","text":",1); --ease-in-"}
+{"type":"token","text":"out: cubic-bezier(0"}
+{"type":"token","text":".4,0,0.2"}
+{"type":"token","text":",1); --ease-bounce:"}
+{"type":"token","text":" cubic-bezier(0.34"}
+{"type":"token","text":",1.56,0.64"}
+{"type":"token","text":",1);\\n    }\\"}
+{"type":"token","text":"n\\"}
+{"type":"token","text":"n    ["}
+{"type":"token","text":"data-theme=\\\"light\\\"] "}
+{"type":"token","text":"{\\n      --bg:"}
+{"type":"token","text":" #"}
+{"type":"token","text":"FFFFFF;\\n      --bg"}
+{"type":"token","text":"-secondary: #FA"}
+{"type":"token","text":"F9F7"}
+{"type":"token","text":";\\n      --bg-tertiary"}
+{"type":"token","text":": #F5"}
+{"type":"token","text":"F3E"}
+{"type":"token","text":"F;\\n      --surface"}
+{"type":"token","text":": #FFFFFF;\\n      --"}
+{"type":"token","text":"text"}
+{"type":"token","text":": #1E"}
+{"type":"token","text":"3"}
+{"type":"token","text":"A5"}
+{"type":"token","text":"F"}
+{"type":"token","text":";\\n      --text-m"}
+{"type":"token","text":"uted: #64"}
+{"type":"token","text":"748B;\\n      --accent"}
+{"type":"token","text":": #1"}
+{"type":"token","text":"E3A5F;\\n      "}
+{"type":"token","text":"--accent-secondary: #B"}
+{"type":"token","text":"8860"}
+{"type":"token","text":"B;\\n      --border"}
+{"type":"token","text":": rgba"}
+{"type":"token","text":"(30"}
+{"type":"token","text":", 58, 95, "}
+{"type":"token","text":"0.1);\\n    "}
+{"type":"token","text":"}\\n\\n    [data"}
+{"type":"token","text":"-theme=\\\"dark\\\"] {\\"}
+{"type":"token","text":"n      --bg: #0D"}
+{"type":"token","text":"0"}
+{"type":"token","text":"D0D;\\n      --bg"}
+{"type":"token","text":"-secondary: #18"}
+{"type":"token","text":"181B;\\n      --bg-"}
+{"type":"token","text":"tertiary: #27"}
+{"type":"token","text":"272A;\\n      --surface:"}
+{"type":"token","text":" #1"}
+{"type":"token","text":"C"}
+{"type":"token","text":"1C1E"}
+{"type":"token","text":";\\n      --text: #"}
+{"type":"token","text":"F"}
+{"type":"token","text":"AFAFA;\\n      --text-"}
+{"type":"token","text":"muted: #A"}
+{"type":"token","text":"1A1AA;\\n      --"}
+{"type":"token","text":"accent: #3"}
+{"type":"token","text":"B82F6;\\n      --"}
+{"type":"token","text":"accent-secondary: #D"}
+{"type":"token","text":"4AF"}
+{"type":"token","text":"37;\\n      --border: rgba"}
+{"type":"token","text":"(255, 255, 255"}
+{"type":"token","text":", 0.1);\\n"}
+{"type":"token","text":"    }\\n\\n    *"}
+{"type":"token","text":" {\\n      margin: 0"}
+{"type":"token","text":";\\n      padding: 0;\\"}
+{"type":"token","text":"n      box-sizing: border-"}
+{"type":"token","text":"box;\\n    }\\n\\"}
+{"type":"token","text":"n    body {\\n      font"}
+{"type":"token","text":"-family: 'Source Sans "}
+{"type":"token","text":"3', sans-serif;\\n      "}
+{"type":"token","text":"background"}
+{"type":"token","text":":"}
+{"type":"token","text":" var(--bg);\\n      "}
+{"type":"token","text":"color: var(--text);\\"}
+{"type":"token","text":"n      line-height: 1"}
+{"type":"token","text":".6;\\n      overflow"}
+{"type":"token","text":"-x: hidden;\\n      transition"}
+{"type":"token","text":": background"}
+{"type":"token","text":" "}
+{"type":"token","text":"0.3s var"}
+{"type":"token","text":"(--ease-out), color "}
+{"type":"token","text":"0.3s var(--ease"}
+{"type":"token","text":"-out"}
+{"type":"token","text":");\\n    }\\n\\"}
+{"type":"token","text":"n    ."}
+{"type":"token","text":"skip"}
+{"type":"token","text":"-link"}
+{"type":"token","text":" {\\n      position: absolute;\\"}
+{"type":"token","text":"n      top: -40px;\\"}
+{"type":"token","text":"n      left: 0;\\n"}
+{"type":"token","text":"      background: var(--accent"}
+{"type":"token","text":");\\n      color: white"}
+{"type":"token","text":";\\n      padding: 8"}
+{"type":"token","text":"px;\\"}
+{"type":"token","text":"n      text-decoration: none;\\"}
+{"type":"token","text":"n      z"}
+{"type":"token","text":"-index: 100;\\n    "}
+{"type":"token","text":"}\\n\\n    .skip"}
+{"type":"token","text":"-link:focus {\\n      "}
+{"type":"token","text":"top"}
+{"type":"token","text":": 0;\\n    }\\"}
+{"type":"token","text":"n\\n    nav"}
+{"type":"token","text":" {\\n      position: fixed;\\"}
+{"type":"token","text":"n      top: 0;\\n"}
+{"type":"token","text":"      width: 100%;\\n"}
+{"type":"token","text":"      background: var(--surface"}
+{"type":"token","text":");\\n      backdrop-filter:"}
+{"type":"token","text":" blur(12"}
+{"type":"token","text":"px);\\n      border"}
+{"type":"token","text":"-bottom: 1px solid var"}
+{"type":"token","text":"(--border);\\n      z"}
+{"type":"token","text":"-index: 50"}
+{"type":"token","text":";\\n      transition"}
+{"type":"token","text":": background"}
+{"type":"token","text":" 0.3s var(--"}
+{"type":"token","text":"ease-out), border"}
+{"type":"token","text":"-color 0.3s var"}
+{"type":"token","text":"(--ease-out);\\n"}
+{"type":"token","text":"    }\\n\\n    ."}
+{"type":"token","text":"nav-container"}
+{"type":"token","text":" {\\n      max-width:"}
+{"type":"token","text":" 1280"}
+{"type":"token","text":"px;\\n      margin: 0"}
+{"type":"token","text":" auto;\\n      padding: var"}
+{"type":"token","text":"(--space-4"}
+{"type":"token","text":")"}
+{"type":"token","text":" cl"}
+{"type":"token","text":"amp(16px, 5v"}
+{"type":"token","text":"w, 64px);\\n"}
+{"type":"token","text":"      "}
+{"type":"token","text":"display"}
+{"type":"token","text":": flex;\\n      align-items"}
+{"type":"token","text":": center;\\n      justify-content"}
+{"type":"token","text":": space-between;\\n    "}
+{"type":"token","text":"}\\n\\n    .logo "}
+{"type":"token","text":"{\\n      font-family: "}
+{"type":"token","text":"'Playfair Display', serif"}
+{"type":"token","text":";\\n      font-size: var"}
+{"type":"token","text":"(--text-xl"}
+{"type":"token","text":");\\n      font-weight:"}
+{"type":"token","text":" 700;\\n      color: var"}
+{"type":"token","text":"(--text"}
+{"type":"token","text":")"}
+{"type":"token","text":";\\n      text-decoration: none"}
+{"type":"token","text":";\\n      letter"}
+{"type":"token","text":"-spacing: -"}
+{"type":"token","text":"0.02em;\\n    "}
+{"type":"token","text":"}\\n\\n    .nav"}
+{"type":"token","text":"-links {\\n      display:"}
+{"type":"token","text":" flex;\\n      gap"}
+{"type":"token","text":": var(--space-8"}
+{"type":"token","text":");\\n      list-style:"}
+{"type":"token","text":" none;\\n    }\\n\\"}
+{"type":"token","text":"n    .nav-links a "}
+{"type":"token","text":"{\\n      color: var(--"}
+{"type":"token","text":"text-muted);\\n      "}
+{"type":"token","text":"text-decoration: none;\\n      "}
+{"type":"token","text":"font"}
+{"type":"token","text":"-size"}
+{"type":"token","text":": var(--text-sm)"}
+{"type":"token","text":";\\n      font"}
+{"type":"token","text":"-weight: 500;\\n      "}
+{"type":"token","text":"letter"}
+{"type":"token","text":"-spacing: 0.05"}
+{"type":"token","text":"em;\\n      text"}
+{"type":"token","text":"-transform: uppercase;\\n      transition"}
+{"type":"token","text":": color 0.2"}
+{"type":"token","text":"s var(--ease-out)"}
+{"type":"token","text":";\\n      "}
+{"type":"token","text":"position: relative;\\n    "}
+{"type":"token","text":"}\\n\\n    .nav"}
+{"type":"token","text":"-links a:"}
+{"type":"token","text":"hover,"}
+{"type":"token","text":"\\n    .nav-links a"}
+{"type":"token","text":".active {\\n      color:"}
+{"type":"token","text":" var(--accent);\\n    "}
+{"type":"token","text":"}\\n\\n    .nav"}
+{"type":"token","text":"-links a."}
+{"type":"token","text":"active::after {\\n      content"}
+{"type":"token","text":": '';\\n      position: absolute"}
+{"type":"token","text":";\\n      bottom: -8"}
+{"type":"token","text":"px;\\n      left: 0"}
+{"type":"token","text":";\\n      width: 100%"}
+{"type":"token","text":";\\n      height: 2px"}
+{"type":"token","text":";\\n      background: var(--"}
+{"type":"token","text":"accent);\\n    "}
+{"type":"token","text":"}\\n\\n    .theme"}
+{"type":"token","text":"-toggle {\\n      background"}
+{"type":"token","text":": none;\\n      border: none"}
+{"type":"token","text":";\\n      cursor"}
+{"type":"token","text":": pointer;\\n      padding"}
+{"type":"token","text":": var"}
+{"type":"token","text":"(--space-2"}
+{"type":"token","text":");\\n      display"}
+{"type":"token","text":": flex;\\n      align-items"}
+{"type":"token","text":": center;\\n      justify"}
+{"type":"token","text":"-content: center;\\n      color"}
+{"type":"token","text":": var(--text-muted"}
+{"type":"token","text":");\\n      transition"}
+{"type":"token","text":": color 0.2s var"}
+{"type":"token","text":"(--ease-out);\\n"}
+{"type":"token","text":"    }\\n\\n    ."}
+{"type":"token","text":"theme-toggle:hover {\\n"}
+{"type":"token","text":"      color: var(--accent)"}
+{"type":"token","text":";\\n    }\\n\\n"}
+{"type":"token","text":"    .theme-toggle svg {\\"}
+{"type":"token","text":"n      width: 20"}
+{"type":"token","text":"px;\\n      height: 20"}
+{"type":"token","text":"px;\\n    }\\n\\"}
+{"type":"token","text":"n    .menu"}
+{"type":"token","text":"-toggle {\\n      display:"}
+{"type":"token","text":" none;\\n      "}
+{"type":"token","text":"background"}
+{"type":"token","text":": none;\\n      border: none"}
+{"type":"token","text":";\\n      cursor: pointer;\\n"}
+{"type":"token","text":"      padding: var(--space-"}
+{"type":"token","text":"2);\\n      color"}
+{"type":"token","text":": var(--text)"}
+{"type":"token","text":";\\n    "}
+{"type":"token","text":"}\\n\\n    ."}
+{"type":"token","text":"menu-toggle svg"}
+{"type":"token","text":" {\\n      width: 24"}
+{"type":"token","text":"px;\\n      height: 24"}
+{"type":"token","text":"px;\\n    }\\n\\"}
+{"type":"token","text":"n    .mobile-menu {\\"}
+{"type":"token","text":"n      display"}
+{"type":"token","text":": none;\\n      position"}
+{"type":"token","text":": fixed"}
+{"type":"token","text":";\\n      top: 65"}
+{"type":"token","text":"px;\\n      left"}
+{"type":"token","text":": 0;\\n      width:"}
+{"type":"token","text":" 100%;\\n      height"}
+{"type":"token","text":": calc"}
+{"type":"token","text":"(100vh"}
+{"type":"token","text":" - 65px);\\n      "}
+{"type":"token","text":"background: var(--surface);\\"}
+{"type":"token","text":"n      backdrop-filter: blur("}
+{"type":"token","text":"12px);\\n      z-"}
+{"type":"token","text":"index: 40;\\n      padding"}
+{"type":"token","text":": var(--space-8"}
+{"type":"token","text":");\\n      transform"}
+{"type":"token","text":": translateX(-100%);\\n"}
+{"type":"token","text":"      transition: transform 0.3"}
+{"type":"token","text":"s var(--ease-out)"}
+{"type":"token","text":";\\n    }\\n\\n"}
+{"type":"token","text":"    .mobile-menu.open "}
+{"type":"token","text":"{\\n      transform: translateX("}
+{"type":"token","text":"0);\\n    }\\n"}
+{"type":"token","text":"\\n    .mobile-menu ."}
+{"type":"token","text":"nav"}
+{"type":"token","text":"-links {\\n      flex-"}
+{"type":"token","text":"direction: column;\\n      gap:"}
+{"type":"token","text":" var(--space-6"}
+{"type":"token","text":");\\n    }\\n\\"}
+{"type":"token","text":"n    .container"}
+{"type":"token","text":" {\\n      max-width:"}
+{"type":"token","text":" 1280px;\\n      margin"}
+{"type":"token","text":": 0 auto;\\n      "}
+{"type":"token","text":"padding: "}
+{"type":"token","text":"0 cl"}
+{"type":"token","text":"amp(16px, 5v"}
+{"type":"token","text":"w, 64px);\\n"}
+{"type":"token","text":"    }\\n\\n    main"}
+{"type":"token","text":" {\\n      padding"}
+{"type":"token","text":"-"}
+{"type":"token","text":"top: "}
+{"type":"token","text":"65"}
+{"type":"token","text":"px;\\n    }\\n\\"}
+{"type":"token","text":"n    .page"}
+{"type":"token","text":" "}
+{"type":"token","text":"{\\n      display"}
+{"type":"token","text":": none;\\n      opacity"}
+{"type":"token","text":": 0;\\n      transition"}
+{"type":"token","text":": opacity 0.3s var"}
+{"type":"token","text":"(--ease-out);\\n"}
+{"type":"token","text":"    }\\n\\n    ."}
+{"type":"token","text":"page.active {\\n      display"}
+{"type":"token","text":": block;\\n      opacity: "}
+{"type":"token","text":"1;\\n    }\\n\\"}
+{"type":"token","text":"n    .hero"}
+{"type":"token","text":" {\\n      padding"}
+{"type":"token","text":": var(--space-32"}
+{"type":"token","text":") 0 "}
+{"type":"token","text":"var(--space-24)"}
+{"type":"token","text":";\\n      background"}
+{"type":"token","text":": var"}
+{"type":"token","text":"(--bg)"}
+{"type":"token","text":";\\n    "}
+{"type":"token","text":"}\\n\\n    .hero"}
+{"type":"token","text":"-content {\\n      display"}
+{"type":"token","text":": grid"}
+{"type":"token","text":";\\n      grid-template-columns"}
+{"type":"token","text":": 60"}
+{"type":"token","text":"% 1"}
+{"type":"token","text":"fr;\\n      gap: var("}
+{"type":"token","text":"--space-16);\\n      "}
+{"type":"token","text":"align-items: center;\\n    "}
+{"type":"token","text":"}\\n\\n    .hero"}
+{"type":"token","text":" h"}
+{"type":"token","text":"1 {\\n      font-"}
+{"type":"token","text":"family"}
+{"type":"token","text":": 'Playfair Display"}
+{"type":"token","text":"', serif;\\n      font-size"}
+{"type":"token","text":": cl"}
+{"type":"token","text":"amp(2"}
+{"type":"token","text":".5rem, 6"}
+{"type":"token","text":"vw, 5"}
+{"type":"token","text":"rem);\\n      font-weight"}
+{"type":"token","text":": 700;\\n      line-"}
+{"type":"token","text":"height: 1."}
+{"type":"token","text":"1;\\n      letter"}
+{"type":"token","text":"-spacing: -0.03"}
+{"type":"token","text":"em;\\n      margin-bottom:"}
+{"type":"token","text":" var(--space-6);\\"}
+{"type":"token","text":"n      "}
+{"type":"token","text":"color: var(--text);\\"}
+{"type":"token","text":"n    }\\n\\n    "}
+{"type":"token","text":".hero p {\\n      font"}
+{"type":"token","text":"-size: var(--text-"}
+{"type":"token","text":"xl"}
+{"type":"token","text":");\\n      color"}
+{"type":"token","text":": var(--text-muted"}
+{"type":"token","text":");\\n      line"}
+{"type":"token","text":"-height: 1.6;\\"}
+{"type":"token","text":"n      margin-bottom: var("}
+{"type":"token","text":"--space-8"}
+{"type":"token","text":");\\n      "}
+{"type":"token","text":"font"}
+{"type":"token","text":"-weight: 300"}
+{"type":"token","text":";\\n    }\\n\\n"}
+{"type":"token","text":"    .hero-c"}
+{"type":"token","text":"ta {\\n      display: inline"}
+{"type":"token","text":"-flex"}
+{"type":"token","text":";\\n      align-items: center"}
+{"type":"token","text":";\\n      gap: var(--"}
+{"type":"token","text":"space-2"}
+{"type":"token","text":");\\n      background"}
+{"type":"token","text":": var(--accent);\\n"}
+{"type":"token","text":"      color: white"}
+{"type":"token","text":";\\n      padding: "}
+{"type":"token","text":"16"}
+{"type":"token","text":"px 32px;\\n      border"}
+{"type":"token","text":"-radius: var(--radius-"}
+{"type":"token","text":"md"}
+{"type":"token","text":");\\n      text-decoration:"}
+{"type":"token","text":" none;\\n      font-weight:"}
+{"type":"token","text":" 600;\\n      font"}
+{"type":"token","text":"-size: var(--text-"}
+{"type":"token","text":"base);\\n      transition: transform"}
+{"type":"token","text":" 0.2s var(--"}
+{"type":"token","text":"ease-out),"}
+{"type":"token","text":" box-shadow 0.2s"}
+{"type":"token","text":" var(--ease-out);\\"}
+{"type":"token","text":"n      "}
+{"type":"token","text":"box-shadow: var"}
+{"type":"token","text":"(--shadow-md"}
+{"type":"token","text":");\\n      "}
+{"type":"token","text":"border"}
+{"type":"token","text":": none"}
+{"type":"token","text":";\\n      "}
+{"type":"token","text":"cursor"}
+{"type":"token","text":": pointer;\\n    }\\n"}
+{"type":"token","text":"\\n    .hero-cta"}
+{"type":"token","text":":hover {\\n      transform:"}
+{"type":"token","text":" translateY(-2px);\\n"}
+{"type":"token","text":"      box-shadow: var(--"}
+{"type":"token","text":"shadow-lg);\\n    "}
+{"type":"token","text":"}\\n\\n    .hero-"}
+{"type":"token","text":"cta:"}
+{"type":"token","text":"active {\\n      transform: scale"}
+{"type":"token","text":"(0.98);\\n    "}
+{"type":"token","text":"}\\n\\n    .hero"}
+{"type":"token","text":"-cta:"}
+{"type":"token","text":"focus-"}
+{"type":"token","text":"visible {\\n      outline: "}
+{"type":"token","text":"3"}
+{"type":"token","text":"px solid rgba"}
+{"type":"token","text":"(30, 58, 95"}
+{"type":"token","text":", 0.3"}
+{"type":"token","text":");\\n      "}
+{"type":"token","text":"outline-offset: 2px;\\"}
+{"type":"token","text":"n    }\\n\\n    "}
+{"type":"token","text":".hero-aside"}
+{"type":"token","text":" {\\n      background"}
+{"type":"token","text":": var(--bg-secondary)"}
+{"type":"token","text":";\\n      border-radius: var"}
+{"type":"token","text":"(--radius-lg"}
+{"type":"token","text":");\\n      padding: var("}
+{"type":"token","text":"--space-12);\\n      "}
+{"type":"token","text":"border"}
+{"type":"token","text":": 1px solid var(--"}
+{"type":"token","text":"border);\\n    }\\n"}
+{"type":"token","text":"\\n    .hero-aside h"}
+{"type":"token","text":"3"}
+{"type":"token","text":" {\\n      font-family"}
+{"type":"token","text":": 'Playfair Display"}
+{"type":"token","text":"', serif;\\n      font-size"}
+{"type":"token","text":": var(--text-2xl"}
+{"type":"token","text":");\\n      margin"}
+{"type":"token","text":"-bottom: var(--space-"}
+{"type":"token","text":"6);\\n      color: var"}
+{"type":"token","text":"(--text);\\n    "}
+{"type":"token","text":"}\\n\\n    .stat"}
+{"type":"token","text":"-grid {\\n      display:"}
+{"type":"token","text":" grid;\\n      gap"}
+{"type":"token","text":": var(--space-6"}
+{"type":"token","text":");\\n    "}
+{"type":"token","text":"}\\n\\n    .stat"}
+{"type":"token","text":" "}
+{"type":"token","text":"{\\n      border"}
+{"type":"token","text":"-bottom"}
+{"type":"token","text":": 1"}
+{"type":"token","text":"px solid var(--border);\\"}
+{"type":"token","text":"n      padding-bottom: var("}
+{"type":"token","text":"--space-4);\\n    "}
+{"type":"token","text":"}\\n\\n    .stat"}
+{"type":"token","text":":"}
+{"type":"token","text":"last-child {\\n      border"}
+{"type":"token","text":"-bottom: none;\\n      "}
+{"type":"token","text":"padding-bottom: 0;\\n"}
+{"type":"token","text":"    }\\n\\n    ."}
+{"type":"token","text":"stat-number"}
+{"type":"token","text":" {\\n      font-family"}
+{"type":"token","text":": '"}
+{"type":"token","text":"Playfair Display', serif;\\n"}
+{"type":"token","text":"      font-size: var(--"}
+{"type":"token","text":"text-3xl);\\n      "}
+{"type":"token","text":"font-weight: 700;\\n"}
+{"type":"token","text":"      color: var(--accent-"}
+{"type":"token","text":"secondary);\\n      display"}
+{"type":"token","text":": block"}
+{"type":"token","text":";\\n      margin-bottom: var"}
+{"type":"token","text":"(--space-2);\\n"}
+{"type":"token","text":"    }\\n\\n    ."}
+{"type":"token","text":"stat-label {\\n      font"}
+{"type":"token","text":"-size: var(--text-"}
+{"type":"token","text":"sm);\\n      color: var"}
+{"type":"token","text":"(--text-muted);\\"}
+{"type":"token","text":"n      text"}
+{"type":"token","text":"-transform: uppercase;\\n      letter"}
+{"type":"token","text":"-spacing: 0.1em"}
+{"type":"token","text":";\\n      font"}
+{"type":"token","text":"-weight: 500;\\n    "}
+{"type":"token","text":"}\\n\\n    .services"}
+{"type":"token","text":" {\\n      padding: var("}
+{"type":"token","text":"--space-24"}
+{"type":"token","text":") 0;\\n      "}
+{"type":"token","text":"background: var(--bg-secondary"}
+{"type":"token","text":");\\n    }\\n\\"}
+{"type":"token","text":"n    .section"}
+{"type":"token","text":"-header"}
+{"type":"token","text":" {\\n      max"}
+{"type":"token","text":"-width: 800"}
+{"type":"token","text":"px;\\n      margin-"}
+{"type":"token","text":"bottom: var(--space-16"}
+{"type":"token","text":");\\n    "}
+{"type":"token","text":"}\\n\\n    .section"}
+{"type":"token","text":"-label"}
+{"type":"token","text":" {\\n      font-size"}
+{"type":"token","text":": var(--text-sm)"}
+{"type":"token","text":";\\n      color: var(--"}
+{"type":"token","text":"accent"}
+{"type":"token","text":"-"}
+{"type":"token","text":"secondary);\\n      text"}
+{"type":"token","text":"-transform: uppercase;\\n      letter"}
+{"type":"token","text":"-spacing: 0.1em"}
+{"type":"token","text":";\\n      font-weight: "}
+{"type":"token","text":"600"}
+{"type":"token","text":";\\n      "}
+{"type":"token","text":"margin-bottom: var(--space"}
+{"type":"token","text":"-4);\\n    }\\"}
+{"type":"token","text":"n\\n    .section-title"}
+{"type":"token","text":" {\\n      font-family:"}
+{"type":"token","text":" 'Playfair Display',"}
+{"type":"token","text":" serif;\\n      font-size:"}
+{"type":"token","text":" var(--text-4"}
+{"type":"token","text":"xl);\\n      font-weight"}
+{"type":"token","text":": 700;\\n      line"}
+{"type":"token","text":"-height: 1.2"}
+{"type":"token","text":";\\n      letter-spacing: -"}
+{"type":"token","text":"0.02em;\\n      color"}
+{"type":"token","text":": var(--text"}
+{"type":"token","text":");\\n      margin-bottom:"}
+{"type":"token","text":" var(--space-4"}
+{"type":"token","text":");\\n    }\\n\\"}
+{"type":"token","text":"n    .section-description"}
+{"type":"token","text":" {\\n      font-size:"}
+{"type":"token","text":" var(--text-lg"}
+{"type":"token","text":");\\n      color: var("}
+{"type":"token","text":"--text-muted);\\n"}
+{"type":"token","text":"      line-height: 1."}
+{"type":"token","text":"7"}
+{"type":"token","text":";\\n      font"}
+{"type":"token","text":"-weight: 300;\\n    "}
+{"type":"token","text":"}\\n\\n    .service"}
+{"type":"token","text":"-list"}
+{"type":"token","text":" {\\n      display: grid;\\"}
+{"type":"token","text":"n      gap"}
+{"type":"token","text":": var(--space-12"}
+{"type":"token","text":");\\n      "}
+{"type":"token","text":"max"}
+{"type":"token","text":"-width: 900"}
+{"type":"token","text":"px;\\n    "}
+{"type":"token","text":"}\\n\\n    .service"}
+{"type":"token","text":"-item {\\n      display"}
+{"type":"token","text":": grid"}
+{"type":"token","text":";\\n      grid-template-columns"}
+{"type":"token","text":": 1fr 2"}
+{"type":"token","text":"fr;\\n      gap: var("}
+{"type":"token","text":"--space-8"}
+{"type":"token","text":");\\n      padding"}
+{"type":"token","text":": var(--space-8"}
+{"type":"token","text":") "}
+{"type":"token","text":"0;\\n      border-bottom:"}
+{"type":"token","text":" 1px solid var(--border"}
+{"type":"token","text":");\\n    }\\n\\"}
+{"type":"token","text":"n    .service-item:last"}
+{"type":"token","text":"-child {\\n      border-"}
+{"type":"token","text":"bottom: none;\\n    }\\"}
+{"type":"token","text":"n\\n    .service-item"}
+{"type":"token","text":" h3 {\\n      font"}
+{"type":"token","text":"-family: 'Playf"}
+{"type":"token","text":"air Display', serif;\\n      font"}
+{"type":"token","text":"-size: var(--text-"}
+{"type":"token","text":"2xl);\\n      font"}
+{"type":"token","text":"-weight: 600"}
+{"type":"token","text":";\\n      color: var(--"}
+{"type":"token","text":"text"}
+{"type":"token","text":");\\n      line"}
+{"type":"token","text":"-height: 1.3"}
+{"type":"token","text":";\\n    "}
+{"type":"token","text":"}\\n\\n    .service"}
+{"type":"token","text":"-item p {\\n      font"}
+{"type":"token","text":"-size: var(--text-"}
+{"type":"token","text":"base"}
+{"type":"token","text":");\\n      color: var("}
+{"type":"token","text":"--text-muted);\\n"}
+{"type":"token","text":"      line-height: 1."}
+{"type":"token","text":"7"}
+{"type":"token","text":";\\n    }\\n\\n"}
+{"type":"token","text":"    .approach"}
+{"type":"token","text":" {\\n      padding: var("}
+{"type":"token","text":"--space-32"}
+{"type":"token","text":") 0;\\n      background:"}
+{"type":"token","text":" var(--bg)"}
+{"type":"token","text":";\\n    }\\n\\n"}
+{"type":"token","text":"    .approach-content {\\n"}
+{"type":"token","text":"      display: grid;\\n      grid"}
+{"type":"token","text":"-template-columns: 1"}
+{"type":"token","text":"fr 1fr;\\n      gap"}
+{"type":"token","text":": var(--space-20"}
+{"type":"token","text":");\\n      "}
+{"type":"token","text":"align-items: start"}
+{"type":"token","text":";\\n    }\\n\\n"}
+{"type":"token","text":"    .approach-text"}
+{"type":"token","text":" {\\n      position"}
+{"type":"token","text":": sticky"}
+{"type":"token","text":";\\n      top: 120"}
+{"type":"token","text":"px;\\n    "}
+{"type":"token","text":"}\\n\\n    .approach"}
+{"type":"token","text":"-steps"}
+{"type":"token","text":" {\\n      display: grid;\\"}
+{"type":"token","text":"n      gap"}
+{"type":"token","text":": var(--space-12)"}
+{"type":"token","text":";\\n    }\\n\\n"}
+{"type":"token","text":"    .approach-step {\\n"}
+{"type":"token","text":"      background"}
+{"type":"token","text":": var(--bg-secondary"}
+{"type":"token","text":");\\n      border"}
+{"type":"token","text":"-radius: var(--radius-"}
+{"type":"token","text":"lg);\\n      padding: var"}
+{"type":"token","text":"(--space-10"}
+{"type":"token","text":");\\n      border: 1"}
+{"type":"token","text":"px solid var(--border);\\"}
+{"type":"token","text":"n    }\\n\\n    "}
+{"type":"token","text":".step"}
+{"type":"token","text":"-number {\\n      display"}
+{"type":"token","text":": inline"}
+{"type":"token","text":"-block;\\n      width"}
+{"type":"token","text":": 48"}
+{"type":"token","text":"px;\\n      height: 48"}
+{"type":"token","text":"px;\\n      background: rgba"}
+{"type":"token","text":"(30, 58, 95"}
+{"type":"token","text":", 0.1);\\n"}
+{"type":"token","text":"      border-radius: 50%"}
+{"type":"token","text":";\\n      text-align: center"}
+{"type":"token","text":";\\n      line-height: "}
+{"type":"token","text":"48px;\\n      font"}
+{"type":"token","text":"-family"}
+{"type":"token","text":": 'Playfair Display"}
+{"type":"token","text":"', serif;\\n      font-weight"}
+{"type":"token","text":": 700;\\n      color:"}
+{"type":"token","text":" var(--accent)"}
+{"type":"token","text":";\\n      font-size: var"}
+{"type":"token","text":"(--text-lg"}
+{"type":"token","text":");\\n      margin-bottom:"}
+{"type":"token","text":" var(--space-4);\\"}
+{"type":"token","text":"n    }\\n\\n    "}
+{"type":"token","text":".approach"}
+{"type":"token","text":"-step h3 {\\n"}
+{"type":"token","text":"      font-family: '"}
+{"type":"token","text":"Playfair Display', serif;\\n"}
+{"type":"token","text":"      font-size: var(--"}
+{"type":"token","text":"text-xl);\\n      font"}
+{"type":"token","text":"-weight: 600"}
+{"type":"token","text":";\\n      margin"}
+{"type":"token","text":"-bottom: var(--space-"}
+{"type":"token","text":"3"}
+{"type":"token","text":");\\n      "}
+{"type":"token","text":"color: var(--text);\\"}
+{"type":"token","text":"n    }\\n\\n    "}
+{"type":"token","text":".approach-step p {\\n"}
+{"type":"token","text":"      font-size: var(--"}
+{"type":"token","text":"text-base);\\n      color"}
+{"type":"token","text":": var(--text-muted"}
+{"type":"token","text":");\\n      line-height:"}
+{"type":"token","text":" 1.6;\\n    "}
+{"type":"token","text":"}\\n\\n    .testimon"}
+{"type":"token","text":"ial"}
+{"type":"token","text":" {\\n      padding: var("}
+{"type":"token","text":"--space-24"}
+{"type":"token","text":") 0;\\n      background:"}
+{"type":"token","text":" var(--bg-tert"}
+{"type":"token","text":"iary);\\n    }\\n"}
+{"type":"token","text":"\\n    .testimonial-content"}
+{"type":"token","text":" {\\n      max"}
+{"type":"token","text":"-width: 900"}
+{"type":"token","text":"px;\\n      margin: 0"}
+{"type":"token","text":" auto;\\n      "}
+{"type":"token","text":"text"}
+{"type":"token","text":"-align: left"}
+{"type":"token","text":";\\n    }\\n\\n"}
+{"type":"token","text":"    .quote"}
+{"type":"token","text":" {\\n      font-family:"}
+{"type":"token","text":" 'Playfair Display',"}
+{"type":"token","text":" serif;\\n      font-size:"}
+{"type":"token","text":" var(--text-3"}
+{"type":"token","text":"xl);\\n      line"}
+{"type":"token","text":"-height: 1.4"}
+{"type":"token","text":";\\n      font"}
+{"type":"token","text":"-style"}
+{"type":"token","text":": italic;\\n      color: var"}
+{"type":"token","text":"(--text"}
+{"type":"token","text":")"}
+{"type":"token","text":";\\n      margin-bottom: var"}
+{"type":"token","text":"(--space-8);\\n"}
+{"type":"token","text":"      "}
+{"type":"token","text":"font"}
+{"type":"token","text":"-weight: 400"}
+{"type":"token","text":";\\n    }\\n\\n"}
+{"type":"token","text":"    .quote"}
+{"type":"token","text":"::"}
+{"type":"token","text":"before {\\n      content: '\""}
+{"type":"token","text":"';\\n      color"}
+{"type":"token","text":": var(--accent-"}
+{"type":"token","text":"secondary);\\n    }\\n"}
+{"type":"token","text":"\\n    .quote"}
+{"type":"token","text":"::after {\\n      content:"}
+{"type":"token","text":" '\"';\\n      "}
+{"type":"token","text":"color: var(--accent-"}
+{"type":"token","text":"secondary);\\n    }\\n"}
+{"type":"token","text":"\\n    .testimonial-author"}
+{"type":"token","text":" {\\n      display"}
+{"type":"token","text":": flex;\\n      align-items"}
+{"type":"token","text":": center;\\n      gap: var"}
+{"type":"token","text":"(--space-4);\\n"}
+{"type":"token","text":"    "}
+{"type":"token","text":"}\\n\\n    .author"}
+{"type":"token","text":"-info"}
+{"type":"token","text":" h"}
+{"type":"token","text":"4"}
+{"type":"token","text":" {\\n      font-size"}
+{"type":"token","text":": var(--text-base"}
+{"type":"token","text":");\\n      font"}
+{"type":"token","text":"-weight: 600;\\n      "}
+{"type":"token","text":"color: var(--text);\\"}
+{"type":"token","text":"n    }\\n\\n    "}
+{"type":"token","text":".author-info p {\\n"}
+{"type":"token","text":"      font-size: var(--"}
+{"type":"token","text":"text-sm);\\n      color"}
+{"type":"token","text":": var(--text-muted"}
+{"type":"token","text":");\\n    "}
+{"type":"token","text":"}\\n\\n    .c"}
+{"type":"token","text":"ta-section"}
+{"type":"token","text":" {\\n      padding: var("}
+{"type":"token","text":"--space-32) 0;\\"}
+{"type":"token","text":"n      background: var(--accent"}
+{"type":"token","text":");\\n      color: white;\\"}
+{"type":"token","text":"n      text-align"}
+{"type":"token","text":": center;\\n    }\\n"}
+{"type":"token","text":"\\n    .cta-section"}
+{"type":"token","text":" h2"}
+{"type":"token","text":" {\\n      font-family"}
+{"type":"token","text":": 'Playfair Display"}
+{"type":"token","text":"', serif;\\n      font-size"}
+{"type":"token","text":": var(--text-4"}
+{"type":"token","text":"xl);\\n      font-weight"}
+{"type":"token","text":": 700;\\n      margin-"}
+{"type":"token","text":"bottom: var(--space-6"}
+{"type":"token","text":");\\n      "}
+{"type":"token","text":"line"}
+{"type":"token","text":"-height: 1.2"}
+{"type":"token","text":";\\n    }\\n\\n"}
+{"type":"token","text":"    .cta-section p "}
+{"type":"token","text":"{\\n      font-size: var"}
+{"type":"token","text":"(--text-xl"}
+{"type":"token","text":");\\n      margin-bottom:"}
+{"type":"token","text":" var(--space-8);\\"}
+{"type":"token","text":"n      "}
+{"type":"token","text":"opacity"}
+{"type":"token","text":": 0.95"}
+{"type":"token","text":";\\n      "}
+{"type":"token","text":"max"}
+{"type":"token","text":"-width: 600px;\\n"}
+{"type":"token","text":"      "}
+{"type":"token","text":"margin-"}
+{"type":"token","text":"left: auto;\\n      margin-"}
+{"type":"token","text":"right: auto;\\n      "}
+{"type":"token","text":"font-weight: 300;\\n"}
+{"type":"token","text":"    }\\n\\n    ."}
+{"type":"token","text":"cta-button"}
+{"type":"token","text":" {\\n      display: inline-"}
+{"type":"token","text":"flex"}
+{"type":"token","text":";\\n      align-items: center"}
+{"type":"token","text":";\\n      gap: var(--"}
+{"type":"token","text":"space-2);\\n      background"}
+{"type":"token","text":": white"}
+{"type":"token","text":";\\n      color: var(--"}
+{"type":"token","text":"accent);\\n      padding: "}
+{"type":"token","text":"16px 32px;\\n      "}
+{"type":"token","text":"border-radius: var(--radius"}
+{"type":"token","text":"-md);\\n      text-"}
+{"type":"token","text":"decoration: none;\\n      font-"}
+{"type":"token","text":"weight: 600;\\n      font"}
+{"type":"token","text":"-size: var(--text-"}
+{"type":"token","text":"base);\\n      transition: transform"}
+{"type":"token","text":" 0.2s var(--"}
+{"type":"token","text":"ease-out), box-shadow "}
+{"type":"token","text":"0.2s var(--ease"}
+{"type":"token","text":"-out);\\n      box-"}
+{"type":"token","text":"shadow: var(--shadow-lg"}
+{"type":"token","text":");\\n      border: none;\\"}
+{"type":"token","text":"n      cursor: pointer;\\n    "}
+{"type":"token","text":"}\\n\\n    .c"}
+{"type":"token","text":"ta-button:hover {\\n"}
+{"type":"token","text":"      transform: translateY(-2px"}
+{"type":"token","text":");\\n      box-shadow:"}
+{"type":"token","text":" var(--shadow-xl"}
+{"type":"token","text":");\\n    }\\n\\"}
+{"type":"token","text":"n    .cta-button:"}
+{"type":"token","text":"active {\\n      transform: scale"}
+{"type":"token","text":"(0.98);\\n    "}
+{"type":"token","text":"}\\n\\n    .c"}
+{"type":"token","text":"ta-button:focus-visible "}
+{"type":"token","text":"{\\n      outline: 3px"}
+{"type":"token","text":" solid rgba(255"}
+{"type":"token","text":", 255, 255, "}
+{"type":"token","text":"0.5"}
+{"type":"token","text":");\\n      outline-offset:"}
+{"type":"token","text":" 2px;\\n    }\\"}
+{"type":"token","text":"n\\n    .about"}
+{"type":"token","text":"-hero"}
+{"type":"token","text":" {\\n      padding: var("}
+{"type":"token","text":"--space-32) 0 "}
+{"type":"token","text":"var(--space-16"}
+{"type":"token","text":");\\n      background: var("}
+{"type":"token","text":"--bg);\\n    }\\"}
+{"type":"token","text":"n\\n    .about-intro"}
+{"type":"token","text":" {\\n      max"}
+{"type":"token","text":"-width: 800px;\\n"}
+{"type":"token","text":"      margin-"}
+{"type":"token","text":"bottom: var(--space-20"}
+{"type":"token","text":");\\n    }\\n\\"}
+{"type":"token","text":"n    .about-intro"}
+{"type":"token","text":" h1"}
+{"type":"token","text":" {\\n      font-family"}
+{"type":"token","text":": 'Playfair Display"}
+{"type":"token","text":"', serif;\\n      font-size"}
+{"type":"token","text":": var(--text-5"}
+{"type":"token","text":"xl);\\n      font-weight"}
+{"type":"token","text":": 700;\\n      line-"}
+{"type":"token","text":"height: 1.1;\\n"}
+{"type":"token","text":"      letter-spacing: -0."}
+{"type":"token","text":"03"}
+{"type":"token","text":"em;\\n      margin-bottom:"}
+{"type":"token","text":" var(--space-6);\\"}
+{"type":"token","text":"n      color: var(--text"}
+{"type":"token","text":");\\n    }\\n\\"}
+{"type":"token","text":"n    .about-intro p "}
+{"type":"token","text":"{\\n      font-size: var"}
+{"type":"token","text":"(--text-xl);\\n"}
+{"type":"token","text":"      color: var(--text-"}
+{"type":"token","text":"muted);\\n      line-"}
+{"type":"token","text":"height: 1.7"}
+{"type":"token","text":";\\n      font"}
+{"type":"token","text":"-weight: 300;\\n    "}
+{"type":"token","text":"}\\n\\n    .values"}
+{"type":"token","text":" {\\n      padding: var("}
+{"type":"token","text":"--space-24"}
+{"type":"token","text":") 0;\\n      background:"}
+{"type":"token","text":" var(--bg-secondary);\\"}
+{"type":"token","text":"n    }\\n\\n    "}
+{"type":"token","text":".values-grid"}
+{"type":"token","text":" {\\n      display: grid;\\"}
+{"type":"token","text":"n      grid"}
+{"type":"token","text":"-template-columns: repeat(3"}
+{"type":"token","text":", 1fr);\\n      "}
+{"type":"token","text":"gap: var(--space-8"}
+{"type":"token","text":");\\n    }\\n\\"}
+{"type":"token","text":"n    .value-"}
+{"type":"token","text":"card"}
+{"type":"token","text":" {\\n      background: var"}
+{"type":"token","text":"(--surface"}
+{"type":"token","text":");\\n      border-radius:"}
+{"type":"token","text":" var(--radius-lg"}
+{"type":"token","text":");\\n      padding: var("}
+{"type":"token","text":"--space-10"}
+{"type":"token","text":");\\n      border"}
+{"type":"token","text":": 1px solid var(--"}
+{"type":"token","text":"border);\\n      box"}
+{"type":"token","text":"-shadow: var(--shadow-"}
+{"type":"token","text":"sm"}
+{"type":"token","text":");\\n      "}
+{"type":"token","text":"transition: transform 0.2s"}
+{"type":"token","text":" var(--ease-out),"}
+{"type":"token","text":" box-shadow 0.2s"}
+{"type":"token","text":" var(--ease-out);\\"}
+{"type":"token","text":"n    }\\n\\n    "}
+{"type":"token","text":".value-card:hover {\\"}
+{"type":"token","text":"n      transform: translateY(-4"}
+{"type":"token","text":"px);\\n      box-shadow"}
+{"type":"token","text":": var(--shadow-lg"}
+{"type":"token","text":");\\n    }\\n\\"}
+{"type":"token","text":"n    .value-icon"}
+{"type":"token","text":" {\\n      width"}
+{"type":"token","text":": 48px;\\n      height"}
+{"type":"token","text":": 48px;\\n      background"}
+{"type":"token","text":": rgba"}
+{"type":"token","text":"(30, 58, 95"}
+{"type":"token","text":", 0.1);\\n"}
+{"type":"token","text":"      border-radius: 50%"}
+{"type":"token","text":";\\n      display: flex;\\n"}
+{"type":"token","text":"      align-items: center;\\n"}
+{"type":"token","text":"      justify-content: center;\\n"}
+{"type":"token","text":"      margin"}
+{"type":"token","text":"-bottom: var(--space-"}
+{"type":"token","text":"4);\\n      "}
+{"type":"token","text":"color"}
+{"type":"token","text":": var(--accent);\\n"}
+{"type":"token","text":"    }\\n\\n    ."}
+{"type":"token","text":"value-card"}
+{"type":"token","text":" h3 {\\n      font"}
+{"type":"token","text":"-family: 'Playf"}
+{"type":"token","text":"air Display', serif;\\n      font"}
+{"type":"token","text":"-size: var(--text-"}
+{"type":"token","text":"xl);\\n      font-weight"}
+{"type":"token","text":": 600;\\n      margin-"}
+{"type":"token","text":"bottom: var(--space-3"}
+{"type":"token","text":");\\n      color: var("}
+{"type":"token","text":"--text);\\n    }\\"}
+{"type":"token","text":"n\\n    .value-card"}
+{"type":"token","text":" p {\\n      font-size"}
+{"type":"token","text":": var(--text-base)"}
+{"type":"token","text":";\\n      color: var(--"}
+{"type":"token","text":"text-muted);\\n      "}
+{"type":"token","text":"line-height: 1.6"}
+{"type":"token","text":";\\n    }\\n\\n"}
+{"type":"token","text":"    .team"}
+{"type":"token","text":" "}
+{"type":"token","text":"{\\n      padding: var(--"}
+{"type":"token","text":"space-32"}
+{"type":"token","text":") 0;\\n      background:"}
+{"type":"token","text":" var(--bg);\\n    "}
+{"type":"token","text":"}\\n\\n    .contact"}
+{"type":"token","text":"-"}
+{"type":"token","text":"hero"}
+{"type":"token","text":" {\\n      padding: var("}
+{"type":"token","text":"--space-32) 0 "}
+{"type":"token","text":"var(--space-24"}
+{"type":"token","text":");\\n      background: var("}
+{"type":"token","text":"--bg)"}
+{"type":"token","text":";\\n    }\\n\\n"}
+{"type":"token","text":"    .contact-grid"}
+{"type":"token","text":" {\\n      display: grid;\\"}
+{"type":"token","text":"n      grid-template-columns:"}
+{"type":"token","text":" 1fr 1fr;\\n"}
+{"type":"token","text":"      gap: var(--space-"}
+{"type":"token","text":"16);\\n      "}
+{"type":"token","text":"align-items: start;\\n    "}
+{"type":"token","text":"}\\n\\n    .contact"}
+{"type":"token","text":"-form"}
+{"type":"token","text":" {\\n      background: var("}
+{"type":"token","text":"--bg-secondary);\\n      "}
+{"type":"token","text":"border-radius: var(--radius"}
+{"type":"token","text":"-lg);\\n      padding:"}
+{"type":"token","text":" var(--space-12"}
+{"type":"token","text":");\\n      border: 1"}
+{"type":"token","text":"px solid var(--border);\\"}
+{"type":"token","text":"n    }\\n\\n    "}
+{"type":"token","text":".form"}
+{"type":"token","text":"-group {\\n      margin-"}
+{"type":"token","text":"bottom: var(--space-6"}
+{"type":"token","text":");\\n    }\\n\\"}
+{"type":"token","text":"n    .form-group label "}
+{"type":"token","text":"{\\n      display: block;\\n"}
+{"type":"token","text":"      font"}
+{"type":"token","text":"-size: var(--text-"}
+{"type":"token","text":"sm"}
+{"type":"token","text":");\\n      font"}
+{"type":"token","text":"-weight: 600"}
+{"type":"token","text":";\\n      color: var(--"}
+{"type":"token","text":"text);\\n      margin-bottom"}
+{"type":"token","text":": var(--space-2)"}
+{"type":"token","text":";\\n      "}
+{"type":"token","text":"text"}
+{"type":"token","text":"-transform: uppercase;\\n      letter"}
+{"type":"token","text":"-spacing: 0.05"}
+{"type":"token","text":"em;\\n    }\\n\\"}
+{"type":"token","text":"n    .form-group input,"}
+{"type":"token","text":"\\n    .form-group select"}
+{"type":"token","text":",\\n    .form-group"}
+{"type":"token","text":" textarea {\\n      width: "}
+{"type":"token","text":"100%;\\n      padding: "}
+{"type":"token","text":"12"}
+{"type":"token","text":"px "}
+{"type":"token","text":"16px;\\n      border: "}
+{"type":"token","text":"1px solid var(--border)"}
+{"type":"token","text":";\\n      border-radius: var"}
+{"type":"token","text":"(--radius-md"}
+{"type":"token","text":");\\n      font-family"}
+{"type":"token","text":": 'Source"}
+{"type":"token","text":" Sans "}
+{"type":"token","text":"3', sans-serif;\\n      "}
+{"type":"token","text":"font-size: var(--text"}
+{"type":"token","text":"-base);\\n      background"}
+{"type":"token","text":": var"}
+{"type":"token","text":"(--surface);\\n      color"}
+{"type":"token","text":": var(--text);\\n"}
+{"type":"token","text":"      transition: border-color 0"}
+{"type":"token","text":".2s var(--ease-"}
+{"type":"token","text":"out),"}
+{"type":"token","text":" box-shadow 0.2s"}
+{"type":"token","text":" var(--ease-out);\\"}
+{"type":"token","text":"n    }\\n\\n    "}
+{"type":"token","text":".form-group input:focus,"}
+{"type":"token","text":"\\n    .form-group select"}
+{"type":"token","text":":focus,\\n    .form"}
+{"type":"token","text":"-group textarea:focus {\\n"}
+{"type":"token","text":"      outline: none"}
+{"type":"token","text":";\\n      border-color: var"}
+{"type":"token","text":"(--accent);\\n      box"}
+{"type":"token","text":"-shadow: "}
+{"type":"token","text":"0 0 0 3px"}
+{"type":"token","text":" rgba(30, 58, "}
+{"type":"token","text":"95, 0.15"}
+{"type":"token","text":");\\n    }\\n\\"}
+{"type":"token","text":"n    .form-group textarea"}
+{"type":"token","text":" {\\n      resize: vertical;\\"}
+{"type":"token","text":"n      min-height: 120"}
+{"type":"token","text":"px;\\n    }\\n\\"}
+{"type":"token","text":"n    .form-button"}
+{"type":"token","text":" {\\n      width"}
+{"type":"token","text":": 100%;\\n      background"}
+{"type":"token","text":": var(--accent);\\n"}
+{"type":"token","text":"      color: white;\\n      padding"}
+{"type":"token","text":": "}
+{"type":"token","text":"16px 32px;\\n      "}
+{"type":"token","text":"border: none;\\n      border-"}
+{"type":"token","text":"radius: var(--radius-md"}
+{"type":"token","text":");\\n      font-weight"}
+{"type":"token","text":": 600;\\n      font-"}
+{"type":"token","text":"size: var(--text-base"}
+{"type":"token","text":");\\n      cursor: pointer;\\"}
+{"type":"token","text":"n      transition: transform 0."}
+{"type":"token","text":"2s var(--ease-out"}
+{"type":"token","text":"), box-shadow 0.2"}
+{"type":"token","text":"s var(--ease-out)"}
+{"type":"token","text":";\\n      box-shadow: var"}
+{"type":"token","text":"(--shadow-md"}
+{"type":"token","text":");\\n    }\\n\\"}
+{"type":"token","text":"n    .form-button:hover"}
+{"type":"token","text":" {\\n      transform: translateY"}
+{"type":"token","text":"(-2px);\\n      box"}
+{"type":"token","text":"-shadow: var(--shadow-"}
+{"type":"token","text":"lg);\\n    }\\n"}
+{"type":"token","text":"\\n    .form-button:"}
+{"type":"token","text":"active {\\n      transform: scale"}
+{"type":"token","text":"(0.98);\\n    "}
+{"type":"token","text":"}\\n\\n    .form"}
+{"type":"token","text":"-button:focus-visible {\\"}
+{"type":"token","text":"n      outline: 3px solid"}
+{"type":"token","text":" rgba(30"}
+{"type":"token","text":", 58, 95, "}
+{"type":"token","text":"0.3"}
+{"type":"token","text":");\\n      outline-offset:"}
+{"type":"token","text":" 2px;\\n    }\\"}
+{"type":"token","text":"n\\n    .form"}
+{"type":"token","text":"-button:disabled"}
+{"type":"token","text":" {\\n      opacity: 0"}
+{"type":"token","text":".6;\\n      cursor: not"}
+{"type":"token","text":"-allowed;\\n      "}
+{"type":"token","text":"transform: none;\\n    }\\"}
+{"type":"token","text":"n\\n    .form-message"}
+{"type":"token","text":" {\\n      margin"}
+{"type":"token","text":"-top: var(--space-"}
+{"type":"token","text":"4"}
+{"type":"token","text":");\\n      padding"}
+{"type":"token","text":": var(--space-4"}
+{"type":"token","text":");\\n      border"}
+{"type":"token","text":"-radius: var(--radius-"}
+{"type":"token","text":"md);\\n      font"}
+{"type":"token","text":"-size: var(--text-"}
+{"type":"token","text":"sm);\\n      display"}
+{"type":"token","text":": none;\\n    }\\n"}
+{"type":"token","text":"\\n    .form-message."}
+{"type":"token","text":"success {\\n      background"}
+{"type":"token","text":": rgba"}
+{"type":"token","text":"(34"}
+{"type":"token","text":", 197, 94, "}
+{"type":"token","text":"0.1);\\n      color"}
+{"type":"token","text":": #"}
+{"type":"token","text":"16"}
+{"type":"token","text":"A"}
+{"type":"token","text":"34"}
+{"type":"token","text":"A;\\n      "}
+{"type":"token","text":"border: 1px solid rgba"}
+{"type":"token","text":"(34, 197, 94"}
+{"type":"token","text":", 0.2);\\n"}
+{"type":"token","text":"      "}
+{"type":"token","text":"display"}
+{"type":"token","text":": block;\\n    }\\n"}
+{"type":"token","text":"\\n    .contact"}
+{"type":"token","text":"-info h"}
+{"type":"token","text":"3 {\\n      font-"}
+{"type":"token","text":"family: 'Playfair"}
+{"type":"token","text":" Display', serif;\\n      font-"}
+{"type":"token","text":"size: var(--text-2"}
+{"type":"token","text":"xl);\\n      font-weight"}
+{"type":"token","text":": 600"}
+{"type":"token","text":";\\n      margin-bottom: var"}
+{"type":"token","text":"(--space-6);\\n"}
+{"type":"token","text":"      color: var(--text)"}
+{"type":"token","text":";\\n    }\\n\\n"}
+{"type":"token","text":"    .info"}
+{"type":"token","text":"-item {\\n      margin"}
+{"type":"token","text":"-bottom: var(--space-"}
+{"type":"token","text":"6"}
+{"type":"token","text":");\\n      "}
+{"type":"token","text":"padding-bottom"}
+{"type":"token","text":": var(--space-6)"}
+{"type":"token","text":";\\n      border-bottom: "}
+{"type":"token","text":"1px solid var(--border)"}
+{"type":"token","text":";\\n    }\\n\\n"}
+{"type":"token","text":"    .info-item:last-"}
+{"type":"token","text":"child {\\n      border-bottom"}
+{"type":"token","text":": none;\\n      "}
+{"type":"token","text":"padding-bottom: 0;\\n"}
+{"type":"token","text":"    }\\n\\n    ."}
+{"type":"token","text":"info-label"}
+{"type":"token","text":" {\\n      font-size"}
+{"type":"token","text":": var(--text-sm)"}
+{"type":"token","text":";\\n      color: var(--"}
+{"type":"token","text":"text-muted);\\n      "}
+{"type":"token","text":"text"}
+{"type":"token","text":"-transform: uppercase;\\n      letter"}
+{"type":"token","text":"-spacing: 0.1"}
+{"type":"token","text":"em;\\n      "}
+{"type":"token","text":"font"}
+{"type":"token","text":"-weight: 600;\\n      "}
+{"type":"token","text":"margin-bottom: var(--space"}
+{"type":"token","text":"-2);\\n    }\\"}
+{"type":"token","text":"n\\n    .info-value"}
+{"type":"token","text":" {\\n      font-size:"}
+{"type":"token","text":" var(--text-lg"}
+{"type":"token","text":");\\n      color: var("}
+{"type":"token","text":"--text);\\n      font"}
+{"type":"token","text":"-weight: 400"}
+{"type":"token","text":";\\n    "}
+{"type":"token","text":"}\\n\\n    .info"}
+{"type":"token","text":"-value a"}
+{"type":"token","text":" {\\n      color: var("}
+{"type":"token","text":"--accent);\\n      text-"}
+{"type":"token","text":"decoration: none;\\n      "}
+{"type":"token","text":"transition: opacity"}
+{"type":"token","text":" 0.2s var(--"}
+{"type":"token","text":"ease-out);\\n    "}
+{"type":"token","text":"}\\n\\n    .info-"}
+{"type":"token","text":"value a:hover {\\n      "}
+{"type":"token","text":"opacity: 0.8;\\n"}
+{"type":"token","text":"    }\\n\\n    footer"}
+{"type":"token","text":" {\\n      background"}
+{"type":"token","text":": var(--accent"}
+{"type":"token","text":");\\n      color: white;\\"}
+{"type":"token","text":"n      padding"}
+{"type":"token","text":": var(--space-16)"}
+{"type":"token","text":" 0 "}
+{"type":"token","text":"var(--space-8);\\"}
+{"type":"token","text":"n    "}
+{"type":"token","text":"}\\n\\n    .footer"}
+{"type":"token","text":"-content {\\n      display:"}
+{"type":"token","text":" grid;\\n      grid-template-"}
+{"type":"token","text":"columns: "}
+{"type":"token","text":"2"}
+{"type":"token","text":"fr 1fr "}
+{"type":"token","text":"1fr "}
+{"type":"token","text":"1fr;\\n      gap: var"}
+{"type":"token","text":"(--space-12"}
+{"type":"token","text":");\\n      "}
+{"type":"token","text":"margin-bottom: var(--space"}
+{"type":"token","text":"-12"}
+{"type":"token","text":");\\n    }\\n\\"}
+{"type":"token","text":"n    .footer-brand"}
+{"type":"token","text":" h"}
+{"type":"token","text":"3"}
+{"type":"token","text":" {\\n      font-family"}
+{"type":"token","text":": 'Playfair Display"}
+{"type":"token","text":"', serif;\\n      font-size"}
+{"type":"token","text":": var(--text-2xl"}
+{"type":"token","text":");\\n      font-weight:"}
+{"type":"token","text":" 700;\\n      margin-bottom"}
+{"type":"token","text":": var(--space-4)"}
+{"type":"token","text":";\\n    "}
+{"type":"token","text":"}\\n\\n    .footer"}
+{"type":"token","text":"-brand p {\\n      font"}
+{"type":"token","text":"-size: var(--text-"}
+{"type":"token","text":"base);\\n      opacity"}
+{"type":"token","text":": 0.9"}
+{"type":"token","text":";\\n      "}
+{"type":"token","text":"line-height: 1.6"}
+{"type":"token","text":";\\n      "}
+{"type":"token","text":"font"}
+{"type":"token","text":"-weight: 300;\\n    "}
+{"type":"token","text":"}\\n\\n    .footer"}
+{"type":"token","text":"-section"}
+{"type":"token","text":" h"}
+{"type":"token","text":"4 {\\n      font"}
+{"type":"token","text":"-size"}
+{"type":"token","text":": var(--text-base)"}
+{"type":"token","text":";\\n      font-weight: "}
+{"type":"token","text":"600;\\n      margin-bottom:"}
+{"type":"token","text":" var(--space-4"}
+{"type":"token","text":");\\n      "}
+{"type":"token","text":"text"}
+{"type":"token","text":"-transform: uppercase;\\n      letter"}
+{"type":"token","text":"-spacing: 0.05"}
+{"type":"token","text":"em;\\n    }\\n\\"}
+{"type":"token","text":"n    .footer-links"}
+{"type":"token","text":" {\\n      list"}
+{"type":"token","text":"-style: none;\\n      display"}
+{"type":"token","text":": grid;\\n      gap"}
+{"type":"token","text":": var(--space-3"}
+{"type":"token","text":");\\n    }\\n\\"}
+{"type":"token","text":"n    .footer-links a"}
+{"type":"token","text":" {\\n      color: white"}
+{"type":"token","text":";\\n      text-decoration: none"}
+{"type":"token","text":";\\n      font"}
+{"type":"token","text":"-size: var(--text-"}
+{"type":"token","text":"sm);\\n      opacity"}
+{"type":"token","text":": 0.8;\\n      "}
+{"type":"token","text":"transition: opacity 0.2s"}
+{"type":"token","text":" var(--ease-out);\\"}
+{"type":"token","text":"n    }\\n\\n    "}
+{"type":"token","text":".footer-links a:hover "}
+{"type":"token","text":"{\\n      opacity: 1;\\"}
+{"type":"token","text":"n    }\\n\\n    "}
+{"type":"token","text":".footer-bottom"}
+{"type":"token","text":" {\\n      padding"}
+{"type":"token","text":"-"}
+{"type":"token","text":"top: var(--space-8"}
+{"type":"token","text":");\\n      border-top:"}
+{"type":"token","text":" 1px solid rgba"}
+{"type":"token","text":"(255, 255, 255"}
+{"type":"token","text":", 0.2"}
+{"type":"token","text":");\\n      display"}
+{"type":"token","text":": flex;\\n      justify-content"}
+{"type":"token","text":": space-between;\\n      align"}
+{"type":"token","text":"-items: center;\\n      "}
+{"type":"token","text":"font"}
+{"type":"token","text":"-size: var(--text-"}
+{"type":"token","text":"sm);\\n      opacity"}
+{"type":"token","text":": 0.8"}
+{"type":"token","text":";\\n    }\\n\\n"}
+{"type":"token","text":"    .reveal"}
+{"type":"token","text":" "}
+{"type":"token","text":"{\\n      opacity: 0;\\"}
+{"type":"token","text":"n      transform"}
+{"type":"token","text":": translateY"}
+{"type":"token","text":"(30"}
+{"type":"token","text":"px);\\n      transition: opacity"}
+{"type":"token","text":" 0.6"}
+{"type":"token","text":"s var(--ease-out),"}
+{"type":"token","text":" transform 0.6s var("}
+{"type":"token","text":"--ease-out);\\n    "}
+{"type":"token","text":"}\\n\\n    .reveal"}
+{"type":"token","text":".visible"}
+{"type":"token","text":" {\\n      opacity: 1"}
+{"type":"token","text":";\\n      transform: translateY("}
+{"type":"token","text":"0);\\n    }\\n"}
+{"type":"token","text":"\\n    .reveal-"}
+{"type":"token","text":"st"}
+{"type":"token","text":"agger >"}
+{"type":"token","text":" *"}
+{"type":"token","text":" {\\n      opacity"}
+{"type":"token","text":": 0;\\n      transform:"}
+{"type":"token","text":" translateY(30px);\\n"}
+{"type":"token","text":"      transition: opacity 0.6"}
+{"type":"token","text":"s var(--ease-out),"}
+{"type":"token","text":" transform 0.6s var("}
+{"type":"token","text":"--ease-out);\\n    "}
+{"type":"token","text":"}\\n\\n    .reveal"}
+{"type":"token","text":"-stagger."}
+{"type":"token","text":"visible > *"}
+{"type":"token","text":":"}
+{"type":"token","text":"nth-child(1) {"}
+{"type":"token","text":" transition-delay: 0.05"}
+{"type":"token","text":"s; }\\n    .reveal"}
+{"type":"token","text":"-stagger.visible > *:"}
+{"type":"token","text":"nth-child(2) { transition"}
+{"type":"token","text":"-delay: 0.1s"}
+{"type":"token","text":"; }\\n    .reveal-"}
+{"type":"token","text":"stagger.visible > *:nth"}
+{"type":"token","text":"-child(3) { transition-"}
+{"type":"token","text":"delay: 0.15s;"}
+{"type":"token","text":" }\\n    .reveal-st"}
+{"type":"token","text":"agger.visible > *:nth-"}
+{"type":"token","text":"child(4) { transition-delay"}
+{"type":"token","text":": 0.2s; "}
+{"type":"token","text":"}\\n    .reveal-stagger"}
+{"type":"token","text":".visible > *:nth-child"}
+{"type":"token","text":"(5) { transition-delay:"}
+{"type":"token","text":" 0.25s; }\\"}
+{"type":"token","text":"n\\"}
+{"type":"token","text":"n    .reveal-stagger."}
+{"type":"token","text":"visible > *"}
+{"type":"token","text":" {\\n      opacity: 1"}
+{"type":"token","text":";\\n      transform: translateY("}
+{"type":"token","text":"0);\\n    }\\n"}
+{"type":"token","text":"\\n    @media (pre"}
+{"type":"token","text":"fers-reduced-motion: reduce)"}
+{"type":"token","text":" {\\n      *"}
+{"type":"token","text":" {\\n        animation-duration:"}
+{"type":"token","text":" 0.01ms"}
+{"type":"token","text":" !important;\\n        animation-iteration"}
+{"type":"token","text":"-count: 1 !important"}
+{"type":"token","text":";\\n        transition"}
+{"type":"token","text":"-duration: 0.01ms"}
+{"type":"token","text":" !important;\\n      }\\n"}
+{"type":"token","text":"      "}
+{"type":"token","text":".reveal,"}
+{"type":"token","text":" .reveal-stagger >"}
+{"type":"token","text":" * {\\n        opacity"}
+{"type":"token","text":": 1;\\"}
+{"type":"token","text":"n        transform: none;\\"}
+{"type":"token","text":"n      }\\n    }\\"}
+{"type":"token","text":"n\\"}
+{"type":"token","text":"n    @media (max"}
+{"type":"token","text":"-width: 768px) "}
+{"type":"token","text":"{\\n      .nav"}
+{"type":"token","text":"-links {\\n        display:"}
+{"type":"token","text":" none;\\n      }\\n\\"}
+{"type":"token","text":"n      .menu"}
+{"type":"token","text":"-toggle,"}
+{"type":"token","text":"\\n      .mobile-menu "}
+{"type":"token","text":"{\\n        display: block;\\n"}
+{"type":"token","text":"      }\\n\\n      ."}
+{"type":"token","text":"hero-content,"}
+{"type":"token","text":"\\n      .approach"}
+{"type":"token","text":"-content,\\n      .contact"}
+{"type":"token","text":"-grid"}
+{"type":"token","text":" {\\n        grid-template-"}
+{"type":"token","text":"columns: 1fr;\\n        "}
+{"type":"token","text":"gap: var(--space-12"}
+{"type":"token","text":");\\n      }\\n\\"}
+{"type":"token","text":"n      .approach"}
+{"type":"token","text":"-text"}
+{"type":"token","text":" {\\n        position"}
+{"type":"token","text":": static"}
+{"type":"token","text":";\\n      }\\n\\n"}
+{"type":"token","text":"      .values"}
+{"type":"token","text":"-grid,"}
+{"type":"token","text":"\\n      .footer"}
+{"type":"token","text":"-content {\\n        grid-"}
+{"type":"token","text":"template-columns: "}
+{"type":"token","text":"1fr;\\n        "}
+{"type":"token","text":"gap: var(--space-8"}
+{"type":"token","text":");\\n      }\\n\\"}
+{"type":"token","text":"n      .service"}
+{"type":"token","text":"-item {\\n        grid"}
+{"type":"token","text":"-template"}
+{"type":"token","text":"-columns: 1fr;\\n"}
+{"type":"token","text":"        "}
+{"type":"token","text":"gap: var(--space-4"}
+{"type":"token","text":");\\n      }\\n\\"}
+{"type":"token","text":"n      .footer-bottom"}
+{"type":"token","text":" {\\n        flex"}
+{"type":"token","text":"-direction: column;\\n        gap"}
+{"type":"token","text":": var(--space-4"}
+{"type":"token","text":");\\n        "}
+{"type":"token","text":"text-align: center;\\n      "}
+{"type":"token","text":"}\\n    }\\n  "}
+{"type":"token","text":"</style>\\n</head>\\n"}
+{"type":"token","text":"<body>\\n  "}
+{"type":"token","text":"<a href=\\\"#main"}
+{"type":"token","text":"\\\""}
+{"type":"token","text":" class=\\\"skip-link\\\">Skip"}
+{"type":"token","text":" to main content</a>\\n  "}
+{"type":"token","text":"\\n  <nav"}
+{"type":"token","text":">\\"}
+{"type":"token","text":"n    <div class=\\\"nav-"}
+{"type":"token","text":"container"}
+{"type":"token","text":"\\\">\\n      "}
+{"type":"token","text":"<a href=\\\"#home"}
+{"type":"token","text":"\\\" class=\\\"logo"}
+{"type":"token","text":"\\\""}
+{"type":"token","text":" onclick"}
+{"type":"token","text":"=\\\"show"}
+{"type":"token","text":"Page"}
+{"type":"token","text":"('home');"}
+{"type":"token","text":" return false;\\\">Summit"}
+{"type":"token","text":" Wealth"}
+{"type":"token","text":"</a>\\n      <ul class"}
+{"type":"token","text":"=\\\"nav-links\\\">\\n        "}
+{"type":"token","text":"<li><a href=\\\"#home"}
+{"type":"token","text":"\\\""}
+{"type":"token","text":" class"}
+{"type":"token","text":"=\\\"active"}
+{"type":"token","text":"\\\""}
+{"type":"token","text":" onclick=\\\"showPage('home'); return"}
+{"type":"token","text":" false;\\\">Home</a></li"}
+{"type":"token","text":">\\n        <li><a href"}
+{"type":"token","text":"=\\\"#about\\\" onclick=\\\"showPage"}
+{"type":"token","text":"('about'); return false;\\\">About"}
+{"type":"token","text":"</a></li>\\n        "}
+{"type":"token","text":"<li><a href=\\\"#services\\\""}
+{"type":"token","text":" onclick=\\\"showPage('services'); return"}
+{"type":"token","text":" false;\\\">Services</a></li"}
+{"type":"token","text":">\\n        <li><a href"}
+{"type":"token","text":"=\\\"#contact"}
+{"type":"token","text":"\\\" onclick=\\\"showPage('contact');"}
+{"type":"token","text":" return false;\\\">Contact</a>"}
+{"type":"token","text":"</li>\\n      </ul>\\n"}
+{"type":"token","text":"      "}
+{"type":"token","text":"<button"}
+{"type":"token","text":" class=\\\"theme"}
+{"type":"token","text":"-toggle\\\" aria"}
+{"type":"token","text":"-label=\\\"Toggle dark"}
+{"type":"token","text":" mode\\\""}
+{"type":"token","text":">\\n        <svg"}
+{"type":"token","text":" view"}
+{"type":"token","text":"Box=\\\"0 0 24 "}
+{"type":"token","text":"24\\\" fill=\\\"none\\\" stroke=\\\""}
+{"type":"token","text":"currentColor\\\" stroke-width=\\\"2"}
+{"type":"token","text":"\\\""}
+{"type":"token","text":" stroke-linecap=\\\"round\\\""}
+{"type":"token","text":" stroke-linejoin=\\\"round\\\""}
+{"type":"token","text":">\\n          <circle"}
+{"type":"token","text":" cx=\\\"12\\\" cy=\\\"12\\\""}
+{"type":"token","text":" r=\\\"5\\\"/>\\n          "}
+{"type":"token","text":"<line"}
+{"type":"token","text":" x1=\\\"12\\\" y1=\\\""}
+{"type":"token","text":"1"}
+{"type":"token","text":"\\\" x2=\\\"12\\\" y2"}
+{"type":"token","text":"=\\\"3\\\"/>\\n          "}
+{"type":"token","text":"<line x1=\\\"12\\\" y1"}
+{"type":"token","text":"=\\\"21\\\" x2=\\\"12\\\""}
+{"type":"token","text":" y2=\\\"23\\\"/>\\n"}
+{"type":"token","text":"          <line x1=\\\"4."}
+{"type":"token","text":"22\\\" y1=\\\"4"}
+{"type":"token","text":".22\\\""}
+{"type":"token","text":" x2=\\\"5.64\\\" y"}
+{"type":"token","text":"2=\\\"5.64\\\"/>\\"}
+{"type":"token","text":"n          <line x1=\\\"18"}
+{"type":"token","text":".36\\\" y1=\\\"18."}
+{"type":"token","text":"36\\\" x2=\\\"19.78"}
+{"type":"token","text":"\\\" y2=\\\"19.78\\"}
+{"type":"token","text":"\"/>\\n          <line x1"}
+{"type":"token","text":"=\\\"1\\\" y1=\\\"12\\\""}
+{"type":"token","text":" x2=\\\"3\\\" y2=\\\""}
+{"type":"token","text":"12\\\"/>\\n          <line"}
+{"type":"token","text":" x1=\\\"21\\\" y1=\\\""}
+{"type":"token","text":"12\\\" x2=\\\"23\\\" y"}
+{"type":"token","text":"2=\\\"12\\\"/>\\n          "}
+{"type":"token","text":"<line x1=\\\"4.22"}
+{"type":"token","text":"\\\" y1=\\\"19.78\\\""}
+{"type":"token","text":" x2=\\\"5.64\\\" y"}
+{"type":"token","text":"2=\\\"18.36\\\"/>\\"}
+{"type":"token","text":"n          <line x1=\\\"18"}
+{"type":"token","text":".36\\\" y1=\\\"5."}
+{"type":"token","text":"64\\\" x2=\\\"19.78"}
+{"type":"token","text":"\\\" y2=\\\"4.22\\"}
+{"type":"token","text":"\"/>\\n        </svg>\\n"}
+{"type":"token","text":"      </button>\\n      "}
+{"type":"token","text":"<button class=\\\"menu-toggle\\\""}
+{"type":"token","text":" aria-label=\\\"Toggle menu\\\">\\"}
+{"type":"token","text":"n        <svg viewBox=\\\"0"}
+{"type":"token","text":" 0 24 24\\\" fill"}
+{"type":"token","text":"=\\\"none\\\" stroke=\\\"currentColor\\\""}
+{"type":"token","text":" stroke-width=\\\"2\\\" stroke-"}
+{"type":"token","text":"linecap=\\\"round\\\" stroke-"}
+{"type":"token","text":"linejoin=\\\"round\\\">\\n"}
+{"type":"token","text":"          <line x1=\\\"3\\\""}
+{"type":"token","text":" y1=\\\"12\\\" x2=\\\""}
+{"type":"token","text":"21\\\""}
+{"type":"token","text":" y2=\\\"12\\\"/>\\n"}
+{"type":"token","text":"          <line x1=\\\"3\\\""}
+{"type":"token","text":" y1=\\\"6\\\" x2=\\\""}
+{"type":"token","text":"21\\\" y2=\\\"6\\\"/"}
+{"type":"token","text":">\\n          <line x1=\\\""}
+{"type":"token","text":"3\\\" y1=\\\"18\\\" x"}
+{"type":"token","text":"2=\\\"21\\\" y2=\\\"18"}
+{"type":"token","text":"\\\"/>\\n        </svg>\\"}
+{"type":"token","text":"n      </button>\\n    "}
+{"type":"token","text":"</div>\\n  </nav>\\n"}
+{"type":"token","text":"\\"}
+{"type":"token","text":"n  <div"}
+{"type":"token","text":" class=\\\"mobile"}
+{"type":"token","text":"-menu\\\""}
+{"type":"token","text":">\\n    <ul"}
+{"type":"token","text":" class=\\\"nav"}
+{"type":"token","text":"-links\\\">\\n      <li"}
+{"type":"token","text":"><a href=\\\"#home\\\" onclick"}
+{"type":"token","text":"=\\\"showPage('home'); return false"}
+{"type":"token","text":";\\\">Home</a></li>\\"}
+{"type":"token","text":"n      <li><a href=\\\""}
+{"type":"token","text":"#about\\\" onclick=\\\"showPage('"}
+{"type":"token","text":"about'); return false;\\\">About"}
+{"type":"token","text":"</a></li>\\n      <li"}
+{"type":"token","text":"><a href=\\\"#services\\\" onclick"}
+{"type":"token","text":"=\\\"showPage('services'); return false"}
+{"type":"token","text":";\\\">Services</a></li>\\"}
+{"type":"token","text":"n      <li><a href=\\\""}
+{"type":"token","text":"#contact\\\" onclick=\\\"showPage('"}
+{"type":"token","text":"contact'); return false;\\\">Contact"}
+{"type":"token","text":"</a></li>\\n    </ul"}
+{"type":"token","text":">\\n  </div>\\n\\"}
+{"type":"token","text":"n  <main"}
+{"type":"token","text":" id=\\\"main\\\">\\n    "}
+{"type":"token","text":"<div"}
+{"type":"token","text":" class=\\\"page"}
+{"type":"token","text":" active"}
+{"type":"token","text":"\\\" id=\\\"home\\\">\\n      "}
+{"type":"token","text":"<section class=\\\"hero\\\">\\n"}
+{"type":"token","text":"        <div class=\\\"container"}
+{"type":"token","text":"\\\">\\n          <div class=\\\""}
+{"type":"token","text":"hero-content reveal"}
+{"type":"token","text":"-"}
+{"type":"token","text":"stagger\\\">\\n            <div"}
+{"type":"token","text":">\\"}
+{"type":"token","text":"n              <h1>Build"}
+{"type":"token","text":" wealth"}
+{"type":"token","text":" with"}
+{"type":"token","text":" confidence and"}
+{"type":"token","text":" clarity"}
+{"type":"token","text":"</h1>\\n              <p"}
+{"type":"token","text":">"}
+{"type":"token","text":"Comprehensive"}
+{"type":"token","text":" financial planning and"}
+{"type":"token","text":" investment management"}
+{"type":"token","text":" designed"}
+{"type":"token","text":" around"}
+{"type":"token","text":" your unique goals and values"}
+{"type":"token","text":"."}
+{"type":"token","text":"</p>\\n              "}
+{"type":"token","text":"<a href=\\\"#contact\\\" class=\\\"hero"}
+{"type":"token","text":"-c"}
+{"type":"token","text":"ta\\\""}
+{"type":"token","text":" onclick=\\\"showPage('contact'); return"}
+{"type":"token","text":" false;\\\">Schedule"}
+{"type":"token","text":" a consultation"}
+{"type":"token","text":"</a>\\n            </div>\\"}
+{"type":"token","text":"n            <div class=\\\"hero-"}
+{"type":"token","text":"aside"}
+{"type":"token","text":"\\\">\\n              <h"}
+{"type":"token","text":"3"}
+{"type":"token","text":">Our track"}
+{"type":"token","text":" record"}
+{"type":"token","text":"</h3>\\n              <div"}
+{"type":"token","text":" class=\\\"stat"}
+{"type":"token","text":"-grid"}
+{"type":"token","text":"\\\">\\n                <div class=\\\""}
+{"type":"token","text":"stat\\\""}
+{"type":"token","text":">\\n                  <span"}
+{"type":"token","text":" class=\\\"stat-number"}
+{"type":"token","text":"\\\">30"}
+{"type":"token","text":"+</span>\\n                  "}
+{"type":"token","text":"<span class=\\\"stat-label\\\">"}
+{"type":"token","text":"Years combined"}
+{"type":"token","text":" experience"}
+{"type":"token","text":"</span>\\n                </div>\\"}
+{"type":"token","text":"n                <div class=\\\"stat\\\""}
+{"type":"token","text":">\\n                  <span class=\\\""}
+{"type":"token","text":"stat-number\\\">$"}
+{"type":"token","text":"500"}
+{"type":"token","text":"M+</span>\\n                  "}
+{"type":"token","text":"<span class=\\\"stat-label\\"}
+{"type":"token","text":"\">Assets"}
+{"type":"token","text":" under"}
+{"type":"token","text":" management</span>\\n                </div"}
+{"type":"token","text":">\\n                <div class=\\\"stat"}
+{"type":"token","text":"\\\">\\n                  <span class"}
+{"type":"token","text":"=\\\"stat-number\\\">200+"}
+{"type":"token","text":"</span>\\n                  <span"}
+{"type":"token","text":" class=\\\"stat-label\\\">"}
+{"type":"token","text":"Families"}
+{"type":"token","text":" served</span>\\n                </div"}
+{"type":"token","text":">\\n              </div>\\n            "}
+{"type":"token","text":"</div>\\n          </div>\\"}
+{"type":"token","text":"n        </div>\\n      "}
+{"type":"token","text":"</section>\\n\\n      <section"}
+{"type":"token","text":" class=\\\"services"}
+{"type":"token","text":"\\\""}
+{"type":"token","text":">\\n        <div class=\\\"container"}
+{"type":"token","text":"\\\">\\n          <div"}
+{"type":"token","text":" class=\\\"section"}
+{"type":"token","text":"-header reveal"}
+{"type":"token","text":"\\\""}
+{"type":"token","text":">\\n            <div"}
+{"type":"token","text":" class=\\\"section-label"}
+{"type":"token","text":"\\\">Our expertise"}
+{"type":"token","text":"</div>\\n            <h2"}
+{"type":"token","text":" "}
+{"type":"token","text":"class=\\\"section-title\\\">Financial"}
+{"type":"token","text":" planning"}
+{"type":"token","text":" tail"}
+{"type":"token","text":"ored to you</h2>\\n"}
+{"type":"token","text":"            "}
+{"type":"token","text":"<p class=\\\"section-description\\"}
+{"type":"token","text":"\">We take"}
+{"type":"token","text":" a"}
+{"type":"token","text":" holistic approach to wealth management"}
+{"type":"token","text":", addressing"}
+{"type":"token","text":" every"}
+{"type":"token","text":" aspect of your financial life with"}
+{"type":"token","text":" expertise and care.</p>\\n          "}
+{"type":"token","text":"</div>\\n          "}
+{"type":"token","text":"<div class=\\\"service"}
+{"type":"token","text":"-list"}
+{"type":"token","text":" reveal-"}
+{"type":"token","text":"stagger\\\">\\n            <div"}
+{"type":"token","text":" class=\\\"service-item\\\">\\n"}
+{"type":"token","text":"              <h"}
+{"type":"token","text":"3>Investment Management"}
+{"type":"token","text":"</h3>\\n              <p"}
+{"type":"token","text":">Custom"}
+{"type":"token","text":" portfol"}
+{"type":"token","text":"ios built"}
+{"type":"token","text":" on"}
+{"type":"token","text":" sound"}
+{"type":"token","text":" principles"}
+{"type":"token","text":","}
+{"type":"token","text":" aligned"}
+{"type":"token","text":" with your risk tolerance and time horizon."}
+{"type":"token","text":" We monitor"}
+{"type":"token","text":" and rebalance regularly"}
+{"type":"token","text":" to keep"}
+{"type":"token","text":" you"}
+{"type":"token","text":" on track.</p>\\n            "}
+{"type":"token","text":"</div>\\n            <div class=\\\""}
+{"type":"token","text":"service-item\\\">\\n              "}
+{"type":"token","text":"<h3>"}
+{"type":"token","text":"Retirement Planning</h3>\\n              "}
+{"type":"token","text":"<p>Strategic"}
+{"type":"token","text":" planning"}
+{"type":"token","text":" for your retirement years, including"}
+{"type":"token","text":" income"}
+{"type":"token","text":" proj"}
+{"type":"token","text":"ections, Social"}
+{"type":"token","text":" Security optimization, and tax-efficient withdrawal"}
+{"type":"token","text":" strategies.</p>\\n            </div"}
+{"type":"token","text":">\\n            <div class=\\\"service"}
+{"type":"token","text":"-item\\\">\\n              <h"}
+{"type":"token","text":"3>Estate Planning</h3>\\"}
+{"type":"token","text":"n              <p>Coordinate"}
+{"type":"token","text":" with your legal"}
+{"type":"token","text":" team to ensure your assets pass"}
+{"type":"token","text":" according to your wishes while"}
+{"type":"token","text":" minimizing tax implications for"}
+{"type":"token","text":" your heirs.</p>\\n            "}
+{"type":"token","text":"</div>\\n            <div class"}
+{"type":"token","text":"=\\\"service-item\\\">\\n              "}
+{"type":"token","text":"<h3>Tax Strategy"}
+{"type":"token","text":"</h3>\\n              <p"}
+{"type":"token","text":">Pro"}
+{"type":"token","text":"active tax planning to reduce"}
+{"type":"token","text":" your lifetime"}
+{"type":"token","text":" tax burden through"}
+{"type":"token","text":" strategic asset"}
+{"type":"token","text":" location,"}
+{"type":"token","text":" Roth conversions, and charitable"}
+{"type":"token","text":" giving strategies"}
+{"type":"token","text":".</p>\\n            </div>\\"}
+{"type":"token","text":"n            "}
+{"type":"token","text":"<div class=\\\"service-item\\\""}
+{"type":"token","text":">\\n              <h3>Risk"}
+{"type":"token","text":" Management</h3>\\n              "}
+{"type":"token","text":"<p>Comprehensive"}
+{"type":"token","text":" insurance"}
+{"type":"token","text":" review"}
+{"type":"token","text":" to"}
+{"type":"token","text":" protect your assets, income"}
+{"type":"token","text":", and legacy"}
+{"type":"token","text":" from unexpected events.</p>\\n            "}
+{"type":"token","text":"</div>\\n          </div>\\"}
+{"type":"token","text":"n        </div>\\n      "}
+{"type":"token","text":"</section>\\n\\n      <section"}
+{"type":"token","text":" class=\\\"approach\\\">\\n        "}
+{"type":"token","text":"<div class=\\\"container\\\">\\n          "}
+{"type":"token","text":"<div class=\\\"approach"}
+{"type":"token","text":"-content\\\""}
+{"type":"token","text":">\\n            <div class=\\\"approach"}
+{"type":"token","text":"-text reveal\\\""}
+{"type":"token","text":">\\n              <div"}
+{"type":"token","text":" class=\\\"section-label"}
+{"type":"token","text":"\\\">Our process"}
+{"type":"token","text":"</div>\\n              <h2"}
+{"type":"token","text":" class=\\\"section-title\\\">"}
+{"type":"token","text":"A"}
+{"type":"token","text":" partnership"}
+{"type":"token","text":" built"}
+{"type":"token","text":" on trust</h2>\\n              "}
+{"type":"token","text":"<p class=\\\"section-description\\"}
+{"type":"token","text":"\">We believe"}
+{"type":"token","text":" financial"}
+{"type":"token","text":" planning is"}
+{"type":"token","text":" deeply"}
+{"type":"token","text":" personal. Our"}
+{"type":"token","text":" process"}
+{"type":"token","text":" is designed to understand"}
+{"type":"token","text":" what"}
+{"type":"token","text":" matters most to you,"}
+{"type":"token","text":" then build"}
+{"type":"token","text":" a comprehensive"}
+{"type":"token","text":" strategy that brings"}
+{"type":"token","text":" your goals within"}
+{"type":"token","text":" reach.</p>\\n            </div"}
+{"type":"token","text":">\\n            <div class=\\\"approach"}
+{"type":"token","text":"-steps"}
+{"type":"token","text":" reveal"}
+{"type":"token","text":"-stagger\\\">\\n              "}
+{"type":"token","text":"<div class=\\\"approach"}
+{"type":"token","text":"-step\\\">\\n                <span"}
+{"type":"token","text":" class=\\\"step-number\\\">1"}
+{"type":"token","text":"</span>\\n                <h"}
+{"type":"token","text":"3>Discovery</h3>\\n"}
+{"type":"token","text":"                <p>We start by listening"}
+{"type":"token","text":"."}
+{"type":"token","text":" What"}
+{"type":"token","text":" are your goals"}
+{"type":"token","text":"? What keeps"}
+{"type":"token","text":" you up at night? What does"}
+{"type":"token","text":" success look like to you?"}
+{"type":"token","text":" This conversation"}
+{"type":"token","text":" forms"}
+{"type":"token","text":" the foundation of everything"}
+{"type":"token","text":" we do together"}
+{"type":"token","text":".</p>\\n              </div>\\"}
+{"type":"token","text":"n              <div class=\\\"approach-"}
+{"type":"token","text":"step\\\">\\n                <span class"}
+{"type":"token","text":"=\\\"step-number\\\">2"}
+{"type":"token","text":"</span>\\n                <h3>"}
+{"type":"token","text":"Analysis"}
+{"type":"token","text":"</h3>\\n                <p"}
+{"type":"token","text":">Our"}
+{"type":"token","text":" team"}
+{"type":"token","text":" condu"}
+{"type":"token","text":"cts a comprehensive review"}
+{"type":"token","text":" of your financial"}
+{"type":"token","text":" situation —"}
+{"type":"token","text":" assets"}
+{"type":"token","text":", li"}
+{"type":"token","text":"abilities, income, expenses, risk"}
+{"type":"token","text":" tolerance, and time"}
+{"type":"token","text":" horizon."}
+{"type":"token","text":"</p>\\n              </div>\\n"}
+{"type":"token","text":"              <div class=\\\"approach-step"}
+{"type":"token","text":"\\\">\\n                <span class=\\\""}
+{"type":"token","text":"step-number\\\">3</span"}
+{"type":"token","text":">\\n                <h3>Strategy"}
+{"type":"token","text":"</h3>\\n                <p"}
+{"type":"token","text":">We"}
+{"type":"token","text":" present"}
+{"type":"token","text":" a customized financial"}
+{"type":"token","text":" plan with"}
+{"type":"token","text":" clear recommendations"}
+{"type":"token","text":" across"}
+{"type":"token","text":" investment"}
+{"type":"token","text":" management"}
+{"type":"token","text":", retirement planning, tax"}
+{"type":"token","text":" strategy"}
+{"type":"token","text":", and estate planning.</p>\\n"}
+{"type":"token","text":"              </div>\\n              <div"}
+{"type":"token","text":" class=\\\"approach-step\\\">\\n"}
+{"type":"token","text":"                <span class=\\\"step-number"}
+{"type":"token","text":"\\\">4</span>\\n                "}
+{"type":"token","text":"<h3>Implementation</h3"}
+{"type":"token","text":">\\n                <p>Once"}
+{"type":"token","text":" you"}
+{"type":"token","text":" approve the"}
+{"type":"token","text":" plan, we handle"}
+{"type":"token","text":" the execution"}
+{"type":"token","text":" —"}
+{"type":"token","text":" opening"}
+{"type":"token","text":" accounts, transfer"}
+{"type":"token","text":"ring assets, coord"}
+{"type":"token","text":"inating with your other"}
+{"type":"token","text":" advisors."}
+{"type":"token","text":"</p>\\n              </div>\\n"}
+{"type":"token","text":"              <div class=\\\"approach-step"}
+{"type":"token","text":"\\\">\\n                <span class=\\\""}
+{"type":"token","text":"step-number\\\">5</span"}
+{"type":"token","text":">\\n                <h3>"}
+{"type":"token","text":"Ongoing"}
+{"type":"token","text":" guidance"}
+{"type":"token","text":"</h3>\\n                <p"}
+{"type":"token","text":">Your"}
+{"type":"token","text":" financial life"}
+{"type":"token","text":" evol"}
+{"type":"token","text":"ves. We meet"}
+{"type":"token","text":" regularly to review"}
+{"type":"token","text":" progress, adjust for"}
+{"type":"token","text":" life changes, and ensure you"}
+{"type":"token","text":" stay"}
+{"type":"token","text":" on track toward your goals.</p>\\"}
+{"type":"token","text":"n              </div>\\n            "}
+{"type":"token","text":"</div>\\n          </div>\\n"}
+{"type":"token","text":"        </div>\\n      </section"}
+{"type":"token","text":">\\n\\n      <section class"}
+{"type":"token","text":"=\\\"testimon"}
+{"type":"token","text":"ial"}
+{"type":"token","text":"\\\">\\n        <div class=\\\""}
+{"type":"token","text":"container\\\">\\n          <div class"}
+{"type":"token","text":"=\\\"testimonial-content reveal"}
+{"type":"token","text":"\\\">\\n            <p"}
+{"type":"token","text":" class=\\\"quote"}
+{"type":"token","text":"\\\">Summit"}
+{"type":"token","text":" Wealth helped"}
+{"type":"token","text":" us"}
+{"type":"token","text":" navigate a"}
+{"type":"token","text":" complex financial transition"}
+{"type":"token","text":" with clarity"}
+{"type":"token","text":" and confidence. Their"}
+{"type":"token","text":" hol"}
+{"type":"token","text":"istic approach gave"}
+{"type":"token","text":" us peace"}
+{"type":"token","text":" of mind that"}
+{"type":"token","text":" every"}
+{"type":"token","text":" detail"}
+{"type":"token","text":" was considered"}
+{"type":"token","text":".</p>\\n            <div class"}
+{"type":"token","text":"=\\\"testimonial-author\\\">\\n"}
+{"type":"token","text":"              <div"}
+{"type":"token","text":" class=\\\"author-info"}
+{"type":"token","text":"\\\">\\n                <h"}
+{"type":"token","text":"4>["}
+{"type":"token","text":"Client"}
+{"type":"token","text":" Name]</h4>\\n                "}
+{"type":"token","text":"<p>Retired"}
+{"type":"token","text":" Physician"}
+{"type":"token","text":"</p>\\n              </div>\\"}
+{"type":"token","text":"n            "}
+{"type":"token","text":"</div>\\n          </div>\\"}
+{"type":"token","text":"n        </div>\\n      "}
+{"type":"token","text":"</section>\\n\\n      <section"}
+{"type":"token","text":" class=\\\"c"}
+{"type":"token","text":"ta-"}
+{"type":"token","text":"section\\\">\\n        <div class"}
+{"type":"token","text":"=\\\"container\\\">\\n          <h"}
+{"type":"token","text":"2>"}
+{"type":"token","text":"Ready to take"}
+{"type":"token","text":" the"}
+{"type":"token","text":" next step?</h2>\\n"}
+{"type":"token","text":"          <p"}
+{"type":"token","text":">"}
+{"type":"token","text":"Schedule a"}
+{"type":"token","text":" compl"}
+{"type":"token","text":"imentary consultation to discuss your financial"}
+{"type":"token","text":" goals and see"}
+{"type":"token","text":" if"}
+{"type":"token","text":" we're the right fit."}
+{"type":"token","text":"</p>\\n          <a href=\\\""}
+{"type":"token","text":"#contact\\\" class=\\\"cta-"}
+{"type":"token","text":"button\\\" onclick=\\\"showPage('contact"}
+{"type":"token","text":"'); return false;\\\">Schedule a"}
+{"type":"token","text":" consultation</a>\\n        </div"}
+{"type":"token","text":">\\n      </section>\\n    "}
+{"type":"token","text":"</div>\\n\\"}
+{"type":"token","text":"n    <div"}
+{"type":"token","text":" class=\\\"page\\\" id=\\\"about\\\""}
+{"type":"token","text":">\\n      <section class=\\\"about"}
+{"type":"token","text":"-hero\\\">\\n        <div"}
+{"type":"token","text":" class=\\\"container\\\">\\n          "}
+{"type":"token","text":"<div class=\\\"about"}
+{"type":"token","text":"-intro"}
+{"type":"token","text":" reveal"}
+{"type":"token","text":"\\\">\\n            <h"}
+{"type":"token","text":"1>Our"}
+{"type":"token","text":" story</h1>\\n            "}
+{"type":"token","text":"<p>Summit"}
+{"type":"token","text":" Wealth was"}
+{"type":"token","text":" founded on a"}
+{"type":"token","text":" simple belief"}
+{"type":"token","text":": financial"}
+{"type":"token","text":" planning should be personal, transparent"}
+{"type":"token","text":", and focused"}
+{"type":"token","text":" on what"}
+{"type":"token","text":" truly matters to"}
+{"type":"token","text":" you. For"}
+{"type":"token","text":" over three"}
+{"type":"token","text":" decades, we've helped families"}
+{"type":"token","text":" build and"}
+{"type":"token","text":" preserve wealth through"}
+{"type":"token","text":" discipl"}
+{"type":"token","text":"ined planning and thought"}
+{"type":"token","text":"ful guidance"}
+{"type":"token","text":".</p>\\n          </div>\\"}
+{"type":"token","text":"n        "}
+{"type":"token","text":"</div>\\n      </section>\\"}
+{"type":"token","text":"n\\n      <section class=\\\""}
+{"type":"token","text":"values"}
+{"type":"token","text":"\\\">\\n        <div class=\\\""}
+{"type":"token","text":"container\\\">\\n          <div class"}
+{"type":"token","text":"=\\\"section"}
+{"type":"token","text":"-header reveal\\\">\\n            "}
+{"type":"token","text":"<div class=\\\"section-label\\\">"}
+{"type":"token","text":"What"}
+{"type":"token","text":" guides"}
+{"type":"token","text":" us</div>\\n            <h"}
+{"type":"token","text":"2 class=\\\"section-title\\"}
+{"type":"token","text":"\">Our principles"}
+{"type":"token","text":"</h2>\\n          "}
+{"type":"token","text":"</div>\\n          <div class"}
+{"type":"token","text":"=\\\"values-grid reveal-stagger"}
+{"type":"token","text":"\\\">\\n            <div class=\\\""}
+{"type":"token","text":"value-card\\\">\\n              "}
+{"type":"token","text":"<div class=\\\"value-icon\\\""}
+{"type":"token","text":">\\n                <svg width"}
+{"type":"token","text":"=\\\"24"}
+{"type":"token","text":"\\\" height=\\\"24\\\" viewBox=\\\""}
+{"type":"token","text":"0 0 24 24\\\""}
+{"type":"token","text":" fill=\\\"none\\\" stroke=\\\"currentColor"}
+{"type":"token","text":"\\\" stroke-width=\\\"2\\\" stroke"}
+{"type":"token","text":"-linecap=\\\"round\\\" stroke"}
+{"type":"token","text":"-linejoin=\\\"round\\\">\\"}
+{"type":"token","text":"n                  <path d=\\\"M"}
+{"type":"token","text":"12 2L"}
+{"type":"token","text":"2 7l"}
+{"type":"token","text":"10 5 10-5-"}
+{"type":"token","text":"10-5z"}
+{"type":"token","text":"\\\"/>\\n                  <path"}
+{"type":"token","text":" d=\\\"M2"}
+{"type":"token","text":" 17"}
+{"type":"token","text":"l10 5 10-5"}
+{"type":"token","text":"\\"}
+{"type":"token","text":"\"/>\\n                  "}
+{"type":"token","text":"<path d=\\\"M2 12"}
+{"type":"token","text":"l10 5 10-5"}
+{"type":"token","text":"\\\"/>\\n                </svg>\\"}
+{"type":"token","text":"n              </div>\\n              "}
+{"type":"token","text":"<h3>Integrity first"}
+{"type":"token","text":"</h3>\\n              <p"}
+{"type":"token","text":">We act"}
+{"type":"token","text":" in"}
+{"type":"token","text":" your"}
+{"type":"token","text":" best interest, always"}
+{"type":"token","text":". As"}
+{"type":"token","text":" fi"}
+{"type":"token","text":"duciaries, we're"}
+{"type":"token","text":" legally"}
+{"type":"token","text":" and"}
+{"type":"token","text":" ethically bound"}
+{"type":"token","text":" to put your needs ahead"}
+{"type":"token","text":" of our own.</p>\\n            "}
+{"type":"token","text":"</div>\\n            <div class"}
+{"type":"token","text":"=\\\"value-card\\\">\\n              "}
+{"type":"token","text":"<div class=\\\"value-icon\\\""}
+{"type":"token","text":">\\n                <svg width=\\\"24"}
+{"type":"token","text":"\\\" height=\\\"24\\\" viewBox=\\\""}
+{"type":"token","text":"0 0 24 24\\\""}
+{"type":"token","text":" fill=\\\"none\\\" stroke=\\\"currentColor"}
+{"type":"token","text":"\\\" stroke-width=\\\"2\\\" stroke"}
+{"type":"token","text":"-linecap=\\\"round\\\" stroke"}
+{"type":"token","text":"-linejoin=\\\"round\\\">\\"}
+{"type":"token","text":"n                  <circle"}
+{"type":"token","text":" cx=\\\"12\\\" cy=\\\"12\\\""}
+{"type":"token","text":" r=\\\"10\\\"/>\\n                "}
+{"type":"token","text":"  <path d=\\\"M12 "}
+{"type":"token","text":"6v6"}
+{"type":"token","text":"l"}
+{"type":"token","text":"4"}
+{"type":"token","text":" 2"}
+{"type":"token","text":"\\\"/>\\n                "}
+{"type":"token","text":"</svg>\\n              </div>\\n"}
+{"type":"token","text":"              <h3>Long"}
+{"type":"token","text":"-term thinking</h3>\\n"}
+{"type":"token","text":"              <p>"}
+{"type":"token","text":"Wealth building"}
+{"type":"token","text":" is a marathon, not a sprint."}
+{"type":"token","text":" We design"}
+{"type":"token","text":" strategies that work"}
+{"type":"token","text":" over decades, not quarters"}
+{"type":"token","text":".</p>\\n            </div>\\"}
+{"type":"token","text":"n            <div class=\\\"value-"}
+{"type":"token","text":"card\\\">\\n              <div class"}
+{"type":"token","text":"=\\\"value-icon\\\">\\n                "}
+{"type":"token","text":"<svg width=\\\"24\\\" height=\\\""}
+{"type":"token","text":"24\\\" viewBox=\\\"0 0"}
+{"type":"token","text":" 24 24\\\" fill=\\\"none"}
+{"type":"token","text":"\\\" stroke=\\\"currentColor\\\" stroke-"}
+{"type":"token","text":"width=\\\"2\\\" stroke-linec"}
+{"type":"token","text":"ap=\\\"round\\\" stroke-linej"}
+{"type":"token","text":"oin=\\\"round\\\">\\n                  "}
+{"type":"token","text":"<path d=\\\"M21"}
+{"type":"token","text":" 16"}
+{"type":"token","text":"V8a2 2 0"}
+{"type":"token","text":" 0"}
+{"type":"token","text":" 0-1-1.73"}
+{"type":"token","text":"l"}
+{"type":"token","text":"-7-4a2 2"}
+{"type":"token","text":" 0 0 0-2"}
+{"type":"token","text":" 0l"}
+{"type":"token","text":"-7 4A2 2"}
+{"type":"token","text":" 0 0 0 3"}
+{"type":"token","text":" 8v8a2 2"}
+{"type":"token","text":" 0 0 0 1"}
+{"type":"token","text":" 1.73l7 4"}
+{"type":"token","text":"a2 2 0 0"}
+{"type":"token","text":" 0 2 0l7"}
+{"type":"token","text":"-4A2 2 0"}
+{"type":"token","text":" 0 0 21 16"}
+{"type":"token","text":"z\\\"/>\\n                  "}
+{"type":"token","text":"<polyline points=\\\"3."}
+{"type":"token","text":"27 6.96 12"}
+{"type":"token","text":" 12.01 20.73"}
+{"type":"token","text":" 6.96\\\"/>\\n"}
+{"type":"token","text":"                  <line"}
+{"type":"token","text":" x1=\\\"12\\\" y1=\\\""}
+{"type":"token","text":"22.08"}
+{"type":"token","text":"\\\" x2=\\\"12\\\""}
+{"type":"token","text":" y2=\\\"12\\"}
+{"type":"token","text":"\"/>\\n                </svg>\\n"}
+{"type":"token","text":"              </div>\\n              <h"}
+{"type":"token","text":"3>Total"}
+{"type":"token","text":" transparency"}
+{"type":"token","text":"</h3>\\n              <p"}
+{"type":"token","text":">You"}
+{"type":"token","text":" deserve to understand"}
+{"type":"token","text":" exactly"}
+{"type":"token","text":" what you"}
+{"type":"token","text":"'re paying"}
+{"type":"token","text":" for and"}
+{"type":"token","text":" why. We believe"}
+{"type":"token","text":" in clear"}
+{"type":"token","text":", straight"}
+{"type":"token","text":"forward communication.</p>\\n            "}
+{"type":"token","text":"</div>\\n            "}
+{"type":"token","text":"<div class=\\\"value-card\\\""}
+{"type":"token","text":">\\n              <div class=\\\"value"}
+{"type":"token","text":"-icon\\\">\\n                <svg"}
+{"type":"token","text":" width=\\\"24\\\" height=\\\"24\\\""}
+{"type":"token","text":" viewBox=\\\"0 0 24"}
+{"type":"token","text":" 24\\\" fill=\\\"none\\\" stroke"}
+{"type":"token","text":"=\\\"currentColor\\\" stroke-width=\\\""}
+{"type":"token","text":"2\\\" stroke-linecap=\\\""}
+{"type":"token","text":"round\\\" stroke-linejoin=\\\""}
+{"type":"token","text":"round\\\">\\n                  <path"}
+{"type":"token","text":" d=\\\"M17"}
+{"type":"token","text":" 21"}
+{"type":"token","text":"v"}
+{"type":"token","text":"-2"}
+{"type":"token","text":"a4 4 0 0"}
+{"type":"token","text":" 0-4-4H5"}
+{"type":"token","text":"a4 4 0 0"}
+{"type":"token","text":" 0-4 4v2"}
+{"type":"token","text":"\\\"/>\\n                  <circle"}
+{"type":"token","text":" cx=\\\"9\\\" cy=\\\"7\\\""}
+{"type":"token","text":" r=\\\"4\\\"/>\\n                "}
+{"type":"token","text":"  <path d=\\\"M23 "}
+{"type":"token","text":"21v-2a4 4"}
+{"type":"token","text":" 0 0 0-3"}
+{"type":"token","text":"-3.87"}
+{"type":"token","text":"\\"}
+{"type":"token","text":"\"/"}
+{"type":"token","text":">\\n                  <path"}
+{"type":"token","text":" d=\\\"M16 3.13"}
+{"type":"token","text":"a4 4 0 0"}
+{"type":"token","text":" 1 0"}
+{"type":"token","text":" 7.75\\\"/>\\n"}
+{"type":"token","text":"                </svg>\\n              </div"}
+{"type":"token","text":">\\n              <h3>Personal"}
+{"type":"token","text":" relationships"}
+{"type":"token","text":"</h3>\\n              <p"}
+{"type":"token","text":">We limit"}
+{"type":"token","text":" our client"}
+{"type":"token","text":" base"}
+{"type":"token","text":" to ensure"}
+{"type":"token","text":" every"}
+{"type":"token","text":" family"}
+{"type":"token","text":" receives"}
+{"type":"token","text":" the attention and"}
+{"type":"token","text":" care they deserve."}
+{"type":"token","text":"</p>\\n            </div>\\n"}
+{"type":"token","text":"            "}
+{"type":"token","text":"<div class=\\\"value-card\\\""}
+{"type":"token","text":">\\n              <div class=\\\"value"}
+{"type":"token","text":"-icon\\\">\\n                <svg"}
+{"type":"token","text":" width=\\\"24\\\" height=\\\"24\\\""}
+{"type":"token","text":" viewBox=\\\"0 0 24"}
+{"type":"token","text":" 24\\\" fill=\\\"none\\\" stroke"}
+{"type":"token","text":"=\\\"currentColor\\\" stroke-width=\\\""}
+{"type":"token","text":"2\\\" stroke-linecap=\\\""}
+{"type":"token","text":"round\\\" stroke-linejoin=\\\""}
+{"type":"token","text":"round\\\">\\n                  <path"}
+{"type":"token","text":" d=\\\"M2"}
+{"type":"token","text":" 3"}
+{"type":"token","text":"h6a4 4 0"}
+{"type":"token","text":" 0 1 4 4"}
+{"type":"token","text":"v14"}
+{"type":"token","text":"a3 3 0 0"}
+{"type":"token","text":" 0-"}
+{"type":"token","text":"3-3H"}
+{"type":"token","text":"2z\\\"/>\\n                  "}
+{"type":"token","text":"<path d=\\\"M22"}
+{"type":"token","text":" 3h-6a4 "}
+{"type":"token","text":"4 0 0 0-"}
+{"type":"token","text":"4"}
+{"type":"token","text":" 4v14a3 3"}
+{"type":"token","text":" 0 0 1 3"}
+{"type":"token","text":"-3h7"}
+{"type":"token","text":"z\\\"/>\\n                </svg"}
+{"type":"token","text":">\\n              </div>\\n              "}
+{"type":"token","text":"<h3>Continuous"}
+{"type":"token","text":" learning</h3>\\n              "}
+{"type":"token","text":"<p>Markets"}
+{"type":"token","text":" evolve, regulations"}
+{"type":"token","text":" change, and new"}
+{"type":"token","text":" opportunities emerge. We stay current"}
+{"type":"token","text":" so"}
+{"type":"token","text":" you stay"}
+{"type":"token","text":" ahead.</p>\\n            </div"}
+{"type":"token","text":">\\n            "}
+{"type":"token","text":"<div class=\\\"value-card\\\""}
+{"type":"token","text":">\\n              <div class=\\\"value"}
+{"type":"token","text":"-icon\\\">\\n                <svg"}
+{"type":"token","text":" width=\\\"24\\\" height=\\\"24\\\""}
+{"type":"token","text":" viewBox=\\\"0 0 24"}
+{"type":"token","text":" 24\\\" fill=\\\"none\\\" stroke"}
+{"type":"token","text":"=\\\"currentColor\\\" stroke-width=\\\""}
+{"type":"token","text":"2\\\" stroke-linecap=\\\""}
+{"type":"token","text":"round\\\" stroke-linejoin=\\\""}
+{"type":"token","text":"round\\\">\\n                  <poly"}
+{"type":"token","text":"line points=\\\"22"}
+{"type":"token","text":" "}
+{"type":"token","text":"12 18"}
+{"type":"token","text":" 12 15"}
+{"type":"token","text":" 21 9"}
+{"type":"token","text":" 3 6 12 2"}
+{"type":"token","text":" 12\\\"/>\\n                "}
+{"type":"token","text":"</svg>\\n              </div>\\n"}
+{"type":"token","text":"              <h3>Hol"}
+{"type":"token","text":"istic approach</h3>\\n              "}
+{"type":"token","text":"<p>Your"}
+{"type":"token","text":" financial life"}
+{"type":"token","text":" isn"}
+{"type":"token","text":"'t compart"}
+{"type":"token","text":"mentalized,"}
+{"type":"token","text":" and"}
+{"type":"token","text":" neither is"}
+{"type":"token","text":" our planning"}
+{"type":"token","text":". Everything"}
+{"type":"token","text":" connects."}
+{"type":"token","text":"</p>\\n            </div>\\n"}
+{"type":"token","text":"          </div>\\n        </div"}
+{"type":"token","text":">\\n      </section>\\n\\"}
+{"type":"token","text":"n      <section class=\\\"team"}
+{"type":"token","text":"\\\">\\n        <div class=\\\""}
+{"type":"token","text":"container\\\">\\n          <div class"}
+{"type":"token","text":"=\\\"section"}
+{"type":"token","text":"-header reveal\\\">\\n            "}
+{"type":"token","text":"<div class=\\\"section-label\\\">"}
+{"type":"token","text":"Meet"}
+{"type":"token","text":" the"}
+{"type":"token","text":" team</div>\\n            <h"}
+{"type":"token","text":"2 class=\\\"section-title\\"}
+{"type":"token","text":"\">"}
+{"type":"token","text":"Experienced"}
+{"type":"token","text":" advis"}
+{"type":"token","text":"ors dedicated"}
+{"type":"token","text":" to your success</h2>\\n"}
+{"type":"token","text":"            "}
+{"type":"token","text":"<p class=\\\"section-description\\"}
+{"type":"token","text":"\">Our team brings"}
+{"type":"token","text":" decades of combined"}
+{"type":"token","text":" experience in financial"}
+{"type":"token","text":" planning, investment management, and wealth preservation"}
+{"type":"token","text":". ["}
+{"type":"token","text":"Team"}
+{"type":"token","text":" member photos"}
+{"type":"token","text":" and bios would"}
+{"type":"token","text":" go"}
+{"type":"token","text":" here]</p>\\n          "}
+{"type":"token","text":"</div>\\n        "}
+{"type":"token","text":"</div>\\n      </section>\\"}
+{"type":"token","text":"n\\n      <section class=\\\""}
+{"type":"token","text":"cta-section\\\">\\n        "}
+{"type":"token","text":"<div class=\\\"container\\\">\\n"}
+{"type":"token","text":"          <h2>Let"}
+{"type":"token","text":"'s start"}
+{"type":"token","text":" a"}
+{"type":"token","text":" conversation</h2>\\n          "}
+{"type":"token","text":"<p>We"}
+{"type":"token","text":"'d love to learn"}
+{"type":"token","text":" about"}
+{"type":"token","text":" your financial goals and explore"}
+{"type":"token","text":" how we can help you achieve them."}
+{"type":"token","text":"</p>\\n          <a href=\\\""}
+{"type":"token","text":"#contact\\\" class=\\\"cta-"}
+{"type":"token","text":"button\\\" onclick=\\\"showPage('contact"}
+{"type":"token","text":"'); return false;\\\">Schedule a consultation"}
+{"type":"token","text":"</a>\\n        </div>\\"}
+{"type":"token","text":"n      </section>\\n    "}
+{"type":"token","text":"</div>\\n\\n    <div"}
+{"type":"token","text":" class=\\\"page\\\" id=\\\"services"}
+{"type":"token","text":"\\\">\\n      <section class=\\\""}
+{"type":"token","text":"about"}
+{"type":"token","text":"-hero"}
+{"type":"token","text":"\\\">\\n        <div class=\\\""}
+{"type":"token","text":"container\\\">\\n          <div class"}
+{"type":"token","text":"=\\\"about-intro reveal\\\">\\n"}
+{"type":"token","text":"            <h1>"}
+{"type":"token","text":"Comprehensive wealth"}
+{"type":"token","text":" management</h1>\\n            "}
+{"type":"token","text":"<p>From"}
+{"type":"token","text":" investment strategy"}
+{"type":"token","text":" to estate"}
+{"type":"token","text":" planning, we provide"}
+{"type":"token","text":" the"}
+{"type":"token","text":" full"}
+{"type":"token","text":" spectrum of financial planning services"}
+{"type":"token","text":" your"}
+{"type":"token","text":" family needs to"}
+{"type":"token","text":" thrive across"}
+{"type":"token","text":" generations"}
+{"type":"token","text":".</p>\\n          </div>\\"}
+{"type":"token","text":"n        </div>\\n      "}
+{"type":"token","text":"</section>\\n\\n      <section"}
+{"type":"token","text":" class=\\\"services\\\">\\n        "}
+{"type":"token","text":"<div class=\\\"container\\\">\\n          "}
+{"type":"token","text":"<div class=\\\"service"}
+{"type":"token","text":"-list"}
+{"type":"token","text":" reveal-stagger\\\">\\n            "}
+{"type":"token","text":"<div class=\\\"service-item\\\""}
+{"type":"token","text":">\\n              <h3>Investment"}
+{"type":"token","text":" Management</h3>\\n              "}
+{"type":"token","text":"<p>We"}
+{"type":"token","text":" build"}
+{"type":"token","text":" diversified portfolios using"}
+{"type":"token","text":" low"}
+{"type":"token","text":"-cost index funds and strategic"}
+{"type":"token","text":" asset allocation."}
+{"type":"token","text":" Our approach emphas"}
+{"type":"token","text":"izes long-term growth,"}
+{"type":"token","text":" tax"}
+{"type":"token","text":" efficiency, and regular"}
+{"type":"token","text":" rebalancing to"}
+{"type":"token","text":" keep your portfolio aligned with your goals."}
+{"type":"token","text":" We avoid"}
+{"type":"token","text":" market"}
+{"type":"token","text":" timing and speculation"}
+{"type":"token","text":", focusing instead on proven"}
+{"type":"token","text":" strategies that work over decades"}
+{"type":"token","text":".</p>\\n            </div>\\"}
+{"type":"token","text":"n            <div class=\\\"service-"}
+{"type":"token","text":"item\\\">\\n              <h3"}
+{"type":"token","text":">Retirement Planning</h3>\\"}
+{"type":"token","text":"n              <p>Whether"}
+{"type":"token","text":" retirement"}
+{"type":"token","text":" is decades"}
+{"type":"token","text":" away or just"}
+{"type":"token","text":" around the corner, we help you answer"}
+{"type":"token","text":" the critical"}
+{"type":"token","text":" questions: How much do I need?"}
+{"type":"token","text":" When can"}
+{"type":"token","text":" I retire? How"}
+{"type":"token","text":" should"}
+{"type":"token","text":" I draw"}
+{"type":"token","text":" income"}
+{"type":"token","text":"? We model"}
+{"type":"token","text":" multiple"}
+{"type":"token","text":" scenarios,"}
+{"type":"token","text":" optimize"}
+{"type":"token","text":" Social"}
+{"type":"token","text":" Security claiming"}
+{"type":"token","text":" strategies"}
+{"type":"token","text":", and create sustainable"}
+{"type":"token","text":" withdrawal"}
+{"type":"token","text":" plans"}
+{"type":"token","text":" that last"}
+{"type":"token","text":" throughout your retirement."}
+{"type":"token","text":"</p>\\n            </div>\\n"}
+{"type":"token","text":"            <div class=\\\"service-item"}
+{"type":"token","text":"\\\">\\n              <h3>"}
+{"type":"token","text":"Tax"}
+{"type":"token","text":" Strategy</h3>\\n              "}
+{"type":"token","text":"<p>Taxes"}
+{"type":"token","text":" are often"}
+{"type":"token","text":" the largest"}
+{"type":"token","text":" expense in a"}
+{"type":"token","text":" financial"}
+{"type":"token","text":" plan. We work"}
+{"type":"token","text":" to"}
+{"type":"token","text":" minimize your lifetime"}
+{"type":"token","text":" tax burden through strategic"}
+{"type":"token","text":" Roth conversions, tax-loss"}
+{"type":"token","text":" harvesting, charitable"}
+{"type":"token","text":" giving strategies"}
+{"type":"token","text":", and careful"}
+{"type":"token","text":" asset location across"}
+{"type":"token","text":" tax"}
+{"type":"token","text":"able and tax-advant"}
+{"type":"token","text":"aged accounts."}
+{"type":"token","text":" We"}
+{"type":"token","text":" coordinate"}
+{"type":"token","text":" with your C"}
+{"type":"token","text":"PA to ensure seam"}
+{"type":"token","text":"less execution"}
+{"type":"token","text":"."}
+{"type":"token","text":"</p>\\n            </div>\\n"}
+{"type":"token","text":"            <div class=\\\"service-item"}
+{"type":"token","text":"\\\">\\n              <h3>"}
+{"type":"token","text":"Estate Planning</h3>\\n              "}
+{"type":"token","text":"<p>Your"}
+{"type":"token","text":" legacy"}
+{"type":"token","text":" matters. We help you structure your estate"}
+{"type":"token","text":" to pass"}
+{"type":"token","text":" wealth efficiently"}
+{"type":"token","text":" to"}
+{"type":"token","text":" the"}
+{"type":"token","text":" next generation while minimizing estate"}
+{"type":"token","text":" taxes and prob"}
+{"type":"token","text":"ate costs. We coordinate"}
+{"type":"token","text":" with estate"}
+{"type":"token","text":" attorneys"}
+{"type":"token","text":" to ensure your documents"}
+{"type":"token","text":" align"}
+{"type":"token","text":" with your financial"}
+{"type":"token","text":" plan"}
+{"type":"token","text":" and"}
+{"type":"token","text":" family"}
+{"type":"token","text":" values.</p>\\n            </div"}
+{"type":"token","text":">\\n            <div class=\\\"service"}
+{"type":"token","text":"-item\\\">\\n              <h"}
+{"type":"token","text":"3>Risk Management</h3>\\"}
+{"type":"token","text":"n              <p>Insurance"}
+{"type":"token","text":" is a critical"}
+{"type":"token","text":" but"}
+{"type":"token","text":" often overlooked component of financial"}
+{"type":"token","text":" planning. We review your life"}
+{"type":"token","text":","}
+{"type":"token","text":" disability"}
+{"type":"token","text":", long"}
+{"type":"token","text":"-term care, and umbre"}
+{"type":"token","text":"lla liability"}
+{"type":"token","text":" coverage"}
+{"type":"token","text":" to ensure your"}
+{"type":"token","text":" assets and"}
+{"type":"token","text":" income are protected from"}
+{"type":"token","text":" unexpected events."}
+{"type":"token","text":"</p>\\n            </div>\\n"}
+{"type":"token","text":"            "}
+{"type":"token","text":"<div class=\\\"service-item\\\""}
+{"type":"token","text":">\\n              <h3>Education"}
+{"type":"token","text":" Planning"}
+{"type":"token","text":"</h3>\\n              <p"}
+{"type":"token","text":">Funding"}
+{"type":"token","text":" education"}
+{"type":"token","text":" is a"}
+{"type":"token","text":" priority"}
+{"type":"token","text":" for many families. We help"}
+{"type":"token","text":" you balance"}
+{"type":"token","text":" education savings"}
+{"type":"token","text":" with retirement"}
+{"type":"token","text":" planning, navigate"}
+{"type":"token","text":" "}
+{"type":"token","text":"529 plans and"}
+{"type":"token","text":" financial"}
+{"type":"token","text":" aid strategies"}
+{"type":"token","text":", and make"}
+{"type":"token","text":" informed decisions about how"}
+{"type":"token","text":" much"}
+{"type":"token","text":" to save and"}
+{"type":"token","text":" where"}
+{"type":"token","text":" to invest.</p>\\n            "}
+{"type":"token","text":"</div>\\n            "}
+{"type":"token","text":"<div class=\\\"service-item\\\""}
+{"type":"token","text":">\\n              <h3>Cash"}
+{"type":"token","text":" Flow Planning"}
+{"type":"token","text":"</h3>\\n              <p"}
+{"type":"token","text":">Understanding"}
+{"type":"token","text":" where"}
+{"type":"token","text":" your money goes is the"}
+{"type":"token","text":" foundation"}
+{"type":"token","text":" of financial success. We help you optimize"}
+{"type":"token","text":" your spending"}
+{"type":"token","text":", build"}
+{"type":"token","text":" emergency reserves, and make"}
+{"type":"token","text":" intent"}
+{"type":"token","text":"ional decisions"}
+{"type":"token","text":" about lifestyle"}
+{"type":"token","text":" choices that align with your long"}
+{"type":"token","text":"-term goals.</p>\\n            "}
+{"type":"token","text":"</div>\\n          </div>\\"}
+{"type":"token","text":"n        </div>\\n      "}
+{"type":"token","text":"</section>\\n\\n      <section"}
+{"type":"token","text":" class=\\\"c"}
+{"type":"token","text":"ta-section\\\">\\n        "}
+{"type":"token","text":"<div class=\\\"container\\\">\\n          "}
+{"type":"token","text":"<h2>Ready to build"}
+{"type":"token","text":" your plan"}
+{"type":"token","text":"?</h2>\\n          "}
+{"type":"token","text":"<p>Let"}
+{"type":"token","text":"'s discuss your financial situation"}
+{"type":"token","text":" and create"}
+{"type":"token","text":" a strategy"}
+{"type":"token","text":" that brings"}
+{"type":"token","text":" your goals within reach.</p>\\n"}
+{"type":"token","text":"          <a href=\\\"#contact\\\""}
+{"type":"token","text":" class=\\\"cta-button\\\" onclick"}
+{"type":"token","text":"=\\\"showPage('contact'); return false"}
+{"type":"token","text":";\\\">Schedule a consultation</a>\\"}
+{"type":"token","text":"n        </div>\\n      "}
+{"type":"token","text":"</section>\\n    </div>\\n"}
+{"type":"token","text":"\\n    <div class=\\\"page"}
+{"type":"token","text":"\\\" id=\\\"contact\\\">\\n      "}
+{"type":"token","text":"<section class=\\\"contact-hero\\\""}
+{"type":"token","text":">\\n        <div class=\\\"container"}
+{"type":"token","text":"\\\">\\n          <div class=\\\""}
+{"type":"token","text":"about"}
+{"type":"token","text":"-intro reveal\\\">\\n            "}
+{"type":"token","text":"<h1>Let"}
+{"type":"token","text":"'s connect"}
+{"type":"token","text":"</h1>\\n            <p"}
+{"type":"token","text":">Schedule"}
+{"type":"token","text":" a complimentary consultation to discuss your"}
+{"type":"token","text":" financial goals."}
+{"type":"token","text":" We'll explore whether"}
+{"type":"token","text":" we're the right fit to"}
+{"type":"token","text":" help you achieve them.</p>\\n"}
+{"type":"token","text":"          </div>\\n          "}
+{"type":"token","text":"<div class=\\\"contact-grid"}
+{"type":"token","text":" reveal-stagger\\\">\\n            "}
+{"type":"token","text":"<div class=\\\"contact-form"}
+{"type":"token","text":"\\\">\\n              <form id"}
+{"type":"token","text":"=\\\"contact"}
+{"type":"token","text":"Form\\\">\\n                <div class"}
+{"type":"token","text":"=\\\"form-group\\\">\\n                "}
+{"type":"token","text":"  <label for=\\\"name\\\">"}
+{"type":"token","text":"Full"}
+{"type":"token","text":" name"}
+{"type":"token","text":"</label>\\n                  <input"}
+{"type":"token","text":" type=\\\"text\\\" id=\\\"name\\\""}
+{"type":"token","text":" name=\\\"name\\\" required>\\n                "}
+{"type":"token","text":"</div>\\n                <div class"}
+{"type":"token","text":"=\\\"form-group\\\">\\n                "}
+{"type":"token","text":"  <label for=\\\"email\\\">"}
+{"type":"token","text":"Email"}
+{"type":"token","text":"</label>\\n                  <input type"}
+{"type":"token","text":"=\\\"email\\\" id=\\\"email\\\" name"}
+{"type":"token","text":"=\\\"email\\\" required>\\n                "}
+{"type":"token","text":"</div>\\n                <div class=\\\""}
+{"type":"token","text":"form-group\\\">\\n                  "}
+{"type":"token","text":"<label for=\\\"phone\\\">Phone"}
+{"type":"token","text":"</label>\\n                  <input type"}
+{"type":"token","text":"=\\\"tel\\\" id=\\\"phone\\\" name"}
+{"type":"token","text":"=\\\"phone\\\""}
+{"type":"token","text":">\\n                </div>\\n                "}
+{"type":"token","text":"<div class=\\\"form-group\\\""}
+{"type":"token","text":">\\n                  <label for=\\\""}
+{"type":"token","text":"service"}
+{"type":"token","text":"\\\">I"}
+{"type":"token","text":"'m interested in</label>\\n                "}
+{"type":"token","text":"  <select id=\\\"service\\\" name"}
+{"type":"token","text":"=\\\"service\\\" required>\\n                    "}
+{"type":"token","text":"<option value=\\\"\\\">Select"}
+{"type":"token","text":" a service</option>\\n                    "}
+{"type":"token","text":"<option value=\\\"comprehensive"}
+{"type":"token","text":"\\\">Comprehensive financial planning</option"}
+{"type":"token","text":">\\n                    <option value=\\\""}
+{"type":"token","text":"investment\\\">Investment management</option>\\"}
+{"type":"token","text":"n                    <option value=\\\"retirement"}
+{"type":"token","text":"\\\">Retirement planning</option>\\"}
+{"type":"token","text":"n                    <option value=\\\"estate"}
+{"type":"token","text":"\\\">Estate planning</option>\\n"}
+{"type":"token","text":"                    <option value=\\\"other"}
+{"type":"token","text":"\\\">Other /"}
+{"type":"token","text":" Not"}
+{"type":"token","text":" sure yet"}
+{"type":"token","text":"</option>\\n                  </select"}
+{"type":"token","text":">\\n                </div>\\n                "}
+{"type":"token","text":"<div class=\\\"form-group\\\""}
+{"type":"token","text":">\\n                  <label for=\\\""}
+{"type":"token","text":"message\\\">Tell"}
+{"type":"token","text":" us about your situation"}
+{"type":"token","text":"</label>\\n                  <textarea"}
+{"type":"token","text":" id=\\\"message\\\" name=\\\"message\\\""}
+{"type":"token","text":" rows=\\\"4\\"}
+{"type":"token","text":"\"></textarea>\\n                </div>\\"}
+{"type":"token","text":"n                <button type=\\\"submit\\\""}
+{"type":"token","text":" class=\\\"form"}
+{"type":"token","text":"-button"}
+{"type":"token","text":"\\\">Send message</button>\\n"}
+{"type":"token","text":"                "}
+{"type":"token","text":"<div class=\\\"form-message\\\""}
+{"type":"token","text":" id=\\\"form"}
+{"type":"token","text":"Message\\\"></div>\\n              "}
+{"type":"token","text":"</form>\\n            </div>\\n"}
+{"type":"token","text":"            "}
+{"type":"token","text":"<div class=\\\"contact-info\\\""}
+{"type":"token","text":">\\n              <h3>"}
+{"type":"token","text":"Reach"}
+{"type":"token","text":" us"}
+{"type":"token","text":" directly"}
+{"type":"token","text":"</h3>\\n              <div"}
+{"type":"token","text":" class=\\\"info-item\\\">\\n"}
+{"type":"token","text":"                <div class=\\\"info-label"}
+{"type":"token","text":"\\\">Office"}
+{"type":"token","text":"</div>\\n                <div class"}
+{"type":"token","text":"=\\\"info-value\\\""}
+{"type":"token","text":">["}
+{"type":"token","text":"Your"}
+{"type":"token","text":" Address"}
+{"type":"token","text":"]</div>\\n              </div"}
+{"type":"token","text":">\\n              <div class=\\\"info"}
+{"type":"token","text":"-item\\\">\\n                <div"}
+{"type":"token","text":" class=\\\"info-label\\\">Phone"}
+{"type":"token","text":"</div>\\n                <div class"}
+{"type":"token","text":"=\\\"info-value\\"}
+{"type":"token","text":"\">"}
+{"type":"token","text":"<a href=\\\"tel:["}
+{"type":"token","text":"Your"}
+{"type":"token","text":" Phone"}
+{"type":"token","text":"]"}
+{"type":"token","text":"\\\">[Your Phone]</a>"}
+{"type":"token","text":"</div>\\n              </div>\\n"}
+{"type":"token","text":"              <div class=\\\"info-item"}
+{"type":"token","text":"\\\">\\n                <div class=\\\""}
+{"type":"token","text":"info-label\\\">Email</div"}
+{"type":"token","text":">\\n                <div class=\\\"info"}
+{"type":"token","text":"-value\\\"><a href=\\\"mailto"}
+{"type":"token","text":":[Your Email]\\\">[Your Email"}
+{"type":"token","text":"]</a></div>\\n              "}
+{"type":"token","text":"</div>\\n              <div class"}
+{"type":"token","text":"=\\\"info-item\\\">\\n                "}
+{"type":"token","text":"<div class=\\\"info-label\\"}
+{"type":"token","text":"\">Hours</div>\\n                "}
+{"type":"token","text":"<div class=\\\"info-value\\\">"}
+{"type":"token","text":"Monday"}
+{"type":"token","text":"–"}
+{"type":"token","text":"Friday"}
+{"type":"token","text":"<br>9:"}
+{"type":"token","text":"00 AM –"}
+{"type":"token","text":" 5"}
+{"type":"token","text":":00 PM</div>\\n"}
+{"type":"token","text":"              </div>\\n            </div"}
+{"type":"token","text":">\\n          </div>\\n        "}
+{"type":"token","text":"</div>\\n      </section>\\"}
+{"type":"token","text":"n    </div>\\n  "}
+{"type":"token","text":"</main"}
+{"type":"token","text":">\\n\\n  <footer>\\"}
+{"type":"token","text":"n    <div class=\\\"container\\\""}
+{"type":"token","text":">\\n      <div class=\\\"footer"}
+{"type":"token","text":"-content\\\""}
+{"type":"token","text":">\\n        <div class=\\\"footer"}
+{"type":"token","text":"-brand"}
+{"type":"token","text":"\\\">\\n          <h3>"}
+{"type":"token","text":"Summit Wealth</h3>\\n"}
+{"type":"token","text":"          <p>Comprehensive"}
+{"type":"token","text":" financial planning and"}
+{"type":"token","text":" investment"}
+{"type":"token","text":" management built"}
+{"type":"token","text":" on integrity"}
+{"type":"token","text":","}
+{"type":"token","text":" transparency, and long-term thinking."}
+{"type":"token","text":"</p>\\n        </div>\\n"}
+{"type":"token","text":"        <div class=\\\"footer-section"}
+{"type":"token","text":"\\\">\\n          <h4>"}
+{"type":"token","text":"Company"}
+{"type":"token","text":"</h4>\\n          <ul"}
+{"type":"token","text":" class"}
+{"type":"token","text":"=\\\"footer-links\\\">\\n            "}
+{"type":"token","text":"<li><a href=\\\"#about"}
+{"type":"token","text":"\\\""}
+{"type":"token","text":" onclick"}
+{"type":"token","text":"=\\\"showPage('about'); return false"}
+{"type":"token","text":";\\\">About us</a></li"}
+{"type":"token","text":">\\n            <li><a href"}
+{"type":"token","text":"=\\\"#services\\\" onclick=\\\"showPage"}
+{"type":"token","text":"('services'); return false;\\\">Services"}
+{"type":"token","text":"</a></li>\\n            "}
+{"type":"token","text":"<li><a href=\\\"#contact\\\""}
+{"type":"token","text":" onclick=\\\"showPage('contact'); return"}
+{"type":"token","text":" false;\\\">Contact</a></li"}
+{"type":"token","text":">\\n          </ul>\\n        "}
+{"type":"token","text":"</div>\\n        <div class"}
+{"type":"token","text":"=\\\"footer-section\\\">\\n          "}
+{"type":"token","text":"<h4>Services</h4"}
+{"type":"token","text":">\\n          <ul class=\\\"footer"}
+{"type":"token","text":"-links\\\">\\n            <li"}
+{"type":"token","text":"><a href=\\\"#services"}
+{"type":"token","text":"\\\" onclick=\\\"showPage('services');"}
+{"type":"token","text":" return false;\\\">Investment Management"}
+{"type":"token","text":"</a></li>\\n            <li>"}
+{"type":"token","text":"<a href=\\\"#services\\\" onclick=\\\""}
+{"type":"token","text":"showPage('services'); return false;\\"}
+{"type":"token","text":"\">Retirement Planning</a></li"}
+{"type":"token","text":">\\n            <li><a href"}
+{"type":"token","text":"=\\\"#services\\\" onclick=\\\"showPage"}
+{"type":"token","text":"('services'); return false;\\\">Estate"}
+{"type":"token","text":" Planning</a></li>\\n            "}
+{"type":"token","text":"<li><a href=\\\"#services"}
+{"type":"token","text":"\\\" onclick=\\\"showPage('services');"}
+{"type":"token","text":" return false;\\\">Tax Strategy"}
+{"type":"token","text":"</a></li>\\n          "}
+{"type":"token","text":"</ul>\\n        </div>\\"}
+{"type":"token","text":"n        <div class=\\\"footer-"}
+{"type":"token","text":"section\\\">\\n          <h4"}
+{"type":"token","text":">Contact"}
+{"type":"token","text":"</h4>\\n          <ul"}
+{"type":"token","text":" class=\\\"footer-links\\\">\\n"}
+{"type":"token","text":"            <li><a href=\\\"tel"}
+{"type":"token","text":":[Your Phone]\\\""}
+{"type":"token","text":">[Your Phone]</a></li"}
+{"type":"token","text":">\\n            <li><a href"}
+{"type":"token","text":"=\\\"mailto:[Your Email]\\\">["}
+{"type":"token","text":"Your Email]</a></li>\\"}
+{"type":"token","text":"n            <li>["}
+{"type":"token","text":"Your Address]</li>\\n          "}
+{"type":"token","text":"</ul>\\n        </div>\\"}
+{"type":"token","text":"n      </div>\\n      "}
+{"type":"token","text":"<div class=\\\"footer-bottom\\\">\\"}
+{"type":"token","text":"n        <div"}
+{"type":"token","text":">&"}
+{"type":"token","text":"copy; 2024 Summit"}
+{"type":"token","text":" Wealth. All rights reserved.</div>\\"}
+{"type":"token","text":"n        <div>Registered"}
+{"type":"token","text":" Investment"}
+{"type":"token","text":" Advisor"}
+{"type":"token","text":"</div>\\n      </div>\\n"}
+{"type":"token","text":"    </div>\\n  </footer"}
+{"type":"token","text":">\\n\\n  <script>\\"}
+{"type":"token","text":"n    // Page"}
+{"type":"token","text":" routing"}
+{"type":"token","text":"\\n    function showPage(page"}
+{"type":"token","text":"Id) {\\n      const pages"}
+{"type":"token","text":" = document.querySelectorAll('."}
+{"type":"token","text":"page');\\n      const"}
+{"type":"token","text":" nav"}
+{"type":"token","text":"Links"}
+{"type":"token","text":" = document.querySelectorAll('."}
+{"type":"token","text":"nav-links"}
+{"type":"token","text":" a"}
+{"type":"token","text":"');\\n      \\n      pages"}
+{"type":"token","text":".forEach(page => {\\n"}
+{"type":"token","text":"        page.classList.remove('active"}
+{"type":"token","text":"');\\n      });\\n      "}
+{"type":"token","text":"\\n      navLinks.forEach("}
+{"type":"token","text":"link => {\\n        link."}
+{"type":"token","text":"classList.remove('active');\\n"}
+{"type":"token","text":"        "}
+{"type":"token","text":"if"}
+{"type":"token","text":" (link.getAttribute('href') ==="}
+{"type":"token","text":" '#' + pageId) {\\"}
+{"type":"token","text":"n          link.classList.add('"}
+{"type":"token","text":"active');\\n        }\\n"}
+{"type":"token","text":"      });\\n      "}
+{"type":"token","text":"\\n      const"}
+{"type":"token","text":" target"}
+{"type":"token","text":"Page = document.getElementById(pageId"}
+{"type":"token","text":");\\n      if (targetPage"}
+{"type":"token","text":") {\\n        targetPage."}
+{"type":"token","text":"classList.add('active');\\n"}
+{"type":"token","text":"        "}
+{"type":"token","text":"window"}
+{"type":"token","text":".scrollTo(0, "}
+{"type":"token","text":"0);\\n        "}
+{"type":"token","text":"window"}
+{"type":"token","text":".location"}
+{"type":"token","text":".hash = pageId;\\n      "}
+{"type":"token","text":"}\\n      "}
+{"type":"token","text":"\\n      // Close"}
+{"type":"token","text":" mobile menu\\"}
+{"type":"token","text":"n      const m"}
+{"type":"token","text":"obileMenu = document.querySelector('.mobile"}
+{"type":"token","text":"-menu');\\n      if ("}
+{"type":"token","text":"mobileMenu) {\\n        "}
+{"type":"token","text":"mobileMenu.classList"}
+{"type":"token","text":".remove('open"}
+{"type":"token","text":"');\\n        "}
+{"type":"token","text":"document"}
+{"type":"token","text":".body.style"}
+{"type":"token","text":".overflow"}
+{"type":"token","text":" = ''"}
+{"type":"token","text":";\\n      }\\n    "}
+{"type":"token","text":"}\\n\\"}
+{"type":"token","text":"n    // Handle"}
+{"type":"token","text":" hash"}
+{"type":"token","text":" on"}
+{"type":"token","text":" load"}
+{"type":"token","text":"\\n    function"}
+{"type":"token","text":" handleHash"}
+{"type":"token","text":"() {\\n      const hash ="}
+{"type":"token","text":" window.location.hash.slice"}
+{"type":"token","text":"(1);\\n      if ("}
+{"type":"token","text":"hash &&"}
+{"type":"token","text":" document.getElementById"}
+{"type":"token","text":"(hash)) {\\n        show"}
+{"type":"token","text":"Page(hash);\\n      "}
+{"type":"token","text":"}\\n    }\\n\\n"}
+{"type":"token","text":"    window"}
+{"type":"token","text":".addEventListener('D"}
+{"type":"token","text":"OMContentLoaded', handleHash)"}
+{"type":"token","text":";\\n    window.addEventListener('hash"}
+{"type":"token","text":"change', handleHash);\\n\\"}
+{"type":"token","text":"n    // Mobile"}
+{"type":"token","text":" menu toggle\\n    const menu"}
+{"type":"token","text":"Toggle = document.querySelector('.menu"}
+{"type":"token","text":"-toggle');\\n    const m"}
+{"type":"token","text":"obileMenu = document.querySelector('.mobile"}
+{"type":"token","text":"-menu');\\n    \\n"}
+{"type":"token","text":"    if (menuToggle &&"}
+{"type":"token","text":" mobileMenu) {\\n      "}
+{"type":"token","text":"menuToggle.addEventListener('click',"}
+{"type":"token","text":" () => {\\n        mobile"}
+{"type":"token","text":"Menu.classList.toggle('open')"}
+{"type":"token","text":";\\n        if"}
+{"type":"token","text":" (mobileMenu.classList.contains"}
+{"type":"token","text":"('open')) {\\n          document"}
+{"type":"token","text":".body.style.overflow = "}
+{"type":"token","text":"'hidden';\\n        } else"}
+{"type":"token","text":" {\\n          document.body."}
+{"type":"token","text":"style.overflow = '';\\n        "}
+{"type":"token","text":"}\\n      });\\n    "}
+{"type":"token","text":"}\\n\\"}
+{"type":"token","text":"n    // Theme"}
+{"type":"token","text":" toggle\\n    const themeTog"}
+{"type":"token","text":"gle = document.querySelector('.theme-"}
+{"type":"token","text":"toggle');\\n    const"}
+{"type":"token","text":" html"}
+{"type":"token","text":" = document.document"}
+{"type":"token","text":"Element;\\n    \\"}
+{"type":"token","text":"n    //"}
+{"type":"token","text":" Check"}
+{"type":"token","text":" saved theme or"}
+{"type":"token","text":" system"}
+{"type":"token","text":" preference\\n    const savedTheme"}
+{"type":"token","text":" = localStorage.getItem('theme')"}
+{"type":"token","text":";\\n    const systemPrefer"}
+{"type":"token","text":"sDark = window.matchMedia('"}
+{"type":"token","text":"(prefers-color-scheme:"}
+{"type":"token","text":" dark)"}
+{"type":"token","text":"').matches;\\n    const"}
+{"type":"token","text":" initial"}
+{"type":"token","text":"Theme = savedTheme || ("}
+{"type":"token","text":"systemPrefersDark ? '"}
+{"type":"token","text":"dark' : 'light');\\"}
+{"type":"token","text":"n    html"}
+{"type":"token","text":".setAttribute('data-theme', initial"}
+{"type":"token","text":"Theme);\\n    \\n"}
+{"type":"token","text":"    if"}
+{"type":"token","text":" (themeToggle) {\\"}
+{"type":"token","text":"n      themeToggle.addEventListener"}
+{"type":"token","text":"('click', () => {\\n"}
+{"type":"token","text":"        const currentTheme = html."}
+{"type":"token","text":"getAttribute('data-theme');\\n"}
+{"type":"token","text":"        const newTheme = currentTh"}
+{"type":"token","text":"eme === 'light' ? "}
+{"type":"token","text":"'dark' : 'light'"}
+{"type":"token","text":";\\n        html.setAttribute('data"}
+{"type":"token","text":"-theme', newTheme);\\"}
+{"type":"token","text":"n        localStorage.setItem('theme"}
+{"type":"token","text":"', newTheme);\\n      "}
+{"type":"token","text":"});\\n    }\\n\\"}
+{"type":"token","text":"n    // Scroll"}
+{"type":"token","text":" reveal"}
+{"type":"token","text":"\\n    const revealElements ="}
+{"type":"token","text":" document.querySelectorAll('.reveal"}
+{"type":"token","text":","}
+{"type":"token","text":" .reveal-stagger');\\n"}
+{"type":"token","text":"    \\n    const"}
+{"type":"token","text":" rev"}
+{"type":"token","text":"ealObserver = new Intersection"}
+{"type":"token","text":"Observer((entries) => {\\"}
+{"type":"token","text":"n      entries.forEach(entry =>"}
+{"type":"token","text":" {\\n        if (entry."}
+{"type":"token","text":"isIntersecting) {\\n"}
+{"type":"token","text":"          entry.target.classList.add"}
+{"type":"token","text":"('visible"}
+{"type":"token","text":"');\\n        "}
+{"type":"token","text":"}\\n      });\\n    },"}
+{"type":"token","text":" {"}
+{"type":"token","text":" threshold: 0.1"}
+{"type":"token","text":" });\\n    \\n    "}
+{"type":"token","text":"revealElements.forEach(el"}
+{"type":"token","text":" => rev"}
+{"type":"token","text":"ealObserver.observe(el))"}
+{"type":"token","text":";\\n\\n    // Form"}
+{"type":"token","text":" handling"}
+{"type":"token","text":"\\n    const contactForm = document"}
+{"type":"token","text":".getElementById('contactForm');\\n"}
+{"type":"token","text":"    const"}
+{"type":"token","text":" formMessage = document.getElementById('form"}
+{"type":"token","text":"Message');\\n    \\n    "}
+{"type":"token","text":"if (contactForm) {\\n"}
+{"type":"token","text":"      contactForm.addEventListener('submit',"}
+{"type":"token","text":" (e) => {\\n        "}
+{"type":"token","text":"e.preventDefault();\\n        \\"}
+{"type":"token","text":"n        const submit"}
+{"type":"token","text":"Button"}
+{"type":"token","text":" = contactForm.querySelector('."}
+{"type":"token","text":"form-button');\\n        submit"}
+{"type":"token","text":"Button.disabled = true;\\n        "}
+{"type":"token","text":"submit"}
+{"type":"token","text":"Button.textContent = '"}
+{"type":"token","text":"Sending...';\\n        \\n"}
+{"type":"token","text":"        //"}
+{"type":"token","text":" Simulate form submission\\n        setTimeout"}
+{"type":"token","text":"(() => {\\n          //"}
+{"type":"token","text":" Save"}
+{"type":"token","text":" to"}
+{"type":"token","text":" localStorage"}
+{"type":"token","text":"\\n          const"}
+{"type":"token","text":" formData = "}
+{"type":"token","text":"{\\n            name: contactForm."}
+{"type":"token","text":"name.value,\\n            email"}
+{"type":"token","text":": contactForm.email.value,"}
+{"type":"token","text":"\\n            phone: contactForm."}
+{"type":"token","text":"phone.value,\\n            service"}
+{"type":"token","text":": contactForm.service.value,"}
+{"type":"token","text":"\\n            message: contactForm."}
+{"type":"token","text":"message.value,"}
+{"type":"token","text":"\\n            "}
+{"type":"token","text":"timestamp"}
+{"type":"token","text":": new Date().toISOString"}
+{"type":"token","text":"("}
+{"type":"token","text":")\\n          };\\n          \\"}
+{"type":"token","text":"n          const"}
+{"type":"token","text":" submissions"}
+{"type":"token","text":" = JSON.parse(localStorage.get"}
+{"type":"token","text":"Item('contact"}
+{"type":"token","text":"Submissions') || '[]');\\"}
+{"type":"token","text":"n          submissions.push(formData"}
+{"type":"token","text":");\\n          localStorage.setItem"}
+{"type":"token","text":"('contactSubmissions', JSON.stringify"}
+{"type":"token","text":"(submissions));\\n          \\n"}
+{"type":"token","text":"          //"}
+{"type":"token","text":" Show success message\\n          formMessage"}
+{"type":"token","text":".className"}
+{"type":"token","text":" = 'form-message success'"}
+{"type":"token","text":";\\n          formMessage.textContent"}
+{"type":"token","text":" = 'Thank you for reaching"}
+{"type":"token","text":" out! We\\"}
+{"type":"token","text":"\\'ll"}
+{"type":"token","text":" be"}
+{"type":"token","text":" in touch within"}
+{"type":"token","text":" 24 hours.';\\n          "}
+{"type":"token","text":"\\n          //"}
+{"type":"token","text":" Reset form\\n          contactForm."}
+{"type":"token","text":"reset();\\n          submit"}
+{"type":"token","text":"Button.disabled = false;\\n          "}
+{"type":"token","text":"submitButton.textContent = '"}
+{"type":"token","text":"Send message';\\n          \\n"}
+{"type":"token","text":"          //"}
+{"type":"token","text":" Hide"}
+{"type":"token","text":" message after"}
+{"type":"token","text":" 5"}
+{"type":"token","text":" seconds\\n          setTimeout(() =>"}
+{"type":"token","text":" {\\n            formMessage.style"}
+{"type":"token","text":".display = 'none';\\"}
+{"type":"token","text":"n          }, 5000);\\"}
+{"type":"token","text":"n        }, 1000);\\"}
+{"type":"token","text":"n      });\\n    }\\"}
+{"type":"token","text":"n\\"}
+{"type":"token","text":"n    // Smooth"}
+{"type":"token","text":" scroll"}
+{"type":"token","text":" for"}
+{"type":"token","text":" anchor links\\n    document.quer"}
+{"type":"token","text":"ySelectorAll('a[href^"}
+{"type":"token","text":"=\\\"#\\\"]').forEach(anchor"}
+{"type":"token","text":" => {\\n      anchor.addEventListener"}
+{"type":"token","text":"('click', function("}
+{"type":"token","text":"e) {\\n        const"}
+{"type":"token","text":" href"}
+{"type":"token","text":" = this.getAttribute('href')"}
+{"type":"token","text":";\\n        if (href.length"}
+{"type":"token","text":" > 1"}
+{"type":"token","text":" "}
+{"type":"token","text":"&& !"}
+{"type":"token","text":"this"}
+{"type":"token","text":".has"}
+{"type":"token","text":"Attribute('onclick"}
+{"type":"token","text":"')) {\\n          e.preventDefault"}
+{"type":"token","text":"();\\n          const"}
+{"type":"token","text":" target = document.querySelector(href)"}
+{"type":"token","text":";\\n          if (target) "}
+{"type":"token","text":"{\\n            target.scrollInto"}
+{"type":"token","text":"View({ behavior: 'smooth'"}
+{"type":"token","text":" });\\n          }\\n        "}
+{"type":"token","text":"}\\n      });\\n    "}
+{"type":"token","text":"});\\n  </script>\\n"}
+{"type":"token","text":"</body>\\n</html>\""}
+{"type":"token","text":"\n}"}
+{"type":"token","text":"\n```"}
+{"type":"done","response":{"message":"```json\n{\n  \"context\": {\n    \"brandName\": \"Summit Wealth\",\n    \"industry\": \"finance\",\n    \"stylePreferences\": [\"trustworthy\", \"conservative\", \"clean\"],\n    \"targetAudience\": [\"individuals seeking financial advice\"]\n  },\n  \"message\": \"I went with a classic editorial approach — navy and cream palette, serif headlines for gravitas, and generous whitespace to feel premium and unhurried. The layout has that timeless financial journal feel.\",\n  \"pills\": [\"Perfect, keep going\", \"Try a different direction\", \"Add content\"],\n  \"html\": \"<!DOCTYPE html>\\n<html lang=\\\"en\\\" data-theme=\\\"light\\\">\\n<head>\\n  <meta charset=\\\"UTF-8\\\">\\n  <meta name=\\\"viewport\\\" content=\\\"width=device-width, initial-scale=1.0\\\">\\n  <title>Summit Wealth – Trusted Financial Advisory</title>\\n  <meta name=\\\"description\\\" content=\\\"Summit Wealth provides comprehensive financial planning and investment management with integrity and expertise.\\\">\\n  <meta property=\\\"og:title\\\" content=\\\"Summit Wealth – Trusted Financial Advisory\\\">\\n  <meta property=\\\"og:description\\\" content=\\\"Summit Wealth provides comprehensive financial planning and investment management with integrity and expertise.\\\">\\n  <link rel=\\\"preconnect\\\" href=\\\"https://fonts.googleapis.com\\\">\\n  <link rel=\\\"preconnect\\\" href=\\\"https://fonts.gstatic.com\\\" crossorigin>\\n  <link href=\\\"https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Source+Sans+3:wght@300;400;500;600&display=swap\\\" rel=\\\"stylesheet\\\">\\n  <style>\\n    :root {\\n      --space-1: 4px; --space-2: 8px; --space-3: 12px; --space-4: 16px;\\n      --space-5: 20px; --space-6: 24px; --space-8: 32px; --space-10: 40px;\\n      --space-12: 48px; --space-16: 64px; --space-20: 80px; --space-24: 96px; --space-32: 128px;\\n      --text-xs: clamp(0.75rem, 0.7rem + 0.25vw, 0.875rem);\\n      --text-sm: clamp(0.875rem, 0.8rem + 0.35vw, 1rem);\\n      --text-base: clamp(1rem, 0.9rem + 0.5vw, 1.125rem);\\n      --text-lg: clamp(1.125rem, 1rem + 0.6vw, 1.25rem);\\n      --text-xl: clamp(1.25rem, 1rem + 1vw, 1.5rem);\\n      --text-2xl: clamp(1.5rem, 1.2rem + 1.5vw, 2rem);\\n      --text-3xl: clamp(1.875rem, 1.4rem + 2.3vw, 2.5rem);\\n      --text-4xl: clamp(2.25rem, 1.5rem + 3.5vw, 3.5rem);\\n      --text-5xl: clamp(3rem, 2rem + 5vw, 5rem);\\n      --shadow-sm: 0 1px 2px rgba(0,0,0,0.05); --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -2px rgba(0,0,0,0.1);\\n      --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -4px rgba(0,0,0,0.1); --shadow-xl: 0 20px 25px -5px rgba(0,0,0,0.1), 0 8px 10px -6px rgba(0,0,0,0.1);\\n      --radius-sm: 6px; --radius-md: 8px; --radius-lg: 12px; --radius-xl: 16px;\\n      --ease-out: cubic-bezier(0,0,0.2,1); --ease-in: cubic-bezier(0.4,0,1,1); --ease-in-out: cubic-bezier(0.4,0,0.2,1); --ease-bounce: cubic-bezier(0.34,1.56,0.64,1);\\n    }\\n\\n    [data-theme=\\\"light\\\"] {\\n      --bg: #FFFFFF;\\n      --bg-secondary: #FAF9F7;\\n      --bg-tertiary: #F5F3EF;\\n      --surface: #FFFFFF;\\n      --text: #1E3A5F;\\n      --text-muted: #64748B;\\n      --accent: #1E3A5F;\\n      --accent-secondary: #B8860B;\\n      --border: rgba(30, 58, 95, 0.1);\\n    }\\n\\n    [data-theme=\\\"dark\\\"] {\\n      --bg: #0D0D0D;\\n      --bg-secondary: #18181B;\\n      --bg-tertiary: #27272A;\\n      --surface: #1C1C1E;\\n      --text: #FAFAFA;\\n      --text-muted: #A1A1AA;\\n      --accent: #3B82F6;\\n      --accent-secondary: #D4AF37;\\n      --border: rgba(255, 255, 255, 0.1);\\n    }\\n\\n    * {\\n      margin: 0;\\n      padding: 0;\\n      box-sizing: border-box;\\n    }\\n\\n    body {\\n      font-family: 'Source Sans 3', sans-serif;\\n      background: var(--bg);\\n      color: var(--text);\\n      line-height: 1.6;\\n      overflow-x: hidden;\\n      transition: background 0.3s var(--ease-out), color 0.3s var(--ease-out);\\n    }\\n\\n    .skip-link {\\n      position: absolute;\\n      top: -40px;\\n      left: 0;\\n      background: var(--accent);\\n      color: white;\\n      padding: 8px;\\n      text-decoration: none;\\n      z-index: 100;\\n    }\\n\\n    .skip-link:focus {\\n      top: 0;\\n    }\\n\\n    nav {\\n      position: fixed;\\n      top: 0;\\n      width: 100%;\\n      background: var(--surface);\\n      backdrop-filter: blur(12px);\\n      border-bottom: 1px solid var(--border);\\n      z-index: 50;\\n      transition: background 0.3s var(--ease-out), border-color 0.3s var(--ease-out);\\n    }\\n\\n    .nav-container {\\n      max-width: 1280px;\\n      margin: 0 auto;\\n      padding: var(--space-4) clamp(16px, 5vw, 64px);\\n      display: flex;\\n      align-items: center;\\n      justify-content: space-between;\\n    }\\n\\n    .logo {\\n      font-family: 'Playfair Display', serif;\\n      font-size: var(--text-xl);\\n      font-weight: 700;\\n      color: var(--text);\\n      text-decoration: none;\\n      letter-spacing: -0.02em;\\n    }\\n\\n    .nav-links {\\n      display: flex;\\n      gap: var(--space-8);\\n      list-style: none;\\n    }\\n\\n    .nav-links a {\\n      color: var(--text-muted);\\n      text-decoration: none;\\n      font-size: var(--text-sm);\\n      font-weight: 500;\\n      letter-spacing: 0.05em;\\n      text-transform: uppercase;\\n      transition: color 0.2s var(--ease-out);\\n      position: relative;\\n    }\\n\\n    .nav-links a:hover,\\n    .nav-links a.active {\\n      color: var(--accent);\\n    }\\n\\n    .nav-links a.active::after {\\n      content: '';\\n      position: absolute;\\n      bottom: -8px;\\n      left: 0;\\n      width: 100%;\\n      height: 2px;\\n      background: var(--accent);\\n    }\\n\\n    .theme-toggle {\\n      background: none;\\n      border: none;\\n      cursor: pointer;\\n      padding: var(--space-2);\\n      display: flex;\\n      align-items: center;\\n      justify-content: center;\\n      color: var(--text-muted);\\n      transition: color 0.2s var(--ease-out);\\n    }\\n\\n    .theme-toggle:hover {\\n      color: var(--accent);\\n    }\\n\\n    .theme-toggle svg {\\n      width: 20px;\\n      height: 20px;\\n    }\\n\\n    .menu-toggle {\\n      display: none;\\n      background: none;\\n      border: none;\\n      cursor: pointer;\\n      padding: var(--space-2);\\n      color: var(--text);\\n    }\\n\\n    .menu-toggle svg {\\n      width: 24px;\\n      height: 24px;\\n    }\\n\\n    .mobile-menu {\\n      display: none;\\n      position: fixed;\\n      top: 65px;\\n      left: 0;\\n      width: 100%;\\n      height: calc(100vh - 65px);\\n      background: var(--surface);\\n      backdrop-filter: blur(12px);\\n      z-index: 40;\\n      padding: var(--space-8);\\n      transform: translateX(-100%);\\n      transition: transform 0.3s var(--ease-out);\\n    }\\n\\n    .mobile-menu.open {\\n      transform: translateX(0);\\n    }\\n\\n    .mobile-menu .nav-links {\\n      flex-direction: column;\\n      gap: var(--space-6);\\n    }\\n\\n    .container {\\n      max-width: 1280px;\\n      margin: 0 auto;\\n      padding: 0 clamp(16px, 5vw, 64px);\\n    }\\n\\n    main {\\n      padding-top: 65px;\\n    }\\n\\n    .page {\\n      display: none;\\n      opacity: 0;\\n      transition: opacity 0.3s var(--ease-out);\\n    }\\n\\n    .page.active {\\n      display: block;\\n      opacity: 1;\\n    }\\n\\n    .hero {\\n      padding: var(--space-32) 0 var(--space-24);\\n      background: var(--bg);\\n    }\\n\\n    .hero-content {\\n      display: grid;\\n      grid-template-columns: 60% 1fr;\\n      gap: var(--space-16);\\n      align-items: center;\\n    }\\n\\n    .hero h1 {\\n      font-family: 'Playfair Display', serif;\\n      font-size: clamp(2.5rem, 6vw, 5rem);\\n      font-weight: 700;\\n      line-height: 1.1;\\n      letter-spacing: -0.03em;\\n      margin-bottom: var(--space-6);\\n      color: var(--text);\\n    }\\n\\n    .hero p {\\n      font-size: var(--text-xl);\\n      color: var(--text-muted);\\n      line-height: 1.6;\\n      margin-bottom: var(--space-8);\\n      font-weight: 300;\\n    }\\n\\n    .hero-cta {\\n      display: inline-flex;\\n      align-items: center;\\n      gap: var(--space-2);\\n      background: var(--accent);\\n      color: white;\\n      padding: 16px 32px;\\n      border-radius: var(--radius-md);\\n      text-decoration: none;\\n      font-weight: 600;\\n      font-size: var(--text-base);\\n      transition: transform 0.2s var(--ease-out), box-shadow 0.2s var(--ease-out);\\n      box-shadow: var(--shadow-md);\\n      border: none;\\n      cursor: pointer;\\n    }\\n\\n    .hero-cta:hover {\\n      transform: translateY(-2px);\\n      box-shadow: var(--shadow-lg);\\n    }\\n\\n    .hero-cta:active {\\n      transform: scale(0.98);\\n    }\\n\\n    .hero-cta:focus-visible {\\n      outline: 3px solid rgba(30, 58, 95, 0.3);\\n      outline-offset: 2px;\\n    }\\n\\n    .hero-aside {\\n      background: var(--bg-secondary);\\n      border-radius: var(--radius-lg);\\n      padding: var(--space-12);\\n      border: 1px solid var(--border);\\n    }\\n\\n    .hero-aside h3 {\\n      font-family: 'Playfair Display', serif;\\n      font-size: var(--text-2xl);\\n      margin-bottom: var(--space-6);\\n      color: var(--text);\\n    }\\n\\n    .stat-grid {\\n      display: grid;\\n      gap: var(--space-6);\\n    }\\n\\n    .stat {\\n      border-bottom: 1px solid var(--border);\\n      padding-bottom: var(--space-4);\\n    }\\n\\n    .stat:last-child {\\n      border-bottom: none;\\n      padding-bottom: 0;\\n    }\\n\\n    .stat-number {\\n      font-family: 'Playfair Display', serif;\\n      font-size: var(--text-3xl);\\n      font-weight: 700;\\n      color: var(--accent-secondary);\\n      display: block;\\n      margin-bottom: var(--space-2);\\n    }\\n\\n    .stat-label {\\n      font-size: var(--text-sm);\\n      color: var(--text-muted);\\n      text-transform: uppercase;\\n      letter-spacing: 0.1em;\\n      font-weight: 500;\\n    }\\n\\n    .services {\\n      padding: var(--space-24) 0;\\n      background: var(--bg-secondary);\\n    }\\n\\n    .section-header {\\n      max-width: 800px;\\n      margin-bottom: var(--space-16);\\n    }\\n\\n    .section-label {\\n      font-size: var(--text-sm);\\n      color: var(--accent-secondary);\\n      text-transform: uppercase;\\n      letter-spacing: 0.1em;\\n      font-weight: 600;\\n      margin-bottom: var(--space-4);\\n    }\\n\\n    .section-title {\\n      font-family: 'Playfair Display', serif;\\n      font-size: var(--text-4xl);\\n      font-weight: 700;\\n      line-height: 1.2;\\n      letter-spacing: -0.02em;\\n      color: var(--text);\\n      margin-bottom: var(--space-4);\\n    }\\n\\n    .section-description {\\n      font-size: var(--text-lg);\\n      color: var(--text-muted);\\n      line-height: 1.7;\\n      font-weight: 300;\\n    }\\n\\n    .service-list {\\n      display: grid;\\n      gap: var(--space-12);\\n      max-width: 900px;\\n    }\\n\\n    .service-item {\\n      display: grid;\\n      grid-template-columns: 1fr 2fr;\\n      gap: var(--space-8);\\n      padding: var(--space-8) 0;\\n      border-bottom: 1px solid var(--border);\\n    }\\n\\n    .service-item:last-child {\\n      border-bottom: none;\\n    }\\n\\n    .service-item h3 {\\n      font-family: 'Playfair Display', serif;\\n      font-size: var(--text-2xl);\\n      font-weight: 600;\\n      color: var(--text);\\n      line-height: 1.3;\\n    }\\n\\n    .service-item p {\\n      font-size: var(--text-base);\\n      color: var(--text-muted);\\n      line-height: 1.7;\\n    }\\n\\n    .approach {\\n      padding: var(--space-32) 0;\\n      background: var(--bg);\\n    }\\n\\n    .approach-content {\\n      display: grid;\\n      grid-template-columns: 1fr 1fr;\\n      gap: var(--space-20);\\n      align-items: start;\\n    }\\n\\n    .approach-text {\\n      position: sticky;\\n      top: 120px;\\n    }\\n\\n    .approach-steps {\\n      display: grid;\\n      gap: var(--space-12);\\n    }\\n\\n    .approach-step {\\n      background: var(--bg-secondary);\\n      border-radius: var(--radius-lg);\\n      padding: var(--space-10);\\n      border: 1px solid var(--border);\\n    }\\n\\n    .step-number {\\n      display: inline-block;\\n      width: 48px;\\n      height: 48px;\\n      background: rgba(30, 58, 95, 0.1);\\n      border-radius: 50%;\\n      text-align: center;\\n      line-height: 48px;\\n      font-family: 'Playfair Display', serif;\\n      font-weight: 700;\\n      color: var(--accent);\\n      font-size: var(--text-lg);\\n      margin-bottom: var(--space-4);\\n    }\\n\\n    .approach-step h3 {\\n      font-family: 'Playfair Display', serif;\\n      font-size: var(--text-xl);\\n      font-weight: 600;\\n      margin-bottom: var(--space-3);\\n      color: var(--text);\\n    }\\n\\n    .approach-step p {\\n      font-size: var(--text-base);\\n      color: var(--text-muted);\\n      line-height: 1.6;\\n    }\\n\\n    .testimonial {\\n      padding: var(--space-24) 0;\\n      background: var(--bg-tertiary);\\n    }\\n\\n    .testimonial-content {\\n      max-width: 900px;\\n      margin: 0 auto;\\n      text-align: left;\\n    }\\n\\n    .quote {\\n      font-family: 'Playfair Display', serif;\\n      font-size: var(--text-3xl);\\n      line-height: 1.4;\\n      font-style: italic;\\n      color: var(--text);\\n      margin-bottom: var(--space-8);\\n      font-weight: 400;\\n    }\\n\\n    .quote::before {\\n      content: '\"';\\n      color: var(--accent-secondary);\\n    }\\n\\n    .quote::after {\\n      content: '\"';\\n      color: var(--accent-secondary);\\n    }\\n\\n    .testimonial-author {\\n      display: flex;\\n      align-items: center;\\n      gap: var(--space-4);\\n    }\\n\\n    .author-info h4 {\\n      font-size: var(--text-base);\\n      font-weight: 600;\\n      color: var(--text);\\n    }\\n\\n    .author-info p {\\n      font-size: var(--text-sm);\\n      color: var(--text-muted);\\n    }\\n\\n    .cta-section {\\n      padding: var(--space-32) 0;\\n      background: var(--accent);\\n      color: white;\\n      text-align: center;\\n    }\\n\\n    .cta-section h2 {\\n      font-family: 'Playfair Display', serif;\\n      font-size: var(--text-4xl);\\n      font-weight: 700;\\n      margin-bottom: var(--space-6);\\n      line-height: 1.2;\\n    }\\n\\n    .cta-section p {\\n      font-size: var(--text-xl);\\n      margin-bottom: var(--space-8);\\n      opacity: 0.95;\\n      max-width: 600px;\\n      margin-left: auto;\\n      margin-right: auto;\\n      font-weight: 300;\\n    }\\n\\n    .cta-button {\\n      display: inline-flex;\\n      align-items: center;\\n      gap: var(--space-2);\\n      background: white;\\n      color: var(--accent);\\n      padding: 16px 32px;\\n      border-radius: var(--radius-md);\\n      text-decoration: none;\\n      font-weight: 600;\\n      font-size: var(--text-base);\\n      transition: transform 0.2s var(--ease-out), box-shadow 0.2s var(--ease-out);\\n      box-shadow: var(--shadow-lg);\\n      border: none;\\n      cursor: pointer;\\n    }\\n\\n    .cta-button:hover {\\n      transform: translateY(-2px);\\n      box-shadow: var(--shadow-xl);\\n    }\\n\\n    .cta-button:active {\\n      transform: scale(0.98);\\n    }\\n\\n    .cta-button:focus-visible {\\n      outline: 3px solid rgba(255, 255, 255, 0.5);\\n      outline-offset: 2px;\\n    }\\n\\n    .about-hero {\\n      padding: var(--space-32) 0 var(--space-16);\\n      background: var(--bg);\\n    }\\n\\n    .about-intro {\\n      max-width: 800px;\\n      margin-bottom: var(--space-20);\\n    }\\n\\n    .about-intro h1 {\\n      font-family: 'Playfair Display', serif;\\n      font-size: var(--text-5xl);\\n      font-weight: 700;\\n      line-height: 1.1;\\n      letter-spacing: -0.03em;\\n      margin-bottom: var(--space-6);\\n      color: var(--text);\\n    }\\n\\n    .about-intro p {\\n      font-size: var(--text-xl);\\n      color: var(--text-muted);\\n      line-height: 1.7;\\n      font-weight: 300;\\n    }\\n\\n    .values {\\n      padding: var(--space-24) 0;\\n      background: var(--bg-secondary);\\n    }\\n\\n    .values-grid {\\n      display: grid;\\n      grid-template-columns: repeat(3, 1fr);\\n      gap: var(--space-8);\\n    }\\n\\n    .value-card {\\n      background: var(--surface);\\n      border-radius: var(--radius-lg);\\n      padding: var(--space-10);\\n      border: 1px solid var(--border);\\n      box-shadow: var(--shadow-sm);\\n      transition: transform 0.2s var(--ease-out), box-shadow 0.2s var(--ease-out);\\n    }\\n\\n    .value-card:hover {\\n      transform: translateY(-4px);\\n      box-shadow: var(--shadow-lg);\\n    }\\n\\n    .value-icon {\\n      width: 48px;\\n      height: 48px;\\n      background: rgba(30, 58, 95, 0.1);\\n      border-radius: 50%;\\n      display: flex;\\n      align-items: center;\\n      justify-content: center;\\n      margin-bottom: var(--space-4);\\n      color: var(--accent);\\n    }\\n\\n    .value-card h3 {\\n      font-family: 'Playfair Display', serif;\\n      font-size: var(--text-xl);\\n      font-weight: 600;\\n      margin-bottom: var(--space-3);\\n      color: var(--text);\\n    }\\n\\n    .value-card p {\\n      font-size: var(--text-base);\\n      color: var(--text-muted);\\n      line-height: 1.6;\\n    }\\n\\n    .team {\\n      padding: var(--space-32) 0;\\n      background: var(--bg);\\n    }\\n\\n    .contact-hero {\\n      padding: var(--space-32) 0 var(--space-24);\\n      background: var(--bg);\\n    }\\n\\n    .contact-grid {\\n      display: grid;\\n      grid-template-columns: 1fr 1fr;\\n      gap: var(--space-16);\\n      align-items: start;\\n    }\\n\\n    .contact-form {\\n      background: var(--bg-secondary);\\n      border-radius: var(--radius-lg);\\n      padding: var(--space-12);\\n      border: 1px solid var(--border);\\n    }\\n\\n    .form-group {\\n      margin-bottom: var(--space-6);\\n    }\\n\\n    .form-group label {\\n      display: block;\\n      font-size: var(--text-sm);\\n      font-weight: 600;\\n      color: var(--text);\\n      margin-bottom: var(--space-2);\\n      text-transform: uppercase;\\n      letter-spacing: 0.05em;\\n    }\\n\\n    .form-group input,\\n    .form-group select,\\n    .form-group textarea {\\n      width: 100%;\\n      padding: 12px 16px;\\n      border: 1px solid var(--border);\\n      border-radius: var(--radius-md);\\n      font-family: 'Source Sans 3', sans-serif;\\n      font-size: var(--text-base);\\n      background: var(--surface);\\n      color: var(--text);\\n      transition: border-color 0.2s var(--ease-out), box-shadow 0.2s var(--ease-out);\\n    }\\n\\n    .form-group input:focus,\\n    .form-group select:focus,\\n    .form-group textarea:focus {\\n      outline: none;\\n      border-color: var(--accent);\\n      box-shadow: 0 0 0 3px rgba(30, 58, 95, 0.15);\\n    }\\n\\n    .form-group textarea {\\n      resize: vertical;\\n      min-height: 120px;\\n    }\\n\\n    .form-button {\\n      width: 100%;\\n      background: var(--accent);\\n      color: white;\\n      padding: 16px 32px;\\n      border: none;\\n      border-radius: var(--radius-md);\\n      font-weight: 600;\\n      font-size: var(--text-base);\\n      cursor: pointer;\\n      transition: transform 0.2s var(--ease-out), box-shadow 0.2s var(--ease-out);\\n      box-shadow: var(--shadow-md);\\n    }\\n\\n    .form-button:hover {\\n      transform: translateY(-2px);\\n      box-shadow: var(--shadow-lg);\\n    }\\n\\n    .form-button:active {\\n      transform: scale(0.98);\\n    }\\n\\n    .form-button:focus-visible {\\n      outline: 3px solid rgba(30, 58, 95, 0.3);\\n      outline-offset: 2px;\\n    }\\n\\n    .form-button:disabled {\\n      opacity: 0.6;\\n      cursor: not-allowed;\\n      transform: none;\\n    }\\n\\n    .form-message {\\n      margin-top: var(--space-4);\\n      padding: var(--space-4);\\n      border-radius: var(--radius-md);\\n      font-size: var(--text-sm);\\n      display: none;\\n    }\\n\\n    .form-message.success {\\n      background: rgba(34, 197, 94, 0.1);\\n      color: #16A34A;\\n      border: 1px solid rgba(34, 197, 94, 0.2);\\n      display: block;\\n    }\\n\\n    .contact-info h3 {\\n      font-family: 'Playfair Display', serif;\\n      font-size: var(--text-2xl);\\n      font-weight: 600;\\n      margin-bottom: var(--space-6);\\n      color: var(--text);\\n    }\\n\\n    .info-item {\\n      margin-bottom: var(--space-6);\\n      padding-bottom: var(--space-6);\\n      border-bottom: 1px solid var(--border);\\n    }\\n\\n    .info-item:last-child {\\n      border-bottom: none;\\n      padding-bottom: 0;\\n    }\\n\\n    .info-label {\\n      font-size: var(--text-sm);\\n      color: var(--text-muted);\\n      text-transform: uppercase;\\n      letter-spacing: 0.1em;\\n      font-weight: 600;\\n      margin-bottom: var(--space-2);\\n    }\\n\\n    .info-value {\\n      font-size: var(--text-lg);\\n      color: var(--text);\\n      font-weight: 400;\\n    }\\n\\n    .info-value a {\\n      color: var(--accent);\\n      text-decoration: none;\\n      transition: opacity 0.2s var(--ease-out);\\n    }\\n\\n    .info-value a:hover {\\n      opacity: 0.8;\\n    }\\n\\n    footer {\\n      background: var(--accent);\\n      color: white;\\n      padding: var(--space-16) 0 var(--space-8);\\n    }\\n\\n    .footer-content {\\n      display: grid;\\n      grid-template-columns: 2fr 1fr 1fr 1fr;\\n      gap: var(--space-12);\\n      margin-bottom: var(--space-12);\\n    }\\n\\n    .footer-brand h3 {\\n      font-family: 'Playfair Display', serif;\\n      font-size: var(--text-2xl);\\n      font-weight: 700;\\n      margin-bottom: var(--space-4);\\n    }\\n\\n    .footer-brand p {\\n      font-size: var(--text-base);\\n      opacity: 0.9;\\n      line-height: 1.6;\\n      font-weight: 300;\\n    }\\n\\n    .footer-section h4 {\\n      font-size: var(--text-base);\\n      font-weight: 600;\\n      margin-bottom: var(--space-4);\\n      text-transform: uppercase;\\n      letter-spacing: 0.05em;\\n    }\\n\\n    .footer-links {\\n      list-style: none;\\n      display: grid;\\n      gap: var(--space-3);\\n    }\\n\\n    .footer-links a {\\n      color: white;\\n      text-decoration: none;\\n      font-size: var(--text-sm);\\n      opacity: 0.8;\\n      transition: opacity 0.2s var(--ease-out);\\n    }\\n\\n    .footer-links a:hover {\\n      opacity: 1;\\n    }\\n\\n    .footer-bottom {\\n      padding-top: var(--space-8);\\n      border-top: 1px solid rgba(255, 255, 255, 0.2);\\n      display: flex;\\n      justify-content: space-between;\\n      align-items: center;\\n      font-size: var(--text-sm);\\n      opacity: 0.8;\\n    }\\n\\n    .reveal {\\n      opacity: 0;\\n      transform: translateY(30px);\\n      transition: opacity 0.6s var(--ease-out), transform 0.6s var(--ease-out);\\n    }\\n\\n    .reveal.visible {\\n      opacity: 1;\\n      transform: translateY(0);\\n    }\\n\\n    .reveal-stagger > * {\\n      opacity: 0;\\n      transform: translateY(30px);\\n      transition: opacity 0.6s var(--ease-out), transform 0.6s var(--ease-out);\\n    }\\n\\n    .reveal-stagger.visible > *:nth-child(1) { transition-delay: 0.05s; }\\n    .reveal-stagger.visible > *:nth-child(2) { transition-delay: 0.1s; }\\n    .reveal-stagger.visible > *:nth-child(3) { transition-delay: 0.15s; }\\n    .reveal-stagger.visible > *:nth-child(4) { transition-delay: 0.2s; }\\n    .reveal-stagger.visible > *:nth-child(5) { transition-delay: 0.25s; }\\n\\n    .reveal-stagger.visible > * {\\n      opacity: 1;\\n      transform: translateY(0);\\n    }\\n\\n    @media (prefers-reduced-motion: reduce) {\\n      * {\\n        animation-duration: 0.01ms !important;\\n        animation-iteration-count: 1 !important;\\n        transition-duration: 0.01ms !important;\\n      }\\n      .reveal, .reveal-stagger > * {\\n        opacity: 1;\\n        transform: none;\\n      }\\n    }\\n\\n    @media (max-width: 768px) {\\n      .nav-links {\\n        display: none;\\n      }\\n\\n      .menu-toggle,\\n      .mobile-menu {\\n        display: block;\\n      }\\n\\n      .hero-content,\\n      .approach-content,\\n      .contact-grid {\\n        grid-template-columns: 1fr;\\n        gap: var(--space-12);\\n      }\\n\\n      .approach-text {\\n        position: static;\\n      }\\n\\n      .values-grid,\\n      .footer-content {\\n        grid-template-columns: 1fr;\\n        gap: var(--space-8);\\n      }\\n\\n      .service-item {\\n        grid-template-columns: 1fr;\\n        gap: var(--space-4);\\n      }\\n\\n      .footer-bottom {\\n        flex-direction: column;\\n        gap: var(--space-4);\\n        text-align: center;\\n      }\\n    }\\n  </style>\\n</head>\\n<body>\\n  <a href=\\\"#main\\\" class=\\\"skip-link\\\">Skip to main content</a>\\n  \\n  <nav>\\n    <div class=\\\"nav-container\\\">\\n      <a href=\\\"#home\\\" class=\\\"logo\\\" onclick=\\\"showPage('home'); return false;\\\">Summit Wealth</a>\\n      <ul class=\\\"nav-links\\\">\\n        <li><a href=\\\"#home\\\" class=\\\"active\\\" onclick=\\\"showPage('home'); return false;\\\">Home</a></li>\\n        <li><a href=\\\"#about\\\" onclick=\\\"showPage('about'); return false;\\\">About</a></li>\\n        <li><a href=\\\"#services\\\" onclick=\\\"showPage('services'); return false;\\\">Services</a></li>\\n        <li><a href=\\\"#contact\\\" onclick=\\\"showPage('contact'); return false;\\\">Contact</a></li>\\n      </ul>\\n      <button class=\\\"theme-toggle\\\" aria-label=\\\"Toggle dark mode\\\">\\n        <svg viewBox=\\\"0 0 24 24\\\" fill=\\\"none\\\" stroke=\\\"currentColor\\\" stroke-width=\\\"2\\\" stroke-linecap=\\\"round\\\" stroke-linejoin=\\\"round\\\">\\n          <circle cx=\\\"12\\\" cy=\\\"12\\\" r=\\\"5\\\"/>\\n          <line x1=\\\"12\\\" y1=\\\"1\\\" x2=\\\"12\\\" y2=\\\"3\\\"/>\\n          <line x1=\\\"12\\\" y1=\\\"21\\\" x2=\\\"12\\\" y2=\\\"23\\\"/>\\n          <line x1=\\\"4.22\\\" y1=\\\"4.22\\\" x2=\\\"5.64\\\" y2=\\\"5.64\\\"/>\\n          <line x1=\\\"18.36\\\" y1=\\\"18.36\\\" x2=\\\"19.78\\\" y2=\\\"19.78\\\"/>\\n          <line x1=\\\"1\\\" y1=\\\"12\\\" x2=\\\"3\\\" y2=\\\"12\\\"/>\\n          <line x1=\\\"21\\\" y1=\\\"12\\\" x2=\\\"23\\\" y2=\\\"12\\\"/>\\n          <line x1=\\\"4.22\\\" y1=\\\"19.78\\\" x2=\\\"5.64\\\" y2=\\\"18.36\\\"/>\\n          <line x1=\\\"18.36\\\" y1=\\\"5.64\\\" x2=\\\"19.78\\\" y2=\\\"4.22\\\"/>\\n        </svg>\\n      </button>\\n      <button class=\\\"menu-toggle\\\" aria-label=\\\"Toggle menu\\\">\\n        <svg viewBox=\\\"0 0 24 24\\\" fill=\\\"none\\\" stroke=\\\"currentColor\\\" stroke-width=\\\"2\\\" stroke-linecap=\\\"round\\\" stroke-linejoin=\\\"round\\\">\\n          <line x1=\\\"3\\\" y1=\\\"12\\\" x2=\\\"21\\\" y2=\\\"12\\\"/>\\n          <line x1=\\\"3\\\" y1=\\\"6\\\" x2=\\\"21\\\" y2=\\\"6\\\"/>\\n          <line x1=\\\"3\\\" y1=\\\"18\\\" x2=\\\"21\\\" y2=\\\"18\\\"/>\\n        </svg>\\n      </button>\\n    </div>\\n  </nav>\\n\\n  <div class=\\\"mobile-menu\\\">\\n    <ul class=\\\"nav-links\\\">\\n      <li><a href=\\\"#home\\\" onclick=\\\"showPage('home'); return false;\\\">Home</a></li>\\n      <li><a href=\\\"#about\\\" onclick=\\\"showPage('about'); return false;\\\">About</a></li>\\n      <li><a href=\\\"#services\\\" onclick=\\\"showPage('services'); return false;\\\">Services</a></li>\\n      <li><a href=\\\"#contact\\\" onclick=\\\"showPage('contact'); return false;\\\">Contact</a></li>\\n    </ul>\\n  </div>\\n\\n  <main id=\\\"main\\\">\\n    <div class=\\\"page active\\\" id=\\\"home\\\">\\n      <section class=\\\"hero\\\">\\n        <div class=\\\"container\\\">\\n          <div class=\\\"hero-content reveal-stagger\\\">\\n            <div>\\n              <h1>Build wealth with confidence and clarity</h1>\\n              <p>Comprehensive financial planning and investment management designed around your unique goals and values.</p>\\n              <a href=\\\"#contact\\\" class=\\\"hero-cta\\\" onclick=\\\"showPage('contact'); return false;\\\">Schedule a consultation</a>\\n            </div>\\n            <div class=\\\"hero-aside\\\">\\n              <h3>Our track record</h3>\\n              <div class=\\\"stat-grid\\\">\\n                <div class=\\\"stat\\\">\\n                  <span class=\\\"stat-number\\\">30+</span>\\n                  <span class=\\\"stat-label\\\">Years combined experience</span>\\n                </div>\\n                <div class=\\\"stat\\\">\\n                  <span class=\\\"stat-number\\\">$500M+</span>\\n                  <span class=\\\"stat-label\\\">Assets under management</span>\\n                </div>\\n                <div class=\\\"stat\\\">\\n                  <span class=\\\"stat-number\\\">200+</span>\\n                  <span class=\\\"stat-label\\\">Families served</span>\\n                </div>\\n              </div>\\n            </div>\\n          </div>\\n        </div>\\n      </section>\\n\\n      <section class=\\\"services\\\">\\n        <div class=\\\"container\\\">\\n          <div class=\\\"section-header reveal\\\">\\n            <div class=\\\"section-label\\\">Our expertise</div>\\n            <h2 class=\\\"section-title\\\">Financial planning tailored to you</h2>\\n            <p class=\\\"section-description\\\">We take a holistic approach to wealth management, addressing every aspect of your financial life with expertise and care.</p>\\n          </div>\\n          <div class=\\\"service-list reveal-stagger\\\">\\n            <div class=\\\"service-item\\\">\\n              <h3>Investment Management</h3>\\n              <p>Custom portfolios built on sound principles, aligned with your risk tolerance and time horizon. We monitor and rebalance regularly to keep you on track.</p>\\n            </div>\\n            <div class=\\\"service-item\\\">\\n              <h3>Retirement Planning</h3>\\n              <p>Strategic planning for your retirement years, including income projections, Social Security optimization, and tax-efficient withdrawal strategies.</p>\\n            </div>\\n            <div class=\\\"service-item\\\">\\n              <h3>Estate Planning</h3>\\n              <p>Coordinate with your legal team to ensure your assets pass according to your wishes while minimizing tax implications for your heirs.</p>\\n            </div>\\n            <div class=\\\"service-item\\\">\\n              <h3>Tax Strategy</h3>\\n              <p>Proactive tax planning to reduce your lifetime tax burden through strategic asset location, Roth conversions, and charitable giving strategies.</p>\\n            </div>\\n            <div class=\\\"service-item\\\">\\n              <h3>Risk Management</h3>\\n              <p>Comprehensive insurance review to protect your assets, income, and legacy from unexpected events.</p>\\n            </div>\\n          </div>\\n        </div>\\n      </section>\\n\\n      <section class=\\\"approach\\\">\\n        <div class=\\\"container\\\">\\n          <div class=\\\"approach-content\\\">\\n            <div class=\\\"approach-text reveal\\\">\\n              <div class=\\\"section-label\\\">Our process</div>\\n              <h2 class=\\\"section-title\\\">A partnership built on trust</h2>\\n              <p class=\\\"section-description\\\">We believe financial planning is deeply personal. Our process is designed to understand what matters most to you, then build a comprehensive strategy that brings your goals within reach.</p>\\n            </div>\\n            <div class=\\\"approach-steps reveal-stagger\\\">\\n              <div class=\\\"approach-step\\\">\\n                <span class=\\\"step-number\\\">1</span>\\n                <h3>Discovery</h3>\\n                <p>We start by listening. What are your goals? What keeps you up at night? What does success look like to you? This conversation forms the foundation of everything we do together.</p>\\n              </div>\\n              <div class=\\\"approach-step\\\">\\n                <span class=\\\"step-number\\\">2</span>\\n                <h3>Analysis</h3>\\n                <p>Our team conducts a comprehensive review of your financial situation — assets, liabilities, income, expenses, risk tolerance, and time horizon.</p>\\n              </div>\\n              <div class=\\\"approach-step\\\">\\n                <span class=\\\"step-number\\\">3</span>\\n                <h3>Strategy</h3>\\n                <p>We present a customized financial plan with clear recommendations across investment management, retirement planning, tax strategy, and estate planning.</p>\\n              </div>\\n              <div class=\\\"approach-step\\\">\\n                <span class=\\\"step-number\\\">4</span>\\n                <h3>Implementation</h3>\\n                <p>Once you approve the plan, we handle the execution — opening accounts, transferring assets, coordinating with your other advisors.</p>\\n              </div>\\n              <div class=\\\"approach-step\\\">\\n                <span class=\\\"step-number\\\">5</span>\\n                <h3>Ongoing guidance</h3>\\n                <p>Your financial life evolves. We meet regularly to review progress, adjust for life changes, and ensure you stay on track toward your goals.</p>\\n              </div>\\n            </div>\\n          </div>\\n        </div>\\n      </section>\\n\\n      <section class=\\\"testimonial\\\">\\n        <div class=\\\"container\\\">\\n          <div class=\\\"testimonial-content reveal\\\">\\n            <p class=\\\"quote\\\">Summit Wealth helped us navigate a complex financial transition with clarity and confidence. Their holistic approach gave us peace of mind that every detail was considered.</p>\\n            <div class=\\\"testimonial-author\\\">\\n              <div class=\\\"author-info\\\">\\n                <h4>[Client Name]</h4>\\n                <p>Retired Physician</p>\\n              </div>\\n            </div>\\n          </div>\\n        </div>\\n      </section>\\n\\n      <section class=\\\"cta-section\\\">\\n        <div class=\\\"container\\\">\\n          <h2>Ready to take the next step?</h2>\\n          <p>Schedule a complimentary consultation to discuss your financial goals and see if we're the right fit.</p>\\n          <a href=\\\"#contact\\\" class=\\\"cta-button\\\" onclick=\\\"showPage('contact'); return false;\\\">Schedule a consultation</a>\\n        </div>\\n      </section>\\n    </div>\\n\\n    <div class=\\\"page\\\" id=\\\"about\\\">\\n      <section class=\\\"about-hero\\\">\\n        <div class=\\\"container\\\">\\n          <div class=\\\"about-intro reveal\\\">\\n            <h1>Our story</h1>\\n            <p>Summit Wealth was founded on a simple belief: financial planning should be personal, transparent, and focused on what truly matters to you. For over three decades, we've helped families build and preserve wealth through disciplined planning and thoughtful guidance.</p>\\n          </div>\\n        </div>\\n      </section>\\n\\n      <section class=\\\"values\\\">\\n        <div class=\\\"container\\\">\\n          <div class=\\\"section-header reveal\\\">\\n            <div class=\\\"section-label\\\">What guides us</div>\\n            <h2 class=\\\"section-title\\\">Our principles</h2>\\n          </div>\\n          <div class=\\\"values-grid reveal-stagger\\\">\\n            <div class=\\\"value-card\\\">\\n              <div class=\\\"value-icon\\\">\\n                <svg width=\\\"24\\\" height=\\\"24\\\" viewBox=\\\"0 0 24 24\\\" fill=\\\"none\\\" stroke=\\\"currentColor\\\" stroke-width=\\\"2\\\" stroke-linecap=\\\"round\\\" stroke-linejoin=\\\"round\\\">\\n                  <path d=\\\"M12 2L2 7l10 5 10-5-10-5z\\\"/>\\n                  <path d=\\\"M2 17l10 5 10-5\\\"/>\\n                  <path d=\\\"M2 12l10 5 10-5\\\"/>\\n                </svg>\\n              </div>\\n              <h3>Integrity first</h3>\\n              <p>We act in your best interest, always. As fiduciaries, we're legally and ethically bound to put your needs ahead of our own.</p>\\n            </div>\\n            <div class=\\\"value-card\\\">\\n              <div class=\\\"value-icon\\\">\\n                <svg width=\\\"24\\\" height=\\\"24\\\" viewBox=\\\"0 0 24 24\\\" fill=\\\"none\\\" stroke=\\\"currentColor\\\" stroke-width=\\\"2\\\" stroke-linecap=\\\"round\\\" stroke-linejoin=\\\"round\\\">\\n                  <circle cx=\\\"12\\\" cy=\\\"12\\\" r=\\\"10\\\"/>\\n                  <path d=\\\"M12 6v6l4 2\\\"/>\\n                </svg>\\n              </div>\\n              <h3>Long-term thinking</h3>\\n              <p>Wealth building is a marathon, not a sprint. We design strategies that work over decades, not quarters.</p>\\n            </div>\\n            <div class=\\\"value-card\\\">\\n              <div class=\\\"value-icon\\\">\\n                <svg width=\\\"24\\\" height=\\\"24\\\" viewBox=\\\"0 0 24 24\\\" fill=\\\"none\\\" stroke=\\\"currentColor\\\" stroke-width=\\\"2\\\" stroke-linecap=\\\"round\\\" stroke-linejoin=\\\"round\\\">\\n                  <path d=\\\"M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z\\\"/>\\n                  <polyline points=\\\"3.27 6.96 12 12.01 20.73 6.96\\\"/>\\n                  <line x1=\\\"12\\\" y1=\\\"22.08\\\" x2=\\\"12\\\" y2=\\\"12\\\"/>\\n                </svg>\\n              </div>\\n              <h3>Total transparency</h3>\\n              <p>You deserve to understand exactly what you're paying for and why. We believe in clear, straightforward communication.</p>\\n            </div>\\n            <div class=\\\"value-card\\\">\\n              <div class=\\\"value-icon\\\">\\n                <svg width=\\\"24\\\" height=\\\"24\\\" viewBox=\\\"0 0 24 24\\\" fill=\\\"none\\\" stroke=\\\"currentColor\\\" stroke-width=\\\"2\\\" stroke-linecap=\\\"round\\\" stroke-linejoin=\\\"round\\\">\\n                  <path d=\\\"M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2\\\"/>\\n                  <circle cx=\\\"9\\\" cy=\\\"7\\\" r=\\\"4\\\"/>\\n                  <path d=\\\"M23 21v-2a4 4 0 0 0-3-3.87\\\"/>\\n                  <path d=\\\"M16 3.13a4 4 0 0 1 0 7.75\\\"/>\\n                </svg>\\n              </div>\\n              <h3>Personal relationships</h3>\\n              <p>We limit our client base to ensure every family receives the attention and care they deserve.</p>\\n            </div>\\n            <div class=\\\"value-card\\\">\\n              <div class=\\\"value-icon\\\">\\n                <svg width=\\\"24\\\" height=\\\"24\\\" viewBox=\\\"0 0 24 24\\\" fill=\\\"none\\\" stroke=\\\"currentColor\\\" stroke-width=\\\"2\\\" stroke-linecap=\\\"round\\\" stroke-linejoin=\\\"round\\\">\\n                  <path d=\\\"M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z\\\"/>\\n                  <path d=\\\"M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z\\\"/>\\n                </svg>\\n              </div>\\n              <h3>Continuous learning</h3>\\n              <p>Markets evolve, regulations change, and new opportunities emerge. We stay current so you stay ahead.</p>\\n            </div>\\n            <div class=\\\"value-card\\\">\\n              <div class=\\\"value-icon\\\">\\n                <svg width=\\\"24\\\" height=\\\"24\\\" viewBox=\\\"0 0 24 24\\\" fill=\\\"none\\\" stroke=\\\"currentColor\\\" stroke-width=\\\"2\\\" stroke-linecap=\\\"round\\\" stroke-linejoin=\\\"round\\\">\\n                  <polyline points=\\\"22 12 18 12 15 21 9 3 6 12 2 12\\\"/>\\n                </svg>\\n              </div>\\n              <h3>Holistic approach</h3>\\n              <p>Your financial life isn't compartmentalized, and neither is our planning. Everything connects.</p>\\n            </div>\\n          </div>\\n        </div>\\n      </section>\\n\\n      <section class=\\\"team\\\">\\n        <div class=\\\"container\\\">\\n          <div class=\\\"section-header reveal\\\">\\n            <div class=\\\"section-label\\\">Meet the team</div>\\n            <h2 class=\\\"section-title\\\">Experienced advisors dedicated to your success</h2>\\n            <p class=\\\"section-description\\\">Our team brings decades of combined experience in financial planning, investment management, and wealth preservation. [Team member photos and bios would go here]</p>\\n          </div>\\n        </div>\\n      </section>\\n\\n      <section class=\\\"cta-section\\\">\\n        <div class=\\\"container\\\">\\n          <h2>Let's start a conversation</h2>\\n          <p>We'd love to learn about your financial goals and explore how we can help you achieve them.</p>\\n          <a href=\\\"#contact\\\" class=\\\"cta-button\\\" onclick=\\\"showPage('contact'); return false;\\\">Schedule a consultation</a>\\n        </div>\\n      </section>\\n    </div>\\n\\n    <div class=\\\"page\\\" id=\\\"services\\\">\\n      <section class=\\\"about-hero\\\">\\n        <div class=\\\"container\\\">\\n          <div class=\\\"about-intro reveal\\\">\\n            <h1>Comprehensive wealth management</h1>\\n            <p>From investment strategy to estate planning, we provide the full spectrum of financial planning services your family needs to thrive across generations.</p>\\n          </div>\\n        </div>\\n      </section>\\n\\n      <section class=\\\"services\\\">\\n        <div class=\\\"container\\\">\\n          <div class=\\\"service-list reveal-stagger\\\">\\n            <div class=\\\"service-item\\\">\\n              <h3>Investment Management</h3>\\n              <p>We build diversified portfolios using low-cost index funds and strategic asset allocation. Our approach emphasizes long-term growth, tax efficiency, and regular rebalancing to keep your portfolio aligned with your goals. We avoid market timing and speculation, focusing instead on proven strategies that work over decades.</p>\\n            </div>\\n            <div class=\\\"service-item\\\">\\n              <h3>Retirement Planning</h3>\\n              <p>Whether retirement is decades away or just around the corner, we help you answer the critical questions: How much do I need? When can I retire? How should I draw income? We model multiple scenarios, optimize Social Security claiming strategies, and create sustainable withdrawal plans that last throughout your retirement.</p>\\n            </div>\\n            <div class=\\\"service-item\\\">\\n              <h3>Tax Strategy</h3>\\n              <p>Taxes are often the largest expense in a financial plan. We work to minimize your lifetime tax burden through strategic Roth conversions, tax-loss harvesting, charitable giving strategies, and careful asset location across taxable and tax-advantaged accounts. We coordinate with your CPA to ensure seamless execution.</p>\\n            </div>\\n            <div class=\\\"service-item\\\">\\n              <h3>Estate Planning</h3>\\n              <p>Your legacy matters. We help you structure your estate to pass wealth efficiently to the next generation while minimizing estate taxes and probate costs. We coordinate with estate attorneys to ensure your documents align with your financial plan and family values.</p>\\n            </div>\\n            <div class=\\\"service-item\\\">\\n              <h3>Risk Management</h3>\\n              <p>Insurance is a critical but often overlooked component of financial planning. We review your life, disability, long-term care, and umbrella liability coverage to ensure your assets and income are protected from unexpected events.</p>\\n            </div>\\n            <div class=\\\"service-item\\\">\\n              <h3>Education Planning</h3>\\n              <p>Funding education is a priority for many families. We help you balance education savings with retirement planning, navigate 529 plans and financial aid strategies, and make informed decisions about how much to save and where to invest.</p>\\n            </div>\\n            <div class=\\\"service-item\\\">\\n              <h3>Cash Flow Planning</h3>\\n              <p>Understanding where your money goes is the foundation of financial success. We help you optimize your spending, build emergency reserves, and make intentional decisions about lifestyle choices that align with your long-term goals.</p>\\n            </div>\\n          </div>\\n        </div>\\n      </section>\\n\\n      <section class=\\\"cta-section\\\">\\n        <div class=\\\"container\\\">\\n          <h2>Ready to build your plan?</h2>\\n          <p>Let's discuss your financial situation and create a strategy that brings your goals within reach.</p>\\n          <a href=\\\"#contact\\\" class=\\\"cta-button\\\" onclick=\\\"showPage('contact'); return false;\\\">Schedule a consultation</a>\\n        </div>\\n      </section>\\n    </div>\\n\\n    <div class=\\\"page\\\" id=\\\"contact\\\">\\n      <section class=\\\"contact-hero\\\">\\n        <div class=\\\"container\\\">\\n          <div class=\\\"about-intro reveal\\\">\\n            <h1>Let's connect</h1>\\n            <p>Schedule a complimentary consultation to discuss your financial goals. We'll explore whether we're the right fit to help you achieve them.</p>\\n          </div>\\n          <div class=\\\"contact-grid reveal-stagger\\\">\\n            <div class=\\\"contact-form\\\">\\n              <form id=\\\"contactForm\\\">\\n                <div class=\\\"form-group\\\">\\n                  <label for=\\\"name\\\">Full name</label>\\n                  <input type=\\\"text\\\" id=\\\"name\\\" name=\\\"name\\\" required>\\n                </div>\\n                <div class=\\\"form-group\\\">\\n                  <label for=\\\"email\\\">Email</label>\\n                  <input type=\\\"email\\\" id=\\\"email\\\" name=\\\"email\\\" required>\\n                </div>\\n                <div class=\\\"form-group\\\">\\n                  <label for=\\\"phone\\\">Phone</label>\\n                  <input type=\\\"tel\\\" id=\\\"phone\\\" name=\\\"phone\\\">\\n                </div>\\n                <div class=\\\"form-group\\\">\\n                  <label for=\\\"service\\\">I'm interested in</label>\\n                  <select id=\\\"service\\\" name=\\\"service\\\" required>\\n                    <option value=\\\"\\\">Select a service</option>\\n                    <option value=\\\"comprehensive\\\">Comprehensive financial planning</option>\\n                    <option value=\\\"investment\\\">Investment management</option>\\n                    <option value=\\\"retirement\\\">Retirement planning</option>\\n                    <option value=\\\"estate\\\">Estate planning</option>\\n                    <option value=\\\"other\\\">Other / Not sure yet</option>\\n                  </select>\\n                </div>\\n                <div class=\\\"form-group\\\">\\n                  <label for=\\\"message\\\">Tell us about your situation</label>\\n                  <textarea id=\\\"message\\\" name=\\\"message\\\" rows=\\\"4\\\"></textarea>\\n                </div>\\n                <button type=\\\"submit\\\" class=\\\"form-button\\\">Send message</button>\\n                <div class=\\\"form-message\\\" id=\\\"formMessage\\\"></div>\\n              </form>\\n            </div>\\n            <div class=\\\"contact-info\\\">\\n              <h3>Reach us directly</h3>\\n              <div class=\\\"info-item\\\">\\n                <div class=\\\"info-label\\\">Office</div>\\n                <div class=\\\"info-value\\\">[Your Address]</div>\\n              </div>\\n              <div class=\\\"info-item\\\">\\n                <div class=\\\"info-label\\\">Phone</div>\\n                <div class=\\\"info-value\\\"><a href=\\\"tel:[Your Phone]\\\">[Your Phone]</a></div>\\n              </div>\\n              <div class=\\\"info-item\\\">\\n                <div class=\\\"info-label\\\">Email</div>\\n                <div class=\\\"info-value\\\"><a href=\\\"mailto:[Your Email]\\\">[Your Email]</a></div>\\n              </div>\\n              <div class=\\\"info-item\\\">\\n                <div class=\\\"info-label\\\">Hours</div>\\n                <div class=\\\"info-value\\\">Monday–Friday<br>9:00 AM – 5:00 PM</div>\\n              </div>\\n            </div>\\n          </div>\\n        </div>\\n      </section>\\n    </div>\\n  </main>\\n\\n  <footer>\\n    <div class=\\\"container\\\">\\n      <div class=\\\"footer-content\\\">\\n        <div class=\\\"footer-brand\\\">\\n          <h3>Summit Wealth</h3>\\n          <p>Comprehensive financial planning and investment management built on integrity, transparency, and long-term thinking.</p>\\n        </div>\\n        <div class=\\\"footer-section\\\">\\n          <h4>Company</h4>\\n          <ul class=\\\"footer-links\\\">\\n            <li><a href=\\\"#about\\\" onclick=\\\"showPage('about'); return false;\\\">About us</a></li>\\n            <li><a href=\\\"#services\\\" onclick=\\\"showPage('services'); return false;\\\">Services</a></li>\\n            <li><a href=\\\"#contact\\\" onclick=\\\"showPage('contact'); return false;\\\">Contact</a></li>\\n          </ul>\\n        </div>\\n        <div class=\\\"footer-section\\\">\\n          <h4>Services</h4>\\n          <ul class=\\\"footer-links\\\">\\n            <li><a href=\\\"#services\\\" onclick=\\\"showPage('services'); return false;\\\">Investment Management</a></li>\\n            <li><a href=\\\"#services\\\" onclick=\\\"showPage('services'); return false;\\\">Retirement Planning</a></li>\\n            <li><a href=\\\"#services\\\" onclick=\\\"showPage('services'); return false;\\\">Estate Planning</a></li>\\n            <li><a href=\\\"#services\\\" onclick=\\\"showPage('services'); return false;\\\">Tax Strategy</a></li>\\n          </ul>\\n        </div>\\n        <div class=\\\"footer-section\\\">\\n          <h4>Contact</h4>\\n          <ul class=\\\"footer-links\\\">\\n            <li><a href=\\\"tel:[Your Phone]\\\">[Your Phone]</a></li>\\n            <li><a href=\\\"mailto:[Your Email]\\\">[Your Email]</a></li>\\n            <li>[Your Address]</li>\\n          </ul>\\n        </div>\\n      </div>\\n      <div class=\\\"footer-bottom\\\">\\n        <div>&copy; 2024 Summit Wealth. All rights reserved.</div>\\n        <div>Registered Investment Advisor</div>\\n      </div>\\n    </div>\\n  </footer>\\n\\n  <script>\\n    // Page routing\\n    function showPage(pageId) {\\n      const pages = document.querySelectorAll('.page');\\n      const navLinks = document.querySelectorAll('.nav-links a');\\n      \\n      pages.forEach(page => {\\n        page.classList.remove('active');\\n      });\\n      \\n      navLinks.forEach(link => {\\n        link.classList.remove('active');\\n        if (link.getAttribute('href') === '#' + pageId) {\\n          link.classList.add('active');\\n        }\\n      });\\n      \\n      const targetPage = document.getElementById(pageId);\\n      if (targetPage) {\\n        targetPage.classList.add('active');\\n        window.scrollTo(0, 0);\\n        window.location.hash = pageId;\\n      }\\n      \\n      // Close mobile menu\\n      const mobileMenu = document.querySelector('.mobile-menu');\\n      if (mobileMenu) {\\n        mobileMenu.classList.remove('open');\\n        document.body.style.overflow = '';\\n      }\\n    }\\n\\n    // Handle hash on load\\n    function handleHash() {\\n      const hash = window.location.hash.slice(1);\\n      if (hash && document.getElementById(hash)) {\\n        showPage(hash);\\n      }\\n    }\\n\\n    window.addEventListener('DOMContentLoaded', handleHash);\\n    window.addEventListener('hashchange', handleHash);\\n\\n    // Mobile menu toggle\\n    const menuToggle = document.querySelector('.menu-toggle');\\n    const mobileMenu = document.querySelector('.mobile-menu');\\n    \\n    if (menuToggle && mobileMenu) {\\n      menuToggle.addEventListener('click', () => {\\n        mobileMenu.classList.toggle('open');\\n        if (mobileMenu.classList.contains('open')) {\\n          document.body.style.overflow = 'hidden';\\n        } else {\\n          document.body.style.overflow = '';\\n        }\\n      });\\n    }\\n\\n    // Theme toggle\\n    const themeToggle = document.querySelector('.theme-toggle');\\n    const html = document.documentElement;\\n    \\n    // Check saved theme or system preference\\n    const savedTheme = localStorage.getItem('theme');\\n    const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;\\n    const initialTheme = savedTheme || (systemPrefersDark ? 'dark' : 'light');\\n    html.setAttribute('data-theme', initialTheme);\\n    \\n    if (themeToggle) {\\n      themeToggle.addEventListener('click', () => {\\n        const currentTheme = html.getAttribute('data-theme');\\n        const newTheme = currentTheme === 'light' ? 'dark' : 'light';\\n        html.setAttribute('data-theme', newTheme);\\n        localStorage.setItem('theme', newTheme);\\n      });\\n    }\\n\\n    // Scroll reveal\\n    const revealElements = document.querySelectorAll('.reveal, .reveal-stagger');\\n    \\n    const revealObserver = new IntersectionObserver((entries) => {\\n      entries.forEach(entry => {\\n        if (entry.isIntersecting) {\\n          entry.target.classList.add('visible');\\n        }\\n      });\\n    }, { threshold: 0.1 });\\n    \\n    revealElements.forEach(el => revealObserver.observe(el));\\n\\n    // Form handling\\n    const contactForm = document.getElementById('contactForm');\\n    const formMessage = document.getElementById('formMessage');\\n    \\n    if (contactForm) {\\n      contactForm.addEventListener('submit', (e) => {\\n        e.preventDefault();\\n        \\n        const submitButton = contactForm.querySelector('.form-button');\\n        submitButton.disabled = true;\\n        submitButton.textContent = 'Sending...';\\n        \\n        // Simulate form submission\\n        setTimeout(() => {\\n          // Save to localStorage\\n          const formData = {\\n            name: contactForm.name.value,\\n            email: contactForm.email.value,\\n            phone: contactForm.phone.value,\\n            service: contactForm.service.value,\\n            message: contactForm.message.value,\\n            timestamp: new Date().toISOString()\\n          };\\n          \\n          const submissions = JSON.parse(localStorage.getItem('contactSubmissions') || '[]');\\n          submissions.push(formData);\\n          localStorage.setItem('contactSubmissions', JSON.stringify(submissions));\\n          \\n          // Show success message\\n          formMessage.className = 'form-message success';\\n          formMessage.textContent = 'Thank you for reaching out! We\\\\'ll be in touch within 24 hours.';\\n          \\n          // Reset form\\n          contactForm.reset();\\n          submitButton.disabled = false;\\n          submitButton.textContent = 'Send message';\\n          \\n          // Hide message after 5 seconds\\n          setTimeout(() => {\\n            formMessage.style.display = 'none';\\n          }, 5000);\\n        }, 1000);\\n      });\\n    }\\n\\n    // Smooth scroll for anchor links\\n    document.querySelectorAll('a[href^=\\\"#\\\"]').forEach(anchor => {\\n      anchor.addEventListener('click', function(e) {\\n        const href = this.getAttribute('href');\\n        if (href.length > 1 && !this.hasAttribute('onclick')) {\\n          e.preventDefault();\\n          const target = document.querySelector(href);\\n          if (target) {\\n            target.scrollIntoView({ behavior: 'smooth' });\\n          }\\n        }\\n      });\\n    });\\n  </script>\\n</body>\\n</html>\"\n}\n```"}}

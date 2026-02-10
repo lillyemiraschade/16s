@@ -1,0 +1,1341 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Paws and Prose — Luxury Pet Grooming</title>
+  <meta name="description" content="Elegant grooming and pampering for your beloved pets in a luxurious Art Deco-inspired salon.">
+  <meta property="og:title" content="Paws and Prose — Luxury Pet Grooming">
+  <meta property="og:description" content="Elegant grooming and pampering for your beloved pets in a luxurious Art Deco-inspired salon.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Manrope:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --space-1: 4px; --space-2: 8px; --space-3: 12px; --space-4: 16px;
+      --space-5: 20px; --space-6: 24px; --space-8: 32px; --space-10: 40px;
+      --space-12: 48px; --space-16: 64px; --space-20: 80px; --space-24: 96px; --space-32: 128px;
+      
+      --text-xs: clamp(0.75rem, 0.7rem + 0.25vw, 0.875rem);
+      --text-sm: clamp(0.875rem, 0.8rem + 0.35vw, 1rem);
+      --text-base: clamp(1rem, 0.9rem + 0.5vw, 1.125rem);
+      --text-lg: clamp(1.125rem, 1rem + 0.6vw, 1.25rem);
+      --text-xl: clamp(1.25rem, 1rem + 1vw, 1.5rem);
+      --text-2xl: clamp(1.5rem, 1.2rem + 1.5vw, 2rem);
+      --text-3xl: clamp(1.875rem, 1.4rem + 2.3vw, 2.5rem);
+      --text-4xl: clamp(2.25rem, 1.5rem + 3.5vw, 3.5rem);
+      --text-5xl: clamp(3rem, 2rem + 5vw, 5rem);
+      
+      --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
+      --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -2px rgba(0,0,0,0.1);
+      --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -4px rgba(0,0,0,0.1);
+      --shadow-xl: 0 20px 25px -5px rgba(0,0,0,0.1), 0 8px 10px -6px rgba(0,0,0,0.1);
+      
+      --radius-sm: 6px; --radius-md: 8px; --radius-lg: 12px; --radius-xl: 16px;
+      --ease-out: cubic-bezier(0,0,0.2,1);
+      --ease-in: cubic-bezier(0.4,0,1,1);
+      --ease-in-out: cubic-bezier(0.4,0,0.2,1);
+      --ease-bounce: cubic-bezier(0.34,1.56,0.64,1);
+    }
+
+    [data-theme="light"] {
+      --bg: #FAF9F7;
+      --surface: #FFFFFF;
+      --text: #2C2420;
+      --text-muted: #6B5D56;
+      --border: rgba(44, 36, 32, 0.1);
+      --accent: #D4AF37;
+      --accent-light: #F5E6C3;
+      --accent-dark: #B8941F;
+    }
+
+    [data-theme="dark"] {
+      --bg: #1A1410;
+      --surface: #2C2420;
+      --text: #FAF9F7;
+      --text-muted: #A39388;
+      --border: rgba(250, 249, 247, 0.1);
+      --accent: #D4AF37;
+      --accent-light: #E6D098;
+      --accent-dark: #B8941F;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Manrope', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      overflow-x: hidden;
+      transition: background 0.3s var(--ease-out), color 0.3s var(--ease-out);
+    }
+
+    h1, h2, h3, h4 {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 500;
+      line-height: 1.15;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    button {
+      border: none;
+      background: none;
+      cursor: pointer;
+      font-family: inherit;
+    }
+
+    .skip-link {
+      position: absolute;
+      top: -40px;
+      left: 0;
+      background: var(--accent);
+      color: white;
+      padding: var(--space-2) var(--space-4);
+      z-index: 100;
+    }
+
+    .skip-link:focus {
+      top: 0;
+    }
+
+    /* Navigation */
+    nav {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background: rgba(250, 249, 247, 0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      z-index: 50;
+      transition: background 0.3s var(--ease-out);
+    }
+
+    [data-theme="dark"] nav {
+      background: rgba(26, 20, 16, 0.85);
+    }
+
+    .nav-container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: var(--space-5) clamp(16px, 5vw, 64px);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: var(--text-xl);
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      color: var(--accent);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: var(--space-8);
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: var(--text-sm);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-weight: 500;
+      transition: color 0.2s var(--ease-out);
+      position: relative;
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0;
+      height: 1px;
+      background: var(--accent);
+      transition: width 0.3s var(--ease-out);
+    }
+
+    .nav-links a:hover::after,
+    .nav-links a.active::after {
+      width: 100%;
+    }
+
+    .nav-links a:hover {
+      color: var(--accent);
+    }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: var(--space-4);
+    }
+
+    .theme-toggle {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      transition: all 0.2s var(--ease-out);
+    }
+
+    .theme-toggle:hover {
+      transform: scale(1.05);
+      background: var(--accent-light);
+    }
+
+    .theme-toggle svg {
+      width: 18px;
+      height: 18px;
+      stroke: var(--text);
+    }
+
+    .menu-toggle {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      width: 28px;
+      height: 24px;
+    }
+
+    .menu-toggle span {
+      width: 100%;
+      height: 2px;
+      background: var(--text);
+      transition: all 0.3s var(--ease-out);
+    }
+
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      top: 72px;
+      right: 0;
+      width: 280px;
+      height: calc(100vh - 72px);
+      background: var(--surface);
+      padding: var(--space-8);
+      transform: translateX(100%);
+      transition: transform 0.3s var(--ease-out);
+      box-shadow: var(--shadow-xl);
+    }
+
+    .mobile-menu.open {
+      transform: translateX(0);
+    }
+
+    .mobile-menu ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-6);
+    }
+
+    .mobile-menu a {
+      font-size: var(--text-base);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-weight: 500;
+    }
+
+    @media (max-width: 768px) {
+      .nav-links {
+        display: none;
+      }
+
+      .menu-toggle {
+        display: flex;
+      }
+
+      .mobile-menu {
+        display: block;
+      }
+    }
+
+    /* Container */
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 clamp(16px, 5vw, 64px);
+    }
+
+    /* Page Sections */
+    .page {
+      display: none;
+      opacity: 0;
+      animation: fadeIn 0.4s var(--ease-out) forwards;
+    }
+
+    .page.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      to {
+        opacity: 1;
+      }
+    }
+
+    /* Hero */
+    .hero {
+      min-height: 90vh;
+      display: flex;
+      align-items: center;
+      padding-top: 100px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: -10%;
+      width: 800px;
+      height: 800px;
+      background: radial-gradient(circle, rgba(212, 175, 55, 0.08) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: var(--space-16);
+      align-items: center;
+      position: relative;
+    }
+
+    .hero-content h1 {
+      font-size: clamp(3.5rem, 10vw, 7rem);
+      font-weight: 300;
+      letter-spacing: -0.02em;
+      line-height: 1;
+      margin-bottom: var(--space-6);
+      color: var(--text);
+    }
+
+    .hero-content h1 span {
+      display: block;
+      font-style: italic;
+      color: var(--accent);
+    }
+
+    .hero-tagline {
+      font-size: var(--text-xl);
+      color: var(--text-muted);
+      margin-bottom: var(--space-10);
+      max-width: 500px;
+      line-height: 1.6;
+    }
+
+    .hero-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2);
+      padding: var(--space-4) var(--space-8);
+      background: var(--accent);
+      color: white;
+      font-weight: 600;
+      font-size: var(--text-base);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      border-radius: var(--radius-sm);
+      transition: all 0.2s var(--ease-out);
+    }
+
+    .hero-cta:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-lg);
+      background: var(--accent-dark);
+    }
+
+    .hero-cta:active {
+      transform: scale(0.98);
+    }
+
+    .hero-image {
+      position: relative;
+      aspect-ratio: 4/5;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow-xl);
+    }
+
+    .hero-image::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(212, 175, 55, 0.2), transparent);
+      z-index: 1;
+    }
+
+    .hero-image-placeholder {
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, var(--accent-light) 0%, #E8D5B7 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .hero-image-placeholder svg {
+      width: 120px;
+      height: 120px;
+      opacity: 0.3;
+    }
+
+    @media (max-width: 968px) {
+      .hero-grid {
+        grid-template-columns: 1fr;
+        gap: var(--space-12);
+      }
+
+      .hero-image {
+        max-width: 400px;
+        margin: 0 auto;
+      }
+    }
+
+    /* Services Section */
+    .services-section {
+      padding: var(--space-32) 0;
+      background: var(--surface);
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: var(--space-16);
+    }
+
+    .section-label {
+      font-size: var(--text-xs);
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--accent);
+      font-weight: 600;
+      margin-bottom: var(--space-3);
+    }
+
+    .section-title {
+      font-size: var(--text-4xl);
+      font-weight: 400;
+      color: var(--text);
+    }
+
+    .services-list {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .service-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding: var(--space-6) 0;
+      border-bottom: 1px solid var(--border);
+      gap: var(--space-4);
+      transition: all 0.2s var(--ease-out);
+    }
+
+    .service-item:hover {
+      padding-left: var(--space-4);
+      border-color: var(--accent);
+    }
+
+    .service-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: var(--text-xl);
+      font-weight: 500;
+      color: var(--text);
+    }
+
+    .service-price {
+      font-size: var(--text-lg);
+      font-weight: 600;
+      color: var(--accent);
+      white-space: nowrap;
+    }
+
+    .service-description {
+      font-size: var(--text-sm);
+      color: var(--text-muted);
+      margin-top: var(--space-2);
+      max-width: 600px;
+    }
+
+    @media (max-width: 640px) {
+      .service-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--space-2);
+      }
+    }
+
+    /* Gallery Section */
+    .gallery-section {
+      padding: var(--space-32) 0;
+      background: #F5F3F0;
+    }
+
+    [data-theme="dark"] .gallery-section {
+      background: #231C18;
+    }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: var(--space-6);
+      margin-top: var(--space-12);
+    }
+
+    .gallery-item {
+      aspect-ratio: 1;
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      cursor: pointer;
+      transition: transform 0.3s var(--ease-out);
+      box-shadow: var(--shadow-md);
+    }
+
+    .gallery-item:hover {
+      transform: translateY(-6px);
+      box-shadow: var(--shadow-xl);
+    }
+
+    .gallery-placeholder {
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, #E8D5B7, #D4C4A8);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .gallery-placeholder svg {
+      width: 60px;
+      height: 60px;
+      opacity: 0.3;
+    }
+
+    /* Booking Section */
+    .booking-section {
+      padding: var(--space-32) 0;
+      background: var(--bg);
+    }
+
+    .booking-container {
+      max-width: 700px;
+      margin: 0 auto;
+      background: var(--surface);
+      padding: var(--space-12);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .form-group {
+      margin-bottom: var(--space-6);
+    }
+
+    .form-label {
+      display: block;
+      font-size: var(--text-sm);
+      font-weight: 600;
+      margin-bottom: var(--space-2);
+      color: var(--text);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .form-input,
+    .form-select,
+    .form-textarea {
+      width: 100%;
+      padding: var(--space-4);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      font-family: inherit;
+      font-size: var(--text-base);
+      background: var(--bg);
+      color: var(--text);
+      transition: all 0.2s var(--ease-out);
+    }
+
+    .form-input:focus,
+    .form-select:focus,
+    .form-textarea:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.15);
+    }
+
+    .form-textarea {
+      resize: vertical;
+      min-height: 120px;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-4);
+    }
+
+    @media (max-width: 640px) {
+      .form-row {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .submit-btn {
+      width: 100%;
+      padding: var(--space-4) var(--space-8);
+      background: var(--accent);
+      color: white;
+      font-weight: 600;
+      font-size: var(--text-base);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      border-radius: var(--radius-sm);
+      transition: all 0.2s var(--ease-out);
+      margin-top: var(--space-4);
+    }
+
+    .submit-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-lg);
+      background: var(--accent-dark);
+    }
+
+    .submit-btn:active {
+      transform: scale(0.98);
+    }
+
+    .submit-btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .form-message {
+      margin-top: var(--space-4);
+      padding: var(--space-4);
+      border-radius: var(--radius-sm);
+      text-align: center;
+      font-weight: 500;
+      display: none;
+    }
+
+    .form-message.success {
+      background: rgba(34, 197, 94, 0.1);
+      color: #16a34a;
+      border: 1px solid rgba(34, 197, 94, 0.2);
+    }
+
+    .form-message.error {
+      background: rgba(239, 68, 68, 0.1);
+      color: #dc2626;
+      border: 1px solid rgba(239, 68, 68, 0.2);
+    }
+
+    /* About Section */
+    .about-section {
+      padding: var(--space-32) 0;
+      background: var(--surface);
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-16);
+      align-items: center;
+      margin-top: var(--space-12);
+    }
+
+    .about-image {
+      aspect-ratio: 4/5;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow-lg);
+    }
+
+    .about-image-placeholder {
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, #E8D5B7, #D4C4A8);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .about-content h3 {
+      font-size: var(--text-3xl);
+      margin-bottom: var(--space-6);
+      color: var(--text);
+    }
+
+    .about-content p {
+      font-size: var(--text-base);
+      color: var(--text-muted);
+      line-height: 1.8;
+      margin-bottom: var(--space-5);
+    }
+
+    @media (max-width: 968px) {
+      .about-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .about-image {
+        max-width: 400px;
+        margin: 0 auto;
+      }
+    }
+
+    /* Footer */
+    footer {
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      padding: var(--space-16) 0 var(--space-8);
+    }
+
+    [data-theme="light"] footer {
+      background: #2C2420;
+      color: #FAF9F7;
+    }
+
+    [data-theme="light"] footer .footer-text {
+      color: rgba(250, 249, 247, 0.7);
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: var(--space-12);
+      margin-bottom: var(--space-12);
+    }
+
+    .footer-brand {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: var(--text-2xl);
+      font-weight: 600;
+      color: var(--accent);
+      margin-bottom: var(--space-3);
+    }
+
+    .footer-text {
+      font-size: var(--text-sm);
+      line-height: 1.7;
+      opacity: 0.8;
+    }
+
+    [data-theme="light"] .footer-text {
+      opacity: 1;
+    }
+
+    .footer-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: var(--text-lg);
+      font-weight: 600;
+      margin-bottom: var(--space-4);
+    }
+
+    [data-theme="light"] .footer-title {
+      color: #FAF9F7;
+    }
+
+    .footer-links {
+      list-style: none;
+    }
+
+    .footer-links li {
+      margin-bottom: var(--space-3);
+    }
+
+    .footer-links a {
+      font-size: var(--text-sm);
+      opacity: 0.8;
+      transition: opacity 0.2s var(--ease-out), color 0.2s var(--ease-out);
+    }
+
+    .footer-links a:hover {
+      opacity: 1;
+      color: var(--accent);
+    }
+
+    [data-theme="light"] .footer-links a {
+      color: rgba(250, 249, 247, 0.7);
+    }
+
+    [data-theme="light"] .footer-links a:hover {
+      color: var(--accent);
+      opacity: 1;
+    }
+
+    .footer-bottom {
+      padding-top: var(--space-6);
+      border-top: 1px solid var(--border);
+      text-align: center;
+      font-size: var(--text-sm);
+      opacity: 0.6;
+    }
+
+    @media (max-width: 968px) {
+      .footer-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: var(--space-8);
+      }
+    }
+
+    @media (max-width: 640px) {
+      .footer-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Scroll Reveal */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.6s var(--ease-out), transform 0.6s var(--ease-out);
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .reveal-stagger > * {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.6s var(--ease-out), transform 0.6s var(--ease-out);
+    }
+
+    .reveal-stagger.visible > * {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .reveal-stagger.visible > *:nth-child(1) { transition-delay: 0s; }
+    .reveal-stagger.visible > *:nth-child(2) { transition-delay: 0.1s; }
+    .reveal-stagger.visible > *:nth-child(3) { transition-delay: 0.2s; }
+    .reveal-stagger.visible > *:nth-child(4) { transition-delay: 0.3s; }
+    .reveal-stagger.visible > *:nth-child(5) { transition-delay: 0.4s; }
+    .reveal-stagger.visible > *:nth-child(6) { transition-delay: 0.5s; }
+
+    @media (prefers-reduced-motion: reduce) {
+      .reveal,
+      .reveal-stagger > * {
+        opacity: 1;
+        transform: none;
+        transition: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to main content</a>
+
+  <nav>
+    <div class="nav-container">
+      <a href="#home" class="logo" onclick="showPage('home'); return false;">Paws and Prose</a>
+      
+      <ul class="nav-links">
+        <li><a href="#home" class="active" onclick="showPage('home'); return false;">Home</a></li>
+        <li><a href="#services" onclick="showPage('services'); return false;">Services</a></li>
+        <li><a href="#gallery" onclick="showPage('gallery'); return false;">Gallery</a></li>
+        <li><a href="#about" onclick="showPage('about'); return false;">About</a></li>
+        <li><a href="#booking" onclick="showPage('booking'); return false;">Book Now</a></li>
+      </ul>
+
+      <div class="nav-right">
+        <button class="theme-toggle" aria-label="Toggle theme">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="5"/>
+            <line x1="12" y1="1" x2="12" y2="3"/>
+            <line x1="12" y1="21" x2="12" y2="23"/>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+            <line x1="1" y1="12" x2="3" y2="12"/>
+            <line x1="21" y1="12" x2="23" y2="12"/>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+          </svg>
+        </button>
+        <button class="menu-toggle" aria-label="Toggle menu">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <div class="mobile-menu">
+    <ul>
+      <li><a href="#home" onclick="showPage('home'); return false;">Home</a></li>
+      <li><a href="#services" onclick="showPage('services'); return false;">Services</a></li>
+      <li><a href="#gallery" onclick="showPage('gallery'); return false;">Gallery</a></li>
+      <li><a href="#about" onclick="showPage('about'); return false;">About</a></li>
+      <li><a href="#booking" onclick="showPage('booking'); return false;">Book Now</a></li>
+    </ul>
+  </div>
+
+  <main id="main">
+    <!-- Home Page -->
+    <div class="page active" id="home">
+      <section class="hero">
+        <div class="container">
+          <div class="hero-grid">
+            <div class="hero-content reveal">
+              <h1>
+                Paws and
+                <span>Prose</span>
+              </h1>
+              <p class="hero-tagline">Where elegance meets excellence in luxury pet grooming. Bespoke care for your beloved companions.</p>
+              <a href="#booking" class="hero-cta" onclick="showPage('booking'); return false;">
+                Reserve Your Appointment
+              </a>
+            </div>
+            <div class="hero-image reveal">
+              <div class="hero-image-placeholder">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <path d="M12 8c-1.657 0-3 1.343-3 3s1.343 3 3 3 3-1.343 3-3-1.343-3-3-3z"/>
+                  <path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2z"/>
+                  <path d="M8 12c0-1.105-.895-2-2-2M18 12c0-1.105-.895-2-2-2M12 16c-1.105 0-2 .895-2 2M12 16c1.105 0 2 .895 2 2"/>
+                </svg>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- Services Page -->
+    <div class="page" id="services">
+      <section class="services-section">
+        <div class="container">
+          <div class="section-header reveal">
+            <div class="section-label">Our Services</div>
+            <h2 class="section-title">Tailored Treatments</h2>
+          </div>
+
+          <div class="services-list reveal-stagger">
+            <div class="service-item">
+              <div>
+                <div class="service-name">The Classic Groom</div>
+                <div class="service-description">Full bath, precision cut, nail trim, and ear cleaning. Our signature service for all breeds.</div>
+              </div>
+              <div class="service-price">$85+</div>
+            </div>
+
+            <div class="service-item">
+              <div>
+                <div class="service-name">The Royal Treatment</div>
+                <div class="service-description">Our premium package with aromatherapy bath, breed-specific styling, pawdicure, and finishing cologne.</div>
+              </div>
+              <div class="service-price">$145+</div>
+            </div>
+
+            <div class="service-item">
+              <div>
+                <div class="service-name">Spa Day</div>
+                <div class="service-description">Luxurious bath with organic shampoo, deep conditioning treatment, blueberry facial, and gentle massage.</div>
+              </div>
+              <div class="service-price">$120</div>
+            </div>
+
+            <div class="service-item">
+              <div>
+                <div class="service-name">Breed-Specific Styling</div>
+                <div class="service-description">Expert cuts tailored to your pet's breed standard, competition prep available.</div>
+              </div>
+              <div class="service-price">$95+</div>
+            </div>
+
+            <div class="service-item">
+              <div>
+                <div class="service-name">Deluxe Pawdicure</div>
+                <div class="service-description">Nail trim, filing, paw pad moisturizing treatment, and optional polish.</div>
+              </div>
+              <div class="service-price">$35</div>
+            </div>
+
+            <div class="service-item">
+              <div>
+                <div class="service-name">Express Bath & Brush</div>
+                <div class="service-description">Quick refresh with bath, blow-dry, and brush-out. Perfect for maintenance between full grooms.</div>
+              </div>
+              <div class="service-price">$65</div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- Gallery Page -->
+    <div class="page" id="gallery">
+      <section class="gallery-section">
+        <div class="container">
+          <div class="section-header reveal">
+            <div class="section-label">Our Work</div>
+            <h2 class="section-title">Before & After Gallery</h2>
+          </div>
+
+          <div class="gallery-grid reveal-stagger">
+            <div class="gallery-item">
+              <div class="gallery-placeholder">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <circle cx="12" cy="8" r="3"/>
+                  <path d="M12 14c-4 0-7 2-7 4v2h14v-2c0-2-3-4-7-4z"/>
+                </svg>
+              </div>
+            </div>
+            <div class="gallery-item">
+              <div class="gallery-placeholder">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <circle cx="12" cy="8" r="3"/>
+                  <path d="M12 14c-4 0-7 2-7 4v2h14v-2c0-2-3-4-7-4z"/>
+                </svg>
+              </div>
+            </div>
+            <div class="gallery-item">
+              <div class="gallery-placeholder">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <circle cx="12" cy="8" r="3"/>
+                  <path d="M12 14c-4 0-7 2-7 4v2h14v-2c0-2-3-4-7-4z"/>
+                </svg>
+              </div>
+            </div>
+            <div class="gallery-item">
+              <div class="gallery-placeholder">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <circle cx="12" cy="8" r="3"/>
+                  <path d="M12 14c-4 0-7 2-7 4v2h14v-2c0-2-3-4-7-4z"/>
+                </svg>
+              </div>
+            </div>
+            <div class="gallery-item">
+              <div class="gallery-placeholder">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <circle cx="12" cy="8" r="3"/>
+                  <path d="M12 14c-4 0-7 2-7 4v2h14v-2c0-2-3-4-7-4z"/>
+                </svg>
+              </div>
+            </div>
+            <div class="gallery-item">
+              <div class="gallery-placeholder">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <circle cx="12" cy="8" r="3"/>
+                  <path d="M12 14c-4 0-7 2-7 4v2h14v-2c0-2-3-4-7-4z"/>
+                </svg>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- About Page -->
+    <div class="page" id="about">
+      <section class="about-section">
+        <div class="container">
+          <div class="section-header reveal">
+            <div class="section-label">About Us</div>
+            <h2 class="section-title">Our Story</h2>
+          </div>
+
+          <div class="about-grid">
+            <div class="about-image reveal">
+              <div class="about-image-placeholder">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="width: 80px; height: 80px;">
+                  <path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2z"/>
+                  <path d="M12 6v6l4 2"/>
+                </svg>
+              </div>
+            </div>
+            <div class="about-content reveal">
+              <h3>Where Luxury Meets Love</h3>
+              <p>Founded with a passion for exceptional pet care, Paws and Prose brings together certified master groomers and a dedication to creating a stress-free, spa-like experience for your beloved companions.</p>
+              <p>Our Art Deco-inspired salon combines vintage elegance with modern techniques, ensuring every pet receives personalized attention in a calming, beautiful environment. We believe grooming is both an art and a science—each cut is tailored to enhance your pet's natural beauty while prioritizing their comfort and wellbeing.</p>
+              <p>From our organic, cruelty-free products to our gentle handling techniques, every detail is designed to make your pet feel cherished. Because they deserve nothing less than the royal treatment.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- Booking Page -->
+    <div class="page" id="booking">
+      <section class="booking-section">
+        <div class="container">
+          <div class="section-header reveal">
+            <div class="section-label">Reserve Your Spot</div>
+            <h2 class="section-title">Book an Appointment</h2>
+          </div>
+
+          <div class="booking-container reveal">
+            <form id="booking-form">
+              <div class="form-row">
+                <div class="form-group">
+                  <label class="form-label" for="owner-name">Your Name</label>
+                  <input type="text" id="owner-name" class="form-input" required>
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="phone">Phone Number</label>
+                  <input type="tel" id="phone" class="form-input" required>
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label class="form-label" for="pet-name">Pet's Name</label>
+                  <input type="text" id="pet-name" class="form-input" required>
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="pet-breed">Breed</label>
+                  <input type="text" id="pet-breed" class="form-input" required>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="service">Select Service</label>
+                <select id="service" class="form-select" required>
+                  <option value="">Choose a service...</option>
+                  <option value="classic">The Classic Groom ($85+)</option>
+                  <option value="royal">The Royal Treatment ($145+)</option>
+                  <option value="spa">Spa Day ($120)</option>
+                  <option value="styling">Breed-Specific Styling ($95+)</option>
+                  <option value="pawdicure">Deluxe Pawdicure ($35)</option>
+                  <option value="express">Express Bath & Brush ($65)</option>
+                </select>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label class="form-label" for="date">Preferred Date</label>
+                  <input type="date" id="date" class="form-input" required>
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="time">Preferred Time</label>
+                  <input type="time" id="time" class="form-input" required>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="notes">Special Requests or Notes</label>
+                <textarea id="notes" class="form-textarea" placeholder="Any special requirements, behavioral notes, or requests..."></textarea>
+              </div>
+
+              <button type="submit" class="submit-btn">Confirm Booking</button>
+
+              <div class="form-message" id="form-message"></div>
+            </form>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <div class="footer-brand">Paws and Prose</div>
+          <p class="footer-text">Luxury grooming and pampering for your beloved pets. Where elegance meets excellence.</p>
+        </div>
+        <div>
+          <h4 class="footer-title">Services</h4>
+          <ul class="footer-links">
+            <li><a href="#services" onclick="showPage('services'); return false;">Full Grooming</a></li>
+            <li><a href="#services" onclick="showPage('services'); return false;">Spa Treatments</a></li>
+            <li><a href="#services" onclick="showPage('services'); return false;">Styling</a></li>
+            <li><a href="#services" onclick="showPage('services'); return false;">Pawdicure</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="footer-title">Contact</h4>
+          <ul class="footer-links">
+            <li>[Your Address]</li>
+            <li>[Your Phone]</li>
+            <li>[Your Email]</li>
+            <li>[Your Hours]</li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="footer-title">Connect</h4>
+          <ul class="footer-links">
+            <li><a href="#" target="_blank" rel="noopener">Instagram</a></li>
+            <li><a href="#" target="_blank" rel="noopener">Facebook</a></li>
+            <li><a href="#booking" onclick="showPage('booking'); return false;">Book Now</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2024 Paws and Prose. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Page routing
+    function showPage(pageId) {
+      const pages = document.querySelectorAll('.page');
+      const navLinks = document.querySelectorAll('.nav-links a');
+      const mobileLinks = document.querySelectorAll('.mobile-menu a');
+      const mobileMenu = document.querySelector('.mobile-menu');
+      
+      pages.forEach(page => {
+        page.classList.remove('active');
+      });
+      
+      const targetPage = document.getElementById(pageId);
+      if (targetPage) {
+        targetPage.classList.add('active');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        
+        // Update active nav link
+        navLinks.forEach(link => link.classList.remove('active'));
+        mobileLinks.forEach(link => link.classList.remove('active'));
+        
+        document.querySelectorAll(`a[href="#${pageId}"]`).forEach(link => {
+          link.classList.add('active');
+        });
+        
+        // Close mobile menu
+        if (mobileMenu) {
+          mobileMenu.classList.remove('open');
+          document.body.style.overflow = '';
+        }
+        
+        // Update URL hash
+        window.location.hash = pageId;
+      }
+    }
+
+    // Handle initial page load and browser navigation
+    function handleHashChange() {
+      const hash = window.location.hash.slice(1) || 'home';
+      showPage(hash);
+    }
+
+    window.addEventListener('DOMContentLoaded', handleHashChange);
+    window.addEventListener('hashchange', handleHashChange);
+
+    // Mobile menu toggle
+    const menuToggle = document.querySelector('.menu-toggle');
+    const mobileMenu = document.querySelector('.mobile-menu');
+    
+    if (menuToggle && mobileMenu) {
+      menuToggle.addEventListener('click', () => {
+        mobileMenu.classList.toggle('open');
+        if (mobileMenu.classList.contains('open')) {
+          document.body.style.overflow = 'hidden';
+        } else {
+          document.body.style.overflow = '';
+        }
+      });
+    }
+
+    // Theme toggle
+    const themeToggle = document.querySelector('.theme-toggle');
+    const html = document.documentElement;
+    
+    // Check for saved theme preference or default to 'light'
+    const currentTheme = localStorage.getItem('theme') || 'light';
+    html.setAttribute('data-theme', currentTheme);
+    
+    if (themeToggle) {
+      themeToggle.addEventListener('click', () => {
+        const theme = html.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+        html.setAttribute('data-theme', theme);
+        localStorage.setItem('theme', theme);
+      });
+    }
+
+    // Booking form
+    const bookingForm = document.getElementById('booking-form');
+    const formMessage = document.getElementById('form-message');
+    
+    if (bookingForm) {
+      bookingForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        
+        const submitBtn = bookingForm.querySelector('.submit-btn');
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Processing...';
+        
+        // Get form data
+        const formData = {
+          ownerName: document.getElementById('owner-name').value,
+          phone: document.getElementById('phone').value,
+          petName: document.getElementById('pet-name').value,
+          breed: document.getElementById('pet-breed').value,
+          service: document.getElementById('service').value,
+          date: document.getElementById('date').value,
+          time: document.getElementById('time').value,
+          notes: document.getElementById('notes').value,
+          timestamp: new Date().toISOString()
+        };
+        
+        // Save to localStorage
+        const bookings = JSON.parse(localStorage.getItem('bookings') || '[]');
+        bookings.push(formData);
+        if (bookings.length > 20) bookings.shift();
+        localStorage.setItem('bookings', JSON.stringify(bookings));
+        
+        // Simulate processing
+        setTimeout(() => {
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Confirm Booking';
+          
+          formMessage.textContent = `Thank you! We've received your booking request for ${formData.petName}. We'll contact you shortly at ${formData.phone} to confirm.`;
+          formMessage.className = 'form-message success';
+          formMessage.style.display = 'block';
+          
+          bookingForm.reset();
+          
+          setTimeout(() => {
+            formMessage.style.display = 'none';
+          }, 5000);
+        }, 1500);
+      });
+    }
+
+    // Scroll reveal
+    const revealElements = document.querySelectorAll('.reveal, .reveal-stagger');
+    
+    const revealObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
+    
+    revealElements.forEach(el => revealObserver.observe(el));
+
+    // Set minimum date for booking (today)
+    const dateInput = document.getElementById('date');
+    if (dateInput) {
+      const today = new Date().toISOString().split('T')[0];
+      dateInput.setAttribute('min', today);
+    }
+  </script>
+</body>
+</html>

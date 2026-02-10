@@ -1,0 +1,3106 @@
+{"type":"token","text":"```"}
+{"type":"token","text":"json"}
+{"type":"token","text":"\n{\n  \"message"}
+{"type":"token","text":"\": \"Built"}
+{"type":"token","text":" you"}
+{"type":"token","text":" a clean"}
+{"type":"token","text":", editorial"}
+{"type":"token","text":"-style site"}
+{"type":"token","text":" with"}
+{"type":"token","text":" an"}
+{"type":"token","text":" unexpected"}
+{"type":"token","text":" dark"}
+{"type":"token","text":" hero"}
+{"type":"token","text":" moment"}
+{"type":"token","text":". Went"}
+{"type":"token","text":" with"}
+{"type":"token","text":" a warm"}
+{"type":"token","text":" sage"}
+{"type":"token","text":" and"}
+{"type":"token","text":" cream"}
+{"type":"token","text":" palette —"}
+{"type":"token","text":" modern"}
+{"type":"token","text":" but"}
+{"type":"token","text":" gr"}
+{"type":"token","text":"ounded,"}
+{"type":"token","text":" like"}
+{"type":"token","text":" the"}
+{"type":"token","text":" food"}
+{"type":"token","text":" itself.\","}
+{"type":"token","text":"\n  \"pills"}
+{"type":"token","text":"\": [\""}
+{"type":"token","text":"Love"}
+{"type":"token","text":" it"}
+{"type":"token","text":","}
+{"type":"token","text":" keep"}
+{"type":"token","text":" going"}
+{"type":"token","text":"\","}
+{"type":"token","text":" \"Try"}
+{"type":"token","text":" a"}
+{"type":"token","text":" different direction"}
+{"type":"token","text":"\", \"Show"}
+{"type":"token","text":" me style"}
+{"type":"token","text":" options"}
+{"type":"token","text":"\"],\n  \"html"}
+{"type":"token","text":"\": \"<!DOCTYPE html>\\"}
+{"type":"token","text":"n<html lang=\\\"en\\\""}
+{"type":"token","text":" data"}
+{"type":"token","text":"-theme=\\\"light"}
+{"type":"token","text":"\\\">\\n<head>\\n  "}
+{"type":"token","text":"<meta charset=\\\"UTF-8\\\""}
+{"type":"token","text":">\\n  <meta name=\\\"viewport"}
+{"type":"token","text":"\\\" content=\\\"width=device-width"}
+{"type":"token","text":", initial-scale=1.0"}
+{"type":"token","text":"\\\">\\n  <title>"}
+{"type":"token","text":"Sprout —"}
+{"type":"token","text":" Fresh"}
+{"type":"token","text":" Plant"}
+{"type":"token","text":"-Based Meals"}
+{"type":"token","text":" Delivered</title>\\n  <meta"}
+{"type":"token","text":" name=\\\"description\\\" content=\\\"Spr"}
+{"type":"token","text":"out delivers"}
+{"type":"token","text":" chef"}
+{"type":"token","text":"-craf"}
+{"type":"token","text":"ted,"}
+{"type":"token","text":" plant-based meals to"}
+{"type":"token","text":" your door. Real"}
+{"type":"token","text":" ingredients, bold flavors, zero"}
+{"type":"token","text":" compromise"}
+{"type":"token","text":"."}
+{"type":"token","text":"\\\">\\n  <meta property"}
+{"type":"token","text":"=\\\"og:title\\\" content=\\\""}
+{"type":"token","text":"Sprout — Fresh Plant-Based"}
+{"type":"token","text":" Meals Delivered\\\">\\n  "}
+{"type":"token","text":"<meta property=\\\"og:description\\\" content"}
+{"type":"token","text":"=\\\"Chef"}
+{"type":"token","text":"-crafted, plant-based meals"}
+{"type":"token","text":" delivered fresh"}
+{"type":"token","text":" to your door."}
+{"type":"token","text":"\\\">\\n  <link"}
+{"type":"token","text":" rel"}
+{"type":"token","text":"=\\\"pre"}
+{"type":"token","text":"connect\\\" href=\\\"https://fonts"}
+{"type":"token","text":".googleapis.com\\\">\\n  "}
+{"type":"token","text":"<link rel=\\\"preconnect\\\""}
+{"type":"token","text":" href=\\\"https://fonts.gst"}
+{"type":"token","text":"atic.com\\\" crossorigin>\\n"}
+{"type":"token","text":"  <link href=\\\"https://fonts"}
+{"type":"token","text":".googleapis.com/css2?"}
+{"type":"token","text":"family=S"}
+{"type":"token","text":"yne:"}
+{"type":"token","text":"wght@400;600"}
+{"type":"token","text":";700&family"}
+{"type":"token","text":"=Plus"}
+{"type":"token","text":"+Jakarta+Sans:wght@"}
+{"type":"token","text":"300;400;500&"}
+{"type":"token","text":"display=swap\\\" rel=\\\"stylesheet\\\""}
+{"type":"token","text":">\\n  <style>\\n    "}
+{"type":"token","text":":"}
+{"type":"token","text":"root {\\n      --space"}
+{"type":"token","text":"-1: 4px; --"}
+{"type":"token","text":"space-2: 8px;"}
+{"type":"token","text":" --space-3: 12px"}
+{"type":"token","text":"; --space-4: 16"}
+{"type":"token","text":"px;\\n      --space-5"}
+{"type":"token","text":": 20px; --space-"}
+{"type":"token","text":"6: 24px; --space"}
+{"type":"token","text":"-8: 32px; --"}
+{"type":"token","text":"space-10: 40px;\\"}
+{"type":"token","text":"n      --space-12: "}
+{"type":"token","text":"48px; --space-16:"}
+{"type":"token","text":" 64px; --space-20"}
+{"type":"token","text":": 80px; --space-"}
+{"type":"token","text":"24: 96px; --space"}
+{"type":"token","text":"-32: 128px;\\n"}
+{"type":"token","text":"      \\"}
+{"type":"token","text":"n      --text-xs: cl"}
+{"type":"token","text":"amp(0.75rem, "}
+{"type":"token","text":"0.7rem + 0."}
+{"type":"token","text":"25vw, 0.875"}
+{"type":"token","text":"rem);\\n      --text-"}
+{"type":"token","text":"sm: clamp(0.875"}
+{"type":"token","text":"rem, 0.8rem +"}
+{"type":"token","text":" 0.35vw, "}
+{"type":"token","text":"1rem);\\n      --text"}
+{"type":"token","text":"-base: clamp(1rem"}
+{"type":"token","text":", 0.9rem + "}
+{"type":"token","text":"0.5vw, 1"}
+{"type":"token","text":".125rem);\\n      --"}
+{"type":"token","text":"text-lg: clamp(1"}
+{"type":"token","text":".125rem, 1rem +"}
+{"type":"token","text":" 0.6vw, "}
+{"type":"token","text":"1.25rem);\\n      "}
+{"type":"token","text":"--text-xl: clamp("}
+{"type":"token","text":"1.25rem, 1rem"}
+{"type":"token","text":" + 1vw, 1"}
+{"type":"token","text":".5rem);\\n      --"}
+{"type":"token","text":"text-2xl: clamp("}
+{"type":"token","text":"1.5rem, 1."}
+{"type":"token","text":"2rem + 1.5v"}
+{"type":"token","text":"w, 2rem);\\n"}
+{"type":"token","text":"      --text-3xl: cl"}
+{"type":"token","text":"amp(1.875rem, "}
+{"type":"token","text":"1.4rem + 2."}
+{"type":"token","text":"3vw, 2.5"}
+{"type":"token","text":"rem);\\n      --text-"}
+{"type":"token","text":"4xl: clamp(2."}
+{"type":"token","text":"25rem, 1.5rem"}
+{"type":"token","text":" + 3.5vw,"}
+{"type":"token","text":" 3.5rem);\\n"}
+{"type":"token","text":"      --text-5xl: cl"}
+{"type":"token","text":"amp(3rem, 2rem"}
+{"type":"token","text":" + 5vw, 5"}
+{"type":"token","text":"rem);\\n      \\n      "}
+{"type":"token","text":"--shadow-sm: 0 "}
+{"type":"token","text":"1px 2px rgba(0"}
+{"type":"token","text":",0,0,0.05"}
+{"type":"token","text":");\\n      --shadow-md"}
+{"type":"token","text":": 0 4px 6"}
+{"type":"token","text":"px -1px rgba(0,"}
+{"type":"token","text":"0,0,0.1),"}
+{"type":"token","text":" 0 2px 4px"}
+{"type":"token","text":" -2px rgba(0,0"}
+{"type":"token","text":",0,0.1);\\"}
+{"type":"token","text":"n      --shadow-lg: "}
+{"type":"token","text":"0 10px 15px -"}
+{"type":"token","text":"3px rgba(0,0,"}
+{"type":"token","text":"0,0.1), 0"}
+{"type":"token","text":" 4px 6px -4"}
+{"type":"token","text":"px rgba(0,0,0"}
+{"type":"token","text":",0.1);\\n      "}
+{"type":"token","text":"--shadow"}
+{"type":"token","text":"-xl: 0 20px"}
+{"type":"token","text":" 25px -5px rgba("}
+{"type":"token","text":"0,0,0,0."}
+{"type":"token","text":"1), 0 8px "}
+{"type":"token","text":"10px -6px rgba(0"}
+{"type":"token","text":",0,0,0.1"}
+{"type":"token","text":");\\n      \\"}
+{"type":"token","text":"n      --radius-sm: "}
+{"type":"token","text":"6px;"}
+{"type":"token","text":" --radius-md: 8px"}
+{"type":"token","text":"; --radius-lg: 12"}
+{"type":"token","text":"px; --radius-xl: "}
+{"type":"token","text":"16px;\\n      \\"}
+{"type":"token","text":"n      --ease-out: cubic"}
+{"type":"token","text":"-bezier(0,0,"}
+{"type":"token","text":"0.2,1);\\n"}
+{"type":"token","text":"      --ease-in: cubic-"}
+{"type":"token","text":"bezier(0.4,0"}
+{"type":"token","text":",1,1);\\n      "}
+{"type":"token","text":"--ease-in-out: cubic"}
+{"type":"token","text":"-bezier(0.4,"}
+{"type":"token","text":"0,0.2,1)"}
+{"type":"token","text":";\\n      --ease-bounce:"}
+{"type":"token","text":" cubic-bezier(0.34"}
+{"type":"token","text":",1.56,0.64"}
+{"type":"token","text":",1);\\n    }\\"}
+{"type":"token","text":"n\\"}
+{"type":"token","text":"n    ["}
+{"type":"token","text":"data-theme=\\\"light\\\"] "}
+{"type":"token","text":"{\\n      --bg:"}
+{"type":"token","text":" #"}
+{"type":"token","text":"FFFFFF;\\n      --bg"}
+{"type":"token","text":"-alt"}
+{"type":"token","text":": #FA"}
+{"type":"token","text":"F9F7"}
+{"type":"token","text":";\\n      --bg"}
+{"type":"token","text":"-accent"}
+{"type":"token","text":": #F0"}
+{"type":"token","text":"F4"}
+{"type":"token","text":"F0"}
+{"type":"token","text":";\\n      --surface"}
+{"type":"token","text":": #FFFFFF;\\n      --"}
+{"type":"token","text":"text"}
+{"type":"token","text":": #18"}
+{"type":"token","text":"181B;\\n      --text-"}
+{"type":"token","text":"m"}
+{"type":"token","text":"uted: #52"}
+{"type":"token","text":"525B;\\n      --border"}
+{"type":"token","text":": rgba"}
+{"type":"token","text":"(0"}
+{"type":"token","text":",0,0,0.1"}
+{"type":"token","text":");\\n      --accent"}
+{"type":"token","text":": #6B8"}
+{"type":"token","text":"E"}
+{"type":"token","text":"6"}
+{"type":"token","text":"B;\\n      --accent-dark"}
+{"type":"token","text":": #4A"}
+{"type":"token","text":"6"}
+{"type":"token","text":"B"}
+{"type":"token","text":"4"}
+{"type":"token","text":"A;\\n      --sage"}
+{"type":"token","text":": #6"}
+{"type":"token","text":"B8E6B;\\n      "}
+{"type":"token","text":"--cream"}
+{"type":"token","text":": #FA"}
+{"type":"token","text":"F9F7;\\n      --"}
+{"type":"token","text":"olive"}
+{"type":"token","text":": #8FA"}
+{"type":"token","text":"68"}
+{"type":"token","text":"F"}
+{"type":"token","text":";\\n    "}
+{"type":"token","text":"}\\n\\n    [data"}
+{"type":"token","text":"-theme=\\\"dark\\\"] {\\"}
+{"type":"token","text":"n      --bg: #0D"}
+{"type":"token","text":"0"}
+{"type":"token","text":"D0D;\\n      --bg"}
+{"type":"token","text":"-alt: #18"}
+{"type":"token","text":"181B;\\n      --bg-"}
+{"type":"token","text":"accent: #1C"}
+{"type":"token","text":"2"}
+{"type":"token","text":"520"}
+{"type":"token","text":";\\n      --surface: #1"}
+{"type":"token","text":"C1"}
+{"type":"token","text":"C1E"}
+{"type":"token","text":";\\n      --text: #"}
+{"type":"token","text":"F"}
+{"type":"token","text":"AFAFA;\\n      --text-"}
+{"type":"token","text":"muted: #A"}
+{"type":"token","text":"1A1AA;\\n      --"}
+{"type":"token","text":"border: rgba(255,255,"}
+{"type":"token","text":"255,0.1);\\n"}
+{"type":"token","text":"      --accent: #8"}
+{"type":"token","text":"FA"}
+{"type":"token","text":"68F;\\n      --accent-"}
+{"type":"token","text":"dark: #6B8E6"}
+{"type":"token","text":"B;\\n      --sage: #"}
+{"type":"token","text":"8FA68F;\\n      --"}
+{"type":"token","text":"cream: #27"}
+{"type":"token","text":"272A"}
+{"type":"token","text":";\\n      --olive: #A"}
+{"type":"token","text":"8"}
+{"type":"token","text":"B"}
+{"type":"token","text":"E"}
+{"type":"token","text":"A8;\\n    }\\n"}
+{"type":"token","text":"\\n    * {\\n      "}
+{"type":"token","text":"margin: 0;\\n      padding"}
+{"type":"token","text":": 0;\\n      box-"}
+{"type":"token","text":"sizing: border-box;\\n    "}
+{"type":"token","text":"}\\n\\n    body "}
+{"type":"token","text":"{\\n      font-family: "}
+{"type":"token","text":"'Plus Jakarta Sans', sans"}
+{"type":"token","text":"-serif;\\n      font"}
+{"type":"token","text":"-weight"}
+{"type":"token","text":": 400;\\n      line-"}
+{"type":"token","text":"height: 1.6;\\n"}
+{"type":"token","text":"      color: var(--text)"}
+{"type":"token","text":";\\n      background:"}
+{"type":"token","text":" var(--bg);\\n      "}
+{"type":"token","text":"overflow-x: hidden;\\n      "}
+{"type":"token","text":"transition"}
+{"type":"token","text":": background"}
+{"type":"token","text":" 0.3s var"}
+{"type":"token","text":"(--ease-out),"}
+{"type":"token","text":" color 0.3s var("}
+{"type":"token","text":"--ease-out);\\n    "}
+{"type":"token","text":"}\\n\\n    .skip"}
+{"type":"token","text":"-link {\\n      position:"}
+{"type":"token","text":" absolute;\\n      top: -40"}
+{"type":"token","text":"px;\\n      left: 0"}
+{"type":"token","text":";\\n      background: var(--"}
+{"type":"token","text":"accent"}
+{"type":"token","text":");\\n      color: white;\\"}
+{"type":"token","text":"n      padding: 8px;\\"}
+{"type":"token","text":"n      text-decoration: none;\\"}
+{"type":"token","text":"n      z"}
+{"type":"token","text":"-index: 100;\\n    "}
+{"type":"token","text":"}\\n\\n    .skip"}
+{"type":"token","text":"-link:focus {\\n      "}
+{"type":"token","text":"top: 0;\\n    "}
+{"type":"token","text":"}\\n\\n    nav"}
+{"type":"token","text":" {\\n      position: fixed;\\"}
+{"type":"token","text":"n      top: 0;\\n"}
+{"type":"token","text":"      left: 0;\\n      "}
+{"type":"token","text":"right: 0;\\n      z"}
+{"type":"token","text":"-index: 50"}
+{"type":"token","text":";\\n      background: rgba"}
+{"type":"token","text":"(255"}
+{"type":"token","text":", 255, 255, "}
+{"type":"token","text":"0.9"}
+{"type":"token","text":");\\n      backdrop-filter:"}
+{"type":"token","text":" blur(12"}
+{"type":"token","text":"px);\\n      -webkit-"}
+{"type":"token","text":"backdrop-filter: blur(12px"}
+{"type":"token","text":");\\n      "}
+{"type":"token","text":"border-"}
+{"type":"token","text":"bottom: 1px solid var"}
+{"type":"token","text":"(--border);\\n      transition"}
+{"type":"token","text":": background"}
+{"type":"token","text":" 0.3s var(--"}
+{"type":"token","text":"ease-out)"}
+{"type":"token","text":";\\n    }\\n\\n"}
+{"type":"token","text":"    ["}
+{"type":"token","text":"data-theme=\\\"dark"}
+{"type":"token","text":"\\\"] nav {\\n      background"}
+{"type":"token","text":": rgba(13"}
+{"type":"token","text":", 13, 13, "}
+{"type":"token","text":"0.9);\\n    "}
+{"type":"token","text":"}\\n\\n    nav"}
+{"type":"token","text":" ."}
+{"type":"token","text":"container {\\n      display"}
+{"type":"token","text":": flex;\\n      justify-content"}
+{"type":"token","text":": space-between;\\n      align"}
+{"type":"token","text":"-items: center;\\n      padding"}
+{"type":"token","text":": var"}
+{"type":"token","text":"(--space-4"}
+{"type":"token","text":") cl"}
+{"type":"token","text":"amp(16px, 5v"}
+{"type":"token","text":"w, 64px);\\n"}
+{"type":"token","text":"      "}
+{"type":"token","text":"max-width: 1400"}
+{"type":"token","text":"px;\\n      margin: 0"}
+{"type":"token","text":" auto;\\n    }\\n"}
+{"type":"token","text":"\\n    .logo {\\n"}
+{"type":"token","text":"      font-family: '"}
+{"type":"token","text":"Syne', sans-serif;\\n"}
+{"type":"token","text":"      font-weight: 700"}
+{"type":"token","text":";\\n      font-size: var"}
+{"type":"token","text":"(--text-xl"}
+{"type":"token","text":");\\n      color: var("}
+{"type":"token","text":"--accent"}
+{"type":"token","text":");\\n      text-decoration:"}
+{"type":"token","text":" none;\\n      letter-spacing:"}
+{"type":"token","text":" -"}
+{"type":"token","text":"0"}
+{"type":"token","text":".02"}
+{"type":"token","text":"em;\\n    "}
+{"type":"token","text":"}\\n\\n    .nav"}
+{"type":"token","text":"-links {\\n      display:"}
+{"type":"token","text":" flex;\\n      gap"}
+{"type":"token","text":": var(--space-8"}
+{"type":"token","text":");\\n      list-style:"}
+{"type":"token","text":" none;\\n      align"}
+{"type":"token","text":"-items: center;\\n    "}
+{"type":"token","text":"}\\n\\n    .nav-"}
+{"type":"token","text":"links a {\\n      text"}
+{"type":"token","text":"-decoration: none;\\n      color"}
+{"type":"token","text":": var(--text)"}
+{"type":"token","text":";\\n      font-size"}
+{"type":"token","text":": var(--text-sm)"}
+{"type":"token","text":";\\n      font-weight: "}
+{"type":"token","text":"500;\\n      transition: color "}
+{"type":"token","text":"0.2"}
+{"type":"token","text":"s var(--ease-out)"}
+{"type":"token","text":";\\n      "}
+{"type":"token","text":"text"}
+{"type":"token","text":"-transform: uppercase"}
+{"type":"token","text":";\\n      letter-spacing: "}
+{"type":"token","text":"0.05"}
+{"type":"token","text":"em;\\n    }\\n\\"}
+{"type":"token","text":"n    .nav-links a:"}
+{"type":"token","text":"hover,"}
+{"type":"token","text":"\\n    .nav-links a"}
+{"type":"token","text":".active {\\n      color:"}
+{"type":"token","text":" var(--accent);\\n    "}
+{"type":"token","text":"}\\n\\n    .theme"}
+{"type":"token","text":"-toggle {\\n      background"}
+{"type":"token","text":": none;\\n      border: none"}
+{"type":"token","text":";\\n      cursor"}
+{"type":"token","text":": pointer;\\n      width"}
+{"type":"token","text":": 36"}
+{"type":"token","text":"px;\\n      height: 36"}
+{"type":"token","text":"px;\\n      display: flex;\\"}
+{"type":"token","text":"n      align-items: center;\\"}
+{"type":"token","text":"n      justify-content: center;\\"}
+{"type":"token","text":"n      border"}
+{"type":"token","text":"-radius: 50%;\\n"}
+{"type":"token","text":"      transition: background"}
+{"type":"token","text":" 0.2s var(--"}
+{"type":"token","text":"ease-out);\\n    "}
+{"type":"token","text":"}\\n\\n    .theme"}
+{"type":"token","text":"-toggle:hover {\\n      "}
+{"type":"token","text":"background: var(--bg"}
+{"type":"token","text":"-alt);\\n    }\\"}
+{"type":"token","text":"n\\n    .theme-toggle"}
+{"type":"token","text":" svg"}
+{"type":"token","text":" {\\n      width: 20"}
+{"type":"token","text":"px;\\n      height: 20"}
+{"type":"token","text":"px;\\n      "}
+{"type":"token","text":"stroke"}
+{"type":"token","text":": var(--text);\\n"}
+{"type":"token","text":"    }\\n\\n    ."}
+{"type":"token","text":"menu"}
+{"type":"token","text":"-toggle {\\n      display:"}
+{"type":"token","text":" none;\\n      "}
+{"type":"token","text":"background"}
+{"type":"token","text":": none;\\n      border: none"}
+{"type":"token","text":";\\n      cursor: pointer;\\n"}
+{"type":"token","text":"      padding"}
+{"type":"token","text":": var(--space-2"}
+{"type":"token","text":");\\n    "}
+{"type":"token","text":"}\\n\\n    .menu"}
+{"type":"token","text":"-toggle span"}
+{"type":"token","text":" {\\n      display: block;\\"}
+{"type":"token","text":"n      width: 24"}
+{"type":"token","text":"px;\\n      height: 2"}
+{"type":"token","text":"px;\\n      background: var("}
+{"type":"token","text":"--text);\\n      margin"}
+{"type":"token","text":": 5px 0;\\n"}
+{"type":"token","text":"      transition: 0.3s"}
+{"type":"token","text":";\\"}
+{"type":"token","text":"n    }\\n\\n    "}
+{"type":"token","text":"@"}
+{"type":"token","text":"media (max-width: 768"}
+{"type":"token","text":"px) {\\n      .nav"}
+{"type":"token","text":"-links {\\n        position:"}
+{"type":"token","text":" fixed;\\n        top: 0"}
+{"type":"token","text":";\\n        right: -100%"}
+{"type":"token","text":";\\n        width: 70"}
+{"type":"token","text":"%;\\n        max-width:"}
+{"type":"token","text":" 300"}
+{"type":"token","text":"px;\\n        height: 100"}
+{"type":"token","text":"vh;\\n        background: var("}
+{"type":"token","text":"--surface);\\n        flex-"}
+{"type":"token","text":"direction: column;\\n        padding:"}
+{"type":"token","text":" var(--space-24"}
+{"type":"token","text":") var(--space-8"}
+{"type":"token","text":");\\n        gap"}
+{"type":"token","text":": var(--space-6"}
+{"type":"token","text":");\\n        box"}
+{"type":"token","text":"-shadow: -"}
+{"type":"token","text":"2px 0 10px rgba"}
+{"type":"token","text":"(0,"}
+{"type":"token","text":"0,0,0.1)"}
+{"type":"token","text":";\\n        transition: right 0"}
+{"type":"token","text":".3s var(--ease-"}
+{"type":"token","text":"out);\\n        "}
+{"type":"token","text":"align"}
+{"type":"token","text":"-items: flex"}
+{"type":"token","text":"-start;\\n      }\\n"}
+{"type":"token","text":"\\n      .nav-links."}
+{"type":"token","text":"open {\\n        right: "}
+{"type":"token","text":"0;\\n      }\\n\\"}
+{"type":"token","text":"n      .menu-toggle {\\"}
+{"type":"token","text":"n        display: block;\\n        "}
+{"type":"token","text":"z"}
+{"type":"token","text":"-index: 60"}
+{"type":"token","text":";\\n      }\\n    "}
+{"type":"token","text":"}\\n\\n    .container"}
+{"type":"token","text":" {\\n      max-width:"}
+{"type":"token","text":" 1280"}
+{"type":"token","text":"px;\\n      margin: 0"}
+{"type":"token","text":" auto;\\n      padding: "}
+{"type":"token","text":"0 cl"}
+{"type":"token","text":"amp(16px, 5v"}
+{"type":"token","text":"w, 64px);\\n"}
+{"type":"token","text":"    }\\n\\n    ."}
+{"type":"token","text":"page"}
+{"type":"token","text":" {\\n      display"}
+{"type":"token","text":": none;\\n      "}
+{"type":"token","text":"opacity"}
+{"type":"token","text":": 0;\\n      transition:"}
+{"type":"token","text":" opacity 0.3s var("}
+{"type":"token","text":"--ease-out);\\n    "}
+{"type":"token","text":"}\\n\\n    .page"}
+{"type":"token","text":".active {\\n      display:"}
+{"type":"token","text":" block;\\n      opacity: 1"}
+{"type":"token","text":";\\n    }\\n\\n"}
+{"type":"token","text":"    main"}
+{"type":"token","text":" {\\n      padding"}
+{"type":"token","text":"-"}
+{"type":"token","text":"top: "}
+{"type":"token","text":"72"}
+{"type":"token","text":"px;\\n    "}
+{"type":"token","text":"}\\n\\n    .reveal"}
+{"type":"token","text":" {\\n      opacity: 0"}
+{"type":"token","text":";\\n      transform"}
+{"type":"token","text":": translateY"}
+{"type":"token","text":"(30"}
+{"type":"token","text":"px);\\n      transition: opacity"}
+{"type":"token","text":" 0.6"}
+{"type":"token","text":"s var(--ease-out),"}
+{"type":"token","text":" transform 0.6s var("}
+{"type":"token","text":"--ease-out);\\n    "}
+{"type":"token","text":"}\\n\\n    .reveal"}
+{"type":"token","text":".visible"}
+{"type":"token","text":" {\\n      opacity: 1"}
+{"type":"token","text":";\\n      transform: translateY("}
+{"type":"token","text":"0);\\n    }\\n"}
+{"type":"token","text":"\\n    .reveal"}
+{"type":"token","text":"-"}
+{"type":"token","text":"st"}
+{"type":"token","text":"agger >"}
+{"type":"token","text":" *"}
+{"type":"token","text":" {\\n      opacity"}
+{"type":"token","text":": 0;\\n      transform:"}
+{"type":"token","text":" translateY(30"}
+{"type":"token","text":"px);\\n      transition: opacity"}
+{"type":"token","text":" 0.6s var(--"}
+{"type":"token","text":"ease-out), transform 0."}
+{"type":"token","text":"6s var(--ease-out"}
+{"type":"token","text":");\\n    }\\n\\"}
+{"type":"token","text":"n    .reveal-stagger."}
+{"type":"token","text":"visible > * {\\n      opacity"}
+{"type":"token","text":": 1;\\n      transform:"}
+{"type":"token","text":" translateY(0);\\n    "}
+{"type":"token","text":"}\\n\\n    .reveal"}
+{"type":"token","text":"-stagger."}
+{"type":"token","text":"visible >"}
+{"type":"token","text":" *"}
+{"type":"token","text":":nth-child(1"}
+{"type":"token","text":") {"}
+{"type":"token","text":" transition-delay: 0.05"}
+{"type":"token","text":"s; }\\n    .reveal"}
+{"type":"token","text":"-stagger.visible > *:"}
+{"type":"token","text":"nth-child(2) { transition"}
+{"type":"token","text":"-delay: 0.1s"}
+{"type":"token","text":"; }\\n    .reveal-"}
+{"type":"token","text":"stagger.visible > *:nth"}
+{"type":"token","text":"-child(3) { transition-"}
+{"type":"token","text":"delay: 0.15s;"}
+{"type":"token","text":" }\\n    .reveal-st"}
+{"type":"token","text":"agger.visible > *:nth-"}
+{"type":"token","text":"child(4) { transition-delay"}
+{"type":"token","text":": 0.2s; "}
+{"type":"token","text":"}\\n    .reveal-stagger"}
+{"type":"token","text":".visible > *:nth-child"}
+{"type":"token","text":"(5) { transition-delay:"}
+{"type":"token","text":" 0.25s; }\\"}
+{"type":"token","text":"n    .reveal-stagger."}
+{"type":"token","text":"visible > *:nth-child("}
+{"type":"token","text":"6) { transition-delay: "}
+{"type":"token","text":"0.3s; }\\n"}
+{"type":"token","text":"\\"}
+{"type":"token","text":"n    @"}
+{"type":"token","text":"media (pre"}
+{"type":"token","text":"fers-reduced-motion: reduce)"}
+{"type":"token","text":" {\\n      .reveal, ."}
+{"type":"token","text":"reveal-stagger >"}
+{"type":"token","text":" * {\\n        opacity"}
+{"type":"token","text":": 1;\\n        transform:"}
+{"type":"token","text":" none"}
+{"type":"token","text":";\\n        "}
+{"type":"token","text":"transition: none;\\n      }\\"}
+{"type":"token","text":"n    }\\n\\n    "}
+{"type":"token","text":"button"}
+{"type":"token","text":","}
+{"type":"token","text":" ."}
+{"type":"token","text":"btn {\\n      font"}
+{"type":"token","text":"-family: 'Plus Jakarta Sans"}
+{"type":"token","text":"', sans-serif;\\n      font"}
+{"type":"token","text":"-weight: 500"}
+{"type":"token","text":";\\n      padding"}
+{"type":"token","text":": "}
+{"type":"token","text":"14"}
+{"type":"token","text":"px 32px;\\n      border"}
+{"type":"token","text":"-"}
+{"type":"token","text":"radius: var(--radius-md"}
+{"type":"token","text":");\\n      cursor: pointer;\\"}
+{"type":"token","text":"n      transition: transform"}
+{"type":"token","text":" 0.2s var(--"}
+{"type":"token","text":"ease-out), box-shadow "}
+{"type":"token","text":"0.2s var(--ease"}
+{"type":"token","text":"-out);\\n      "}
+{"type":"token","text":"text-decoration"}
+{"type":"token","text":": none;\\n      display"}
+{"type":"token","text":": inline-block"}
+{"type":"token","text":";\\n      font"}
+{"type":"token","text":"-size: var(--text-"}
+{"type":"token","text":"base);\\n      min"}
+{"type":"token","text":"-height"}
+{"type":"token","text":": 44"}
+{"type":"token","text":"px;\\n      border"}
+{"type":"token","text":": none;\\n    "}
+{"type":"token","text":"}\\n\\n    ."}
+{"type":"token","text":"btn-"}
+{"type":"token","text":"primary {\\n      background: var"}
+{"type":"token","text":"(--accent);\\n      color"}
+{"type":"token","text":": white"}
+{"type":"token","text":";\\n      "}
+{"type":"token","text":"box"}
+{"type":"token","text":"-shadow: var"}
+{"type":"token","text":"(--shadow-md"}
+{"type":"token","text":");\\n    }\\n\\"}
+{"type":"token","text":"n    .btn-primary:hover"}
+{"type":"token","text":" {\\n      transform: translateY"}
+{"type":"token","text":"(-2px);\\n      box"}
+{"type":"token","text":"-shadow: var(--shadow-"}
+{"type":"token","text":"lg);\\n    }\\n"}
+{"type":"token","text":"\\n    .btn-primary"}
+{"type":"token","text":":active {\\n      transform:"}
+{"type":"token","text":" scale"}
+{"type":"token","text":"(0.98"}
+{"type":"token","text":");\\n    }\\n\\"}
+{"type":"token","text":"n    .btn-ghost"}
+{"type":"token","text":" {\\n      background: transparent"}
+{"type":"token","text":";\\n      color: var(--"}
+{"type":"token","text":"text);\\n      border: "}
+{"type":"token","text":"1px solid var(--border)"}
+{"type":"token","text":";\\n    "}
+{"type":"token","text":"}\\n\\n    .btn"}
+{"type":"token","text":"-ghost:hover {\\n      "}
+{"type":"token","text":"background: var(--bg-alt"}
+{"type":"token","text":");\\n      transform"}
+{"type":"token","text":": translateY(-1"}
+{"type":"token","text":"px);\\n    }\\n"}
+{"type":"token","text":"\\n    button"}
+{"type":"token","text":":focus"}
+{"type":"token","text":"-"}
+{"type":"token","text":"visible,"}
+{"type":"token","text":" .btn:focus-visible {\\"}
+{"type":"token","text":"n      outline: 2px solid"}
+{"type":"token","text":" var(--accent);\\n      "}
+{"type":"token","text":"outline-offset: 2px;\\"}
+{"type":"token","text":"n    }\\n\\n    "}
+{"type":"token","text":"/*"}
+{"type":"token","text":" HERO"}
+{"type":"token","text":" -"}
+{"type":"token","text":" Dark"}
+{"type":"token","text":" dramatic"}
+{"type":"token","text":" split"}
+{"type":"token","text":" */\\n    .hero {\\"}
+{"type":"token","text":"n      min"}
+{"type":"token","text":"-height: 90"}
+{"type":"token","text":"vh;\\n      display"}
+{"type":"token","text":": flex;\\n      align-items"}
+{"type":"token","text":": center;\\n      background"}
+{"type":"token","text":": linear-gradient(135deg,"}
+{"type":"token","text":" #"}
+{"type":"token","text":"1"}
+{"type":"token","text":"A"}
+{"type":"token","text":"2"}
+{"type":"token","text":"821"}
+{"type":"token","text":" 0%, #0"}
+{"type":"token","text":"D0D0D 100%)"}
+{"type":"token","text":";\\n      color: #"}
+{"type":"token","text":"FAFAFA;\\n      position"}
+{"type":"token","text":": relative;\\n      overflow: hidden"}
+{"type":"token","text":";\\n    }\\n\\n"}
+{"type":"token","text":"    .hero::before {\\n"}
+{"type":"token","text":"      content: '';\\n      position"}
+{"type":"token","text":": absolute;\\n      top: "}
+{"type":"token","text":"0;\\n      left: 0"}
+{"type":"token","text":";\\n      right: 0;\\"}
+{"type":"token","text":"n      bottom: 0;\\n"}
+{"type":"token","text":"      background: \\"}
+{"type":"token","text":"n        rad"}
+{"type":"token","text":"ial-gradient(circle at 20"}
+{"type":"token","text":"% 50"}
+{"type":"token","text":"%, rgba(107"}
+{"type":"token","text":", 142, 107"}
+{"type":"token","text":", 0.15"}
+{"type":"token","text":") 0%, transparent 50"}
+{"type":"token","text":"%"}
+{"type":"token","text":"),\\n        radial-gradient"}
+{"type":"token","text":"(circle at 80% 80"}
+{"type":"token","text":"%, rgba(143"}
+{"type":"token","text":", 166"}
+{"type":"token","text":", 143, 0.1"}
+{"type":"token","text":") 0%, transparent 50%)"}
+{"type":"token","text":";\\n      pointer"}
+{"type":"token","text":"-events: none;\\n    "}
+{"type":"token","text":"}\\n\\n    .hero ."}
+{"type":"token","text":"container {\\n      position: relative"}
+{"type":"token","text":";\\n      z-index: "}
+{"type":"token","text":"2"}
+{"type":"token","text":";\\n      "}
+{"type":"token","text":"display: grid;\\n      grid-"}
+{"type":"token","text":"template-columns: 1fr "}
+{"type":"token","text":"1fr;\\n      gap"}
+{"type":"token","text":": var(--space-16"}
+{"type":"token","text":");\\n      "}
+{"type":"token","text":"align-items: center;\\n    "}
+{"type":"token","text":"}\\n\\n    .hero"}
+{"type":"token","text":"-content h"}
+{"type":"token","text":"1 {\\n      font-"}
+{"type":"token","text":"family: 'Syne',"}
+{"type":"token","text":" sans-serif;\\n      font-"}
+{"type":"token","text":"weight: 700;\\n      font"}
+{"type":"token","text":"-size: cl"}
+{"type":"token","text":"amp(3"}
+{"type":"token","text":"rem, 8"}
+{"type":"token","text":"vw, 6"}
+{"type":"token","text":"rem);\\n      line"}
+{"type":"token","text":"-height: 1.05"}
+{"type":"token","text":";\\n      letter"}
+{"type":"token","text":"-spacing: -0.03"}
+{"type":"token","text":"em;\\n      margin-bottom:"}
+{"type":"token","text":" var(--space-6);\\"}
+{"type":"token","text":"n      color"}
+{"type":"token","text":": #"}
+{"type":"token","text":"FAFAFA;\\n    "}
+{"type":"token","text":"}\\n\\n    .hero-"}
+{"type":"token","text":"content p {\\n      font-"}
+{"type":"token","text":"size: var(--text-xl"}
+{"type":"token","text":");\\n      line"}
+{"type":"token","text":"-height: 1.5;\\"}
+{"type":"token","text":"n      color"}
+{"type":"token","text":": #D"}
+{"type":"token","text":"4D4D8"}
+{"type":"token","text":";\\n      margin-bottom: var"}
+{"type":"token","text":"(--space-8"}
+{"type":"token","text":");\\n      "}
+{"type":"token","text":"font"}
+{"type":"token","text":"-weight: 300"}
+{"type":"token","text":";\\n    }\\n\\n"}
+{"type":"token","text":"    .hero-image"}
+{"type":"token","text":" {\\n      position"}
+{"type":"token","text":": relative;\\n      height"}
+{"type":"token","text":": 500"}
+{"type":"token","text":"px;\\n      border"}
+{"type":"token","text":"-radius: var(--radius-"}
+{"type":"token","text":"xl"}
+{"type":"token","text":");\\n      overflow: hidden;\\"}
+{"type":"token","text":"n      "}
+{"type":"token","text":"box-shadow: 0 30"}
+{"type":"token","text":"px 60px rgba(0,"}
+{"type":"token","text":"0,0,0.4"}
+{"type":"token","text":");\\n    }\\n\\"}
+{"type":"token","text":"n    .hero-image img"}
+{"type":"token","text":" {\\n      width: 100"}
+{"type":"token","text":"%;\\n      height: 100"}
+{"type":"token","text":"%;\\n      object-fit:"}
+{"type":"token","text":" cover;\\n      display"}
+{"type":"token","text":": block;\\n    }\\n"}
+{"type":"token","text":"\\n    .hero-image::"}
+{"type":"token","text":"after"}
+{"type":"token","text":" {\\n      content: '';\\"}
+{"type":"token","text":"n      position: absolute;\\n      "}
+{"type":"token","text":"in"}
+{"type":"token","text":"set: 0;\\n      background"}
+{"type":"token","text":": linear-gradient(180"}
+{"type":"token","text":"deg, transparent "}
+{"type":"token","text":"0%, rgba(0,0,"}
+{"type":"token","text":"0,0.3"}
+{"type":"token","text":") 100%);\\n    "}
+{"type":"token","text":"}\\n\\n    @"}
+{"type":"token","text":"media (max-width: 968"}
+{"type":"token","text":"px) {\\n      .hero"}
+{"type":"token","text":" ."}
+{"type":"token","text":"container {\\n        grid-template"}
+{"type":"token","text":"-columns: 1fr;\\n"}
+{"type":"token","text":"        "}
+{"type":"token","text":"gap: var(--space-12"}
+{"type":"token","text":");\\n      }\\n      "}
+{"type":"token","text":".hero-image"}
+{"type":"token","text":" {\\n        height: 400"}
+{"type":"token","text":"px;\\n      }\\n    "}
+{"type":"token","text":"}\\n\\n    /* HO"}
+{"type":"token","text":"W IT WORKS - Renamed"}
+{"type":"token","text":" to"}
+{"type":"token","text":" \\\""}
+{"type":"token","text":"The"}
+{"type":"token","text":" Process"}
+{"type":"token","text":"\\\" */\\n    .process"}
+{"type":"token","text":" {\\n      padding"}
+{"type":"token","text":": var(--space-24)"}
+{"type":"token","text":" "}
+{"type":"token","text":"0;\\n      background"}
+{"type":"token","text":": var"}
+{"type":"token","text":"(--bg"}
+{"type":"token","text":");\\n    "}
+{"type":"token","text":"}\\n\\n    .process"}
+{"type":"token","text":" h"}
+{"type":"token","text":"2 {\\n      font-"}
+{"type":"token","text":"family: 'Syne',"}
+{"type":"token","text":" sans-serif;\\n      font-"}
+{"type":"token","text":"weight: 600"}
+{"type":"token","text":";\\n      font-size: var"}
+{"type":"token","text":"(--text-4"}
+{"type":"token","text":"xl);\\n      margin"}
+{"type":"token","text":"-bottom: var(--space-"}
+{"type":"token","text":"16"}
+{"type":"token","text":");\\n      text"}
+{"type":"token","text":"-align: center;\\n      letter"}
+{"type":"token","text":"-spacing: -0.02em"}
+{"type":"token","text":";\\n    "}
+{"type":"token","text":"}\\n\\n    .process"}
+{"type":"token","text":"-grid {\\n      display:"}
+{"type":"token","text":" grid;\\n      grid-template-"}
+{"type":"token","text":"columns: repeat(auto-fit,"}
+{"type":"token","text":" minmax(280"}
+{"type":"token","text":"px, 1fr));\\n"}
+{"type":"token","text":"      gap: var(--space-"}
+{"type":"token","text":"12);\\n    "}
+{"type":"token","text":"}\\n\\n    .process"}
+{"type":"token","text":"-step"}
+{"type":"token","text":" {\\n      text-align:"}
+{"type":"token","text":" left"}
+{"type":"token","text":";\\n    "}
+{"type":"token","text":"}\\n\\n    .step"}
+{"type":"token","text":"-number {\\n      display"}
+{"type":"token","text":": inline-block;\\n      width"}
+{"type":"token","text":": 48"}
+{"type":"token","text":"px;\\n      height: 48"}
+{"type":"token","text":"px;\\n      background: var("}
+{"type":"token","text":"--bg"}
+{"type":"token","text":"-accent);\\n      color"}
+{"type":"token","text":": var(--accent"}
+{"type":"token","text":");\\n      border-radius:"}
+{"type":"token","text":" 50%;\\n      display"}
+{"type":"token","text":": flex;\\n      align-items"}
+{"type":"token","text":": center;\\n      justify-content"}
+{"type":"token","text":": center;\\n      font-family"}
+{"type":"token","text":": '"}
+{"type":"token","text":"Syne', sans-serif;\\n"}
+{"type":"token","text":"      font-weight: 600;\\"}
+{"type":"token","text":"n      font-size: var("}
+{"type":"token","text":"--text-xl"}
+{"type":"token","text":");\\n      margin-bottom:"}
+{"type":"token","text":" var(--space-4);\\"}
+{"type":"token","text":"n    }\\n\\n    "}
+{"type":"token","text":".process"}
+{"type":"token","text":"-step h"}
+{"type":"token","text":"3 {\\n      font-"}
+{"type":"token","text":"family: 'Syne',"}
+{"type":"token","text":" sans-serif;\\n      font-"}
+{"type":"token","text":"weight: 600;\\n      font"}
+{"type":"token","text":"-size: var(--text-"}
+{"type":"token","text":"xl);\\n      margin-bottom"}
+{"type":"token","text":": var(--space-3"}
+{"type":"token","text":");\\n      "}
+{"type":"token","text":"letter"}
+{"type":"token","text":"-spacing: -0.01em"}
+{"type":"token","text":";\\n    }\\n\\n"}
+{"type":"token","text":"    .process-step p {\\"}
+{"type":"token","text":"n      color"}
+{"type":"token","text":": var"}
+{"type":"token","text":"(--text-muted);\\"}
+{"type":"token","text":"n      line"}
+{"type":"token","text":"-height: 1.6;\\"}
+{"type":"token","text":"n    }\\n\\n    "}
+{"type":"token","text":"/*"}
+{"type":"token","text":" MENU"}
+{"type":"token","text":" PREVIEW"}
+{"type":"token","text":" - Editorial"}
+{"type":"token","text":" "}
+{"type":"token","text":"2-"}
+{"type":"token","text":"col"}
+{"type":"token","text":" */"}
+{"type":"token","text":"\\n    .menu-preview "}
+{"type":"token","text":"{\\n      padding"}
+{"type":"token","text":": var(--space-32"}
+{"type":"token","text":") 0;\\n      background:"}
+{"type":"token","text":" var(--bg"}
+{"type":"token","text":"-"}
+{"type":"token","text":"alt);\\n    }\\n"}
+{"type":"token","text":"\\n    .menu-header"}
+{"type":"token","text":" {\\n      max"}
+{"type":"token","text":"-width: 700"}
+{"type":"token","text":"px;\\n      margin-"}
+{"type":"token","text":"bottom: var(--space-16"}
+{"type":"token","text":");\\n    }\\n\\"}
+{"type":"token","text":"n    .menu-header h2"}
+{"type":"token","text":" {\\n      font-family"}
+{"type":"token","text":": 'Syne', sans"}
+{"type":"token","text":"-serif;\\n      font-weight"}
+{"type":"token","text":": 600;\\n      font-"}
+{"type":"token","text":"size: var(--text-4"}
+{"type":"token","text":"xl);\\n      margin-bottom"}
+{"type":"token","text":": var(--space-4"}
+{"type":"token","text":");\\n      letter-spacing:"}
+{"type":"token","text":" -0.02em;\\n    "}
+{"type":"token","text":"}\\n\\n    .menu"}
+{"type":"token","text":"-header p {\\n      font"}
+{"type":"token","text":"-size: var(--text-"}
+{"type":"token","text":"lg"}
+{"type":"token","text":");\\n      color: var("}
+{"type":"token","text":"--text-muted);\\n"}
+{"type":"token","text":"      line"}
+{"type":"token","text":"-height: 1.6;\\"}
+{"type":"token","text":"n    }\\n\\n    "}
+{"type":"token","text":".menu-grid {\\n      "}
+{"type":"token","text":"display: grid;\\n      grid-"}
+{"type":"token","text":"template-columns: repeat(2"}
+{"type":"token","text":", 1fr);\\n      "}
+{"type":"token","text":"gap: var(--space-8"}
+{"type":"token","text":");\\n    }\\n\\"}
+{"type":"token","text":"n    .meal"}
+{"type":"token","text":"-card {\\n      background:"}
+{"type":"token","text":" var(--surface);\\n      "}
+{"type":"token","text":"border-radius: var(--radius"}
+{"type":"token","text":"-lg"}
+{"type":"token","text":");\\n      overflow: hidden;\\"}
+{"type":"token","text":"n      box-shadow: var"}
+{"type":"token","text":"(--shadow-md);\\n"}
+{"type":"token","text":"      transition: transform 0.3"}
+{"type":"token","text":"s var(--ease-out),"}
+{"type":"token","text":" box-shadow 0.3s"}
+{"type":"token","text":" var(--ease-out);\\"}
+{"type":"token","text":"n      "}
+{"type":"token","text":"cursor: pointer;\\n    "}
+{"type":"token","text":"}\\n\\n    .meal"}
+{"type":"token","text":"-card:hover {\\n      "}
+{"type":"token","text":"transform: translateY(-4"}
+{"type":"token","text":"px);\\n      box-shadow"}
+{"type":"token","text":": var(--shadow-xl"}
+{"type":"token","text":");\\n    }\\n\\"}
+{"type":"token","text":"n    .meal-image"}
+{"type":"token","text":" {\\n      width: 100"}
+{"type":"token","text":"%;\\n      height: 240"}
+{"type":"token","text":"px;\\n      overflow"}
+{"type":"token","text":": hidden;\\n      position"}
+{"type":"token","text":": relative;\\n    "}
+{"type":"token","text":"}\\n\\n    .meal"}
+{"type":"token","text":"-image img {\\n      width"}
+{"type":"token","text":": 100%;\\n      height"}
+{"type":"token","text":": 100%;\\n      object"}
+{"type":"token","text":"-fit: cover;\\n      display"}
+{"type":"token","text":": block;\\n      "}
+{"type":"token","text":"transition: transform 0.4"}
+{"type":"token","text":"s var(--ease-out)"}
+{"type":"token","text":";\\n    }\\n\\n"}
+{"type":"token","text":"    .meal-card"}
+{"type":"token","text":":"}
+{"type":"token","text":"hover .meal-image img {\\"}
+{"type":"token","text":"n      transform: scale(1."}
+{"type":"token","text":"05);\\n    }\\n"}
+{"type":"token","text":"\\n    .meal-info "}
+{"type":"token","text":"{\\n      padding: var(--"}
+{"type":"token","text":"space-6"}
+{"type":"token","text":");\\n    "}
+{"type":"token","text":"}\\n\\n    .meal"}
+{"type":"token","text":"-category"}
+{"type":"token","text":" {\\n      display: inline-"}
+{"type":"token","text":"block;\\n      font-size:"}
+{"type":"token","text":" var(--text-xs"}
+{"type":"token","text":");\\n      text"}
+{"type":"token","text":"-transform: uppercase;\\n      letter"}
+{"type":"token","text":"-spacing: 0.1"}
+{"type":"token","text":"em;\\n      color: var("}
+{"type":"token","text":"--accent"}
+{"type":"token","text":");\\n      margin-bottom:"}
+{"type":"token","text":" var(--space-2);\\"}
+{"type":"token","text":"n      "}
+{"type":"token","text":"font-weight: 500;\\n"}
+{"type":"token","text":"    }\\n\\n    ."}
+{"type":"token","text":"meal-info"}
+{"type":"token","text":" h3 {\\n      font"}
+{"type":"token","text":"-family: 'Syne"}
+{"type":"token","text":"', sans-serif;\\n      font"}
+{"type":"token","text":"-weight: 600;\\n      "}
+{"type":"token","text":"font-size: var(--text"}
+{"type":"token","text":"-xl);\\n      margin-"}
+{"type":"token","text":"bottom: var(--space-2"}
+{"type":"token","text":");\\n      letter"}
+{"type":"token","text":"-spacing: -0.01"}
+{"type":"token","text":"em;\\n    }\\n\\"}
+{"type":"token","text":"n    .meal-info p "}
+{"type":"token","text":"{\\n      font-size: var"}
+{"type":"token","text":"(--text-sm"}
+{"type":"token","text":");\\n      color: var("}
+{"type":"token","text":"--text-muted);\\n"}
+{"type":"token","text":"      line-height: 1."}
+{"type":"token","text":"5;\\n    }\\n\\"}
+{"type":"token","text":"n    @"}
+{"type":"token","text":"media (max-width: 768"}
+{"type":"token","text":"px) {\\n      .menu"}
+{"type":"token","text":"-grid {\\n        grid-"}
+{"type":"token","text":"template-columns: 1fr;\\"}
+{"type":"token","text":"n      }\\n    }\\"}
+{"type":"token","text":"n\\n    /* VALUES"}
+{"type":"token","text":" - Full"}
+{"type":"token","text":"-width"}
+{"type":"token","text":" dark"}
+{"type":"token","text":" panel"}
+{"type":"token","text":" */\\n    .values {\\"}
+{"type":"token","text":"n      padding: var(--space"}
+{"type":"token","text":"-32) 0;\\n      "}
+{"type":"token","text":"background: linear"}
+{"type":"token","text":"-gradient(135deg, #1"}
+{"type":"token","text":"A2821 0%, #0"}
+{"type":"token","text":"D0D0D 100%)"}
+{"type":"token","text":";\\n      "}
+{"type":"token","text":"color: #FAFAFA;\\"}
+{"type":"token","text":"n      "}
+{"type":"token","text":"position"}
+{"type":"token","text":": relative;\\n      overflow: hidden"}
+{"type":"token","text":";\\n    }\\n\\n"}
+{"type":"token","text":"    .values::before {\\n"}
+{"type":"token","text":"      content: '';\\n      position"}
+{"type":"token","text":": absolute;\\n      top: "}
+{"type":"token","text":"0;\\n      left: 0"}
+{"type":"token","text":";\\n      right: 0;\\"}
+{"type":"token","text":"n      bottom: 0;\\n"}
+{"type":"token","text":"      background: \\"}
+{"type":"token","text":"n        radial-gradient(circle"}
+{"type":"token","text":" at 70"}
+{"type":"token","text":"% 30"}
+{"type":"token","text":"%, rgba(143"}
+{"type":"token","text":", 166, 143, "}
+{"type":"token","text":"0.1) 0%, transparent"}
+{"type":"token","text":" 50%)"}
+{"type":"token","text":";\\n      "}
+{"type":"token","text":"pointer-events: none;\\n    "}
+{"type":"token","text":"}\\n\\n    .values"}
+{"type":"token","text":" .container {\\n      position:"}
+{"type":"token","text":" relative;\\n      z-index:"}
+{"type":"token","text":" 2;\\n    "}
+{"type":"token","text":"}\\n\\n    .values"}
+{"type":"token","text":" h"}
+{"type":"token","text":"2 {\\n      font-"}
+{"type":"token","text":"family: 'Syne',"}
+{"type":"token","text":" sans-serif;\\n      font-"}
+{"type":"token","text":"weight: 600;\\n      font"}
+{"type":"token","text":"-size: var(--text-"}
+{"type":"token","text":"4xl);\\n      margin-"}
+{"type":"token","text":"bottom: var(--space-16"}
+{"type":"token","text":");\\n      text-align:"}
+{"type":"token","text":" center;\\n      letter-spacing:"}
+{"type":"token","text":" -0.02em;\\n    "}
+{"type":"token","text":"}\\n\\n    .values"}
+{"type":"token","text":"-list"}
+{"type":"token","text":" {\\n      display: grid;\\"}
+{"type":"token","text":"n      grid-template-columns:"}
+{"type":"token","text":" repeat(3"}
+{"type":"token","text":", 1fr);\\n      "}
+{"type":"token","text":"gap: var(--space-12"}
+{"type":"token","text":");\\n    }\\n\\"}
+{"type":"token","text":"n    .value"}
+{"type":"token","text":"-item"}
+{"type":"token","text":" {\\n      text"}
+{"type":"token","text":"-align: left"}
+{"type":"token","text":";\\n    "}
+{"type":"token","text":"}\\n\\n    .value"}
+{"type":"token","text":"-icon"}
+{"type":"token","text":" {\\n      width: 56"}
+{"type":"token","text":"px;\\n      height: 56"}
+{"type":"token","text":"px;\\n      background: rgba"}
+{"type":"token","text":"(143"}
+{"type":"token","text":", 166, 143, "}
+{"type":"token","text":"0.15"}
+{"type":"token","text":");\\n      border-radius:"}
+{"type":"token","text":" var"}
+{"type":"token","text":"(--radius-md);\\n"}
+{"type":"token","text":"      display: flex;\\n      align"}
+{"type":"token","text":"-items: center;\\n      justify"}
+{"type":"token","text":"-content: center;\\n      margin"}
+{"type":"token","text":"-bottom: var(--space-"}
+{"type":"token","text":"4);\\n      "}
+{"type":"token","text":"border"}
+{"type":"token","text":": 1px solid rgba(143"}
+{"type":"token","text":", 166, 143, "}
+{"type":"token","text":"0.2"}
+{"type":"token","text":");\\n    }\\n\\"}
+{"type":"token","text":"n    .value-icon svg"}
+{"type":"token","text":" {\\n      width: 28"}
+{"type":"token","text":"px;\\n      height: 28"}
+{"type":"token","text":"px;\\n      "}
+{"type":"token","text":"stroke"}
+{"type":"token","text":": #"}
+{"type":"token","text":"8"}
+{"type":"token","text":"FA"}
+{"type":"token","text":"68"}
+{"type":"token","text":"F"}
+{"type":"token","text":";\\n      stroke"}
+{"type":"token","text":"-width: 2;\\n    "}
+{"type":"token","text":"}\\n\\n    .value"}
+{"type":"token","text":"-item"}
+{"type":"token","text":" h3 {\\n      font"}
+{"type":"token","text":"-family: 'Syne"}
+{"type":"token","text":"', sans-serif;\\n      font"}
+{"type":"token","text":"-weight: 600;\\n      "}
+{"type":"token","text":"font-size: var(--text"}
+{"type":"token","text":"-xl);\\n      margin-"}
+{"type":"token","text":"bottom: var(--space-3"}
+{"type":"token","text":");\\n      letter-spacing:"}
+{"type":"token","text":" -0.01em;\\n    "}
+{"type":"token","text":"}\\n\\n    .value"}
+{"type":"token","text":"-item p {\\n      color"}
+{"type":"token","text":": #D4D4D8"}
+{"type":"token","text":";\\n      line"}
+{"type":"token","text":"-height: 1.6;\\"}
+{"type":"token","text":"n    }\\n\\n    "}
+{"type":"token","text":"@"}
+{"type":"token","text":"media (max-width: 968"}
+{"type":"token","text":"px) {\\n      .values"}
+{"type":"token","text":"-list {\\n        grid-"}
+{"type":"token","text":"template-columns: "}
+{"type":"token","text":"1fr;\\n      }\\n"}
+{"type":"token","text":"    }\\n\\n    /*"}
+{"type":"token","text":" C"}
+{"type":"token","text":"TA -"}
+{"type":"token","text":" Accent"}
+{"type":"token","text":" t"}
+{"type":"token","text":"int"}
+{"type":"token","text":" */\\n    .cta "}
+{"type":"token","text":"{\\n      padding: var(--"}
+{"type":"token","text":"space-32) 0;\\n"}
+{"type":"token","text":"      background: var(--bg"}
+{"type":"token","text":"-accent);\\n      text"}
+{"type":"token","text":"-align: center;\\n    "}
+{"type":"token","text":"}\\n\\n    .c"}
+{"type":"token","text":"ta h2 {\\n      "}
+{"type":"token","text":"font-family: 'S"}
+{"type":"token","text":"yne', sans-serif;\\n      "}
+{"type":"token","text":"font-weight: 600;\\n"}
+{"type":"token","text":"      font-size: var(--"}
+{"type":"token","text":"text-4xl);\\n      "}
+{"type":"token","text":"margin-bottom: var(--space"}
+{"type":"token","text":"-4);\\n      letter-"}
+{"type":"token","text":"spacing: -0.02em;\\"}
+{"type":"token","text":"n    }\\n\\n    "}
+{"type":"token","text":".cta p {\\n      "}
+{"type":"token","text":"font-size: var(--text"}
+{"type":"token","text":"-lg);\\n      color:"}
+{"type":"token","text":" var(--text-muted)"}
+{"type":"token","text":";\\n      margin"}
+{"type":"token","text":"-bottom: var(--space-"}
+{"type":"token","text":"8"}
+{"type":"token","text":");\\n      "}
+{"type":"token","text":"max"}
+{"type":"token","text":"-width: 600px;\\n"}
+{"type":"token","text":"      "}
+{"type":"token","text":"margin-"}
+{"type":"token","text":"left: auto;\\n      margin-"}
+{"type":"token","text":"right: auto;\\n    }\\"}
+{"type":"token","text":"n\\n    /*"}
+{"type":"token","text":" ABOUT"}
+{"type":"token","text":" PAGE"}
+{"type":"token","text":" */"}
+{"type":"token","text":"\\n    .about-"}
+{"type":"token","text":"hero"}
+{"type":"token","text":" {\\n      padding: var("}
+{"type":"token","text":"--space-32) 0 "}
+{"type":"token","text":"var(--space-24);\\"}
+{"type":"token","text":"n      background: var(--bg"}
+{"type":"token","text":")"}
+{"type":"token","text":";\\n    }\\n\\n"}
+{"type":"token","text":"    .about-hero h1"}
+{"type":"token","text":" {\\n      font-family"}
+{"type":"token","text":": 'Syne', sans"}
+{"type":"token","text":"-serif;\\n      font-weight"}
+{"type":"token","text":": 600;\\n      font-"}
+{"type":"token","text":"size: var(--text-5"}
+{"type":"token","text":"xl);\\n      margin-bottom"}
+{"type":"token","text":": var(--space-6"}
+{"type":"token","text":");\\n      letter-spacing:"}
+{"type":"token","text":" -0.03"}
+{"type":"token","text":"em;\\n    "}
+{"type":"token","text":"}\\n\\n    .about"}
+{"type":"token","text":"-hero p {\\n      font"}
+{"type":"token","text":"-size: var(--text-"}
+{"type":"token","text":"xl);\\n      color"}
+{"type":"token","text":": var(--text-muted"}
+{"type":"token","text":");\\n      line"}
+{"type":"token","text":"-height: 1.6;\\"}
+{"type":"token","text":"n      max"}
+{"type":"token","text":"-width: 800px;\\n"}
+{"type":"token","text":"    "}
+{"type":"token","text":"}\\n\\n    .story"}
+{"type":"token","text":" {\\n      padding: var("}
+{"type":"token","text":"--space-24"}
+{"type":"token","text":") 0;\\n      background:"}
+{"type":"token","text":" var(--bg-alt);\\"}
+{"type":"token","text":"n    }\\n\\n    "}
+{"type":"token","text":".story-"}
+{"type":"token","text":"grid"}
+{"type":"token","text":" {\\n      display: grid;\\"}
+{"type":"token","text":"n      grid-template-columns:"}
+{"type":"token","text":" "}
+{"type":"token","text":"1fr 1fr;\\n      "}
+{"type":"token","text":"gap: var(--space-16"}
+{"type":"token","text":");\\n      "}
+{"type":"token","text":"align"}
+{"type":"token","text":"-items: center;\\n    "}
+{"type":"token","text":"}\\n\\n    .story-"}
+{"type":"token","text":"content"}
+{"type":"token","text":" h"}
+{"type":"token","text":"2 {\\n      font-"}
+{"type":"token","text":"family: 'Syne',"}
+{"type":"token","text":" sans-serif;\\n      font-"}
+{"type":"token","text":"weight: 600;\\n      font"}
+{"type":"token","text":"-size: var(--text-"}
+{"type":"token","text":"3"}
+{"type":"token","text":"xl);\\n      margin-bottom"}
+{"type":"token","text":": var(--space-6)"}
+{"type":"token","text":";\\n      letter-spacing: -"}
+{"type":"token","text":"0.02em;\\n    "}
+{"type":"token","text":"}\\n\\n    .story-"}
+{"type":"token","text":"content p {\\n      font-"}
+{"type":"token","text":"size: var(--text-base"}
+{"type":"token","text":");\\n      color: var("}
+{"type":"token","text":"--text-muted);\\n"}
+{"type":"token","text":"      line-height: 1."}
+{"type":"token","text":"7;\\n      "}
+{"type":"token","text":"margin-bottom: var(--space"}
+{"type":"token","text":"-4"}
+{"type":"token","text":");\\n    }\\n\\"}
+{"type":"token","text":"n    .story-image {\\"}
+{"type":"token","text":"n      height"}
+{"type":"token","text":": 400px;\\n      border"}
+{"type":"token","text":"-radius: var(--radius-"}
+{"type":"token","text":"xl"}
+{"type":"token","text":");\\n      overflow: hidden;\\"}
+{"type":"token","text":"n    "}
+{"type":"token","text":"}\\n\\n    .story"}
+{"type":"token","text":"-image img {\\n      width"}
+{"type":"token","text":": 100%;\\n      height"}
+{"type":"token","text":": 100%;\\n      object"}
+{"type":"token","text":"-fit: cover;\\n      display"}
+{"type":"token","text":": block;\\n    }\\n"}
+{"type":"token","text":"\\n    @"}
+{"type":"token","text":"media (max-width: 768"}
+{"type":"token","text":"px) {\\n      .story"}
+{"type":"token","text":"-grid {\\n        grid-"}
+{"type":"token","text":"template-columns: 1fr;\\"}
+{"type":"token","text":"n      }\\n    }\\"}
+{"type":"token","text":"n\\n    /* MENU"}
+{"type":"token","text":" PAGE"}
+{"type":"token","text":" */\\n    .menu-hero"}
+{"type":"token","text":" {\\n      padding: var("}
+{"type":"token","text":"--space-32) 0 "}
+{"type":"token","text":"var(--space-16"}
+{"type":"token","text":");\\n      background: var("}
+{"type":"token","text":"--bg)"}
+{"type":"token","text":";\\n    }\\n\\n"}
+{"type":"token","text":"    .menu-hero h1 "}
+{"type":"token","text":"{\\n      font-family:"}
+{"type":"token","text":" 'Syne', sans-"}
+{"type":"token","text":"serif;\\n      font-weight:"}
+{"type":"token","text":" 600;\\n      font-size"}
+{"type":"token","text":": var(--text-5xl"}
+{"type":"token","text":");\\n      margin-bottom:"}
+{"type":"token","text":" var(--space-4"}
+{"type":"token","text":");\\n      letter-spacing:"}
+{"type":"token","text":" -0.03em;\\n    "}
+{"type":"token","text":"}\\n\\n    .menu"}
+{"type":"token","text":"-hero p {\\n      font"}
+{"type":"token","text":"-size: var(--text-"}
+{"type":"token","text":"xl);\\n      color: var"}
+{"type":"token","text":"(--text-muted);\\"}
+{"type":"token","text":"n      line-height: 1"}
+{"type":"token","text":".6;\\n      max"}
+{"type":"token","text":"-width: 700"}
+{"type":"token","text":"px;\\n    "}
+{"type":"token","text":"}\\n\\n    .menu"}
+{"type":"token","text":"-filters"}
+{"type":"token","text":" {\\n      padding"}
+{"type":"token","text":": var(--space-8"}
+{"type":"token","text":") 0;\\n      background:"}
+{"type":"token","text":" var(--bg)"}
+{"type":"token","text":";\\n      "}
+{"type":"token","text":"position"}
+{"type":"token","text":": sticky"}
+{"type":"token","text":";\\n      top: 72"}
+{"type":"token","text":"px;\\n      z-index:"}
+{"type":"token","text":" 10"}
+{"type":"token","text":";\\n      "}
+{"type":"token","text":"border"}
+{"type":"token","text":"-bottom"}
+{"type":"token","text":": 1px solid var(--"}
+{"type":"token","text":"border);\\n    }\\n"}
+{"type":"token","text":"\\n    .filter"}
+{"type":"token","text":"-buttons"}
+{"type":"token","text":" {\\n      display: flex;\\"}
+{"type":"token","text":"n      gap"}
+{"type":"token","text":": var(--space-3"}
+{"type":"token","text":");\\n      flex"}
+{"type":"token","text":"-wrap: wrap;\\n    "}
+{"type":"token","text":"}\\n\\n    .filter-"}
+{"type":"token","text":"btn {\\n      padding: "}
+{"type":"token","text":"10"}
+{"type":"token","text":"px 20px;\\n      border"}
+{"type":"token","text":": 1px solid var(--"}
+{"type":"token","text":"border);\\n      background"}
+{"type":"token","text":": var(--surface);\\n"}
+{"type":"token","text":"      color: var(--text)"}
+{"type":"token","text":";\\n      border-radius: "}
+{"type":"token","text":"9"}
+{"type":"token","text":"999px;\\n      font"}
+{"type":"token","text":"-size: var(--text-"}
+{"type":"token","text":"sm);\\n      font"}
+{"type":"token","text":"-weight: 500;\\n      "}
+{"type":"token","text":"cursor: pointer;\\n      transition:"}
+{"type":"token","text":" all 0.2"}
+{"type":"token","text":"s var(--ease-out)"}
+{"type":"token","text":";\\n      "}
+{"type":"token","text":"text"}
+{"type":"token","text":"-transform"}
+{"type":"token","text":": uppercase;\\n      "}
+{"type":"token","text":"letter-spacing: 0.05"}
+{"type":"token","text":"em;\\n    }\\n\\"}
+{"type":"token","text":"n    .filter-btn:hover"}
+{"type":"token","text":","}
+{"type":"token","text":"\\n    .filter-btn."}
+{"type":"token","text":"active {\\n      background"}
+{"type":"token","text":": var(--accent);\\n"}
+{"type":"token","text":"      color: white"}
+{"type":"token","text":";\\n      "}
+{"type":"token","text":"border"}
+{"type":"token","text":"-color: var(--accent)"}
+{"type":"token","text":";\\n    }\\n\\n"}
+{"type":"token","text":"    .menu"}
+{"type":"token","text":"-full"}
+{"type":"token","text":" "}
+{"type":"token","text":"{\\n      padding"}
+{"type":"token","text":": var(--space-16"}
+{"type":"token","text":") 0 "}
+{"type":"token","text":"var(--space-24"}
+{"type":"token","text":");\\n      background: var("}
+{"type":"token","text":"--bg);\\n    }\\"}
+{"type":"token","text":"n\\n    .menu-full"}
+{"type":"token","text":"-"}
+{"type":"token","text":"grid {\\n      display: grid"}
+{"type":"token","text":";\\n      grid-template-columns"}
+{"type":"token","text":": repeat(3"}
+{"type":"token","text":", 1fr);\\n      "}
+{"type":"token","text":"gap: var(--space-8"}
+{"type":"token","text":");\\n    }\\n\\"}
+{"type":"token","text":"n    @"}
+{"type":"token","text":"media (max-width: 968"}
+{"type":"token","text":"px) {\\n      .menu"}
+{"type":"token","text":"-full-grid {\\n        "}
+{"type":"token","text":"grid-template-columns: repeat"}
+{"type":"token","text":"(2, 1fr);\\"}
+{"type":"token","text":"n      }\\n    }\\"}
+{"type":"token","text":"n\\n    @"}
+{"type":"token","text":"media (max-width: 640"}
+{"type":"token","text":"px) {\\n      .menu"}
+{"type":"token","text":"-full-grid {\\n        "}
+{"type":"token","text":"grid-template-columns: 1"}
+{"type":"token","text":"fr;\\n      }\\n    "}
+{"type":"token","text":"}\\n\\n    /*"}
+{"type":"token","text":" CONTACT"}
+{"type":"token","text":" PAGE */\\n    .contact-"}
+{"type":"token","text":"hero {\\n      padding: var"}
+{"type":"token","text":"(--space-32) 0"}
+{"type":"token","text":" var(--space-24"}
+{"type":"token","text":");\\n      background: var("}
+{"type":"token","text":"--bg-"}
+{"type":"token","text":"alt);\\n    }\\n"}
+{"type":"token","text":"\\n    .contact-hero h"}
+{"type":"token","text":"1 {\\n      font-"}
+{"type":"token","text":"family: 'Syne',"}
+{"type":"token","text":" sans-serif;\\n      font-"}
+{"type":"token","text":"weight: 600;\\n      font"}
+{"type":"token","text":"-size: var(--text-"}
+{"type":"token","text":"5xl);\\n      margin-"}
+{"type":"token","text":"bottom: var(--space-4"}
+{"type":"token","text":");\\n      letter-spacing:"}
+{"type":"token","text":" -0.03em;\\n    "}
+{"type":"token","text":"}\\n\\n    .contact"}
+{"type":"token","text":"-hero p {\\n      font"}
+{"type":"token","text":"-size: var(--text-"}
+{"type":"token","text":"xl);\\n      color: var"}
+{"type":"token","text":"(--text-muted);\\"}
+{"type":"token","text":"n      line-height: 1"}
+{"type":"token","text":".6;\\n      max-width"}
+{"type":"token","text":": 700"}
+{"type":"token","text":"px;\\n    }\\n\\"}
+{"type":"token","text":"n    .contact-grid {\\"}
+{"type":"token","text":"n      padding"}
+{"type":"token","text":": var(--space-24)"}
+{"type":"token","text":" 0;\\n      background: var"}
+{"type":"token","text":"(--bg)"}
+{"type":"token","text":";\\n    }\\n\\n"}
+{"type":"token","text":"    .contact-content {\\n"}
+{"type":"token","text":"      display: grid;\\n      grid"}
+{"type":"token","text":"-template-columns: 1fr"}
+{"type":"token","text":" 1fr;\\n      gap:"}
+{"type":"token","text":" var(--space-16);\\"}
+{"type":"token","text":"n      "}
+{"type":"token","text":"align-items: start"}
+{"type":"token","text":";\\n    }\\n\\n"}
+{"type":"token","text":"    .contact-info h"}
+{"type":"token","text":"2 {\\n      font-"}
+{"type":"token","text":"family: 'Syne',"}
+{"type":"token","text":" sans-serif;\\n      font-"}
+{"type":"token","text":"weight: 600;\\n      font"}
+{"type":"token","text":"-size: var(--text-"}
+{"type":"token","text":"2"}
+{"type":"token","text":"xl);\\n      margin-bottom"}
+{"type":"token","text":": var(--space-6)"}
+{"type":"token","text":";\\n      letter-spacing: -"}
+{"type":"token","text":"0.02em;\\n    "}
+{"type":"token","text":"}\\n\\n    .info"}
+{"type":"token","text":"-item {\\n      margin-"}
+{"type":"token","text":"bottom: var(--space-6"}
+{"type":"token","text":");\\n    }\\n\\"}
+{"type":"token","text":"n    .info-item h3"}
+{"type":"token","text":" {\\n      font-family"}
+{"type":"token","text":": 'Syne', sans"}
+{"type":"token","text":"-serif;\\n      font-weight"}
+{"type":"token","text":": 500"}
+{"type":"token","text":";\\n      font-size: var"}
+{"type":"token","text":"(--text-base"}
+{"type":"token","text":");\\n      margin-bottom:"}
+{"type":"token","text":" var(--space-2);\\"}
+{"type":"token","text":"n      text"}
+{"type":"token","text":"-transform: uppercase;\\n      letter"}
+{"type":"token","text":"-spacing: 0.05em"}
+{"type":"token","text":";\\n      "}
+{"type":"token","text":"font"}
+{"type":"token","text":"-size"}
+{"type":"token","text":": var(--text-sm)"}
+{"type":"token","text":";\\n      "}
+{"type":"token","text":"color: var(--accent"}
+{"type":"token","text":");\\n    }\\n\\"}
+{"type":"token","text":"n    .info-item p "}
+{"type":"token","text":"{\\n      color: var(--"}
+{"type":"token","text":"text)"}
+{"type":"token","text":";\\n      font"}
+{"type":"token","text":"-size: var(--text-"}
+{"type":"token","text":"base"}
+{"type":"token","text":");\\n    "}
+{"type":"token","text":"}\\n\\n    .contact"}
+{"type":"token","text":"-form {\\n      background"}
+{"type":"token","text":": var(--surface);\\n"}
+{"type":"token","text":"      padding: var(--space-"}
+{"type":"token","text":"8"}
+{"type":"token","text":");\\n      border-radius:"}
+{"type":"token","text":" var(--radius-lg);\\"}
+{"type":"token","text":"n      box-shadow: var("}
+{"type":"token","text":"--shadow-md);\\n    "}
+{"type":"token","text":"}\\n\\n    .form"}
+{"type":"token","text":"-group {\\n      margin-"}
+{"type":"token","text":"bottom: var(--space-6"}
+{"type":"token","text":");\\n    }\\n\\"}
+{"type":"token","text":"n    .form-group label "}
+{"type":"token","text":"{\\n      display: block;\\n"}
+{"type":"token","text":"      margin-bottom: var(--"}
+{"type":"token","text":"space-2);\\n      font"}
+{"type":"token","text":"-weight: 500;\\n      "}
+{"type":"token","text":"font"}
+{"type":"token","text":"-size: var(--text-"}
+{"type":"token","text":"sm"}
+{"type":"token","text":");\\n      color: var("}
+{"type":"token","text":"--text)"}
+{"type":"token","text":";\\n    }\\n\\n"}
+{"type":"token","text":"    .form-group input,\\"}
+{"type":"token","text":"n    .form-group textarea,"}
+{"type":"token","text":"\\n    .form-group select"}
+{"type":"token","text":" {\\n      width: 100"}
+{"type":"token","text":"%;\\n      padding: "}
+{"type":"token","text":"12"}
+{"type":"token","text":"px "}
+{"type":"token","text":"16px;\\n      border: "}
+{"type":"token","text":"1px solid var(--border)"}
+{"type":"token","text":";\\n      border-radius: var"}
+{"type":"token","text":"(--radius-md);\\n"}
+{"type":"token","text":"      font-family"}
+{"type":"token","text":": 'Plus"}
+{"type":"token","text":" Jakarta Sans', sans-serif;\\n"}
+{"type":"token","text":"      font-size: var(--"}
+{"type":"token","text":"text-base);\\n      background"}
+{"type":"token","text":": var(--bg"}
+{"type":"token","text":");\\n      color: var("}
+{"type":"token","text":"--text);\\n      transition:"}
+{"type":"token","text":" border"}
+{"type":"token","text":"-color 0.2s var"}
+{"type":"token","text":"(--ease-out),"}
+{"type":"token","text":" box-shadow 0.2s"}
+{"type":"token","text":" var(--ease-out);\\"}
+{"type":"token","text":"n    }\\n\\n    "}
+{"type":"token","text":".form-group input:focus,"}
+{"type":"token","text":"\\n    .form-group textarea"}
+{"type":"token","text":":focus,\\n    .form"}
+{"type":"token","text":"-group select:focus {\\n"}
+{"type":"token","text":"      outline: none;\\n      border"}
+{"type":"token","text":"-color: var(--accent)"}
+{"type":"token","text":";\\n      box-shadow: "}
+{"type":"token","text":"0 0 0 3"}
+{"type":"token","text":"px rgba(107"}
+{"type":"token","text":", 142, 107"}
+{"type":"token","text":", 0.15"}
+{"type":"token","text":");\\n    }\\n\\"}
+{"type":"token","text":"n    .form-group textarea"}
+{"type":"token","text":" {\\n      min"}
+{"type":"token","text":"-height: 120px;\\n"}
+{"type":"token","text":"      resize: vertical;\\n    "}
+{"type":"token","text":"}\\n\\n    .form-"}
+{"type":"token","text":"success"}
+{"type":"token","text":" {\\n      display"}
+{"type":"token","text":": none;\\n      padding"}
+{"type":"token","text":": var(--space-4"}
+{"type":"token","text":");\\n      background: rgba"}
+{"type":"token","text":"(16"}
+{"type":"token","text":", 185, 129, "}
+{"type":"token","text":"0.1);\\n      color"}
+{"type":"token","text":": #"}
+{"type":"token","text":"10"}
+{"type":"token","text":"B981;\\n      border-"}
+{"type":"token","text":"radius: var(--radius-md"}
+{"type":"token","text":");\\n      margin-top"}
+{"type":"token","text":": var(--space-4)"}
+{"type":"token","text":";\\n      "}
+{"type":"token","text":"text"}
+{"type":"token","text":"-align: center;\\n    "}
+{"type":"token","text":"}\\n\\n    .form-"}
+{"type":"token","text":"success.show {\\n      display"}
+{"type":"token","text":": block;\\n    }\\n"}
+{"type":"token","text":"\\n    @"}
+{"type":"token","text":"media (max-width: 768"}
+{"type":"token","text":"px) {\\n      .contact"}
+{"type":"token","text":"-content {\\n        grid-"}
+{"type":"token","text":"template-columns: 1fr;\\"}
+{"type":"token","text":"n      }\\n    }\\"}
+{"type":"token","text":"n\\n    /* FOOTER */"}
+{"type":"token","text":"\\n    footer"}
+{"type":"token","text":" {\\n      background"}
+{"type":"token","text":": linear"}
+{"type":"token","text":"-gradient(135deg, #1"}
+{"type":"token","text":"A2821 0%, #0"}
+{"type":"token","text":"D0D0D 100%)"}
+{"type":"token","text":";\\n      color"}
+{"type":"token","text":": #"}
+{"type":"token","text":"FAFAFA;\\n      padding"}
+{"type":"token","text":": var(--space-24"}
+{"type":"token","text":") 0 "}
+{"type":"token","text":"var(--space-8"}
+{"type":"token","text":");\\n      margin"}
+{"type":"token","text":"-top: var"}
+{"type":"token","text":"(--space-32"}
+{"type":"token","text":");\\n    }\\n\\"}
+{"type":"token","text":"n    .footer-grid"}
+{"type":"token","text":" {\\n      display: grid;\\"}
+{"type":"token","text":"n      grid-template-columns:"}
+{"type":"token","text":" "}
+{"type":"token","text":"2"}
+{"type":"token","text":"fr 1fr "}
+{"type":"token","text":"1fr "}
+{"type":"token","text":"1fr;\\n      gap: var"}
+{"type":"token","text":"(--space-12"}
+{"type":"token","text":");\\n      margin"}
+{"type":"token","text":"-bottom: var(--space-"}
+{"type":"token","text":"12"}
+{"type":"token","text":");\\n    }\\n\\"}
+{"type":"token","text":"n    .footer-brand"}
+{"type":"token","text":" h"}
+{"type":"token","text":"3"}
+{"type":"token","text":" {\\n      font-family"}
+{"type":"token","text":": 'Syne', sans"}
+{"type":"token","text":"-serif;\\n      font-weight"}
+{"type":"token","text":": 700"}
+{"type":"token","text":";\\n      font-size: var"}
+{"type":"token","text":"(--text-2"}
+{"type":"token","text":"xl);\\n      margin-bottom"}
+{"type":"token","text":": var(--space-3"}
+{"type":"token","text":");\\n      color"}
+{"type":"token","text":": #"}
+{"type":"token","text":"8FA68F;\\n      letter"}
+{"type":"token","text":"-spacing: -0.02em"}
+{"type":"token","text":";\\n    }\\n\\n"}
+{"type":"token","text":"    .footer-brand"}
+{"type":"token","text":" p {\\n      color"}
+{"type":"token","text":": #D4D4D8"}
+{"type":"token","text":";\\n      line-height: "}
+{"type":"token","text":"1.6;\\n      "}
+{"type":"token","text":"margin-bottom: var(--space"}
+{"type":"token","text":"-4"}
+{"type":"token","text":");\\n    }\\n\\"}
+{"type":"token","text":"n    .footer-section"}
+{"type":"token","text":" h4 {\\n      font"}
+{"type":"token","text":"-family: '"}
+{"type":"token","text":"Syne', sans-serif;\\n"}
+{"type":"token","text":"      font-weight: 600;\\"}
+{"type":"token","text":"n      font-size: var("}
+{"type":"token","text":"--text-sm"}
+{"type":"token","text":");\\n      margin-bottom:"}
+{"type":"token","text":" var(--space-4"}
+{"type":"token","text":");\\n      text"}
+{"type":"token","text":"-transform: uppercase;\\n      letter"}
+{"type":"token","text":"-spacing: 0.1"}
+{"type":"token","text":"em;\\n      color: #8"}
+{"type":"token","text":"FA68F;\\n    }\\"}
+{"type":"token","text":"n\\n    .footer-section"}
+{"type":"token","text":" ul {\\n      list-style"}
+{"type":"token","text":": none;\\n    "}
+{"type":"token","text":"}\\n\\n    .footer"}
+{"type":"token","text":"-section ul"}
+{"type":"token","text":" li {\\n      margin-bottom"}
+{"type":"token","text":": var(--space-3"}
+{"type":"token","text":");\\n    }\\n\\"}
+{"type":"token","text":"n    .footer-section ul li"}
+{"type":"token","text":" a {\\n      color: #"}
+{"type":"token","text":"D4D4D8;\\n"}
+{"type":"token","text":"      text-decoration: none;\\n"}
+{"type":"token","text":"      transition: color 0.2"}
+{"type":"token","text":"s var(--ease-out)"}
+{"type":"token","text":";\\n      "}
+{"type":"token","text":"font"}
+{"type":"token","text":"-size: var(--text-"}
+{"type":"token","text":"sm"}
+{"type":"token","text":");\\n    }\\n\\"}
+{"type":"token","text":"n    .footer-section ul li"}
+{"type":"token","text":" a:hover {\\n      color"}
+{"type":"token","text":": #8FA68F;\\n"}
+{"type":"token","text":"    }\\n\\n    ."}
+{"type":"token","text":"social"}
+{"type":"token","text":"-links {\\n      display:"}
+{"type":"token","text":" flex;\\n      gap: var("}
+{"type":"token","text":"--space-4);\\n    "}
+{"type":"token","text":"}\\n\\n    .social"}
+{"type":"token","text":"-links a {\\n      width"}
+{"type":"token","text":": 40px;\\n      height"}
+{"type":"token","text":": 40px;\\n      background"}
+{"type":"token","text":": rgba(143, 166,"}
+{"type":"token","text":" 143, 0.15"}
+{"type":"token","text":");\\n      border-radius:"}
+{"type":"token","text":" "}
+{"type":"token","text":"50%;\\n      display: flex"}
+{"type":"token","text":";\\n      align-items: center"}
+{"type":"token","text":";\\n      justify-content: center"}
+{"type":"token","text":";\\n      transition"}
+{"type":"token","text":": background"}
+{"type":"token","text":" 0.2s var(--"}
+{"type":"token","text":"ease-out),"}
+{"type":"token","text":" transform 0.2s var("}
+{"type":"token","text":"--ease-out);\\n      "}
+{"type":"token","text":"border"}
+{"type":"token","text":": 1px solid rgba(143"}
+{"type":"token","text":", 166, 143, "}
+{"type":"token","text":"0.2);\\n    "}
+{"type":"token","text":"}\\n\\n    .social-"}
+{"type":"token","text":"links a:hover {\\n      "}
+{"type":"token","text":"background: rgba"}
+{"type":"token","text":"(143, 166, 143"}
+{"type":"token","text":", 0.25"}
+{"type":"token","text":");\\n      transform: translate"}
+{"type":"token","text":"Y(-2px);\\n    "}
+{"type":"token","text":"}\\n\\n    .social"}
+{"type":"token","text":"-links svg"}
+{"type":"token","text":" {\\n      width: 18"}
+{"type":"token","text":"px;\\n      height: 18"}
+{"type":"token","text":"px;\\n      fill: #8"}
+{"type":"token","text":"FA68F;\\n    }\\"}
+{"type":"token","text":"n\\n    ."}
+{"type":"token","text":"footer-bottom {\\n      padding"}
+{"type":"token","text":"-"}
+{"type":"token","text":"top: var(--space-6"}
+{"type":"token","text":");\\n      border-top:"}
+{"type":"token","text":" 1px solid rgba(255"}
+{"type":"token","text":","}
+{"type":"token","text":"255,255,0.1)"}
+{"type":"token","text":";\\n      text"}
+{"type":"token","text":"-align: center;\\n      color"}
+{"type":"token","text":": #A"}
+{"type":"token","text":"1"}
+{"type":"token","text":"A1AA;\\n      "}
+{"type":"token","text":"font-size: var(--text"}
+{"type":"token","text":"-sm"}
+{"type":"token","text":");\\n    }\\n\\"}
+{"type":"token","text":"n    @media (max-width"}
+{"type":"token","text":": 968"}
+{"type":"token","text":"px) {\\n      .footer"}
+{"type":"token","text":"-grid {\\n        grid-"}
+{"type":"token","text":"template-columns: 1fr "}
+{"type":"token","text":"1fr;\\n      }\\n"}
+{"type":"token","text":"    }\\n\\n    @"}
+{"type":"token","text":"media (max-width: 640"}
+{"type":"token","text":"px) {\\n      .footer"}
+{"type":"token","text":"-grid {\\n        grid-"}
+{"type":"token","text":"template-columns: 1fr;\\"}
+{"type":"token","text":"n      }\\n    }\\"}
+{"type":"token","text":"n  "}
+{"type":"token","text":"</style>\\n</head"}
+{"type":"token","text":">\\n<body>\\n  "}
+{"type":"token","text":"<a href"}
+{"type":"token","text":"=\\\"#main"}
+{"type":"token","text":"\\\""}
+{"type":"token","text":" class=\\\"skip-link"}
+{"type":"token","text":"\\\">Skip to main content"}
+{"type":"token","text":"</a>\\n  "}
+{"type":"token","text":"\\n  "}
+{"type":"token","text":"<nav"}
+{"type":"token","text":">\\"}
+{"type":"token","text":"n    <div class=\\\"container\\\""}
+{"type":"token","text":">\\n      "}
+{"type":"token","text":"<a href=\\\"#home"}
+{"type":"token","text":"\\\" class=\\\"logo\\\""}
+{"type":"token","text":" onclick"}
+{"type":"token","text":"=\\\"show"}
+{"type":"token","text":"Page"}
+{"type":"token","text":"('home'"}
+{"type":"token","text":")\\\">SPR"}
+{"type":"token","text":"OUT</a>\\n      <ul"}
+{"type":"token","text":" class=\\\"nav-links\\\">\\n"}
+{"type":"token","text":"        <li><a href=\\\"#"}
+{"type":"token","text":"home\\\""}
+{"type":"token","text":" class"}
+{"type":"token","text":"=\\\"active\\\""}
+{"type":"token","text":" onclick=\\\"showPage('home')\\"}
+{"type":"token","text":"\">Home</a></li>\\n"}
+{"type":"token","text":"        <li><a href=\\\"#"}
+{"type":"token","text":"about\\\" onclick=\\\"showPage('about"}
+{"type":"token","text":"')\\\">About</a></li"}
+{"type":"token","text":">\\n        <li><a href"}
+{"type":"token","text":"=\\\"#menu\\\" onclick=\\\"showPage"}
+{"type":"token","text":"('menu')\\\">Menu"}
+{"type":"token","text":"</a></li>\\n        <li>"}
+{"type":"token","text":"<a href=\\\"#contact\\\" onclick=\\\""}
+{"type":"token","text":"showPage('contact')\\\">Contact"}
+{"type":"token","text":"</a></li>\\n      "}
+{"type":"token","text":"</ul>\\n      "}
+{"type":"token","text":"<button class=\\\"theme"}
+{"type":"token","text":"-toggle\\\" aria"}
+{"type":"token","text":"-label=\\\"Toggle theme\\\""}
+{"type":"token","text":">\\n        <svg class=\\\"sun"}
+{"type":"token","text":"\\\""}
+{"type":"token","text":" fill=\\\"none\\\" view"}
+{"type":"token","text":"Box=\\\"0 0 24 "}
+{"type":"token","text":"24\\\""}
+{"type":"token","text":">\\n          <circle cx=\\\"12"}
+{"type":"token","text":"\\\" cy=\\\"12\\\" r=\\\"4"}
+{"type":"token","text":"\\\" stroke"}
+{"type":"token","text":"=\\\"current"}
+{"type":"token","text":"Color\\\" stroke-width=\\\"2\\"}
+{"type":"token","text":"\"/>\\n          <path stroke"}
+{"type":"token","text":"=\\\"currentColor\\\" stroke-width"}
+{"type":"token","text":"=\\\"2\\\" d=\\\"M12 "}
+{"type":"token","text":"2v2"}
+{"type":"token","text":"m"}
+{"type":"token","text":"0 16"}
+{"type":"token","text":"v2M"}
+{"type":"token","text":"4."}
+{"type":"token","text":"93"}
+{"type":"token","text":" 4.93l1"}
+{"type":"token","text":".41"}
+{"type":"token","text":" "}
+{"type":"token","text":"1.41m"}
+{"type":"token","text":"11.32"}
+{"type":"token","text":" "}
+{"type":"token","text":"11.32l1.41 "}
+{"type":"token","text":"1.41M2"}
+{"type":"token","text":" "}
+{"type":"token","text":"12h2m16"}
+{"type":"token","text":" 0h2M4"}
+{"type":"token","text":".93 19.07l1"}
+{"type":"token","text":".41-1.41m11"}
+{"type":"token","text":".32-11.32l1"}
+{"type":"token","text":".41-1.41\\\"/"}
+{"type":"token","text":">\\n        </svg>\\n      "}
+{"type":"token","text":"</button>\\n      "}
+{"type":"token","text":"<button class=\\\"menu-toggle\\\""}
+{"type":"token","text":" aria-label=\\\"Toggle menu\\\">\\"}
+{"type":"token","text":"n        <span"}
+{"type":"token","text":"></span>\\n        <span>"}
+{"type":"token","text":"</span>\\n        <span></span"}
+{"type":"token","text":">\\n      </button>\\n    "}
+{"type":"token","text":"</div>\\n  </nav>\\"}
+{"type":"token","text":"n\\"}
+{"type":"token","text":"n  <main id=\\\"main\\\""}
+{"type":"token","text":">\\n    <!--"}
+{"type":"token","text":" HOME"}
+{"type":"token","text":" PAGE -->\\n    <div"}
+{"type":"token","text":" id=\\\"home\\\" class=\\\"page"}
+{"type":"token","text":" active"}
+{"type":"token","text":"\\\">\\n      <section"}
+{"type":"token","text":" class=\\\"hero\\\">\\n        "}
+{"type":"token","text":"<div class=\\\"container\\\">\\n          "}
+{"type":"token","text":"<div"}
+{"type":"token","text":" class=\\\"hero-content reveal"}
+{"type":"token","text":"\\\">\\n            <h1>"}
+{"type":"token","text":"Real"}
+{"type":"token","text":" food"}
+{"type":"token","text":"."}
+{"type":"token","text":"<br>"}
+{"type":"token","text":"Delivered"}
+{"type":"token","text":"."}
+{"type":"token","text":"</h1>\\n            <p>"}
+{"type":"token","text":"Chef"}
+{"type":"token","text":"-craf"}
+{"type":"token","text":"ted, plant"}
+{"type":"token","text":"-based meals delivered"}
+{"type":"token","text":" fresh"}
+{"type":"token","text":" to your door. Bold"}
+{"type":"token","text":" flavors, real"}
+{"type":"token","text":" ingredients, zero"}
+{"type":"token","text":" compromise"}
+{"type":"token","text":".</p>\\n            <button"}
+{"type":"token","text":" class=\\\"btn"}
+{"type":"token","text":" btn-primary\\\" onclick=\\\"showPage"}
+{"type":"token","text":"('menu'"}
+{"type":"token","text":")\\\">View"}
+{"type":"token","text":" this"}
+{"type":"token","text":" week"}
+{"type":"token","text":"'s menu</button>\\n          "}
+{"type":"token","text":"</div>\\n          <div class=\\\""}
+{"type":"token","text":"hero-image reveal\\\">\\n            "}
+{"type":"token","text":"<img src=\\\"data"}
+{"type":"token","text":":image/svg+xml,%"}
+{"type":"token","text":"3Csvg width"}
+{"type":"token","text":"='800"}
+{"type":"token","text":"' height='500"}
+{"type":"token","text":"' xmlns"}
+{"type":"token","text":"='http://www.w3."}
+{"type":"token","text":"org/2000/svg'%"}
+{"type":"token","text":"3E%3Cr"}
+{"type":"token","text":"ect width='800' height='500"}
+{"type":"token","text":"' fill='%236"}
+{"type":"token","text":"B8"}
+{"type":"token","text":"E"}
+{"type":"token","text":"6"}
+{"type":"token","text":"B"}
+{"type":"token","text":"'/%3E%3C"}
+{"type":"token","text":"text x='50"}
+{"type":"token","text":"%"}
+{"type":"token","text":"25"}
+{"type":"token","text":"' y='50%25' dominant"}
+{"type":"token","text":"-baseline='middle' text-anchor"}
+{"type":"token","text":"='middle' font"}
+{"type":"token","text":"-family"}
+{"type":"token","text":"='sans"}
+{"type":"token","text":"-serif' font-size='20"}
+{"type":"token","text":"' fill"}
+{"type":"token","text":"='%23FFFFFF"}
+{"type":"token","text":"'"}
+{"type":"token","text":"%3E"}
+{"type":"token","text":"Y"}
+{"type":"token","text":"our featured"}
+{"type":"token","text":" dish image"}
+{"type":"token","text":"%"}
+{"type":"token","text":"3C/text%3E%"}
+{"type":"token","text":"3C/svg%3E\\\""}
+{"type":"token","text":" alt=\\\"Featured"}
+{"type":"token","text":" plant"}
+{"type":"token","text":"-based meal"}
+{"type":"token","text":"\\\""}
+{"type":"token","text":" loading"}
+{"type":"token","text":"=\\\"lazy\\\">\\n          </div"}
+{"type":"token","text":">\\n        </div>\\n      "}
+{"type":"token","text":"</section>\\n\\n      "}
+{"type":"token","text":"<section class=\\\"process"}
+{"type":"token","text":"\\\""}
+{"type":"token","text":">\\n        <div class=\\\"container"}
+{"type":"token","text":" reveal"}
+{"type":"token","text":"-"}
+{"type":"token","text":"st"}
+{"type":"token","text":"agger\\\">\\n          <h2"}
+{"type":"token","text":">The"}
+{"type":"token","text":" Process</h2>\\n          "}
+{"type":"token","text":"<div class=\\\"process-grid\\\">\\"}
+{"type":"token","text":"n            <div class=\\\"process-"}
+{"type":"token","text":"step"}
+{"type":"token","text":"\\\""}
+{"type":"token","text":">\\n              <div class=\\\"step"}
+{"type":"token","text":"-number\\\">1</div>\\"}
+{"type":"token","text":"n              <h"}
+{"type":"token","text":"3>Browse"}
+{"type":"token","text":"</h3>\\n              <p"}
+{"type":"token","text":">Check"}
+{"type":"token","text":" our weekly"}
+{"type":"token","text":" rotating"}
+{"type":"token","text":" menu of"}
+{"type":"token","text":" chef"}
+{"type":"token","text":"-designed"}
+{"type":"token","text":" meals"}
+{"type":"token","text":" —"}
+{"type":"token","text":" new"}
+{"type":"token","text":" flav"}
+{"type":"token","text":"ors drop"}
+{"type":"token","text":" every Monday"}
+{"type":"token","text":".</p>\\n            </div>\\"}
+{"type":"token","text":"n            <div class=\\\"process-"}
+{"type":"token","text":"step\\\">\\n              <div class"}
+{"type":"token","text":"=\\\"step-number\\\">2"}
+{"type":"token","text":"</div>\\n              <h3>"}
+{"type":"token","text":"Customize"}
+{"type":"token","text":"</h3>\\n              <p"}
+{"type":"token","text":">Pick"}
+{"type":"token","text":" your favorites"}
+{"type":"token","text":","}
+{"type":"token","text":" adjust"}
+{"type":"token","text":" portions, set"}
+{"type":"token","text":" dietary preferences."}
+{"type":"token","text":" Your box"}
+{"type":"token","text":","}
+{"type":"token","text":" your way.</p>\\n            "}
+{"type":"token","text":"</div>\\n            <div class=\\\""}
+{"type":"token","text":"process-step\\\">\\n              "}
+{"type":"token","text":"<div class=\\\"step-number\\\">"}
+{"type":"token","text":"3</div>\\n              <h"}
+{"type":"token","text":"3>Delivered"}
+{"type":"token","text":"</h3>\\n              <p"}
+{"type":"token","text":">We"}
+{"type":"token","text":" cook"}
+{"type":"token","text":","}
+{"type":"token","text":" pack"}
+{"type":"token","text":", and deliver fresh"}
+{"type":"token","text":" to"}
+{"type":"token","text":" your door. Ready"}
+{"type":"token","text":" to"}
+{"type":"token","text":" heat"}
+{"type":"token","text":" and"}
+{"type":"token","text":" eat in"}
+{"type":"token","text":" under"}
+{"type":"token","text":" 10"}
+{"type":"token","text":" minutes.</p>\\n            "}
+{"type":"token","text":"</div>\\n          </div>\\n"}
+{"type":"token","text":"        </div>\\n      </section"}
+{"type":"token","text":">\\n\\n      <section class"}
+{"type":"token","text":"=\\\"menu"}
+{"type":"token","text":"-"}
+{"type":"token","text":"preview\\\">\\n        <div class"}
+{"type":"token","text":"=\\\"container\\\">\\n          <div"}
+{"type":"token","text":" class=\\\"menu-header"}
+{"type":"token","text":" reveal"}
+{"type":"token","text":"\\\">\\n            <h2>"}
+{"type":"token","text":"This"}
+{"type":"token","text":" Week's Menu</h2>\\n"}
+{"type":"token","text":"            "}
+{"type":"token","text":"<p"}
+{"type":"token","text":">Chef-"}
+{"type":"token","text":"crafted plates"}
+{"type":"token","text":" rotating"}
+{"type":"token","text":" weekly —"}
+{"type":"token","text":" everything"}
+{"type":"token","text":" from bold, globally"}
+{"type":"token","text":"-inspired bowls to com"}
+{"type":"token","text":"forting classics"}
+{"type":"token","text":" made"}
+{"type":"token","text":" entirely"}
+{"type":"token","text":" from plants.</p>\\n          "}
+{"type":"token","text":"</div>\\n          <div class=\\\""}
+{"type":"token","text":"menu-grid reveal"}
+{"type":"token","text":"-"}
+{"type":"token","text":"stagger\\\">\\n            <div"}
+{"type":"token","text":" class=\\\"meal"}
+{"type":"token","text":"-card\\\">\\n              <div"}
+{"type":"token","text":" class=\\\"meal-image\\\">\\n"}
+{"type":"token","text":"                <img src=\\\"data:image"}
+{"type":"token","text":"/svg+xml,%3Csv"}
+{"type":"token","text":"g width='600"}
+{"type":"token","text":"' height='400' xmlns='http"}
+{"type":"token","text":"://www.w3.org/"}
+{"type":"token","text":"2000/svg'%3E"}
+{"type":"token","text":"%3Crect width='600"}
+{"type":"token","text":"' height='400' fill='%"}
+{"type":"token","text":"238"}
+{"type":"token","text":"FA"}
+{"type":"token","text":"68F'/%3E%3"}
+{"type":"token","text":"Ctext x='50"}
+{"type":"token","text":"%25' y='50%25"}
+{"type":"token","text":"' dominant-baseline='middle' text"}
+{"type":"token","text":"-anchor='middle' font-family"}
+{"type":"token","text":"='sans-serif' font-size"}
+{"type":"token","text":"='18"}
+{"type":"token","text":"' fill='%23FFFFFF'"}
+{"type":"token","text":"%3EG"}
+{"type":"token","text":"ol"}
+{"type":"token","text":"den"}
+{"type":"token","text":" Tu"}
+{"type":"token","text":"rmeric Bowl"}
+{"type":"token","text":"%3C/text%3E"}
+{"type":"token","text":"%3C/svg%3E"}
+{"type":"token","text":"\\\" alt=\\\"Golden"}
+{"type":"token","text":" Turmeric Bowl\\\" loading=\\\""}
+{"type":"token","text":"lazy\\\">\\n              </div>\\"}
+{"type":"token","text":"n              <div class=\\\"meal-"}
+{"type":"token","text":"info"}
+{"type":"token","text":"\\\">\\n                <span"}
+{"type":"token","text":" class=\\\"meal-category"}
+{"type":"token","text":"\\\">Bowl"}
+{"type":"token","text":"</span>\\n                <h3"}
+{"type":"token","text":">Golden Turmeric Bowl"}
+{"type":"token","text":"</h3>\\n                <p>"}
+{"type":"token","text":"Ro"}
+{"type":"token","text":"asted sweet potato, chick"}
+{"type":"token","text":"peas, quin"}
+{"type":"token","text":"oa, tah"}
+{"type":"token","text":"ini dr"}
+{"type":"token","text":"izzle."}
+{"type":"token","text":" Anti"}
+{"type":"token","text":"-inflammatory power"}
+{"type":"token","text":"house."}
+{"type":"token","text":"</p>\\n              "}
+{"type":"token","text":"</div>\\n            </div>\\"}
+{"type":"token","text":"n            <div class=\\\"meal-"}
+{"type":"token","text":"card\\\">\\n              <div class"}
+{"type":"token","text":"=\\\"meal-image\\\">\\n                "}
+{"type":"token","text":"<img src=\\\"data:image/"}
+{"type":"token","text":"svg+xml,%3Csvg"}
+{"type":"token","text":" width='600' height='400'"}
+{"type":"token","text":" xmlns='http://www.w3"}
+{"type":"token","text":".org/2000/svg'"}
+{"type":"token","text":"%3E%3Crect"}
+{"type":"token","text":" width='600' height='400'"}
+{"type":"token","text":" fill='%236"}
+{"type":"token","text":"B8E6B'/%3"}
+{"type":"token","text":"E%3Ctext x='"}
+{"type":"token","text":"50%25' y='50%"}
+{"type":"token","text":"25' dominant-baseline='middle'"}
+{"type":"token","text":" text-anchor='middle' font-"}
+{"type":"token","text":"family='sans-serif' font-"}
+{"type":"token","text":"size='18' fill='%23"}
+{"type":"token","text":"FFFFFF'%3ESm"}
+{"type":"token","text":"oked"}
+{"type":"token","text":" Mush"}
+{"type":"token","text":"room Ta"}
+{"type":"token","text":"cos%3C/text%3"}
+{"type":"token","text":"E%3C/svg%3"}
+{"type":"token","text":"E\\\" alt=\\\"Smoked"}
+{"type":"token","text":" Mushroom Tacos\\\" loading=\\\""}
+{"type":"token","text":"lazy\\\">\\n              </div>\\"}
+{"type":"token","text":"n              <div class=\\\"meal-"}
+{"type":"token","text":"info\\\">\\n                <span class"}
+{"type":"token","text":"=\\\"meal-category\\\">T"}
+{"type":"token","text":"aco</span>\\n                <h"}
+{"type":"token","text":"3>Smoked Mushroom"}
+{"type":"token","text":" Tacos</h3>\\n"}
+{"type":"token","text":"                <p>Chi"}
+{"type":"token","text":"potle oy"}
+{"type":"token","text":"ster mushrooms, pick"}
+{"type":"token","text":"led jalapeños, cilantro"}
+{"type":"token","text":" lime"}
+{"type":"token","text":" s"}
+{"type":"token","text":"law. Bold"}
+{"type":"token","text":" and smo"}
+{"type":"token","text":"ky.</p>\\n              </div"}
+{"type":"token","text":">\\n            </div>\\n            "}
+{"type":"token","text":"<div class=\\\"meal-card\\\""}
+{"type":"token","text":">\\n              <div class=\\\"meal"}
+{"type":"token","text":"-image\\\">\\n                <img"}
+{"type":"token","text":" src=\\\"data:image/svg+"}
+{"type":"token","text":"xml,%3Csvg width='"}
+{"type":"token","text":"600' height='400' xmlns='"}
+{"type":"token","text":"http://www.w3.org"}
+{"type":"token","text":"/2000/svg'%3"}
+{"type":"token","text":"E%3Crect width='"}
+{"type":"token","text":"600' height='400' fill='"}
+{"type":"token","text":"%23A"}
+{"type":"token","text":"8"}
+{"type":"token","text":"B"}
+{"type":"token","text":"E"}
+{"type":"token","text":"A8'/%3E%3"}
+{"type":"token","text":"Ctext x='50%25"}
+{"type":"token","text":"' y='50%25' dominant"}
+{"type":"token","text":"-baseline='middle' text-anchor"}
+{"type":"token","text":"='middle' font-family='sans"}
+{"type":"token","text":"-serif' font-size='18"}
+{"type":"token","text":"' fill='%23FFFFFF'"}
+{"type":"token","text":"%3EGreen"}
+{"type":"token","text":" Goddess Pasta"}
+{"type":"token","text":"%3C/text%3E"}
+{"type":"token","text":"%3C/svg%3E"}
+{"type":"token","text":"\\\" alt=\\\"Green Goddess Pasta"}
+{"type":"token","text":"\\\" loading=\\\"lazy\\\">\\n              "}
+{"type":"token","text":"</div>\\n              <div class"}
+{"type":"token","text":"=\\\"meal-info\\\">\\n                "}
+{"type":"token","text":"<span class=\\\"meal-category\\"}
+{"type":"token","text":"\">Pasta</span>\\n                "}
+{"type":"token","text":"<h3>Green Goddess"}
+{"type":"token","text":" Pasta</h3>\\n                "}
+{"type":"token","text":"<p>Creamy herb"}
+{"type":"token","text":" sauce"}
+{"type":"token","text":", snap"}
+{"type":"token","text":" peas, to"}
+{"type":"token","text":"asted pine"}
+{"type":"token","text":" nuts. Ind"}
+{"type":"token","text":"ulgent comfort"}
+{"type":"token","text":","}
+{"type":"token","text":" zero"}
+{"type":"token","text":" dairy"}
+{"type":"token","text":".</p>\\n              </div>\\"}
+{"type":"token","text":"n            </div>\\n            "}
+{"type":"token","text":"<div class=\\\"meal-card\\\">\\"}
+{"type":"token","text":"n              <div class=\\\"meal-"}
+{"type":"token","text":"image\\\">\\n                <img src"}
+{"type":"token","text":"=\\\"data:image/svg+xml"}
+{"type":"token","text":",%3Csvg width='600"}
+{"type":"token","text":"' height='400' xmlns='http"}
+{"type":"token","text":"://www.w3.org/"}
+{"type":"token","text":"2000/svg'%3E"}
+{"type":"token","text":"%3Crect width='600"}
+{"type":"token","text":"' height='400' fill='%"}
+{"type":"token","text":"234"}
+{"type":"token","text":"A"}
+{"type":"token","text":"6"}
+{"type":"token","text":"B"}
+{"type":"token","text":"4"}
+{"type":"token","text":"A'/%3E%3"}
+{"type":"token","text":"Ctext x='50%25'"}
+{"type":"token","text":" y='50%25' dominant-"}
+{"type":"token","text":"baseline='middle' text-anchor='"}
+{"type":"token","text":"middle' font-family='sans-"}
+{"type":"token","text":"serif' font-size='18'"}
+{"type":"token","text":" fill='%23FFFFFF'%"}
+{"type":"token","text":"3EBurrito"}
+{"type":"token","text":" Bowl"}
+{"type":"token","text":"%3C/text%3E"}
+{"type":"token","text":"%3C/svg%3E"}
+{"type":"token","text":"\\\" alt=\\\"Loaded"}
+{"type":"token","text":" Burrito Bowl\\\" loading=\\\"lazy"}
+{"type":"token","text":"\\\">\\n              </div>\\n"}
+{"type":"token","text":"              <div class=\\\"meal-info"}
+{"type":"token","text":"\\\">\\n                <span class=\\\""}
+{"type":"token","text":"meal-category\\\">Bowl</span"}
+{"type":"token","text":">\\n                <h3>"}
+{"type":"token","text":"Loaded"}
+{"type":"token","text":" Burrito Bowl</h3>\\"}
+{"type":"token","text":"n                <p>Black beans,"}
+{"type":"token","text":" roasted"}
+{"type":"token","text":" corn"}
+{"type":"token","text":", gu"}
+{"type":"token","text":"acamole, salsa verde"}
+{"type":"token","text":"."}
+{"type":"token","text":" A"}
+{"type":"token","text":" crowd"}
+{"type":"token","text":" favorite"}
+{"type":"token","text":" every"}
+{"type":"token","text":" week"}
+{"type":"token","text":".</p>\\n              </div>\\"}
+{"type":"token","text":"n            </div>\\n          "}
+{"type":"token","text":"</div>\\n        </div>\\n"}
+{"type":"token","text":"      </section>\\n\\n      "}
+{"type":"token","text":"<section class=\\\"values"}
+{"type":"token","text":"\\\">\\n        <div class=\\\""}
+{"type":"token","text":"container\\\""}
+{"type":"token","text":">\\n          <h2 "}
+{"type":"token","text":"class=\\\"reveal"}
+{"type":"token","text":"\\\">What"}
+{"type":"token","text":" Matters to"}
+{"type":"token","text":" Us</h2>\\n          "}
+{"type":"token","text":"<div class=\\\"values-list"}
+{"type":"token","text":" reveal"}
+{"type":"token","text":"-stagger\\\">\\n            "}
+{"type":"token","text":"<div class=\\\"value-item\\\">\\"}
+{"type":"token","text":"n              <div"}
+{"type":"token","text":" class=\\\"value-icon\\\""}
+{"type":"token","text":">\\n                <svg fill"}
+{"type":"token","text":"=\\\"none\\\" view"}
+{"type":"token","text":"Box=\\\"0 0 24 "}
+{"type":"token","text":"24\\\""}
+{"type":"token","text":">\\n                  <path stroke=\\\""}
+{"type":"token","text":"currentColor\\\" stroke-width=\\\"2"}
+{"type":"token","text":"\\\" d=\\\"M12 2L"}
+{"type":"token","text":"2"}
+{"type":"token","text":" 7"}
+{"type":"token","text":"l"}
+{"type":"token","text":"10 5 10-5-"}
+{"type":"token","text":"10-5z"}
+{"type":"token","text":"\\\"/>\\n                  <path"}
+{"type":"token","text":" stroke=\\\"currentColor\\\" stroke-width"}
+{"type":"token","text":"=\\\"2\\\" d=\\\"M2"}
+{"type":"token","text":" 17"}
+{"type":"token","text":"l10 5 10-5"}
+{"type":"token","text":"M"}
+{"type":"token","text":"2 12l"}
+{"type":"token","text":"10 5 10-5\\"}
+{"type":"token","text":"\"/>\\n                </svg>\\n"}
+{"type":"token","text":"              </div>\\n              <h"}
+{"type":"token","text":"3>Real"}
+{"type":"token","text":" Ingredients</h3>\\n              "}
+{"type":"token","text":"<p>We source"}
+{"type":"token","text":" directly"}
+{"type":"token","text":" from farms and pu"}
+{"type":"token","text":"rveyors we"}
+{"type":"token","text":" trust. If"}
+{"type":"token","text":" it's in your"}
+{"type":"token","text":" meal"}
+{"type":"token","text":", we"}
+{"type":"token","text":" can"}
+{"type":"token","text":" tell"}
+{"type":"token","text":" you"}
+{"type":"token","text":" where"}
+{"type":"token","text":" it came"}
+{"type":"token","text":" from.</p>\\n            </div"}
+{"type":"token","text":">\\n            <div class=\\\"value"}
+{"type":"token","text":"-item\\\">\\n              <div"}
+{"type":"token","text":" class=\\\"value-icon\\\">\\n"}
+{"type":"token","text":"                <svg fill=\\\"none\\\" view"}
+{"type":"token","text":"Box=\\\"0 0 24 "}
+{"type":"token","text":"24\\\">\\n                  <circle"}
+{"type":"token","text":" cx=\\\"12\\\" cy=\\\"12\\\""}
+{"type":"token","text":" r=\\\"10"}
+{"type":"token","text":"\\\" stroke=\\\"currentColor\\\" stroke-"}
+{"type":"token","text":"width=\\\"2\\\"/>\\n                "}
+{"type":"token","text":"  <path stroke=\\\"currentColor\\\""}
+{"type":"token","text":" stroke-width=\\\"2\\\" d=\\\""}
+{"type":"token","text":"M8 12l"}
+{"type":"token","text":"2"}
+{"type":"token","text":" "}
+{"type":"token","text":"2 4-4\\"}
+{"type":"token","text":"\"/>\\n                </svg>\\n"}
+{"type":"token","text":"              </div>\\n              <h"}
+{"type":"token","text":"3>Chef"}
+{"type":"token","text":"-Driven"}
+{"type":"token","text":"</h3>\\n              <p"}
+{"type":"token","text":">Every dish"}
+{"type":"token","text":" is designed"}
+{"type":"token","text":" by real"}
+{"type":"token","text":" chefs who obs"}
+{"type":"token","text":"ess over flavor"}
+{"type":"token","text":". Plant"}
+{"type":"token","text":"-based doesn"}
+{"type":"token","text":"'t mean boring —"}
+{"type":"token","text":" it means creative"}
+{"type":"token","text":".</p>\\n            </div>\\"}
+{"type":"token","text":"n            <div class=\\\"value-"}
+{"type":"token","text":"item\\\">\\n              <div class"}
+{"type":"token","text":"=\\\"value-icon\\\">\\n                "}
+{"type":"token","text":"<svg fill=\\\"none\\\" viewBox"}
+{"type":"token","text":"=\\\"0 0 24 24"}
+{"type":"token","text":"\\\">\\n                  <path stroke"}
+{"type":"token","text":"=\\\"currentColor\\\" stroke-width=\\\""}
+{"type":"token","text":"2\\\" d=\\\"M21"}
+{"type":"token","text":" 16"}
+{"type":"token","text":"V8a2 2 0"}
+{"type":"token","text":" 00-1"}
+{"type":"token","text":"-1.73l-7-"}
+{"type":"token","text":"4a2 2 0 "}
+{"type":"token","text":"00-2 0l"}
+{"type":"token","text":"-7 4A"}
+{"type":"token","text":"2 2 0 003 "}
+{"type":"token","text":"8v"}
+{"type":"token","text":"8a2 2 0 "}
+{"type":"token","text":"001 1.73l7 "}
+{"type":"token","text":"4a2 2 0 "}
+{"type":"token","text":"002 "}
+{"type":"token","text":"0l7-4A2 "}
+{"type":"token","text":"2 0 0021 16"}
+{"type":"token","text":"z\\\"/>\\n                "}
+{"type":"token","text":"</svg>\\n              </div>\\n"}
+{"type":"token","text":"              <h3>Zero"}
+{"type":"token","text":" Waste"}
+{"type":"token","text":"</h3>\\n              <p"}
+{"type":"token","text":">"}
+{"type":"token","text":"Com"}
+{"type":"token","text":"post"}
+{"type":"token","text":"able packaging, port"}
+{"type":"token","text":"ioned ingredients"}
+{"type":"token","text":", and partnerships"}
+{"type":"token","text":" with local compos"}
+{"type":"token","text":"ting programs. We don't do"}
+{"type":"token","text":" lan"}
+{"type":"token","text":"dfill.</p>\\n            "}
+{"type":"token","text":"</div>\\n          "}
+{"type":"token","text":"</div>\\n        </div>\\"}
+{"type":"token","text":"n      </section>\\n\\n"}
+{"type":"token","text":"      <section class=\\\"c"}
+{"type":"token","text":"ta\\\">\\n        <div class"}
+{"type":"token","text":"=\\\"container reveal"}
+{"type":"token","text":"\\\""}
+{"type":"token","text":">\\n          <h2>Start"}
+{"type":"token","text":" Eating"}
+{"type":"token","text":" Better"}
+{"type":"token","text":"</h2>\\n          <p"}
+{"type":"token","text":">No"}
+{"type":"token","text":" commitment"}
+{"type":"token","text":", cancel"}
+{"type":"token","text":" anytime. Get"}
+{"type":"token","text":" your"}
+{"type":"token","text":" first"}
+{"type":"token","text":" box "}
+{"type":"token","text":"30% off with"}
+{"type":"token","text":" code TR"}
+{"type":"token","text":"YS"}
+{"type":"token","text":"PR0"}
+{"type":"token","text":"UT.</p>\\n          <button"}
+{"type":"token","text":" class=\\\"btn btn-primary\\"}
+{"type":"token","text":"\">Build"}
+{"type":"token","text":" your"}
+{"type":"token","text":" first"}
+{"type":"token","text":" box</button>\\n        </div"}
+{"type":"token","text":">\\n      </section>\\n    "}
+{"type":"token","text":"</div>\\n\\n    <!--"}
+{"type":"token","text":" ABOUT PAGE -->\\n    "}
+{"type":"token","text":"<div id=\\\"about\\\" class=\\\"page"}
+{"type":"token","text":"\\\">\\n      <section class=\\\""}
+{"type":"token","text":"about"}
+{"type":"token","text":"-hero"}
+{"type":"token","text":"\\\">\\n        <div class=\\\""}
+{"type":"token","text":"container reveal"}
+{"type":"token","text":"\\\">\\n          <h"}
+{"type":"token","text":"1>We"}
+{"type":"token","text":"'re"}
+{"type":"token","text":" R"}
+{"type":"token","text":"ethinking"}
+{"type":"token","text":"<br>Plant-Based"}
+{"type":"token","text":"</h1>\\n          <p>"}
+{"type":"token","text":"Spr"}
+{"type":"token","text":"out started"}
+{"type":"token","text":" in"}
+{"type":"token","text":" a"}
+{"type":"token","text":" tiny"}
+{"type":"token","text":" Brooklyn"}
+{"type":"token","text":" kitchen in 2019"}
+{"type":"token","text":" "}
+{"type":"token","text":"when"}
+{"type":"token","text":" our founder,"}
+{"type":"token","text":" a"}
+{"type":"token","text":" professionally"}
+{"type":"token","text":" trained chef, got"}
+{"type":"token","text":" tired"}
+{"type":"token","text":" of bland"}
+{"type":"token","text":" v"}
+{"type":"token","text":"egan take"}
+{"type":"token","text":"out. We knew"}
+{"type":"token","text":" plants"}
+{"type":"token","text":" could do"}
+{"type":"token","text":" better"}
+{"type":"token","text":" — way"}
+{"type":"token","text":" better.</p>\\n        "}
+{"type":"token","text":"</div>\\n      </section>\\"}
+{"type":"token","text":"n\\n      <section class=\\\""}
+{"type":"token","text":"story"}
+{"type":"token","text":"\\\">\\n        <div class=\\\""}
+{"type":"token","text":"container\\\""}
+{"type":"token","text":">\\n          <div class=\\\"story"}
+{"type":"token","text":"-grid"}
+{"type":"token","text":"\\\""}
+{"type":"token","text":">\\n            <div class=\\\"story"}
+{"type":"token","text":"-content"}
+{"type":"token","text":" reveal"}
+{"type":"token","text":"\\\">\\n              <h2>"}
+{"type":"token","text":"Built"}
+{"type":"token","text":" by"}
+{"type":"token","text":" Chefs,"}
+{"type":"token","text":"<br>Not"}
+{"type":"token","text":" Algorithms"}
+{"type":"token","text":"</h2>\\n              <p"}
+{"type":"token","text":">Every dish"}
+{"type":"token","text":" we make"}
+{"type":"token","text":" is designed by real chefs with"}
+{"type":"token","text":" decades"}
+{"type":"token","text":" of cul"}
+{"type":"token","text":"inary training"}
+{"type":"token","text":". We don't optimize"}
+{"type":"token","text":" for scale"}
+{"type":"token","text":" — we optimize for flavor."}
+{"type":"token","text":"</p>\\n              <p>Our"}
+{"type":"token","text":" kitchen"}
+{"type":"token","text":" team"}
+{"type":"token","text":" comes"}
+{"type":"token","text":" from"}
+{"type":"token","text":" Michelin kit"}
+{"type":"token","text":"chens, neighborhood"}
+{"type":"token","text":" bist"}
+{"type":"token","text":"ros, and family"}
+{"type":"token","text":" tables"}
+{"type":"token","text":" around"}
+{"type":"token","text":" the world. We treat"}
+{"type":"token","text":" vegetables"}
+{"type":"token","text":" like the"}
+{"type":"token","text":" stars they are."}
+{"type":"token","text":"</p>\\n              "}
+{"type":"token","text":"<p>We"}
+{"type":"token","text":" cook"}
+{"type":"token","text":" in"}
+{"type":"token","text":" small"}
+{"type":"token","text":" batches, taste"}
+{"type":"token","text":" everything"}
+{"type":"token","text":" ourselves"}
+{"type":"token","text":", and never cut"}
+{"type":"token","text":" corners. If"}
+{"type":"token","text":" we"}
+{"type":"token","text":" wouldn"}
+{"type":"token","text":"'t serve"}
+{"type":"token","text":" it to our own family, it"}
+{"type":"token","text":" doesn"}
+{"type":"token","text":"'t go"}
+{"type":"token","text":" in your"}
+{"type":"token","text":" box.</p>\\n            </div"}
+{"type":"token","text":">\\n            <div class=\\\"story"}
+{"type":"token","text":"-image reveal"}
+{"type":"token","text":"\\\">\\n              <img src=\\\""}
+{"type":"token","text":"data:image/svg+xml,%"}
+{"type":"token","text":"3Csvg width='800'"}
+{"type":"token","text":" height='500' xmlns='http://"}
+{"type":"token","text":"www.w3.org/2"}
+{"type":"token","text":"000/svg'%3E%"}
+{"type":"token","text":"3Crect width='800'"}
+{"type":"token","text":" height='500' fill='%236"}
+{"type":"token","text":"B8E6B'/%3"}
+{"type":"token","text":"E%3Ctext x='"}
+{"type":"token","text":"50%25' y='50%"}
+{"type":"token","text":"25' dominant-baseline='middle'"}
+{"type":"token","text":" text-anchor='middle' font-"}
+{"type":"token","text":"family='sans-serif' font-"}
+{"type":"token","text":"size='20' fill='%23"}
+{"type":"token","text":"FFFFFF'%3EK"}
+{"type":"token","text":"itchen team"}
+{"type":"token","text":" photo"}
+{"type":"token","text":"%3C/text%3E"}
+{"type":"token","text":"%3C/svg%3E"}
+{"type":"token","text":"\\\" alt=\\\""}
+{"type":"token","text":"Spr"}
+{"type":"token","text":"out kitchen team\\\" loading=\\\"lazy\\\""}
+{"type":"token","text":">\\n            </div>\\n          "}
+{"type":"token","text":"</div>\\n        </div>\\"}
+{"type":"token","text":"n      </section>\\n\\n"}
+{"type":"token","text":"      <section class=\\\"values\\\">\\"}
+{"type":"token","text":"n        <div class=\\\"container\\\""}
+{"type":"token","text":">\\n          <h2 class"}
+{"type":"token","text":"=\\\"reveal\\\">Our"}
+{"type":"token","text":" Commit"}
+{"type":"token","text":"ments</h2>\\n          "}
+{"type":"token","text":"<div class=\\\"values-list reveal-"}
+{"type":"token","text":"stagger\\\">\\n            <div"}
+{"type":"token","text":" class=\\\"value-item\\\">\\n"}
+{"type":"token","text":"              <div class=\\\"value-icon"}
+{"type":"token","text":"\\\">\\n                <svg fill=\\\""}
+{"type":"token","text":"none\\\" viewBox=\\\"0 0"}
+{"type":"token","text":" 24 24\\\">\\n                "}
+{"type":"token","text":"  <path stroke=\\\"currentColor\\\""}
+{"type":"token","text":" stroke-width=\\\"2\\\" d=\\\""}
+{"type":"token","text":"M12 22"}
+{"type":"token","text":"s8-4 "}
+{"type":"token","text":"8-10V5l-8"}
+{"type":"token","text":"-3-8 3v7"}
+{"type":"token","text":"c0 6"}
+{"type":"token","text":" 8 10 8 10"}
+{"type":"token","text":"z\\\"/>\\n                "}
+{"type":"token","text":"</svg>\\n              </div>\\n"}
+{"type":"token","text":"              <h3>"}
+{"type":"token","text":"Organic"}
+{"type":"token","text":" First"}
+{"type":"token","text":"</h3>\\n              <p"}
+{"type":"token","text":">Over"}
+{"type":"token","text":" 90% of our produce"}
+{"type":"token","text":" is certified"}
+{"type":"token","text":" organic. When"}
+{"type":"token","text":" it"}
+{"type":"token","text":"'s not, it"}
+{"type":"token","text":"'s from"}
+{"type":"token","text":" a farm we"}
+{"type":"token","text":" know"}
+{"type":"token","text":" personally"}
+{"type":"token","text":".</p>\\n            </div>\\"}
+{"type":"token","text":"n            <div class=\\\"value-"}
+{"type":"token","text":"item\\\">\\n              <div class"}
+{"type":"token","text":"=\\\"value-icon\\\">\\n                "}
+{"type":"token","text":"<svg fill=\\\"none\\\" viewBox"}
+{"type":"token","text":"=\\\"0 0 24 24"}
+{"type":"token","text":"\\\">\\n                  <path stroke"}
+{"type":"token","text":"=\\\"currentColor\\\" stroke-width=\\\""}
+{"type":"token","text":"2\\\" d=\\\"M17"}
+{"type":"token","text":" 21"}
+{"type":"token","text":"v"}
+{"type":"token","text":"-2a4 4 0"}
+{"type":"token","text":" 00-4-4H5"}
+{"type":"token","text":"a4 4 0 00"}
+{"type":"token","text":"-4 4v2\\"}
+{"type":"token","text":"\"/>\\n                  <circle cx"}
+{"type":"token","text":"=\\\"9\\\" cy=\\\"7\\\" r"}
+{"type":"token","text":"=\\\"4\\\""}
+{"type":"token","text":" stroke=\\\"currentColor\\\" stroke-width"}
+{"type":"token","text":"=\\\"2\\\"/>\\n                  "}
+{"type":"token","text":"<path stroke=\\\"currentColor\\\" stroke"}
+{"type":"token","text":"-width=\\\"2\\\" d=\\\"M"}
+{"type":"token","text":"23"}
+{"type":"token","text":" 21v-2a4 "}
+{"type":"token","text":"4 0 00-3-"}
+{"type":"token","text":"3.87"}
+{"type":"token","text":"M"}
+{"type":"token","text":"16 3.13a4 "}
+{"type":"token","text":"4 0 010"}
+{"type":"token","text":" 7.75\\"}
+{"type":"token","text":"\"/>\\n                </svg>\\n"}
+{"type":"token","text":"              </div>\\n              <h"}
+{"type":"token","text":"3>Fair"}
+{"type":"token","text":" Wages"}
+{"type":"token","text":"</h3>\\n              <p"}
+{"type":"token","text":">Everyone"}
+{"type":"token","text":" on"}
+{"type":"token","text":" our team —"}
+{"type":"token","text":" from ch"}
+{"type":"token","text":"efs to drivers"}
+{"type":"token","text":" — makes at least $20"}
+{"type":"token","text":"/"}
+{"type":"token","text":"hour with"}
+{"type":"token","text":" full"}
+{"type":"token","text":" benefits."}
+{"type":"token","text":"</p>\\n            </div>\\n"}
+{"type":"token","text":"            <div class=\\\"value-item"}
+{"type":"token","text":"\\\">\\n              <div class=\\\""}
+{"type":"token","text":"value-icon\\\">\\n                "}
+{"type":"token","text":"<svg fill=\\\"none\\\" viewBox=\\\""}
+{"type":"token","text":"0 0 24 24\\\""}
+{"type":"token","text":">\\n                  <path stroke=\\\""}
+{"type":"token","text":"currentColor\\\" stroke-width=\\\"2"}
+{"type":"token","text":"\\\" d=\\\"M3 9"}
+{"type":"token","text":"l"}
+{"type":"token","text":"9"}
+{"type":"token","text":"-7 9 7v11"}
+{"type":"token","text":"a"}
+{"type":"token","text":"2 2 0 01-"}
+{"type":"token","text":"2 2H5a2 "}
+{"type":"token","text":"2 0 01-2-"}
+{"type":"token","text":"2z\\\"/>\\n                  "}
+{"type":"token","text":"<polyline stroke"}
+{"type":"token","text":"=\\\"currentColor\\\" stroke-width=\\\""}
+{"type":"token","text":"2\\\" points=\\\"9"}
+{"type":"token","text":" "}
+{"type":"token","text":"22"}
+{"type":"token","text":" 9 12 15 12"}
+{"type":"token","text":" 15"}
+{"type":"token","text":" 22\\\"/>\\n                "}
+{"type":"token","text":"</svg>\\n              </div>\\n"}
+{"type":"token","text":"              <h3>Local"}
+{"type":"token","text":" Impact"}
+{"type":"token","text":"</h3>\\n              <p"}
+{"type":"token","text":">We donate surplus"}
+{"type":"token","text":" meals"}
+{"type":"token","text":" to community"}
+{"type":"token","text":" frid"}
+{"type":"token","text":"ges and partner"}
+{"type":"token","text":" with urban"}
+{"type":"token","text":" farms in"}
+{"type":"token","text":" our"}
+{"type":"token","text":" delivery"}
+{"type":"token","text":" zones"}
+{"type":"token","text":".</p>\\n            </div>\\"}
+{"type":"token","text":"n          </div>\\n        "}
+{"type":"token","text":"</div>\\n      </section>\\n"}
+{"type":"token","text":"    "}
+{"type":"token","text":"</div>\\n\\n    <!--"}
+{"type":"token","text":" MENU PAGE -->\\n    "}
+{"type":"token","text":"<div id=\\\"menu\\\" class=\\\"page"}
+{"type":"token","text":"\\\">\\n      <section class=\\\""}
+{"type":"token","text":"menu-hero\\\">\\n        "}
+{"type":"token","text":"<div class=\\\"container reveal"}
+{"type":"token","text":"\\\">\\n          <h1>"}
+{"type":"token","text":"This"}
+{"type":"token","text":" Week's Menu</h1>\\n"}
+{"type":"token","text":"          <p>Chef-designed"}
+{"type":"token","text":" dishes"}
+{"type":"token","text":" rotating every"}
+{"type":"token","text":" Monday."}
+{"type":"token","text":" Filter"}
+{"type":"token","text":" by your"}
+{"type":"token","text":" preferences below"}
+{"type":"token","text":" —"}
+{"type":"token","text":" everything"}
+{"type":"token","text":" is"}
+{"type":"token","text":" "}
+{"type":"token","text":"100"}
+{"type":"token","text":"% plant-based,"}
+{"type":"token","text":" but"}
+{"type":"token","text":" we love"}
+{"type":"token","text":" bold"}
+{"type":"token","text":" flavors and"}
+{"type":"token","text":" global"}
+{"type":"token","text":" inspiration.</p>\\n        </div"}
+{"type":"token","text":">\\n      </section>\\n\\"}
+{"type":"token","text":"n      <div"}
+{"type":"token","text":" class=\\\"menu-filters"}
+{"type":"token","text":"\\\">\\n        <div class=\\\""}
+{"type":"token","text":"container\\\">\\n          <div class"}
+{"type":"token","text":"=\\\"filter-buttons"}
+{"type":"token","text":"\\\""}
+{"type":"token","text":">\\n            <button class=\\\"filter"}
+{"type":"token","text":"-btn active\\\" data-category"}
+{"type":"token","text":"=\\\"all\\\">All</button>\\"}
+{"type":"token","text":"n            <button class=\\\"filter-"}
+{"type":"token","text":"btn\\\" data-category=\\\"bowl\\"}
+{"type":"token","text":"\">"}
+{"type":"token","text":"Bowls</button>\\n            "}
+{"type":"token","text":"<button class=\\\"filter-btn\\\" data"}
+{"type":"token","text":"-category=\\\"pasta"}
+{"type":"token","text":"\\\">Pasta"}
+{"type":"token","text":"</button>\\n            <button class"}
+{"type":"token","text":"=\\\"filter-btn\\\" data-category"}
+{"type":"token","text":"=\\\"taco\\\">Tacos"}
+{"type":"token","text":"</button>\\n            <button class"}
+{"type":"token","text":"=\\\"filter-btn\\\" data-category"}
+{"type":"token","text":"=\\\"soup"}
+{"type":"token","text":"\\\">Soups</button>\\"}
+{"type":"token","text":"n          "}
+{"type":"token","text":"</div>\\n        "}
+{"type":"token","text":"</div>\\n      </div>\\"}
+{"type":"token","text":"n\\n      <section"}
+{"type":"token","text":" class=\\\"menu-full"}
+{"type":"token","text":"\\\">\\n        <div class=\\\""}
+{"type":"token","text":"container\\\""}
+{"type":"token","text":">\\n          <div class=\\\"menu"}
+{"type":"token","text":"-full"}
+{"type":"token","text":"-grid reveal-stagger\\\">\\"}
+{"type":"token","text":"n            <div class=\\\"meal-"}
+{"type":"token","text":"card filt"}
+{"type":"token","text":"erable-"}
+{"type":"token","text":"item"}
+{"type":"token","text":"\\\""}
+{"type":"token","text":" data-category=\\\"bowl\\\">\\n"}
+{"type":"token","text":"              <div class=\\\"meal-image"}
+{"type":"token","text":"\\\">\\n                <img src=\\\""}
+{"type":"token","text":"data:image/svg+xml,%"}
+{"type":"token","text":"3Csvg width='600'"}
+{"type":"token","text":" height='400' xmlns='http://"}
+{"type":"token","text":"www.w3.org/2"}
+{"type":"token","text":"000/svg'%3E%"}
+{"type":"token","text":"3Crect width='600'"}
+{"type":"token","text":" height='400' fill='%238"}
+{"type":"token","text":"FA68F'/%3E%"}
+{"type":"token","text":"3Ctext x='50%"}
+{"type":"token","text":"25' y='50%25'"}
+{"type":"token","text":" dominant-baseline='middle' text-"}
+{"type":"token","text":"anchor='middle' font-family='"}
+{"type":"token","text":"sans-serif' font-size='"}
+{"type":"token","text":"18' fill='%23FFFFFF"}
+{"type":"token","text":"'%3EGolden"}
+{"type":"token","text":" Turmeric Bowl%3C/"}
+{"type":"token","text":"text%3E%3C/"}
+{"type":"token","text":"svg%3E\\\" alt=\\\"Golden"}
+{"type":"token","text":" Turmeric Bowl\\\" loading=\\\""}
+{"type":"token","text":"lazy\\\">\\n              </div>\\"}
+{"type":"token","text":"n              <div class=\\\"meal-"}
+{"type":"token","text":"info\\\">\\n                <span class"}
+{"type":"token","text":"=\\\"meal-category\\\">Bowl"}
+{"type":"token","text":"</span>\\n                <h3>"}
+{"type":"token","text":"Golden Turmeric Bowl</h"}
+{"type":"token","text":"3>\\n                <p>"}
+{"type":"token","text":"Roasted sweet potato, chickpeas"}
+{"type":"token","text":", quinoa, tahini drizz"}
+{"type":"token","text":"le. Anti-inflammatory powerhouse."}
+{"type":"token","text":"</p>\\n              </div>\\n"}
+{"type":"token","text":"            </div>\\n            <div"}
+{"type":"token","text":" class=\\\"meal-card filterable-"}
+{"type":"token","text":"item\\\" data-category=\\\"taco"}
+{"type":"token","text":"\\\">\\n              <div class=\\\""}
+{"type":"token","text":"meal-image\\\">\\n                "}
+{"type":"token","text":"<img src=\\\"data:image/svg"}
+{"type":"token","text":"+xml,%3Csvg width"}
+{"type":"token","text":"='600' height='400' xmlns"}
+{"type":"token","text":"='http://www.w3."}
+{"type":"token","text":"org/2000/svg'%"}
+{"type":"token","text":"3E%3Crect width"}
+{"type":"token","text":"='600' height='400' fill"}
+{"type":"token","text":"='%236"}
+{"type":"token","text":"B8E6B'/%3"}
+{"type":"token","text":"E%3Ctext x='"}
+{"type":"token","text":"50%25' y='50%"}
+{"type":"token","text":"25' dominant-baseline='middle'"}
+{"type":"token","text":" text-anchor='middle' font-"}
+{"type":"token","text":"family='sans-serif' font-"}
+{"type":"token","text":"size='18' fill='%23"}
+{"type":"token","text":"FFFFFF'%3ESmoked"}
+{"type":"token","text":" Mushroom Tacos%3"}
+{"type":"token","text":"C/text%3E%3"}
+{"type":"token","text":"C/svg%3E\\\" alt"}
+{"type":"token","text":"=\\\"Smoked Mushroom"}
+{"type":"token","text":" Tacos\\\" loading=\\\"lazy\\\">\\"}
+{"type":"token","text":"n              </div>\\n              "}
+{"type":"token","text":"<div class=\\\"meal-info\\\">\\"}
+{"type":"token","text":"n                <span class=\\\"meal-"}
+{"type":"token","text":"category\\\">Taco</span"}
+{"type":"token","text":">\\n                <h3>"}
+{"type":"token","text":"Smoked Mushroom Tacos"}
+{"type":"token","text":"</h3>\\n                <p"}
+{"type":"token","text":">Chipotle oyster mush"}
+{"type":"token","text":"rooms, pickled jalapeños,"}
+{"type":"token","text":" cilantro lime slaw. Bold"}
+{"type":"token","text":" and smoky.</p>\\n              "}
+{"type":"token","text":"</div>\\n            </div>\\"}
+{"type":"token","text":"n            <div class=\\\"meal-"}
+{"type":"token","text":"card filterable-item\\\" data-"}
+{"type":"token","text":"category=\\\"pasta\\\">\\n              "}
+{"type":"token","text":"<div class=\\\"meal-image\\\">\\"}
+{"type":"token","text":"n                <img src=\\\"data:"}
+{"type":"token","text":"image/svg+xml,%3"}
+{"type":"token","text":"Csvg width='600' height='"}
+{"type":"token","text":"400' xmlns='http://www."}
+{"type":"token","text":"w3.org/2000/"}
+{"type":"token","text":"svg'%3E%3"}
+{"type":"token","text":"Crect width='600' height='"}
+{"type":"token","text":"400' fill='%23A8"}
+{"type":"token","text":"BEA8'/%3E"}
+{"type":"token","text":"%3Ctext x='50"}
+{"type":"token","text":"%25' y='50%25"}
+{"type":"token","text":"' dominant-baseline='middle' text"}
+{"type":"token","text":"-anchor='middle' font-family"}
+{"type":"token","text":"='sans-serif' font-size"}
+{"type":"token","text":"='18' fill='%23"}
+{"type":"token","text":"FFFFFF'%3EGreen"}
+{"type":"token","text":" Goddess Pasta%3C/text"}
+{"type":"token","text":"%3E%3C/svg"}
+{"type":"token","text":"%3E\\\" alt=\\\"Green"}
+{"type":"token","text":" Goddess Pasta\\\" loading=\\\"lazy\\\""}
+{"type":"token","text":">\\n              </div>\\n              "}
+{"type":"token","text":"<div class=\\\"meal-info\\\""}
+{"type":"token","text":">\\n                <span class=\\\"meal"}
+{"type":"token","text":"-category\\\">Pasta</span"}
+{"type":"token","text":">\\n                <h3>Green"}
+{"type":"token","text":" Goddess Pasta</h3>\\"}
+{"type":"token","text":"n                <p>Creamy"}
+{"type":"token","text":" herb sauce, snap peas, to"}
+{"type":"token","text":"asted pine nuts. Indulgent"}
+{"type":"token","text":" comfort, zero dairy.</p>\\n"}
+{"type":"token","text":"              </div>\\n            </div"}
+{"type":"token","text":">\\n            <div class=\\\"meal"}
+{"type":"token","text":"-card filterable-item\\\" data"}
+{"type":"token","text":"-category=\\\"bowl"}
+{"type":"token","text":"\\\">\\n              <div class=\\\""}
+{"type":"token","text":"meal-image\\\">\\n                "}
+{"type":"token","text":"<img src=\\\"data:image/svg"}
+{"type":"token","text":"+xml,%3Csvg width"}
+{"type":"token","text":"='600' height='400' xmlns"}
+{"type":"token","text":"='http://www.w3."}
+{"type":"token","text":"org/2000/svg'%"}
+{"type":"token","text":"3E%3Crect width"}
+{"type":"token","text":"='600' height='400' fill"}
+{"type":"token","text":"='%234"}
+{"type":"token","text":"A6B4A'/%3"}
+{"type":"token","text":"E%3Ctext x='"}
+{"type":"token","text":"50%25' y='50%"}
+{"type":"token","text":"25' dominant-baseline='middle'"}
+{"type":"token","text":" text-anchor='middle' font-"}
+{"type":"token","text":"family='sans-serif' font-"}
+{"type":"token","text":"size='18' fill='%23"}
+{"type":"token","text":"FFFFFF'%3EBur"}
+{"type":"token","text":"rito Bowl%3C/text%"}
+{"type":"token","text":"3E%3C/svg%"}
+{"type":"token","text":"3E\\\" alt=\\\"Loaded"}
+{"type":"token","text":" Burrito Bowl\\\" loading=\\\"lazy\\\""}
+{"type":"token","text":">\\n              </div>\\n              "}
+{"type":"token","text":"<div class=\\\"meal-info\\\""}
+{"type":"token","text":">\\n                <span class=\\\"meal"}
+{"type":"token","text":"-category\\\">Bowl</span>\\"}
+{"type":"token","text":"n                <h3>Loaded"}
+{"type":"token","text":" Burrito Bowl</h3>\\"}
+{"type":"token","text":"n                <p>Black beans,"}
+{"type":"token","text":" roasted corn, guacamole"}
+{"type":"token","text":", salsa verde. A crowd favorite"}
+{"type":"token","text":" every week.</p>\\n              "}
+{"type":"token","text":"</div>\\n            </div>\\n"}
+{"type":"token","text":"            "}
+{"type":"token","text":"<div class=\\\"meal-card filt"}
+{"type":"token","text":"erable-item\\\" data-category=\\\""}
+{"type":"token","text":"soup\\\">\\n              <div class"}
+{"type":"token","text":"=\\\"meal-image\\\">\\n                "}
+{"type":"token","text":"<img src=\\\"data:image/"}
+{"type":"token","text":"svg+xml,%3Csvg"}
+{"type":"token","text":" width='600' height='400'"}
+{"type":"token","text":" xmlns='http://www.w3"}
+{"type":"token","text":".org/2000/svg'"}
+{"type":"token","text":"%3E%3Crect"}
+{"type":"token","text":" width='600' height='400'"}
+{"type":"token","text":" fill='%236"}
+{"type":"token","text":"B8E6B'/%3"}
+{"type":"token","text":"E%3Ctext x='"}
+{"type":"token","text":"50%25' y='50%"}
+{"type":"token","text":"25' dominant-baseline='middle'"}
+{"type":"token","text":" text-anchor='middle' font-"}
+{"type":"token","text":"family='sans-serif' font-"}
+{"type":"token","text":"size='18' fill='%23"}
+{"type":"token","text":"FFFFFF'%3ET"}
+{"type":"token","text":"hai"}
+{"type":"token","text":" Cocon"}
+{"type":"token","text":"ut Soup%3C/text"}
+{"type":"token","text":"%3E%3C/svg"}
+{"type":"token","text":"%3E\\\" alt=\\\"Thai"}
+{"type":"token","text":" Coconut Soup\\\" loading=\\\""}
+{"type":"token","text":"lazy\\\">\\n              </div>\\"}
+{"type":"token","text":"n              <div class=\\\"meal-"}
+{"type":"token","text":"info\\\">\\n                <span class"}
+{"type":"token","text":"=\\\"meal-category\\\">Soup"}
+{"type":"token","text":"</span>\\n                <h3"}
+{"type":"token","text":">Thai Coconut Soup"}
+{"type":"token","text":"</h3>\\n                <p>"}
+{"type":"token","text":"L"}
+{"type":"token","text":"emongrass, g"}
+{"type":"token","text":"inger, rice"}
+{"type":"token","text":" noodles, "}
+{"type":"token","text":"bok"}
+{"type":"token","text":" choy. Warming"}
+{"type":"token","text":" and frag"}
+{"type":"token","text":"rant.</p>\\n              </div"}
+{"type":"token","text":">\\n            </div>\\n            "}
+{"type":"token","text":"<div class=\\\"meal-card filt"}
+{"type":"token","text":"erable-item\\\" data-category=\\\""}
+{"type":"token","text":"pasta"}
+{"type":"token","text":"\\\">\\n              <div class=\\\""}
+{"type":"token","text":"meal-image\\\">\\n                "}
+{"type":"token","text":"<img src=\\\"data:image/svg"}
+{"type":"token","text":"+xml,%3Csvg width"}
+{"type":"token","text":"='600' height='400' xmlns"}
+{"type":"token","text":"='http://www.w3."}
+{"type":"token","text":"org/2000/svg'%"}
+{"type":"token","text":"3E%3Crect width"}
+{"type":"token","text":"='600' height='400' fill"}
+{"type":"token","text":"='%238"}
+{"type":"token","text":"FA68F'/%3E%"}
+{"type":"token","text":"3Ctext x='50%"}
+{"type":"token","text":"25' y='50%25'"}
+{"type":"token","text":" dominant-baseline='middle' text-"}
+{"type":"token","text":"anchor='middle' font-family='"}
+{"type":"token","text":"sans-serif' font-size='"}
+{"type":"token","text":"18' fill='%23FFFFFF"}
+{"type":"token","text":"'%3ES"}
+{"type":"token","text":"un"}
+{"type":"token","text":"-Dried Tomato P"}
+{"type":"token","text":"enne"}
+{"type":"token","text":"%3C/text%3E"}
+{"type":"token","text":"%3C/svg%3E"}
+{"type":"token","text":"\\\" alt=\\\"Sun-Dried"}
+{"type":"token","text":" Tomato Penne\\\" loading=\\\""}
+{"type":"token","text":"lazy\\\">\\n              </div>\\"}
+{"type":"token","text":"n              <div class=\\\"meal-"}
+{"type":"token","text":"info\\\">\\n                <span class"}
+{"type":"token","text":"=\\\"meal-category\\\">Pasta"}
+{"type":"token","text":"</span>\\n                <h3"}
+{"type":"token","text":">Sun-Dried Tomato"}
+{"type":"token","text":" Penne</h3>\\n"}
+{"type":"token","text":"                <p>Cash"}
+{"type":"token","text":"ew cream, bas"}
+{"type":"token","text":"il, gar"}
+{"type":"token","text":"lic, ar"}
+{"type":"token","text":"ugula. Italian"}
+{"type":"token","text":" comfort,"}
+{"type":"token","text":" plant"}
+{"type":"token","text":"-based.</p>\\n              "}
+{"type":"token","text":"</div>\\n            </div>\\n"}
+{"type":"token","text":"          </div>\\n        </div"}
+{"type":"token","text":">\\n      </section>\\n    "}
+{"type":"token","text":"</div>\\n\\n    <!--"}
+{"type":"token","text":" CONTACT"}
+{"type":"token","text":" PAGE -->\\n    <div id"}
+{"type":"token","text":"=\\\"contact\\\" class=\\\"page\\\">\\"}
+{"type":"token","text":"n      <section class=\\\"contact-"}
+{"type":"token","text":"hero\\\">\\n        <div class"}
+{"type":"token","text":"=\\\"container reveal\\\">\\n          "}
+{"type":"token","text":"<h1>Let"}
+{"type":"token","text":"'s Talk"}
+{"type":"token","text":"</h1>\\n          <p>"}
+{"type":"token","text":"Questions"}
+{"type":"token","text":" about"}
+{"type":"token","text":" our menu, delivery"}
+{"type":"token","text":" zones"}
+{"type":"token","text":", or custom"}
+{"type":"token","text":" orders for"}
+{"type":"token","text":" events"}
+{"type":"token","text":"? We're"}
+{"type":"token","text":" here to help."}
+{"type":"token","text":"</p>\\n        </div>\\n"}
+{"type":"token","text":"      </section>\\n\\n      "}
+{"type":"token","text":"<section class=\\\"contact-grid"}
+{"type":"token","text":"\\\">\\n        <div class=\\\""}
+{"type":"token","text":"container\\\">\\n          <div class"}
+{"type":"token","text":"=\\\"contact-content\\\""}
+{"type":"token","text":">\\n            <div"}
+{"type":"token","text":" class=\\\"contact-info reveal"}
+{"type":"token","text":"\\\">\\n              <h2>"}
+{"type":"token","text":"Reach"}
+{"type":"token","text":" Us"}
+{"type":"token","text":"</h2>\\n              <div"}
+{"type":"token","text":" class=\\\"info"}
+{"type":"token","text":"-item\\\">\\n                <h"}
+{"type":"token","text":"3>Email"}
+{"type":"token","text":"</h3>\\n                <p"}
+{"type":"token","text":">["}
+{"type":"token","text":"Your Email"}
+{"type":"token","text":"]</p>\\n              </div"}
+{"type":"token","text":">\\n              <div class=\\\"info"}
+{"type":"token","text":"-item\\\">\\n                <h"}
+{"type":"token","text":"3>Phone</h3>\\n"}
+{"type":"token","text":"                <p>["}
+{"type":"token","text":"Your Phone]</p>\\n              "}
+{"type":"token","text":"</div>\\n              <div class"}
+{"type":"token","text":"=\\\"info-item\\\">\\n                "}
+{"type":"token","text":"<h3>Hours</h3"}
+{"type":"token","text":">\\n                <p>Monday"}
+{"type":"token","text":"-Friday: 8"}
+{"type":"token","text":"am"}
+{"type":"token","text":"-6"}
+{"type":"token","text":"pm<br>Saturday: 9"}
+{"type":"token","text":"am-4pm<br>Sunday"}
+{"type":"token","text":": Closed</p>\\n              "}
+{"type":"token","text":"</div>\\n              <div class"}
+{"type":"token","text":"=\\\"info-item\\\">\\n                "}
+{"type":"token","text":"<h3>Delivery"}
+{"type":"token","text":" Zones</h3>\\n                "}
+{"type":"token","text":"<p>Currently"}
+{"type":"token","text":" serving"}
+{"type":"token","text":" Brooklyn"}
+{"type":"token","text":", Manhattan"}
+{"type":"token","text":", and"}
+{"type":"token","text":" parts"}
+{"type":"token","text":" of Queens. Check"}
+{"type":"token","text":" your"}
+{"type":"token","text":" zip"}
+{"type":"token","text":" at"}
+{"type":"token","text":" checkout"}
+{"type":"token","text":".</p>\\n              </div>\\"}
+{"type":"token","text":"n            </div>\\n\\"}
+{"type":"token","text":"n            <form"}
+{"type":"token","text":" class=\\\"contact-form reveal\\\""}
+{"type":"token","text":" id=\\\"contactForm\\\">\\n              "}
+{"type":"token","text":"<div class=\\\"form-group\\\""}
+{"type":"token","text":">\\n                <label"}
+{"type":"token","text":" for=\\\"name\\\">Name</label"}
+{"type":"token","text":">\\n                <input type=\\\"text"}
+{"type":"token","text":"\\\" id=\\\"name\\\" name=\\\"name"}
+{"type":"token","text":"\\\" required>\\n              </div>\\"}
+{"type":"token","text":"n              <div class=\\\"form-"}
+{"type":"token","text":"group\\\">\\n                <label for"}
+{"type":"token","text":"=\\\"email\\\">Email</label>\\"}
+{"type":"token","text":"n                <input type=\\\"email\\\""}
+{"type":"token","text":" id=\\\"email\\\" name=\\\"email\\\""}
+{"type":"token","text":" required>\\n              </div>\\n"}
+{"type":"token","text":"              <div class=\\\"form-group"}
+{"type":"token","text":"\\\">\\n                <label for=\\\""}
+{"type":"token","text":"subject"}
+{"type":"token","text":"\\\">Subject</label>\\n                "}
+{"type":"token","text":"<select"}
+{"type":"token","text":" id=\\\"subject\\\" name=\\\"subject\\\""}
+{"type":"token","text":" required>\\n                  <option value"}
+{"type":"token","text":"=\\\"\\\">Select a topic"}
+{"type":"token","text":"</option>\\n                  <option value"}
+{"type":"token","text":"=\\\"delivery"}
+{"type":"token","text":"\\\">Delivery Question"}
+{"type":"token","text":"</option>\\n                  <option"}
+{"type":"token","text":" value=\\\"menu\\\">Menu"}
+{"type":"token","text":" Inquiry</option>\\n                  "}
+{"type":"token","text":"<option value=\\\"ca"}
+{"type":"token","text":"tering\\\">Catering/"}
+{"type":"token","text":"Events"}
+{"type":"token","text":"</option>\\n                  <option"}
+{"type":"token","text":" value=\\\"feedback"}
+{"type":"token","text":"\\\">Feedback</option>\\n"}
+{"type":"token","text":"                  "}
+{"type":"token","text":"<option value=\\\"other\\\">Other"}
+{"type":"token","text":"</option>\\n                </select>\\"}
+{"type":"token","text":"n              </div>\\n              "}
+{"type":"token","text":"<div class=\\\"form-group\\\">\\"}
+{"type":"token","text":"n                <label for=\\\"message\\"}
+{"type":"token","text":"\">Message</label>\\n                "}
+{"type":"token","text":"<textarea id=\\\"message\\\" name=\\\"message"}
+{"type":"token","text":"\\\" required"}
+{"type":"token","text":"></textarea>\\n              </div>\\"}
+{"type":"token","text":"n              <button type=\\\"submit\\\""}
+{"type":"token","text":" class=\\\"btn"}
+{"type":"token","text":" btn-primary\\\">Send Message"}
+{"type":"token","text":"</button>\\n              "}
+{"type":"token","text":"<div"}
+{"type":"token","text":" class"}
+{"type":"token","text":"=\\\"form-success"}
+{"type":"token","text":"\\\" id=\\\"formSuccess\\\">\\n"}
+{"type":"token","text":"                Thanks"}
+{"type":"token","text":"!"}
+{"type":"token","text":" We'll get back to you within"}
+{"type":"token","text":" 24 hours.\\n              "}
+{"type":"token","text":"</div>\\n            </form>\\n"}
+{"type":"token","text":"          </div>\\n        </div"}
+{"type":"token","text":">\\n      </section>\\n    "}
+{"type":"token","text":"</div>\\n  "}
+{"type":"token","text":"</main>\\n\\n  "}
+{"type":"token","text":"<footer>\\n    <div class=\\\""}
+{"type":"token","text":"container\\\">\\n      <div"}
+{"type":"token","text":" class=\\\"footer-grid"}
+{"type":"token","text":"\\\">\\n        <div class=\\\""}
+{"type":"token","text":"footer-brand"}
+{"type":"token","text":"\\\""}
+{"type":"token","text":">\\n          <h3>"}
+{"type":"token","text":"SPROUT</h3>\\n          "}
+{"type":"token","text":"<p>Chef"}
+{"type":"token","text":"-craf"}
+{"type":"token","text":"ted,"}
+{"type":"token","text":" plant-based"}
+{"type":"token","text":" meals delivered"}
+{"type":"token","text":" fresh"}
+{"type":"token","text":" to your door. Bold"}
+{"type":"token","text":" flavors, real"}
+{"type":"token","text":" ingredients,"}
+{"type":"token","text":" zero"}
+{"type":"token","text":" compromise"}
+{"type":"token","text":".</p>\\n          "}
+{"type":"token","text":"<div class=\\\"social-links\\\""}
+{"type":"token","text":">\\n            <a href=\\\"#"}
+{"type":"token","text":"\\\" aria"}
+{"type":"token","text":"-label=\\\"Instagram"}
+{"type":"token","text":"\\\""}
+{"type":"token","text":">\\n              <svg view"}
+{"type":"token","text":"Box=\\\"0 0 24 "}
+{"type":"token","text":"24\\\""}
+{"type":"token","text":">\\n                <rect"}
+{"type":"token","text":" x=\\\"2\\\" y=\\\"2"}
+{"type":"token","text":"\\\" width=\\\"20\\\" height=\\\"20"}
+{"type":"token","text":"\\\" rx"}
+{"type":"token","text":"=\\\"5\\\""}
+{"type":"token","text":" "}
+{"type":"token","text":"ry=\\\"5\\"}
+{"type":"token","text":"\"/>\\n                <path d=\\\""}
+{"type":"token","text":"M16"}
+{"type":"token","text":" 11.37A"}
+{"type":"token","text":"4 4 0 1 "}
+{"type":"token","text":"1 12.63 8 "}
+{"type":"token","text":"4 4 0 0 "}
+{"type":"token","text":"1"}
+{"type":"token","text":" 16 11.37z\\"}
+{"type":"token","text":"\"/>\\n                <line x1"}
+{"type":"token","text":"=\\\"17"}
+{"type":"token","text":".5\\\" y1=\\\"6."}
+{"type":"token","text":"5\\\" x2=\\\"17.51"}
+{"type":"token","text":"\\\" y2=\\\"6.5\\"}
+{"type":"token","text":"\"/>\\n              </svg>\\n"}
+{"type":"token","text":"            </a>\\n            "}
+{"type":"token","text":"<a href=\\\"#\\\" aria-label=\\\""}
+{"type":"token","text":"Facebook"}
+{"type":"token","text":"\\\">\\n              <svg viewBox"}
+{"type":"token","text":"=\\\"0 0 24 24"}
+{"type":"token","text":"\\\">\\n                <path"}
+{"type":"token","text":" d=\\\"M18"}
+{"type":"token","text":" "}
+{"type":"token","text":"2h-3a5 5"}
+{"type":"token","text":" 0 0 0-5"}
+{"type":"token","text":" 5v3"}
+{"type":"token","text":"H7v4"}
+{"type":"token","text":"h3v8h4v-"}
+{"type":"token","text":"8h3l"}
+{"type":"token","text":"1-4h-4V7"}
+{"type":"token","text":"a1 1 0 0"}
+{"type":"token","text":" 1 1-1h3"}
+{"type":"token","text":"z\\\"/>\\n              </svg"}
+{"type":"token","text":">\\n            </a>\\n            "}
+{"type":"token","text":"<a href=\\\"#\\\" aria-"}
+{"type":"token","text":"label=\\\"Twitter\\\">\\n              "}
+{"type":"token","text":"<svg viewBox=\\\"0 0 "}
+{"type":"token","text":"24 24\\\">\\n                "}
+{"type":"token","text":"<path d=\\\"M23"}
+{"type":"token","text":" 3a10.9 10"}
+{"type":"token","text":".9 0 0 1"}
+{"type":"token","text":"-3.14 1.53"}
+{"type":"token","text":" 4.48 4.48"}
+{"type":"token","text":" 0 0 0-7"}
+{"type":"token","text":".86 3v1A10"}
+{"type":"token","text":".66 10.66 0"}
+{"type":"token","text":" 0 1 3 4"}
+{"type":"token","text":"s-4 9 5 "}
+{"type":"token","text":"13"}
+{"type":"token","text":"a11.64 11.64"}
+{"type":"token","text":" 0 0 1-7"}
+{"type":"token","text":" 2c9 5 20"}
+{"type":"token","text":" 0 20-11.5"}
+{"type":"token","text":"a4.5 4.5"}
+{"type":"token","text":" 0 0 0-.08"}
+{"type":"token","text":"-.83A7.72 7"}
+{"type":"token","text":".72 0 0 0"}
+{"type":"token","text":" 23 3z\\\"/>\\"}
+{"type":"token","text":"n              </svg>\\n            "}
+{"type":"token","text":"</a>\\n          "}
+{"type":"token","text":"</div>\\n        </div>\\"}
+{"type":"token","text":"n        <div class=\\\"footer-"}
+{"type":"token","text":"section"}
+{"type":"token","text":"\\\">\\n          <h4>"}
+{"type":"token","text":"Menu"}
+{"type":"token","text":"</h4>\\n          <ul"}
+{"type":"token","text":">\\n            <li><a href"}
+{"type":"token","text":"=\\\"#menu"}
+{"type":"token","text":"\\\""}
+{"type":"token","text":" onclick"}
+{"type":"token","text":"=\\\"showPage"}
+{"type":"token","text":"('menu')\\\">This"}
+{"type":"token","text":" Week"}
+{"type":"token","text":"</a></li>\\n            <li"}
+{"type":"token","text":"><a href=\\\"#menu"}
+{"type":"token","text":"\\\" onclick=\\\"showPage('menu'"}
+{"type":"token","text":")\\\">Bow"}
+{"type":"token","text":"ls</a></li>\\n            "}
+{"type":"token","text":"<li><a href=\\\"#menu"}
+{"type":"token","text":"\\\" onclick=\\\"showPage('menu'"}
+{"type":"token","text":")\\\">Pasta</a></li"}
+{"type":"token","text":">\\n            <li><a href"}
+{"type":"token","text":"=\\\"#menu\\\" onclick=\\\"showPage"}
+{"type":"token","text":"('menu')\\\">Ta"}
+{"type":"token","text":"cos</a></li>\\n          "}
+{"type":"token","text":"</ul>\\n        </div>\\"}
+{"type":"token","text":"n        <div class=\\\"footer-"}
+{"type":"token","text":"section\\\">\\n          <h4"}
+{"type":"token","text":">Company"}
+{"type":"token","text":"</h4>\\n          <ul"}
+{"type":"token","text":">\\n            <li><a href"}
+{"type":"token","text":"=\\\"#about\\\" onclick=\\\"showPage"}
+{"type":"token","text":"('about')\\\">About Us"}
+{"type":"token","text":"</a></li>\\n            "}
+{"type":"token","text":"<li><a href=\\\"#\\"}
+{"type":"token","text":"\">Our Ch"}
+{"type":"token","text":"efs</a></li>\\n            "}
+{"type":"token","text":"<li><a href=\\\"#\\"}
+{"type":"token","text":"\">Sustainability"}
+{"type":"token","text":"</a></li>\\n            "}
+{"type":"token","text":"<li><a href=\\\"#contact"}
+{"type":"token","text":"\\\" onclick=\\\"showPage('contact'"}
+{"type":"token","text":")\\\">Contact</a></li>\\"}
+{"type":"token","text":"n          "}
+{"type":"done","response":{"message":"```json\n{\n  \"message\": \"Built you a clean, editorial-style site with an unexpected dark hero moment. Went with a warm sage and cream palette — modern but grounded, like the food itself.\",\n  \"pills\": [\"Love it, keep going\", \"Try a different direction\", \"Show me style options\"],\n  \"html\": \"<!DOCTYPE html>\\n<html lang=\\\"en\\\" data-theme=\\\"light\\\">\\n<head>\\n  <meta charset=\\\"UTF-8\\\">\\n  <meta name=\\\"viewport\\\" content=\\\"width=device-width, initial-scale=1.0\\\">\\n  <title>Sprout — Fresh Plant-Based Meals Delivered</title>\\n  <meta name=\\\"description\\\" content=\\\"Sprout delivers chef-crafted, plant-based meals to your door. Real ingredients, bold flavors, zero compromise.\\\">\\n  <meta property=\\\"og:title\\\" content=\\\"Sprout — Fresh Plant-Based Meals Delivered\\\">\\n  <meta property=\\\"og:description\\\" content=\\\"Chef-crafted, plant-based meals delivered fresh to your door.\\\">\\n  <link rel=\\\"preconnect\\\" href=\\\"https://fonts.googleapis.com\\\">\\n  <link rel=\\\"preconnect\\\" href=\\\"https://fonts.gstatic.com\\\" crossorigin>\\n  <link href=\\\"https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700&family=Plus+Jakarta+Sans:wght@300;400;500&display=swap\\\" rel=\\\"stylesheet\\\">\\n  <style>\\n    :root {\\n      --space-1: 4px; --space-2: 8px; --space-3: 12px; --space-4: 16px;\\n      --space-5: 20px; --space-6: 24px; --space-8: 32px; --space-10: 40px;\\n      --space-12: 48px; --space-16: 64px; --space-20: 80px; --space-24: 96px; --space-32: 128px;\\n      \\n      --text-xs: clamp(0.75rem, 0.7rem + 0.25vw, 0.875rem);\\n      --text-sm: clamp(0.875rem, 0.8rem + 0.35vw, 1rem);\\n      --text-base: clamp(1rem, 0.9rem + 0.5vw, 1.125rem);\\n      --text-lg: clamp(1.125rem, 1rem + 0.6vw, 1.25rem);\\n      --text-xl: clamp(1.25rem, 1rem + 1vw, 1.5rem);\\n      --text-2xl: clamp(1.5rem, 1.2rem + 1.5vw, 2rem);\\n      --text-3xl: clamp(1.875rem, 1.4rem + 2.3vw, 2.5rem);\\n      --text-4xl: clamp(2.25rem, 1.5rem + 3.5vw, 3.5rem);\\n      --text-5xl: clamp(3rem, 2rem + 5vw, 5rem);\\n      \\n      --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);\\n      --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -2px rgba(0,0,0,0.1);\\n      --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -4px rgba(0,0,0,0.1);\\n      --shadow-xl: 0 20px 25px -5px rgba(0,0,0,0.1), 0 8px 10px -6px rgba(0,0,0,0.1);\\n      \\n      --radius-sm: 6px; --radius-md: 8px; --radius-lg: 12px; --radius-xl: 16px;\\n      \\n      --ease-out: cubic-bezier(0,0,0.2,1);\\n      --ease-in: cubic-bezier(0.4,0,1,1);\\n      --ease-in-out: cubic-bezier(0.4,0,0.2,1);\\n      --ease-bounce: cubic-bezier(0.34,1.56,0.64,1);\\n    }\\n\\n    [data-theme=\\\"light\\\"] {\\n      --bg: #FFFFFF;\\n      --bg-alt: #FAF9F7;\\n      --bg-accent: #F0F4F0;\\n      --surface: #FFFFFF;\\n      --text: #18181B;\\n      --text-muted: #52525B;\\n      --border: rgba(0,0,0,0.1);\\n      --accent: #6B8E6B;\\n      --accent-dark: #4A6B4A;\\n      --sage: #6B8E6B;\\n      --cream: #FAF9F7;\\n      --olive: #8FA68F;\\n    }\\n\\n    [data-theme=\\\"dark\\\"] {\\n      --bg: #0D0D0D;\\n      --bg-alt: #18181B;\\n      --bg-accent: #1C2520;\\n      --surface: #1C1C1E;\\n      --text: #FAFAFA;\\n      --text-muted: #A1A1AA;\\n      --border: rgba(255,255,255,0.1);\\n      --accent: #8FA68F;\\n      --accent-dark: #6B8E6B;\\n      --sage: #8FA68F;\\n      --cream: #27272A;\\n      --olive: #A8BEA8;\\n    }\\n\\n    * {\\n      margin: 0;\\n      padding: 0;\\n      box-sizing: border-box;\\n    }\\n\\n    body {\\n      font-family: 'Plus Jakarta Sans', sans-serif;\\n      font-weight: 400;\\n      line-height: 1.6;\\n      color: var(--text);\\n      background: var(--bg);\\n      overflow-x: hidden;\\n      transition: background 0.3s var(--ease-out), color 0.3s var(--ease-out);\\n    }\\n\\n    .skip-link {\\n      position: absolute;\\n      top: -40px;\\n      left: 0;\\n      background: var(--accent);\\n      color: white;\\n      padding: 8px;\\n      text-decoration: none;\\n      z-index: 100;\\n    }\\n\\n    .skip-link:focus {\\n      top: 0;\\n    }\\n\\n    nav {\\n      position: fixed;\\n      top: 0;\\n      left: 0;\\n      right: 0;\\n      z-index: 50;\\n      background: rgba(255, 255, 255, 0.9);\\n      backdrop-filter: blur(12px);\\n      -webkit-backdrop-filter: blur(12px);\\n      border-bottom: 1px solid var(--border);\\n      transition: background 0.3s var(--ease-out);\\n    }\\n\\n    [data-theme=\\\"dark\\\"] nav {\\n      background: rgba(13, 13, 13, 0.9);\\n    }\\n\\n    nav .container {\\n      display: flex;\\n      justify-content: space-between;\\n      align-items: center;\\n      padding: var(--space-4) clamp(16px, 5vw, 64px);\\n      max-width: 1400px;\\n      margin: 0 auto;\\n    }\\n\\n    .logo {\\n      font-family: 'Syne', sans-serif;\\n      font-weight: 700;\\n      font-size: var(--text-xl);\\n      color: var(--accent);\\n      text-decoration: none;\\n      letter-spacing: -0.02em;\\n    }\\n\\n    .nav-links {\\n      display: flex;\\n      gap: var(--space-8);\\n      list-style: none;\\n      align-items: center;\\n    }\\n\\n    .nav-links a {\\n      text-decoration: none;\\n      color: var(--text);\\n      font-size: var(--text-sm);\\n      font-weight: 500;\\n      transition: color 0.2s var(--ease-out);\\n      text-transform: uppercase;\\n      letter-spacing: 0.05em;\\n    }\\n\\n    .nav-links a:hover,\\n    .nav-links a.active {\\n      color: var(--accent);\\n    }\\n\\n    .theme-toggle {\\n      background: none;\\n      border: none;\\n      cursor: pointer;\\n      width: 36px;\\n      height: 36px;\\n      display: flex;\\n      align-items: center;\\n      justify-content: center;\\n      border-radius: 50%;\\n      transition: background 0.2s var(--ease-out);\\n    }\\n\\n    .theme-toggle:hover {\\n      background: var(--bg-alt);\\n    }\\n\\n    .theme-toggle svg {\\n      width: 20px;\\n      height: 20px;\\n      stroke: var(--text);\\n    }\\n\\n    .menu-toggle {\\n      display: none;\\n      background: none;\\n      border: none;\\n      cursor: pointer;\\n      padding: var(--space-2);\\n    }\\n\\n    .menu-toggle span {\\n      display: block;\\n      width: 24px;\\n      height: 2px;\\n      background: var(--text);\\n      margin: 5px 0;\\n      transition: 0.3s;\\n    }\\n\\n    @media (max-width: 768px) {\\n      .nav-links {\\n        position: fixed;\\n        top: 0;\\n        right: -100%;\\n        width: 70%;\\n        max-width: 300px;\\n        height: 100vh;\\n        background: var(--surface);\\n        flex-direction: column;\\n        padding: var(--space-24) var(--space-8);\\n        gap: var(--space-6);\\n        box-shadow: -2px 0 10px rgba(0,0,0,0.1);\\n        transition: right 0.3s var(--ease-out);\\n        align-items: flex-start;\\n      }\\n\\n      .nav-links.open {\\n        right: 0;\\n      }\\n\\n      .menu-toggle {\\n        display: block;\\n        z-index: 60;\\n      }\\n    }\\n\\n    .container {\\n      max-width: 1280px;\\n      margin: 0 auto;\\n      padding: 0 clamp(16px, 5vw, 64px);\\n    }\\n\\n    .page {\\n      display: none;\\n      opacity: 0;\\n      transition: opacity 0.3s var(--ease-out);\\n    }\\n\\n    .page.active {\\n      display: block;\\n      opacity: 1;\\n    }\\n\\n    main {\\n      padding-top: 72px;\\n    }\\n\\n    .reveal {\\n      opacity: 0;\\n      transform: translateY(30px);\\n      transition: opacity 0.6s var(--ease-out), transform 0.6s var(--ease-out);\\n    }\\n\\n    .reveal.visible {\\n      opacity: 1;\\n      transform: translateY(0);\\n    }\\n\\n    .reveal-stagger > * {\\n      opacity: 0;\\n      transform: translateY(30px);\\n      transition: opacity 0.6s var(--ease-out), transform 0.6s var(--ease-out);\\n    }\\n\\n    .reveal-stagger.visible > * {\\n      opacity: 1;\\n      transform: translateY(0);\\n    }\\n\\n    .reveal-stagger.visible > *:nth-child(1) { transition-delay: 0.05s; }\\n    .reveal-stagger.visible > *:nth-child(2) { transition-delay: 0.1s; }\\n    .reveal-stagger.visible > *:nth-child(3) { transition-delay: 0.15s; }\\n    .reveal-stagger.visible > *:nth-child(4) { transition-delay: 0.2s; }\\n    .reveal-stagger.visible > *:nth-child(5) { transition-delay: 0.25s; }\\n    .reveal-stagger.visible > *:nth-child(6) { transition-delay: 0.3s; }\\n\\n    @media (prefers-reduced-motion: reduce) {\\n      .reveal, .reveal-stagger > * {\\n        opacity: 1;\\n        transform: none;\\n        transition: none;\\n      }\\n    }\\n\\n    button, .btn {\\n      font-family: 'Plus Jakarta Sans', sans-serif;\\n      font-weight: 500;\\n      padding: 14px 32px;\\n      border-radius: var(--radius-md);\\n      cursor: pointer;\\n      transition: transform 0.2s var(--ease-out), box-shadow 0.2s var(--ease-out);\\n      text-decoration: none;\\n      display: inline-block;\\n      font-size: var(--text-base);\\n      min-height: 44px;\\n      border: none;\\n    }\\n\\n    .btn-primary {\\n      background: var(--accent);\\n      color: white;\\n      box-shadow: var(--shadow-md);\\n    }\\n\\n    .btn-primary:hover {\\n      transform: translateY(-2px);\\n      box-shadow: var(--shadow-lg);\\n    }\\n\\n    .btn-primary:active {\\n      transform: scale(0.98);\\n    }\\n\\n    .btn-ghost {\\n      background: transparent;\\n      color: var(--text);\\n      border: 1px solid var(--border);\\n    }\\n\\n    .btn-ghost:hover {\\n      background: var(--bg-alt);\\n      transform: translateY(-1px);\\n    }\\n\\n    button:focus-visible, .btn:focus-visible {\\n      outline: 2px solid var(--accent);\\n      outline-offset: 2px;\\n    }\\n\\n    /* HERO - Dark dramatic split */\\n    .hero {\\n      min-height: 90vh;\\n      display: flex;\\n      align-items: center;\\n      background: linear-gradient(135deg, #1A2821 0%, #0D0D0D 100%);\\n      color: #FAFAFA;\\n      position: relative;\\n      overflow: hidden;\\n    }\\n\\n    .hero::before {\\n      content: '';\\n      position: absolute;\\n      top: 0;\\n      left: 0;\\n      right: 0;\\n      bottom: 0;\\n      background: \\n        radial-gradient(circle at 20% 50%, rgba(107, 142, 107, 0.15) 0%, transparent 50%),\\n        radial-gradient(circle at 80% 80%, rgba(143, 166, 143, 0.1) 0%, transparent 50%);\\n      pointer-events: none;\\n    }\\n\\n    .hero .container {\\n      position: relative;\\n      z-index: 2;\\n      display: grid;\\n      grid-template-columns: 1fr 1fr;\\n      gap: var(--space-16);\\n      align-items: center;\\n    }\\n\\n    .hero-content h1 {\\n      font-family: 'Syne', sans-serif;\\n      font-weight: 700;\\n      font-size: clamp(3rem, 8vw, 6rem);\\n      line-height: 1.05;\\n      letter-spacing: -0.03em;\\n      margin-bottom: var(--space-6);\\n      color: #FAFAFA;\\n    }\\n\\n    .hero-content p {\\n      font-size: var(--text-xl);\\n      line-height: 1.5;\\n      color: #D4D4D8;\\n      margin-bottom: var(--space-8);\\n      font-weight: 300;\\n    }\\n\\n    .hero-image {\\n      position: relative;\\n      height: 500px;\\n      border-radius: var(--radius-xl);\\n      overflow: hidden;\\n      box-shadow: 0 30px 60px rgba(0,0,0,0.4);\\n    }\\n\\n    .hero-image img {\\n      width: 100%;\\n      height: 100%;\\n      object-fit: cover;\\n      display: block;\\n    }\\n\\n    .hero-image::after {\\n      content: '';\\n      position: absolute;\\n      inset: 0;\\n      background: linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.3) 100%);\\n    }\\n\\n    @media (max-width: 968px) {\\n      .hero .container {\\n        grid-template-columns: 1fr;\\n        gap: var(--space-12);\\n      }\\n      .hero-image {\\n        height: 400px;\\n      }\\n    }\\n\\n    /* HOW IT WORKS - Renamed to \\\"The Process\\\" */\\n    .process {\\n      padding: var(--space-24) 0;\\n      background: var(--bg);\\n    }\\n\\n    .process h2 {\\n      font-family: 'Syne', sans-serif;\\n      font-weight: 600;\\n      font-size: var(--text-4xl);\\n      margin-bottom: var(--space-16);\\n      text-align: center;\\n      letter-spacing: -0.02em;\\n    }\\n\\n    .process-grid {\\n      display: grid;\\n      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));\\n      gap: var(--space-12);\\n    }\\n\\n    .process-step {\\n      text-align: left;\\n    }\\n\\n    .step-number {\\n      display: inline-block;\\n      width: 48px;\\n      height: 48px;\\n      background: var(--bg-accent);\\n      color: var(--accent);\\n      border-radius: 50%;\\n      display: flex;\\n      align-items: center;\\n      justify-content: center;\\n      font-family: 'Syne', sans-serif;\\n      font-weight: 600;\\n      font-size: var(--text-xl);\\n      margin-bottom: var(--space-4);\\n    }\\n\\n    .process-step h3 {\\n      font-family: 'Syne', sans-serif;\\n      font-weight: 600;\\n      font-size: var(--text-xl);\\n      margin-bottom: var(--space-3);\\n      letter-spacing: -0.01em;\\n    }\\n\\n    .process-step p {\\n      color: var(--text-muted);\\n      line-height: 1.6;\\n    }\\n\\n    /* MENU PREVIEW - Editorial 2-col */\\n    .menu-preview {\\n      padding: var(--space-32) 0;\\n      background: var(--bg-alt);\\n    }\\n\\n    .menu-header {\\n      max-width: 700px;\\n      margin-bottom: var(--space-16);\\n    }\\n\\n    .menu-header h2 {\\n      font-family: 'Syne', sans-serif;\\n      font-weight: 600;\\n      font-size: var(--text-4xl);\\n      margin-bottom: var(--space-4);\\n      letter-spacing: -0.02em;\\n    }\\n\\n    .menu-header p {\\n      font-size: var(--text-lg);\\n      color: var(--text-muted);\\n      line-height: 1.6;\\n    }\\n\\n    .menu-grid {\\n      display: grid;\\n      grid-template-columns: repeat(2, 1fr);\\n      gap: var(--space-8);\\n    }\\n\\n    .meal-card {\\n      background: var(--surface);\\n      border-radius: var(--radius-lg);\\n      overflow: hidden;\\n      box-shadow: var(--shadow-md);\\n      transition: transform 0.3s var(--ease-out), box-shadow 0.3s var(--ease-out);\\n      cursor: pointer;\\n    }\\n\\n    .meal-card:hover {\\n      transform: translateY(-4px);\\n      box-shadow: var(--shadow-xl);\\n    }\\n\\n    .meal-image {\\n      width: 100%;\\n      height: 240px;\\n      overflow: hidden;\\n      position: relative;\\n    }\\n\\n    .meal-image img {\\n      width: 100%;\\n      height: 100%;\\n      object-fit: cover;\\n      display: block;\\n      transition: transform 0.4s var(--ease-out);\\n    }\\n\\n    .meal-card:hover .meal-image img {\\n      transform: scale(1.05);\\n    }\\n\\n    .meal-info {\\n      padding: var(--space-6);\\n    }\\n\\n    .meal-category {\\n      display: inline-block;\\n      font-size: var(--text-xs);\\n      text-transform: uppercase;\\n      letter-spacing: 0.1em;\\n      color: var(--accent);\\n      margin-bottom: var(--space-2);\\n      font-weight: 500;\\n    }\\n\\n    .meal-info h3 {\\n      font-family: 'Syne', sans-serif;\\n      font-weight: 600;\\n      font-size: var(--text-xl);\\n      margin-bottom: var(--space-2);\\n      letter-spacing: -0.01em;\\n    }\\n\\n    .meal-info p {\\n      font-size: var(--text-sm);\\n      color: var(--text-muted);\\n      line-height: 1.5;\\n    }\\n\\n    @media (max-width: 768px) {\\n      .menu-grid {\\n        grid-template-columns: 1fr;\\n      }\\n    }\\n\\n    /* VALUES - Full-width dark panel */\\n    .values {\\n      padding: var(--space-32) 0;\\n      background: linear-gradient(135deg, #1A2821 0%, #0D0D0D 100%);\\n      color: #FAFAFA;\\n      position: relative;\\n      overflow: hidden;\\n    }\\n\\n    .values::before {\\n      content: '';\\n      position: absolute;\\n      top: 0;\\n      left: 0;\\n      right: 0;\\n      bottom: 0;\\n      background: \\n        radial-gradient(circle at 70% 30%, rgba(143, 166, 143, 0.1) 0%, transparent 50%);\\n      pointer-events: none;\\n    }\\n\\n    .values .container {\\n      position: relative;\\n      z-index: 2;\\n    }\\n\\n    .values h2 {\\n      font-family: 'Syne', sans-serif;\\n      font-weight: 600;\\n      font-size: var(--text-4xl);\\n      margin-bottom: var(--space-16);\\n      text-align: center;\\n      letter-spacing: -0.02em;\\n    }\\n\\n    .values-list {\\n      display: grid;\\n      grid-template-columns: repeat(3, 1fr);\\n      gap: var(--space-12);\\n    }\\n\\n    .value-item {\\n      text-align: left;\\n    }\\n\\n    .value-icon {\\n      width: 56px;\\n      height: 56px;\\n      background: rgba(143, 166, 143, 0.15);\\n      border-radius: var(--radius-md);\\n      display: flex;\\n      align-items: center;\\n      justify-content: center;\\n      margin-bottom: var(--space-4);\\n      border: 1px solid rgba(143, 166, 143, 0.2);\\n    }\\n\\n    .value-icon svg {\\n      width: 28px;\\n      height: 28px;\\n      stroke: #8FA68F;\\n      stroke-width: 2;\\n    }\\n\\n    .value-item h3 {\\n      font-family: 'Syne', sans-serif;\\n      font-weight: 600;\\n      font-size: var(--text-xl);\\n      margin-bottom: var(--space-3);\\n      letter-spacing: -0.01em;\\n    }\\n\\n    .value-item p {\\n      color: #D4D4D8;\\n      line-height: 1.6;\\n    }\\n\\n    @media (max-width: 968px) {\\n      .values-list {\\n        grid-template-columns: 1fr;\\n      }\\n    }\\n\\n    /* CTA - Accent tint */\\n    .cta {\\n      padding: var(--space-32) 0;\\n      background: var(--bg-accent);\\n      text-align: center;\\n    }\\n\\n    .cta h2 {\\n      font-family: 'Syne', sans-serif;\\n      font-weight: 600;\\n      font-size: var(--text-4xl);\\n      margin-bottom: var(--space-4);\\n      letter-spacing: -0.02em;\\n    }\\n\\n    .cta p {\\n      font-size: var(--text-lg);\\n      color: var(--text-muted);\\n      margin-bottom: var(--space-8);\\n      max-width: 600px;\\n      margin-left: auto;\\n      margin-right: auto;\\n    }\\n\\n    /* ABOUT PAGE */\\n    .about-hero {\\n      padding: var(--space-32) 0 var(--space-24);\\n      background: var(--bg);\\n    }\\n\\n    .about-hero h1 {\\n      font-family: 'Syne', sans-serif;\\n      font-weight: 600;\\n      font-size: var(--text-5xl);\\n      margin-bottom: var(--space-6);\\n      letter-spacing: -0.03em;\\n    }\\n\\n    .about-hero p {\\n      font-size: var(--text-xl);\\n      color: var(--text-muted);\\n      line-height: 1.6;\\n      max-width: 800px;\\n    }\\n\\n    .story {\\n      padding: var(--space-24) 0;\\n      background: var(--bg-alt);\\n    }\\n\\n    .story-grid {\\n      display: grid;\\n      grid-template-columns: 1fr 1fr;\\n      gap: var(--space-16);\\n      align-items: center;\\n    }\\n\\n    .story-content h2 {\\n      font-family: 'Syne', sans-serif;\\n      font-weight: 600;\\n      font-size: var(--text-3xl);\\n      margin-bottom: var(--space-6);\\n      letter-spacing: -0.02em;\\n    }\\n\\n    .story-content p {\\n      font-size: var(--text-base);\\n      color: var(--text-muted);\\n      line-height: 1.7;\\n      margin-bottom: var(--space-4);\\n    }\\n\\n    .story-image {\\n      height: 400px;\\n      border-radius: var(--radius-xl);\\n      overflow: hidden;\\n    }\\n\\n    .story-image img {\\n      width: 100%;\\n      height: 100%;\\n      object-fit: cover;\\n      display: block;\\n    }\\n\\n    @media (max-width: 768px) {\\n      .story-grid {\\n        grid-template-columns: 1fr;\\n      }\\n    }\\n\\n    /* MENU PAGE */\\n    .menu-hero {\\n      padding: var(--space-32) 0 var(--space-16);\\n      background: var(--bg);\\n    }\\n\\n    .menu-hero h1 {\\n      font-family: 'Syne', sans-serif;\\n      font-weight: 600;\\n      font-size: var(--text-5xl);\\n      margin-bottom: var(--space-4);\\n      letter-spacing: -0.03em;\\n    }\\n\\n    .menu-hero p {\\n      font-size: var(--text-xl);\\n      color: var(--text-muted);\\n      line-height: 1.6;\\n      max-width: 700px;\\n    }\\n\\n    .menu-filters {\\n      padding: var(--space-8) 0;\\n      background: var(--bg);\\n      position: sticky;\\n      top: 72px;\\n      z-index: 10;\\n      border-bottom: 1px solid var(--border);\\n    }\\n\\n    .filter-buttons {\\n      display: flex;\\n      gap: var(--space-3);\\n      flex-wrap: wrap;\\n    }\\n\\n    .filter-btn {\\n      padding: 10px 20px;\\n      border: 1px solid var(--border);\\n      background: var(--surface);\\n      color: var(--text);\\n      border-radius: 9999px;\\n      font-size: var(--text-sm);\\n      font-weight: 500;\\n      cursor: pointer;\\n      transition: all 0.2s var(--ease-out);\\n      text-transform: uppercase;\\n      letter-spacing: 0.05em;\\n    }\\n\\n    .filter-btn:hover,\\n    .filter-btn.active {\\n      background: var(--accent);\\n      color: white;\\n      border-color: var(--accent);\\n    }\\n\\n    .menu-full {\\n      padding: var(--space-16) 0 var(--space-24);\\n      background: var(--bg);\\n    }\\n\\n    .menu-full-grid {\\n      display: grid;\\n      grid-template-columns: repeat(3, 1fr);\\n      gap: var(--space-8);\\n    }\\n\\n    @media (max-width: 968px) {\\n      .menu-full-grid {\\n        grid-template-columns: repeat(2, 1fr);\\n      }\\n    }\\n\\n    @media (max-width: 640px) {\\n      .menu-full-grid {\\n        grid-template-columns: 1fr;\\n      }\\n    }\\n\\n    /* CONTACT PAGE */\\n    .contact-hero {\\n      padding: var(--space-32) 0 var(--space-24);\\n      background: var(--bg-alt);\\n    }\\n\\n    .contact-hero h1 {\\n      font-family: 'Syne', sans-serif;\\n      font-weight: 600;\\n      font-size: var(--text-5xl);\\n      margin-bottom: var(--space-4);\\n      letter-spacing: -0.03em;\\n    }\\n\\n    .contact-hero p {\\n      font-size: var(--text-xl);\\n      color: var(--text-muted);\\n      line-height: 1.6;\\n      max-width: 700px;\\n    }\\n\\n    .contact-grid {\\n      padding: var(--space-24) 0;\\n      background: var(--bg);\\n    }\\n\\n    .contact-content {\\n      display: grid;\\n      grid-template-columns: 1fr 1fr;\\n      gap: var(--space-16);\\n      align-items: start;\\n    }\\n\\n    .contact-info h2 {\\n      font-family: 'Syne', sans-serif;\\n      font-weight: 600;\\n      font-size: var(--text-2xl);\\n      margin-bottom: var(--space-6);\\n      letter-spacing: -0.02em;\\n    }\\n\\n    .info-item {\\n      margin-bottom: var(--space-6);\\n    }\\n\\n    .info-item h3 {\\n      font-family: 'Syne', sans-serif;\\n      font-weight: 500;\\n      font-size: var(--text-base);\\n      margin-bottom: var(--space-2);\\n      text-transform: uppercase;\\n      letter-spacing: 0.05em;\\n      font-size: var(--text-sm);\\n      color: var(--accent);\\n    }\\n\\n    .info-item p {\\n      color: var(--text);\\n      font-size: var(--text-base);\\n    }\\n\\n    .contact-form {\\n      background: var(--surface);\\n      padding: var(--space-8);\\n      border-radius: var(--radius-lg);\\n      box-shadow: var(--shadow-md);\\n    }\\n\\n    .form-group {\\n      margin-bottom: var(--space-6);\\n    }\\n\\n    .form-group label {\\n      display: block;\\n      margin-bottom: var(--space-2);\\n      font-weight: 500;\\n      font-size: var(--text-sm);\\n      color: var(--text);\\n    }\\n\\n    .form-group input,\\n    .form-group textarea,\\n    .form-group select {\\n      width: 100%;\\n      padding: 12px 16px;\\n      border: 1px solid var(--border);\\n      border-radius: var(--radius-md);\\n      font-family: 'Plus Jakarta Sans', sans-serif;\\n      font-size: var(--text-base);\\n      background: var(--bg);\\n      color: var(--text);\\n      transition: border-color 0.2s var(--ease-out), box-shadow 0.2s var(--ease-out);\\n    }\\n\\n    .form-group input:focus,\\n    .form-group textarea:focus,\\n    .form-group select:focus {\\n      outline: none;\\n      border-color: var(--accent);\\n      box-shadow: 0 0 0 3px rgba(107, 142, 107, 0.15);\\n    }\\n\\n    .form-group textarea {\\n      min-height: 120px;\\n      resize: vertical;\\n    }\\n\\n    .form-success {\\n      display: none;\\n      padding: var(--space-4);\\n      background: rgba(16, 185, 129, 0.1);\\n      color: #10B981;\\n      border-radius: var(--radius-md);\\n      margin-top: var(--space-4);\\n      text-align: center;\\n    }\\n\\n    .form-success.show {\\n      display: block;\\n    }\\n\\n    @media (max-width: 768px) {\\n      .contact-content {\\n        grid-template-columns: 1fr;\\n      }\\n    }\\n\\n    /* FOOTER */\\n    footer {\\n      background: linear-gradient(135deg, #1A2821 0%, #0D0D0D 100%);\\n      color: #FAFAFA;\\n      padding: var(--space-24) 0 var(--space-8);\\n      margin-top: var(--space-32);\\n    }\\n\\n    .footer-grid {\\n      display: grid;\\n      grid-template-columns: 2fr 1fr 1fr 1fr;\\n      gap: var(--space-12);\\n      margin-bottom: var(--space-12);\\n    }\\n\\n    .footer-brand h3 {\\n      font-family: 'Syne', sans-serif;\\n      font-weight: 700;\\n      font-size: var(--text-2xl);\\n      margin-bottom: var(--space-3);\\n      color: #8FA68F;\\n      letter-spacing: -0.02em;\\n    }\\n\\n    .footer-brand p {\\n      color: #D4D4D8;\\n      line-height: 1.6;\\n      margin-bottom: var(--space-4);\\n    }\\n\\n    .footer-section h4 {\\n      font-family: 'Syne', sans-serif;\\n      font-weight: 600;\\n      font-size: var(--text-sm);\\n      margin-bottom: var(--space-4);\\n      text-transform: uppercase;\\n      letter-spacing: 0.1em;\\n      color: #8FA68F;\\n    }\\n\\n    .footer-section ul {\\n      list-style: none;\\n    }\\n\\n    .footer-section ul li {\\n      margin-bottom: var(--space-3);\\n    }\\n\\n    .footer-section ul li a {\\n      color: #D4D4D8;\\n      text-decoration: none;\\n      transition: color 0.2s var(--ease-out);\\n      font-size: var(--text-sm);\\n    }\\n\\n    .footer-section ul li a:hover {\\n      color: #8FA68F;\\n    }\\n\\n    .social-links {\\n      display: flex;\\n      gap: var(--space-4);\\n    }\\n\\n    .social-links a {\\n      width: 40px;\\n      height: 40px;\\n      background: rgba(143, 166, 143, 0.15);\\n      border-radius: 50%;\\n      display: flex;\\n      align-items: center;\\n      justify-content: center;\\n      transition: background 0.2s var(--ease-out), transform 0.2s var(--ease-out);\\n      border: 1px solid rgba(143, 166, 143, 0.2);\\n    }\\n\\n    .social-links a:hover {\\n      background: rgba(143, 166, 143, 0.25);\\n      transform: translateY(-2px);\\n    }\\n\\n    .social-links svg {\\n      width: 18px;\\n      height: 18px;\\n      fill: #8FA68F;\\n    }\\n\\n    .footer-bottom {\\n      padding-top: var(--space-6);\\n      border-top: 1px solid rgba(255,255,255,0.1);\\n      text-align: center;\\n      color: #A1A1AA;\\n      font-size: var(--text-sm);\\n    }\\n\\n    @media (max-width: 968px) {\\n      .footer-grid {\\n        grid-template-columns: 1fr 1fr;\\n      }\\n    }\\n\\n    @media (max-width: 640px) {\\n      .footer-grid {\\n        grid-template-columns: 1fr;\\n      }\\n    }\\n  </style>\\n</head>\\n<body>\\n  <a href=\\\"#main\\\" class=\\\"skip-link\\\">Skip to main content</a>\\n  \\n  <nav>\\n    <div class=\\\"container\\\">\\n      <a href=\\\"#home\\\" class=\\\"logo\\\" onclick=\\\"showPage('home')\\\">SPROUT</a>\\n      <ul class=\\\"nav-links\\\">\\n        <li><a href=\\\"#home\\\" class=\\\"active\\\" onclick=\\\"showPage('home')\\\">Home</a></li>\\n        <li><a href=\\\"#about\\\" onclick=\\\"showPage('about')\\\">About</a></li>\\n        <li><a href=\\\"#menu\\\" onclick=\\\"showPage('menu')\\\">Menu</a></li>\\n        <li><a href=\\\"#contact\\\" onclick=\\\"showPage('contact')\\\">Contact</a></li>\\n      </ul>\\n      <button class=\\\"theme-toggle\\\" aria-label=\\\"Toggle theme\\\">\\n        <svg class=\\\"sun\\\" fill=\\\"none\\\" viewBox=\\\"0 0 24 24\\\">\\n          <circle cx=\\\"12\\\" cy=\\\"12\\\" r=\\\"4\\\" stroke=\\\"currentColor\\\" stroke-width=\\\"2\\\"/>\\n          <path stroke=\\\"currentColor\\\" stroke-width=\\\"2\\\" d=\\\"M12 2v2m0 16v2M4.93 4.93l1.41 1.41m11.32 11.32l1.41 1.41M2 12h2m16 0h2M4.93 19.07l1.41-1.41m11.32-11.32l1.41-1.41\\\"/>\\n        </svg>\\n      </button>\\n      <button class=\\\"menu-toggle\\\" aria-label=\\\"Toggle menu\\\">\\n        <span></span>\\n        <span></span>\\n        <span></span>\\n      </button>\\n    </div>\\n  </nav>\\n\\n  <main id=\\\"main\\\">\\n    <!-- HOME PAGE -->\\n    <div id=\\\"home\\\" class=\\\"page active\\\">\\n      <section class=\\\"hero\\\">\\n        <div class=\\\"container\\\">\\n          <div class=\\\"hero-content reveal\\\">\\n            <h1>Real food.<br>Delivered.</h1>\\n            <p>Chef-crafted, plant-based meals delivered fresh to your door. Bold flavors, real ingredients, zero compromise.</p>\\n            <button class=\\\"btn btn-primary\\\" onclick=\\\"showPage('menu')\\\">View this week's menu</button>\\n          </div>\\n          <div class=\\\"hero-image reveal\\\">\\n            <img src=\\\"data:image/svg+xml,%3Csvg width='800' height='500' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='800' height='500' fill='%236B8E6B'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-family='sans-serif' font-size='20' fill='%23FFFFFF'%3EYour featured dish image%3C/text%3E%3C/svg%3E\\\" alt=\\\"Featured plant-based meal\\\" loading=\\\"lazy\\\">\\n          </div>\\n        </div>\\n      </section>\\n\\n      <section class=\\\"process\\\">\\n        <div class=\\\"container reveal-stagger\\\">\\n          <h2>The Process</h2>\\n          <div class=\\\"process-grid\\\">\\n            <div class=\\\"process-step\\\">\\n              <div class=\\\"step-number\\\">1</div>\\n              <h3>Browse</h3>\\n              <p>Check our weekly rotating menu of chef-designed meals — new flavors drop every Monday.</p>\\n            </div>\\n            <div class=\\\"process-step\\\">\\n              <div class=\\\"step-number\\\">2</div>\\n              <h3>Customize</h3>\\n              <p>Pick your favorites, adjust portions, set dietary preferences. Your box, your way.</p>\\n            </div>\\n            <div class=\\\"process-step\\\">\\n              <div class=\\\"step-number\\\">3</div>\\n              <h3>Delivered</h3>\\n              <p>We cook, pack, and deliver fresh to your door. Ready to heat and eat in under 10 minutes.</p>\\n            </div>\\n          </div>\\n        </div>\\n      </section>\\n\\n      <section class=\\\"menu-preview\\\">\\n        <div class=\\\"container\\\">\\n          <div class=\\\"menu-header reveal\\\">\\n            <h2>This Week's Menu</h2>\\n            <p>Chef-crafted plates rotating weekly — everything from bold, globally-inspired bowls to comforting classics made entirely from plants.</p>\\n          </div>\\n          <div class=\\\"menu-grid reveal-stagger\\\">\\n            <div class=\\\"meal-card\\\">\\n              <div class=\\\"meal-image\\\">\\n                <img src=\\\"data:image/svg+xml,%3Csvg width='600' height='400' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='600' height='400' fill='%238FA68F'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-family='sans-serif' font-size='18' fill='%23FFFFFF'%3EGolden Turmeric Bowl%3C/text%3E%3C/svg%3E\\\" alt=\\\"Golden Turmeric Bowl\\\" loading=\\\"lazy\\\">\\n              </div>\\n              <div class=\\\"meal-info\\\">\\n                <span class=\\\"meal-category\\\">Bowl</span>\\n                <h3>Golden Turmeric Bowl</h3>\\n                <p>Roasted sweet potato, chickpeas, quinoa, tahini drizzle. Anti-inflammatory powerhouse.</p>\\n              </div>\\n            </div>\\n            <div class=\\\"meal-card\\\">\\n              <div class=\\\"meal-image\\\">\\n                <img src=\\\"data:image/svg+xml,%3Csvg width='600' height='400' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='600' height='400' fill='%236B8E6B'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-family='sans-serif' font-size='18' fill='%23FFFFFF'%3ESmoked Mushroom Tacos%3C/text%3E%3C/svg%3E\\\" alt=\\\"Smoked Mushroom Tacos\\\" loading=\\\"lazy\\\">\\n              </div>\\n              <div class=\\\"meal-info\\\">\\n                <span class=\\\"meal-category\\\">Taco</span>\\n                <h3>Smoked Mushroom Tacos</h3>\\n                <p>Chipotle oyster mushrooms, pickled jalapeños, cilantro lime slaw. Bold and smoky.</p>\\n              </div>\\n            </div>\\n            <div class=\\\"meal-card\\\">\\n              <div class=\\\"meal-image\\\">\\n                <img src=\\\"data:image/svg+xml,%3Csvg width='600' height='400' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='600' height='400' fill='%23A8BEA8'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-family='sans-serif' font-size='18' fill='%23FFFFFF'%3EGreen Goddess Pasta%3C/text%3E%3C/svg%3E\\\" alt=\\\"Green Goddess Pasta\\\" loading=\\\"lazy\\\">\\n              </div>\\n              <div class=\\\"meal-info\\\">\\n                <span class=\\\"meal-category\\\">Pasta</span>\\n                <h3>Green Goddess Pasta</h3>\\n                <p>Creamy herb sauce, snap peas, toasted pine nuts. Indulgent comfort, zero dairy.</p>\\n              </div>\\n            </div>\\n            <div class=\\\"meal-card\\\">\\n              <div class=\\\"meal-image\\\">\\n                <img src=\\\"data:image/svg+xml,%3Csvg width='600' height='400' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='600' height='400' fill='%234A6B4A'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-family='sans-serif' font-size='18' fill='%23FFFFFF'%3EBurrito Bowl%3C/text%3E%3C/svg%3E\\\" alt=\\\"Loaded Burrito Bowl\\\" loading=\\\"lazy\\\">\\n              </div>\\n              <div class=\\\"meal-info\\\">\\n                <span class=\\\"meal-category\\\">Bowl</span>\\n                <h3>Loaded Burrito Bowl</h3>\\n                <p>Black beans, roasted corn, guacamole, salsa verde. A crowd favorite every week.</p>\\n              </div>\\n            </div>\\n          </div>\\n        </div>\\n      </section>\\n\\n      <section class=\\\"values\\\">\\n        <div class=\\\"container\\\">\\n          <h2 class=\\\"reveal\\\">What Matters to Us</h2>\\n          <div class=\\\"values-list reveal-stagger\\\">\\n            <div class=\\\"value-item\\\">\\n              <div class=\\\"value-icon\\\">\\n                <svg fill=\\\"none\\\" viewBox=\\\"0 0 24 24\\\">\\n                  <path stroke=\\\"currentColor\\\" stroke-width=\\\"2\\\" d=\\\"M12 2L2 7l10 5 10-5-10-5z\\\"/>\\n                  <path stroke=\\\"currentColor\\\" stroke-width=\\\"2\\\" d=\\\"M2 17l10 5 10-5M2 12l10 5 10-5\\\"/>\\n                </svg>\\n              </div>\\n              <h3>Real Ingredients</h3>\\n              <p>We source directly from farms and purveyors we trust. If it's in your meal, we can tell you where it came from.</p>\\n            </div>\\n            <div class=\\\"value-item\\\">\\n              <div class=\\\"value-icon\\\">\\n                <svg fill=\\\"none\\\" viewBox=\\\"0 0 24 24\\\">\\n                  <circle cx=\\\"12\\\" cy=\\\"12\\\" r=\\\"10\\\" stroke=\\\"currentColor\\\" stroke-width=\\\"2\\\"/>\\n                  <path stroke=\\\"currentColor\\\" stroke-width=\\\"2\\\" d=\\\"M8 12l2 2 4-4\\\"/>\\n                </svg>\\n              </div>\\n              <h3>Chef-Driven</h3>\\n              <p>Every dish is designed by real chefs who obsess over flavor. Plant-based doesn't mean boring — it means creative.</p>\\n            </div>\\n            <div class=\\\"value-item\\\">\\n              <div class=\\\"value-icon\\\">\\n                <svg fill=\\\"none\\\" viewBox=\\\"0 0 24 24\\\">\\n                  <path stroke=\\\"currentColor\\\" stroke-width=\\\"2\\\" d=\\\"M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z\\\"/>\\n                </svg>\\n              </div>\\n              <h3>Zero Waste</h3>\\n              <p>Compostable packaging, portioned ingredients, and partnerships with local composting programs. We don't do landfill.</p>\\n            </div>\\n          </div>\\n        </div>\\n      </section>\\n\\n      <section class=\\\"cta\\\">\\n        <div class=\\\"container reveal\\\">\\n          <h2>Start Eating Better</h2>\\n          <p>No commitment, cancel anytime. Get your first box 30% off with code TRYSPR0UT.</p>\\n          <button class=\\\"btn btn-primary\\\">Build your first box</button>\\n        </div>\\n      </section>\\n    </div>\\n\\n    <!-- ABOUT PAGE -->\\n    <div id=\\\"about\\\" class=\\\"page\\\">\\n      <section class=\\\"about-hero\\\">\\n        <div class=\\\"container reveal\\\">\\n          <h1>We're Rethinking<br>Plant-Based</h1>\\n          <p>Sprout started in a tiny Brooklyn kitchen in 2019 when our founder, a professionally trained chef, got tired of bland vegan takeout. We knew plants could do better — way better.</p>\\n        </div>\\n      </section>\\n\\n      <section class=\\\"story\\\">\\n        <div class=\\\"container\\\">\\n          <div class=\\\"story-grid\\\">\\n            <div class=\\\"story-content reveal\\\">\\n              <h2>Built by Chefs,<br>Not Algorithms</h2>\\n              <p>Every dish we make is designed by real chefs with decades of culinary training. We don't optimize for scale — we optimize for flavor.</p>\\n              <p>Our kitchen team comes from Michelin kitchens, neighborhood bistros, and family tables around the world. We treat vegetables like the stars they are.</p>\\n              <p>We cook in small batches, taste everything ourselves, and never cut corners. If we wouldn't serve it to our own family, it doesn't go in your box.</p>\\n            </div>\\n            <div class=\\\"story-image reveal\\\">\\n              <img src=\\\"data:image/svg+xml,%3Csvg width='800' height='500' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='800' height='500' fill='%236B8E6B'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-family='sans-serif' font-size='20' fill='%23FFFFFF'%3EKitchen team photo%3C/text%3E%3C/svg%3E\\\" alt=\\\"Sprout kitchen team\\\" loading=\\\"lazy\\\">\\n            </div>\\n          </div>\\n        </div>\\n      </section>\\n\\n      <section class=\\\"values\\\">\\n        <div class=\\\"container\\\">\\n          <h2 class=\\\"reveal\\\">Our Commitments</h2>\\n          <div class=\\\"values-list reveal-stagger\\\">\\n            <div class=\\\"value-item\\\">\\n              <div class=\\\"value-icon\\\">\\n                <svg fill=\\\"none\\\" viewBox=\\\"0 0 24 24\\\">\\n                  <path stroke=\\\"currentColor\\\" stroke-width=\\\"2\\\" d=\\\"M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z\\\"/>\\n                </svg>\\n              </div>\\n              <h3>Organic First</h3>\\n              <p>Over 90% of our produce is certified organic. When it's not, it's from a farm we know personally.</p>\\n            </div>\\n            <div class=\\\"value-item\\\">\\n              <div class=\\\"value-icon\\\">\\n                <svg fill=\\\"none\\\" viewBox=\\\"0 0 24 24\\\">\\n                  <path stroke=\\\"currentColor\\\" stroke-width=\\\"2\\\" d=\\\"M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2\\\"/>\\n                  <circle cx=\\\"9\\\" cy=\\\"7\\\" r=\\\"4\\\" stroke=\\\"currentColor\\\" stroke-width=\\\"2\\\"/>\\n                  <path stroke=\\\"currentColor\\\" stroke-width=\\\"2\\\" d=\\\"M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75\\\"/>\\n                </svg>\\n              </div>\\n              <h3>Fair Wages</h3>\\n              <p>Everyone on our team — from chefs to drivers — makes at least $20/hour with full benefits.</p>\\n            </div>\\n            <div class=\\\"value-item\\\">\\n              <div class=\\\"value-icon\\\">\\n                <svg fill=\\\"none\\\" viewBox=\\\"0 0 24 24\\\">\\n                  <path stroke=\\\"currentColor\\\" stroke-width=\\\"2\\\" d=\\\"M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z\\\"/>\\n                  <polyline stroke=\\\"currentColor\\\" stroke-width=\\\"2\\\" points=\\\"9 22 9 12 15 12 15 22\\\"/>\\n                </svg>\\n              </div>\\n              <h3>Local Impact</h3>\\n              <p>We donate surplus meals to community fridges and partner with urban farms in our delivery zones.</p>\\n            </div>\\n          </div>\\n        </div>\\n      </section>\\n    </div>\\n\\n    <!-- MENU PAGE -->\\n    <div id=\\\"menu\\\" class=\\\"page\\\">\\n      <section class=\\\"menu-hero\\\">\\n        <div class=\\\"container reveal\\\">\\n          <h1>This Week's Menu</h1>\\n          <p>Chef-designed dishes rotating every Monday. Filter by your preferences below — everything is 100% plant-based, but we love bold flavors and global inspiration.</p>\\n        </div>\\n      </section>\\n\\n      <div class=\\\"menu-filters\\\">\\n        <div class=\\\"container\\\">\\n          <div class=\\\"filter-buttons\\\">\\n            <button class=\\\"filter-btn active\\\" data-category=\\\"all\\\">All</button>\\n            <button class=\\\"filter-btn\\\" data-category=\\\"bowl\\\">Bowls</button>\\n            <button class=\\\"filter-btn\\\" data-category=\\\"pasta\\\">Pasta</button>\\n            <button class=\\\"filter-btn\\\" data-category=\\\"taco\\\">Tacos</button>\\n            <button class=\\\"filter-btn\\\" data-category=\\\"soup\\\">Soups</button>\\n          </div>\\n        </div>\\n      </div>\\n\\n      <section class=\\\"menu-full\\\">\\n        <div class=\\\"container\\\">\\n          <div class=\\\"menu-full-grid reveal-stagger\\\">\\n            <div class=\\\"meal-card filterable-item\\\" data-category=\\\"bowl\\\">\\n              <div class=\\\"meal-image\\\">\\n                <img src=\\\"data:image/svg+xml,%3Csvg width='600' height='400' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='600' height='400' fill='%238FA68F'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-family='sans-serif' font-size='18' fill='%23FFFFFF'%3EGolden Turmeric Bowl%3C/text%3E%3C/svg%3E\\\" alt=\\\"Golden Turmeric Bowl\\\" loading=\\\"lazy\\\">\\n              </div>\\n              <div class=\\\"meal-info\\\">\\n                <span class=\\\"meal-category\\\">Bowl</span>\\n                <h3>Golden Turmeric Bowl</h3>\\n                <p>Roasted sweet potato, chickpeas, quinoa, tahini drizzle. Anti-inflammatory powerhouse.</p>\\n              </div>\\n            </div>\\n            <div class=\\\"meal-card filterable-item\\\" data-category=\\\"taco\\\">\\n              <div class=\\\"meal-image\\\">\\n                <img src=\\\"data:image/svg+xml,%3Csvg width='600' height='400' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='600' height='400' fill='%236B8E6B'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-family='sans-serif' font-size='18' fill='%23FFFFFF'%3ESmoked Mushroom Tacos%3C/text%3E%3C/svg%3E\\\" alt=\\\"Smoked Mushroom Tacos\\\" loading=\\\"lazy\\\">\\n              </div>\\n              <div class=\\\"meal-info\\\">\\n                <span class=\\\"meal-category\\\">Taco</span>\\n                <h3>Smoked Mushroom Tacos</h3>\\n                <p>Chipotle oyster mushrooms, pickled jalapeños, cilantro lime slaw. Bold and smoky.</p>\\n              </div>\\n            </div>\\n            <div class=\\\"meal-card filterable-item\\\" data-category=\\\"pasta\\\">\\n              <div class=\\\"meal-image\\\">\\n                <img src=\\\"data:image/svg+xml,%3Csvg width='600' height='400' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='600' height='400' fill='%23A8BEA8'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-family='sans-serif' font-size='18' fill='%23FFFFFF'%3EGreen Goddess Pasta%3C/text%3E%3C/svg%3E\\\" alt=\\\"Green Goddess Pasta\\\" loading=\\\"lazy\\\">\\n              </div>\\n              <div class=\\\"meal-info\\\">\\n                <span class=\\\"meal-category\\\">Pasta</span>\\n                <h3>Green Goddess Pasta</h3>\\n                <p>Creamy herb sauce, snap peas, toasted pine nuts. Indulgent comfort, zero dairy.</p>\\n              </div>\\n            </div>\\n            <div class=\\\"meal-card filterable-item\\\" data-category=\\\"bowl\\\">\\n              <div class=\\\"meal-image\\\">\\n                <img src=\\\"data:image/svg+xml,%3Csvg width='600' height='400' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='600' height='400' fill='%234A6B4A'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-family='sans-serif' font-size='18' fill='%23FFFFFF'%3EBurrito Bowl%3C/text%3E%3C/svg%3E\\\" alt=\\\"Loaded Burrito Bowl\\\" loading=\\\"lazy\\\">\\n              </div>\\n              <div class=\\\"meal-info\\\">\\n                <span class=\\\"meal-category\\\">Bowl</span>\\n                <h3>Loaded Burrito Bowl</h3>\\n                <p>Black beans, roasted corn, guacamole, salsa verde. A crowd favorite every week.</p>\\n              </div>\\n            </div>\\n            <div class=\\\"meal-card filterable-item\\\" data-category=\\\"soup\\\">\\n              <div class=\\\"meal-image\\\">\\n                <img src=\\\"data:image/svg+xml,%3Csvg width='600' height='400' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='600' height='400' fill='%236B8E6B'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-family='sans-serif' font-size='18' fill='%23FFFFFF'%3EThai Coconut Soup%3C/text%3E%3C/svg%3E\\\" alt=\\\"Thai Coconut Soup\\\" loading=\\\"lazy\\\">\\n              </div>\\n              <div class=\\\"meal-info\\\">\\n                <span class=\\\"meal-category\\\">Soup</span>\\n                <h3>Thai Coconut Soup</h3>\\n                <p>Lemongrass, ginger, rice noodles, bok choy. Warming and fragrant.</p>\\n              </div>\\n            </div>\\n            <div class=\\\"meal-card filterable-item\\\" data-category=\\\"pasta\\\">\\n              <div class=\\\"meal-image\\\">\\n                <img src=\\\"data:image/svg+xml,%3Csvg width='600' height='400' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='600' height='400' fill='%238FA68F'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-family='sans-serif' font-size='18' fill='%23FFFFFF'%3ESun-Dried Tomato Penne%3C/text%3E%3C/svg%3E\\\" alt=\\\"Sun-Dried Tomato Penne\\\" loading=\\\"lazy\\\">\\n              </div>\\n              <div class=\\\"meal-info\\\">\\n                <span class=\\\"meal-category\\\">Pasta</span>\\n                <h3>Sun-Dried Tomato Penne</h3>\\n                <p>Cashew cream, basil, garlic, arugula. Italian comfort, plant-based.</p>\\n              </div>\\n            </div>\\n          </div>\\n        </div>\\n      </section>\\n    </div>\\n\\n    <!-- CONTACT PAGE -->\\n    <div id=\\\"contact\\\" class=\\\"page\\\">\\n      <section class=\\\"contact-hero\\\">\\n        <div class=\\\"container reveal\\\">\\n          <h1>Let's Talk</h1>\\n          <p>Questions about our menu, delivery zones, or custom orders for events? We're here to help.</p>\\n        </div>\\n      </section>\\n\\n      <section class=\\\"contact-grid\\\">\\n        <div class=\\\"container\\\">\\n          <div class=\\\"contact-content\\\">\\n            <div class=\\\"contact-info reveal\\\">\\n              <h2>Reach Us</h2>\\n              <div class=\\\"info-item\\\">\\n                <h3>Email</h3>\\n                <p>[Your Email]</p>\\n              </div>\\n              <div class=\\\"info-item\\\">\\n                <h3>Phone</h3>\\n                <p>[Your Phone]</p>\\n              </div>\\n              <div class=\\\"info-item\\\">\\n                <h3>Hours</h3>\\n                <p>Monday-Friday: 8am-6pm<br>Saturday: 9am-4pm<br>Sunday: Closed</p>\\n              </div>\\n              <div class=\\\"info-item\\\">\\n                <h3>Delivery Zones</h3>\\n                <p>Currently serving Brooklyn, Manhattan, and parts of Queens. Check your zip at checkout.</p>\\n              </div>\\n            </div>\\n\\n            <form class=\\\"contact-form reveal\\\" id=\\\"contactForm\\\">\\n              <div class=\\\"form-group\\\">\\n                <label for=\\\"name\\\">Name</label>\\n                <input type=\\\"text\\\" id=\\\"name\\\" name=\\\"name\\\" required>\\n              </div>\\n              <div class=\\\"form-group\\\">\\n                <label for=\\\"email\\\">Email</label>\\n                <input type=\\\"email\\\" id=\\\"email\\\" name=\\\"email\\\" required>\\n              </div>\\n              <div class=\\\"form-group\\\">\\n                <label for=\\\"subject\\\">Subject</label>\\n                <select id=\\\"subject\\\" name=\\\"subject\\\" required>\\n                  <option value=\\\"\\\">Select a topic</option>\\n                  <option value=\\\"delivery\\\">Delivery Question</option>\\n                  <option value=\\\"menu\\\">Menu Inquiry</option>\\n                  <option value=\\\"catering\\\">Catering/Events</option>\\n                  <option value=\\\"feedback\\\">Feedback</option>\\n                  <option value=\\\"other\\\">Other</option>\\n                </select>\\n              </div>\\n              <div class=\\\"form-group\\\">\\n                <label for=\\\"message\\\">Message</label>\\n                <textarea id=\\\"message\\\" name=\\\"message\\\" required></textarea>\\n              </div>\\n              <button type=\\\"submit\\\" class=\\\"btn btn-primary\\\">Send Message</button>\\n              <div class=\\\"form-success\\\" id=\\\"formSuccess\\\">\\n                Thanks! We'll get back to you within 24 hours.\\n              </div>\\n            </form>\\n          </div>\\n        </div>\\n      </section>\\n    </div>\\n  </main>\\n\\n  <footer>\\n    <div class=\\\"container\\\">\\n      <div class=\\\"footer-grid\\\">\\n        <div class=\\\"footer-brand\\\">\\n          <h3>SPROUT</h3>\\n          <p>Chef-crafted, plant-based meals delivered fresh to your door. Bold flavors, real ingredients, zero compromise.</p>\\n          <div class=\\\"social-links\\\">\\n            <a href=\\\"#\\\" aria-label=\\\"Instagram\\\">\\n              <svg viewBox=\\\"0 0 24 24\\\">\\n                <rect x=\\\"2\\\" y=\\\"2\\\" width=\\\"20\\\" height=\\\"20\\\" rx=\\\"5\\\" ry=\\\"5\\\"/>\\n                <path d=\\\"M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z\\\"/>\\n                <line x1=\\\"17.5\\\" y1=\\\"6.5\\\" x2=\\\"17.51\\\" y2=\\\"6.5\\\"/>\\n              </svg>\\n            </a>\\n            <a href=\\\"#\\\" aria-label=\\\"Facebook\\\">\\n              <svg viewBox=\\\"0 0 24 24\\\">\\n                <path d=\\\"M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z\\\"/>\\n              </svg>\\n            </a>\\n            <a href=\\\"#\\\" aria-label=\\\"Twitter\\\">\\n              <svg viewBox=\\\"0 0 24 24\\\">\\n                <path d=\\\"M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z\\\"/>\\n              </svg>\\n            </a>\\n          </div>\\n        </div>\\n        <div class=\\\"footer-section\\\">\\n          <h4>Menu</h4>\\n          <ul>\\n            <li><a href=\\\"#menu\\\" onclick=\\\"showPage('menu')\\\">This Week</a></li>\\n            <li><a href=\\\"#menu\\\" onclick=\\\"showPage('menu')\\\">Bowls</a></li>\\n            <li><a href=\\\"#menu\\\" onclick=\\\"showPage('menu')\\\">Pasta</a></li>\\n            <li><a href=\\\"#menu\\\" onclick=\\\"showPage('menu')\\\">Tacos</a></li>\\n          </ul>\\n        </div>\\n        <div class=\\\"footer-section\\\">\\n          <h4>Company</h4>\\n          <ul>\\n            <li><a href=\\\"#about\\\" onclick=\\\"showPage('about')\\\">About Us</a></li>\\n            <li><a href=\\\"#\\\">Our Chefs</a></li>\\n            <li><a href=\\\"#\\\">Sustainability</a></li>\\n            <li><a href=\\\"#contact\\\" onclick=\\\"showPage('contact')\\\">Contact</a></li>\\n"}}
